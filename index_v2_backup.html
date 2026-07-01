@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小红书封面生成器</title>
+<style>
+/* 5 个差异大的中文字体 + 英文衬线（衬线/黑体/草书/小薇/快乐） */
+@import url('https://fonts.font.im/css2?family=Noto+Serif+SC:wght@700&family=Noto+Sans+SC:wght@900&family=Liu+Jian+Mao+Cao&family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&family=DM+Serif+Display&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Noto Serif SC","PingFang SC",serif;background:#f7f5f2;padding:20px;color:#3a3a3a}
+
+.header{text-align:center;margin-bottom:14px}
+.header h1{font-family:"DM Serif Display","Noto Serif SC",serif;font-size:26px;font-weight:400;color:#2d2a26;letter-spacing:1px;font-style:italic}
+.header p{color:#a8a098;font-size:12px;margin-top:4px;letter-spacing:4px}
+
+.input-row{max-width:640px;margin:0 auto 16px;display:flex;gap:8px}
+.input-row textarea{flex:1;min-width:0;height:90px;padding:14px;border:1.5px solid #e8e4df;border-radius:8px;font-size:16px;font-family:inherit;outline:none;resize:vertical;line-height:1.6;transition:border .2s;background:#fff;color:#3a3a3a}
+.input-row textarea:focus{border-color:#a8b0c0}
+.input-row button{padding:10px 22px;background:#3a3a3a;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;letter-spacing:3px;font-family:inherit;transition:background .2s}
+.input-row button:hover{background:#1a1a1a}
+.reroll-all{background:#fff !important;color:#3a3a3a !important;border:1.5px solid #3a3a3a !important;font-weight:700 !important}
+.reroll-all:hover{background:#3a3a3a !important;color:#fff !important}
+
+/* 字体切换 tab — 基础样式 */
+.font-tabs{display:flex;justify-content:center;gap:6px;margin-top:12px;flex-wrap:wrap}
+.font-tab{padding:5px 14px;border:1.5px solid #e8e4df;background:#fff;border-radius:14px;font-size:12px;color:#a8a098;cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:1px;white-space:nowrap}
+.font-tab:hover{border-color:#a8a098;color:#3a3a3a}
+.font-tab.active{background:#3a3a3a;color:#fff;border-color:#3a3a3a}
+
+/* 空白状态 */
+.empty-state{text-align:center;padding:80px 20px 60px;max-width:500px;margin:0 auto}
+.empty-icon{font-size:64px;margin-bottom:16px;opacity:.6}
+.empty-title{font-size:18px;color:#2d2a26;font-weight:600;margin-bottom:6px;letter-spacing:1px}
+.empty-desc{font-size:13px;color:#a8a098;letter-spacing:.5px}
+
+/* 字体全局切换 — 5 字体各一套（标题+小元素全部跟随切换） */
+body[data-font="serif"] .card-title,
+body[data-font="serif"] .card-meta{font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;letter-spacing:.02em}
+body[data-font="black"] .card-title,
+body[data-font="black"] .card-meta{font-family:"Noto Sans SC","PingFang SC",sans-serif;font-weight:900;letter-spacing:-.03em}
+body[data-font="cao"] .card-title,
+body[data-font="cao"] .card-meta{font-family:"Liu Jian Mao Cao","Noto Serif SC",cursive;font-weight:400;letter-spacing:.05em}
+body[data-font="xiaowei"] .card-title,
+body[data-font="xiaowei"] .card-meta{font-family:"ZCOOL XiaoWei","Noto Serif SC",serif;font-weight:400;letter-spacing:.06em}
+body[data-font="kuai"] .card-title,
+body[data-font="kuai"] .card-meta{font-family:"ZCOOL KuaiLe","Noto Serif SC",cursive;font-weight:400;letter-spacing:.04em}
+body[data-font="serif"] .header h1{font-family:"DM Serif Display","Noto Serif SC",serif;font-style:italic}
+
+#msg{text-align:center;color:#a8a098;font-size:12px;margin-bottom:4px;min-height:18px;letter-spacing:1px}
+
+.section-label{max-width:1300px;margin:30px auto 14px;padding:14px 20px;background:#fff;border-radius:10px;border:1.5px solid #e8e4df;display:flex;align-items:center;gap:14px;font-size:17px;font-weight:600;color:#2d2a26;letter-spacing:1px;font-family:"DM Serif Display","Noto Serif SC",serif;font-style:italic;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.section-label::after{content:'';flex:1;height:1px;background:#e8e4df;margin:0 4px}
+.section-num{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 4px;background:#3a3a3a;color:#fff;border-radius:50%;font-size:13px;font-weight:700;font-style:normal;font-family:"Noto Sans SC","PingFang SC",sans-serif;letter-spacing:0}
+.section-desc{font-size:12px;color:#a8a098;font-weight:400;font-style:normal;letter-spacing:.5px;font-family:"Noto Sans SC","PingFang SC",sans-serif}
+.s-tag{display:inline-block;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;background:#f0ebe5;color:#7a7a7a;letter-spacing:1px;font-style:normal;font-family:"Noto Sans SC","PingFang SC",sans-serif}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;max-width:1300px;margin:0 auto 18px}
+
+/* ═══════════ 卡片 ═══════════ */
+.card{position:relative;aspect-ratio:3/4;overflow:hidden;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.04);transition:transform .25s,box-shadow .25s;display:flex;align-items:center;justify-content:center;contain:paint layout;border-radius:8px}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.card:active{transform:scale(.98)}
+.card-inner{position:relative;z-index:2;width:100%;height:100%;display:flex;flex-direction:column;overflow:hidden}
+/* 标题 — 衬线体 Noto Serif SC */
+.card-title{font-family:"Noto Serif SC","Songti SC",serif;font-weight:700;line-height:1.45;word-break:break-word;overflow-wrap:break-word;max-width:100%;letter-spacing:.02em}
+
+.dl{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.35);color:#fff;border:none;padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;opacity:0;transition:opacity .2s;z-index:9}
+.card:hover .dl{opacity:1}
+.dl:hover{background:rgba(0,0,0,.6)}
+
+/* 卡片右下角按钮组（下载/复制/换一换） */
+.actions{position:absolute;bottom:6px;right:6px;display:flex;gap:4px;z-index:9;opacity:0;transition:opacity .2s}
+.card:hover .actions{opacity:1}
+.act-btn{background:rgba(0,0,0,.35);color:#fff;border:none;padding:5px 9px;border-radius:6px;font-size:12px;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .2s;line-height:1}
+.act-btn:hover{background:rgba(0,0,0,.65)}
+.act-btn.spin{transition:background .2s,transform .6s cubic-bezier(.4,0,.2,1)}
+.act-btn.spin:hover{transform:rotate(180deg)}
+.act-btn:disabled{opacity:.6;cursor:not-allowed}
+
+/* ═══════════ 响应式 — mobile-first ═══════════ */
+/* 手机端 (375-767px) */
+@media (max-width:767px){
+  body{padding:12px}
+  .header h1{font-size:20px}
+  .header p{font-size:10px;letter-spacing:2px}
+  .font-tabs{gap:4px;margin-top:10px}
+  .font-tab{padding:4px 10px;font-size:11px;border-radius:12px}
+  .input-row{flex-direction:column;gap:8px;max-width:100%}
+  .input-row textarea{height:70px;font-size:15px;padding:12px;min-height:70px}
+  .input-row button{padding:10px 18px;font-size:12px;letter-spacing:2px}
+  .input-row .reroll-all{display:none}
+  .grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .section-label{flex-wrap:wrap;gap:8px;padding:10px 14px;font-size:14px;margin:20px auto 10px}
+  .section-label .section-num{min-width:24px;height:24px;font-size:11px}
+  .section-label .s-tag{font-size:10px;padding:3px 8px}
+  .section-label .section-desc{font-size:10px}
+  .card{border-radius:6px}
+  .empty-state{padding:50px 20px 40px}
+  .empty-icon{font-size:48px}
+  .empty-title{font-size:16px}
+  .empty-desc{font-size:12px}
+}
+
+/* 平板端 (768-1023px) */
+@media (min-width:768px) and (max-width:1023px){
+  body{padding:18px}
+  .grid{grid-template-columns:repeat(3,1fr);gap:12px}
+  .section-label{font-size:15px}
+}
+
+/* 桌面端 (1024px+) */
+@media (min-width:1024px){
+  .input-row{max-width:640px}
+  .grid{grid-template-columns:repeat(4,1fr);gap:16px}
+  .section-label{font-size:17px;padding:14px 20px}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Notes Cover</h1>
+  <p>小 红 书 文 艺 风 封 面 · 5 种 风 格 · 30 张 模 板</p>
+  <div class="font-tabs">
+    <button class="font-tab active" data-font="serif">衬线</button>
+    <button class="font-tab" data-font="black">黑体</button>
+    <button class="font-tab" data-font="cao">草书</button>
+    <button class="font-tab" data-font="xiaowei">小薇</button>
+    <button class="font-tab" data-font="kuai">快乐</button>
+  </div>
+</div>
+
+<div class="input-row">
+  <textarea id="textInput" placeholder="输入你的小红书封面文案，支持换行，自动适配字号大小"></textarea>
+  <button onclick="generate()">生成封面</button>
+  <button class="reroll-all" onclick="rerollAll()">🎲 换一换</button>
+</div>
+<div id="msg"></div>
+<div id="container"><div class="empty-state" id="emptyState">
+  <div class="empty-icon">📱</div>
+  <div class="empty-title">输入文案，生成小红书封面</div>
+  <div class="empty-desc">5 种风格 · 4 种配色 · 5 种字体 · 自动适配字号</div>
+</div></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+
+// ═══════════ 字号自适应 — CJK=1em, EN=0.55em, 数字=0.6em, 8% 安全边距 ═══════════
+function fs(t,mw,mh,mn,mx){
+  mn=mn||16;mx=mx||64;
+  var lines=t.split('\n');
+  // 估算每行宽度（em 单位），CJK 按 1em，英文/空格 0.55em，数字 0.6em
+  function lineW(s){
+    var w=0;
+    for(var i=0;i<s.length;i++){
+      var c=s.charCodeAt(i);
+      // CJK 统一表意文字（CJK 标点也算上 1em）
+      if((c>=0x4e00 && c<=0x9fff) || (c>=0x3400 && c<=0x4dbf) || (c>=0xf900 && c<=0xfaff) || (c>=0x3000 && c<=0x303f)) w+=1;
+      else if(c>=0x30 && c<=0x39) w+=0.6;  // 数字
+      else if((c>=0x41 && c<=0x7a) || c===0x20) w+=0.55;  // 英文/空格
+      else w+=0.5;  // 其他符号
+    }
+    return w;
+  }
+  var maxLineW=0;
+  for(var i=0;i<lines.length;i++){
+    var w=lineW(lines[i]);
+    if(w>maxLineW)maxLineW=w;
+  }
+  if(maxLineW===0)maxLineW=1;
+  var safeMW=mw*0.96;  // 左右各留 2%
+  var safeMH=mh*0.93;  // 上下各留 3.5%
+  var lineH=1.3;       // 行高紧凑
+  var rW=Math.floor(safeMW/maxLineW);
+  var rH=Math.floor(safeMH/(lines.length*lineH));
+  var r=Math.min(rW,rH);
+  // 留点余量（×0.95）避免边缘溢出
+  r=Math.floor(r*0.95);
+  // 字形视觉补偿（草书/小薇/快乐字形显小，按字体放大）
+  var FONT_SCALES={serif:1,black:1,cao:1.15,xiaowei:1.1,kuai:1.05};
+  var font=document.body.dataset.font||'serif';
+  var scale=FONT_SCALES[font]||1;
+  if(scale!==1) r=Math.floor(r*scale);
+  return Math.max(mn,Math.min(mx,r));
+}
+
+// ═══════════ 低饱和度调色板 ═══════════
+var PALETTES=[
+  {bg:'#ffffff',tx:'#2d2a26',ac:'#a8a098',name:'纯白'},
+  {bg:'#faf8f5',tx:'#2d2a26',ac:'#b8a892',name:'米白'},
+  {bg:'#f0f4f8',tx:'#1e3a52',ac:'#a8c0d8',name:'晴蓝'},
+  {bg:'#eef5ee',tx:'#2d4a30',ac:'#a8c8a8',name:'薄荷'},
+  {bg:'#faf5ea',tx:'#5d4e00',ac:'#d4c080',name:'奶黄'},
+  {bg:'#f3eef8',tx:'#3d2a52',ac:'#c0a8d8',name:'薰衣草'},
+];
+
+// ═══════════ 5 大公式 — 参考图风格 ═══════════
+var FORMULAS=[
+
+  // 公式1：横线便签纸 — 浅色便签 + 横线 + 小装饰
+  {
+    name:'Notebook',
+    tag:'便签·横线·生活记录',
+    build:function(t,vi){
+      var p=PALETTES[vi%6];
+      var f=fs(t,200,170,26,52);
+      // 横线背景（均匀分布）
+      var lines='';
+      for(var i=0;i<7;i++){
+        lines+='<div style="position:absolute;left:8%;right:8%;top:'+(12+i*12)+'%;height:1px;background:'+p.ac+';opacity:.25"></div>';
+      }
+      var emojis=['😊','🥰','😌','🤗','😉','😋'];
+      // 顶部小黄色光斑（参考图 #1 风格）
+      var blob='<div style="position:absolute;top:18%;left:50%;transform:translateX(-50%);width:65%;height:55%;background:radial-gradient(ellipse,#FFE082 0%,transparent 65%);opacity:.35;z-index:0;border-radius:50%"></div>';
+      // 顶部胶带（差异化招牌）
+      var tapeRot=[-3,2,-2,3,-3,2][vi];
+      var tape='<div style="position:absolute;top:-6px;left:50%;transform:translateX(-50%) rotate('+tapeRot+'deg);width:90px;height:26px;background:rgba(255,235,150,.75);box-shadow:0 2px 8px rgba(0,0,0,.06);z-index:5"></div>';
+      return '<div class="card f1" style="background:'+p.bg+';position:relative" onclick="downloadCard(this)">'
+        +tape
+        +blob
+        +lines
+        +'<div style="position:absolute;bottom:6%;right:8%;font-size:28px;opacity:.75;filter:drop-shadow(0 2px 4px rgba(0,0,0,.08));z-index:3">'+emojis[vi]+'</div>'
+        +'<div class="card-inner" style="justify-content:center;align-items:flex-start;padding:12% 8%">'
+        +'<div class="card-title" style="font-size:'+f+'px;color:'+p.tx+';text-align:left">'+t.replace(/\n/g,'<br>')+'</div>'
+        +'</div>'
+        +'<button class="dl" onclick="event.stopPropagation();downloadCard(this.parentElement)">⬇</button></div>';
+    }
+  },
+
+  // 公式2：iOS Notes 备忘录 — App 截图仿
+  {
+    name:'iOS Notes',
+    tag:'备忘录·极简·手账',
+    build:function(t,vi){
+      var p=PALETTES[vi%6];
+      var f=fs(t,200,160,26,50);
+      var navColors=['#FFD60A','#FF9F0A','#34C759','#FF453A','#5E5CE6','#FF2D92'];
+      return '<div class="card f2" style="background:'+p.bg+';position:relative" onclick="downloadCard(this)">'
+        // iOS 状态栏（顶部系统栏）
+        +'<div style="position:absolute;top:0;left:0;right:0;height:5%;display:flex;align-items:center;justify-content:space-between;padding:0 14px;z-index:4;font-size:11px;color:'+p.tx+';font-weight:600;letter-spacing:-.5px">'
+        +'<span>9:41</span>'
+        +'<div style="display:flex;gap:4px;align-items:center;font-size:10px"><span>●●●●</span><span>▲</span><span style="border:1px solid '+p.tx+';border-radius:3px;padding:0 2px;font-size:8px">100%</span></div>'
+        +'</div>'
+        // 顶部导航栏（iOS 风格）
+        +'<div style="position:absolute;top:5%;left:0;right:0;height:11%;background:'+navColors[vi]+';display:flex;align-items:center;justify-content:space-between;padding:0 14px;z-index:3">'
+        +'<span style="color:#fff;font-size:14px;font-weight:500">‹ Notes</span>'
+        +'<div style="display:flex;gap:14px;color:#fff;font-size:15px"><span>⎘</span><span>⋯</span></div>'
+        +'</div>'
+        // 横线
+        +'<div style="position:absolute;left:6%;right:6%;top:22%;height:1px;background:'+p.ac+';opacity:.2;z-index:2"></div>'
+        +'<div style="position:absolute;left:6%;right:6%;top:90%;height:1px;background:'+p.ac+';opacity:.2;z-index:2"></div>'
+        +'<div class="card-inner" style="justify-content:center;align-items:flex-start;padding:14% 8% 8%">'
+        +'<div class="card-title" style="font-size:'+f+'px;color:'+p.tx+';text-align:left;line-height:1.35">'+t.replace(/\n/g,'<br>')+'</div>'
+        +'</div>'
+        // 底部小 emoji
+        +'<div style="position:absolute;bottom:5%;left:50%;transform:translateX(-50%);font-size:34px;opacity:.9;z-index:3">'+['😄','🥹','😎','🤩','🥳','😴'][vi]+'</div>'
+        +'<button class="dl" onclick="event.stopPropagation();downloadCard(this.parentElement)">⬇</button></div>';
+    }
+  },
+
+  // 公式3：浅色光晕 — 径向渐变 + 小角落 emoji
+  {
+    name:'Halo',
+    tag:'光晕·氛围·温柔',
+    build:function(t,vi){
+      var halos=[
+        {bg:'radial-gradient(circle at 50% 30%,#E8DEF8 0%,#FFFFFF 60%)',tx:'#3d2a52',ac:'#a890d0',block:'#a890d0'},
+        {bg:'radial-gradient(circle at 30% 60%,#FCE4EC 0%,#FFFFFF 55%)',tx:'#5d2a3d',ac:'#d090a8',block:'#d090a8'},
+        {bg:'radial-gradient(circle at 70% 40%,#E0F2F1 0%,#FFFFFF 60%)',tx:'#1d4a48',ac:'#88c0bc',block:'#88c0bc'},
+        {bg:'radial-gradient(circle at 50% 70%,#FFF3E0 0%,#FFFFFF 55%)',tx:'#5d3a00',ac:'#d4a060',block:'#d4a060'},
+        {bg:'radial-gradient(circle at 30% 30%,#E3F2FD 0%,#FFFFFF 60%)',tx:'#1a3a5c',ac:'#88b0d8',block:'#88b0d8'},
+        {bg:'radial-gradient(circle at 70% 70%,#F1F8E9 0%,#FFFFFF 55%)',tx:'#3a4a1d',ac:'#a8c078',block:'#a8c078'},
+      ];
+      var p=halos[vi%6];
+      var f=fs(t,200,170,24,50);
+      // 6 种不同的大色块（圆形/方形/三角形/环形等）
+      var blocks=[
+        // 1. 大圆 + 小圆
+        '<div style="position:absolute;top:18%;right:10%;width:90px;height:90px;border-radius:50%;background:'+p.block+';opacity:.35;filter:blur(10px);z-index:1"></div>'
+        +'<div style="position:absolute;bottom:15%;right:18%;width:30px;height:30px;border-radius:50%;background:'+p.block+';opacity:.55;z-index:2"></div>',
+        // 2. 圆环 + 小点
+        '<div style="position:absolute;top:14%;left:12%;width:75px;height:75px;border:14px solid '+p.block+';border-radius:50%;opacity:.4;z-index:1"></div>'
+        +'<div style="position:absolute;bottom:22%;right:14%;width:14px;height:14px;border-radius:50%;background:'+p.block+';opacity:.6;z-index:2"></div>',
+        // 3. 斜放方块
+        '<div style="position:absolute;top:16%;right:14%;width:80px;height:80px;background:'+p.block+';opacity:.4;transform:rotate(18deg);border-radius:10px;z-index:1"></div>'
+        +'<div style="position:absolute;bottom:18%;left:18%;width:24px;height:24px;background:'+p.block+';opacity:.5;transform:rotate(18deg);border-radius:4px;z-index:2"></div>',
+        // 4. 半圆 + 圆点
+        '<div style="position:absolute;top:12%;left:14%;width:100px;height:55px;border-top-left-radius:100px;border-top-right-radius:100px;background:'+p.block+';opacity:.4;z-index:1"></div>'
+        +'<div style="position:absolute;bottom:20%;right:18%;display:flex;gap:6px;z-index:2">'
+        +'<div style="width:12px;height:12px;border-radius:50%;background:'+p.block+';opacity:.7"></div>'
+        +'<div style="width:12px;height:12px;border-radius:50%;background:'+p.block+';opacity:.5"></div>'
+        +'</div>',
+        // 5. 大圆 + 横线
+        '<div style="position:absolute;bottom:14%;left:12%;width:90px;height:90px;border-radius:50%;background:'+p.block+';opacity:.35;filter:blur(8px);z-index:1"></div>'
+        +'<div style="position:absolute;top:18%;right:18%;width:40px;height:3px;background:'+p.block+';opacity:.6;border-radius:2px;z-index:2"></div>'
+        +'<div style="position:absolute;top:24%;right:18%;width:24px;height:3px;background:'+p.block+';opacity:.45;border-radius:2px;z-index:2"></div>',
+        // 6. 圆角矩形堆叠
+        '<div style="position:absolute;top:14%;right:12%;width:80px;height:100px;background:'+p.block+';opacity:.3;border-radius:14px;transform:rotate(-8deg);z-index:1"></div>'
+        +'<div style="position:absolute;top:18%;right:18%;width:60px;height:80px;background:'+p.block+';opacity:.45;border-radius:10px;transform:rotate(-8deg);z-index:2"></div>',
+      ];
+      return '<div class="card f3" style="background:'+p.bg+';position:relative" onclick="downloadCard(this)">'
+        +blocks[vi]
+        +'<div class="card-inner" style="justify-content:center;align-items:flex-start;padding:12% 8%">'
+        +'<div class="card-title" style="font-size:'+f+'px;color:'+p.tx+';text-align:left">'+t.replace(/\n/g,'<br>')+'</div>'
+        +'</div>'
+        // 角落小 emoji
+        +'<div style="position:absolute;bottom:8%;left:8%;font-size:44px;filter:drop-shadow(0 3px 6px rgba(0,0,0,.06));z-index:3">'+['🍑','🌸','🍀','🍊','🌊','🌿'][vi]+'</div>'
+        +'<button class="dl" onclick="event.stopPropagation();downloadCard(this.parentElement)">⬇</button></div>';
+    }
+  },
+
+  // 公式4：引号包夹 — 大引号装饰
+  {
+    name:'Quotes',
+    tag:'引号·文艺·格言',
+    build:function(t,vi){
+      var quoteColors=['#A8B8D0','#D0A8B8','#B8D0A8','#D0C0A8','#A8C8D0','#C8A8D0'];
+      var p=PALETTES[vi%6];
+      var f=fs(t,200,150,26,48);
+      // 6 种几何装饰（每个公式加 2 个独特装饰元素）
+      var decos=[
+        // 1. 圆环 + 短线
+        '<div style="position:absolute;bottom:18%;left:12%;width:26px;height:26px;border:2.5px solid '+quoteColors[vi]+';border-radius:50%;opacity:.55;z-index:2"></div>'
+        +'<div style="position:absolute;top:22%;right:14%;width:32px;height:2.5px;background:'+quoteColors[vi]+';opacity:.6;border-radius:2px;z-index:2"></div>',
+        // 2. 三角 + 短线
+        '<div style="position:absolute;bottom:20%;right:12%;width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-bottom:24px solid '+quoteColors[vi]+';opacity:.5;z-index:2"></div>'
+        +'<div style="position:absolute;top:25%;left:14%;width:28px;height:2.5px;background:'+quoteColors[vi]+';opacity:.6;border-radius:2px;z-index:2"></div>',
+        // 3. 波浪 + 小圆
+        '<div style="position:absolute;bottom:22%;left:12%;width:42px;height:16px;opacity:.55;z-index:2"><svg viewBox="0 0 42 16"><path d="M2 8 Q10 1 21 8 T40 8" fill="none" stroke="'+quoteColors[vi]+'" stroke-width="2.5" stroke-linecap="round"/></svg></div>'
+        +'<div style="position:absolute;top:24%;right:16%;width:11px;height:11px;border-radius:50%;background:'+quoteColors[vi]+';opacity:.65;z-index:2"></div>',
+        // 4. 十字 + 横线
+        '<div style="position:absolute;top:26%;left:15%;width:24px;height:24px;opacity:.5;z-index:2;line-height:1;font-size:28px;color:'+quoteColors[vi]+'">+</div>'
+        +'<div style="position:absolute;bottom:22%;right:14%;width:38px;height:2.5px;background:'+quoteColors[vi]+';opacity:.6;border-radius:2px;z-index:2"></div>',
+        // 5. 双圆 + 斜线
+        '<div style="position:absolute;bottom:22%;left:14%;display:flex;gap:7px;opacity:.55;z-index:2"><div style="width:11px;height:11px;border-radius:50%;border:2px solid '+quoteColors[vi]+'"></div><div style="width:11px;height:11px;border-radius:50%;background:'+quoteColors[vi]+'"></div></div>'
+        +'<div style="position:absolute;top:24%;right:14%;width:30px;height:2.5px;background:'+quoteColors[vi]+';opacity:.6;border-radius:2px;transform:rotate(-22deg);z-index:2"></div>',
+        // 6. 菱形 + 小方
+        '<div style="position:absolute;bottom:22%;left:14%;width:15px;height:15px;background:'+quoteColors[vi]+';opacity:.45;transform:rotate(45deg);z-index:2"></div>'
+        +'<div style="position:absolute;top:24%;right:14%;width:13px;height:13px;border:2px solid '+quoteColors[vi]+';opacity:.6;z-index:2"></div>',
+      ];
+      return '<div class="card f4" style="background:'+p.bg+';position:relative" onclick="downloadCard(this)">'
+        // 大引号（左上）
+        +'<div class="card-meta" style="position:absolute;top:8%;left:8%;z-index:3;font-size:84px;line-height:.7;color:'+quoteColors[vi]+';opacity:.75">"</div>'
+        // 大引号（右下）
+        +'<div class="card-meta" style="position:absolute;bottom:-2%;right:8%;z-index:3;font-size:84px;line-height:.7;color:'+quoteColors[vi]+';opacity:.75">"</div>'
+        // 几何装饰
+        +decos[vi]
+        +'<div class="card-inner" style="justify-content:center;align-items:center;padding:14% 12%">'
+        +'<div class="card-title" style="font-size:'+f+'px;color:'+p.tx+';text-align:center;line-height:1.55">'+t.replace(/\n/g,'<br>')+'</div>'
+        +'</div>'
+        +'<button class="dl" onclick="event.stopPropagation();downloadCard(this.parentElement)">⬇</button></div>';
+    }
+  },
+
+  // 公式5：撕边纸 / 蜡笔涂抹 — 质感纸
+  {
+    name:'Torn Paper',
+    tag:'撕边·蜡笔·手账',
+    build:function(t,vi){
+      var papers=[
+        {bg:'#FAF8F5',tx:'#2d2a26',ac:'#c0a890',crayon:'#A8B8D0',cp:{top:'4%',left:'8%',w:'30%',h:'24%'},doodle:'#8B7CB8',dType:'wave'},
+        {bg:'#FAF5EA',tx:'#5d4e00',ac:'#d4c080',crayon:'#FFD700',cp:{top:'4%',left:'8%',w:'32%',h:'22%'},doodle:'#5d4e00',dType:'circle'},
+        {bg:'#EEF5EE',tx:'#2d4a30',ac:'#a8c8a8',crayon:'#88c8a0',cp:{top:'3%',right:'8%',w:'26%',h:'22%'},doodle:'#2d4a30',dType:'line'},
+        {bg:'#FFFFFF',tx:'#1e3a52',ac:'#a8c0d8',crayon:'#88b0d8',cp:{top:'4%',left:'8%',w:'28%',h:'22%'},doodle:'#5d3a8c',dType:'arrow'},
+        {bg:'#F3EEF8',tx:'#3d2a52',ac:'#c0a8d8',crayon:'#c0a8d8',cp:{top:'3%',right:'8%',w:'30%',h:'24%'},doodle:'#8B7CB8',dType:'wave'},
+        {bg:'#F0F4F8',tx:'#01579b',ac:'#88b0d8',crayon:'#5d8cd0',cp:{top:'4%',left:'8%',w:'32%',h:'22%'},doodle:'#01579b',dType:'star'},
+      ];
+      var p=papers[vi%6];
+      var f=fs(t,200,160,26,50);
+      // 撕边效果（顶部不规则边缘）
+      var torn='<svg style="position:absolute;top:-1px;left:0;width:100%;height:16px;z-index:4;display:block" viewBox="0 0 100 16" preserveAspectRatio="none"><path d="M0 16 L0 6 L3 10 L6 4 L10 9 L13 5 L17 10 L21 6 L25 11 L29 5 L33 9 L37 6 L41 11 L45 5 L49 9 L53 6 L57 11 L61 5 L65 9 L69 6 L73 11 L77 5 L81 9 L85 6 L89 11 L93 5 L97 9 L100 6 L100 16 Z" fill="#f7f5f2"/></svg>';
+      // 蜡笔涂抹
+      var cp=p.cp;
+      var crayonStyle='position:absolute;top:'+cp.top+';left:'+(cp.left||'auto')+';right:'+(cp.right||'auto')+';width:'+cp.w+';height:'+cp.h+';background:radial-gradient(ellipse,'+p.crayon+'aa,transparent 70%);border-radius:50%;opacity:.55;filter:blur(6px);z-index:1';
+      // 手绘涂鸦
+      var doodleHTML='';
+      if(p.dType==='wave'){
+        doodleHTML='<svg style="position:absolute;bottom:18%;right:8%;z-index:3;width:60px;height:30px" viewBox="0 0 60 30"><path d="M5 15 Q15 5 25 15 T45 15 T60 15" fill="none" stroke="'+p.doodle+'" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>';
+      } else if(p.dType==='circle'){
+        doodleHTML='<svg style="position:absolute;bottom:18%;right:8%;z-index:3;width:50px;height:30px" viewBox="0 0 50 30"><path d="M10 15 Q10 5 25 5 Q40 5 40 15 Q40 25 25 25 Q10 25 10 15" fill="none" stroke="'+p.doodle+'" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>';
+      } else if(p.dType==='line'){
+        doodleHTML='<svg style="position:absolute;bottom:20%;right:10%;z-index:3;width:50px;height:30px" viewBox="0 0 50 30"><path d="M5 20 L15 10 L25 18 L35 8 L45 15" fill="none" stroke="'+p.doodle+'" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>';
+      } else if(p.dType==='arrow'){
+        doodleHTML='<svg style="position:absolute;top:18%;right:8%;z-index:3;width:60px;height:40px" viewBox="0 0 60 40"><path d="M5 20 Q25 5 50 20 M40 12 L50 20 L42 28" fill="none" stroke="'+p.doodle+'" stroke-width="2" stroke-linecap="round" opacity=".55"/></svg>';
+      } else if(p.dType==='star'){
+        doodleHTML='<svg style="position:absolute;bottom:18%;right:8%;z-index:3;width:40px;height:40px" viewBox="0 0 40 40"><path d="M20 5 L24 16 L36 16 L26 23 L30 35 L20 28 L10 35 L14 23 L4 16 L16 16 Z" fill="none" stroke="'+p.doodle+'" stroke-width="2" stroke-linejoin="round" opacity=".55"/></svg>';
+      }
+      var topText=['Capture words','in mind','Notes','Today','Memo','Words'];
+      // 红色印章（差异化招牌）
+      var stampTexts=['TOP','HOT','NEW','FAV','BEST','YES'];
+      var stampRot=[-12,8,-10,10,-8,12][vi];
+      var stamp='<div style="position:absolute;top:12%;right:8%;width:54px;height:54px;display:flex;align-items:center;justify-content:center;background:#E53935;color:#fff;border-radius:50%;font-size:11px;font-weight:900;transform:rotate('+stampRot+'deg);box-shadow:0 3px 10px rgba(229,57,53,.35);z-index:5;letter-spacing:1px;border:1.5px dashed rgba(255,255,255,.55);font-family:ZCOOL KuaiLe,Noto Sans SC,sans-serif">'+stampTexts[vi]+'</div>';
+      return '<div class="card f5" style="background:'+p.bg+';position:relative;box-shadow:0 6px 20px rgba(0,0,0,.06)" onclick="downloadCard(this)">'
+        +torn
+        // 蜡笔涂抹
+        +'<div style="'+crayonStyle+'"></div>'
+        // 红色印章
+        +stamp
+        // 手绘涂鸦
+        +doodleHTML
+        // 横线（便签纸效果）
+        +'<div style="position:absolute;left:8%;right:8%;top:92%;height:1px;background:'+p.ac+';opacity:.2;z-index:2"></div>'
+        +'<div class="card-inner" style="justify-content:center;align-items:flex-start;padding:14% 8% 6%">'
+        +'<div class="card-title" style="font-size:'+f+'px;color:'+p.tx+';text-align:left">'+t.replace(/\n/g,'<br>')+'</div>'
+        +'</div>'
+        +'<button class="dl" onclick="event.stopPropagation();downloadCard(this.parentElement)">⬇</button></div>';
+    }
+  },
+];
+
+// ═══════════ 字数判断 + 装饰等级 ═══════════
+function textLen(t){return t.replace(/[\s\n]/g,'').length}
+function decorLevel(t){
+  var n=textLen(t);
+  if(n<10) return 'cartoon';   // 卡通形象
+  if(n<=15) return 'emoji2';   // 2 个 emoji
+  return 'emoji1';             // 1 个 emoji
+}
+
+// ═══════════ 卡通 SVG 库（12 个可爱小图案）═══════════
+var CARTOONS=[
+  // 1. 圆脸猫
+  '<svg viewBox="0 0 80 80"><circle cx="40" cy="45" r="28" fill="#FFD9A8"/><polygon points="20,28 28,15 32,30" fill="#FFD9A8"/><polygon points="60,28 52,15 48,30" fill="#FFD9A8"/><polygon points="23,26 30,17 32,28" fill="#FFB890"/><polygon points="57,26 50,17 48,28" fill="#FFB890"/><circle cx="32" cy="45" r="3" fill="#3a3a3a"/><circle cx="48" cy="45" r="3" fill="#3a3a3a"/><ellipse cx="40" cy="55" rx="3" ry="2" fill="#FF9F90"/><path d="M37 58 Q40 62 43 58" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round"/><line x1="24" y1="50" x2="31" y2="52" stroke="#3a3a3a" stroke-width="1.5"/><line x1="49" y1="52" x2="56" y2="50" stroke="#3a3a3a" stroke-width="1.5"/></svg>',
+  // 2. 兔子
+  '<svg viewBox="0 0 80 80"><ellipse cx="28" cy="20" rx="6" ry="14" fill="#fff" stroke="#e8c5c5" stroke-width="1.5"/><ellipse cx="52" cy="20" rx="6" ry="14" fill="#fff" stroke="#e8c5c5" stroke-width="1.5"/><ellipse cx="28" cy="22" rx="3" ry="9" fill="#FFCCD5"/><ellipse cx="52" cy="22" rx="3" ry="9" fill="#FFCCD5"/><circle cx="40" cy="48" r="22" fill="#fff" stroke="#e8c5c5" stroke-width="1.5"/><circle cx="33" cy="48" r="2.5" fill="#3a3a3a"/><circle cx="47" cy="48" r="2.5" fill="#3a3a3a"/><ellipse cx="40" cy="55" rx="2.5" ry="2" fill="#FF9F90"/><path d="M37 58 Q40 61 43 58" stroke="#3a3a3a" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>',
+  // 3. 咖啡杯
+  '<svg viewBox="0 0 80 80"><path d="M20 35 L20 60 Q20 68 28 68 L52 68 Q60 68 60 60 L60 35 Z" fill="#fff" stroke="#8B6F47" stroke-width="2"/><path d="M60 42 Q72 42 72 52 Q72 60 60 60" fill="none" stroke="#8B6F47" stroke-width="2"/><ellipse cx="40" cy="35" rx="20" ry="4" fill="#6B4226"/><path d="M32 25 Q34 18 32 12" stroke="#a8a098" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M40 25 Q42 18 40 12" stroke="#a8a098" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M48 25 Q50 18 48 12" stroke="#a8a098" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  // 4. 书本
+  '<svg viewBox="0 0 80 80"><path d="M10 25 L40 30 L70 25 L70 65 L40 70 L10 65 Z" fill="#fff" stroke="#a8a098" stroke-width="1.5"/><line x1="40" y1="30" x2="40" y2="70" stroke="#a8a098" stroke-width="1.5"/><line x1="20" y1="38" x2="35" y2="40" stroke="#a8a098" stroke-width="1" opacity=".5"/><line x1="20" y1="46" x2="35" y2="48" stroke="#a8a098" stroke-width="1" opacity=".5"/><line x1="20" y1="54" x2="35" y2="56" stroke="#a8a098" stroke-width="1" opacity=".5"/><line x1="45" y1="40" x2="60" y2="38" stroke="#a8a098" stroke-width="1" opacity=".5"/><line x1="45" y1="48" x2="60" y2="46" stroke="#a8a098" stroke-width="1" opacity=".5"/><line x1="45" y1="56" x2="60" y2="54" stroke="#a8a098" stroke-width="1" opacity=".5"/></svg>',
+  // 5. 相机
+  '<svg viewBox="0 0 80 80"><rect x="12" y="25" width="56" height="42" rx="6" fill="#3a3a3a"/><rect x="28" y="18" width="24" height="10" rx="2" fill="#3a3a3a"/><circle cx="40" cy="46" r="14" fill="#5a5a5a"/><circle cx="40" cy="46" r="9" fill="#1a1a1a"/><circle cx="36" cy="42" r="3" fill="#888"/><circle cx="58" cy="33" r="2" fill="#FF453A"/></svg>',
+  // 6. 奶茶杯
+  '<svg viewBox="0 0 80 80"><path d="M22 28 L24 68 L56 68 L58 28 Z" fill="#FFE4D6"/><path d="M22 28 L24 38 L56 38 L58 28 Z" fill="#8B5A3C"/><rect x="22" y="22" width="36" height="8" rx="2" fill="#fff" stroke="#a8a098" stroke-width="1.5"/><line x1="38" y1="14" x2="38" y2="24" stroke="#a8a098" stroke-width="2"/><circle cx="36" cy="50" r="2" fill="#fff" opacity=".7"/><circle cx="44" cy="55" r="2" fill="#fff" opacity=".7"/><circle cx="40" cy="60" r="2" fill="#fff" opacity=".7"/></svg>',
+  // 7. 购物袋
+  '<svg viewBox="0 0 80 80"><path d="M18 30 L62 30 L58 70 L22 70 Z" fill="#FFB8C8" stroke="#d4889c" stroke-width="1.5"/><path d="M28 30 Q28 18 40 18 Q52 18 52 30" fill="none" stroke="#d4889c" stroke-width="2"/><circle cx="40" cy="48" r="10" fill="#fff" opacity=".85"/><text x="40" y="53" text-anchor="middle" font-size="14" font-weight="700" fill="#d4889c">♥</text></svg>',
+  // 8. 爱心
+  '<svg viewBox="0 0 80 80"><path d="M40 65 C15 45 15 25 30 22 C35 22 40 28 40 32 C40 28 45 22 50 22 C65 25 65 45 40 65 Z" fill="#FF9F90" stroke="#E07868" stroke-width="1.5"/><circle cx="33" cy="35" r="3" fill="#fff" opacity=".6"/></svg>',
+  // 9. 植物
+  '<svg viewBox="0 0 80 80"><line x1="40" y1="35" x2="40" y2="65" stroke="#6B8E4E" stroke-width="2"/><ellipse cx="32" cy="42" rx="10" ry="5" fill="#88c078" transform="rotate(-30 32 42)"/><ellipse cx="48" cy="38" rx="10" ry="5" fill="#88c078" transform="rotate(30 48 38)"/><ellipse cx="40" cy="28" rx="8" ry="6" fill="#a8d890"/><path d="M28 70 L52 70 L48 65 L32 65 Z" fill="#8B6F47"/><rect x="32" y="65" width="16" height="5" fill="#6B5237"/></svg>',
+  // 10. 星星
+  '<svg viewBox="0 0 80 80"><path d="M40 10 L48 32 L72 34 L53 50 L60 72 L40 60 L20 72 L27 50 L8 34 L32 32 Z" fill="#FFD700" stroke="#E6B800" stroke-width="1.5"/><circle cx="32" cy="42" r="2.5" fill="#fff" opacity=".7"/></svg>',
+  // 11. 小熊
+  '<svg viewBox="0 0 80 80"><circle cx="25" cy="22" r="8" fill="#c8a878"/><circle cx="55" cy="22" r="8" fill="#c8a878"/><circle cx="25" cy="22" r="4" fill="#FFB890"/><circle cx="55" cy="22" r="4" fill="#FFB890"/><circle cx="40" cy="42" r="25" fill="#c8a878"/><circle cx="32" cy="40" r="3" fill="#3a3a3a"/><circle cx="48" cy="40" r="3" fill="#3a3a3a"/><ellipse cx="40" cy="50" rx="6" ry="4" fill="#FFB890"/><circle cx="40" cy="48" r="2" fill="#3a3a3a"/><path d="M36 52 Q40 56 44 52" stroke="#3a3a3a" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  // 12. 蝴蝶结
+  '<svg viewBox="0 0 80 80"><path d="M40 40 L15 25 L20 40 L15 55 Z" fill="#FFB8C8" stroke="#d4889c" stroke-width="1.5"/><path d="M40 40 L65 25 L60 40 L65 55 Z" fill="#FFB8C8" stroke="#d4889c" stroke-width="1.5"/><circle cx="40" cy="40" r="7" fill="#E07868"/><circle cx="40" cy="40" r="3" fill="#fff" opacity=".5"/></svg>',
+];
+
+// 装饰位置（5 个角落轮换）
+var DECOR_POS=[
+  {bottom:'8%',right:'8%',size:'52px'},
+  {top:'14%',right:'8%',size:'50px'},
+  {bottom:'10%',left:'8%',size:'54px'},
+  {top:'12%',left:'8%',size:'48px'},
+  {top:'50%',right:'6%',size:'50px',transform:'translateY(-50%)'},
+];
+
+function posStyle(p){
+  var s='position:absolute;z-index:3;';
+  if(p.top)s+='top:'+p.top+';';
+  if(p.bottom)s+='bottom:'+p.bottom+';';
+  if(p.left)s+='left:'+p.left+';';
+  if(p.right)s+='right:'+p.right+';';
+  if(p.size)s+='width:'+p.size+';height:'+p.size+';';
+  if(p.transform)s+='transform:'+p.transform+';';
+  return s;
+}
+
+// 生成装饰 HTML
+function getDecorHTML(t,vi,fi){
+  var level=decorLevel(t);
+  var seed=vi+fi*7+globalSeed;
+  if(level==='cartoon'){
+    var c=CARTOONS[seed%CARTOONS.length];
+    var p=DECOR_POS[seed%DECOR_POS.length];
+    return '<div style="'+posStyle(p)+'filter:drop-shadow(0 4px 8px rgba(0,0,0,.08))">'+c+'</div>';
+  } else if(level==='emoji2'){
+    var e1=['🍑','🌸','✨','💫','🌿','🦋','☁️','🌙','🍀','💐','🌷','🪻'];
+    var e2=['🌼','🍋','🐚','🌺','🐱','☕','🎀','📷','🍰','🪴','🧁','🍓'];
+    var p1=DECOR_POS[seed%DECOR_POS.length];
+    var p2=DECOR_POS[(seed+2)%DECOR_POS.length];
+    return '<div style="'+posStyle(p1)+'font-size:30px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))">'+e1[seed%e1.length]+'</div>'
+      +'<div style="'+posStyle(p2)+'font-size:24px;opacity:.85;filter:drop-shadow(0 2px 4px rgba(0,0,0,.08))">'+e2[(seed+3)%e2.length]+'</div>';
+  } else {
+    var e=['🍃','🌱','✨','🌟','💧','☘️','🪻','🪷','🍂','🍁','🌾','🌿'];
+    var p=DECOR_POS[seed%DECOR_POS.length];
+    return '<div style="'+posStyle(p)+'font-size:26px;opacity:.65">'+e[seed%e.length]+'</div>';
+  }
+}
+
+// 把公式生成的 <button class="dl"> 替换为 actions 三按钮组
+function injectActions(card){
+  var oldBtn=card.querySelector('.dl');
+  if(!oldBtn) return;
+  var actions=document.createElement('div');
+  actions.className='actions';
+  actions.innerHTML='<button class="act-btn" title="下载 PNG" onclick="event.stopPropagation();downloadCard(this.closest(\'.card\'))">⬇</button>'
+    +'<button class="act-btn" title="复制到剪贴板" onclick="event.stopPropagation();copyCard(this.closest(\'.card\'))">📋</button>'
+    +'<button class="act-btn spin" title="换一换" onclick="event.stopPropagation();rerollOne(this.closest(\'.card\'))">↻</button>';
+  oldBtn.replaceWith(actions);
+}
+
+// ═══════════ 全局种子（全部换一换时累加）═══════════
+var globalSeed=0;
+
+// ═══════════ 板块描述 ═══════════
+var SECTION_DESCS=[
+  '横线便签纸，米黄/米白底，浅色横线',
+  'iOS Notes app 截图风格',
+  '浅色径向渐变光晕 + 角落 emoji',
+  '大引号包夹标题，装饰色引号',
+  '撕边纸 + 蜡笔涂抹 + 手绘涂鸦'
+];
+
+// ═══════════ 生成 ═══════════
+function generate(){
+  var t=document.getElementById('textInput').value.trim();
+  var c=document.getElementById('container');
+  var m=document.getElementById('msg');
+  if(!t){m.textContent='请输入文案';c.innerHTML='<div class="empty-state" id="emptyState"><div class="empty-icon">📝</div><div class="empty-title">输入文案，生成小红书封面</div><div class="empty-desc">5 种风格 · 4 种配色 · 5 种字体 · 自动适配字号</div></div>';return}
+  m.textContent='⏳ 生成 20 张封面中...';
+  c.innerHTML='';
+
+  setTimeout(function(){
+    try{
+      for(var s=0;s<FORMULAS.length;s++){
+        var fm=FORMULAS[s];
+        var lb=document.createElement('div');
+        lb.className='section-label';
+        lb.innerHTML='<span class="section-num">'+(s+1).toString().padStart(2,'0')+'</span>'
+          +'<span>'+fm.name+'</span>'
+          +'<span class="s-tag">'+fm.tag+'</span>'
+          +'<span class="section-desc">'+SECTION_DESCS[s]+'</span>';
+        c.appendChild(lb);
+        var g=document.createElement('div');g.className='grid';
+        c.appendChild(g);
+        for(var v=0;v<4;v++){
+          var card=buildOneCard(t,fm,s,v);
+          g.appendChild(card);
+        }
+      }
+      var n=textLen(t);
+      var lvl=decorLevel(t);
+      var lvlText={cartoon:'卡通形象',emoji2:'双 emoji',emoji1:'单 emoji'}[lvl];
+      var fontName={serif:'衬线',black:'黑体',cao:'草书',xiaowei:'小薇',kuai:'快乐'}[document.body.dataset.font||'serif'];
+      m.textContent='✅ 5 风格 × 4 配色 = 20 张 · '+fontName+'体 · '+n+' 字 · '+lvlText;
+      if(n>15) m.textContent+=' · 字号已自动适配';
+    }catch(e){m.textContent='❌ '+e.message;console.error(e)}
+  },10);
+}
+
+// 构建单张卡片（生成 + 注入装饰 + 替换按钮组）
+function buildOneCard(t,fm,fi,vi){
+  var h=fm.build(t,vi);
+  var w=document.createElement('div');
+  w.innerHTML=h;
+  var card=w.firstElementChild;
+  // 注入装饰
+  card.insertAdjacentHTML('beforeend', getDecorHTML(t,vi,fi));
+  // 替换按钮为 actions 三按钮组
+  injectActions(card);
+  // 标记索引（用于换一换）
+  card.dataset.fmIdx=fi;
+  card.dataset.vi=vi;
+  return card;
+}
+
+// 单卡片换一换
+function rerollOne(card){
+  var fi=parseInt(card.dataset.fmIdx);
+  var vi=parseInt(card.dataset.vi);
+  var t=document.getElementById('textInput').value.trim();
+  if(!t) return;
+  // vi 加 1-3（避免重复）
+  vi=(vi+1+Math.floor(Math.random()*3))%12;
+  var newCard=buildOneCard(t,FORMULAS[fi],fi,vi);
+  // 翻转动画
+  newCard.style.transform='rotateY(90deg)';
+  newCard.style.transition='transform .3s';
+  setTimeout(function(){
+    newCard.style.transform='';
+  },10);
+  card.replaceWith(newCard);
+}
+
+// 全部换一换
+function rerollAll(){
+  globalSeed+=7;
+  var btn=document.querySelector('.reroll-all');
+  if(btn){btn.disabled=true;btn.textContent='🎲 换中...';}
+  setTimeout(function(){
+    generate();
+    if(btn){btn.disabled=false;btn.textContent='🎲 换一换';}
+  },50);
+}
+
+function downloadCard(el){
+  if(typeof html2canvas==='undefined'){alert('加载中');return}
+  var btn=el.querySelector('.act-btn');
+  var oldText=btn?btn.textContent:'⬇';
+  if(btn){btn.disabled=true;btn.textContent='...';}
+  html2canvas(el,{scale:2,backgroundColor:null,logging:false,useCORS:true}).then(function(cv){
+    var a=document.createElement('a');a.download='cover.png';a.href=cv.toDataURL('image/png');a.click();
+    if(btn){btn.disabled=false;btn.textContent=oldText;}
+  }).catch(function(e){if(btn){btn.textContent='✗';setTimeout(function(){btn.textContent=oldText},1500)}});
+}
+
+// 复制到剪贴板
+async function copyCard(el){
+  var btns=el.querySelectorAll('.act-btn');
+  var copyBtn=btns[1];
+  var oldText=copyBtn?copyBtn.textContent:'📋';
+  if(!navigator.clipboard || !window.ClipboardItem){
+    if(copyBtn){copyBtn.textContent='✗';setTimeout(function(){copyBtn.textContent=oldText},1500);}
+    return;
+  }
+  if(copyBtn){copyBtn.disabled=true;copyBtn.textContent='...';}
+  try{
+    var cv=await html2canvas(el,{scale:2,backgroundColor:null,logging:false,useCORS:true});
+    var blob=await new Promise(function(r){cv.toBlob(r,'image/png')});
+    await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
+    if(copyBtn){copyBtn.textContent='✓';}
+  }catch(e){
+    if(copyBtn){copyBtn.textContent='✗';}
+  }
+  setTimeout(function(){if(copyBtn){copyBtn.disabled=false;copyBtn.textContent=oldText;}},1500);
+}
+
+// 字体切换
+var FONT_NAMES={serif:'衬线',black:'黑体',cao:'草书',xiaowei:'小薇',kuai:'快乐'};
+document.querySelectorAll('.font-tab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.font-tab').forEach(function(b){b.classList.remove('active')});
+    btn.classList.add('active');
+    document.body.dataset.font=btn.dataset.font;
+    // 切换字体时重新生成所有卡片（字号根据字体重新计算，手写/可爱自动放大）
+    generate();
+  });
+});
+
+</script>
+</body>
+</html>
