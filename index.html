@@ -459,30 +459,49 @@ button{font-family:inherit}
       </div>
       <button class="auth-close" id="btnCloseUpgrade" type="button" aria-label="关闭">×</button>
     </div>
-    <div class="plan-row">
-      <div class="plan-card" data-plan="monthly" id="planMonthly">
-        <div class="plan-name">月度会员</div>
-        <div class="plan-price">¥9.9<span class="plan-unit">/月</span></div>
-        <div class="plan-save">&nbsp;</div>
+
+    <!-- Step 1: 选套餐 -->
+    <div id="upgradeStep1">
+      <div class="plan-row">
+        <div class="plan-card" data-plan="monthly" id="planMonthly">
+          <div class="plan-name">月度会员</div>
+          <div class="plan-price">¥9.9<span class="plan-unit">/月</span></div>
+          <div class="plan-save">&nbsp;</div>
+        </div>
+        <div class="plan-card selected" data-plan="annual" id="planAnnual">
+          <div class="plan-badge">推荐</div>
+          <div class="plan-name">年度会员</div>
+          <div class="plan-price">¥99<span class="plan-unit">/年</span></div>
+          <div class="plan-save">省 ¥19.8 · 日均 ¥0.27</div>
+        </div>
       </div>
-      <div class="plan-card selected" data-plan="annual" id="planAnnual">
-        <div class="plan-badge">推荐</div>
-        <div class="plan-name">年度会员</div>
-        <div class="plan-price">¥99<span class="plan-unit">/年</span></div>
-        <div class="plan-save">省 ¥19.8 · 日均 ¥0.27</div>
+      <div class="upgrade-features">
+        <div>✅ <span>无限下载（无每日 3 次限制）</span></div>
+        <div>✅ <span>批量下载（一键下载全部 100 张封面）</span></div>
+        <div>✅ <span>优先体验新功能</span></div>
+      </div>
+      <div class="auth-actions">
+        <button class="btn primary" id="btnUpgradeWechat" type="button">微信支付</button>
+        <button class="btn ghost" id="btnUpgradeAlipay" type="button">支付宝</button>
+      </div>
+      <div class="upgrade-footer">
+        ⚠️ 虚拟产品，一经购买不可退订
       </div>
     </div>
-    <div class="upgrade-features">
-      <div>✅ <span>无限下载（无每日 3 次限制）</span></div>
-      <div>✅ <span>批量下载（一键下载全部 100 张封面）</span></div>
-      <div>✅ <span>优先体验新功能</span></div>
-    </div>
-    <div class="auth-actions">
-      <button class="btn primary" id="btnUpgradePay" type="button">立即开通</button>
-    </div>
-    <div class="upgrade-footer">
-      ⚠️ 虚拟产品，一经购买不可退订<br>
-      📧 支付遇到问题？请联系管理员手动开通
+
+    <!-- Step 2: 扫码支付 -->
+    <div id="upgradeStep2" style="display:none;text-align:center">
+      <div style="margin-bottom:10px;font-size:14px;font-weight:700" id="payPlanLabel"></div>
+      <img id="payQrImage" src="" alt="收款码" style="width:220px;height:220px;object-fit:contain;border:2px solid #e8e4df;border-radius:12px;margin-bottom:10px">
+      <div style="font-size:12px;color:#ED0108;font-weight:700;margin-bottom:4px" id="payReminder">
+        ⚠️ 付款时请在备注里填写你的邮箱
+      </div>
+      <div style="font-size:11px;color:#8a8a8a;margin-bottom:14px">
+        管理员收到付款后会为你开通 VIP<br>通常在 24 小时内处理
+      </div>
+      <div class="auth-actions">
+        <button class="btn ghost btn-sm" id="btnBackToPlans" type="button">← 返回</button>
+      </div>
     </div>
   </div>
 </div>
@@ -892,12 +911,17 @@ function closeAuthModal() {
 
 /* ═══════════ 升级弹窗 ═══════════ */
 let selectedPlan = 'annual';
+let currentOrderNo = '';
+let pollTimer = null;
 
 function openUpgradeModal(message) {
-  const modal = document.getElementById('upgradeModal');
+  document.getElementById('upgradeStep1').style.display = '';
+  document.getElementById('upgradeStep2').style.display = 'none';
+  stopPolling();
   const desc = document.getElementById('upgradeDesc');
   if (desc && message) desc.textContent = message;
   if (desc && !message) desc.textContent = '解锁全部功能，无限下载封面';
+  const modal = document.getElementById('upgradeModal');
   if (modal) {
     modal.classList.add('show');
     modal.setAttribute('aria-hidden', 'false');
@@ -909,6 +933,7 @@ function closeUpgradeModal() {
   if (!modal) return;
   modal.classList.remove('show');
   modal.setAttribute('aria-hidden', 'false');
+  stopPolling();
 }
 
 function selectPlan(plan) {
@@ -917,33 +942,35 @@ function selectPlan(plan) {
   document.getElementById('planAnnual').classList.toggle('selected', plan === 'annual');
 }
 
-async function handleUpgradePay() {
-  const btn = document.getElementById('btnUpgradePay');
-  if (!btn) return;
-  if (!supabase) {
-    showToast('📧 支付功能即将上线，请先联系管理员手动开通 VIP');
+function showUpgradeQrCode(provider) {
+  const cfg = (window.COVER_MAKER_CONFIG && window.COVER_MAKER_CONFIG.paymentQrCodes) || {};
+  const qrUrl = provider === 'wechat' ? cfg.wechat : cfg.alipay;
+
+  if (!qrUrl) {
+    showToast('收款码尚未配置，请联系管理员');
     return;
   }
-  btn.disabled = true;
-  btn.textContent = '正在生成订单...';
-  try {
-    const { data, error } = await supabase.functions.invoke('create-payment-order', {
-      body: { plan: selectedPlan, provider: 'manual' },
-    });
-    if (error || !data || !data.ok) {
-      throw new Error((data && data.message) || '创建订单失败');
-    }
-    closeUpgradeModal();
-    showToast('📧 请联系管理员完成开通，订单号：' + (data.orderId || 'N/A'));
-  } catch (e) {
-    showToast('❌ ' + (e.message || '支付暂不可用，请联系管理员'));
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '立即开通';
-  }
+
+  document.getElementById('upgradeStep1').style.display = 'none';
+  document.getElementById('upgradeStep2').style.display = '';
+  const planName = selectedPlan === 'annual' ? '年度会员 ¥99' : '月度会员 ¥9.9';
+  document.getElementById('payPlanLabel').textContent = planName + ' · ' + (provider === 'wechat' ? '微信支付' : '支付宝');
+  document.getElementById('payQrImage').src = qrUrl;
+  document.getElementById('payReminder').textContent = provider === 'wechat'
+    ? '⚠️ 微信付款时请在「添加备注」里填写你的邮箱'
+    : '⚠️ 支付宝付款时请在「备注」里填写你的邮箱';
 }
 
-// 暴露到全局，供 inline onclick 调用（ES module 不自动暴露）
+async function handleUpgradePay(provider) {
+  showUpgradeQrCode(provider);
+}
+
+function backToPlans() {
+  document.getElementById('upgradeStep1').style.display = '';
+  document.getElementById('upgradeStep2').style.display = 'none';
+}
+
+// 暴露到全局
 window.openUpgradeModal = openUpgradeModal;
 window.closeUpgradeModal = closeUpgradeModal;
 window.selectPlan = selectPlan;
@@ -5361,7 +5388,9 @@ document.getElementById('upgradeModal').addEventListener('click', (ev) => {
 });
 document.getElementById('planMonthly').addEventListener('click', () => selectPlan('monthly'));
 document.getElementById('planAnnual').addEventListener('click', () => selectPlan('annual'));
-document.getElementById('btnUpgradePay').addEventListener('click', handleUpgradePay);
+document.getElementById('btnUpgradeWechat').addEventListener('click', () => handleUpgradePay('wechat'));
+document.getElementById('btnUpgradeAlipay').addEventListener('click', () => handleUpgradePay('alipay'));
+document.getElementById('btnBackToPlans').addEventListener('click', backToPlans);
 
 document.getElementById('container').addEventListener('click', (ev) => {
   const group = ev.target.closest('.batch-group');

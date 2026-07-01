@@ -4,4 +4,10 @@ window.COVER_MAKER_CONFIG = {
   // 管理员邮箱列表（用于 admin.html 管理后台）
   // 在 Supabase Edge Function 中也需要设置 ADMIN_EMAILS 环境变量
   adminEmails: ['admin@example.com'],
+  // 收款码（微信和支付宝个人收款码图片 URL）
+  // 把图片放到 GitHub 仓库或图床，然后填链接
+  paymentQrCodes: {
+    wechat: '',
+    alipay: '',
+  },
 };
