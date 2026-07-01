@@ -920,6 +920,10 @@ function selectPlan(plan) {
 async function handleUpgradePay() {
   const btn = document.getElementById('btnUpgradePay');
   if (!btn) return;
+  if (!supabase) {
+    showToast('📧 支付功能即将上线，请先联系管理员手动开通 VIP');
+    return;
+  }
   btn.disabled = true;
   btn.textContent = '正在生成订单...';
   try {
@@ -938,6 +942,12 @@ async function handleUpgradePay() {
     btn.textContent = '立即开通';
   }
 }
+
+// 暴露到全局，供 inline onclick 调用（ES module 不自动暴露）
+window.openUpgradeModal = openUpgradeModal;
+window.closeUpgradeModal = closeUpgradeModal;
+window.selectPlan = selectPlan;
+window.handleUpgradePay = handleUpgradePay;
 
 async function refreshAuthState() {
   try {
