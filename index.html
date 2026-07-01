@@ -851,9 +851,9 @@ function renderAccountBar() {
       const daysLeft = Math.ceil((expDate - Date.now()) / 86400000);
       const dateStr = expDate.toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' });
       if (daysLeft <= 7 && daysLeft > 0) {
-        sub.innerHTML = '会员有效期至 ' + dateStr + ' · <span class="vip-expiring">还剩 ' + daysLeft + ' 天</span> · <a class="upgrade-link" onclick="openUpgradeModal(\'续费 VIP\')">续费 →</a>';
+        sub.innerHTML = '会员有效期至 ' + dateStr + ' · <span class="vip-expiring">还剩 ' + daysLeft + ' 天</span> · <a class="upgrade-link" href="javascript:void(0)" onclick="openUpgradeModal(\'续费 VIP\')">续费 →</a>';
       } else if (daysLeft <= 0) {
-        sub.innerHTML = '<span class="remaining-zero">会员已过期</span> · <a class="upgrade-link" onclick="openUpgradeModal(\'续费 VIP\')">续费 →</a>';
+        sub.innerHTML = '<span class="remaining-zero">会员已过期</span> · <a class="upgrade-link" href="javascript:void(0)" onclick="openUpgradeModal(\'续费 VIP\')">续费 →</a>';
       } else {
         sub.innerHTML = '会员有效期至 ' + dateStr + ' · <span class="vip-expires">还剩 ' + daysLeft + ' 天</span>';
       }
@@ -863,7 +863,7 @@ function renderAccountBar() {
   } else {
     const rem = AUTH_STATE.limits.remainingToday || 0;
     const cls = rem === 0 ? 'remaining-zero' : (rem === 1 ? 'remaining-warn' : '');
-    sub.innerHTML = '今日剩余 <span class="' + cls + '">' + rem + ' / ' + AUTH_STATE.limits.freeDailyDownloads + '</span> 张 · 不支持批量下载 · <a class="upgrade-link" onclick="openUpgradeModal()">升级VIP →</a>';
+    sub.innerHTML = '今日剩余 <span class="' + cls + '">' + rem + ' / ' + AUTH_STATE.limits.freeDailyDownloads + '</span> 张 · 不支持批量下载 · <a class="upgrade-link" href="javascript:void(0)" onclick="openUpgradeModal()">升级VIP →</a>';
   }
   openBtn.style.display = 'none';
   logoutBtn.style.display = '';
