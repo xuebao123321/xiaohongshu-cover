@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>小红书大字封面生成器 v3.0</title>
-<meta name="description" content="基于 192 张稿定设计真实样本蒸馏,5 大风格族,程序化生成 1242×1656 小红书封面。">
+<title>小红书大字封面生成器 v4.0</title>
+<meta name="description" content="基于大字封面模板体系,每种风格 5 个固定模板骨架,生成 1242×1656 小红书封面。">
 <style>
 /*
  * ═══════════════════════════════════════════════════════════════════
- *  小红书大字封面生成器 v3.0
+ *  小红书大字封面生成器 v4.0
  *  ────────────────────────────────────────────────
  *  数据底片: 192 张稿定设计真实样本视觉评审
- *  风格族  : A 手绘便签 / B 拼贴 / C 漫画 pop / D 报纸大字 / E 极简大字
+ *  设计锁  : DESIGN_LOCK.md / 大字封面模板体系
+ *  模板骨架: 爆炸底 / 白卡底 / 气泡底 / 撕纸底 / 边框底
  *  字体    : 8 类(衬线 / 黑体 / 马克笔 / 卡通 / 草书 / 小薇 / 手写 / 快乐)
  *  渲染    : Canvas 2D → PNG(1242×1656, 3:4)
  *  ────────────────────────────────────────────────
@@ -20,12 +21,12 @@
  *    2. <body>  : Header / Tabs(风格族+字体) / 输入区 / 卡片网格
  *    3. <script>: ES Module 导入 features.js + colors.js
  *               主流程:generate / rerollOne / rerollAll / downloadCanvas / copyCanvas
- *               5 大风格族函数:styleA_handDrawn ~ styleE_minimal
+ *               模板入口:drawLockedTemplateCover / STYLE_FUNCS 全部指向模板体系
  *  ═══════════════════════════════════════════════════════════════════
  */
 
-/* ═══════════ 字体加载 — 8 类 ═══════════ */
-@import url('https://fonts.font.im/css2?family=Noto+Serif+SC:wght@700&family=Noto+Sans+SC:wght@900&family=Liu+Jian+Mao+Cao&family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&family=ZCOOL+QingKe+HuangYou&family=Ma+Shan+Zheng&family=DM+Serif+Display&family=Permanent+Marker&display=swap');
+/* ═══════════ 字体加载 — 免费中文字体 ═══════════ */
+@import url('https://fonts.font.im/css2?family=Noto+Sans+SC:wght@700;900&family=Noto+Serif+SC:wght@700;900&family=ZCOOL+QingKe+HuangYou&family=ZCOOL+XiaoWei&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&family=Liu+Jian+Mao+Cao&family=Long+Cang&family=Zhi+Mang+Xing&family=DM+Serif+Display&display=swap');
 
 /* ═══════════ 重置 ═══════════ */
 *{margin:0;padding:0;box-sizing:border-box}
@@ -53,6 +54,48 @@ button{font-family:inherit}
   background:#fff;border:1px solid #e8e4df;border-radius:20px;
   font-size:11px;color:#a8a098;letter-spacing:.5px;
 }
+.account-bar{
+  max-width:960px;margin:0 auto 16px;padding:10px 14px;background:#fff;
+  border:1.5px solid #e8e4df;border-radius:12px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.account-main{display:flex;align-items:center;gap:10px;min-width:0}
+.account-pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:68px;padding:5px 10px;border-radius:999px;background:#1a1a1a;color:#fff;
+  font-size:12px;font-weight:800;letter-spacing:.8px;
+}
+.account-pill.vip{background:#ED0108}
+.account-pill.guest{background:#a8a098}
+.account-text{min-width:0}
+.account-title{font-size:13px;font-weight:800;color:#2d2a26;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.account-sub{font-size:12px;color:#8a8a8a;margin-top:1px}
+.account-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.modal-mask{
+  position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:9998;
+  display:none;align-items:center;justify-content:center;padding:18px;
+}
+.modal-mask.show{display:flex}
+.auth-modal{
+  width:min(420px,100%);background:#fff;border-radius:14px;border:1.5px solid #e8e4df;
+  box-shadow:0 24px 80px rgba(0,0,0,.22);padding:18px;
+}
+.auth-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.auth-title{font-size:18px;font-weight:900;color:#1a1a1a}
+.auth-desc{font-size:12px;color:#8a8a8a;margin-top:3px;line-height:1.6}
+.auth-close{
+  width:32px;height:32px;border-radius:8px;border:1px solid #e8e4df;background:#fff;
+  cursor:pointer;font-size:18px;line-height:1;color:#5a5a5a;
+}
+.auth-fields{display:grid;gap:10px}
+.auth-fields input{
+  width:100%;height:44px;border:1.5px solid #e8e4df;border-radius:10px;
+  padding:0 12px;font-size:14px;color:#2d2a26;outline:none;background:#fff;
+}
+.auth-fields input:focus{border-color:#5a8cb8}
+.auth-actions{display:flex;gap:8px;margin-top:14px}
+.auth-actions .btn{flex:1}
+.auth-note{font-size:12px;color:#8a8a8a;line-height:1.7;margin-top:12px}
 
 /* ═══════════ Tabs(风格族 / 字体)═══════════ */
 .tabs{display:flex;justify-content:center;gap:6px;margin:14px 0;flex-wrap:wrap}
@@ -100,6 +143,74 @@ button{font-family:inherit}
 .btn.outline{background:#fff;color:#1a1a1a;border:1.5px solid #1a1a1a;font-weight:700}
 .btn.outline:hover{background:#1a1a1a;color:#fff}
 .btn.small{padding:5px 10px;font-size:11px;letter-spacing:1px}
+.btn.ghost{background:#f7f5f2;color:#2d2a26;border:1px solid #e8e4df}
+.btn.ghost:hover{background:#ebe6df}
+
+/* ═══════════ 批量文案识别 ═══════════ */
+.batch-panel{
+  max-width:960px;margin:0 auto 18px;background:#fff;border:1.5px solid #e8e4df;
+  border-radius:12px;padding:14px 16px;display:none;
+}
+.batch-panel.show{display:block}
+.batch-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.batch-title{font-size:14px;font-weight:800;color:#2d2a26;letter-spacing:.8px}
+.batch-meta{font-size:12px;color:#8a8a8a}
+.batch-tools{display:flex;gap:8px;flex-wrap:wrap}
+.batch-list{display:grid;gap:10px;max-height:420px;overflow:auto;padding-right:4px}
+.batch-item{
+  display:grid;grid-template-columns:auto 42px minmax(0,1fr) auto;gap:10px;align-items:start;
+  padding:10px;border:1px solid #eee8e1;border-radius:10px;background:#fbfaf8;
+}
+.batch-item input[type="checkbox"]{width:18px;height:18px;margin-top:7px;accent-color:#ED0108}
+.batch-index{
+  display:flex;align-items:center;justify-content:center;height:32px;border-radius:8px;
+  background:#1a1a1a;color:#fff;font-size:12px;font-weight:800;
+}
+.batch-item textarea{
+  width:100%;min-height:58px;resize:vertical;border:1px solid #e8e4df;border-radius:8px;
+  padding:8px 10px;font-size:14px;line-height:1.55;color:#2d2a26;background:#fff;
+  font-family:"Noto Serif SC","PingFang SC","Microsoft YaHei",serif;outline:none;
+}
+.batch-item textarea:focus{border-color:#5a8cb8}
+.batch-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.batch-count{font-size:11px;color:#a8a098;white-space:nowrap}
+.batch-remove{
+  border:1px solid #ead9d9;background:#fff;color:#b42323;border-radius:7px;
+  padding:5px 8px;font-size:11px;cursor:pointer;
+}
+.batch-remove:hover{background:#fff4f4}
+.batch-run{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px;
+  border-top:1px solid #eee8e1;padding-top:12px;
+}
+.batch-hint{font-size:12px;color:#8a8a8a;line-height:1.6}
+.batch-downloads{display:flex;gap:8px;flex-wrap:wrap}
+.batch-group{
+  max-width:1500px;margin:24px auto 18px;background:#fff;border:1.5px solid #e8e4df;
+  border-radius:12px;padding:14px;
+}
+.batch-group-head{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;
+}
+.batch-group-title{display:flex;align-items:center;gap:10px;min-width:0}
+.batch-group-title strong{
+  display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;
+  border-radius:50%;background:#1a1a1a;color:#fff;font-size:13px;
+}
+.batch-group-preview{
+  font-size:14px;font-weight:800;color:#2d2a26;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.batch-group-sub{font-size:12px;color:#a8a098;margin-top:2px}
+.batch-group-tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.selectable-card{outline:0 solid transparent}
+.selectable-card.selected{outline:4px solid #ED0108;outline-offset:3px}
+.select-pick{
+  position:absolute;top:8px;left:8px;z-index:10;width:26px;height:26px;
+  border-radius:7px;background:rgba(255,255,255,.88);border:1px solid rgba(0,0,0,.18);
+  display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#ED0108;
+  opacity:0;transition:opacity .2s;
+}
+.selectable-card:hover .select-pick,.selectable-card.selected .select-pick{opacity:1}
 
 /* ═══════════ 字符计数 ═══════════ */
 .counter{text-align:center;color:#a8a098;font-size:12px;margin-bottom:14px;letter-spacing:1px;min-height:18px}
@@ -213,6 +324,9 @@ button{font-family:inherit}
   .header h1{font-size:20px}
   .header p{font-size:10px;letter-spacing:1.2px}
   .header .badge{font-size:10px;padding:3px 8px}
+  .account-bar{align-items:stretch;flex-direction:column;padding:10px}
+  .account-actions{justify-content:stretch}
+  .account-actions .btn{flex:1}
   .tab{padding:6px 9px;font-size:10px;min-height:32px}
   .input-row{flex-direction:column;gap:8px}
   .input-row .btn-wrap{flex-direction:row;gap:6px;min-width:auto}
@@ -230,12 +344,16 @@ button{font-family:inherit}
   /* 触摸设备:长按 0.5s 触发下载,actions 按钮常驻 */
   .actions{opacity:1 !important;bottom:8px;right:8px}
   .act-btn{padding:10px 14px;font-size:16px;min-width:44px;min-height:44px}
+  .batch-head,.batch-run,.batch-group-head{align-items:stretch;flex-direction:column}
+  .batch-item{grid-template-columns:auto 34px minmax(0,1fr);gap:8px}
+  .batch-actions{grid-column:3;align-items:flex-start;flex-direction:row}
 }
 
 @media (max-width:767px){
   body{padding:14px 12px 40px}
   .header h1{font-size:22px}
   .header p{font-size:11px;letter-spacing:1.5px}
+  .account-bar{align-items:stretch;flex-direction:column}
   .tab{padding:5px 10px;font-size:11px}
   .input-row{flex-direction:column;gap:10px}
   .input-row .btn-wrap{flex-direction:row;min-width:auto}
@@ -254,11 +372,16 @@ button{font-family:inherit}
 
 @media (min-width:768px) and (max-width:1023px){
   body{padding:18px}
-  .grid{grid-template-columns:repeat(4,1fr);gap:12px}
+  .grid{grid-template-columns:repeat(3,1fr);gap:12px}
   .section-label{font-size:15px}
 }
 
-@media (min-width:1024px){
+@media (min-width:1024px) and (max-width:1399px){
+  .input-row{max-width:760px}
+  .grid{grid-template-columns:repeat(4,1fr);gap:16px}
+}
+
+@media (min-width:1400px){
   .input-row{max-width:760px}
   .grid{grid-template-columns:repeat(5,1fr);gap:16px}
 }
@@ -269,37 +392,74 @@ button{font-family:inherit}
 <!-- ═══════════ Toast 容器 ═══════════ -->
 <div class="toast" id="toast"></div>
 
+<!-- ═══════════ 登录弹窗 ═══════════ -->
+<div class="modal-mask" id="authModal" aria-hidden="true">
+  <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="auth-head">
+      <div>
+        <div class="auth-title" id="authTitle">登录后下载封面</div>
+        <div class="auth-desc">普通会员每天可下载 3 张,VIP 开放全部下载和批量功能。</div>
+      </div>
+      <button class="auth-close" id="btnCloseAuth" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="auth-fields">
+      <input id="authEmail" type="email" autocomplete="email" placeholder="邮箱">
+      <input id="authPassword" type="password" autocomplete="current-password" placeholder="密码,至少 6 位">
+    </div>
+    <div class="auth-actions">
+      <button class="btn primary" id="btnLogin" type="button">登录</button>
+      <button class="btn ghost" id="btnRegister" type="button">注册普通会员</button>
+    </div>
+    <div class="auth-note">阶段 1 已接入真实账号和后端权限。VIP 暂时通过后台手动开通,后续再接支付。</div>
+  </div>
+</div>
+
 <!-- ═══════════ Header ═══════════ -->
 <div class="header">
   <h1>Notes Cover Studio</h1>
-  <p>小 红 书 大 字 封 面 生 成 器 · 5 大 风 格 族 · 30 张 模 板</p>
-  <div class="badge">💡 基于 192 张稿定设计真实样本蒸馏 · v3.0</div>
+  <p>小 红 书 大 字 封 面 生 成 器 · 多 风 格 大 字 模 板</p>
+  <div class="badge">20 种风格 · 每种 5 张 · 可按需勾选</div>
+</div>
+
+<!-- ═══════════ 账号状态 ═══════════ -->
+<div class="account-bar" id="accountBar">
+  <div class="account-main">
+    <span class="account-pill guest" id="accountRole">未登录</span>
+    <div class="account-text">
+      <div class="account-title" id="accountTitle">登录后可下载封面</div>
+      <div class="account-sub" id="accountSub">普通会员每日 3 张,VIP 开放全部功能</div>
+    </div>
+  </div>
+  <div class="account-actions">
+    <button class="btn small primary" id="btnOpenAuth" type="button">登录 / 注册</button>
+    <button class="btn small ghost" id="btnLogout" type="button" style="display:none">退出登录</button>
+  </div>
 </div>
 
 <!-- ═══════════ 风格族勾选 ═══════════ -->
 <div class="tab-group">
-  <div class="label">风 格 族(可勾选启用哪些,默认全选)</div>
+  <div class="label">风 格 模 板(默认全选,每种展示 5 张)</div>
   <div class="tabs" id="familyTabs">
-    <button class="tab active" data-family="A">🅰️ 手绘便签</button>
-    <button class="tab active" data-family="B">🅱️ 拼贴 collage</button>
-    <button class="tab active" data-family="C">🅲 漫画 pop</button>
-    <button class="tab active" data-family="D">🅳 报纸大字</button>
-    <button class="tab active" data-family="E">🅴 极简大字</button>
-    <button class="tab active" data-family="F">🎞️ 复古胶片</button>
-    <button class="tab active" data-family="G">🥳 多巴胺</button>
-    <button class="tab active" data-family="H">🧪 酸性设计</button>
-    <button class="tab active" data-family="I">🎨 孟菲斯</button>
-    <button class="tab active" data-family="J">🏯 国风</button>
-    <button class="tab active" data-family="K">🤖 赛博朋克</button>
-    <button class="tab active" data-family="L">🌸 日系清新</button>
-    <button class="tab active" data-family="M">🔮 3D 渲染</button>
-    <button class="tab active" data-family="N">🌆 蒸汽波</button>
-    <button class="tab active" data-family="O">🖤 暗黑系</button>
-    <button class="tab active" data-family="P">👾 像素风</button>
-    <button class="tab active" data-family="Q">🌌 极光渐变</button>
-    <button class="tab active" data-family="R">📜 复古海报</button>
-    <button class="tab active" data-family="S">🪟 玻璃拟态</button>
-    <button class="tab active" data-family="T">🎀 卡通插画</button>
+    <button class="tab active" data-family="A">手账白底</button>
+    <button class="tab active" data-family="B">黄底提醒</button>
+    <button class="tab active" data-family="C">红色事件</button>
+    <button class="tab active" data-family="D">蓝绿信息</button>
+    <button class="tab active" data-family="E">极简金句</button>
+    <button class="tab active" data-family="F">复古胶片</button>
+    <button class="tab active" data-family="G">多巴胺</button>
+    <button class="tab active" data-family="H">酸性设计</button>
+    <button class="tab active" data-family="I">孟菲斯</button>
+    <button class="tab active" data-family="J">国风</button>
+    <button class="tab active" data-family="K">赛博朋克</button>
+    <button class="tab active" data-family="L">日系清新</button>
+    <button class="tab active" data-family="M">3D 渲染</button>
+    <button class="tab active" data-family="N">蒸汽波</button>
+    <button class="tab active" data-family="O">暗黑系</button>
+    <button class="tab active" data-family="P">像素风</button>
+    <button class="tab active" data-family="Q">极光渐变</button>
+    <button class="tab active" data-family="R">复古海报</button>
+    <button class="tab active" data-family="S">玻璃拟态</button>
+    <button class="tab active" data-family="T">卡通插画</button>
   </div>
 </div>
 
@@ -307,14 +467,14 @@ button{font-family:inherit}
 <div class="tab-group">
   <div class="label">字 体(全局切换)</div>
   <div class="tabs" id="fontTabs">
-    <button class="tab active" data-font="black">黑体</button>
-    <button class="tab" data-font="serif">宋体</button>
-    <button class="tab" data-font="marker">马克笔</button>
-    <button class="tab" data-font="qingke">卡通</button>
-    <button class="tab" data-font="cao">草书</button>
-    <button class="tab" data-font="xiaowei">小薇</button>
-    <button class="tab" data-font="mashan">手写</button>
-    <button class="tab" data-font="kuai">快乐</button>
+    <button class="tab active" data-font="black">思源黑体</button>
+    <button class="tab" data-font="serif">思源宋体</button>
+    <button class="tab" data-font="qingke">站酷庆科</button>
+    <button class="tab" data-font="xiaowei">站酷小薇</button>
+    <button class="tab" data-font="kuai">站酷快乐</button>
+    <button class="tab" data-font="mashan">马善政</button>
+    <button class="tab" data-font="longcang">龙藏体</button>
+    <button class="tab" data-font="zhimang">志芒行书</button>
   </div>
 </div>
 
@@ -322,14 +482,35 @@ button{font-family:inherit}
 <div class="input-row">
   <textarea
     id="textInput"
-    placeholder="输入文案,字数不限&#10;支持换行 · 自动适配字号 · 关键词感应风格"
+    placeholder="输入文案,字数不限&#10;批量模式请用 888 分隔每条文案"
     aria-label="封面文案输入"></textarea>
   <div class="btn-wrap">
-    <button class="btn primary" id="btnGenerate">🎨 生成 100 张</button>
-    <button class="btn outline" id="btnRerollAll">🎲 全部换一换</button>
+    <button class="btn primary" id="btnGenerate">生成 100 张</button>
+    <button class="btn ghost" id="btnAnalyzeBatch">识别批量文案</button>
+    <button class="btn outline" id="btnRerollAll">全部换一换</button>
   </div>
 </div>
 <div class="counter" id="counter">0 字</div>
+
+<!-- ═══════════ 批量文案识别 ═══════════ -->
+<div class="batch-panel" id="batchPanel">
+  <div class="batch-head">
+    <div>
+      <div class="batch-title" id="batchTitle">批量文案识别</div>
+      <div class="batch-meta" id="batchMeta">使用 888 分隔每条文案</div>
+    </div>
+    <div class="batch-tools">
+      <button class="btn small ghost" id="btnBatchSelectAll">全选</button>
+      <button class="btn small ghost" id="btnBatchInvert">反选</button>
+      <button class="btn small ghost" id="btnBatchClear">取消全选</button>
+    </div>
+  </div>
+  <div class="batch-list" id="batchList"></div>
+  <div class="batch-run">
+    <div class="batch-hint" id="batchHint">每条文案生成精选 5 张,结果按文案分组展示。</div>
+    <button class="btn primary" id="btnGenerateBatch">一键生成所有封面</button>
+  </div>
+</div>
 
 <!-- ═══════════ 卡片网格 ═══════════ -->
 <div id="container">
@@ -337,8 +518,8 @@ button{font-family:inherit}
     <div class="empty-icon">📱</div>
     <div class="empty-title">输入文案,生成小红书封面</div>
     <div class="empty-desc">
-      20 大风格族 · 5 套配色 · 8 类字体<br>
-      字数不限 · 自适应字号 · 边缘安全 · Canvas 直出 1242×1656
+      20 种风格 · 每种 5 张 · 可按需勾选<br>
+      字数不限 · 自适应字号 · Canvas 直出 1242×1656
     </div>
   </div>
 </div>
@@ -373,27 +554,27 @@ import {
 // ═══════════ 全局配置 ═══════════
 const CANVAS_W = 1242;   // 3:4 标准小红书尺寸
 const CANVAS_H = 1656;
-const CARDS_PER_FAMILY = 5;  // 每风格族 5 张(v3.1:一行 5 张布局)
+const CARDS_PER_FAMILY = 5;  // 每种风格展示 5 张,桌面端正好一行
 
-// 8 类字体配置
+// 免费中文字体配置。优先使用可商用/开源字体,加载失败时回退系统字体。
 const FONT_MAP = {
-  black:    { name: '黑体',     family: '"Noto Sans SC","PingFang SC",sans-serif',         weight: 900, scale: 1.00 },
-  serif:    { name: '宋体',     family: '"Noto Serif SC","Songti SC",serif',               weight: 700, scale: 1.00 },
-  marker:   { name: '马克笔',   family: '"Permanent Marker","Noto Sans SC",cursive',       weight: 400, scale: 1.15 },
-  qingke:   { name: '卡通',     family: '"ZCOOL QingKe HuangYou","Noto Sans SC",sans-serif', weight: 400, scale: 1.05 },
-  cao:      { name: '草书',     family: '"Liu Jian Mao Cao","Noto Serif SC",cursive',      weight: 400, scale: 1.18 },
-  xiaowei:  { name: '小薇',     family: '"ZCOOL XiaoWei","Noto Serif SC",serif',           weight: 400, scale: 1.10 },
-  mashan:   { name: '手写',     family: '"Ma Shan Zheng","Noto Serif SC",cursive',         weight: 400, scale: 1.15 },
-  kuai:     { name: '快乐',     family: '"ZCOOL KuaiLe","Noto Sans SC",cursive',           weight: 400, scale: 1.08 },
+  black:    { name: '思源黑体', family: '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif', weight: 900, scale: 1.00 },
+  serif:    { name: '思源宋体', family: '"Noto Serif SC","Songti SC","SimSun",serif',               weight: 900, scale: 1.00 },
+  qingke:   { name: '站酷庆科', family: '"ZCOOL QingKe HuangYou","Noto Sans SC","PingFang SC",sans-serif', weight: 400, scale: 1.08 },
+  xiaowei:  { name: '站酷小薇', family: '"ZCOOL XiaoWei","Noto Serif SC","Songti SC",serif',          weight: 400, scale: 1.08 },
+  kuai:     { name: '站酷快乐', family: '"ZCOOL KuaiLe","Noto Sans SC","PingFang SC",sans-serif',      weight: 400, scale: 1.12 },
+  mashan:   { name: '马善政',   family: '"Ma Shan Zheng","Noto Serif SC","Songti SC",cursive',        weight: 400, scale: 1.18 },
+  longcang: { name: '龙藏体',   family: '"Long Cang","Noto Serif SC","Songti SC",cursive',            weight: 400, scale: 1.20 },
+  zhimang:  { name: '志芒行书', family: '"Zhi Mang Xing","Noto Serif SC","Songti SC",cursive',        weight: 400, scale: 1.18 },
 };
 
-// 5 大风格族元信息
+// A-E 是稿定式核心模板,F-T 是更多可选风格。
 const FAMILY_LABELS = {
-  A: { name: '手绘便签',      tag: '米黄方格 · 手绘圈 · 马克笔',      desc: '笔记本/便签/手账感' },
-  B: { name: '拼贴 collage',  tag: '撕边便签 · 多色块 · 印章',        desc: '拼贴/手账/复古风' },
-  C: { name: '漫画 pop',      tag: '半色调 · 对话气泡 · 放射线',      desc: '漫画/波普/冲击感' },
-  D: { name: '报纸大字',      tag: '纯色块 · 描边粗体 · 印章',        desc: '杂志/报纸/大字' },
-  E: { name: '极简大字',      tag: '整块纯色 · 干净黑体 · ≤1 装饰',   desc: '极简/高级/冷淡' },
+  A: { name: '手账白底',      tag: '白底横线 · 红圈 · 黑体重点',      desc: '像笔记/备忘录截图' },
+  B: { name: '黄底提醒',      tag: '黄底 · 黑字 · 搜索框/贴纸',        desc: '强提醒/必看/收藏' },
+  C: { name: '红色事件',      tag: '红底白字 · 黄重点 · 倒计时',       desc: '活动/紧急/通知' },
+  D: { name: '蓝绿信息',      tag: '浅蓝绿底 · 数据框 · 划重点',       desc: '知识卡/清单/攻略' },
+  E: { name: '极简金句',      tag: '大留白 · 单一重点 · 手绘标注',     desc: '观点/情绪/金句' },
   F: { name: '复古胶片',      tag: '棕褐调 · 胶片颗粒 · 暗角',        desc: '复古/胶片/老照片' },
   G: { name: '多巴胺',        tag: '高饱和 · 笑脸 · 涂鸦',            desc: '活泼/快乐/儿童' },
   H: { name: '酸性设计',      tag: '液态金属 · 3D 渐变球 · 扭曲',     desc: '前卫/先锋/设计感' },
@@ -423,15 +604,199 @@ const FAMILY_TO_PALETTE = {
 const STATE = {
   text: '',
   font: 'black',
-  families: new Set(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T']),
+  families: new Set(Object.keys(FAMILY_LABELS)),
   seed: 0,
   activeCount: 0,
 };
 
+const BATCH_STATE = {
+  items: [],
+  generated: false,
+};
+
+const AUTH_STATE = {
+  ready: false,
+  authenticated: false,
+  user: null,
+  limits: {
+    freeDailyDownloads: 3,
+    usedToday: 0,
+    remainingToday: 0,
+    canBatchDownload: false,
+  },
+};
+
 // 暴露给调试
 window.STATE = STATE;
+window.AUTH_STATE = AUTH_STATE;
 window.FONT_MAP = FONT_MAP;
 window.FAMILY_LABELS = FAMILY_LABELS;
+
+// ═══════════ 账号 / 会员 / 下载权限 ═══════════
+
+async function apiRequest(path, options) {
+  const res = await fetch(path, {
+    credentials: 'same-origin',
+    headers: { 'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {}) },
+    ...options,
+  });
+  let payload = null;
+  try {
+    payload = await res.json();
+  } catch (_) {
+    payload = { ok: false, message: '服务器响应异常' };
+  }
+  if (!res.ok) {
+    const err = new Error(payload.message || '请求失败');
+    err.payload = payload;
+    err.status = res.status;
+    throw err;
+  }
+  return payload;
+}
+
+function applyAuthPayload(payload) {
+  AUTH_STATE.ready = true;
+  AUTH_STATE.authenticated = !!(payload && payload.authenticated);
+  AUTH_STATE.user = payload && payload.user ? payload.user : null;
+  AUTH_STATE.limits = payload && payload.limits ? payload.limits : AUTH_STATE.limits;
+  renderAccountBar();
+}
+
+function renderAccountBar() {
+  const role = document.getElementById('accountRole');
+  const title = document.getElementById('accountTitle');
+  const sub = document.getElementById('accountSub');
+  const openBtn = document.getElementById('btnOpenAuth');
+  const logoutBtn = document.getElementById('btnLogout');
+  if (!role || !title || !sub || !openBtn || !logoutBtn) return;
+
+  role.className = 'account-pill';
+  if (!AUTH_STATE.authenticated || !AUTH_STATE.user) {
+    role.classList.add('guest');
+    role.textContent = '未登录';
+    title.textContent = '登录后可下载封面';
+    sub.textContent = '普通会员每日 3 张,VIP 开放全部功能';
+    openBtn.style.display = '';
+    logoutBtn.style.display = 'none';
+    return;
+  }
+
+  const isVip = AUTH_STATE.user.role === 'vip';
+  role.classList.add(isVip ? 'vip' : 'free');
+  role.textContent = isVip ? 'VIP会员' : '普通会员';
+  title.textContent = AUTH_STATE.user.email;
+  sub.textContent = isVip
+    ? 'VIP 已开放全部下载、批量文案下载和后续功能'
+    : '今日剩余下载 ' + AUTH_STATE.limits.remainingToday + ' / ' + AUTH_STATE.limits.freeDailyDownloads + ' 张 · 不支持批量下载';
+  openBtn.style.display = 'none';
+  logoutBtn.style.display = '';
+}
+
+function openAuthModal(message) {
+  const modal = document.getElementById('authModal');
+  const desc = modal ? modal.querySelector('.auth-desc') : null;
+  if (desc) desc.textContent = message || '普通会员每天可下载 3 张,VIP 开放全部下载和批量功能。';
+  if (modal) {
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+  setTimeout(() => {
+    const email = document.getElementById('authEmail');
+    if (email) email.focus();
+  }, 20);
+}
+
+function closeAuthModal() {
+  const modal = document.getElementById('authModal');
+  if (!modal) return;
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden', 'true');
+}
+
+async function refreshAuthState() {
+  try {
+    const payload = await apiRequest('/api/me');
+    applyAuthPayload(payload);
+  } catch (e) {
+    AUTH_STATE.ready = true;
+    AUTH_STATE.authenticated = false;
+    renderAccountBar();
+    console.warn('[auth] 后端不可用或未启动:', e);
+  }
+}
+
+async function submitAuth(mode) {
+  const email = (document.getElementById('authEmail').value || '').trim();
+  const password = document.getElementById('authPassword').value || '';
+  const loginBtn = document.getElementById('btnLogin');
+  const registerBtn = document.getElementById('btnRegister');
+  if (!email || !password) {
+    showToast('请输入邮箱和密码');
+    return;
+  }
+  if (password.length < 6) {
+    showToast('密码至少 6 位');
+    return;
+  }
+  loginBtn.disabled = true;
+  registerBtn.disabled = true;
+  try {
+    const payload = await apiRequest(mode === 'register' ? '/api/register' : '/api/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+    applyAuthPayload(payload);
+    closeAuthModal();
+    showToast(mode === 'register' ? '已注册并登录' : '登录成功');
+  } catch (e) {
+    showToast('❌ ' + ((e.payload && e.payload.message) || e.message));
+  } finally {
+    loginBtn.disabled = false;
+    registerBtn.disabled = false;
+  }
+}
+
+async function logout() {
+  try {
+    await apiRequest('/api/logout', { method: 'POST', body: '{}' });
+  } catch (e) {
+    console.warn('[auth] logout failed:', e);
+  }
+  AUTH_STATE.authenticated = false;
+  AUTH_STATE.user = null;
+  renderAccountBar();
+  showToast('已退出登录');
+}
+
+async function requestDownloadAccess(count, scope) {
+  if (!AUTH_STATE.authenticated) {
+    openAuthModal('请先登录后下载。普通会员每天 3 张,VIP 不限次数。');
+    showToast('请先登录');
+    return false;
+  }
+  try {
+    const payload = await apiRequest('/api/downloads/authorize', {
+      method: 'POST',
+      body: JSON.stringify({ count: count || 1, scope: scope || 'single' }),
+    });
+    applyAuthPayload(payload);
+    return true;
+  } catch (e) {
+    const payload = e.payload || {};
+    if (payload.limits) {
+      AUTH_STATE.limits = payload.limits;
+      renderAccountBar();
+    }
+    if (payload.code === 'LOGIN_REQUIRED') {
+      openAuthModal('登录后才能下载封面。');
+    } else if (payload.code === 'VIP_REQUIRED') {
+      openAuthModal('批量下载是 VIP 功能。普通会员可以每天单张下载 3 张。');
+    }
+    showToast('❌ ' + (payload.message || e.message));
+    return false;
+  }
+}
 
 // ═══════════ 字号自适应算法 — v3.1(无字数上限,边缘安全)══════════
 /*
@@ -458,7 +823,7 @@ function fs(ctx, t, mw, mh, mn, mx, fontScale) {
   const lineHeight = 1.22;
   const padFactor = 0.94;
 
-  const rawLines = (t || '').split('\n').filter((l) => l.length > 0);
+  const rawLines = splitInputLines(t || '');
   if (rawLines.length === 0) return mn;
 
   // 真实测量文字在指定字号下的行宽 + 拆行
@@ -500,9 +865,11 @@ function fs(ctx, t, mw, mh, mn, mx, fontScale) {
     }
   }
 
-  // 字体视觉补偿
+  // 字体视觉补偿。若用户输入很长,允许继续缩小到 14px,优先保证完整展示。
   best = Math.floor(best * fontScale);
-  return Math.max(mn, Math.min(mx, best));
+  let safe = Math.max(14, Math.min(mx, best));
+  while (safe > 14 && !measure(safe).fits) safe -= 2;
+  return safe;
 }
 
 /**
@@ -525,12 +892,17 @@ function drawWrappedText(ctx, text, x, y, maxW, fontSize, color, opts) {
   const fontFamily = opts.fontFamily || '"Noto Sans SC",sans-serif';
   const fontWeight = opts.fontWeight || 900;
   const stroke = opts.stroke;
+  const maxH = opts.maxH || Infinity;
   ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
   ctx.textBaseline = 'top';
-  const rawLines = text.split('\n');
-  // 自动换行(中文按字拆)
+  ctx.textAlign = 'left';
+  const rawLines = splitInputLines(text);
   const wrapped = [];
   for (const ln of rawLines) {
+    if (ln === '') {
+      wrapped.push('');
+      continue;
+    }
     let cur = '';
     for (const ch of ln) {
       const test = cur + ch;
@@ -543,16 +915,22 @@ function drawWrappedText(ctx, text, x, y, maxW, fontSize, color, opts) {
     }
     if (cur) wrapped.push(cur);
   }
+  const strokePad = stroke ? (stroke.width || 4) : 0;
   const totalH = wrapped.length * fontSize * lineHeight;
+  if (totalH > maxH && fontSize > 18) {
+    return drawWrappedText(ctx, text, x, y, maxW, Math.max(18, fontSize * maxH / totalH), color, opts);
+  }
   let startY;
   if (vAlign === 'top') startY = y;
   else if (vAlign === 'bottom') startY = y - totalH;
   else startY = y - totalH / 2;
   wrapped.forEach((ln, i) => {
+    if (ln === '') return;
     let dx;
     if (align === 'left') dx = x;
     else if (align === 'right') dx = x - ctx.measureText(ln).width;
     else dx = x - ctx.measureText(ln).width / 2;
+    dx = Math.max(strokePad + 8, Math.min(dx, CANVAS_W - ctx.measureText(ln).width - strokePad - 8));
     const dy = startY + i * fontSize * lineHeight;
     if (stroke) {
       ctx.lineWidth = stroke.width || 4;
@@ -565,6 +943,18 @@ function drawWrappedText(ctx, text, x, y, maxW, fontSize, color, opts) {
     ctx.fillText(ln, dx, dy);
   });
   return { width: maxW, height: totalH, lines: wrapped.length };
+}
+
+function splitInputLines(text) {
+  return String(text == null ? '' : text).replace(/\r\n?/g, '\n').split('\n');
+}
+
+function hasVisibleText(text) {
+  return /\S/.test(String(text || ''));
+}
+
+function normalizeVisibleText(text, fallback) {
+  return hasVisibleText(text) ? String(text) : fallback;
 }
 
 /**
@@ -594,7 +984,7 @@ function pick(arr, seed) {
  * @param {object} palette - handDrawn 风格配色
  * @param {object} options - { seed }
  */
-function styleA_handDrawn(ctx, text, palette, options) {
+function styleA_legacyHandDrawn(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
@@ -742,7 +1132,7 @@ function measureTextWidth(ctx, text, fontSize, family, weight) {
  * @param {object} palette - collage 配色
  * @param {object} options
  */
-function styleB_collage(ctx, text, palette, options) {
+function styleB_legacyCollage(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
@@ -899,7 +1289,7 @@ function styleB_collage(ctx, text, palette, options) {
  * @param {object} palette - comicPop 配色
  * @param {object} options
  */
-function styleC_comicPop(ctx, text, palette, options) {
+function styleC_legacyComicPop(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
@@ -1013,7 +1403,7 @@ function styleC_comicPop(ctx, text, palette, options) {
  * @param {object} palette - newspaper 配色
  * @param {object} options
  */
-function styleD_newspaper(ctx, text, palette, options) {
+function styleD_legacyNewspaper(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
@@ -1132,7 +1522,7 @@ function styleD_newspaper(ctx, text, palette, options) {
  * @param {object} palette - minimal 配色
  * @param {object} options
  */
-function styleE_minimal(ctx, text, palette, options) {
+function styleE_legacyMinimal(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
@@ -2032,30 +2422,2105 @@ function styleT_cartoon(ctx, text, palette, options) {
 }
 
 // ════════════════════════════════════════════════════════════════
+//  v3.2 · 稿定式大字模板重校准
+//  核心原则:大字优先、装饰克制、对比强、可读性压倒风格炫技。
+// ════════════════════════════════════════════════════════════════
+
+function gdLines(text) {
+  const raw = splitInputLines(text || '后悔没有早点知道');
+  if (raw.length > 1) return raw;
+  const t = raw[0] || '后悔没有早点知道';
+  if (t.length <= 7) return [t];
+  if (t.length <= 12) return [t.slice(0, Math.ceil(t.length / 2)), t.slice(Math.ceil(t.length / 2))];
+  const a = Math.ceil(t.length * 0.34);
+  const b = Math.ceil(t.length * 0.68);
+  return [t.slice(0, a), t.slice(a, b), t.slice(b)];
+}
+
+function gdTextBlock(ctx, text, x, y, maxW, maxH, fill, opts) {
+  opts = opts || {};
+  const fontConf = opts.fontConf || FONT_MAP.black;
+  const minSize = opts.minSize || 70;
+  const absoluteMinSize = opts.absoluteMinSize || 8;
+  const maxSize = opts.maxSize || 260;
+  const align = opts.align || 'center';
+  const vAlign = opts.vAlign || 'middle';
+  const lineHeight = opts.lineHeight || 1.08;
+  const stroke = opts.stroke || null;
+  const pad = opts.pad == null ? 24 : opts.pad;
+  const lines = gdLines(text);
+  const wrapW = Math.max(80, maxW - pad * 2);
+  let layoutLines = lines;
+  let size = maxSize;
+  for (; size >= minSize; size -= 4) {
+    ctx.font = `${fontConf.weight} ${size}px ${fontConf.family}`;
+    const candidate = gdWrapLines(ctx, lines, wrapW);
+    const widest = Math.max(0, ...candidate.map((ln) => ctx.measureText(ln || ' ').width));
+    if (widest <= wrapW && candidate.length * size * lineHeight <= maxH - pad * 2) {
+      layoutLines = candidate;
+      break;
+    }
+  }
+  size = Math.max(absoluteMinSize, size);
+  while (size > absoluteMinSize) {
+    ctx.font = `${fontConf.weight} ${size}px ${fontConf.family}`;
+    const candidate = gdWrapLines(ctx, lines, wrapW);
+    const widest = Math.max(0, ...candidate.map((ln) => ctx.measureText(ln || ' ').width));
+    layoutLines = candidate;
+    if (widest <= wrapW && candidate.length * size * lineHeight <= maxH - pad * 2) break;
+    size -= 1;
+  }
+  const totalH = layoutLines.length * size * lineHeight;
+  let top = y;
+  if (vAlign === 'middle') top = y - totalH / 2;
+  if (vAlign === 'bottom') top = y - totalH;
+  ctx.save();
+  const clipX = Math.max(0, x - maxW / 2);
+  const clipY = Math.max(0, top - pad);
+  ctx.beginPath();
+  ctx.rect(clipX, clipY, Math.min(maxW, CANVAS_W - clipX), Math.min(maxH + pad * 2, CANVAS_H - clipY));
+  ctx.clip();
+  ctx.font = `${fontConf.weight} ${size}px ${fontConf.family}`;
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'left';
+  ctx.lineJoin = 'round';
+  for (let i = 0; i < layoutLines.length; i++) {
+    const ln = layoutLines[i];
+    if (ln === '') continue;
+    const w = ctx.measureText(ln).width;
+    let tx = x;
+    if (align === 'center') tx = x - w / 2;
+    if (align === 'right') tx = x - w;
+    tx = Math.max(pad, Math.min(tx, CANVAS_W - w - pad));
+    const ty = top + i * size * lineHeight;
+    if (stroke) {
+      ctx.lineWidth = stroke.width || 10;
+      ctx.strokeStyle = stroke.color || '#FFFFFF';
+      ctx.strokeText(ln, tx, ty);
+    }
+    ctx.fillStyle = fill;
+    ctx.fillText(ln, tx, ty);
+  }
+  ctx.restore();
+  return { size, lines: layoutLines, height: totalH };
+}
+
+function gdWrapLines(ctx, lines, maxW) {
+  const wrapped = [];
+  for (const line of lines) {
+    if (line === '') {
+      wrapped.push('');
+      continue;
+    }
+    let cur = '';
+    for (const ch of line) {
+      const test = cur + ch;
+      if (cur && ctx.measureText(test).width > maxW) {
+        wrapped.push(cur);
+        cur = ch;
+      } else {
+        cur = test;
+      }
+    }
+    wrapped.push(cur);
+  }
+  return wrapped;
+}
+
+function gdRoundRect(ctx, x, y, w, h, r, fill, stroke, lineWidth) {
+  ctx.save();
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, r);
+  if (fill) {
+    ctx.fillStyle = fill;
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = lineWidth || 3;
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function gdTopChrome(ctx, label, dark) {
+  const W = CANVAS_W;
+  ctx.save();
+  ctx.fillStyle = dark ? 'rgba(255,255,255,.82)' : 'rgba(0,0,0,.34)';
+  ctx.font = '700 28px "Noto Sans SC","PingFang SC",sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'top';
+  ctx.fillText('GAODING STYLE', 70, 58);
+  ctx.textAlign = 'right';
+  ctx.fillText(label, W - 70, 58);
+  ctx.restore();
+}
+
+function gdNotebook(ctx, bg, line) {
+  const W = CANVAS_W, H = CANVAS_H;
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+  ctx.strokeStyle = line;
+  ctx.lineWidth = 1.5;
+  for (let y = 160; y < H - 90; y += 58) {
+    ctx.beginPath();
+    ctx.moveTo(70, y);
+    ctx.lineTo(W - 70, y);
+    ctx.stroke();
+  }
+}
+
+function gdAccentWord(text) {
+  const lines = gdLines(text);
+  const longest = [...lines].sort((a, b) => b.length - a.length)[0] || lines[0] || text;
+  if (longest.length <= 2) return longest;
+  return longest.slice(Math.max(0, longest.length - 2));
+}
+
+function gdUnderline(ctx, x, y, w, color) {
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 15;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.quadraticCurveTo(x + w * 0.45, y + 18, x + w, y - 4);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function gdSafeW(mult) {
+  return CANVAS_W * mult;
+}
+
+function styleA_handDrawn(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const variant = options && Number.isFinite(options.vi) ? options.vi % 5 : Math.abs(seed) % 5;
+  const fontConf = FONT_MAP.black;
+  const t = normalizeVisibleText(text, '后悔没有早点知道');
+  const bgSet = ['#FBFAF4', '#FFFFFF', '#FFF8DC', '#F4FAFF', '#FCF7EF'];
+  gdNotebook(ctx, bgSet[variant], variant === 3 ? 'rgba(38,119,222,.12)' : 'rgba(0,0,0,.075)');
+  gdTopChrome(ctx, 'NOTE / 0' + (variant + 1), false);
+
+  const frame = [
+    [82, 110, W - 164, H - 220, 30],
+    [56, 148, W - 112, H - 260, 10],
+    [112, 92, W - 224, H - 184, 44],
+    [70, 104, W - 140, H - 208, 0],
+    [96, 132, W - 192, H - 252, 22],
+  ][variant];
+  gdRoundRect(ctx, frame[0], frame[1], frame[2], frame[3], frame[4], 'rgba(255,255,255,.76)', '#111111', variant === 3 ? 6 : 4);
+  const red = ['#E6213D', '#D81717', '#C1121F', '#2677DE', '#111111'][variant];
+  drawHandDrawnCircle(ctx, W * 0.5, H * (variant === 2 ? 0.20 : 0.17), W * (variant === 4 ? 0.66 : 0.58), 112, red, 8);
+  ctx.fillStyle = '#111111';
+  ctx.font = `900 42px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(['2026 年', '必看提醒', '放假安排来了', '重点笔记', '认真看完'][variant], W / 2, H * (variant === 2 ? 0.20 : 0.17));
+
+  const textY = [0.48, 0.43, 0.52, 0.46, 0.50][variant];
+  const block = gdTextBlock(ctx, t, W / 2, H * textY, gdSafeW([0.66, 0.68, 0.62, 0.66, 0.60][variant]), H * 0.46, '#111111', {
+    fontConf, maxSize: [190, 180, 198, 176, 184][variant], minSize: 28, lineHeight: [1.06, 1.12, 1.02, 1.10, 1.14][variant],
+  });
+  gdUnderline(ctx, W * [0.24, 0.18, 0.30, 0.20, 0.27][variant], H * textY + block.height / 2 + 28, W * [0.52, 0.64, 0.42, 0.58, 0.46][variant], variant === 3 ? '#A8D8FF' : '#FFEC47');
+
+  ctx.fillStyle = red;
+  ctx.font = `900 ${Math.max(80, block.size * 0.78)}px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText(gdAccentWord(t), W * [0.5, 0.30, 0.68, 0.5, 0.5][variant], H * [0.72, 0.74, 0.72, 0.76, 0.70][variant]);
+
+  const dots = 6;
+  ctx.fillStyle = '#111111';
+  for (let i = 0; i < dots; i++) {
+    ctx.beginPath();
+    ctx.arc(W * 0.35 + i * 72, H * 0.83, 10, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.font = `700 28px ${fontConf.family}`;
+  ctx.fillText(['建议收藏', '反复看', '别划走', '亲测有效', '保存备用'][variant], W / 2, H * 0.91);
+}
+
+function styleB_collage(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const variant = options && Number.isFinite(options.vi) ? options.vi % 5 : Math.abs(seed) % 5;
+  const fontConf = FONT_MAP.black;
+  const t = normalizeVisibleText(text, '这件事一定要知道');
+  const bgs = ['#FFE45C', '#FFD84D', '#FFF1A8', '#F7D000', '#FFFFFF'];
+  ctx.fillStyle = bgs[variant];
+  ctx.fillRect(0, 0, W, H);
+  gdTopChrome(ctx, 'MUST READ', false);
+
+  ctx.save();
+  ctx.translate(W * [0.50, 0.48, 0.53, 0.50, 0.50][variant], H * [0.48, 0.52, 0.43, 0.55, 0.48][variant]);
+  ctx.rotate([-1.5, 2.5, -4, 0, 1.5][variant] * Math.PI / 180);
+  gdRoundRect(ctx, -W * [0.39, 0.42, 0.34, 0.44, 0.36][variant], -H * [0.26, 0.24, 0.21, 0.28, 0.24][variant], W * [0.78, 0.84, 0.68, 0.88, 0.72][variant], H * [0.52, 0.48, 0.42, 0.56, 0.48][variant], variant === 2 ? 36 : 8, '#FFFFFF', '#111111', 7);
+  ctx.restore();
+
+  ctx.fillStyle = '#111111';
+  ctx.font = `900 64px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(['必看!', '速报!', '注意!', '收藏!', '别错过!'][variant], W / 2, H * [0.21, 0.18, 0.20, 0.16, 0.22][variant]);
+  gdTextBlock(ctx, t, W / 2, H * [0.48, 0.52, 0.44, 0.54, 0.48][variant], gdSafeW([0.58, 0.62, 0.54, 0.64, 0.56][variant]), H * [0.38, 0.34, 0.36, 0.42, 0.34][variant], '#111111', {
+    fontConf, maxSize: [176, 166, 182, 158, 170][variant], minSize: 28, lineHeight: 1.08,
+  });
+
+  ctx.fillStyle = '#E6213D';
+  ctx.font = `900 88px ${fontConf.family}`;
+  ctx.fillText(['!!', '?!', 'NO', 'HOT', 'OK'][variant], W * [0.78, 0.22, 0.78, 0.50, 0.80][variant], H * [0.69, 0.72, 0.70, 0.76, 0.66][variant]);
+  drawHighlighter(ctx, W * [0.23, 0.18, 0.32, 0.24, 0.18][variant], H * [0.74, 0.78, 0.68, 0.80, 0.72][variant], W * [0.54, 0.62, 0.38, 0.52, 0.64][variant], 34, variant === 4 ? '#C8F14A' : '#FFEC47');
+
+  gdRoundRect(ctx, W * 0.18, H * 0.82, W * 0.64, 88, 44, '#FFFFFF', '#111111', 5);
+  ctx.fillStyle = '#111111';
+  ctx.font = `900 34px ${fontConf.family}`;
+  ctx.fillText(['收藏后慢慢看', '亲测有效', '现在就看', '新手友好', '建议收藏'][variant], W / 2, H * 0.82 + 47);
+}
+
+function styleC_comicPop(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const variant = options && Number.isFinite(options.vi) ? options.vi % 5 : Math.abs(seed) % 5;
+  const fontConf = FONT_MAP.black;
+  const t = normalizeVisibleText(text, '大事件即将来袭');
+  const bg = ['#ED0108', '#C90012', '#B00020', '#E6213D', '#1A1A1A'][variant];
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+  gdTopChrome(ctx, ['HOT EVENT', 'NOTICE', 'COUNTDOWN', 'BREAKING', 'ALERT'][variant], true);
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = `900 ${[52, 44, 48, 40, 46][variant]}px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText(['9月17日-9月20日', '20XX 微商', '重要通知', '今天开始', 'ARE YOU READY'][variant], W / 2, H * [0.13, 0.11, 0.15, 0.12, 0.14][variant]);
+
+  gdTextBlock(ctx, t, W / 2, H * [0.43, 0.46, 0.40, 0.48, 0.44][variant], gdSafeW([0.66, 0.62, 0.68, 0.64, 0.64][variant]), H * [0.38, 0.38, 0.32, 0.42, 0.38][variant], '#FFFFFF', {
+    fontConf, maxSize: [184, 172, 190, 164, 176][variant], minSize: 28, lineHeight: [1.02, 1.08, 1.00, 1.10, 1.04][variant],
+  });
+
+  gdRoundRect(ctx, W * [0.18, 0.12, 0.24, 0.18, 0.16][variant], H * [0.64, 0.66, 0.60, 0.70, 0.64][variant], W * [0.64, 0.76, 0.52, 0.64, 0.68][variant], [130, 110, 128, 96, 120][variant], variant === 1 ? 60 : 4, '#FFEC47', null, 0);
+  ctx.fillStyle = '#111111';
+  ctx.font = `900 ${[76, 58, 68, 48, 60][variant]}px ${fontConf.family}`;
+  ctx.textBaseline = 'middle';
+  ctx.fillText(['ARE YOU READY?', '现在就准备!', '即将来袭', '不要错过', '火热来袭'][variant], W / 2, H * [0.64, 0.66, 0.60, 0.70, 0.64][variant] + [70, 58, 66, 50, 62][variant]);
+
+  ctx.strokeStyle = '#FFFFFF';
+  ctx.lineWidth = [4, 0, 6, 3, 5][variant];
+  if (variant !== 1) ctx.strokeRect(66, 66, W - 132, H - 132);
+  ctx.fillStyle = 'rgba(0,0,0,.16)';
+  ctx.fillRect(0, H * [0.86, 0.84, 0.88, 0.86, 0.82][variant], W, 130);
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = `700 30px ${fontConf.family}`;
+  ctx.fillText(['小伙伴们注意保持好队形', '请提前做好准备', '限时提醒', '重点关注', '不要错过通知'][variant], W / 2, H * [0.90, 0.88, 0.92, 0.90, 0.86][variant]);
+}
+
+function styleD_newspaper(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const variant = options && Number.isFinite(options.vi) ? options.vi % 5 : Math.abs(seed) % 5;
+  const fontConf = FONT_MAP.black;
+  const t = normalizeVisibleText(text, '如何高效背诵申论大作文');
+  const bgs = ['#DDF7F3', '#E9F3FF', '#F4F7FF', '#E6FFF4', '#FFFFFF'];
+  ctx.fillStyle = bgs[variant];
+  ctx.fillRect(0, 0, W, H);
+  gdTopChrome(ctx, ['INFO CARD', 'CHECKLIST', 'GUIDE', 'DATA', 'COLLECT'][variant], false);
+
+  const frames = [
+    [70, 128, W - 140, H - 260, 6],
+    [88, 170, W - 176, H - 310, 28],
+    [46, 122, W - 92, H - 244, 0],
+    [110, 112, W - 220, H - 224, 10],
+    [68, 150, W - 136, H - 300, 44],
+  ];
+  const f = frames[variant];
+  gdRoundRect(ctx, f[0], f[1], f[2], f[3], f[4], 'rgba(255,255,255,.78)', '#111111', variant === 2 ? 6 : 4);
+  ctx.strokeStyle = 'rgba(0,0,0,.12)';
+  ctx.lineWidth = 2;
+  for (let y = 250; y < H - 210; y += 86) {
+    ctx.beginPath();
+    ctx.moveTo(110, y);
+    ctx.lineTo(W - 110, y);
+    ctx.stroke();
+  }
+
+  const block = gdTextBlock(ctx, t, W / 2, H * [0.42, 0.40, 0.45, 0.38, 0.44][variant], gdSafeW([0.64, 0.58, 0.68, 0.54, 0.62][variant]), H * [0.44, 0.38, 0.42, 0.36, 0.40][variant], '#111111', {
+    fontConf, maxSize: [166, 154, 172, 146, 160][variant], minSize: 28, lineHeight: 1.10,
+  });
+  const accent = ['#22B26B', '#2677DE', '#FFEC47', '#111111', '#E6213D'][variant];
+  gdRoundRect(ctx, W * [0.27, 0.18, 0.30, 0.25, 0.22][variant], H * [0.63, 0.66, 0.62, 0.68, 0.64][variant], W * [0.46, 0.64, 0.40, 0.50, 0.56][variant], [104, 92, 104, 96, 100][variant], variant === 1 ? 46 : 4, accent, null, 0);
+  ctx.fillStyle = '#FFFFFF';
+  if (accent === '#FFEC47') ctx.fillStyle = '#111111';
+  ctx.font = `900 58px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(['大重点', '建议收藏', '一图讲清', '3 步搞定', '马上用'][variant], W / 2, H * [0.63, 0.66, 0.62, 0.68, 0.64][variant] + [55, 48, 55, 50, 52][variant]);
+
+  ctx.fillStyle = '#111111';
+  ctx.font = `900 46px ${fontConf.family}`;
+  ctx.fillText(block.lines.length > 2 ? '3 步搞定' : '一图讲清', W / 2, H * [0.83, 0.84, 0.82, 0.84, 0.82][variant]);
+  drawHandDrawnCircle(ctx, W * 0.5, H * [0.83, 0.84, 0.82, 0.84, 0.82][variant], W * [0.46, 0.52, 0.40, 0.44, 0.48][variant], 90, '#E6213D', 7);
+}
+
+function styleE_minimal(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const variant = options && Number.isFinite(options.vi) ? options.vi % 5 : Math.abs(seed) % 5;
+  const fontConf = FONT_MAP.black;
+  const t = normalizeVisibleText(text, '逼自己做自媒体的第一天');
+  gdNotebook(ctx, ['#FFFFFF', '#FBFAF4', '#F6FFF9', '#FFFDF1', '#F7FAFF'][variant], variant === 4 ? 'rgba(38,119,222,.08)' : 'rgba(0,0,0,.06)');
+  gdTopChrome(ctx, ['QUOTE', 'THOUGHT', 'MEMO', 'POINT', 'SAVE'][variant], false);
+
+  const accent = ['#E6213D', '#FFEC47', '#2AB673', '#2677DE', '#111111'][variant];
+  const block = gdTextBlock(ctx, t, W / 2, H * [0.48, 0.44, 0.50, 0.42, 0.52][variant], gdSafeW([0.64, 0.58, 0.60, 0.68, 0.56][variant]), H * [0.50, 0.46, 0.52, 0.44, 0.48][variant], '#111111', {
+    fontConf, maxSize: [176, 162, 182, 158, 170][variant], minSize: 28, lineHeight: [1.08, 1.15, 1.04, 1.12, 1.10][variant],
+  });
+  drawHighlighter(ctx, W * [0.28, 0.18, 0.34, 0.25, 0.30][variant], H * [0.48, 0.44, 0.50, 0.42, 0.52][variant] + block.height / 2 + 22, W * [0.44, 0.58, 0.34, 0.50, 0.40][variant], 30, accent);
+
+  ctx.fillStyle = '#111111';
+  ctx.font = `700 30px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText(['不说名字,只说一句能让大家都懂的话', '今天终于想明白了', '写给正在努力的你', '这句话我反复看', '先收藏再慢慢看'][variant], W / 2, H * [0.16, 0.14, 0.18, 0.13, 0.17][variant]);
+  drawHandDrawnCircle(ctx, W / 2, H * [0.16, 0.14, 0.18, 0.13, 0.17][variant] - 10, W * [0.68, 0.52, 0.60, 0.56, 0.58][variant], 74, '#E6213D', 6);
+
+  ctx.font = `900 40px ${fontConf.family}`;
+  ctx.fillText(['真的有人懂', '建议反复看', '别着急', '写给自己', '保存备用'][variant], W / 2, H * [0.83, 0.82, 0.84, 0.80, 0.85][variant]);
+  ctx.fillStyle = accent === '#FFEC47' ? '#111111' : accent;
+  ctx.font = `900 92px ${fontConf.family}`;
+  ctx.fillText(['!', '?', '。', '✓', '!'][variant], W * [0.82, 0.18, 0.78, 0.22, 0.82][variant], H * [0.83, 0.82, 0.84, 0.80, 0.85][variant]);
+}
+
+// ════════════════════════════════════════════════════════════════
+//  v3.3 · 干净封面渲染器
+//  规则:画面里只出现用户输入的文字,其他风格差异全部用色彩/图形/插画表达。
+// ════════════════════════════════════════════════════════════════
+
+const CLEAN_STYLE = {
+  A: { bg: ['#FBFAF4', '#FFFFFF', '#FFF8DC', '#F4FAFF', '#FCF7EF'], text: '#111111', accent: '#E6213D', mode: 'notebook' },
+  B: { bg: ['#FFE45C', '#FFD84D', '#FFF1A8', '#F7D000', '#FFFFFF'], text: '#111111', accent: '#E6213D', mode: 'alert' },
+  C: { bg: ['#ED0108', '#C90012', '#B00020', '#E6213D', '#1A1A1A'], text: '#FFFFFF', accent: '#FFEC47', mode: 'event' },
+  D: { bg: ['#DDF7F3', '#E9F3FF', '#F4F7FF', '#E6FFF4', '#FFFFFF'], text: '#111111', accent: '#2677DE', mode: 'info' },
+  E: { bg: ['#FFFFFF', '#FBFAF4', '#F6FFF9', '#FFFDF1', '#F7FAFF'], text: '#111111', accent: '#2AB673', mode: 'minimal' },
+  F: { bg: ['#3A2A1A', '#1A2B3A', '#2A3A28', '#4A2A38', '#1A1A1A'], text: '#F8F1E8', accent: '#D4A574', mode: 'film' },
+  G: { bg: ['#FF6B9D', '#4ECDC4', '#7FCD91', '#9B5DE5', '#FFE066'], text: '#111111', accent: '#FFFFFF', mode: 'dopamine' },
+  H: { bg: ['#0A0A0A', '#101014', '#0B1220', '#170A24', '#111111'], text: '#FFFFFF', accent: '#00FF88', mode: 'acid' },
+  I: { bg: ['#FFE5EC', '#D4F1F4', '#FFF8DC', '#E6E6FA', '#FFDAB9'], text: '#111111', accent: '#FF6B6B', mode: 'memphis' },
+  J: { bg: ['#F5EBD8', '#F2EAD3', '#F8E8D0', '#E8E4D8', '#E8F0E8'], text: '#2D2520', accent: '#C8252C', mode: 'chinese' },
+  K: { bg: ['#1A0A2E', '#0A0A1F', '#0A1A0A', '#160A24', '#111111'], text: '#FFFFFF', accent: '#00F5FF', mode: 'cyber' },
+  L: { bg: ['#FFF2F6', '#EEF7FF', '#FFF8E8', '#F2FFF7', '#F8F3FF'], text: '#222222', accent: '#FFB8C8', mode: 'japanese' },
+  M: { bg: ['#EAF2FF', '#FFF1FA', '#F1FFF4', '#F6F0FF', '#FFF7E8'], text: '#111111', accent: '#8BB8FF', mode: 'threeD' },
+  N: { bg: ['#2B1055', '#3B1D7A', '#53278D', '#1D2671', '#261447'], text: '#FFFFFF', accent: '#FF8BD1', mode: 'vapor' },
+  O: { bg: ['#050505', '#111111', '#1A1410', '#10151A', '#180D14'], text: '#F5F0E8', accent: '#C9A45C', mode: 'dark' },
+  P: { bg: ['#D8F3FF', '#FFF2C6', '#F2FFD8', '#FFE0F0', '#E8E8FF'], text: '#111111', accent: '#111111', mode: 'pixel' },
+  Q: { bg: ['#DFF6FF', '#FCE7FF', '#E6FFF2', '#FFF4D6', '#EDE7FF'], text: '#111111', accent: '#6B7CFF', mode: 'aurora' },
+  R: { bg: ['#F5E6CF', '#F8ECD8', '#EFE1C7', '#F7EAD5', '#F4E2C5'], text: '#21170F', accent: '#B0823B', mode: 'poster' },
+  S: { bg: ['#EAF4FF', '#F7EDFF', '#EFFFF6', '#FFF3EC', '#EEF0FF'], text: '#111111', accent: '#FFFFFF', mode: 'glass' },
+  T: { bg: ['#FFE7F0', '#FFF1B8', '#E7F8FF', '#F0FFE7', '#F5E7FF'], text: '#111111', accent: '#FF6B9D', mode: 'cartoon' },
+};
+
+// ════════════════════════════════════════════════════════════════
+//  v4.0 · 大字封面模板体系
+//  DESIGN_LOCK:所有输出必须先走模板骨架,禁止自由随机装饰。
+// ════════════════════════════════════════════════════════════════
+
+const TEMPLATE_CONTRACT = Object.freeze({
+  textFirst: true,
+  noExtraCanvasText: true,
+  fixedSkeletonsOnly: true,
+  stickerSlotsOnly: true,
+  variantsPerStyle: 5,
+});
+
+const TEMPLATE_VARIANTS = Object.freeze([
+  {
+    id: 'burst',
+    name: '爆炸底',
+    text: { x: 0.50, y: 0.42, w: 0.72, h: 0.48, max: 178, lh: 1.06, pad: 58 },
+    sticker: { x: 0.76, y: 0.77, short: 0.30, medium: 0.18, long: 0.12 },
+  },
+  {
+    id: 'card',
+    name: '白卡底',
+    text: { x: 0.50, y: 0.48, w: 0.68, h: 0.48, max: 166, lh: 1.10, pad: 62 },
+    sticker: { x: 0.24, y: 0.78, short: 0.24, medium: 0.16, long: 0.11 },
+  },
+  {
+    id: 'bubble',
+    name: '气泡底',
+    text: { x: 0.48, y: 0.44, w: 0.66, h: 0.44, max: 172, lh: 1.08, pad: 60 },
+    sticker: { x: 0.79, y: 0.27, short: 0.23, medium: 0.15, long: 0.10 },
+  },
+  {
+    id: 'paper',
+    name: '撕纸底',
+    text: { x: 0.50, y: 0.52, w: 0.70, h: 0.50, max: 162, lh: 1.12, pad: 66 },
+    sticker: { x: 0.77, y: 0.79, short: 0.26, medium: 0.16, long: 0.10 },
+  },
+  {
+    id: 'frame',
+    name: '边框底',
+    text: { x: 0.50, y: 0.46, w: 0.64, h: 0.50, max: 168, lh: 1.09, pad: 64 },
+    sticker: { x: 0.22, y: 0.24, short: 0.20, medium: 0.14, long: 0.09 },
+  },
+]);
+
+const LOCKED_TEMPLATE_STYLES = Object.freeze({
+  A: { template: 'notebook', name: '手账白底', bg: ['#FBFAF4', '#FFFFFF', '#FFF8DC', '#F4FAFF', '#FCF7EF'], text: '#111111', accent: '#E6213D', second: '#FFEC47', stickers: ['catCard', 'paintRollerReal', 'eyesBig', 'paperCat', 'thumb3d'] },
+  B: { template: 'warning', name: '黄底提醒', bg: ['#FFE45C', '#FFD84D', '#FFF1A8', '#F7D000', '#FFFFFF'], text: '#111111', accent: '#E6213D', second: '#2677DE', stickers: ['megaphonePlush', 'thumb3d', 'emojiAngry3d', 'paintRollerReal', 'dogFrame'] },
+  C: { template: 'event', name: '红色事件', bg: ['#ED0108', '#C90012', '#B00020', '#E6213D', '#1A1A1A'], text: '#FFFFFF', accent: '#FFEC47', second: '#FFFFFF', stickers: ['fistComic', 'megaphonePlush', 'thumb3d', 'emojiAngry3d', 'paintRollerReal'] },
+  D: { template: 'info', name: '蓝绿信息', bg: ['#DDF7F3', '#E9F3FF', '#F4F7FF', '#E6FFF4', '#FFFFFF'], text: '#111111', accent: '#2677DE', second: '#22B26B', stickers: ['paperCat', 'dogFrame', 'eyesBig', 'paintRollerReal', 'thumb3d'] },
+  E: { template: 'quote', name: '极简金句', bg: ['#FFFFFF', '#FBFAF4', '#F6FFF9', '#FFFDF1', '#F7FAFF'], text: '#111111', accent: '#2AB673', second: '#FFEC47', stickers: ['eyesBig', 'paperCat', 'catCard', 'thumb3d', 'paintRollerReal'] },
+  F: { template: 'poster', name: '复古胶片', bg: ['#3A2A1A', '#1A2B3A', '#2A3A28', '#4A2A38', '#1A1A1A'], text: '#F8F1E8', accent: '#D4A574', second: '#FFE0A8', stickers: ['catCard', 'dogFrame', 'paintRollerReal', 'thumb3d', 'eyesBig'] },
+  G: { template: 'dopamine', name: '多巴胺', bg: ['#FF6B9D', '#4ECDC4', '#7FCD91', '#9B5DE5', '#FFE066'], text: '#111111', accent: '#FFFFFF', second: '#FFEC47', stickers: ['megaphonePlush', 'paperCat', 'emojiAngry3d', 'thumb3d', 'fistComic'] },
+  H: { template: 'darkPop', name: '酸性设计', bg: ['#0A0A0A', '#101014', '#0B1220', '#170A24', '#111111'], text: '#FFFFFF', accent: '#00FF88', second: '#FF4FD8', stickers: ['emojiAngry3d', 'fistComic', 'thumb3d', 'eyesBig', 'megaphonePlush'] },
+  I: { template: 'memphis', name: '孟菲斯', bg: ['#FFE5EC', '#D4F1F4', '#FFF8DC', '#E6E6FA', '#FFDAB9'], text: '#111111', accent: '#FF6B6B', second: '#2677DE', stickers: ['fistComic', 'paperCat', 'thumb3d', 'eyesBig', 'paintRollerReal'] },
+  J: { template: 'classic', name: '国风', bg: ['#F5EBD8', '#F2EAD3', '#F8E8D0', '#E8E4D8', '#E8F0E8'], text: '#2D2520', accent: '#C8252C', second: '#B0823B', stickers: ['dogFrame', 'catCard', 'paintRollerReal', 'thumb3d', 'paperCat'] },
+  K: { template: 'darkPop', name: '赛博朋克', bg: ['#1A0A2E', '#0A0A1F', '#0A1A0A', '#160A24', '#111111'], text: '#FFFFFF', accent: '#00F5FF', second: '#FF4FD8', stickers: ['fistComic', 'thumb3d', 'emojiAngry3d', 'megaphonePlush', 'eyesBig'] },
+  L: { template: 'soft', name: '日系清新', bg: ['#FFF2F6', '#EEF7FF', '#FFF8E8', '#F2FFF7', '#F8F3FF'], text: '#222222', accent: '#FFB8C8', second: '#A8D890', stickers: ['catCard', 'paperCat', 'paintRollerReal', 'eyesBig', 'thumb3d'] },
+  M: { template: 'soft', name: '3D 渲染', bg: ['#EAF2FF', '#FFF1FA', '#F1FFF4', '#F6F0FF', '#FFF7E8'], text: '#111111', accent: '#8BB8FF', second: '#FFB8C8', stickers: ['thumb3d', 'emojiAngry3d', 'megaphonePlush', 'paintRollerReal', 'fistComic'] },
+  N: { template: 'darkPop', name: '蒸汽波', bg: ['#2B1055', '#3B1D7A', '#53278D', '#1D2671', '#261447'], text: '#FFFFFF', accent: '#FF8BD1', second: '#00F5FF', stickers: ['megaphonePlush', 'emojiAngry3d', 'thumb3d', 'catCard', 'eyesBig'] },
+  O: { template: 'poster', name: '暗黑系', bg: ['#050505', '#111111', '#1A1410', '#10151A', '#180D14'], text: '#F5F0E8', accent: '#C9A45C', second: '#FFFFFF', stickers: ['dogFrame', 'catCard', 'thumb3d', 'fistComic', 'paintRollerReal'] },
+  P: { template: 'info', name: '像素风', bg: ['#D8F3FF', '#FFF2C6', '#F2FFD8', '#FFE0F0', '#E8E8FF'], text: '#111111', accent: '#111111', second: '#E6213D', stickers: ['eyesBig', 'paperCat', 'thumb3d', 'fistComic', 'dogFrame'] },
+  Q: { template: 'soft', name: '极光渐变', bg: ['#DFF6FF', '#FCE7FF', '#E6FFF2', '#FFF4D6', '#EDE7FF'], text: '#111111', accent: '#6B7CFF', second: '#FF8BD1', stickers: ['megaphonePlush', 'paperCat', 'thumb3d', 'emojiAngry3d', 'eyesBig'] },
+  R: { template: 'poster', name: '复古海报', bg: ['#F5E6CF', '#F8ECD8', '#EFE1C7', '#F7EAD5', '#F4E2C5'], text: '#21170F', accent: '#B0823B', second: '#C8252C', stickers: ['paintRollerReal', 'thumb3d', 'dogFrame', 'catCard', 'megaphonePlush'] },
+  S: { template: 'info', name: '玻璃拟态', bg: ['#EAF4FF', '#F7EDFF', '#EFFFF6', '#FFF3EC', '#EEF0FF'], text: '#111111', accent: '#FFFFFF', second: '#2677DE', stickers: ['thumb3d', 'emojiAngry3d', 'paperCat', 'megaphonePlush', 'catCard'] },
+  T: { template: 'dopamine', name: '卡通插画', bg: ['#FFE7F0', '#FFF1B8', '#E7F8FF', '#F0FFE7', '#F5E7FF'], text: '#111111', accent: '#FF6B9D', second: '#4ECDC4', stickers: ['paperCat', 'dogFrame', 'megaphonePlush', 'catCard', 'eyesBig'] },
+});
+
+function drawLockedTemplateCover(ctx, text, palette, options, family) {
+  if (!TEMPLATE_CONTRACT.textFirst || !TEMPLATE_CONTRACT.fixedSkeletonsOnly) {
+    throw new Error('Template contract is disabled');
+  }
+  const W = CANVAS_W, H = CANVAS_H;
+  const variant = options && Number.isFinite(options.vi) ? options.vi % TEMPLATE_VARIANTS.length : 0;
+  const style = LOCKED_TEMPLATE_STYLES[family] || LOCKED_TEMPLATE_STYLES.E;
+  const tpl = TEMPLATE_VARIANTS[variant];
+  const t = normalizeVisibleText(text, '输入你的封面文案');
+  const load = getTextLoad(t);
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const bg = style.bg[variant % style.bg.length];
+  const ink = style.text;
+  const accent = style.accent;
+  const second = style.second || accent;
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+  drawTemplateBackground(ctx, style, tpl, variant, load);
+  drawTemplatePanel(ctx, style, tpl, variant, load);
+  drawTemplateStickerSlot(ctx, style, tpl, variant, load);
+  drawTemplateUserText(ctx, t, fontConf, style, tpl, variant, load);
+  drawTemplateEmphasis(ctx, t, fontConf, { ink, accent, second }, tpl, variant, load);
+}
+
+function drawTemplateBackground(ctx, style, tpl, variant, load) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const accent = style.accent;
+  const second = style.second || accent;
+  if (['notebook', 'info', 'quote', 'soft', 'classic'].includes(style.template)) {
+    ctx.strokeStyle = style.template === 'classic' ? withAlpha('#8A6A42', 0.14) : 'rgba(0,0,0,.075)';
+    ctx.lineWidth = 1.5;
+    for (let y = 130; y < H - 90; y += style.template === 'info' ? 74 : 58) {
+      ctx.beginPath();
+      ctx.moveTo(58, y);
+      ctx.lineTo(W - 58, y);
+      ctx.stroke();
+    }
+  }
+  if (['warning', 'event', 'dopamine', 'memphis', 'darkPop'].includes(style.template)) {
+    ctx.save();
+    ctx.globalAlpha = load === 'short' ? 0.22 : 0.12;
+    ctx.strokeStyle = style.template === 'event' || style.template === 'darkPop' ? withAlpha('#FFFFFF', 0.55) : withAlpha('#111111', 0.45);
+    ctx.lineWidth = 4;
+    const rays = load === 'short' ? 22 : 12;
+    ctx.translate(W / 2, H * 0.46);
+    for (let i = 0; i < rays; i++) {
+      const a = i / rays * Math.PI * 2 + variant * 0.08;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(a) * 320, Math.sin(a) * 430);
+      ctx.lineTo(Math.cos(a) * 890, Math.sin(a) * 1180);
+      ctx.stroke();
+    }
+    ctx.restore();
+  }
+  if (['poster', 'classic'].includes(style.template)) {
+    ctx.save();
+    ctx.strokeStyle = withAlpha(accent, 0.70);
+    ctx.lineWidth = 8;
+    ctx.strokeRect(64, 64, W - 128, H - 128);
+    ctx.lineWidth = 2;
+    ctx.strokeRect(92, 92, W - 184, H - 184);
+    ctx.restore();
+  }
+  if (tpl.id === 'burst') drawTemplateBurst(ctx, W * 0.50, H * 0.44, W * 0.68, H * 0.30, accent, second, load);
+  if (tpl.id === 'frame') drawTemplateCornerMarks(ctx, accent, style.text);
+}
+
+function drawTemplatePanel(ctx, style, tpl, variant, load) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const ink = style.text === '#FFFFFF' ? 'rgba(255,255,255,.88)' : '#111111';
+  const panelStroke = style.template === 'event' || style.template === 'darkPop' ? 'rgba(255,255,255,.76)' : '#111111';
+  const paperFill = style.template === 'event' || style.template === 'darkPop' ? 'rgba(255,255,255,.10)' : 'rgba(255,255,255,.82)';
+  if (tpl.id === 'card') {
+    const cards = [
+      [0.12, 0.18, 0.76, 0.58, 18, -2],
+      [0.08, 0.22, 0.82, 0.54, 34, 2],
+      [0.18, 0.18, 0.68, 0.54, 8, -5],
+      [0.10, 0.16, 0.80, 0.62, 44, 0],
+      [0.15, 0.22, 0.70, 0.54, 16, 3],
+    ][variant];
+    ctx.save();
+    ctx.translate(W * (cards[0] + cards[2] / 2), H * (cards[1] + cards[3] / 2));
+    ctx.rotate(cards[5] * Math.PI / 180);
+    gdRoundRect(ctx, -W * cards[2] / 2, -H * cards[3] / 2, W * cards[2], H * cards[3], cards[4], paperFill, panelStroke, 6);
+    ctx.restore();
+  }
+  if (tpl.id === 'bubble') {
+    ctx.save();
+    ctx.translate(W * 0.48, H * 0.46);
+    ctx.rotate([-1, 2, -3, 1, 0][variant] * Math.PI / 180);
+    gdRoundRect(ctx, -W * 0.36, -H * 0.22, W * 0.72, H * 0.44, 48, paperFill, panelStroke, 6);
+    ctx.beginPath();
+    ctx.moveTo(W * 0.20, H * 0.20);
+    ctx.lineTo(W * 0.28, H * 0.33);
+    ctx.lineTo(W * 0.10, H * 0.24);
+    ctx.closePath();
+    ctx.fillStyle = paperFill;
+    ctx.fill();
+    ctx.strokeStyle = panelStroke;
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    ctx.restore();
+  }
+  if (tpl.id === 'paper') {
+    drawTemplatePaperStack(ctx, style, variant, paperFill, panelStroke);
+  }
+  if (tpl.id === 'frame') {
+    gdRoundRect(ctx, W * 0.08, H * 0.14, W * 0.84, H * 0.68, variant % 2 ? 36 : 8, style.template === 'event' || style.template === 'darkPop' ? 'rgba(0,0,0,.12)' : 'rgba(255,255,255,.44)', panelStroke, 5);
+  }
+  if (tpl.id === 'burst') {
+    ctx.save();
+    ctx.strokeStyle = withAlpha(ink, 0.25);
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.ellipse(W * 0.50, H * 0.42, W * 0.38, H * 0.24, [-0.08, 0.04, -0.04, 0.06, 0][variant], 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+function drawTemplateUserText(ctx, text, fontConf, style, tpl, variant, load) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const box = templateTextBox(tpl, load);
+  const stroke = style.text === '#FFFFFF' ? { color: 'rgba(0,0,0,.28)', width: 10 } : null;
+  gdTextBlock(ctx, text, W * box.x, H * box.y, W * box.w, H * box.h, style.text, {
+    fontConf,
+    maxSize: Math.round(box.max * (fontConf.scale || 1)),
+    minSize: 24,
+    absoluteMinSize: 10,
+    lineHeight: box.lh,
+    pad: box.pad,
+    stroke,
+  });
+}
+
+function templateTextBox(tpl, load) {
+  const box = { ...tpl.text };
+  if (load === 'medium') {
+    box.w = Math.max(box.w, 0.74);
+    box.h = Math.max(box.h, 0.56);
+    box.max = Math.min(box.max, 150);
+    box.pad = Math.min(box.pad, 54);
+  }
+  if (load === 'long' || load === 'xl') {
+    box.x = 0.50;
+    box.y = 0.50;
+    box.w = load === 'xl' ? 0.86 : 0.82;
+    box.h = load === 'xl' ? 0.72 : 0.66;
+    box.max = load === 'xl' ? 126 : 138;
+    box.pad = load === 'xl' ? 40 : 46;
+  }
+  return box;
+}
+
+function drawTemplateEmphasis(ctx, text, fontConf, colors, tpl, variant, load) {
+  if (load === 'long' || load === 'xl') return;
+  const word = gdAccentWord(text || '');
+  if (!word) return;
+  const W = CANVAS_W, H = CANVAS_H;
+  const p = [
+    [0.50, 0.70, 86],
+    [0.75, 0.68, 76],
+    [0.24, 0.70, 74],
+    [0.50, 0.78, 72],
+    [0.78, 0.28, 68],
+  ][variant];
+  ctx.save();
+  ctx.font = `${fontConf.weight} ${Math.round(p[2] * (fontConf.scale || 1))}px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 12;
+  ctx.strokeStyle = colors.ink === '#FFFFFF' ? 'rgba(0,0,0,.42)' : 'rgba(255,255,255,.88)';
+  ctx.fillStyle = colors.accent;
+  ctx.strokeText(word, W * p[0], H * p[1]);
+  ctx.fillText(word, W * p[0], H * p[1]);
+  ctx.restore();
+}
+
+function drawTemplateStickerSlot(ctx, style, tpl, variant, load) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const slot = templateStickerSlot(tpl, load, variant);
+  if (slot.size <= 0.06) return;
+  const type = style.stickers[variant % style.stickers.length];
+  drawTemplateSticker(ctx, type, W * slot.x, H * slot.y, W * slot.size, style.accent, [-8, 6, -4, 8, -6][variant]);
+}
+
+function templateStickerSlot(tpl, load, variant) {
+  const slot = { ...tpl.sticker };
+  if (load === 'short') slot.size = slot.short;
+  else if (load === 'medium') slot.size = slot.medium;
+  else slot.size = slot.long;
+  if (load === 'long' || load === 'xl') {
+    slot.x = variant % 2 ? 0.88 : 0.12;
+    slot.y = variant % 3 ? 0.91 : 0.09;
+    slot.size = load === 'xl' ? Math.min(slot.size, 0.08) : Math.min(slot.size, 0.10);
+  }
+  return slot;
+}
+
+function drawTemplateSticker(ctx, type, x, y, s, accent, deg) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate((deg || 0) * Math.PI / 180);
+  if (type === 'thumb3d') drawThumb3DSticker(ctx, 0, 0, s * 1.02, accent);
+  else if (type === 'emojiAngry3d') drawEmojiAngry3DSticker(ctx, 0, 0, s * 0.98);
+  else if (type === 'fistComic') drawComicFistSticker(ctx, 0, 0, s * 1.08);
+  else if (type === 'eyesBig') drawBigEyesSticker(ctx, 0, 0, s * 1.04);
+  else if (type === 'paintRollerReal') drawPaintRollerRealSticker(ctx, 0, 0, s * 1.08);
+  else if (type === 'paperCat') drawPlumpCatSticker(ctx, 0, 0, s * 1.10);
+  else if (type === 'catCard') drawCatPhotoCardSticker(ctx, 0, 0, s * 1.06);
+  else if (type === 'dogFrame') drawDogFrameSticker(ctx, 0, 0, s * 1.16);
+  else if (type === 'megaphonePlush') drawPlushMegaphoneSticker(ctx, 0, 0, s * 1.10);
+  ctx.restore();
+}
+
+function drawTemplateBurst(ctx, x, y, w, h, accent, second, load) {
+  const points = load === 'short' ? 18 : 14;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(-0.05);
+  ctx.beginPath();
+  for (let i = 0; i < points; i++) {
+    const a = i / points * Math.PI * 2;
+    const rx = (i % 2 ? w * 0.43 : w * 0.52);
+    const ry = (i % 2 ? h * 0.44 : h * 0.56);
+    const px = Math.cos(a) * rx;
+    const py = Math.sin(a) * ry;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fillStyle = withAlpha(accent, 0.86);
+  ctx.fill();
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = 7;
+  ctx.stroke();
+  ctx.fillStyle = withAlpha(second, 0.42);
+  ctx.beginPath();
+  ctx.ellipse(0, 0, w * 0.30, h * 0.28, 0.1, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawTemplatePaperStack(ctx, style, variant, fill, stroke) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const layers = [
+    [0.15, 0.20, 0.70, 0.56, -4],
+    [0.12, 0.24, 0.76, 0.54, 3],
+    [0.18, 0.18, 0.64, 0.60, -2],
+  ];
+  layers.forEach((l, i) => {
+    ctx.save();
+    ctx.translate(W * (l[0] + l[2] / 2), H * (l[1] + l[3] / 2));
+    ctx.rotate((l[4] + variant - i) * Math.PI / 180);
+    gdRoundRect(ctx, -W * l[2] / 2, -H * l[3] / 2, W * l[2], H * l[3], i === 1 ? 28 : 8, i === 0 ? withAlpha(style.accent, 0.20) : fill, i === 2 ? stroke : null, i === 2 ? 6 : 0);
+    ctx.restore();
+  });
+}
+
+function drawTemplateCornerMarks(ctx, accent, ink) {
+  const W = CANVAS_W, H = CANVAS_H;
+  ctx.save();
+  ctx.strokeStyle = accent;
+  ctx.lineWidth = 12;
+  ctx.lineCap = 'round';
+  const marks = [
+    [88, 88, 210, 88, 88, 210],
+    [W - 88, 88, W - 210, 88, W - 88, 210],
+    [88, H - 88, 210, H - 88, 88, H - 210],
+    [W - 88, H - 88, W - 210, H - 88, W - 88, H - 210],
+  ];
+  marks.forEach((m) => {
+    ctx.beginPath();
+    ctx.moveTo(m[0], m[1]);
+    ctx.lineTo(m[2], m[3]);
+    ctx.moveTo(m[0], m[1]);
+    ctx.lineTo(m[4], m[5]);
+    ctx.stroke();
+  });
+  ctx.strokeStyle = withAlpha(ink, 0.18);
+  ctx.lineWidth = 4;
+  ctx.strokeRect(70, 70, W - 140, H - 140);
+  ctx.restore();
+}
+
+function cleanCoverStyle(ctx, text, palette, options, family) {
+  // Legacy fallback only. DESIGN_LOCK requires STYLE_FUNCS to call drawLockedTemplateCover.
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 0;
+  const variant = options && Number.isFinite(options.vi) ? options.vi % 5 : Math.abs(seed) % 5;
+  const spice = Math.abs(seed * 7 + family.charCodeAt(0)) % 11;
+  const cfg = CLEAN_STYLE[family] || CLEAN_STYLE.E;
+  const bg = cfg.bg[(variant + spice) % cfg.bg.length] || cfg.bg[0];
+  const accent = cfg.accent;
+  const t = normalizeVisibleText(text, '输入你的封面文案');
+  const textLoad = getTextLoad(t);
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+  drawCleanDecor(ctx, cfg.mode, variant, bg, accent, cfg.text, spice, textLoad);
+  const textBox = stickerAwareTextBox(cfg.mode, variant, spice, cleanTextBox(cfg.mode, variant), textLoad);
+  const stroke = cfg.text === '#FFFFFF' ? { color: 'rgba(0,0,0,.22)', width: 8 } : null;
+  gdTextBlock(ctx, t, W / 2, H * textBox.y, W * textBox.w, H * textBox.h, cfg.text, {
+    fontConf,
+    maxSize: Math.round(textBox.max * (fontConf.scale || 1)),
+    minSize: textBox.min || 24,
+    absoluteMinSize: 10,
+    lineHeight: textBox.lh,
+    pad: textBox.pad || 76,
+    stroke,
+  });
+}
+
+function getTextLoad(text) {
+  const lines = splitInputLines(text);
+  const visibleChars = String(text || '').replace(/\s/g, '').length;
+  const lineCount = Math.max(1, lines.length);
+  const longestLine = Math.max(0, ...lines.map((ln) => ln.replace(/\s/g, '').length));
+  const score = visibleChars + Math.max(0, lineCount - 2) * 5 + Math.max(0, longestLine - 10) * 0.75;
+  if (score >= 54) return 'xl';
+  if (score >= 38) return 'long';
+  if (score >= 24) return 'medium';
+  return 'short';
+}
+
+function stickerZone(mode, variant, spice) {
+  const zones = {
+    notebook: ['bottom', 'right', 'left', 'bottom', 'top'],
+    minimal: ['right', 'left', 'top', 'bottom', 'corner'],
+    info: ['right', 'bottom', 'left', 'corner', 'top'],
+    alert: ['top', 'bottom', 'left', 'right', 'corner'],
+    event: ['bottom', 'top', 'right', 'left', 'corner'],
+    dopamine: ['right', 'top', 'left', 'bottom', 'corner'],
+    cartoon: ['right', 'bottom', 'left', 'top', 'corner'],
+    japanese: ['right', 'left', 'top', 'bottom', 'corner'],
+    chinese: ['right', 'left', 'top', 'bottom', 'corner'],
+    film: ['right', 'top', 'left', 'bottom', 'corner'],
+    poster: ['bottom', 'left', 'top', 'right', 'corner'],
+    pixel: ['right', 'top', 'left', 'bottom', 'corner'],
+    glass: ['right', 'left', 'top', 'bottom', 'corner'],
+    aurora: ['right', 'top', 'left', 'bottom', 'corner'],
+    threeD: ['right', 'top', 'left', 'bottom', 'corner'],
+    memphis: ['right', 'left', 'top', 'bottom', 'corner'],
+    acid: ['right', 'top', 'left', 'bottom', 'corner'],
+    cyber: ['right', 'top', 'left', 'bottom', 'corner'],
+    vapor: ['right', 'left', 'top', 'bottom', 'corner'],
+    dark: ['right', 'top', 'left', 'bottom', 'corner'],
+  };
+  return ((zones[mode] || zones.minimal)[variant] || 'bottom');
+}
+
+function stickerAwareTextBox(mode, variant, spice, box, textLoad) {
+  const zone = stickerZone(mode, variant, spice);
+  const next = { ...box };
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  const mediumText = textLoad === 'medium';
+  if (longText) {
+    next.y = 0.50;
+    next.w = Math.min(0.88, Math.max(next.w, textLoad === 'xl' ? 0.84 : 0.80));
+    next.h = Math.min(0.74, Math.max(next.h, textLoad === 'xl' ? 0.70 : 0.64));
+    next.max = Math.min(next.max, textLoad === 'xl' ? 126 : 138);
+    next.pad = Math.min(next.pad || 50, textLoad === 'xl' ? 40 : 46);
+  } else if (mediumText) {
+    next.w = Math.min(0.80, Math.max(next.w, 0.74));
+    next.h = Math.min(0.62, Math.max(next.h, 0.54));
+    next.max = Math.min(next.max, 150);
+    next.pad = Math.min(next.pad || 58, 56);
+  }
+  if (!longText && zone === 'bottom') {
+    next.y = Math.min(next.y, mode === 'event' || mode === 'alert' ? 0.40 : 0.42);
+    next.h = Math.min(next.h, mode === 'dopamine' ? 0.40 : 0.43);
+  } else if (!longText && zone === 'top') {
+    next.y = Math.max(next.y, mode === 'event' || mode === 'alert' ? 0.58 : 0.60);
+    next.h = Math.min(next.h, 0.42);
+  } else if (!longText && zone === 'right') {
+    next.y = Math.max(0.48, next.y);
+    next.w = Math.min(next.w, 0.54);
+    next.h = Math.min(next.h, 0.52);
+  } else if (!longText && zone === 'left') {
+    next.y = Math.max(0.48, next.y);
+    next.w = Math.min(next.w, 0.54);
+    next.h = Math.min(next.h, 0.52);
+  } else if (!longText && zone === 'corner') {
+    next.y = variant % 2 ? 0.42 : 0.58;
+    next.w = Math.min(next.w, 0.58);
+    next.h = Math.min(next.h, 0.46);
+  }
+  if (mode === 'notebook' || mode === 'info' || mode === 'minimal') {
+    next.max = Math.min(next.max, zone === 'bottom' ? 150 : 142);
+    next.pad = Math.max(52, next.pad || 64);
+  }
+  if (mode === 'dopamine') {
+    next.w = Math.max(next.w, 0.72);
+    next.max = Math.min(next.max, 138);
+  }
+  if (['film', 'dark', 'vapor', 'cyber', 'acid'].includes(mode)) {
+    next.max = Math.min(next.max, 146);
+    if (!longText) next.h = Math.min(next.h, 0.40);
+  }
+  return next;
+}
+
+function cleanTextBox(mode, variant) {
+  const base = { y: 0.50, w: 0.66, h: 0.56, max: 176, lh: 1.08 };
+  const fallback = [
+    { y: 0.42, w: 0.64, h: 0.42, max: 176, lh: 1.08, pad: 62 },
+    { y: 0.60, w: 0.60, h: 0.44, max: 168, lh: 1.12, pad: 62 },
+    { y: 0.48, w: 0.58, h: 0.48, max: 184, lh: 1.04, pad: 58 },
+    { y: 0.56, w: 0.68, h: 0.42, max: 158, lh: 1.14, pad: 64 },
+    { y: 0.44, w: 0.56, h: 0.46, max: 172, lh: 1.10, pad: 60 },
+  ];
+  const byMode = {
+    notebook: [
+      { y: 0.48, w: 0.62, h: 0.52, max: 174, lh: 1.10 },
+      { y: 0.46, w: 0.58, h: 0.50, max: 164, lh: 1.14 },
+      { y: 0.52, w: 0.60, h: 0.54, max: 176, lh: 1.06 },
+      { y: 0.48, w: 0.64, h: 0.50, max: 158, lh: 1.12 },
+      { y: 0.50, w: 0.56, h: 0.52, max: 166, lh: 1.12 },
+    ],
+    dopamine: [
+      { y: 0.50, w: 0.70, h: 0.52, max: 154, min: 18, lh: 1.10, pad: 58 },
+      { y: 0.49, w: 0.68, h: 0.52, max: 150, min: 18, lh: 1.12, pad: 58 },
+      { y: 0.52, w: 0.68, h: 0.54, max: 152, min: 18, lh: 1.10, pad: 58 },
+      { y: 0.48, w: 0.70, h: 0.50, max: 146, min: 18, lh: 1.12, pad: 58 },
+      { y: 0.51, w: 0.68, h: 0.54, max: 150, min: 18, lh: 1.10, pad: 58 },
+    ],
+    event: [
+      { y: 0.47, w: 0.62, h: 0.46, max: 170, lh: 1.08 },
+      { y: 0.50, w: 0.58, h: 0.48, max: 160, lh: 1.10 },
+      { y: 0.45, w: 0.60, h: 0.42, max: 168, lh: 1.06 },
+      { y: 0.51, w: 0.62, h: 0.50, max: 156, lh: 1.12 },
+      { y: 0.48, w: 0.58, h: 0.48, max: 164, lh: 1.10 },
+    ],
+  };
+  return (byMode[mode] && byMode[mode][variant]) || fallback[variant] || base;
+}
+
+function drawCleanDecor(ctx, mode, variant, bg, accent, textColor, spice, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  drawTextureBase(ctx, mode, variant, spice);
+  if (mode === 'notebook' || mode === 'minimal' || mode === 'info') {
+    ctx.strokeStyle = mode === 'info' ? 'rgba(0,0,0,.10)' : 'rgba(0,0,0,.07)';
+    ctx.lineWidth = 1.5;
+    for (let y = 150; y < H - 100; y += mode === 'info' ? 84 : 58) {
+      ctx.beginPath();
+      ctx.moveTo(70, y);
+      ctx.lineTo(W - 70, y);
+      ctx.stroke();
+    }
+    gdRoundRect(ctx, 70 + variant * 8, 95 + variant * 10, W - 140 - variant * 16, H - 190 - variant * 12, variant % 2 ? 28 : 8, 'rgba(255,255,255,.52)', mode === 'minimal' ? null : 'rgba(0,0,0,.78)', mode === 'minimal' ? 0 : 4);
+    drawReferenceStickerScene(ctx, mode, variant, spice, accent, textLoad);
+    drawHandMarkup(ctx, variant, spice, accent, textLoad);
+  }
+  if (mode === 'alert' || mode === 'event') {
+    drawCleanRibbon(ctx, variant, mode === 'event' ? '#FFEC47' : '#FFFFFF', textLoad);
+    drawCleanBurstLines(ctx, variant, mode === 'event' ? 'rgba(255,255,255,.20)' : 'rgba(0,0,0,.14)', textLoad);
+    drawReferenceStickerScene(ctx, mode, variant, spice, accent, textLoad);
+  }
+  if (mode === 'dopamine') {
+    drawDopamineDecor(ctx, variant, spice, textLoad);
+    drawReferenceStickerScene(ctx, mode, variant, spice, accent, textLoad);
+    const longText = textLoad === 'long' || textLoad === 'xl';
+    const shortPanel = [
+      [0.08, 0.23, 0.70, 0.48, 34],
+      [0.20, 0.32, 0.70, 0.44, 56],
+      [0.08, 0.38, 0.58, 0.42, 28],
+      [0.13, 0.18, 0.74, 0.46, 70],
+      [0.16, 0.28, 0.66, 0.50, 18],
+    ][variant];
+    gdRoundRect(ctx, W * (longText ? 0.06 : shortPanel[0]), H * (longText ? 0.20 : shortPanel[1]), W * (longText ? 0.88 : shortPanel[2]), H * (longText ? 0.60 : shortPanel[3]), longText ? 34 : shortPanel[4], 'rgba(255,255,255,.86)', 'rgba(0,0,0,.18)', 3);
+  }
+  if (['film', 'dark', 'vapor', 'cyber', 'acid'].includes(mode)) {
+    drawGlowDecor(ctx, variant, accent);
+    drawReferenceStickerScene(ctx, mode, variant, spice, accent, textLoad);
+  }
+  if (['memphis', 'pixel', 'poster', 'glass', 'aurora', 'threeD'].includes(mode)) {
+    drawGeometricDecor(ctx, mode, variant, accent, textLoad);
+    drawReferenceStickerScene(ctx, mode, variant, spice, accent, textLoad);
+  }
+  if (['chinese', 'japanese', 'cartoon'].includes(mode)) {
+    drawOrganicDecor(ctx, mode, variant, accent, textLoad);
+    drawReferenceStickerScene(ctx, mode, variant, spice, accent, textLoad);
+  }
+}
+
+function drawTextureBase(ctx, mode, variant, spice) {
+  const W = CANVAS_W, H = CANVAS_H;
+  if (['notebook', 'info', 'pixel'].includes(mode)) {
+    ctx.fillStyle = 'rgba(0,0,0,.08)';
+    const step = mode === 'pixel' ? 38 : 58;
+    for (let y = 24; y < H; y += step) {
+      for (let x = 24; x < W; x += step) {
+        if ((x + y + spice) % (step * 2) < step) {
+          ctx.beginPath();
+          ctx.arc(x, y, mode === 'pixel' ? 2.2 : 1.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    }
+  }
+  if (['poster', 'film', 'chinese'].includes(mode)) {
+    ctx.fillStyle = 'rgba(0,0,0,.035)';
+    for (let i = 0; i < 900; i++) {
+      const x = (i * 47 + spice * 31) % W;
+      const y = (i * 83 + variant * 97) % H;
+      ctx.fillRect(x, y, 2, 2);
+    }
+  }
+}
+
+function drawReferenceStickerScene(ctx, mode, variant, spice, accent, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const key = Math.abs(variant * 5 + spice) % 10;
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  const bottomY = textLoad === 'xl' ? 0.92 : textLoad === 'long' ? 0.89 : 0.78;
+  const topY = textLoad === 'xl' ? 0.07 : textLoad === 'long' ? 0.10 : 0.23;
+  const sideRight = longText ? (textLoad === 'xl' ? 0.88 : 0.84) : 0.72;
+  const sideLeft = longText ? (textLoad === 'xl' ? 0.12 : 0.16) : 0.28;
+  const topSideRight = longText ? (textLoad === 'xl' ? 0.88 : 0.84) : 0.73;
+  const topSideLeft = longText ? (textLoad === 'xl' ? 0.12 : 0.16) : 0.27;
+  const bottomRight = { x: W * sideRight, y: H * bottomY };
+  const topRight = { x: W * topSideRight, y: H * topY };
+  const bottomLeft = { x: W * sideLeft, y: H * bottomY };
+  const topLeft = { x: W * topSideLeft, y: H * topY };
+  const centerBottom = { x: W * 0.50, y: H * (textLoad === 'xl' ? 0.96 : longText ? 0.94 : 0.80) };
+  const sideHeroRight = { x: W * 0.78, y: H * 0.54 };
+  const sideHeroLeft = { x: W * 0.22, y: H * 0.54 };
+  const heroTop = { x: W * 0.50, y: H * 0.23 };
+  const heroBottom = { x: W * 0.50, y: H * 0.78 };
+  const cornerHero = { x: W * (variant % 2 ? 0.78 : 0.22), y: H * (variant % 3 ? 0.78 : 0.24) };
+  const compactPosByMode = {
+    notebook: [centerBottom, bottomRight, bottomLeft, centerBottom, topRight],
+    minimal: [bottomRight, bottomLeft, topRight, bottomRight, centerBottom],
+    info: [bottomRight, bottomRight, bottomLeft, bottomRight, topRight],
+    alert: [topRight, bottomRight, bottomLeft, topRight, bottomRight],
+    event: [bottomRight, topRight, bottomRight, bottomLeft, topRight],
+    dopamine: [bottomRight, topRight, bottomLeft, centerBottom, bottomRight],
+    cartoon: [bottomRight, centerBottom, bottomLeft, topRight, bottomRight],
+    japanese: [bottomRight, bottomLeft, topRight, bottomRight, centerBottom],
+    chinese: [bottomRight, bottomLeft, topRight, centerBottom, bottomRight],
+    film: [bottomRight, topRight, bottomLeft, bottomRight, centerBottom],
+    poster: [bottomRight, bottomLeft, topRight, centerBottom, bottomRight],
+    pixel: [bottomRight, topRight, bottomLeft, bottomRight, centerBottom],
+    glass: [bottomRight, bottomLeft, topRight, bottomRight, centerBottom],
+    aurora: [bottomRight, topRight, bottomLeft, centerBottom, bottomRight],
+    threeD: [bottomRight, topRight, bottomLeft, bottomRight, centerBottom],
+    memphis: [bottomRight, bottomLeft, topRight, bottomRight, centerBottom],
+    acid: [bottomRight, topRight, bottomLeft, centerBottom, bottomRight],
+    cyber: [bottomRight, topRight, bottomLeft, bottomRight, centerBottom],
+    vapor: [bottomRight, bottomLeft, topRight, centerBottom, bottomRight],
+    dark: [bottomRight, topRight, bottomLeft, bottomRight, centerBottom],
+  };
+  const heroPosByMode = {
+    notebook: [heroBottom, sideHeroRight, sideHeroLeft, centerBottom, heroTop],
+    minimal: [sideHeroRight, sideHeroLeft, heroTop, heroBottom, cornerHero],
+    info: [sideHeroRight, heroBottom, sideHeroLeft, cornerHero, heroTop],
+    alert: [heroTop, heroBottom, sideHeroLeft, sideHeroRight, cornerHero],
+    event: [heroBottom, heroTop, sideHeroRight, sideHeroLeft, cornerHero],
+    dopamine: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+    cartoon: [sideHeroRight, heroBottom, sideHeroLeft, heroTop, cornerHero],
+    japanese: [sideHeroRight, sideHeroLeft, heroTop, heroBottom, cornerHero],
+    chinese: [sideHeroRight, sideHeroLeft, heroTop, heroBottom, cornerHero],
+    film: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+    poster: [heroBottom, sideHeroLeft, heroTop, sideHeroRight, cornerHero],
+    pixel: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+    glass: [sideHeroRight, sideHeroLeft, heroTop, heroBottom, cornerHero],
+    aurora: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+    threeD: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+    memphis: [sideHeroRight, sideHeroLeft, heroTop, heroBottom, cornerHero],
+    acid: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+    cyber: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+    vapor: [sideHeroRight, sideHeroLeft, heroTop, heroBottom, cornerHero],
+    dark: [sideHeroRight, heroTop, sideHeroLeft, heroBottom, cornerHero],
+  };
+  const posByMode = textLoad === 'short' ? heroPosByMode : compactPosByMode;
+  const p = ((posByMode[mode] || posByMode.minimal)[variant] || (textLoad === 'short' ? sideHeroRight : bottomRight));
+  const sizeByMode = {
+    notebook: 390, minimal: 360, info: 410, alert: 390, event: 440, dopamine: 430,
+    cartoon: 450, japanese: 390, chinese: 380, film: 360, poster: 420, pixel: 360,
+    glass: 390, aurora: 420, threeD: 430, memphis: 400, acid: 390, cyber: 380,
+    vapor: 410, dark: 380,
+  };
+  const shortVariantScale = [1.24, 1.10, 1.32, 0.98, 1.18][variant] || 1.12;
+  const loadScale = textLoad === 'xl' ? 0.26 : textLoad === 'long' ? 0.40 : textLoad === 'medium' ? 0.62 : shortVariantScale;
+  const s = (sizeByMode[mode] || 245) * loadScale;
+  const stickerSet = {
+    notebook: ['eyesBig', 'paintRollerReal', 'thumb3d', 'catCard', 'dogFrame'],
+    minimal: ['thumb3d', 'paperCat', 'dogFrame', 'eyesBig', 'paintRollerReal'],
+    info: ['paperCat', 'catCard', 'dogFrame', 'eyesBig', 'thumb3d'],
+    alert: ['emojiAngry3d', 'fistComic', 'megaphonePlush', 'thumb3d', 'paintRollerReal'],
+    event: ['fistComic', 'emojiAngry3d', 'thumb3d', 'megaphonePlush', 'paintRollerReal'],
+    dopamine: ['megaphonePlush', 'paperCat', 'emojiAngry3d', 'thumb3d', 'fistComic'],
+    cartoon: ['paperCat', 'dogFrame', 'megaphonePlush', 'catCard', 'eyesBig'],
+    japanese: ['catCard', 'paperCat', 'paintRollerReal', 'eyesBig', 'thumb3d'],
+    chinese: ['dogFrame', 'catCard', 'paintRollerReal', 'thumb3d', 'paperCat'],
+    film: ['catCard', 'dogFrame', 'paintRollerReal', 'thumb3d', 'eyesBig'],
+    poster: ['paintRollerReal', 'thumb3d', 'dogFrame', 'catCard', 'megaphonePlush'],
+    pixel: ['eyesBig', 'paperCat', 'thumb3d', 'fistComic', 'dogFrame'],
+    glass: ['thumb3d', 'emojiAngry3d', 'paperCat', 'megaphonePlush', 'catCard'],
+    aurora: ['megaphonePlush', 'paperCat', 'thumb3d', 'emojiAngry3d', 'eyesBig'],
+    threeD: ['thumb3d', 'emojiAngry3d', 'megaphonePlush', 'paintRollerReal', 'fistComic'],
+    memphis: ['fistComic', 'paperCat', 'thumb3d', 'eyesBig', 'paintRollerReal'],
+    acid: ['emojiAngry3d', 'fistComic', 'thumb3d', 'eyesBig', 'megaphonePlush'],
+    cyber: ['fistComic', 'thumb3d', 'emojiAngry3d', 'megaphonePlush', 'eyesBig'],
+    vapor: ['megaphonePlush', 'emojiAngry3d', 'thumb3d', 'catCard', 'eyesBig'],
+    dark: ['dogFrame', 'catCard', 'thumb3d', 'fistComic', 'paintRollerReal'],
+  };
+  const set = stickerSet[mode] || stickerSet.minimal;
+  const typeIndex = textLoad === 'short' ? variant % set.length : key % set.length;
+  const type = set[typeIndex];
+  const shortRot = [-10, 7, -4, 12, -8][variant] || 0;
+  const rotate = ((textLoad === 'short' ? shortRot : [-5, 3, -2, 4, -4][variant]) + (spice % 3 - 1)) * Math.PI / 180;
+  ctx.save();
+  ctx.translate(p.x, p.y);
+  ctx.rotate(rotate);
+  if (type === 'thumb3d') drawThumb3DSticker(ctx, 0, 0, s * 1.02, accent);
+  else if (type === 'emojiAngry3d') drawEmojiAngry3DSticker(ctx, 0, 0, s * 0.98);
+  else if (type === 'fistComic') drawComicFistSticker(ctx, 0, 0, s * 1.08);
+  else if (type === 'eyesBig') drawBigEyesSticker(ctx, 0, 0, s * 1.04);
+  else if (type === 'paintRollerReal') drawPaintRollerRealSticker(ctx, 0, 0, s * 1.08);
+  else if (type === 'paperCat') drawPlumpCatSticker(ctx, 0, 0, s * 1.10);
+  else if (type === 'catCard') drawCatPhotoCardSticker(ctx, 0, 0, s * 1.06);
+  else if (type === 'dogFrame') drawDogFrameSticker(ctx, 0, 0, s * 1.16);
+  else if (type === 'megaphonePlush') drawPlushMegaphoneSticker(ctx, 0, 0, s * 1.10);
+  ctx.restore();
+  drawReferenceMarkupAccents(ctx, mode, variant, spice, accent);
+}
+
+function drawReferenceMarkupAccents(ctx, mode, variant, spice, accent) {
+  const W = CANVAS_W, H = CANVAS_H;
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const palette = ['#7B5CFF', '#65D84F', '#FF6B35', '#F8B93D', accent === '#FFFFFF' ? '#111111' : accent];
+  const color = palette[(variant + spice) % palette.length];
+  if (['notebook', 'minimal', 'info', 'dopamine', 'memphis', 'pixel'].includes(mode)) {
+    ctx.strokeStyle = withAlpha(color, 0.86);
+    ctx.lineWidth = 12;
+    const x = W * [0.21, 0.62, 0.24, 0.58, 0.20][variant];
+    const y = H * [0.30, 0.66, 0.34, 0.30, 0.68][variant];
+    ctx.beginPath();
+    ctx.ellipse(x, y, W * [0.20, 0.22, 0.18, 0.20, 0.24][variant], H * [0.075, 0.06, 0.08, 0.07, 0.06][variant], [-0.2, 0.12, -0.16, 0.08, -0.10][variant], 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  if (['alert', 'event', 'poster', 'threeD', 'glass', 'aurora'].includes(mode)) {
+    ctx.strokeStyle = withAlpha('#FF7A1A', 0.92);
+    ctx.lineWidth = 14;
+    const y = H * [0.60, 0.34, 0.66, 0.38, 0.62][variant];
+    ctx.beginPath();
+    ctx.moveTo(W * 0.38, y);
+    ctx.bezierCurveTo(W * 0.48, y + 42, W * 0.57, y - 42, W * 0.70, y);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawStickerShadow(ctx, x, y, w, h, blurColor) {
+  ctx.save();
+  ctx.fillStyle = blurColor || 'rgba(0,0,0,.14)';
+  ctx.beginPath();
+  ctx.ellipse(x, y, w, h, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawBrushStrokeBlob(ctx, x, y, w, h, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color;
+  for (let i = 0; i < 7; i++) {
+    const yy = -h * 0.40 + i * h * 0.14;
+    ctx.globalAlpha = 0.62 + (i % 2) * 0.20;
+    ctx.beginPath();
+    ctx.ellipse((i % 2 ? -w * 0.03 : w * 0.03), yy, w * (0.42 + (i % 3) * 0.03), h * 0.105, (i % 2 ? -0.03 : 0.04), 0, Math.PI * 2);
+    ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  ctx.fillStyle = withAlpha('#FFFFFF', 0.18);
+  for (let i = 0; i < 90; i++) {
+    const px = -w * 0.46 + ((i * 37) % Math.max(1, Math.floor(w * 0.92)));
+    const py = -h * 0.45 + ((i * 53) % Math.max(1, Math.floor(h * 0.90)));
+    ctx.fillRect(px, py, 3, 2);
+  }
+  ctx.restore();
+}
+
+function drawThumb3DSticker(ctx, x, y, s, accent) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawBrushStrokeBlob(ctx, -s * 0.05, -s * 0.10, s * 1.18, s * 0.48, '#FFE08A');
+  drawStickerShadow(ctx, s * 0.03, s * 0.30, s * 0.33, s * 0.09, 'rgba(0,0,0,.16)');
+  const skin = ctx.createLinearGradient(-s * 0.30, -s * 0.35, s * 0.34, s * 0.25);
+  skin.addColorStop(0, '#FFE1D4');
+  skin.addColorStop(0.45, '#FFB9A0');
+  skin.addColorStop(1, '#F18A6D');
+  ctx.fillStyle = skin;
+  ctx.strokeStyle = withAlpha('#D56D55', 0.42);
+  ctx.lineWidth = Math.max(2, s * 0.015);
+  gdRoundRect(ctx, -s * 0.20, -s * 0.12, s * 0.42, s * 0.38, s * 0.14, skin, null, 0);
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.08, -s * 0.16);
+  ctx.bezierCurveTo(-s * 0.03, -s * 0.45, s * 0.16, -s * 0.47, s * 0.20, -s * 0.30);
+  ctx.bezierCurveTo(s * 0.25, -s * 0.14, s * 0.12, -s * 0.05, s * 0.08, s * 0.05);
+  ctx.lineTo(-s * 0.08, s * 0.02);
+  ctx.closePath();
+  ctx.fill();
+  for (let i = 0; i < 4; i++) {
+    const fx = -s * 0.22 + i * s * 0.10;
+    const fy = -s * 0.03 + i * s * 0.016;
+    const fg = ctx.createLinearGradient(fx, fy - s * 0.12, fx + s * 0.10, fy + s * 0.10);
+    fg.addColorStop(0, '#FFE6DB');
+    fg.addColorStop(1, '#F29C80');
+    gdRoundRect(ctx, fx, fy, s * 0.13, s * 0.18, s * 0.06, fg, withAlpha('#C96852', 0.25), 2);
+    ctx.fillStyle = withAlpha('#FFFFFF', 0.42);
+    ctx.beginPath();
+    ctx.ellipse(fx + s * 0.05, fy + s * 0.05, s * 0.024, s * 0.038, -0.5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  const cuff = ctx.createLinearGradient(s * 0.14, s * 0.05, s * 0.48, s * 0.30);
+  cuff.addColorStop(0, '#4C92FF');
+  cuff.addColorStop(1, '#1B61D8');
+  gdRoundRect(ctx, s * 0.14, -s * 0.02, s * 0.26, s * 0.40, s * 0.04, cuff, withAlpha('#0B3E99', 0.45), 3);
+  ctx.fillStyle = withAlpha('#FFFFFF', 0.26);
+  ctx.fillRect(s * 0.19, s * 0.01, s * 0.045, s * 0.33);
+  ctx.restore();
+}
+
+function drawEmojiAngry3DSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawStickerShadow(ctx, 0, s * 0.30, s * 0.34, s * 0.08, 'rgba(0,0,0,.18)');
+  const face = ctx.createRadialGradient(-s * 0.14, -s * 0.15, s * 0.03, 0, 0, s * 0.44);
+  face.addColorStop(0, '#FFE777');
+  face.addColorStop(0.58, '#FFC233');
+  face.addColorStop(1, '#F47A5B');
+  ctx.fillStyle = face;
+  ctx.beginPath();
+  ctx.arc(0, 0, s * 0.34, 0, Math.PI * 2);
+  ctx.fill();
+  const puff = ctx.createRadialGradient(0, 0, 0, 0, 0, s * 0.19);
+  puff.addColorStop(0, '#FFFFFF');
+  puff.addColorStop(0.45, '#EEC8FF');
+  puff.addColorStop(1, '#A95CFF');
+  for (const side of [-1, 1]) {
+    ctx.save();
+    ctx.translate(side * s * 0.28, s * 0.08);
+    ctx.rotate(side * -0.55);
+    ctx.fillStyle = puff;
+    ctx.beginPath();
+    ctx.arc(-s * 0.08, 0, s * 0.12, 0, Math.PI * 2);
+    ctx.arc(s * 0.04, -s * 0.01, s * 0.13, 0, Math.PI * 2);
+    ctx.arc(s * 0.15, s * 0.08, s * 0.10, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.strokeStyle = '#44314D';
+  ctx.lineWidth = Math.max(5, s * 0.035);
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.20, -s * 0.16);
+  ctx.quadraticCurveTo(-s * 0.11, -s * 0.24, -s * 0.03, -s * 0.13);
+  ctx.moveTo(s * 0.03, -s * 0.13);
+  ctx.quadraticCurveTo(s * 0.12, -s * 0.24, s * 0.22, -s * 0.16);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(0, s * 0.05, s * 0.13, Math.PI * 1.10, Math.PI * 1.90);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawComicFistSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawBurstBlob(ctx, 0, 0, s * 1.22, '#FFFFFF', '#FFEC47');
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(4, s * 0.026);
+  for (let i = 0; i < 18; i++) {
+    const a = i / 18 * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a) * s * 0.42, Math.sin(a) * s * 0.34);
+    ctx.lineTo(Math.cos(a) * s * 0.62, Math.sin(a) * s * 0.50);
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#FF824A';
+  ctx.beginPath();
+  for (let i = 0; i < 16; i++) {
+    const r = i % 2 ? s * 0.42 : s * 0.60;
+    const a = i / 16 * Math.PI * 2;
+    const px = Math.cos(a) * r;
+    const py = Math.sin(a) * r * 0.72;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#FFEC47';
+  ctx.beginPath();
+  for (let i = 0; i < 16; i++) {
+    const r = i % 2 ? s * 0.34 : s * 0.49;
+    const a = i / 16 * Math.PI * 2 + 0.08;
+    const px = Math.cos(a) * r;
+    const py = Math.sin(a) * r * 0.70;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fill();
+  const skin = ctx.createLinearGradient(-s * 0.38, -s * 0.22, s * 0.34, s * 0.32);
+  skin.addColorStop(0, '#FFE2C8');
+  skin.addColorStop(0.56, '#F4B08C');
+  skin.addColorStop(1, '#D97A5F');
+  ctx.fillStyle = skin;
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(5, s * 0.026);
+  gdRoundRect(ctx, -s * 0.33, -s * 0.06, s * 0.66, s * 0.34, s * 0.12, skin, '#111111', ctx.lineWidth);
+  for (let i = 0; i < 4; i++) {
+    const fx = -s * 0.32 + i * s * 0.17;
+    gdRoundRect(ctx, fx, -s * 0.23, s * 0.18, s * 0.32, s * 0.08, skin, '#111111', ctx.lineWidth);
+    ctx.fillStyle = withAlpha('#FFFFFF', 0.56);
+    ctx.beginPath();
+    ctx.ellipse(fx + s * 0.10, -s * 0.13, s * 0.024, s * 0.052, -0.4, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = skin;
+  }
+  ctx.restore();
+}
+
+function drawBigEyesSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawStickerShadow(ctx, 0, s * 0.24, s * 0.46, s * 0.07, 'rgba(0,0,0,.10)');
+  ctx.fillStyle = '#FFFFFF';
+  ctx.strokeStyle = '#050505';
+  ctx.lineWidth = Math.max(9, s * 0.060);
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.ellipse(side * s * 0.18, 0, s * 0.22, s * 0.28, side * -0.08, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = '#050505';
+    ctx.beginPath();
+    ctx.arc(side * s * 0.18 + s * 0.045, s * 0.02, s * 0.105, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#FFFFFF';
+    for (let i = 0; i < 4; i++) {
+      ctx.save();
+      ctx.translate(side * s * 0.18 + (i - 1.5) * s * 0.08, -s * 0.25 - Math.abs(i - 1.5) * s * 0.02);
+      ctx.rotate((i - 1.5) * 0.28);
+      ctx.strokeStyle = '#050505';
+      ctx.lineWidth = Math.max(6, s * 0.04);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(0, -s * 0.12);
+      ctx.stroke();
+      ctx.restore();
+    }
+  }
+  ctx.restore();
+}
+
+function drawPaintRollerRealSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawBrushStrokeBlob(ctx, -s * 0.12, -s * 0.12, s * 1.05, s * 0.36, '#FFE16D');
+  drawStickerShadow(ctx, s * 0.08, s * 0.38, s * 0.34, s * 0.07, 'rgba(0,0,0,.15)');
+  ctx.save();
+  ctx.rotate(-0.22);
+  const roller = ctx.createLinearGradient(-s * 0.34, -s * 0.18, s * 0.26, s * 0.10);
+  roller.addColorStop(0, '#FFCA58');
+  roller.addColorStop(0.48, '#F49A3B');
+  roller.addColorStop(1, '#E07325');
+  gdRoundRect(ctx, -s * 0.38, -s * 0.23, s * 0.72, s * 0.22, s * 0.11, roller, null, 0);
+  ctx.fillStyle = withAlpha('#FFFFFF', 0.20);
+  for (let i = 0; i < 7; i++) {
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.30 + i * s * 0.09, -s * 0.18);
+    ctx.lineTo(-s * 0.24 + i * s * 0.09, -s * 0.04);
+    ctx.strokeStyle = withAlpha('#B94E1F', 0.20);
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#8F9AA1';
+  ctx.beginPath();
+  ctx.arc(s * 0.36, -s * 0.12, s * 0.055, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#8D989F';
+  ctx.lineWidth = Math.max(9, s * 0.035);
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(s * 0.36, -s * 0.12);
+  ctx.bezierCurveTo(s * 0.56, -s * 0.08, s * 0.42, s * 0.22, s * 0.28, s * 0.25);
+  ctx.lineTo(s * 0.20, s * 0.52);
+  ctx.stroke();
+  const handle = ctx.createLinearGradient(s * 0.06, s * 0.36, s * 0.28, s * 0.76);
+  handle.addColorStop(0, '#F8C630');
+  handle.addColorStop(1, '#F28B2A');
+  gdRoundRect(ctx, s * 0.05, s * 0.34, s * 0.22, s * 0.46, s * 0.03, handle, null, 0);
+  ctx.fillStyle = '#C9CED1';
+  ctx.beginPath();
+  ctx.arc(s * 0.16, s * 0.70, s * 0.035, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawPlumpCatSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawStickerShadow(ctx, 0, s * 0.34, s * 0.34, s * 0.06, 'rgba(0,0,0,.18)');
+  ctx.fillStyle = '#FFFFFF';
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(4, s * 0.024);
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.30, s * 0.14);
+  ctx.bezierCurveTo(-s * 0.45, -s * 0.12, -s * 0.30, -s * 0.40, -s * 0.05, -s * 0.35);
+  ctx.bezierCurveTo(s * 0.24, -s * 0.47, s * 0.46, -s * 0.16, s * 0.35, s * 0.17);
+  ctx.bezierCurveTo(s * 0.25, s * 0.42, -s * 0.16, s * 0.42, -s * 0.30, s * 0.14);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#111111';
+  ctx.beginPath();
+  ctx.arc(s * 0.16, -s * 0.15, s * 0.16, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#8ED8FF';
+  ctx.beginPath();
+  ctx.arc(-s * 0.19, -s * 0.12, s * 0.10, 0, Math.PI * 2);
+  ctx.arc(-s * 0.29, s * 0.10, s * 0.08, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#FFC0A6';
+  ctx.beginPath();
+  ctx.arc(-s * 0.12, s * 0.01, s * 0.035, 0, Math.PI * 2);
+  ctx.arc(s * 0.10, s * 0.01, s * 0.035, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#111111';
+  ctx.beginPath();
+  ctx.arc(-s * 0.07, -s * 0.05, s * 0.018, 0, Math.PI * 2);
+  ctx.arc(s * 0.07, -s * 0.05, s * 0.018, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(2, s * 0.012);
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 0.01);
+  ctx.quadraticCurveTo(-s * 0.02, s * 0.04, -s * 0.06, s * 0.02);
+  ctx.moveTo(0, -s * 0.01);
+  ctx.quadraticCurveTo(s * 0.02, s * 0.04, s * 0.06, s * 0.02);
+  ctx.stroke();
+  ctx.fillStyle = '#FFE58C';
+  ctx.beginPath();
+  ctx.arc(s * 0.02, -s * 0.39, s * 0.065, 0, Math.PI * 2);
+  ctx.arc(-s * 0.18, -s * 0.33, s * 0.055, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#7B6CFF';
+  ctx.lineWidth = Math.max(3, s * 0.014);
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.09, s * 0.17);
+  ctx.bezierCurveTo(-s * 0.03, s * 0.22, s * 0.04, s * 0.23, s * 0.11, s * 0.18);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawCatPhotoCardSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  gdRoundRect(ctx, -s * 0.42, -s * 0.34, s * 0.84, s * 0.70, s * 0.04, '#FFFFFF', withAlpha('#111111', 0.18), 3);
+  ctx.save();
+  ctx.rotate(-0.12);
+  gdRoundRect(ctx, -s * 0.28, -s * 0.44, s * 0.56, s * 0.12, s * 0.02, withAlpha('#F3C879', 0.78), null, 0);
+  ctx.restore();
+  drawPlumpCatSticker(ctx, -s * 0.02, s * 0.04, s * 0.72);
+  ctx.strokeStyle = withAlpha('#111111', 0.82);
+  ctx.lineWidth = Math.max(4, s * 0.020);
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.35, -s * 0.21);
+  ctx.quadraticCurveTo(-s * 0.21, -s * 0.30, -s * 0.06, -s * 0.25);
+  ctx.moveTo(s * 0.23, -s * 0.28);
+  ctx.quadraticCurveTo(s * 0.34, -s * 0.20, s * 0.26, -s * 0.08);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawDogFrameSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawStickerShadow(ctx, 0, s * 0.36, s * 0.36, s * 0.07, 'rgba(0,0,0,.12)');
+  ctx.fillStyle = '#FFFFFF';
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(5, s * 0.026);
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.42, -s * 0.24);
+  ctx.quadraticCurveTo(-s * 0.25, -s * 0.46, 0, -s * 0.36);
+  ctx.quadraticCurveTo(s * 0.24, -s * 0.46, s * 0.42, -s * 0.24);
+  ctx.lineTo(s * 0.35, s * 0.30);
+  ctx.quadraticCurveTo(s * 0.08, s * 0.45, -s * 0.28, s * 0.30);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#D49251';
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.34, -s * 0.24);
+  ctx.quadraticCurveTo(-s * 0.20, -s * 0.48, -s * 0.07, -s * 0.28);
+  ctx.lineTo(-s * 0.20, -s * 0.02);
+  ctx.closePath();
+  ctx.fill();
+  ctx.beginPath();
+  ctx.moveTo(s * 0.32, -s * 0.24);
+  ctx.quadraticCurveTo(s * 0.20, -s * 0.48, s * 0.06, -s * 0.28);
+  ctx.lineTo(s * 0.20, -s * 0.02);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#111111';
+  ctx.beginPath();
+  ctx.arc(-s * 0.10, -s * 0.04, s * 0.023, 0, Math.PI * 2);
+  ctx.arc(s * 0.12, -s * 0.04, s * 0.023, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(0, s * 0.06, s * 0.055, s * 0.038, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(4, s * 0.018);
+  ctx.beginPath();
+  ctx.arc(-s * 0.10, -s * 0.05, s * 0.13, 0, Math.PI * 2);
+  ctx.arc(s * 0.12, -s * 0.05, s * 0.13, 0, Math.PI * 2);
+  ctx.moveTo(s * 0.02, -s * 0.05);
+  ctx.lineTo(s * 0.00, -s * 0.05);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawPlushMegaphoneSticker(ctx, x, y, s) {
+  ctx.save();
+  ctx.translate(x, y);
+  drawStickerShadow(ctx, 0, s * 0.35, s * 0.36, s * 0.08, 'rgba(0,0,0,.15)');
+  drawBurstBlob(ctx, -s * 0.22, -s * 0.10, s * 0.58, '#C9F36A', '#FFFFFF');
+  const plush = ctx.createRadialGradient(-s * 0.06, -s * 0.05, s * 0.02, 0, 0, s * 0.42);
+  plush.addColorStop(0, '#FFF36F');
+  plush.addColorStop(0.72, '#FFD92E');
+  plush.addColorStop(1, '#E6B80A');
+  ctx.fillStyle = plush;
+  ctx.beginPath();
+  ctx.arc(s * 0.10, s * 0.02, s * 0.34, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = withAlpha('#FFFFFF', 0.20);
+  for (let i = 0; i < 100; i++) {
+    const a = i * 2.399;
+    const r = Math.sqrt(i / 100) * s * 0.30;
+    ctx.fillRect(s * 0.10 + Math.cos(a) * r, s * 0.02 + Math.sin(a) * r, 2, 2);
+  }
+  ctx.fillStyle = '#E65531';
+  ctx.beginPath();
+  ctx.arc(s * 0.12, s * 0.08, s * 0.13, 0, Math.PI);
+  ctx.lineTo(s * 0.25, s * 0.08);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = '#4A2B1A';
+  ctx.lineWidth = Math.max(5, s * 0.025);
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.arc(s * 0.03, -s * 0.10, s * 0.08, 0.15 * Math.PI, 0.85 * Math.PI);
+  ctx.moveTo(s * 0.23, -s * 0.10);
+  ctx.arc(s * 0.25, -s * 0.10, s * 0.08, 0.15 * Math.PI, 0.85 * Math.PI);
+  ctx.stroke();
+  ctx.fillStyle = '#FFC870';
+  ctx.beginPath();
+  ctx.arc(-s * 0.10, s * 0.08, s * 0.055, 0, Math.PI * 2);
+  ctx.arc(s * 0.28, s * 0.08, s * 0.055, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.save();
+  ctx.rotate(0.06);
+  const cone = ctx.createRadialGradient(-s * 0.38, -s * 0.14, 0, -s * 0.20, -s * 0.12, s * 0.30);
+  cone.addColorStop(0, '#FFFFFF');
+  cone.addColorStop(0.62, '#F6D9D4');
+  cone.addColorStop(1, '#F26A45');
+  ctx.fillStyle = cone;
+  ctx.strokeStyle = withAlpha('#D45032', 0.34);
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.58, -s * 0.20);
+  ctx.lineTo(-s * 0.18, -s * 0.07);
+  ctx.lineTo(-s * 0.18, s * 0.12);
+  ctx.lineTo(-s * 0.58, s * 0.28);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  gdRoundRect(ctx, -s * 0.24, -s * 0.07, s * 0.12, s * 0.26, s * 0.04, '#F06543', null, 0);
+  ctx.restore();
+  ctx.restore();
+}
+
+function drawHandMarkup(ctx, variant, spice, accent, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const ink = accent === '#FFFFFF' ? '#111111' : accent;
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  const scale = textLoad === 'xl' ? 0.42 : textLoad === 'long' ? 0.56 : textLoad === 'medium' ? 0.76 : 1;
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = ink;
+  ctx.lineWidth = 8 * scale;
+  ctx.globalAlpha = longText ? 0.46 : 0.82;
+
+  const circleSets = [
+    [W * (longText ? 0.14 : 0.18), H * (longText ? 0.16 : 0.22), W * 0.18, H * 0.12],
+    [W * (longText ? 0.80 : 0.74), H * (longText ? 0.16 : 0.22), W * 0.16, H * 0.11],
+    [W * (longText ? 0.14 : 0.18), H * (longText ? 0.86 : 0.74), W * 0.18, H * 0.10],
+    [W * (longText ? 0.80 : 0.74), H * (longText ? 0.86 : 0.73), W * 0.18, H * 0.12],
+    [W * 0.50, H * (longText ? 0.91 : 0.78), W * 0.22, H * 0.09],
+  ];
+  const c = circleSets[(variant + spice) % circleSets.length];
+  for (let i = 0; i < 2; i++) {
+    ctx.beginPath();
+    ctx.ellipse(c[0] + i * 5, c[1] - i * 3, c[2] * scale / 2, c[3] * scale / 2, (-8 + spice + i * 9) * Math.PI / 180, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  ctx.strokeStyle = withAlpha(ink, 0.65);
+  ctx.lineWidth = 10 * scale;
+  const uy = H * (longText ? [0.10, 0.90, 0.12, 0.88, 0.90][variant] : [0.31, 0.69, 0.34, 0.72, 0.66][variant]);
+  ctx.beginPath();
+  ctx.moveTo(W * (longText ? 0.12 : 0.18), uy);
+  ctx.bezierCurveTo(W * 0.34, uy + 28 * scale, W * 0.54, uy - 32 * scale, W * (longText ? 0.88 : 0.78), uy + 14 * scale);
+  ctx.stroke();
+
+  ctx.strokeStyle = withAlpha('#111111', 0.38);
+  ctx.lineWidth = 5 * scale;
+  const ax = W * [0.82, 0.16, 0.83, 0.18, 0.78][variant];
+  const ay = H * (longText ? [0.12, 0.88, 0.88, 0.12, 0.10][variant] : [0.36, 0.62, 0.62, 0.36, 0.26][variant]);
+  ctx.beginPath();
+  ctx.moveTo(ax, ay);
+  ctx.quadraticCurveTo(ax + (variant % 2 ? 120 : -120) * scale, ay + 30 * scale, ax + (variant % 2 ? 76 : -76) * scale, ay + 120 * scale);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(ax + (variant % 2 ? 76 : -76) * scale, ay + 120 * scale);
+  ctx.lineTo(ax + (variant % 2 ? 38 : -38) * scale, ay + 92 * scale);
+  ctx.moveTo(ax + (variant % 2 ? 76 : -76) * scale, ay + 120 * scale);
+  ctx.lineTo(ax + (variant % 2 ? 104 : -104) * scale, ay + 78 * scale);
+  ctx.stroke();
+
+  drawSunDoodle(ctx, W * [0.13, 0.84, 0.15, 0.86, 0.12][variant], H * [0.84, 0.16, 0.18, 0.83, 0.18][variant], (34 + spice) * scale, ink);
+  ctx.restore();
+}
+
+function drawEmotionPack(ctx, variant, spice, kind) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const packs = {
+    impact: ['fist', 'thumb', 'eyes', 'burst', 'emoji'],
+    alert: ['thumb', 'megaphone', 'emoji', 'tape', 'flower'],
+    glow: ['eyes', 'thumb', 'flower', 'leaf', 'person'],
+    playful: ['emoji', 'cat', 'dog', 'paint', 'tape'],
+    soft: ['cat', 'dog', 'flower', 'leaf', 'person'],
+  };
+  const palette = {
+    impact: ['#FFEC47', '#FFFFFF', '#111111', '#FF7A59'],
+    alert: ['#FFFFFF', '#FFEC47', '#FF6B9D', '#111111'],
+    glow: ['#00F5FF', '#FF8BD1', '#FFFFFF', '#B8FF6A'],
+    playful: ['#FFEC47', '#FF6B9D', '#4ECDC4', '#FFFFFF'],
+    soft: ['#FFE0EC', '#A8D890', '#FFFFFF', '#8BB8FF'],
+  }[kind] || ['#FFFFFF', '#FFEC47', '#FF6B9D', '#4ECDC4'];
+  const pos = [
+    [W * 0.16, H * 0.16, 92],
+    [W * 0.84, H * 0.16, 88],
+    [W * 0.15, H * 0.83, 96],
+    [W * 0.84, H * 0.82, 94],
+    [W * 0.50, H * 0.13, 72],
+    [W * 0.50, H * 0.88, 72],
+  ];
+  const shapes = packs[kind] || packs.playful;
+  const count = kind === 'soft' ? 4 : 5;
+  for (let i = 0; i < count; i++) {
+    const shape = shapes[(i + variant + spice) % shapes.length];
+    const p = pos[(i * 2 + variant + spice) % pos.length];
+    drawDecorShape(ctx, shape, p[0], p[1], p[2] + ((spice + i) % 3) * 12, palette, variant + i + spice);
+  }
+}
+
+function drawDecorShape(ctx, shape, x, y, s, colors, seed) {
+  const c0 = colors[seed % colors.length];
+  const c1 = colors[(seed + 1) % colors.length];
+  const c2 = colors[(seed + 2) % colors.length];
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(((seed % 9) - 4) * Math.PI / 40);
+  if (shape === 'thumb') drawThumbIcon(ctx, 0, 0, s, c0, c1);
+  else if (shape === 'emoji') drawEmojiFaceIcon(ctx, 0, 0, s, c0);
+  else if (shape === 'eyes') drawEyesIcon(ctx, 0, 0, s, c0);
+  else if (shape === 'fist') drawFistIcon(ctx, 0, 0, s, c0);
+  else if (shape === 'megaphone') drawMegaphoneIcon(ctx, 0, 0, s, c0, c1);
+  else if (shape === 'paint') drawPaintRollerIcon(ctx, 0, 0, s, c0, c1);
+  else if (shape === 'tape') drawTapeCardIcon(ctx, 0, 0, s, c0, c1);
+  else if (shape === 'cat') drawPetIcon(ctx, 'cat', 0, 0, s * 0.86, c0);
+  else if (shape === 'dog') drawPetIcon(ctx, 'dog', 0, 0, s * 0.86, c0);
+  else if (shape === 'flower') drawFlowerIcon(ctx, 0, 0, s * 0.82, c0);
+  else if (shape === 'leaf') drawLeafIcon(ctx, 0, 0, s * 0.88, c0);
+  else if (shape === 'person') drawPersonIcon(ctx, 0, 0, s * 0.92, c0);
+  else drawBurstBlob(ctx, 0, 0, s, c0, c2);
+  ctx.restore();
+}
+
+function drawThumbIcon(ctx, x, y, s, color, cuffColor) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color;
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.045);
+  gdRoundRect(ctx, -s * 0.18, -s * 0.05, s * 0.46, s * 0.44, s * 0.12, color, '#111111', ctx.lineWidth);
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.12, -s * 0.08);
+  ctx.quadraticCurveTo(s * 0.02, -s * 0.50, s * 0.23, -s * 0.47);
+  ctx.quadraticCurveTo(s * 0.34, -s * 0.44, s * 0.30, -s * 0.27);
+  ctx.lineTo(s * 0.23, -s * 0.04);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = cuffColor;
+  gdRoundRect(ctx, -s * 0.46, s * 0.12, s * 0.30, s * 0.22, s * 0.07, cuffColor, '#111111', ctx.lineWidth);
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.08 + i * s * 0.13, s * 0.06);
+    ctx.lineTo(-s * 0.08 + i * s * 0.13, s * 0.28);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawEmojiFaceIcon(ctx, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color === '#FFFFFF' ? '#FFEC47' : color;
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.045);
+  ctx.beginPath();
+  ctx.arc(0, 0, s * 0.36, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#111111';
+  ctx.beginPath();
+  ctx.arc(-s * 0.13, -s * 0.06, s * 0.04, 0, Math.PI * 2);
+  ctx.arc(s * 0.13, -s * 0.06, s * 0.04, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.035);
+  ctx.beginPath();
+  ctx.arc(0, s * 0.02, s * 0.17, 0.15 * Math.PI, 0.85 * Math.PI);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawEyesIcon(ctx, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = '#FFFFFF';
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.045);
+  for (const dx of [-s * 0.18, s * 0.18]) {
+    ctx.beginPath();
+    ctx.ellipse(dx, 0, s * 0.17, s * 0.24, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = color === '#FFFFFF' ? '#111111' : color;
+    ctx.beginPath();
+    ctx.arc(dx + s * 0.04, s * 0.02, s * 0.07, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#FFFFFF';
+  }
+  ctx.restore();
+}
+
+function drawFistIcon(ctx, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color;
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.045);
+  for (let i = 0; i < 4; i++) {
+    gdRoundRect(ctx, -s * 0.35 + i * s * 0.17, -s * 0.28 + (i % 2) * s * 0.03, s * 0.18, s * 0.30, s * 0.07, color, '#111111', ctx.lineWidth);
+  }
+  gdRoundRect(ctx, -s * 0.33, -s * 0.02, s * 0.64, s * 0.38, s * 0.10, color, '#111111', ctx.lineWidth);
+  ctx.restore();
+}
+
+function drawMegaphoneIcon(ctx, x, y, s, color, accent) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.045);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.32, -s * 0.12);
+  ctx.lineTo(s * 0.22, -s * 0.32);
+  ctx.lineTo(s * 0.22, s * 0.32);
+  ctx.lineTo(-s * 0.32, s * 0.12);
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  gdRoundRect(ctx, -s * 0.44, -s * 0.10, s * 0.18, s * 0.20, s * 0.05, accent, '#111111', ctx.lineWidth);
+  gdRoundRect(ctx, -s * 0.16, s * 0.10, s * 0.20, s * 0.30, s * 0.05, accent, '#111111', ctx.lineWidth);
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(s * 0.30, -s * 0.20 + i * s * 0.20);
+    ctx.lineTo(s * 0.45, -s * 0.28 + i * s * 0.28);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawPaintRollerIcon(ctx, x, y, s, color, accent) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.045);
+  gdRoundRect(ctx, -s * 0.34, -s * 0.34, s * 0.54, s * 0.22, s * 0.08, color, '#111111', ctx.lineWidth);
+  ctx.beginPath();
+  ctx.moveTo(s * 0.20, -s * 0.22);
+  ctx.lineTo(s * 0.34, -s * 0.22);
+  ctx.lineTo(s * 0.34, s * 0.16);
+  ctx.lineTo(s * 0.10, s * 0.16);
+  ctx.stroke();
+  gdRoundRect(ctx, -s * 0.02, s * 0.10, s * 0.24, s * 0.42, s * 0.07, accent, '#111111', ctx.lineWidth);
+  ctx.fillStyle = withAlpha(color, 0.58);
+  ctx.beginPath();
+  ctx.moveTo(-s * 0.28, -s * 0.10);
+  ctx.bezierCurveTo(-s * 0.38, s * 0.08, -s * 0.24, s * 0.16, -s * 0.34, s * 0.34);
+  ctx.lineTo(-s * 0.08, s * 0.34);
+  ctx.bezierCurveTo(s * 0.00, s * 0.14, -s * 0.12, s * 0.02, s * 0.00, -s * 0.10);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawTapeCardIcon(ctx, x, y, s, color, accent) {
+  ctx.save();
+  ctx.translate(x, y);
+  gdRoundRect(ctx, -s * 0.36, -s * 0.24, s * 0.72, s * 0.48, s * 0.05, withAlpha(color, 0.84), '#111111', Math.max(3, s * 0.04));
+  ctx.rotate(-0.08);
+  gdRoundRect(ctx, -s * 0.24, -s * 0.36, s * 0.48, s * 0.14, s * 0.03, withAlpha(accent, 0.72), null, 0);
+  ctx.strokeStyle = withAlpha('#111111', 0.20);
+  ctx.lineWidth = 3;
+  for (let i = 0; i < 3; i++) {
+    ctx.beginPath();
+    ctx.moveTo(-s * 0.22, -s * 0.02 + i * s * 0.10);
+    ctx.lineTo(s * 0.22, -s * 0.02 + i * s * 0.10);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawBurstBlob(ctx, x, y, s, color, accent) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color;
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(3, s * 0.04);
+  ctx.beginPath();
+  for (let i = 0; i < 14; i++) {
+    const r = i % 2 ? s * 0.24 : s * 0.42;
+    const a = i / 14 * Math.PI * 2;
+    const px = Math.cos(a) * r;
+    const py = Math.sin(a) * r;
+    if (i === 0) ctx.moveTo(px, py);
+    else ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = withAlpha(accent, 0.75);
+  ctx.beginPath();
+  ctx.arc(0, 0, s * 0.14, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawSunDoodle(ctx, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = Math.max(3, s * 0.10);
+  ctx.beginPath();
+  ctx.arc(0, 0, s * 0.32, 0, Math.PI * 2);
+  ctx.stroke();
+  for (let i = 0; i < 10; i++) {
+    const a = i / 10 * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a) * s * 0.48, Math.sin(a) * s * 0.48);
+    ctx.lineTo(Math.cos(a) * s * 0.72, Math.sin(a) * s * 0.72);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawCleanRibbon(ctx, variant, color, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  const scale = textLoad === 'xl' ? 0.46 : textLoad === 'long' ? 0.60 : textLoad === 'medium' ? 0.82 : 1;
+  const yPos = longText ? (textLoad === 'xl' ? 0.92 : 0.88) : [0.76, 0.72, 0.70, 0.78, 0.74][variant];
+  ctx.save();
+  ctx.translate(W * [0.50, 0.48, 0.54, 0.50, 0.46][variant], H * yPos);
+  ctx.rotate([-2, 3, -5, 0, 4][variant] * Math.PI / 180);
+  gdRoundRect(ctx, -W * 0.28 * scale, -36 * scale, W * 0.56 * scale, 72 * scale, 10, color, 'rgba(0,0,0,.15)', longText ? 1 : 2);
+  ctx.restore();
+}
+
+function drawCleanBurstLines(ctx, variant, color, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  const lineCount = textLoad === 'xl' ? 6 : textLoad === 'long' ? 9 : textLoad === 'medium' ? 14 : 20;
+  const inner = longText ? 760 : 500;
+  const outer = longText ? 980 : 760;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = longText ? 2.5 : 5;
+  ctx.translate(W / 2, H / 2);
+  for (let i = 0; i < lineCount; i++) {
+    const a = (i / lineCount) * Math.PI * 2 + variant * 0.12;
+    ctx.beginPath();
+    ctx.moveTo(Math.cos(a) * inner, Math.sin(a) * (inner + 150));
+    ctx.lineTo(Math.cos(a) * outer, Math.sin(a) * (outer + 220));
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawDopamineDecor(ctx, variant, spice, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const colors = [
+    ['#FFE066', '#4ECDC4', '#FF6B9D', '#FFFFFF'],
+    ['#FF6B9D', '#FFE066', '#7FCD91', '#FFFFFF'],
+    ['#9B5DE5', '#00BBF9', '#FEE440', '#FFFFFF'],
+    ['#FF8C42', '#4ECDC4', '#FFE066', '#FFFFFF'],
+    ['#7FCD91', '#FF6B9D', '#4ECDC4', '#FFFFFF'],
+  ][variant];
+  const count = textLoad === 'xl' ? 3 : textLoad === 'long' ? 6 : textLoad === 'medium' ? 10 : 18 + variant * 2;
+  const iconScale = textLoad === 'xl' ? 0.30 : textLoad === 'long' ? 0.42 : textLoad === 'medium' ? 0.62 : [1.05, 1.18, 0.96, 1.28, 1.10][variant];
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  ctx.save();
+  for (let i = 0; i < count; i++) {
+    const rawX = (80 + i * 149 + variant * 67 + spice * 41) % W;
+    const rawY = (105 + i * 197 + variant * 53 + spice * 83) % H;
+    const textMarginX = longText ? 0.08 : 0.13;
+    const textTop = longText ? 0.16 : 0.25;
+    const textBottom = longText ? 0.84 : 0.76;
+    const inTextZone = rawX > W * textMarginX && rawX < W * (1 - textMarginX) && rawY > H * textTop && rawY < H * textBottom;
+    const x = inTextZone ? (rawX < W / 2 ? W * 0.045 : W * 0.955) : rawX;
+    const y = inTextZone ? Math.max(H * 0.045, Math.min(H * 0.955, rawY + (rawY < H / 2 ? -230 : 230))) : rawY;
+    const size = (46 + ((i + spice + variant) % 4) * 12) * iconScale;
+    const shapePool = ['flower', 'leaf', 'cat', 'dog', 'emoji', 'thumb', 'eyes', 'paint'];
+    drawDecorShape(ctx, shapePool[(i + variant + spice) % shapePool.length], x, y, size, colors, i + spice);
+  }
+  ctx.strokeStyle = withAlpha('#111111', 0.16);
+  ctx.lineWidth = longText ? 2 : 4;
+  const waveCount = textLoad === 'xl' ? 2 : textLoad === 'long' ? 3 : textLoad === 'medium' ? 5 : 6 + variant;
+  for (let i = 0; i < waveCount; i++) {
+    const y = H * (longText ? (0.06 + i * 0.42) : (0.08 + i * 0.12));
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.bezierCurveTo(W * 0.26, y + 24, W * 0.62, y - 24, W, y + 14);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function drawGlowDecor(ctx, variant, accent) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const colors = [accent, '#FFFFFF', '#FFEC47', '#FF8BD1', '#00F5FF'];
+  for (let i = 0; i < 5; i++) {
+    const x = W * (0.18 + (i % 3) * 0.32);
+    const y = H * (0.18 + Math.floor(i / 3) * 0.58);
+    const g = ctx.createRadialGradient(x, y, 0, x, y, 160 + i * 18);
+    g.addColorStop(0, withAlpha(colors[(variant + i) % colors.length], 0.46));
+    g.addColorStop(1, withAlpha(colors[(variant + i) % colors.length], 0));
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, 210, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+function drawGeometricDecor(ctx, mode, variant, accent, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const colors = [accent, '#111111', '#FFFFFF', '#FFEC47', '#E6213D'];
+  const count = textLoad === 'xl' ? 3 : textLoad === 'long' ? 5 : textLoad === 'medium' ? 8 : 9 + variant * 2;
+  const sizeScale = textLoad === 'xl' ? 0.42 : textLoad === 'long' ? 0.56 : textLoad === 'medium' ? 0.76 : [1.18, 0.92, 1.34, 1.04, 1.22][variant];
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  for (let i = 0; i < count; i++) {
+    const x = (80 + i * 211 + variant * 53) % W;
+    const rawY = (80 + i * 157 + variant * 89) % H;
+    const y = longText && rawY > H * 0.18 && rawY < H * 0.82 ? (rawY < H / 2 ? H * 0.07 : H * 0.93) : rawY;
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate((i * 17 + variant * 9) * Math.PI / 180);
+    ctx.fillStyle = withAlpha(colors[i % colors.length], longText ? 0.42 : mode === 'glass' ? 0.38 : 0.72);
+    if (mode === 'pixel') ctx.fillRect(-24 * sizeScale, -24 * sizeScale, 48 * sizeScale, 48 * sizeScale);
+    else if (i % 3 === 0) ctx.fillRect(-36 * sizeScale, -18 * sizeScale, 72 * sizeScale, 36 * sizeScale);
+    else if (i % 3 === 1) {
+      ctx.beginPath();
+      ctx.arc(0, 0, 30 * sizeScale, 0, Math.PI * 2);
+      ctx.fill();
+    } else {
+      ctx.beginPath();
+      ctx.moveTo(0, -42 * sizeScale);
+      ctx.lineTo(42 * sizeScale, 32 * sizeScale);
+      ctx.lineTo(-42 * sizeScale, 32 * sizeScale);
+      ctx.closePath();
+      ctx.fill();
+    }
+    ctx.restore();
+  }
+}
+
+function drawOrganicDecor(ctx, mode, variant, accent, textLoad) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const count = textLoad === 'xl' ? 2 : textLoad === 'long' ? 4 : textLoad === 'medium' ? 6 : 5 + variant;
+  const sizeScale = textLoad === 'xl' ? 0.42 : textLoad === 'long' ? 0.58 : textLoad === 'medium' ? 0.78 : [1.22, 0.96, 1.12, 1.34, 1.06][variant];
+  const longText = textLoad === 'long' || textLoad === 'xl';
+  for (let i = 0; i < count; i++) {
+    const x = (100 + i * 137 + variant * 79) % W;
+    const rawY = (150 + i * 191 + variant * 43) % H;
+    const y = longText && rawY > H * 0.18 && rawY < H * 0.82 ? (rawY < H / 2 ? H * 0.08 : H * 0.92) : rawY;
+    if (mode === 'cartoon') drawPetIcon(ctx, i % 2 ? 'cat' : 'dog', x, y, 54 * sizeScale, i % 2 ? '#FFFFFF' : '#FFE0B8');
+    else if (mode === 'japanese') drawFlowerIcon(ctx, x, y, 42 * sizeScale, i % 2 ? '#FFB8C8' : '#A8D890');
+    else drawLeafIcon(ctx, x, y, 56 * sizeScale, i % 2 ? accent : '#6B8E23');
+  }
+  if (mode === 'cartoon' && !longText) drawPersonIcon(ctx, W * [0.18, 0.80, 0.16, 0.78, 0.50][variant], H * [0.78, 0.22, 0.24, 0.78, 0.84][variant], 78 + variant * 8, '#88B0FF');
+  if (mode === 'japanese' && !longText) drawPersonIcon(ctx, W * [0.82, 0.18, 0.80, 0.20, 0.50][variant], H * [0.78, 0.22, 0.24, 0.78, 0.84][variant], 72 + variant * 7, '#FFB8C8');
+}
+
+function drawPetIcon(ctx, type, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color;
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(2, s * 0.05);
+  ctx.beginPath();
+  ctx.arc(0, 0, s * 0.42, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  ctx.beginPath();
+  if (type === 'cat') {
+    ctx.moveTo(-s * 0.28, -s * 0.28);
+    ctx.lineTo(-s * 0.44, -s * 0.62);
+    ctx.lineTo(-s * 0.12, -s * 0.42);
+    ctx.moveTo(s * 0.28, -s * 0.28);
+    ctx.lineTo(s * 0.44, -s * 0.62);
+    ctx.lineTo(s * 0.12, -s * 0.42);
+  } else {
+    ctx.ellipse(-s * 0.38, -s * 0.18, s * 0.16, s * 0.28, -0.5, 0, Math.PI * 2);
+    ctx.ellipse(s * 0.38, -s * 0.18, s * 0.16, s * 0.28, 0.5, 0, Math.PI * 2);
+  }
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = '#111111';
+  ctx.beginPath();
+  ctx.arc(-s * 0.14, -s * 0.06, s * 0.035, 0, Math.PI * 2);
+  ctx.arc(s * 0.14, -s * 0.06, s * 0.035, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(0, s * 0.08, s * 0.045, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawFlowerIcon(ctx, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color;
+  for (let i = 0; i < 6; i++) {
+    ctx.save();
+    ctx.rotate(i * Math.PI / 3);
+    ctx.beginPath();
+    ctx.ellipse(0, -s * 0.24, s * 0.12, s * 0.24, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+  ctx.fillStyle = '#FFEC47';
+  ctx.beginPath();
+  ctx.arc(0, 0, s * 0.12, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawLeafIcon(ctx, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(-0.6);
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, s * 0.18, s * 0.42, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,.22)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(0, -s * 0.34);
+  ctx.lineTo(0, s * 0.34);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawPersonIcon(ctx, x, y, s, color) {
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.fillStyle = color;
+  ctx.strokeStyle = '#111111';
+  ctx.lineWidth = Math.max(2, s * 0.04);
+  ctx.beginPath();
+  ctx.arc(0, -s * 0.32, s * 0.18, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+  gdRoundRect(ctx, -s * 0.26, -s * 0.08, s * 0.52, s * 0.56, s * 0.14, color, '#111111', Math.max(2, s * 0.04));
+  ctx.restore();
+}
+
+// ════════════════════════════════════════════════════════════════
 // ═══════════ 渲染主流程 ═══════════
 // ════════════════════════════════════════════════════════════════
 
 const STYLE_FUNCS = {
-  A: styleA_handDrawn,
-  B: styleB_collage,
-  C: styleC_comicPop,
-  D: styleD_newspaper,
-  E: styleE_minimal,
-  F: styleF_retroFilm,
-  G: styleG_dopamine,
-  H: styleH_acid,
-  I: styleI_memphis,
-  J: styleJ_chinese,
-  K: styleK_cyberpunk,
-  L: styleL_japanese,
-  M: styleM_3d,
-  N: styleN_vaporwave,
-  O: styleO_dark,
-  P: styleP_pixel,
-  Q: styleQ_aurora,
-  R: styleR_vintagePoster,
-  S: styleS_glass,
-  T: styleT_cartoon,
+  A: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'A'),
+  B: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'B'),
+  C: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'C'),
+  D: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'D'),
+  E: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'E'),
+  F: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'F'),
+  G: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'G'),
+  H: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'H'),
+  I: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'I'),
+  J: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'J'),
+  K: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'K'),
+  L: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'L'),
+  M: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'M'),
+  N: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'N'),
+  O: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'O'),
+  P: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'P'),
+  Q: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'Q'),
+  R: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'R'),
+  S: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'S'),
+  T: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'T'),
 };
 
 // 按风格族 + vi + seedOffset 选配色
@@ -2073,11 +4538,16 @@ function pickPalette(family, vi, seedOffset) {
 // 函数声明会 hoisting,此处不再保留 stub,避免重复声明报错。
 
 // 构造卡片 DOM(包装 canvas + actions)
-function buildOneCard(family, vi, text, seedOffset) {
+function buildOneCard(family, vi, text, seedOffset, meta) {
+  meta = meta || {};
   const wrap = document.createElement('div');
-  wrap.className = 'card-wrap';
+  wrap.className = 'card-wrap' + (meta.selectable ? ' selectable-card' : '');
   wrap.dataset.family = family;
   wrap.dataset.vi = vi;
+  wrap.dataset.seed = seedOffset;
+  if (meta.batchIndex != null) wrap.dataset.batchIndex = String(meta.batchIndex);
+  if (meta.cardIndex != null) wrap.dataset.cardIndex = String(meta.cardIndex);
+  if (meta.text) wrap.dataset.sourceText = meta.text;
 
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-label', FAMILY_LABELS[family].name + ' 第 ' + (vi + 1) + ' 张');
@@ -2099,9 +4569,21 @@ function buildOneCard(family, vi, text, seedOffset) {
     else if (act === 'cp') copyCanvas(canvas);
     else if (act === 'rr') rerollOne(wrap);
   });
+  if (meta.selectable) {
+    const pick = document.createElement('div');
+    pick.className = 'select-pick';
+    pick.textContent = '✓';
+    wrap.appendChild(pick);
+    wrap.addEventListener('click', (ev) => {
+      if (ev.target.closest('.actions')) return;
+      ev.preventDefault();
+      wrap.classList.toggle('selected');
+    });
+  } else {
+    wrap.addEventListener('click', () => downloadCanvas(canvas));
+  }
   wrap.appendChild(canvas);
   wrap.appendChild(actions);
-  wrap.addEventListener('click', () => downloadCanvas(canvas));
   return wrap;
 }
 
@@ -2120,9 +4602,15 @@ function buildOneCard(family, vi, text, seedOffset) {
  *   6. 恢复按钮状态
  */
 function generate() {
-  const text = (document.getElementById('textInput').value || '').trim();
+  const text = document.getElementById('textInput').value || '';
+  const batchTexts = text.includes('888') ? parseBatchTexts(text) : [];
+  if (batchTexts.length > 1) {
+    analyzeBatchTexts();
+    showToast('已识别为批量文案,请点击一键生成所有封面');
+    return;
+  }
   STATE.text = text;
-  if (!text) {
+  if (!hasVisibleText(text)) {
     showToast('请输入文案');
     return;
   }
@@ -2165,14 +4653,14 @@ function generate() {
       showToast('❌ 生成失败: ' + e.message);
     } finally {
       btn.disabled = false;
-      btn.innerHTML = '🎨 生成 30 张';
+      updateGenerateButton();
     }
   }, 30);
 }
 
 /**
- * 装饰位置分配器(批次 5 新增,集中管理避免冲突)
- * 规则:同一画面装饰元素数量严格遵守 v3.0 §4.4
+ * Legacy 装饰位置分配器。v4.0 模板入口不再调用自由装饰布局。
+ * 保留给旧函数兜底,不要在新模板中使用。
  *   - A 手绘便签: 4-6 个 (横线 + 胶带 + 手绘圈 + 卡通 + 1-2 emoji)
  *   - B 拼贴    : 5-7 个 (2-3 便签 + 色块 + 印章 + 箭头 + emoji)
  *   - C 漫画 pop: 4-6 个 (半色调 + 气泡 + 放射 + 拟声 + 3D emoji)
@@ -2200,14 +4688,22 @@ function allocDecorPositions(seed) {
 }
 
 /**
- * 单卡片换一换(批次 5 改进:0.3s 淡入淡出过渡)
+ * 单卡片换一换(v4.0:按固定模板骨架顺序切换,不自由随机)
  * @param {HTMLElement} wrap - 卡片容器元素
  */
 function rerollOne(wrap) {
   const fam = wrap.dataset.family;
   const vi = parseInt(wrap.dataset.vi, 10);
-  const newVi = (vi + 1 + Math.floor(Math.random() * 3)) % CARDS_PER_FAMILY;
-  const newCard = buildOneCard(fam, newVi, STATE.text, STATE.seed + Math.floor(Math.random() * 10));
+  const newVi = (vi + 1) % TEMPLATE_CONTRACT.variantsPerStyle;
+  const baseSeed = parseInt(wrap.dataset.seed || STATE.seed, 10) || STATE.seed;
+  const newSeed = baseSeed + TEMPLATE_CONTRACT.variantsPerStyle;
+  const text = wrap.dataset.sourceText || STATE.text;
+  const newCard = buildOneCard(fam, newVi, text, newSeed, {
+    selectable: wrap.classList.contains('selectable-card'),
+    batchIndex: wrap.dataset.batchIndex,
+    cardIndex: wrap.dataset.cardIndex,
+    text,
+  });
 
   // 0.3s 淡入淡出过渡(批次 5 要求)
   newCard.style.opacity = '0';
@@ -2233,12 +4729,12 @@ function rerollOne(wrap) {
 }
 
 /**
- * 全部换一换 — 增加全局 seed 并重新调用 generate
- * seed 累加 7 保证新配色与旧配色差异较大
+ * 全部换一换 — 保持模板体系,仅推进固定变体/配色批次
  */
 function rerollAll() {
-  STATE.seed += 7;
-  generate();
+  STATE.seed += TEMPLATE_CONTRACT.variantsPerStyle;
+  if (BATCH_STATE.generated) generateBatchCovers();
+  else generate();
 }
 
 /**
@@ -2251,11 +4747,15 @@ function clearAll() {
     '<div class="empty-state" id="emptyState">' +
     '<div class="empty-icon">📱</div>' +
     '<div class="empty-title">输入文案,生成小红书封面</div>' +
-    '<div class="empty-desc">5 大风格族 · 6 套配色 · 8 类字体<br>字数自适应 · 装饰互斥 · Canvas 直出 1242×1656</div>' +
+    '<div class="empty-desc">20 种风格 · 每种 5 张 · 可按需勾选<br>字数自适应 · Canvas 直出 1242×1656</div>' +
     '</div>';
   STATE.text = '';
+  BATCH_STATE.items = [];
+  BATCH_STATE.generated = false;
   document.getElementById('textInput').value = '';
   updateCounter();
+  renderBatchPanel();
+  updateGenerateButton();
   showToast('已清空');
 }
 
@@ -2266,13 +4766,230 @@ window.clearAll = clearAll;
 window.downloadCanvas = downloadCanvas;
 window.copyCanvas = copyCanvas;
 
+// ═══════════ 批量文案识别 + 生成 ═══════════
+
+function parseBatchTexts(raw) {
+  return String(raw || '')
+    .split(/\n?\s*888\s*\n?/g)
+    .map((item) => item.trim())
+    .filter((item) => hasVisibleText(item));
+}
+
+function analyzeBatchTexts() {
+  const raw = document.getElementById('textInput').value || '';
+  const texts = parseBatchTexts(raw);
+  BATCH_STATE.generated = false;
+  BATCH_STATE.items = texts.map((text, index) => ({
+    id: 'copy_' + Date.now() + '_' + index,
+    text,
+    selected: true,
+  }));
+  renderBatchPanel();
+  if (!texts.length) {
+    showToast('未识别到有效文案,请用 888 分隔');
+  } else {
+    showToast('共识别出 ' + texts.length + ' 条文案');
+  }
+}
+
+function renderBatchPanel() {
+  const panel = document.getElementById('batchPanel');
+  const list = document.getElementById('batchList');
+  const meta = document.getElementById('batchMeta');
+  const hint = document.getElementById('batchHint');
+  if (!panel || !list || !meta || !hint) return;
+  const items = BATCH_STATE.items;
+  panel.classList.toggle('show', items.length > 0);
+  meta.textContent = items.length ? '共识别出 ' + items.length + ' 条文案' : '使用 888 分隔每条文案';
+  const selectedCount = items.filter((item) => item.selected && hasVisibleText(item.text)).length;
+  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成精选 5 张。';
+  list.innerHTML = '';
+  items.forEach((item, index) => {
+    const row = document.createElement('div');
+    row.className = 'batch-item';
+    row.dataset.id = item.id;
+
+    const check = document.createElement('input');
+    check.type = 'checkbox';
+    check.checked = item.selected;
+    check.addEventListener('change', () => {
+      item.selected = check.checked;
+      renderBatchPanel();
+    });
+
+    const num = document.createElement('div');
+    num.className = 'batch-index';
+    num.textContent = String(index + 1).padStart(2, '0');
+
+    const editor = document.createElement('textarea');
+    editor.value = item.text;
+    editor.addEventListener('input', () => {
+      item.text = editor.value;
+      updateBatchMetaOnly();
+    });
+
+    const actions = document.createElement('div');
+    actions.className = 'batch-actions';
+    const count = document.createElement('div');
+    count.className = 'batch-count';
+    count.textContent = item.text.replace(/\s/g, '').length + ' 字';
+    const remove = document.createElement('button');
+    remove.className = 'batch-remove';
+    remove.type = 'button';
+    remove.textContent = '移除';
+    remove.addEventListener('click', () => {
+      BATCH_STATE.items.splice(index, 1);
+      renderBatchPanel();
+    });
+    actions.appendChild(count);
+    actions.appendChild(remove);
+
+    row.appendChild(check);
+    row.appendChild(num);
+    row.appendChild(editor);
+    row.appendChild(actions);
+    list.appendChild(row);
+  });
+}
+
+function updateBatchMetaOnly() {
+  const hint = document.getElementById('batchHint');
+  if (!hint) return;
+  const selectedCount = BATCH_STATE.items.filter((item) => item.selected && hasVisibleText(item.text)).length;
+  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成精选 5 张。';
+  document.querySelectorAll('.batch-item').forEach((row, index) => {
+    const count = row.querySelector('.batch-count');
+    if (count && BATCH_STATE.items[index]) {
+      count.textContent = BATCH_STATE.items[index].text.replace(/\s/g, '').length + ' 字';
+    }
+  });
+}
+
+function setBatchSelection(mode) {
+  BATCH_STATE.items.forEach((item) => {
+    if (mode === 'all') item.selected = true;
+    else if (mode === 'none') item.selected = false;
+    else if (mode === 'invert') item.selected = !item.selected;
+  });
+  renderBatchPanel();
+}
+
+function selectedBatchItems() {
+  return BATCH_STATE.items
+    .map((item, index) => ({ ...item, originalIndex: index }))
+    .filter((item) => item.selected && hasVisibleText(item.text));
+}
+
+function familiesForBatchCards() {
+  const selected = Array.from(STATE.families).sort();
+  const base = selected.length ? selected : Object.keys(FAMILY_LABELS);
+  const out = [];
+  for (let i = 0; i < 5; i++) out.push(base[i % base.length]);
+  return out;
+}
+
+function generateBatchCovers() {
+  const items = selectedBatchItems();
+  if (!items.length) {
+    showToast('请至少选择 1 条有效文案');
+    return;
+  }
+  STATE.text = items.map((item) => item.text).join('\n888\n');
+  const btn = document.getElementById('btnGenerateBatch');
+  btn.disabled = true;
+  btn.textContent = '生成中...';
+  const c = document.getElementById('container');
+  c.innerHTML = '<div class="loading">批量生成中</div>';
+  setTimeout(() => {
+    try {
+      c.innerHTML = '';
+      const batchDownloads = document.createElement('div');
+      batchDownloads.className = 'batch-group';
+      batchDownloads.innerHTML =
+        '<div class="batch-group-head">' +
+        '<div class="batch-group-title"><strong>ALL</strong><div><div class="batch-group-preview">批量下载</div><div class="batch-group-sub">支持单张、多选和全部下载</div></div></div>' +
+        '<div class="batch-group-tools">' +
+        '<button class="btn small ghost" data-batch-download="selected">下载选中</button>' +
+        '<button class="btn small outline" data-batch-download="all">下载全部</button>' +
+        '</div></div>';
+      c.appendChild(batchDownloads);
+      const fams = familiesForBatchCards();
+      items.forEach((item, groupIndex) => {
+        const group = document.createElement('section');
+        group.className = 'batch-group';
+        group.dataset.batchGroup = String(groupIndex + 1);
+        const preview = item.text.replace(/\s+/g, ' ').slice(0, 46);
+        group.innerHTML =
+          '<div class="batch-group-head">' +
+          '<div class="batch-group-title"><strong>' + String(groupIndex + 1).padStart(2, '0') + '</strong>' +
+          '<div><div class="batch-group-preview"></div><div class="batch-group-sub">精选 5 张封面</div></div></div>' +
+          '<div class="batch-group-tools">' +
+          '<button class="btn small ghost" data-group-select>全选本组</button>' +
+          '<button class="btn small ghost" data-group-download-selected>下载本组选中</button>' +
+          '<button class="btn small outline" data-group-download-all>下载本组全部</button>' +
+          '</div></div>';
+        group.querySelector('.batch-group-preview').textContent = preview || '未命名文案';
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        fams.forEach((fam, cardIndex) => {
+          const vi = cardIndex % TEMPLATE_CONTRACT.variantsPerStyle;
+          const card = buildOneCard(fam, vi, item.text, STATE.seed + groupIndex * 17 + cardIndex, {
+            selectable: true,
+            batchIndex: groupIndex + 1,
+            cardIndex: cardIndex + 1,
+            text: item.text,
+          });
+          grid.appendChild(card);
+        });
+        group.appendChild(grid);
+        c.appendChild(group);
+      });
+      BATCH_STATE.generated = true;
+      showToast('已生成 ' + items.length + ' 组 · 共 ' + (items.length * 5) + ' 张');
+    } catch (e) {
+      console.error(e);
+      showToast('❌ 批量生成失败: ' + e.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '一键生成所有封面';
+    }
+  }, 30);
+}
+
+function cardsInScope(scope, onlySelected) {
+  const root = scope || document;
+  let cards = Array.from(root.querySelectorAll('.card-wrap[data-batch-index]'));
+  if (onlySelected) cards = cards.filter((card) => card.classList.contains('selected'));
+  return cards;
+}
+
+async function downloadCardsSequential(cards, prefix) {
+  if (!cards.length) {
+    showToast('没有可下载的封面');
+    return;
+  }
+  const allowed = await requestDownloadAccess(cards.length, 'batch');
+  if (!allowed) return;
+  for (let i = 0; i < cards.length; i++) {
+    const canvas = cards[i].querySelector('canvas');
+    if (!canvas) continue;
+    const batchIndex = cards[i].dataset.batchIndex || 'single';
+    const cardIndex = cards[i].dataset.cardIndex || String(i + 1);
+    performCanvasDownload(canvas, (prefix || '封面') + '_文案' + String(batchIndex).padStart(2, '0') + '_封面' + String(cardIndex).padStart(2, '0') + '.png');
+    await new Promise((resolve) => setTimeout(resolve, 160));
+  }
+  showToast('已触发下载 ' + cards.length + ' 张');
+}
+
 // ═══════════ 下载 / 复制 ═══════════
 
 /**
  * 将 canvas 内容下载为 PNG(批次 5:使用 downloadCanvasSafe)
  */
-function downloadCanvas(canvas) {
-  downloadCanvasSafe(canvas, 'cover_' + Date.now() + '.png');
+async function downloadCanvas(canvas) {
+  const allowed = await requestDownloadAccess(1, 'single');
+  if (!allowed) return;
+  performCanvasDownload(canvas, 'cover_' + Date.now() + '.png');
 }
 
 /**
@@ -2283,6 +5000,8 @@ async function copyCanvas(canvas) {
     showToast('❌ 浏览器不支持剪贴板图片');
     return;
   }
+  const allowed = await requestDownloadAccess(1, 'single');
+  if (!allowed) return;
   try {
     const blob = await new Promise((res) => canvas.toBlob(res, 'image/png'));
     if (!blob) {
@@ -2316,10 +5035,27 @@ function updateCounter() {
   const v = document.getElementById('textInput').value;
   const n = v.replace(/\s/g, '').length;
   const c = document.getElementById('counter');
-  c.textContent = n + ' / 30 字';
+  const batchCount = v.includes('888') ? parseBatchTexts(v).length : 0;
+  c.textContent = batchCount > 1 ? ('检测到批量文案 · 可识别 ' + batchCount + ' 条') : (n + ' / 30 字');
   c.className = 'counter' + (n > 25 ? ' warn' : '');
 }
-document.getElementById('textInput').addEventListener('input', updateCounter);
+document.getElementById('textInput').addEventListener('input', () => {
+  updateCounter();
+  const raw = document.getElementById('textInput').value || '';
+  if (raw.includes('888')) analyzeBatchTexts();
+  else {
+    BATCH_STATE.items = [];
+    renderBatchPanel();
+  }
+});
+
+function updateGenerateButton() {
+  const btn = document.getElementById('btnGenerate');
+  if (!btn || btn.disabled) return;
+  const raw = document.getElementById('textInput').value || '';
+  const batchCount = raw.includes('888') ? parseBatchTexts(raw).length : 0;
+  btn.textContent = batchCount > 1 ? '生成当前输入' : ('生成 ' + (STATE.families.size * CARDS_PER_FAMILY) + ' 张');
+}
 
 // ═══════════ Tab 事件绑定 ═══════════
 
@@ -2335,6 +5071,7 @@ document.querySelectorAll('#familyTabs .tab').forEach((btn) => {
       btn.classList.add('active');
       showToast('至少启用 1 个风格族');
     }
+    updateGenerateButton();
   });
 });
 
@@ -2344,13 +5081,49 @@ document.querySelectorAll('#fontTabs .tab').forEach((btn) => {
     btn.classList.add('active');
     STATE.font = btn.dataset.font;
     // 切换字体时如有内容则重渲染
-    if (STATE.text) generate();
+    if (BATCH_STATE.generated) generateBatchCovers();
+    else if (STATE.text) generate();
   });
 });
 
 // 按钮事件
 document.getElementById('btnGenerate').addEventListener('click', generate);
 document.getElementById('btnRerollAll').addEventListener('click', rerollAll);
+document.getElementById('btnAnalyzeBatch').addEventListener('click', analyzeBatchTexts);
+document.getElementById('btnGenerateBatch').addEventListener('click', generateBatchCovers);
+document.getElementById('btnBatchSelectAll').addEventListener('click', () => setBatchSelection('all'));
+document.getElementById('btnBatchInvert').addEventListener('click', () => setBatchSelection('invert'));
+document.getElementById('btnBatchClear').addEventListener('click', () => setBatchSelection('none'));
+document.getElementById('btnOpenAuth').addEventListener('click', () => openAuthModal());
+document.getElementById('btnCloseAuth').addEventListener('click', closeAuthModal);
+document.getElementById('authModal').addEventListener('click', (ev) => {
+  if (ev.target.id === 'authModal') closeAuthModal();
+});
+document.getElementById('btnLogin').addEventListener('click', () => submitAuth('login'));
+document.getElementById('btnRegister').addEventListener('click', () => submitAuth('register'));
+document.getElementById('btnLogout').addEventListener('click', logout);
+document.getElementById('authPassword').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') submitAuth('login');
+});
+
+document.getElementById('container').addEventListener('click', (ev) => {
+  const group = ev.target.closest('.batch-group');
+  if (ev.target.closest('[data-group-select]') && group) {
+    cardsInScope(group, false).forEach((card) => card.classList.add('selected'));
+  }
+  if (ev.target.closest('[data-group-download-selected]') && group) {
+    downloadCardsSequential(cardsInScope(group, true), '批量封面');
+  }
+  if (ev.target.closest('[data-group-download-all]') && group) {
+    downloadCardsSequential(cardsInScope(group, false), '批量封面');
+  }
+  if (ev.target.closest('[data-batch-download="selected"]')) {
+    downloadCardsSequential(cardsInScope(document, true), '批量封面');
+  }
+  if (ev.target.closest('[data-batch-download="all"]')) {
+    downloadCardsSequential(cardsInScope(document, false), '批量封面');
+  }
+});
 
 // Ctrl/Cmd + Enter 触发生成
 document.getElementById('textInput').addEventListener('keydown', (e) => {
@@ -2378,24 +5151,27 @@ if (document.fonts && document.fonts.ready) {
   const fontTimeout = new Promise((resolve) => setTimeout(resolve, 10000));
   Promise.race([document.fonts.ready, fontTimeout]).then(() => {
     if (document.fonts.status === 'loaded') {
-      console.log('[v3.0] 字体加载完成');
+      console.log('[v4.0] 字体加载完成');
       // 字体到位后,如已有内容,触发 measureText 重新计算字号重渲染
       if (STATE.text) generate();
     } else {
-      console.warn('[v3.0] 字体加载超时,降级到系统字体');
+      console.warn('[v4.0] 字体加载超时,降级到系统字体');
     }
   }).catch((e) => {
-    console.warn('[v3.0] 字体加载失败', e);
+    console.warn('[v4.0] 字体加载失败', e);
   });
 }
 
 // 初始化
 updateCounter();
+updateGenerateButton();
+renderAccountBar();
+refreshAuthState();
 
 // 启动日志
-console.log('%c小红书大字封面生成器 v3.0',
+console.log('%c小红书大字封面生成器 v4.0',
   'font-size:18px;font-weight:bold;color:#ED0108;background:#FFEC47;padding:6px 12px;border-radius:6px;');
-console.log('%c基于 192 张稿定设计真实样本蒸馏 · 5 大风格族 · 30 张/次',
+console.log('%c20 种风格 · 每种 5 张 · 动态生成数量',
   'color:#666;font-size:11px;');
 console.log('已加载 features:', Object.keys(window.STYLE_FUNCS || {}).join(', '));
 console.log('已加载字体:', Object.keys(FONT_MAP).join(', '));
@@ -2421,13 +5197,14 @@ function renderCard(canvas, family, vi, text, seedOffset) {
     if (!fn) throw new Error('Style family ' + family + ' undefined');
     // 性能监控(单张 < 50ms 目标)
     const t0 = performance.now();
-    fn(ctx, text, palette, { seed: vi + seedOffset });
+    fn(ctx, text, palette, { seed: vi + seedOffset, vi });
+    assertTemplateSafeBounds(ctx, 54, family, vi);
     const t1 = performance.now();
     if (t1 - t0 > 80) {
-      console.warn('[v3.0] 卡片渲染耗时偏长:', (t1 - t0).toFixed(1), 'ms ·', family, vi);
+      console.warn('[v4.0] 卡片渲染耗时偏长:', (t1 - t0).toFixed(1), 'ms ·', family, vi);
     }
   } catch (e) {
-    console.error('[v3.0] renderCard error:', family, vi, e);
+    console.error('[v4.0] renderCard error:', family, vi, e);
     // 错误占位
     try {
       const ctx = canvas.getContext('2d');
@@ -2435,20 +5212,49 @@ function renderCard(canvas, family, vi, text, seedOffset) {
       canvas.height = CANVAS_H;
       ctx.fillStyle = '#FFFFFF';
       ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      ctx.fillStyle = '#E6213D';
-      ctx.font = '40px "PingFang SC",sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText('⚠ 渲染失败', CANVAS_W / 2, CANVAS_H / 2 - 30);
-      ctx.font = '28px "PingFang SC",sans-serif';
-      ctx.fillStyle = '#888888';
-      ctx.fillText(e.message || String(e), CANVAS_W / 2, CANVAS_H / 2 + 30);
+      ctx.strokeStyle = '#E6213D';
+      ctx.lineWidth = 24;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(CANVAS_W / 2 - 90, CANVAS_H / 2 - 90);
+      ctx.lineTo(CANVAS_W / 2 + 90, CANVAS_H / 2 + 90);
+      ctx.moveTo(CANVAS_W / 2 + 90, CANVAS_H / 2 - 90);
+      ctx.lineTo(CANVAS_W / 2 - 90, CANVAS_H / 2 + 90);
+      ctx.stroke();
     } catch (_) {
       // 双重兜底
       canvas.width = 100;
       canvas.height = 100;
     }
   }
+}
+
+function assertTemplateSafeBounds(ctx, safePad, family, vi) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const data = ctx.getImageData(0, 0, W, H);
+  const pixels = data.data;
+  const sample = (x, y) => {
+    const i = (y * W + x) * 4;
+    return [pixels[i], pixels[i + 1], pixels[i + 2]];
+  };
+  const bg = sample(4, 4);
+  const diff = (i) =>
+    Math.abs(pixels[i] - bg[0]) + Math.abs(pixels[i + 1] - bg[1]) + Math.abs(pixels[i + 2] - bg[2]);
+  let minX = W, minY = H, maxX = 0, maxY = 0;
+  for (let y = 0; y < H; y += 3) {
+    for (let x = 0; x < W; x += 3) {
+      const i = (y * W + x) * 4;
+      if (pixels[i + 3] > 8 && diff(i) > 54) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+  if (minX >= maxX || minY >= maxY) return;
+  if (minX >= safePad && minY >= safePad && maxX <= W - safePad && maxY <= H - safePad) return;
+  console.warn('[v4.0] 模板内容接近边界,请调整模板槽位:', family, vi, { minX, minY, maxX, maxY, safePad });
 }
 
 /**
@@ -2486,7 +5292,7 @@ async function buildAllCardsAsync(text) {
  * 下载失败兜底(批次 5 新增)
  * 当 canvas.toBlob 失败或浏览器拦截下载时,提示用户右键另存为
  */
-function downloadCanvasSafe(canvas, fallbackName) {
+function performCanvasDownload(canvas, fallbackName) {
   try {
     canvas.toBlob((blob) => {
       if (!blob) {
@@ -2504,12 +5310,12 @@ function downloadCanvasSafe(canvas, fallbackName) {
         setTimeout(() => URL.revokeObjectURL(url), 1000);
         showToast('⬇ 已下载');
       } catch (e) {
-        console.error('[v3.0] 下载失败:', e);
+        console.error('[v4.0] 下载失败:', e);
         showToast('❌ 下载失败,请右键图片另存为');
       }
     }, 'image/png');
   } catch (e) {
-    console.error('[v3.0] canvas.toBlob 异常:', e);
+    console.error('[v4.0] canvas.toBlob 异常:', e);
     showToast('❌ 下载失败,请右键图片另存为');
   }
 }
@@ -2595,7 +5401,7 @@ if (isTouchDevice) {
   document.addEventListener('touchend', cancelLongPress);
   document.addEventListener('touchmove', cancelLongPress, { passive: true });
 
-  console.log('[v3.0] 移动端长按下载已启用(0.5s)');
+  console.log('[v4.0] 移动端长按下载已启用(0.5s)');
 }
 
 /*

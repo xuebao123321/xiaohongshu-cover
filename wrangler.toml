@@ -1,0 +1,16 @@
+name = "xiaohongshu-cover"
+main = "src/worker.js"
+compatibility_date = "2026-05-03"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "xiaohongshu-cover-db"
+database_id = "f5e7b3bd-35a6-4ea1-9faf-245c8199ea8a"
+
+[vars]
+FREE_DAILY_DOWNLOADS = "3"

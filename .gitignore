@@ -7,11 +7,19 @@
 *.swp
 *.swo
 
+# Node / Cloudflare 构建产物
+node_modules/
+public/
+
 # Claude Code 本地设置
 .claude/settings.local.json
 
 # 日志
 *.log
+
+# 本地数据库
+data/
+.wrangler/
 
 # 临时文件
 *.tmp
