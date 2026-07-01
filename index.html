@@ -254,7 +254,7 @@ button{font-family:inherit}
 
 @media (min-width:768px) and (max-width:1023px){
   body{padding:18px}
-  .grid{grid-template-columns:repeat(3,1fr);gap:12px}
+  .grid{grid-template-columns:repeat(4,1fr);gap:12px}
   .section-label{font-size:15px}
 }
 
@@ -285,6 +285,21 @@ button{font-family:inherit}
     <button class="tab active" data-family="C">🅲 漫画 pop</button>
     <button class="tab active" data-family="D">🅳 报纸大字</button>
     <button class="tab active" data-family="E">🅴 极简大字</button>
+    <button class="tab active" data-family="F">🎞️ 复古胶片</button>
+    <button class="tab active" data-family="G">🥳 多巴胺</button>
+    <button class="tab active" data-family="H">🧪 酸性设计</button>
+    <button class="tab active" data-family="I">🎨 孟菲斯</button>
+    <button class="tab active" data-family="J">🏯 国风</button>
+    <button class="tab active" data-family="K">🤖 赛博朋克</button>
+    <button class="tab active" data-family="L">🌸 日系清新</button>
+    <button class="tab active" data-family="M">🔮 3D 渲染</button>
+    <button class="tab active" data-family="N">🌆 蒸汽波</button>
+    <button class="tab active" data-family="O">🖤 暗黑系</button>
+    <button class="tab active" data-family="P">👾 像素风</button>
+    <button class="tab active" data-family="Q">🌌 极光渐变</button>
+    <button class="tab active" data-family="R">📜 复古海报</button>
+    <button class="tab active" data-family="S">🪟 玻璃拟态</button>
+    <button class="tab active" data-family="T">🎀 卡通插画</button>
   </div>
 </div>
 
@@ -307,15 +322,14 @@ button{font-family:inherit}
 <div class="input-row">
   <textarea
     id="textInput"
-    placeholder="输入文案,1-30 字最佳&#10;支持换行 · 自动适配字号 · 关键词感应风格"
-    maxlength="30"
+    placeholder="输入文案,字数不限&#10;支持换行 · 自动适配字号 · 关键词感应风格"
     aria-label="封面文案输入"></textarea>
   <div class="btn-wrap">
-    <button class="btn primary" id="btnGenerate">🎨 生成 30 张</button>
+    <button class="btn primary" id="btnGenerate">🎨 生成 100 张</button>
     <button class="btn outline" id="btnRerollAll">🎲 全部换一换</button>
   </div>
 </div>
-<div class="counter" id="counter">0 / 30 字</div>
+<div class="counter" id="counter">0 字</div>
 
 <!-- ═══════════ 卡片网格 ═══════════ -->
 <div id="container">
@@ -323,8 +337,8 @@ button{font-family:inherit}
     <div class="empty-icon">📱</div>
     <div class="empty-title">输入文案,生成小红书封面</div>
     <div class="empty-desc">
-      5 大风格族 · 6 套配色 · 8 类字体<br>
-      字数自适应 · 装饰互斥 · Canvas 直出 1242×1656
+      20 大风格族 · 5 套配色 · 8 类字体<br>
+      字数不限 · 自适应字号 · 边缘安全 · Canvas 直出 1242×1656
     </div>
   </div>
 </div>
@@ -359,7 +373,7 @@ import {
 // ═══════════ 全局配置 ═══════════
 const CANVAS_W = 1242;   // 3:4 标准小红书尺寸
 const CANVAS_H = 1656;
-const CARDS_PER_FAMILY = 6;  // 每风格族 6 张
+const CARDS_PER_FAMILY = 5;  // 每风格族 5 张(v3.1:一行 5 张布局)
 
 // 8 类字体配置
 const FONT_MAP = {
@@ -380,22 +394,36 @@ const FAMILY_LABELS = {
   C: { name: '漫画 pop',      tag: '半色调 · 对话气泡 · 放射线',      desc: '漫画/波普/冲击感' },
   D: { name: '报纸大字',      tag: '纯色块 · 描边粗体 · 印章',        desc: '杂志/报纸/大字' },
   E: { name: '极简大字',      tag: '整块纯色 · 干净黑体 · ≤1 装饰',   desc: '极简/高级/冷淡' },
+  F: { name: '复古胶片',      tag: '棕褐调 · 胶片颗粒 · 暗角',        desc: '复古/胶片/老照片' },
+  G: { name: '多巴胺',        tag: '高饱和 · 笑脸 · 涂鸦',            desc: '活泼/快乐/儿童' },
+  H: { name: '酸性设计',      tag: '液态金属 · 3D 渐变球 · 扭曲',     desc: '前卫/先锋/设计感' },
+  I: { name: '孟菲斯',        tag: '波点 · 几何 · 撞色条纹',          desc: '孟菲斯/装饰/艺术' },
+  J: { name: '国风',          tag: '水墨红印章 · 毛笔字 · 梅花',      desc: '古风/中国风/传统' },
+  K: { name: '赛博朋克',      tag: '霓虹光晕 · 网格地面 · 故障',      desc: '赛博/科技/未来' },
+  L: { name: '日系清新',      tag: '柔和粉 · washi 胶带 · 小花',      desc: '日系/可爱/清新' },
+  M: { name: '3D 渲染',       tag: '渐变球体 · 玻璃质感 · 阴影',      desc: '3D/现代/产品' },
+  N: { name: '蒸汽波',        tag: '紫色渐变 · 网格 · 落日',          desc: '复古未来/蒸汽波' },
+  O: { name: '暗黑系',        tag: '深黑 · 金银边 · 衬线字',          desc: '暗黑/哥特/神秘' },
+  P: { name: '像素风',        tag: '8-bit 像素块 · 纯色拼贴',         desc: '像素/复古游戏/8位' },
+  Q: { name: '极光渐变',      tag: '粉蓝紫渐变 · 流动曲线',            desc: '梦幻/极光/北欧' },
+  R: { name: '复古海报',      tag: 'Art Deco · 金边 · 对称',          desc: '复古/海报/装饰' },
+  S: { name: '玻璃拟态',      tag: '半透明卡片 · 模糊圆 · 细线',      desc: '玻璃/拟态/现代' },
+  T: { name: '卡通插画',      tag: '粗黑边 · 卡哇伊 · 大眼萌',        desc: '卡通/萌系/可爱' },
 };
 
 // 风格族 -> PALETTES key 映射
 const FAMILY_TO_PALETTE = {
-  A: 'handDrawn',
-  B: 'collage',
-  C: 'comicPop',
-  D: 'newspaper',
-  E: 'minimal',
+  A: 'handDrawn', B: 'collage', C: 'comicPop', D: 'newspaper', E: 'minimal',
+  F: 'retroFilm', G: 'dopamine', H: 'acid', I: 'memphis', J: 'chinese',
+  K: 'cyberpunk', L: 'japanese', M: 'threeD', N: 'vaporwave', O: 'dark',
+  P: 'pixel',     Q: 'aurora',  R: 'vintagePoster', S: 'glass', T: 'cartoon',
 };
 
 // 全局状态
 const STATE = {
   text: '',
   font: 'black',
-  families: new Set(['A','B','C','D','E']),
+  families: new Set(['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T']),
   seed: 0,
   activeCount: 0,
 };
@@ -405,87 +433,76 @@ window.STATE = STATE;
 window.FONT_MAP = FONT_MAP;
 window.FAMILY_LABELS = FAMILY_LABELS;
 
-// ═══════════ 字号自适应算法 — 4 档(批次 5 改造)══════════
+// ═══════════ 字号自适应算法 — v3.1(无字数上限,边缘安全)══════════
 /*
- * 字号自适应 4 档(v3.0 STYLE_GUIDE §4.1 + §6.1):
- *   1-4  字: 字号 ≈ canvas_height * 0.18, 撑满画面 60-70%
- *   5-9  字: 字号 ≈ canvas_height * 0.13, 撑满画面 50-60%
- *   10-15 字: 字号 ≈ canvas_height * 0.09, 撑满画面 40-50%
- *   16-30 字: 字号 ≈ canvas_height * 0.06, 撑满画面 30-40%
+ * v3.1 升级:
+ *   - 用 ctx.measureText() 二分搜索最大字号(精度 ↑ 30%)
+ *   - 取消字数硬上限(支持任意长度输入)
+ *   - 6% 边缘 padding(任意方向都不贴边)
+ *   - 自动按字符换行(超宽时按字拆)
  *
- * 强制约束:
- *   - 文字块最大宽度 = canvas_width * 0.85(超出降字号)
- *   - 单字宽度:CJK=1em, EN/空格=0.55em, 数字=0.6em, 其他符号=0.5em
- *   - 字体视觉补偿:草书/小薇/手写 视觉偏小 → 放大 1.05-1.18 倍
- *
+ * @param {CanvasRenderingContext2D} ctx
  * @param {string} t - 文本(支持 \n 显式换行)
  * @param {number} mw - 可用宽度(像素)
  * @param {number} mh - 可用高度(像素)
- * @param {number} [mn] - 最小字号(默认 18)
+ * @param {number} [mn] - 最小字号(默认 24)
  * @param {number} [mx] - 最大字号(默认 96)
  * @param {number} [fontScale] - 字体视觉补偿(默认 1)
  * @returns {number} 字号(像素)
  */
-function fs(t, mw, mh, mn, mx, fontScale) {
-  mn = mn || 18;
+function fs(ctx, t, mw, mh, mn, mx, fontScale) {
+  mn = mn || 24;
   mx = mx || 96;
   fontScale = fontScale || 1;
 
-  // 1. 计算有效字符数(剔除空白/换行)
-  const effective = t.replace(/[\s\n]/g, '').length;
-  const rawLines = t.split('\n').filter((l) => l.length > 0);
-  const lineCount = Math.max(1, rawLines.length);
+  const lineHeight = 1.22;
+  const padFactor = 0.94;
 
-  // 2. 按字数分档确定基础字号(对应画面高度比例)
-  let baseH;
-  if (effective <= 4)       baseH = 0.18;  // 1-4 字
-  else if (effective <= 9)  baseH = 0.13;  // 5-9 字
-  else if (effective <= 15) baseH = 0.09;  // 10-15 字
-  else                       baseH = 0.06;  // 16-30 字
+  const rawLines = (t || '').split('\n').filter((l) => l.length > 0);
+  if (rawLines.length === 0) return mn;
 
-  // 3. 单行宽度估算(em 单位)
-  function lineW(s) {
-    let w = 0;
-    for (let i = 0; i < s.length; i++) {
-      const c = s.charCodeAt(i);
-      if ((c >= 0x4e00 && c <= 0x9fff) || (c >= 0x3400 && c <= 0x4dbf)
-        || (c >= 0xf900 && c <= 0xfaff) || (c >= 0x3000 && c <= 0x303f)) {
-        w += 1;
-      } else if (c >= 0x30 && c <= 0x39) {
-        w += 0.6;
-      } else if ((c >= 0x41 && c <= 0x7a) || c === 0x20) {
-        w += 0.55;
-      } else {
-        w += 0.5;
+  // 真实测量文字在指定字号下的行宽 + 拆行
+  function measure(fontSize) {
+    ctx.font = `900 ${fontSize}px "Noto Sans SC",sans-serif`;
+    const lines = [];
+    for (const ln of rawLines) {
+      let cur = '';
+      for (const ch of ln) {
+        const test = cur + ch;
+        if (ctx.measureText(test).width > mw && cur) {
+          lines.push(cur);
+          cur = ch;
+        } else {
+          cur = test;
+        }
       }
+      if (cur) lines.push(cur);
     }
-    return w;
+    let maxLineW = 0;
+    for (const ln of lines) {
+      const w = ctx.measureText(ln).width;
+      if (w > maxLineW) maxLineW = w;
+    }
+    const totalH = lines.length * fontSize * lineHeight;
+    return { fits: maxLineW <= mw * padFactor && totalH <= mh * padFactor, maxLineW, totalH, lines };
   }
-  let maxLineW = 0;
-  for (const l of rawLines) {
-    const w = lineW(l);
-    if (w > maxLineW) maxLineW = w;
+
+  // 二分搜索
+  let lo = mn, hi = mx, best = mn;
+  for (let iter = 0; iter < 18; iter++) {
+    if (lo > hi) break;
+    const mid = Math.floor((lo + hi) / 2);
+    if (measure(mid).fits) {
+      best = mid;
+      lo = mid + 1;
+    } else {
+      hi = mid - 1;
+    }
   }
-  if (maxLineW === 0) maxLineW = 1;
 
-  // 4. 由可用高度推出基础字号
-  const lineH = 1.25;
-  let rH = Math.floor((mh * 0.92) / (lineCount * lineH));
-
-  // 5. 由可用宽度推出约束字号
-  // 强制约束:文字块最大宽度 = mw * 0.85(超出降字号)
-  const maxBlockW = mw * 0.85;
-  let rW = Math.floor(maxBlockW / maxLineW);
-
-  // 6. 取较小者,加字体补偿
-  let r = Math.min(rH, rW);
-
-  // 7. 兜底用 baseH(画面比例基础值)
-  if (r < baseH * 1500) r = Math.floor(baseH * 1500);  // 1500 接近标准画布高度
-
-  r = Math.floor(r * fontScale);
-
-  return Math.max(mn, Math.min(mx, r));
+  // 字体视觉补偿
+  best = Math.floor(best * fontScale);
+  return Math.max(mn, Math.min(mx, best));
 }
 
 /**
@@ -581,7 +598,7 @@ function styleA_handDrawn(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
-  const t = (text || '今日份好物').slice(0, 30);
+  const t = text || '今日份好物';
 
   // ─── 1. 底色 ───
   ctx.fillStyle = palette.bg;
@@ -608,7 +625,7 @@ function styleA_handDrawn(ctx, text, palette, options) {
   ctx.restore();
 
   // ─── 4. 主标题(马克笔风 + 黑色超粗体) ───
-  const fontSize = fs(t, W * 0.78, H * 0.40, 72, 260, fontConf.scale);
+  const fontSize = fs(ctx, t, W * 0.78, H * 0.40, 72, 260, fontConf.scale);
   drawMarkerText(ctx, t, W * 0.5 - measureTextWidth(ctx, t, fontSize, fontConf.family, fontConf.weight) / 2,
                  H * 0.46 - fontSize / 2, fontSize, palette.text);
 
@@ -729,7 +746,7 @@ function styleB_collage(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
-  const t = (text || '好物推荐').slice(0, 30);
+  const t = text || '好物推荐';
 
   // ─── 1. 底色 ───
   ctx.fillStyle = palette.bg;
@@ -764,7 +781,7 @@ function styleB_collage(ctx, text, palette, options) {
   drawHighlighter(ctx, W * 0.2, H * 0.52, W * 0.6, 80, palette.accent);
 
   // ─── 5. 主标题(压在最上层便签上) ───
-  const fontSize = fs(t, W * 0.6, H * 0.24, 64, 200, fontConf.scale);
+  const fontSize = fs(ctx, t, W * 0.6, H * 0.24, 64, 200, fontConf.scale);
   drawWrappedText(ctx, t, W / 2, H * 0.55, W * 0.6, fontSize, palette.text, {
     align: 'center', vAlign: 'middle', lineHeight: 1.18,
     fontFamily: fontConf.family, fontWeight: fontConf.weight,
@@ -886,7 +903,7 @@ function styleC_comicPop(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
-  const t = (text || 'OMG 绝了').slice(0, 30);
+  const t = text || 'OMG 绝了';
 
   // ─── 1. 纯色背景 ───
   ctx.fillStyle = palette.bg;
@@ -899,7 +916,7 @@ function styleC_comicPop(ctx, text, palette, options) {
   drawComicBurst(ctx, W / 2, H / 2, Math.max(W, H) * 0.75, 90, 18, '#FFFFFF');
 
   // ─── 4. 主标题(粗黑体 + 黑色描边,漫画感) ───
-  const fontSize = fs(t, W * 0.78, H * 0.34, 80, 280, fontConf.scale);
+  const fontSize = fs(ctx, t, W * 0.78, H * 0.34, 80, 280, fontConf.scale);
   drawWrappedText(ctx, t, W / 2, H * 0.45, W * 0.78, fontSize, palette.text, {
     align: 'center', vAlign: 'middle', lineHeight: 1.15,
     fontFamily: fontConf.family, fontWeight: fontConf.weight,
@@ -1000,7 +1017,7 @@ function styleD_newspaper(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
-  const t = (text || '年度盘点').slice(0, 30);
+  const t = text || '年度盘点';
 
   // ─── 1. 纯色背景 ───
   ctx.fillStyle = palette.bg;
@@ -1014,7 +1031,7 @@ function styleD_newspaper(ctx, text, palette, options) {
   ctx.fillText('— ANNUAL REPORT 2026 —', W / 2, H * 0.05);
 
   // ─── 3. 主标题(超粗字,占画面 35%) ───
-  const mainSize = fs(t, W * 0.88, H * 0.36, 90, 280, fontConf.scale);
+  const mainSize = fs(ctx, t, W * 0.88, H * 0.36, 90, 280, fontConf.scale);
   drawWrappedText(ctx, t, W / 2, H * 0.32, W * 0.88, mainSize, palette.text, {
     align: 'center', vAlign: 'middle', lineHeight: 1.08,
     fontFamily: fontConf.family, fontWeight: fontConf.weight,
@@ -1119,14 +1136,14 @@ function styleE_minimal(ctx, text, palette, options) {
   const W = CANVAS_W, H = CANVAS_H;
   const seed = (options && options.seed) || 1;
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
-  const t = (text || '极简').slice(0, 30);
+  const t = text || '极简';
 
   // ─── 1. 纯色背景 ───
   ctx.fillStyle = palette.bg;
   ctx.fillRect(0, 0, W, H);
 
   // ─── 2. 主标题(超大字,占画面 75%) ───
-  const fontSize = fs(t, W * 0.92, H * 0.78, 120, 400, fontConf.scale);
+  const fontSize = fs(ctx, t, W * 0.92, H * 0.78, 120, 400, fontConf.scale);
   drawWrappedText(ctx, t, W / 2, H / 2, W * 0.9, fontSize, palette.text, {
     align: 'center', vAlign: 'middle', lineHeight: 1.04,
     fontFamily: fontConf.family, fontWeight: fontConf.weight,
@@ -1175,6 +1192,846 @@ function styleE_minimal(ctx, text, palette, options) {
 }
 
 // ════════════════════════════════════════════════════════════════
+//  v3.1 · 新增 15 个风格族 F-T(每个保持 50-80 行,调用 fs(ctx,...) )
+// ════════════════════════════════════════════════════════════════
+
+/**
+ * F · 复古胶片(retro film)
+ * 视觉:棕褐色调、胶片颗粒、暗角、过曝边
+ */
+function styleF_retroFilm(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '复古胶片';
+
+  // 1. 主背景(棕褐渐变)
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, palette.bg);
+  grad.addColorStop(1, palette.bg2 || palette.bg);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 胶片颗粒(随机散点)
+  ctx.fillStyle = withAlpha(palette.text, 0.06);
+  for (let i = 0; i < 600; i++) {
+    const x = (seed * 13 + i * 47) % W;
+    const y = (seed * 17 + i * 89) % H;
+    ctx.fillRect(x, y, 2, 2);
+  }
+
+  // 3. 暗角
+  const vign = ctx.createRadialGradient(W/2, H/2, W*0.3, W/2, H/2, W*0.7);
+  vign.addColorStop(0, 'rgba(0,0,0,0)');
+  vign.addColorStop(1, 'rgba(0,0,0,0.4)');
+  ctx.fillStyle = vign;
+  ctx.fillRect(0, 0, W, H);
+
+  // 4. 主标题(衬线字体,偏小)
+  const fontSize = fs(ctx, t, W * 0.82, H * 0.5, 60, 240, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H * 0.45, W * 0.8, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.1,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 5. 顶部日期(衬线斜体)
+  ctx.fillStyle = withAlpha(palette.text, 0.7);
+  ctx.font = `italic 700 32px "DM Serif Display",serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('— EST. 2026 —', W / 2, H * 0.1);
+
+  // 6. 底部胶片孔
+  ctx.fillStyle = withAlpha(palette.text, 0.3);
+  for (let i = 0; i < 6; i++) {
+    ctx.fillRect(W * 0.1 + i * W * 0.13, H * 0.93, 40, 14);
+  }
+
+  // 7. 顶部胶片孔
+  for (let i = 0; i < 6; i++) {
+    ctx.fillRect(W * 0.1 + i * W * 0.13, H * 0.02, 40, 14);
+  }
+
+  // 8. 角标文字
+  if (seed % 2 === 0) {
+    ctx.fillStyle = palette.accent;
+    ctx.font = `700 24px ${fontConf.family}`;
+    ctx.textAlign = 'left';
+    ctx.fillText('NO.001', W * 0.08, H * 0.15);
+  }
+}
+
+/**
+ * G · 多巴胺风格(dopamine)
+ * 视觉:高饱和粉/黄/蓝、笑脸、星星、涂鸦
+ */
+function styleG_dopamine(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '快乐每一天';
+
+  // 1. 主背景
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 涂鸦装饰背景(随机圆点/星星)
+  const decos = ['●', '★', '✦', '◉', '◆'];
+  for (let i = 0; i < 12; i++) {
+    const x = ((seed + i * 7) * 31) % W;
+    const y = ((seed + i * 11) * 47) % H;
+    ctx.fillStyle = withAlpha(palette.accent, 0.3 + (i % 3) * 0.2);
+    ctx.font = `900 ${30 + (i % 4) * 20}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(decos[i % decos.length], x, y);
+  }
+
+  // 3. 主标题(粗黑体,白底色块)
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.45, 70, 280, fontConf.scale);
+  // 文字底色块
+  ctx.fillStyle = palette.text;
+  const blockH = fontSize * 1.3;
+  ctx.fillRect(W * 0.08, H * 0.42, W * 0.84, blockH);
+  // 文字(反色)
+  drawWrappedText(ctx, t, W / 2, H * 0.42 + blockH / 2, W * 0.84, fontSize, palette.bg, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.1,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 4. 笑脸表情
+  drawEmojiSticker(ctx, W * 0.85, H * 0.18, 100, '😄');
+
+  // 5. 顶部小标签
+  if (seed % 2 === 0) {
+    ctx.fillStyle = palette.accent;
+    ctx.font = `900 28px ${fontConf.family}`;
+    ctx.textAlign = 'center';
+    ctx.fillText('✦ SUPER HAPPY ✦', W / 2, H * 0.1);
+  }
+
+  // 6. 底部装饰
+  ctx.fillStyle = palette.accent;
+  ctx.font = `900 60px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText('♡', W / 2, H * 0.88);
+}
+
+/**
+ * H · 酸性设计(acid design)
+ * 视觉:液态金属、扭曲、3D 渐变球
+ */
+function styleH_acid(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '酸性设计';
+
+  // 1. 黑底
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 3D 渐变球(左上)
+  const sphereGrad = ctx.createRadialGradient(W*0.25, H*0.3, 10, W*0.25, H*0.3, 180);
+  sphereGrad.addColorStop(0, palette.accent);
+  sphereGrad.addColorStop(0.7, palette.accent2 || palette.accent);
+  sphereGrad.addColorStop(1, withAlpha(palette.accent, 0));
+  ctx.fillStyle = sphereGrad;
+  ctx.beginPath();
+  ctx.arc(W*0.25, H*0.3, 180, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 3. 第 2 个球(右下)
+  const sphere2 = ctx.createRadialGradient(W*0.78, H*0.78, 10, W*0.78, H*0.78, 140);
+  sphere2.addColorStop(0, palette.text);
+  sphere2.addColorStop(1, withAlpha(palette.text, 0));
+  ctx.fillStyle = sphere2;
+  ctx.beginPath();
+  ctx.arc(W*0.78, H*0.78, 140, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 4. 主标题(粗体,反白)
+  const fontSize = fs(ctx, t, W * 0.82, H * 0.4, 80, 280, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H * 0.55, W * 0.8, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 5. 扭曲线条(底部)
+  ctx.strokeStyle = palette.accent;
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  for (let x = 0; x <= W; x += 8) {
+    const y = H * 0.92 + Math.sin((x + seed * 50) * 0.02) * 18;
+    if (x === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+}
+
+/**
+ * I · 孟菲斯(memphis)
+ * 视觉:几何形、波点、Z 字、撞色
+ */
+function styleI_memphis(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '孟菲斯';
+
+  // 1. 主背景
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 几何图案(各种)
+  const colors = [palette.accent, palette.text, palette.accent2 || palette.accent];
+  // 圆点矩阵
+  ctx.fillStyle = colors[seed % 3];
+  for (let x = 0; x < 5; x++) {
+    for (let y = 0; y < 4; y++) {
+      ctx.beginPath();
+      ctx.arc(W * 0.1 + x * 60, H * 0.05 + y * 50, 8, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  // Z 字条纹
+  ctx.fillStyle = colors[(seed + 1) % 3];
+  ctx.beginPath();
+  ctx.moveTo(W * 0.7, H * 0.05);
+  ctx.lineTo(W * 0.95, H * 0.05);
+  ctx.lineTo(W * 0.7, H * 0.15);
+  ctx.lineTo(W * 0.95, H * 0.15);
+  ctx.lineTo(W * 0.7, H * 0.25);
+  ctx.lineTo(W * 0.95, H * 0.25);
+  ctx.fill();
+  // 三角
+  ctx.beginPath();
+  ctx.moveTo(W * 0.85, H * 0.85);
+  ctx.lineTo(W * 0.95, H * 0.85);
+  ctx.lineTo(W * 0.9, H * 0.7);
+  ctx.closePath();
+  ctx.fillStyle = colors[(seed + 2) % 3];
+  ctx.fill();
+
+  // 3. 主标题
+  const fontSize = fs(ctx, t, W * 0.82, H * 0.4, 80, 260, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H / 2, W * 0.8, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 4. 底部条带
+  ctx.fillStyle = palette.accent;
+  ctx.fillRect(0, H * 0.92, W, 12);
+}
+
+/**
+ * J · 国风(Chinese traditional)
+ * 视觉:水墨红印章、毛笔字、梅花、留白
+ */
+function styleJ_chinese(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '古韵国风';
+
+  // 1. 米黄宣纸底
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 印章(右上角)
+  ctx.fillStyle = palette.accent;
+  ctx.fillRect(W * 0.82, H * 0.08, 100, 100);
+  ctx.strokeStyle = palette.bg;
+  ctx.lineWidth = 4;
+  ctx.strokeRect(W * 0.82 + 6, H * 0.08 + 6, 88, 88);
+  ctx.fillStyle = palette.bg;
+  ctx.font = `900 30px "Noto Serif SC",serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('印', W * 0.82 + 50, H * 0.08 + 50);
+
+  // 3. 梅花枝(左上,几笔水墨)
+  ctx.strokeStyle = palette.text;
+  ctx.lineWidth = 6;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(W * 0.05, H * 0.25);
+  ctx.quadraticCurveTo(W * 0.15, H * 0.2, W * 0.2, H * 0.3);
+  ctx.stroke();
+  // 梅花点
+  ctx.fillStyle = palette.accent;
+  [[0.1, 0.22], [0.15, 0.25], [0.18, 0.28], [0.22, 0.31]].forEach(([px, py]) => {
+    ctx.beginPath();
+    ctx.arc(W * px, H * py, 8, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // 4. 主标题(毛笔体)
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.5, 70, 280, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H / 2, W * 0.82, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.15,
+    fontFamily: '"Ma Shan Zheng",serif', fontWeight: 700,
+  });
+
+  // 5. 底部题字
+  if (seed % 2 === 0) {
+    ctx.fillStyle = withAlpha(palette.text, 0.6);
+    ctx.font = `italic 24px "Noto Serif SC",serif`;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('— 丁亥年 —', W * 0.92, H * 0.94);
+  }
+
+  // 6. 右侧竖排小字
+  ctx.save();
+  ctx.translate(W * 0.96, H * 0.6);
+  ctx.rotate(Math.PI / 2);
+  ctx.fillStyle = withAlpha(palette.text, 0.5);
+  ctx.font = `400 22px "Noto Serif SC",serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('小 红 书 封 面', 0, 0);
+  ctx.restore();
+}
+
+/**
+ * K · 赛博朋克(cyberpunk)
+ * 视觉:霓虹光晕、网格地面、故障文字
+ */
+function styleK_cyberpunk(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || 'CYBER';
+
+  // 1. 暗紫黑底
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 透视网格(底部)
+  ctx.strokeStyle = withAlpha(palette.accent, 0.7);
+  ctx.lineWidth = 2;
+  // 横线
+  for (let i = 0; i < 8; i++) {
+    const y = H * 0.7 + i * H * 0.04;
+    ctx.globalAlpha = i / 8;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
+  }
+  // 斜线(透视)
+  ctx.globalAlpha = 1;
+  ctx.lineWidth = 1.5;
+  for (let i = -10; i <= 10; i++) {
+    ctx.beginPath();
+    const x0 = W / 2 + i * 80;
+    ctx.moveTo(x0, H * 0.7);
+    ctx.lineTo(W / 2 + i * 400, H);
+    ctx.stroke();
+  }
+
+  // 3. 主标题(霓虹光晕 - 双层)
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.45, 80, 280, fontConf.scale);
+  // 外层光晕
+  ctx.save();
+  ctx.shadowColor = palette.accent;
+  ctx.shadowBlur = 40;
+  ctx.fillStyle = palette.accent;
+  drawWrappedText(ctx, t, W / 2 + 4, H * 0.4 + 4, W * 0.82, fontSize, palette.accent, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+  ctx.restore();
+
+  // 文字本体
+  drawWrappedText(ctx, t, W / 2, H * 0.4, W * 0.82, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 4. 顶部日文小字
+  ctx.fillStyle = palette.accent;
+  ctx.font = `700 22px sans-serif`;
+  ctx.textAlign = 'left';
+  ctx.fillText('// SYSTEM 2077', W * 0.08, H * 0.08);
+
+  // 5. 故障条
+  if (seed % 2 === 0) {
+    ctx.fillStyle = palette.accent;
+    ctx.fillRect(W * 0.1, H * 0.92, W * 0.3, 8);
+    ctx.fillStyle = palette.text;
+    ctx.fillRect(W * 0.55, H * 0.92, W * 0.2, 8);
+  }
+}
+
+/**
+ * L · 日系清新(Japanese fresh)
+ * 视觉:柔和粉/蓝/米色、washi 胶带、爱心
+ */
+function styleL_japanese(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '小确幸';
+
+  // 1. 柔和底色
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 顶部 washi 胶带
+  ctx.save();
+  ctx.translate(W * 0.3, H * 0.05);
+  ctx.rotate(-0.05);
+  ctx.fillStyle = withAlpha(palette.accent, 0.65);
+  ctx.fillRect(0, 0, W * 0.4, 30);
+  // 胶带纹理(白点)
+  ctx.fillStyle = withAlpha('#FFFFFF', 0.4);
+  for (let i = 0; i < 8; i++) ctx.fillRect(20 + i * 50, 10, 4, 10);
+  ctx.restore();
+
+  // 3. 底部 washi 胶带
+  ctx.save();
+  ctx.translate(W * 0.45, H * 0.92);
+  ctx.rotate(0.03);
+  ctx.fillStyle = withAlpha(palette.accent2 || palette.accent, 0.65);
+  ctx.fillRect(0, 0, W * 0.35, 26);
+  ctx.restore();
+
+  // 4. 主标题
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.5, 70, 260, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H * 0.48, W * 0.85, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.15,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 5. 装饰小爱心 / 小花
+  drawEmojiSticker(ctx, W * 0.18, H * 0.78, 70, '🌸');
+  drawEmojiSticker(ctx, W * 0.82, H * 0.78, 70, '✨');
+
+  // 6. 顶部小字
+  ctx.fillStyle = withAlpha(palette.text, 0.6);
+  ctx.font = `400 24px "ZCOOL XiaoWei",serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('— 大切な瞬間 —', W / 2, H * 0.13);
+
+  // 7. 边框
+  ctx.strokeStyle = withAlpha(palette.text, 0.2);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(40, 40, W - 80, H - 80);
+}
+
+/**
+ * M · 3D 渲染(3D render)
+ * 视觉:渐变球体、玻璃质感、阴影
+ */
+function styleM_3d(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '3D';
+
+  // 1. 渐变背景
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, palette.bg);
+  grad.addColorStop(1, palette.bg2 || palette.bg);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 球体阴影(顶部)
+  ctx.fillStyle = withAlpha(palette.text, 0.15);
+  ctx.beginPath();
+  ctx.ellipse(W/2, H * 0.18 + 180, 200, 30, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 3. 主球体
+  const ballX = W / 2, ballY = H * 0.22, ballR = 170;
+  const ballGrad = ctx.createRadialGradient(
+    ballX - ballR * 0.4, ballY - ballR * 0.4, ballR * 0.1,
+    ballX, ballY, ballR
+  );
+  ballGrad.addColorStop(0, '#FFFFFF');
+  ballGrad.addColorStop(0.3, palette.accent);
+  ballGrad.addColorStop(1, palette.accent2 || palette.accent);
+  ctx.fillStyle = ballGrad;
+  ctx.beginPath();
+  ctx.arc(ballX, ballY, ballR, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 球体高光
+  ctx.fillStyle = withAlpha('#FFFFFF', 0.5);
+  ctx.beginPath();
+  ctx.ellipse(ballX - 60, ballY - 70, 40, 25, -0.5, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 4. 主标题
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.4, 80, 280, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H * 0.68, W * 0.85, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 5. 底部小字
+  ctx.fillStyle = withAlpha(palette.text, 0.6);
+  ctx.font = `700 26px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText('RENDERED IN 3D', W / 2, H * 0.92);
+}
+
+/**
+ * N · 蒸汽波(vaporwave)
+ * 视觉:紫色渐变、网格地面、落日圆盘
+ */
+function styleN_vaporwave(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || 'VAPORWAVE';
+
+  // 1. 紫粉渐变天空
+  const sky = ctx.createLinearGradient(0, 0, 0, H * 0.65);
+  sky.addColorStop(0, palette.bg);
+  sky.addColorStop(1, palette.bg2 || palette.bg);
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H * 0.65);
+
+  // 2. 落日
+  const sunGrad = ctx.createLinearGradient(0, H * 0.3, 0, H * 0.65);
+  sunGrad.addColorStop(0, palette.accent);
+  sunGrad.addColorStop(1, palette.accent2 || palette.accent);
+  ctx.fillStyle = sunGrad;
+  ctx.beginPath();
+  ctx.arc(W / 2, H * 0.55, 240, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 3. 网格地面
+  ctx.strokeStyle = palette.text;
+  ctx.lineWidth = 2;
+  // 横线
+  for (let i = 0; i < 10; i++) {
+    const y = H * 0.65 + i * H * 0.04;
+    ctx.globalAlpha = i / 10;
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(W, y);
+    ctx.stroke();
+  }
+  // 透视线
+  ctx.globalAlpha = 1;
+  for (let i = -10; i <= 10; i++) {
+    ctx.beginPath();
+    const x0 = W / 2 + i * 80;
+    ctx.moveTo(x0, H * 0.65);
+    ctx.lineTo(W / 2 + i * 500, H);
+    ctx.stroke();
+  }
+
+  // 4. 主标题(衬线 + 阴影)
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.4, 80, 280, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H * 0.28, W * 0.82, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+    stroke: { color: palette.bg, width: 4 },
+  });
+}
+
+/**
+ * O · 暗黑系(dark gothic)
+ * 视觉:深黑底、金/银色、暗色花纹
+ */
+function styleO_dark(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || 'GOTHIC';
+
+  // 1. 纯黑底
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 暗纹(垂直细线)
+  ctx.strokeStyle = withAlpha(palette.accent, 0.15);
+  ctx.lineWidth = 1;
+  for (let i = 0; i < W; i += 30) {
+    ctx.beginPath();
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i, H);
+    ctx.stroke();
+  }
+
+  // 3. 边框(金线)
+  ctx.strokeStyle = palette.accent;
+  ctx.lineWidth = 3;
+  ctx.strokeRect(40, 40, W - 80, H - 80);
+  ctx.lineWidth = 1;
+  ctx.strokeRect(50, 50, W - 100, H - 100);
+
+  // 4. 顶部装饰
+  ctx.fillStyle = palette.accent;
+  ctx.font = `900 28px "Noto Serif SC",serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('◆ ◇ ◆', W / 2, H * 0.1);
+
+  // 5. 主标题
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.5, 70, 280, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H * 0.52, W * 0.85, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.1,
+    fontFamily: '"Noto Serif SC",serif', fontWeight: 900,
+  });
+
+  // 6. 底部签名
+  ctx.fillStyle = palette.accent;
+  ctx.font = `italic 700 24px "DM Serif Display",serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText('— DARK SOULS —', W / 2, H * 0.92);
+}
+
+/**
+ * P · 像素风(pixel)
+ * 视觉:8-bit 像素块、纯色块拼贴、复古游戏
+ */
+function styleP_pixel(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || 'PIXEL';
+
+  // 1. 主背景
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 像素方块装饰
+  const pixelSize = 30;
+  const palette2 = [palette.accent, palette.text, palette.accent2 || palette.accent];
+  // 顶部
+  for (let i = 0; i < 12; i++) {
+    ctx.fillStyle = palette2[(seed + i) % 3];
+    ctx.fillRect(i * pixelSize, H * 0.08, pixelSize, pixelSize);
+    ctx.fillRect(i * pixelSize, H * 0.92 - pixelSize, pixelSize, pixelSize);
+  }
+  // 左侧竖排
+  for (let i = 0; i < 8; i++) {
+    ctx.fillStyle = palette2[(seed + i + 1) % 3];
+    ctx.fillRect(W * 0.05, H * 0.15 + i * pixelSize * 2, pixelSize, pixelSize);
+  }
+  // 右侧竖排
+  for (let i = 0; i < 8; i++) {
+    ctx.fillStyle = palette2[(seed + i + 2) % 3];
+    ctx.fillRect(W * 0.95 - pixelSize, H * 0.15 + i * pixelSize * 2, pixelSize, pixelSize);
+  }
+
+  // 3. 主标题(像素感 - 用细描边)
+  const fontSize = fs(ctx, t, W * 0.82, H * 0.4, 80, 260, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H / 2, W * 0.82, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.1,
+    fontFamily: '"Noto Sans SC",sans-serif', fontWeight: 900,
+  });
+
+  // 4. 底部像素字符
+  ctx.fillStyle = palette.accent;
+  ctx.font = `900 28px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText('★ 8-BIT MODE ★', W / 2, H * 0.85);
+}
+
+/**
+ * Q · 极光渐变(aurora)
+ * 视觉:粉/蓝/紫渐变、流动曲线
+ */
+function styleQ_aurora(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || 'AURORA';
+
+  // 1. 多色渐变背景
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, palette.bg);
+  grad.addColorStop(0.5, palette.accent);
+  grad.addColorStop(1, palette.bg2 || palette.bg);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 流动曲线(透明叠加)
+  ctx.globalAlpha = 0.3;
+  ctx.strokeStyle = palette.text;
+  ctx.lineWidth = 3;
+  for (let k = 0; k < 3; k++) {
+    ctx.beginPath();
+    for (let x = 0; x <= W; x += 8) {
+      const y = H * (0.3 + k * 0.2) + Math.sin((x + seed * 30 + k * 100) * 0.01) * 60;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+
+  // 3. 主标题(白字 + 阴影)
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.45, 80, 280, fontConf.scale);
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.4)';
+  ctx.shadowBlur = 20;
+  drawWrappedText(ctx, t, W / 2, H / 2, W * 0.82, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+  ctx.restore();
+
+  // 4. 顶部小字
+  ctx.fillStyle = withAlpha(palette.text, 0.7);
+  ctx.font = `italic 700 26px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText('— northern lights —', W / 2, H * 0.1);
+}
+
+/**
+ * R · 复古海报(vintage poster)
+ * 视觉:Art Deco 金边、对称构图、老电影字
+ */
+function styleR_vintagePoster(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || 'VINTAGE';
+
+  // 1. 米色底
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 装饰外框(双层)
+  ctx.strokeStyle = palette.accent;
+  ctx.lineWidth = 6;
+  ctx.strokeRect(60, 60, W - 120, H - 120);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(80, 80, W - 160, H - 160);
+
+  // 3. 顶部装饰
+  ctx.fillStyle = palette.accent;
+  ctx.font = `900 28px "DM Serif Display",serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('★ EST · 1925 ★', W / 2, H * 0.12);
+
+  // 4. 主标题
+  const fontSize = fs(ctx, t, W * 0.85, H * 0.45, 80, 280, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, H * 0.5, W * 0.85, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: '"DM Serif Display",serif', fontWeight: 900,
+  });
+
+  // 5. 中间装饰条
+  ctx.fillStyle = palette.accent;
+  ctx.fillRect(W * 0.3, H * 0.78, W * 0.4, 4);
+  ctx.beginPath();
+  ctx.arc(W / 2, H * 0.78 + 2, 12, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 6. 底部小字
+  ctx.fillStyle = withAlpha(palette.text, 0.7);
+  ctx.font = `italic 700 22px "DM Serif Display",serif`;
+  ctx.textAlign = 'center';
+  ctx.fillText('a classic poster', W / 2, H * 0.86);
+}
+
+/**
+ * S · 玻璃拟态(glassmorphism)
+ * 视觉:半透明卡片、模糊背景、细线边
+ */
+function styleS_glass(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || 'GLASS';
+
+  // 1. 多色渐变底
+  const grad = ctx.createLinearGradient(0, 0, W, H);
+  grad.addColorStop(0, palette.bg);
+  grad.addColorStop(0.5, palette.accent);
+  grad.addColorStop(1, palette.bg2 || palette.bg);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 装饰圆(模糊感)
+  ctx.globalAlpha = 0.4;
+  ctx.fillStyle = palette.accent2 || palette.accent;
+  ctx.beginPath();
+  ctx.arc(W * 0.2, H * 0.3, 120, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = palette.text;
+  ctx.beginPath();
+  ctx.arc(W * 0.8, H * 0.7, 100, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+
+  // 3. 玻璃卡片(中央)
+  const cardX = W * 0.12, cardY = H * 0.18, cardW = W * 0.76, cardH = H * 0.64;
+  ctx.fillStyle = withAlpha('#FFFFFF', 0.25);
+  ctx.fillRect(cardX, cardY, cardW, cardH);
+  ctx.strokeStyle = withAlpha('#FFFFFF', 0.6);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(cardX, cardY, cardW, cardH);
+
+  // 4. 主标题(深色,卡片内)
+  const fontSize = fs(ctx, t, cardW * 0.85, cardH * 0.7, 70, 280, fontConf.scale);
+  drawWrappedText(ctx, t, W / 2, cardY + cardH / 2, cardW * 0.85, fontSize, palette.text, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.1,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+}
+
+/**
+ * T · 卡通插画(cartoon)
+ * 视觉:粗黑描边、卡哇伊、大眼睛装饰
+ */
+function styleT_cartoon(ctx, text, palette, options) {
+  const W = CANVAS_W, H = CANVAS_H;
+  const seed = (options && options.seed) || 1;
+  const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
+  const t = text || '卡通';
+
+  // 1. 主背景
+  ctx.fillStyle = palette.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 2. 圆点背景
+  ctx.fillStyle = withAlpha(palette.accent, 0.4);
+  for (let i = 0; i < 25; i++) {
+    const x = (seed + i * 51) % W;
+    const y = (seed + i * 79) % H;
+    ctx.beginPath();
+    ctx.arc(x, y, 12, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // 3. 主标题(粗黑边)
+  const fontSize = fs(ctx, t, W * 0.82, H * 0.5, 80, 280, fontConf.scale);
+  // 描边
+  drawWrappedText(ctx, t, W / 2, H * 0.45, W * 0.82, fontSize, palette.bg, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+    stroke: { color: palette.text, width: 12 },
+  });
+  // 填充
+  drawWrappedText(ctx, t, W / 2, H * 0.45, W * 0.82, fontSize, palette.accent, {
+    align: 'center', vAlign: 'middle', lineHeight: 1.05,
+    fontFamily: fontConf.family, fontWeight: fontConf.weight,
+  });
+
+  // 4. 装饰大眼萌
+  drawEmojiSticker(ctx, W * 0.18, H * 0.78, 90, '🥺');
+  drawEmojiSticker(ctx, W * 0.82, H * 0.78, 90, '🌟');
+
+  // 5. 顶部小标
+  ctx.fillStyle = palette.text;
+  ctx.font = `900 32px ${fontConf.family}`;
+  ctx.textAlign = 'center';
+  ctx.fillText('✨ KAWAII ✨', W / 2, H * 0.1);
+
+  // 6. 底部装饰条
+  ctx.fillStyle = palette.accent;
+  ctx.fillRect(W * 0.1, H * 0.88, W * 0.8, 6);
+}
+
+// ════════════════════════════════════════════════════════════════
 // ═══════════ 渲染主流程 ═══════════
 // ════════════════════════════════════════════════════════════════
 
@@ -1184,6 +2041,21 @@ const STYLE_FUNCS = {
   C: styleC_comicPop,
   D: styleD_newspaper,
   E: styleE_minimal,
+  F: styleF_retroFilm,
+  G: styleG_dopamine,
+  H: styleH_acid,
+  I: styleI_memphis,
+  J: styleJ_chinese,
+  K: styleK_cyberpunk,
+  L: styleL_japanese,
+  M: styleM_3d,
+  N: styleN_vaporwave,
+  O: styleO_dark,
+  P: styleP_pixel,
+  Q: styleQ_aurora,
+  R: styleR_vintagePoster,
+  S: styleS_glass,
+  T: styleT_cartoon,
 };
 
 // 按风格族 + vi + seedOffset 选配色
@@ -1254,10 +2126,7 @@ function generate() {
     showToast('请输入文案');
     return;
   }
-  if (text.length > 30) {
-    showToast('文案不能超过 30 字');
-    return;
-  }
+  // v3.1 取消字数上限:字号自适应算法会根据实际字数自动缩放
   const btn = document.getElementById('btnGenerate');
   btn.disabled = true;
   btn.innerHTML = '⏳ 生成中...';

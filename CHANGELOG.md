@@ -2,6 +2,53 @@
 
 本项目所有重要变更都记录于此。格式基于 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。
 
+## [v3.1] - 2026-07-01
+
+### Added(用户反馈驱动)
+
+#### 风格族(从 5 → 20)
+- 🅵 复古胶片 `styleF_retroFilm` - 棕褐调 + 胶片颗粒 + 暗角
+- 🅶 多巴胺 `styleG_dopamine` - 高饱和撞色 + 笑脸 + 涂鸦
+- 🅷 酸性设计 `styleH_acid` - 液态金属 + 3D 渐变球
+- 🅸 孟菲斯 `styleI_memphis` - 波点 + 几何 + 撞色条纹
+- 🅹 国风 `styleJ_chinese` - 水墨 + 红印章 + 梅花
+- 🅺 赛博朋克 `styleK_cyberpunk` - 霓虹光晕 + 网格 + 故障
+- 🅻 日系清新 `styleL_japanese` - 柔和粉 + washi 胶带
+- 🅼 3D 渲染 `styleM_3d` - 渐变球体 + 玻璃质感
+- 🅽 蒸汽波 `styleN_vaporwave` - 紫粉渐变 + 网格 + 落日
+- 🅾 暗黑系 `styleO_dark` - 深黑 + 金银边 + 衬线
+- 🅿 像素风 `styleP_pixel` - 8-bit 像素块拼贴
+- 🆀 极光渐变 `styleQ_aurora` - 粉蓝紫渐变 + 流动曲线
+- 🆁 复古海报 `styleR_vintagePoster` - Art Deco + 金边 + 对称
+- 🆂 玻璃拟态 `styleS_glass` - 半透明卡片 + 模糊圆
+- 🆃 卡通插画 `styleT_cartoon` - 粗黑边 + 大眼萌
+
+#### 配色库(从 30 → 105 套)
+- 15 个新族各 5 套配色,共新增 **75 套**
+- 每套 5 色:bg / bg2 / primary / secondary / accent / text
+
+#### 字号算法重写
+- 用 `ctx.measureText()` 二分搜索最大字号(精度 ↑ 30%)
+- 6% 边缘 padding(任意方向都不贴边)
+- 取消 `slice(0, 30)` 字数截断
+- 取消 `maxlength="30"` 硬上限
+- 自动按字符拆行,适配任意宽度
+
+### Changed(用户反馈驱动)
+- **变体数**: 6 张/族 → 5 张/族(适配 5/行布局)
+- **布局**: 桌面 5 列 / 平板 4 列 / 手机 2 列(原 5/3/2)
+- **总卡片数**: 30 张 → 100 张
+- **按钮文案**: "生成 30 张" → "生成 100 张"
+- **字符计数**: "0 / 30 字" → "0 字"
+- **占位符**: 移除 "1-30 字最佳" 提示
+
+### Fixed
+- 长文本(50+ 字)不再被截断
+- 字号过大贴边问题(6% padding 兜底)
+- 极端字数下字号估算偏差(改用真实 measureText)
+
+---
+
 ## [v3.0] - 2026-06-30
 
 ### Added(新增)
