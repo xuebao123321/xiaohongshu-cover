@@ -526,9 +526,11 @@ button{font-family:inherit}
 
 <!-- ═══════════ html2canvas 备份方案 ═══════════ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="./config.js"></script>
 
 <!-- ═══════════ 主程序 ES Module ═══════════ -->
 <script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 import {
   drawHandDrawnCircle,
   drawCloudHighlight,
@@ -634,25 +636,98 @@ window.FAMILY_LABELS = FAMILY_LABELS;
 
 // ═══════════ 账号 / 会员 / 下载权限 ═══════════
 
-async function apiRequest(path, options) {
-  const res = await fetch(path, {
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json', ...(options && options.headers ? options.headers : {}) },
-    ...options,
-  });
-  let payload = null;
-  try {
-    payload = await res.json();
-  } catch (_) {
-    payload = { ok: false, message: '服务器响应异常' };
-  }
-  if (!res.ok) {
-    const err = new Error(payload.message || '请求失败');
-    err.payload = payload;
-    err.status = res.status;
+const SUPABASE_CONFIG = window.COVER_MAKER_CONFIG || {};
+const SUPABASE_READY = !!(
+  SUPABASE_CONFIG.supabaseUrl &&
+  SUPABASE_CONFIG.supabaseAnonKey &&
+  !String(SUPABASE_CONFIG.supabaseUrl).includes('YOUR_SUPABASE')
+);
+const supabase = SUPABASE_READY
+  ? createClient(SUPABASE_CONFIG.supabaseUrl, SUPABASE_CONFIG.supabaseAnonKey, {
+      auth: {
+        persistSession: true,
+        autoRefreshToken: true,
+        detectSessionInUrl: true,
+      },
+    })
+  : null;
+
+async function authRequest(action, payload) {
+  if (!supabase) {
+    const err = new Error('Supabase 尚未配置');
+    err.payload = { message: '请先在 config.js 填入 Supabase URL 和 anon key' };
     throw err;
   }
+  let result;
+  if (action === 'register') {
+    result = await supabase.auth.signUp({
+      email: payload.email,
+      password: payload.password,
+      options: { emailRedirectTo: location.origin + location.pathname },
+    });
+  } else if (action === 'login') {
+    result = await supabase.auth.signInWithPassword({
+      email: payload.email,
+      password: payload.password,
+    });
+  } else if (action === 'logout') {
+    result = await supabase.auth.signOut();
+  }
+  if (result && result.error) {
+    const err = new Error(result.error.message || '请求失败');
+    err.payload = { message: formatAuthError(result.error.message) };
+    throw err;
+  }
+  return result || {};
+}
+
+function formatAuthError(message) {
+  const msg = String(message || '');
+  if (msg.includes('Invalid login credentials')) return '邮箱或密码不正确';
+  if (msg.includes('User already registered')) return '这个邮箱已经注册';
+  if (msg.includes('Password should be')) return '密码强度不够,请至少 6 位';
+  return msg || '请求失败';
+}
+
+async function fetchAuthPayload() {
+  if (!supabase) {
+    return {
+      ok: false,
+      authenticated: false,
+      user: null,
+      limits: { freeDailyDownloads: 3, usedToday: 0, remainingToday: 0, canBatchDownload: false },
+    };
+  }
+  const sessionResult = await supabase.auth.getSession();
+  const session = sessionResult.data && sessionResult.data.session;
+  if (!session || !session.user) {
+    return {
+      ok: true,
+      authenticated: false,
+      user: null,
+      limits: { freeDailyDownloads: 3, usedToday: 0, remainingToday: 0, canBatchDownload: false },
+    };
+  }
+  const payload = await callAuthorizeDownload({ count: 0, scope: 'status' });
   return payload;
+}
+
+async function callAuthorizeDownload(payload) {
+  if (!supabase) throw new Error('Supabase 尚未配置');
+  const { data, error } = await supabase.functions.invoke('authorize-download', {
+    body: payload || {},
+  });
+  if (error) {
+    const err = new Error(error.message || '请求失败');
+    err.payload = data || { message: error.message };
+    throw err;
+  }
+  if (data && data.ok === false) {
+    const err = new Error(data.message || '请求失败');
+    err.payload = data;
+    throw err;
+  }
+  return data;
 }
 
 function applyAuthPayload(payload) {
@@ -672,6 +747,15 @@ function renderAccountBar() {
   if (!role || !title || !sub || !openBtn || !logoutBtn) return;
 
   role.className = 'account-pill';
+  if (!SUPABASE_READY) {
+    role.classList.add('guest');
+    role.textContent = '未配置';
+    title.textContent = '请配置 Supabase';
+    sub.textContent = '填写 config.js 后即可启用登录、会员和下载限制';
+    openBtn.style.display = '';
+    logoutBtn.style.display = 'none';
+    return;
+  }
   if (!AUTH_STATE.authenticated || !AUTH_STATE.user) {
     role.classList.add('guest');
     role.textContent = '未登录';
@@ -716,13 +800,13 @@ function closeAuthModal() {
 
 async function refreshAuthState() {
   try {
-    const payload = await apiRequest('/api/me');
+    const payload = await fetchAuthPayload();
     applyAuthPayload(payload);
   } catch (e) {
     AUTH_STATE.ready = true;
     AUTH_STATE.authenticated = false;
     renderAccountBar();
-    console.warn('[auth] 后端不可用或未启动:', e);
+    console.warn('[auth] Supabase 不可用或未配置:', e);
   }
 }
 
@@ -742,10 +826,8 @@ async function submitAuth(mode) {
   loginBtn.disabled = true;
   registerBtn.disabled = true;
   try {
-    const payload = await apiRequest(mode === 'register' ? '/api/register' : '/api/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    });
+    await authRequest(mode === 'register' ? 'register' : 'login', { email, password });
+    const payload = await fetchAuthPayload();
     applyAuthPayload(payload);
     closeAuthModal();
     showToast(mode === 'register' ? '已注册并登录' : '登录成功');
@@ -759,7 +841,7 @@ async function submitAuth(mode) {
 
 async function logout() {
   try {
-    await apiRequest('/api/logout', { method: 'POST', body: '{}' });
+    await authRequest('logout');
   } catch (e) {
     console.warn('[auth] logout failed:', e);
   }
@@ -776,10 +858,7 @@ async function requestDownloadAccess(count, scope) {
     return false;
   }
   try {
-    const payload = await apiRequest('/api/downloads/authorize', {
-      method: 'POST',
-      body: JSON.stringify({ count: count || 1, scope: scope || 'single' }),
-    });
+    const payload = await callAuthorizeDownload({ count: count || 1, scope: scope || 'single' });
     applyAuthPayload(payload);
     return true;
   } catch (e) {

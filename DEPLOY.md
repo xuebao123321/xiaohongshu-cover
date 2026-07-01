@@ -2,6 +2,8 @@
 
 > 小红书封面生成器 v3.0 是**纯静态应用**(单 HTML + 2 个 ES Module),可以零配置部署到任何静态托管服务。
 
+> 会员版推荐使用 **GitHub Pages + Supabase**。详见 [SUPABASE_GITHUB_PAGES.md](./SUPABASE_GITHUB_PAGES.md)。
+
 ## 选项 A:GitHub Pages(免费 + 自定义域名)
 
 ### 步骤

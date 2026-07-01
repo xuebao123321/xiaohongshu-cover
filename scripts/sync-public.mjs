@@ -8,6 +8,7 @@ const publicDir = join(root, 'public');
 await rm(publicDir, { recursive: true, force: true });
 await mkdir(publicDir, { recursive: true });
 await cp(join(root, 'index.html'), join(publicDir, 'index.html'));
+await cp(join(root, 'config.js'), join(publicDir, 'config.js'));
 await cp(join(root, 'lib'), join(publicDir, 'lib'), { recursive: true });
 
 console.log('Synced static assets to public/');
