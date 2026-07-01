@@ -33,6 +33,11 @@ create policy "download_logs_select_own"
   on public.download_logs for select
   using (auth.uid() = user_id);
 
+drop policy if exists "download_logs_insert_own" on public.download_logs;
+create policy "download_logs_insert_own"
+  on public.download_logs for insert
+  with check (auth.uid() = user_id);
+
 create or replace function public.handle_new_user()
 returns trigger
 language plpgsql

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管理后台 · 封面生成器</title>
+<style>
+/* ═══════════ 重置 ═══════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  background:#f7f5f2;padding:24px 20px 60px;color:#2d2a26;line-height:1.5;min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer}
+
+/* ═══════════ 容器 ═══════════ */
+.container{max-width:960px;margin:0 auto}
+
+/* ═══════════ Header ═══════════ */
+.header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}
+.header h1{font-size:22px;font-weight:900;color:#1a1a1a}
+.header .sub{font-size:12px;color:#8a8a8a;margin-top:2px}
+.header .user-info{display:flex;align-items:center;gap:10px}
+.header .user-email{font-size:13px;color:#5a5a5a}
+.btn{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:700;border:1.5px solid transparent;transition:all .15s}
+.btn-ghost{background:#fff;border-color:#e0dcd6;color:#5a5a5a}
+.btn-ghost:hover{background:#f5f3ef;border-color:#c8c4be}
+.btn-primary{background:#1a1a1a;color:#fff}
+.btn-primary:hover{background:#333}
+.btn-sm{padding:5px 12px;font-size:12px;border-radius:6px}
+.btn-vip{background:#fff;border-color:#ED0108;color:#ED0108}
+.btn-vip:hover{background:#fff5f5}
+.btn-free{background:#fff;border-color:#5a8cb8;color:#5a8cb8}
+.btn-free:hover{background:#f5f9fc}
+.btn:disabled{opacity:.45;pointer-events:none}
+
+/* ═══════════ 登录卡片 ═══════════ */
+.login-card{
+  max-width:400px;margin:60px auto 0;background:#fff;border-radius:14px;
+  border:1.5px solid #e8e4df;padding:28px 24px;
+}
+.login-card h2{font-size:18px;font-weight:900;margin-bottom:4px;color:#1a1a1a}
+.login-card .desc{font-size:12px;color:#8a8a8a;margin-bottom:18px;line-height:1.6}
+.login-card label{display:block;font-size:12px;font-weight:700;color:#5a5a5a;margin-bottom:4px}
+.login-card input{
+  display:block;width:100%;padding:10px 12px;border:1.5px solid #e0dcd6;
+  border-radius:8px;font-size:14px;margin-bottom:12px;outline:none;background:#faf9f7;
+}
+.login-card input:focus{border-color:#5a8cb8;background:#fff}
+.login-card .actions{display:flex;gap:8px;margin-top:4px}
+.login-card .actions .btn{flex:1;padding:10px}
+.login-error{color:#ED0108;font-size:12px;margin-top:8px;display:none}
+
+/* ═══════════ 统计卡片 ═══════════ */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.stat-card{
+  background:#fff;border:1.5px solid #e8e4df;border-radius:12px;
+  padding:18px 20px;text-align:center;
+}
+.stat-card .num{font-size:32px;font-weight:900;color:#1a1a1a;line-height:1.2}
+.stat-card .label{font-size:12px;color:#8a8a8a;margin-top:4px}
+
+/* ═══════════ 搜索栏 ═══════════ */
+.search-bar{display:flex;gap:8px;margin-bottom:14px}
+.search-bar input{
+  flex:1;padding:10px 14px;border:1.5px solid #e0dcd6;border-radius:10px;
+  font-size:13px;outline:none;background:#fff;
+}
+.search-bar input:focus{border-color:#5a8cb8}
+.search-bar .btn{padding:10px 20px}
+
+/* ═══════════ 用户表格 ═══════════ */
+.table-wrap{
+  background:#fff;border:1.5px solid #e8e4df;border-radius:12px;overflow:hidden;
+}
+.table-header{
+  display:grid;grid-template-columns:1fr 100px 140px 120px;gap:8px;
+  padding:12px 16px;background:#faf9f7;border-bottom:1px solid #e8e4df;
+  font-size:11px;font-weight:800;color:#8a8a8a;letter-spacing:.5px;text-transform:uppercase;
+}
+.table-row{
+  display:grid;grid-template-columns:1fr 100px 140px 120px;gap:8px;
+  padding:14px 16px;border-bottom:1px solid #f0eeea;align-items:center;
+}
+.table-row:last-child{border-bottom:none}
+.table-row .email{font-size:13px;font-weight:700;color:#2d2a26;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.table-row .role{font-size:12px;font-weight:700}
+.table-row .role.vip{color:#ED0108}
+.table-row .role.free{color:#5a8cb8}
+.table-row .date{font-size:12px;color:#a8a098}
+.pagination{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;font-size:12px;color:#8a8a8a}
+.pagination .btn{padding:6px 14px;font-size:12px}
+
+/* ═══════════ Toast ═══════════ */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+  background:#1a1a1a;color:#fff;padding:10px 24px;border-radius:999px;
+  font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:opacity .25s;pointer-events:none;
+}
+.toast.show{opacity:1}
+
+/* ═══════════ 加载 ═══════════ */
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid #e0dcd6;border-top-color:#5a8cb8;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-overlay{display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;font-size:13px;color:#8a8a8a}
+
+/* ═══════════ 响应式 ═══════════ */
+@media(max-width:640px){
+  .stats-row{grid-template-columns:repeat(3,1fr);gap:8px}
+  .stat-card{padding:12px 10px}
+  .stat-card .num{font-size:24px}
+  .table-header,.table-row{grid-template-columns:1fr 60px 90px 80px;font-size:11px;padding:10px 10px;gap:4px}
+  .header{flex-direction:column;align-items:flex-start}
+  .header h1{font-size:18px}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══════════ Header ═══════════ -->
+  <div class="header">
+    <div>
+      <h1>🔒 封面生成器管理后台</h1>
+      <div class="sub">用户管理 · VIP 开通 · 下载统计</div>
+    </div>
+    <div class="user-info" id="headerUser" style="display:none">
+      <span class="user-email" id="headerEmail"></span>
+      <button class="btn btn-ghost btn-sm" id="btnLogout">退出</button>
+    </div>
+  </div>
+
+  <!-- ═══════════ 未登录 / 登录表单 ═══════════ -->
+  <div id="loginSection">
+    <div class="login-card">
+      <h2>管理员登录</h2>
+      <div class="desc">使用 Supabase 已注册的管理员账号登录。<br>非管理员邮箱将无法访问此页面。</div>
+      <label for="email">邮箱</label>
+      <input id="email" type="email" placeholder="admin@example.com" autocomplete="email">
+      <label for="password">密码</label>
+      <input id="password" type="password" placeholder="至少 6 位" autocomplete="current-password">
+      <div class="actions">
+        <button class="btn btn-primary" id="btnLogin">登录</button>
+      </div>
+      <div class="login-error" id="loginError"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 管理面板（登录后显示） ═══════════ -->
+  <div id="adminSection" style="display:none">
+
+    <!-- 统计卡片 -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="num" id="statUsers">-</div>
+        <div class="label">总用户数</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statVip">-</div>
+        <div class="label">VIP 会员</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="statDownloads">-</div>
+        <div class="label">今日下载</div>
+      </div>
+    </div>
+
+    <!-- 搜索 -->
+    <div class="search-bar">
+      <input id="searchInput" type="text" placeholder="搜索邮箱..." autocomplete="off">
+      <button class="btn btn-ghost" id="btnSearch">搜索</button>
+    </div>
+
+    <!-- 用户表格 -->
+    <div class="table-wrap">
+      <div class="table-header">
+        <span>邮箱</span><span>角色</span><span>注册时间</span><span>操作</span>
+      </div>
+      <div id="userList"><div class="loading-overlay"><span class="spinner"></span>加载中...</div></div>
+      <div class="pagination" id="pagination"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════ Supabase SDK ═══════════ -->
+<script src="./config.js"></script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+// ── 初始化 Supabase ──
+const CFG = window.COVER_MAKER_CONFIG || {};
+const SUPABASE_READY = !!(
+  CFG.supabaseUrl && CFG.supabaseAnonKey &&
+  !String(CFG.supabaseUrl).includes('YOUR_SUPABASE')
+);
+const supabase = SUPABASE_READY
+  ? createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    })
+  : null;
+
+// ── 状态 ──
+let currentPage = 1;
+const PAGE_SIZE = 30;
+let currentSearch = '';
+
+// ── DOM 引用 ──
+const $ = (id) => document.getElementById(id);
+const loginSection = $('loginSection');
+const adminSection = $('adminSection');
+const loginError = $('loginError');
+const headerUser = $('headerUser');
+const headerEmail = $('headerEmail');
+const userList = $('userList');
+const pagination = $('pagination');
+const searchInput = $('searchInput');
+const toastEl = $('toast');
+
+// ── Toast ──
+let toastTimer;
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2000);
+}
+
+// ── 登录 ──
+$('btnLogin').addEventListener('click', async () => {
+  const email = ($('email').value || '').trim();
+  const password = ($('password').value || '').trim();
+  if (!email || !password) { showToast('请输入邮箱和密码'); return; }
+  if (!supabase) { showToast('Supabase 未配置，请先填写 config.js'); return; }
+
+  const btn = $('btnLogin');
+  btn.disabled = true;
+  loginError.style.display = 'none';
+  try {
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    await checkAdminAndLoad();
+  } catch (e) {
+    loginError.textContent = e.message || '登录失败';
+    loginError.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+// ── 回车登录 ──
+$('password').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') $('btnLogin').click();
+});
+
+// ── 退出 ──
+$('btnLogout').addEventListener('click', async () => {
+  if (supabase) await supabase.auth.signOut();
+  loginSection.style.display = '';
+  adminSection.style.display = 'none';
+  headerUser.style.display = 'none';
+  $('email').value = '';
+  $('password').value = '';
+});
+
+// ── 检查管理员身份 ──
+async function checkAdminAndLoad() {
+  if (!supabase) return;
+  const { data } = await supabase.auth.getSession();
+  const session = data && data.session;
+  if (!session || !session.user) {
+    loginSection.style.display = '';
+    adminSection.style.display = 'none';
+    headerUser.style.display = 'none';
+    return;
+  }
+
+  // 调用 admin-manage Edge Function 验证管理员身份
+  try {
+    const { data: result, error } = await supabase.functions.invoke('admin-manage', {
+      body: { action: 'stats' },
+    });
+    if (error || !result || !result.ok) {
+      throw new Error((result && result.message) || '无管理员权限');
+    }
+    // 管理员确认 → 显示面板
+    loginSection.style.display = 'none';
+    adminSection.style.display = '';
+    headerUser.style.display = '';
+    headerEmail.textContent = session.user.email;
+    await loadDashboard();
+  } catch (e) {
+    loginSection.style.display = '';
+    adminSection.style.display = 'none';
+    headerUser.style.display = 'none';
+    showToast('❌ ' + (e.message || '无管理员权限'));
+    if (supabase) await supabase.auth.signOut();
+  }
+}
+
+// ── 加载统计和用户列表 ──
+async function loadDashboard() {
+  await Promise.all([loadStats(), loadUsers()]);
+}
+
+async function loadStats() {
+  try {
+    const { data } = await supabase.functions.invoke('admin-manage', {
+      body: { action: 'stats' },
+    });
+    if (data && data.ok && data.stats) {
+      $('statUsers').textContent = data.stats.totalUsers;
+      $('statVip').textContent = data.stats.totalVip;
+      $('statDownloads').textContent = data.stats.todayDownloads;
+    }
+  } catch (e) {
+    console.warn('stats error:', e);
+  }
+}
+
+async function loadUsers() {
+  userList.innerHTML = '<div class="loading-overlay"><span class="spinner"></span>加载中...</div>';
+  try {
+    const { data } = await supabase.functions.invoke('admin-manage', {
+      body: { action: 'listUsers', search: currentSearch, page: currentPage, pageSize: PAGE_SIZE },
+    });
+    if (!data || !data.ok) throw new Error(data.message || '加载失败');
+    renderUsers(data.users, data.total);
+  } catch (e) {
+    userList.innerHTML = `<div class="loading-overlay" style="color:#ED0108">❌ ${e.message || '加载失败'}</div>`;
+  }
+}
+
+function renderUsers(users, total) {
+  if (!users || users.length === 0) {
+    userList.innerHTML = '<div class="loading-overlay">暂无用户</div>';
+    pagination.innerHTML = '';
+    return;
+  }
+
+  userList.innerHTML = users.map((u) => {
+    const isVip = u.role === 'vip';
+    const date = u.created_at ? new Date(u.created_at).toLocaleDateString('zh-CN', {
+      year: 'numeric', month: '2-digit', day: '2-digit',
+    }) : '-';
+    return `
+      <div class="table-row">
+        <span class="email" title="${escapeHtml(u.email)}">${escapeHtml(u.email)}</span>
+        <span class="role ${isVip ? 'vip' : 'free'}">${isVip ? 'VIP会员' : '普通会员'}</span>
+        <span class="date">${date}</span>
+        <span>
+          <button class="btn btn-sm ${isVip ? 'btn-free' : 'btn-vip'}"
+                  data-userid="${u.id}" data-role="${isVip ? 'free' : 'vip'}"
+                  onclick="window._toggleRole(this)">
+            ${isVip ? '🔓 取消VIP' : '✨ 开通VIP'}
+          </button>
+        </span>
+      </div>`;
+  }).join('');
+
+  // 分页
+  const totalPages = Math.ceil(total / PAGE_SIZE);
+  pagination.innerHTML = totalPages <= 1 ? '' : `
+    <button class="btn btn-ghost btn-sm" id="btnPrev" ${currentPage <= 1 ? 'disabled' : ''}>上一页</button>
+    <span>第 ${currentPage} / ${totalPages} 页（共 ${total} 人）</span>
+    <button class="btn btn-ghost btn-sm" id="btnNext" ${currentPage >= totalPages ? 'disabled' : ''}>下一页</button>
+  `;
+
+  const btnPrev = $('btnPrev');
+  const btnNext = $('btnNext');
+  if (btnPrev) btnPrev.addEventListener('click', () => { currentPage--; loadUsers(); });
+  if (btnNext) btnNext.addEventListener('click', () => { currentPage++; loadUsers(); });
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+// ── 切换角色 ──
+window._toggleRole = async function(btn) {
+  const userId = btn.dataset.userid;
+  const newRole = btn.dataset.role;
+  const roleLabel = newRole === 'vip' ? 'VIP会员' : '普通会员';
+  btn.disabled = true;
+  try {
+    const { data } = await supabase.functions.invoke('admin-manage', {
+      body: { action: 'setRole', userId, role: newRole },
+    });
+    if (!data || !data.ok) throw new Error(data.message || '操作失败');
+    showToast(`✅ 已切换为 ${roleLabel}`);
+    await loadUsers();
+    await loadStats();
+  } catch (e) {
+    showToast('❌ ' + (e.message || '操作失败'));
+    btn.disabled = false;
+  }
+};
+
+// ── 搜索 ──
+$('btnSearch').addEventListener('click', () => {
+  currentSearch = searchInput.value.trim();
+  currentPage = 1;
+  loadUsers();
+});
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') $('btnSearch').click();
+});
+
+// ── 启动：检查是否已登录 ──
+if (SUPABASE_READY && supabase) {
+  checkAdminAndLoad();
+} else {
+  loginError.textContent = 'Supabase 尚未配置，请在 config.js 中填入真实的 Supabase URL 和 anon key。';
+  loginError.style.display = 'block';
+}
+</script>
+</body>
+</html>

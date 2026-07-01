@@ -5,7 +5,7 @@
     "deploy:cf": "npm run sync:public && wrangler deploy",
     "d1:migrate:local": "wrangler d1 migrations apply xiaohongshu-cover-db --local",
     "d1:migrate:remote": "wrangler d1 migrations apply xiaohongshu-cover-db --remote",
-    "supabase:functions:deploy": "supabase functions deploy authorize-download"
+    "supabase:functions:deploy": "supabase functions deploy authorize-download && supabase functions deploy admin-manage"
   },
   "devDependencies": {
     "wrangler": "4.86.0"
