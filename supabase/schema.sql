@@ -59,6 +59,32 @@ create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- ═══════════ v4.1: 会员过期 + 支付订单 ═══════════
+
+alter table public.profiles
+  add column if not exists expires_at timestamptz;
+-- null = 免费用户, 有值且在将来 = VIP (过期后由 authorize-download 自动降级)
+
+create table if not exists public.payment_orders (
+  id bigserial primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  plan text not null check (plan in ('monthly', 'annual')),
+  amount integer not null,
+  provider text not null default 'manual',
+  provider_order_id text,
+  status text not null default 'pending'
+    check (status in ('pending', 'paid', 'expired', 'refunded')),
+  paid_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+alter table public.payment_orders enable row level security;
+
+drop policy if exists "payment_orders_select_own" on public.payment_orders;
+create policy "payment_orders_select_own"
+  on public.payment_orders for select
+  using (auth.uid() = user_id);
+
 -- Helpful admin queries:
 -- View users:
 -- select id, email, role, created_at from public.profiles order by created_at desc;

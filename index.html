@@ -97,6 +97,41 @@ button{font-family:inherit}
 .auth-actions .btn{flex:1}
 .auth-note{font-size:12px;color:#8a8a8a;line-height:1.7;margin-top:12px}
 
+/* ═══════════ 升级弹窗 ═══════════ */
+.upgrade-modal{width:min(440px,100%);background:#fff;border-radius:14px;border:1.5px solid #e8e4df;box-shadow:0 24px 80px rgba(0,0,0,.22);padding:18px;text-align:center}
+.upgrade-title{font-size:20px;font-weight:900;color:#1a1a1a;margin-bottom:4px}
+.upgrade-desc{font-size:12px;color:#8a8a8a;margin-bottom:16px;line-height:1.5}
+.plan-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.plan-card{
+  border:2px solid #e8e4df;border-radius:12px;padding:18px 12px;
+  cursor:pointer;transition:all .2s;text-align:center;position:relative;
+}
+.plan-card:hover{border-color:#a8a098}
+.plan-card.selected{border-color:#1a1a1a;background:#faf9f7}
+.plan-card .plan-badge{
+  position:absolute;top:-10px;right:-6px;
+  background:#ED0108;color:#fff;font-size:10px;font-weight:800;
+  padding:2px 8px;border-radius:999px;letter-spacing:.5px;
+}
+.plan-card .plan-name{font-size:16px;font-weight:900;color:#1a1a1a;margin-bottom:2px}
+.plan-card .plan-price{font-size:24px;font-weight:900;color:#1a1a1a}
+.plan-card .plan-unit{font-size:12px;color:#8a8a8a;font-weight:400}
+.plan-card .plan-save{font-size:11px;color:#52a87a;margin-top:2px}
+.plan-card .plan-original{font-size:11px;color:#c0bdb8;text-decoration:line-through}
+.upgrade-features{
+  text-align:left;background:#faf9f7;border-radius:10px;
+  padding:12px 14px;margin-bottom:14px;font-size:12px;line-height:2;
+}
+.upgrade-features span{color:#2d2a26}
+.upgrade-footer{font-size:11px;color:#a8a098;line-height:1.6;margin-top:10px}
+.upgrade-link{color:#5a8cb8;font-weight:700;cursor:pointer;text-decoration:none;margin-left:6px}
+.upgrade-link:hover{text-decoration:underline}
+.account-sub .remaining-zero{color:#ED0108;font-weight:700}
+.account-sub .remaining-warn{color:#e08820;font-weight:700}
+.account-sub .upgrade-link{font-size:12px}
+.vip-expires{color:#52a87a;font-weight:600}
+.vip-expiring{color:#e08820;font-weight:600}
+
 /* ═══════════ Tabs(风格族 / 字体)═══════════ */
 .tabs{display:flex;justify-content:center;gap:6px;margin:14px 0;flex-wrap:wrap}
 .tab{
@@ -411,6 +446,44 @@ button{font-family:inherit}
       <button class="btn ghost" id="btnRegister" type="button">注册普通会员</button>
     </div>
     <div class="auth-note">阶段 1 已接入真实账号和后端权限。VIP 暂时通过后台手动开通,后续再接支付。</div>
+  </div>
+</div>
+
+<!-- ═══════════ 升级弹窗 ═══════════ -->
+<div class="modal-mask" id="upgradeModal" aria-hidden="true">
+  <div class="upgrade-modal" role="dialog" aria-modal="true" aria-labelledby="upgradeTitle">
+    <div class="auth-head">
+      <div>
+        <div class="upgrade-title" id="upgradeTitle">✨ 升级 VIP</div>
+        <div class="upgrade-desc" id="upgradeDesc">解锁全部功能，无限下载封面</div>
+      </div>
+      <button class="auth-close" id="btnCloseUpgrade" type="button" aria-label="关闭">×</button>
+    </div>
+    <div class="plan-row">
+      <div class="plan-card" data-plan="monthly" id="planMonthly">
+        <div class="plan-name">月度会员</div>
+        <div class="plan-price">¥9.9<span class="plan-unit">/月</span></div>
+        <div class="plan-save">&nbsp;</div>
+      </div>
+      <div class="plan-card selected" data-plan="annual" id="planAnnual">
+        <div class="plan-badge">推荐</div>
+        <div class="plan-name">年度会员</div>
+        <div class="plan-price">¥99<span class="plan-unit">/年</span></div>
+        <div class="plan-save">省 ¥19.8 · 日均 ¥0.27</div>
+      </div>
+    </div>
+    <div class="upgrade-features">
+      <div>✅ <span>无限下载（无每日 3 次限制）</span></div>
+      <div>✅ <span>批量下载（一键下载全部 100 张封面）</span></div>
+      <div>✅ <span>优先体验新功能</span></div>
+    </div>
+    <div class="auth-actions">
+      <button class="btn primary" id="btnUpgradePay" type="button">立即开通</button>
+    </div>
+    <div class="upgrade-footer">
+      ⚠️ 虚拟产品，一经购买不可退订<br>
+      📧 支付遇到问题？请联系管理员手动开通
+    </div>
   </div>
 </div>
 
@@ -770,9 +843,28 @@ function renderAccountBar() {
   role.classList.add(isVip ? 'vip' : 'free');
   role.textContent = isVip ? 'VIP会员' : '普通会员';
   title.textContent = AUTH_STATE.user.email;
-  sub.textContent = isVip
-    ? 'VIP 已开放全部下载、批量文案下载和后续功能'
-    : '今日剩余下载 ' + AUTH_STATE.limits.remainingToday + ' / ' + AUTH_STATE.limits.freeDailyDownloads + ' 张 · 不支持批量下载';
+
+  if (isVip) {
+    const expiresAt = AUTH_STATE.user.expires_at;
+    if (expiresAt) {
+      const expDate = new Date(expiresAt);
+      const daysLeft = Math.ceil((expDate - Date.now()) / 86400000);
+      const dateStr = expDate.toLocaleDateString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit' });
+      if (daysLeft <= 7 && daysLeft > 0) {
+        sub.innerHTML = '会员有效期至 ' + dateStr + ' · <span class="vip-expiring">还剩 ' + daysLeft + ' 天</span> · <a class="upgrade-link" onclick="openUpgradeModal(\'续费 VIP\')">续费 →</a>';
+      } else if (daysLeft <= 0) {
+        sub.innerHTML = '<span class="remaining-zero">会员已过期</span> · <a class="upgrade-link" onclick="openUpgradeModal(\'续费 VIP\')">续费 →</a>';
+      } else {
+        sub.innerHTML = '会员有效期至 ' + dateStr + ' · <span class="vip-expires">还剩 ' + daysLeft + ' 天</span>';
+      }
+    } else {
+      sub.textContent = 'VIP 已开放全部下载、批量下载和后续功能';
+    }
+  } else {
+    const rem = AUTH_STATE.limits.remainingToday || 0;
+    const cls = rem === 0 ? 'remaining-zero' : (rem === 1 ? 'remaining-warn' : '');
+    sub.innerHTML = '今日剩余 <span class="' + cls + '">' + rem + ' / ' + AUTH_STATE.limits.freeDailyDownloads + '</span> 张 · 不支持批量下载 · <a class="upgrade-link" onclick="openUpgradeModal()">升级VIP →</a>';
+  }
   openBtn.style.display = 'none';
   logoutBtn.style.display = '';
 }
@@ -796,6 +888,55 @@ function closeAuthModal() {
   if (!modal) return;
   modal.classList.remove('show');
   modal.setAttribute('aria-hidden', 'true');
+}
+
+/* ═══════════ 升级弹窗 ═══════════ */
+let selectedPlan = 'annual';
+
+function openUpgradeModal(message) {
+  const modal = document.getElementById('upgradeModal');
+  const desc = document.getElementById('upgradeDesc');
+  if (desc && message) desc.textContent = message;
+  if (desc && !message) desc.textContent = '解锁全部功能，无限下载封面';
+  if (modal) {
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+}
+
+function closeUpgradeModal() {
+  const modal = document.getElementById('upgradeModal');
+  if (!modal) return;
+  modal.classList.remove('show');
+  modal.setAttribute('aria-hidden', 'false');
+}
+
+function selectPlan(plan) {
+  selectedPlan = plan;
+  document.getElementById('planMonthly').classList.toggle('selected', plan === 'monthly');
+  document.getElementById('planAnnual').classList.toggle('selected', plan === 'annual');
+}
+
+async function handleUpgradePay() {
+  const btn = document.getElementById('btnUpgradePay');
+  if (!btn) return;
+  btn.disabled = true;
+  btn.textContent = '正在生成订单...';
+  try {
+    const { data, error } = await supabase.functions.invoke('create-payment-order', {
+      body: { plan: selectedPlan, provider: 'manual' },
+    });
+    if (error || !data || !data.ok) {
+      throw new Error((data && data.message) || '创建订单失败');
+    }
+    closeUpgradeModal();
+    showToast('📧 请联系管理员完成开通，订单号：' + (data.orderId || 'N/A'));
+  } catch (e) {
+    showToast('❌ ' + (e.message || '支付暂不可用，请联系管理员'));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '立即开通';
+  }
 }
 
 async function refreshAuthState() {
@@ -869,10 +1010,14 @@ async function requestDownloadAccess(count, scope) {
     }
     if (payload.code === 'LOGIN_REQUIRED') {
       openAuthModal('登录后才能下载封面。');
+      showToast('请先登录');
     } else if (payload.code === 'VIP_REQUIRED') {
-      openAuthModal('批量下载是 VIP 功能。普通会员可以每天单张下载 3 张。');
+      openUpgradeModal('批量下载是 VIP 功能，升级后即可一键下载全部封面');
+    } else if (payload.code === 'DAILY_LIMIT_EXCEEDED') {
+      openUpgradeModal('今日 ' + AUTH_STATE.limits.freeDailyDownloads + ' 次免费下载已用完，升级 VIP 不限次数');
+    } else {
+      showToast('❌ ' + (payload.message || e.message));
     }
-    showToast('❌ ' + (payload.message || e.message));
     return false;
   }
 }
@@ -5069,6 +5214,20 @@ async function downloadCanvas(canvas) {
   const allowed = await requestDownloadAccess(1, 'single');
   if (!allowed) return;
   performCanvasDownload(canvas, 'cover_' + Date.now() + '.png');
+  // 显示剩余次数
+  const isVip = AUTH_STATE.user && AUTH_STATE.user.role === 'vip';
+  if (!isVip) {
+    const rem = AUTH_STATE.limits.remainingToday;
+    if (rem === 0) {
+      showToast('⬇ 已下载！今日次数已用完 · 升级VIP不限次数');
+    } else if (rem === 1) {
+      showToast('⬇ 已下载！还剩最后 1 次 · 升级VIP不限次数');
+    } else {
+      showToast('⬇ 已下载！今日还剩 ' + rem + ' 次');
+    }
+  } else {
+    showToast('⬇ 已下载');
+  }
 }
 
 /**
@@ -5184,6 +5343,15 @@ document.getElementById('btnLogout').addEventListener('click', logout);
 document.getElementById('authPassword').addEventListener('keydown', (e) => {
   if (e.key === 'Enter') submitAuth('login');
 });
+
+/* ── 升级弹窗事件 ── */
+document.getElementById('btnCloseUpgrade').addEventListener('click', closeUpgradeModal);
+document.getElementById('upgradeModal').addEventListener('click', (ev) => {
+  if (ev.target.id === 'upgradeModal') closeUpgradeModal();
+});
+document.getElementById('planMonthly').addEventListener('click', () => selectPlan('monthly'));
+document.getElementById('planAnnual').addEventListener('click', () => selectPlan('annual'));
+document.getElementById('btnUpgradePay').addEventListener('click', handleUpgradePay);
 
 document.getElementById('container').addEventListener('click', (ev) => {
   const group = ev.target.closest('.batch-group');

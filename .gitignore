@@ -27,3 +27,4 @@ data/
 
 # 系统文件
 Thumbs.db
+supabase/.temp/

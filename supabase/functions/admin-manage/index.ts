@@ -44,6 +44,8 @@ Deno.serve(async (req) => {
         return await handleSetRole(adminClient, body);
       case 'stats':
         return await handleStats(adminClient);
+      case 'paymentOrders':
+        return await handlePaymentOrders(adminClient, body);
       default:
         return corsResponse({ ok: false, message: `未知操作: ${action}` }, 400);
     }
@@ -60,7 +62,7 @@ async function handleListUsers(adminClient: any, body: any) {
 
   let query = adminClient
     .from('profiles')
-    .select('id, email, role, created_at', { count: 'exact' });
+    .select('id, email, role, expires_at, created_at', { count: 'exact' });
 
   if (search) {
     query = query.ilike('email', `%${search}%`);
@@ -88,6 +90,7 @@ async function handleListUsers(adminClient: any, body: any) {
 async function handleSetRole(adminClient: any, body: any) {
   const userId = String(body.userId || '').trim();
   const newRole = String(body.role || '').trim();
+  const expiresAt = body.expiresAt || null; // ISO date string, 可选
 
   if (!userId) {
     return corsResponse({ ok: false, message: '缺少 userId' }, 400);
@@ -96,11 +99,18 @@ async function handleSetRole(adminClient: any, body: any) {
     return corsResponse({ ok: false, message: '角色只能是 free 或 vip' }, 400);
   }
 
+  const updateData: any = { role: newRole, updated_at: new Date().toISOString() };
+  if (newRole === 'vip' && expiresAt) {
+    updateData.expires_at = expiresAt;
+  } else if (newRole === 'free') {
+    updateData.expires_at = null;
+  }
+
   const { data, error } = await adminClient
     .from('profiles')
-    .update({ role: newRole, updated_at: new Date().toISOString() })
+    .update(updateData)
     .eq('id', userId)
-    .select('id, email, role, created_at')
+    .select('id, email, role, expires_at, created_at')
     .single();
 
   if (error) {
@@ -143,6 +153,37 @@ async function handleStats(adminClient: any) {
       totalVip,
       todayDownloads,
     },
+  });
+}
+
+// ── paymentOrders ──
+async function handlePaymentOrders(adminClient: any, body: any) {
+  const page = Math.max(1, Number(body.page || 1));
+  const pageSize = Math.min(100, Math.max(1, Number(body.pageSize || 30)));
+
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  const { data, error, count } = await adminClient
+    .from('payment_orders')
+    .select('*, profiles!inner(email)', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(from, to);
+
+  if (error) throw error;
+
+  // Flatten email into the order object
+  const orders = (data || []).map((order: any) => ({
+    ...order,
+    email: order.profiles ? order.profiles.email : '',
+  }));
+
+  return corsResponse({
+    ok: true,
+    orders,
+    total: count || 0,
+    page,
+    pageSize,
   });
 }
 

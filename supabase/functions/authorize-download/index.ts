@@ -33,9 +33,29 @@ Deno.serve(async (req) => {
   }
 
   if (profile.role === 'vip') {
-    return corsResponse({ ...authPayload(profile, 0), authorized: true });
+    // 检查 VIP 是否已过期
+    if (profile.expires_at) {
+      const now = new Date();
+      const expires = new Date(profile.expires_at);
+      if (expires < now) {
+        // VIP 已过期，自动降级为免费用户
+        await adminClient
+          .from('profiles')
+          .update({ role: 'free', expires_at: null, updated_at: now.toISOString() })
+          .eq('id', user.id);
+        profile.role = 'free';
+        profile.expires_at = null;
+        // 继续走免费用户逻辑
+      } else {
+        return corsResponse({ ...authPayload(profile, 0), authorized: true });
+      }
+    } else {
+      // 没有 expires_at 的旧 VIP（兼容），直接放行
+      return corsResponse({ ...authPayload(profile, 0), authorized: true });
+    }
   }
 
+  // 免费用户逻辑（原有）
   if (scope !== 'single' || count !== 1) {
     return corsResponse({
       ok: false,
@@ -71,14 +91,14 @@ Deno.serve(async (req) => {
 async function ensureProfile(adminClient: any, userId: string, email: string) {
   const { data } = await adminClient
     .from('profiles')
-    .select('id,email,role,created_at')
+    .select('id,email,role,expires_at,created_at')
     .eq('id', userId)
     .maybeSingle();
   if (data) return data;
   const { data: created, error } = await adminClient
     .from('profiles')
     .insert({ id: userId, email, role: 'free' })
-    .select('id,email,role,created_at')
+    .select('id,email,role,expires_at,created_at')
     .single();
   if (error) throw error;
   return created;
@@ -103,6 +123,7 @@ function authPayload(profile: any, usedToday: number) {
       id: profile.id,
       email: profile.email,
       role: profile.role,
+      expires_at: profile.expires_at || null,
     },
     limits: limitsPayload(profile, usedToday),
   };
