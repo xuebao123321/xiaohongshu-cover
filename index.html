@@ -496,11 +496,14 @@ button{font-family:inherit}
       <div style="font-size:12px;color:#ED0108;font-weight:700;margin-bottom:4px" id="payReminder">
         ⚠️ 付款时请在备注里填写你的邮箱
       </div>
-      <div style="font-size:11px;color:#8a8a8a;margin-bottom:14px">
-        管理员收到付款后会为你开通 VIP<br>通常在 24 小时内处理
+      <div style="font-size:11px;color:#8a8a8a;margin-bottom:8px">
+        管理员收到付款后会为你开通 VIP
+      </div>
+      <div class="auth-actions" style="margin-bottom:8px">
+        <button class="btn primary btn-sm" id="btnPaidDone" type="button">✅ 我已支付完成</button>
       </div>
       <div class="auth-actions">
-        <button class="btn ghost btn-sm" id="btnBackToPlans" type="button">← 返回</button>
+        <button class="btn ghost btn-sm" id="btnBackToPlans" type="button">← 返回选择其他方式</button>
       </div>
     </div>
   </div>
@@ -951,10 +954,16 @@ function showUpgradeQrCode(provider) {
   document.getElementById('upgradeStep2').style.display = '';
   const planName = selectedPlan === 'annual' ? '年度会员 ¥99' : '月度会员 ¥9.9';
   document.getElementById('payPlanLabel').textContent = planName + ' · ' + (provider === 'wechat' ? '微信支付' : '支付宝');
-  document.getElementById('payQrImage').src = qrUrl;
+  // 加时间戳避免浏览器缓存旧图片
+  document.getElementById('payQrImage').src = qrUrl + (qrUrl.includes('?') ? '&' : '?') + 't=' + Date.now();
   document.getElementById('payReminder').textContent = provider === 'wechat'
     ? '⚠️ 微信付款时请在「添加备注」里填写你的邮箱'
     : '⚠️ 支付宝付款时请在「备注」里填写你的邮箱';
+}
+
+function handlePaidDone() {
+  closeUpgradeModal();
+  showToast('✅ 已收到您的支付确认，管理员会尽快为您开通 VIP。如有问题请联系微信 514993415');
 }
 
 async function handleUpgradePay(provider) {
@@ -971,6 +980,7 @@ window.openUpgradeModal = openUpgradeModal;
 window.closeUpgradeModal = closeUpgradeModal;
 window.selectPlan = selectPlan;
 window.handleUpgradePay = handleUpgradePay;
+window.handlePaidDone = handlePaidDone;
 
 async function refreshAuthState() {
   try {
@@ -5387,6 +5397,7 @@ document.getElementById('planAnnual').addEventListener('click', () => selectPlan
 document.getElementById('btnUpgradeWechat').addEventListener('click', () => handleUpgradePay('wechat'));
 document.getElementById('btnUpgradeAlipay').addEventListener('click', () => handleUpgradePay('alipay'));
 document.getElementById('btnBackToPlans').addEventListener('click', backToPlans);
+document.getElementById('btnPaidDone').addEventListener('click', handlePaidDone);
 
 document.getElementById('container').addEventListener('click', (ev) => {
   const group = ev.target.closest('.batch-group');
