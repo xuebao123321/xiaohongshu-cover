@@ -911,13 +911,10 @@ function closeAuthModal() {
 
 /* ═══════════ 升级弹窗 ═══════════ */
 let selectedPlan = 'annual';
-let currentOrderNo = '';
-let pollTimer = null;
 
 function openUpgradeModal(message) {
   document.getElementById('upgradeStep1').style.display = '';
   document.getElementById('upgradeStep2').style.display = 'none';
-  stopPolling();
   const desc = document.getElementById('upgradeDesc');
   if (desc && message) desc.textContent = message;
   if (desc && !message) desc.textContent = '解锁全部功能，无限下载封面';
@@ -933,7 +930,6 @@ function closeUpgradeModal() {
   if (!modal) return;
   modal.classList.remove('show');
   modal.setAttribute('aria-hidden', 'false');
-  stopPolling();
 }
 
 function selectPlan(plan) {
