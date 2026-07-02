@@ -126,6 +126,8 @@ button{font-family:inherit}
 .upgrade-footer{font-size:11px;color:#a8a098;line-height:1.6;margin-top:10px}
 .upgrade-link{color:#5a8cb8;font-weight:700;cursor:pointer;text-decoration:none;margin-left:6px}
 .upgrade-link:hover{text-decoration:underline}
+.btn-locked{opacity:.5;cursor:not-allowed;pointer-events:auto}
+.btn-locked:hover{opacity:.65}
 .account-sub .remaining-zero{color:#ED0108;font-weight:700}
 .account-sub .remaining-warn{color:#e08820;font-weight:700}
 .account-sub .upgrade-link{font-size:12px}
@@ -5182,14 +5184,16 @@ function generateBatchCovers() {
       c.innerHTML = '';
       const batchDownloads = document.createElement('div');
       batchDownloads.className = 'batch-group';
-      const freeLock = (!AUTH_STATE.authenticated || (AUTH_STATE.user && AUTH_STATE.user.role !== 'vip'))
-        ? ' disabled title="VIP 专属功能，升级后可用"' : '';
+      const isFreeUser = !AUTH_STATE.authenticated || (AUTH_STATE.user && AUTH_STATE.user.role !== 'vip');
+      const lockAttr = isFreeUser ? ' data-locked="1"' : '';
+      const lockClass = isFreeUser ? ' btn-locked' : '';
+      const lockIcon = isFreeUser ? ' 🔒' : '';
       batchDownloads.innerHTML =
         '<div class="batch-group-head">' +
-        '<div class="batch-group-title"><strong>ALL</strong><div><div class="batch-group-preview">批量下载</div><div class="batch-group-sub">支持单张、多选和全部下载</div></div></div>' +
+        '<div class="batch-group-title"><strong>ALL</strong><div><div class="batch-group-preview">批量下载</div><div class="batch-group-sub">支持单张、多选和全部下载' + (isFreeUser ? ' · <span style="color:#ED0108;font-weight:700">升级VIP解锁批量下载</span>' : '') + '</div></div></div>' +
         '<div class="batch-group-tools">' +
-        '<button class="btn small ghost" data-batch-download="selected"' + freeLock + '>下载选中' + (freeLock ? ' 🔒' : '') + '</button>' +
-        '<button class="btn small outline" data-batch-download="all"' + freeLock + '>下载全部' + (freeLock ? ' 🔒' : '') + '</button>' +
+        '<button class="btn small ghost' + lockClass + '" data-batch-download="selected"' + lockAttr + '>下载选中' + lockIcon + '</button>' +
+        '<button class="btn small outline' + lockClass + '" data-batch-download="all"' + lockAttr + '>下载全部' + lockIcon + '</button>' +
         '</div></div>';
       c.appendChild(batchDownloads);
       const fams = familiesForBatchCards();
@@ -5204,8 +5208,8 @@ function generateBatchCovers() {
           '<div><div class="batch-group-preview"></div><div class="batch-group-sub">精选 5 张封面</div></div></div>' +
           '<div class="batch-group-tools">' +
           '<button class="btn small ghost" data-group-select>全选本组</button>' +
-          '<button class="btn small ghost" data-group-download-selected' + freeLock + '>下载本组选中' + (freeLock ? ' 🔒' : '') + '</button>' +
-          '<button class="btn small outline" data-group-download-all' + freeLock + '>下载本组全部' + (freeLock ? ' 🔒' : '') + '</button>' +
+          '<button class="btn small ghost' + lockClass + '" data-group-download-selected' + lockAttr + '>下载本组选中' + lockIcon + '</button>' +
+          '<button class="btn small outline' + lockClass + '" data-group-download-all' + lockAttr + '>下载本组全部' + lockIcon + '</button>' +
           '</div></div>';
         group.querySelector('.batch-group-preview').textContent = preview || '未命名文案';
         const grid = document.createElement('div');
@@ -5422,6 +5426,12 @@ document.getElementById('btnBackToPlans').addEventListener('click', backToPlans)
 document.getElementById('btnPaidDone').addEventListener('click', handlePaidDone);
 
 document.getElementById('container').addEventListener('click', (ev) => {
+  // 锁定按钮：点击时弹升级弹窗
+  const lockedBtn = ev.target.closest('[data-locked="1"]');
+  if (lockedBtn) {
+    openUpgradeModal('批量下载是 VIP 功能，升级后即可一键下载全部封面');
+    return;
+  }
   const group = ev.target.closest('.batch-group');
   if (ev.target.closest('[data-group-select]') && group) {
     cardsInScope(group, false).forEach((card) => card.classList.add('selected'));
