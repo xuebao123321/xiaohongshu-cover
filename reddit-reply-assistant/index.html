@@ -691,6 +691,130 @@
       background: #fff5f5;
     }
 
+    /* ===== Offline Banner ===== */
+    .offline-banner {
+      display: none;
+      grid-column: 1 / -1;
+      background: #fff8e1;
+      color: #8d6e00;
+      text-align: center;
+      padding: 6px 16px;
+      font-size: 12px;
+      border-bottom: 1px solid #ffe082;
+      z-index: 11;
+    }
+    .offline-banner.show {
+      display: block;
+    }
+
+    /* ===== Hamburger Menu ===== */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--ink);
+      padding: 4px 8px;
+    }
+    .mobile-nav-dropdown {
+      display: none;
+      position: absolute;
+      top: 56px;
+      right: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      padding: 8px 0;
+      z-index: 20;
+      min-width: 180px;
+    }
+    .mobile-nav-dropdown.open {
+      display: block;
+    }
+    .mobile-nav-dropdown a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .mobile-nav-dropdown a:hover {
+      background: var(--gray);
+    }
+
+    /* ===== Load Animations ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .left-panel  { animation: fadeInUp 0.3s 0.00s both; }
+    .right-panel { animation: fadeInUp 0.3s 0.05s both; }
+    .bottom-bar  { animation: fadeInUp 0.3s 0.10s both; }
+
+    /* ===== Responsive: Tablet (≤900px) ===== */
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: 56px auto auto 48px;
+      }
+      .left-panel {
+        grid-column: 1 / -1;
+        grid-row: 2 / 3;
+        width: 100%;
+        max-height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .right-panel {
+        grid-column: 1 / -1;
+        grid-row: 3 / 4;
+        min-height: 40vh;
+      }
+      .topbar-right a { display: none; }
+      .hamburger { display: block; }
+    }
+
+    /* ===== Responsive: Phone (≤640px) ===== */
+    @media (max-width: 640px) {
+      body { font-size: 14px; }
+      .topbar { padding: 0 12px; }
+      .topbar-left { font-size: 14px; }
+      .left-panel { padding: 16px; max-height: 45vh; }
+      .right-panel { padding: 16px; }
+
+      .tone-cards { grid-template-columns: 1fr 1fr; gap: 6px; }
+      .tone-card { padding: 8px 6px; }
+      .tone-card .tone-name { font-size: 12px; }
+      .tone-card .tone-desc { font-size: 10px; }
+
+      .cta-segments { flex-direction: column; gap: 4px; }
+      .cta-seg { padding: 6px 8px; font-size: 11px; }
+      .cta-seg .seg-label { font-size: 10px; }
+
+      .action-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .action-row .btn { font-size: 11px; padding: 0 8px; height: 32px; }
+
+      .reply-card { padding: 16px; }
+      .version-tab { padding: 8px 12px; font-size: 12px; }
+      .version-tab .word-range { font-size: 9px; }
+
+      .bottom-bar { padding: 0 8px; gap: 6px; }
+      .bottom-bar-btn { font-size: 10px; padding: 0 8px; }
+
+      .expand-panel { max-height: 160px; padding: 12px; }
+      #ctaLibraryContent { grid-template-columns: 1fr !important; }
+
+      .btn-generate { height: 40px; font-size: 14px; }
+      .history-item { padding: 6px 8px; }
+    }
+
     /* ===== Tooltip ===== */
     [data-tooltip] {
       position: relative;
@@ -715,18 +839,27 @@
 </head>
 <body>
 
+<!-- Offline Banner -->
+<div class="offline-banner" id="offlineBanner">⚠️ 当前处于离线状态，工具仍可正常使用，但复制到剪贴板的功能可能受限。</div>
+
 <div class="app">
   <!-- ===== Top Bar ===== -->
-  <header class="topbar">
+  <header class="topbar" style="position:relative;">
     <div class="topbar-left">
       <span class="icon">🧠</span>
       <span>Reddit 评论回复助手</span>
     </div>
-    <nav class="topbar-right">
-      <a href="../index.html">← 返回运营工具台</a>
+    <nav class="topbar-right" id="desktopNav">
+      <a href="../index.html">← 封面生成器</a>
       <a href="../ins_reviewer_carousel/">📱 Instagram 图</a>
-      <a href="../index.html">🎨 封面生成器</a>
+      <a href="../index.html">运营工具台</a>
     </nav>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="打开导航菜单">☰</button>
+    <div class="mobile-nav-dropdown" id="mobileNavDropdown">
+      <a href="../index.html">← 封面生成器</a>
+      <a href="../ins_reviewer_carousel/">📱 Instagram 图</a>
+      <a href="../index.html">运营工具台</a>
+    </div>
   </header>
 
   <!-- ===== Left Panel ===== -->
@@ -900,22 +1033,22 @@
 
     <!-- Action Buttons -->
     <div class="action-row">
-      <button class="btn btn-primary" data-tooltip="复制当前回复到剪贴板" onclick="copyReply()">📋 复制回复</button>
-      <button class="btn btn-secondary" data-tooltip="重新生成三个版本的回复" onclick="regenerate()">🔄 重新生成</button>
-      <button class="btn btn-secondary" data-tooltip="缩短当前回复约 30%" onclick="shortenReply()">📏 缩短</button>
-      <button class="btn btn-secondary" data-tooltip="展开当前回复约 40%" onclick="expandReply()">📝 展开</button>
-      <button class="btn btn-secondary" data-tooltip="降低回复的营销感" onclick="reduceMarketing()">🧹 降低营销感</button>
-      <button class="btn btn-secondary" data-tooltip="临时增强 CTA 强度" onclick="enhanceCTA()">📢 增强 CTA</button>
-      <button class="btn btn-secondary" data-tooltip="移除回复中的 CTA 钩子" onclick="removeCTA()">🚫 移除 CTA</button>
+      <button class="btn btn-primary" data-tooltip="复制当前回复到剪贴板" onclick="copyReply()" aria-label="复制当前回复到剪贴板">📋 复制回复</button>
+      <button class="btn btn-secondary" data-tooltip="重新生成三个版本的回复" onclick="regenerate()" aria-label="重新生成三个版本的回复">🔄 重新生成</button>
+      <button class="btn btn-secondary" data-tooltip="缩短当前回复约 30%" onclick="shortenReply()" aria-label="缩短回复">📏 缩短</button>
+      <button class="btn btn-secondary" data-tooltip="展开当前回复约 40%" onclick="expandReply()" aria-label="展开回复">📝 展开</button>
+      <button class="btn btn-secondary" data-tooltip="降低回复的营销感" onclick="reduceMarketing()" aria-label="降低营销感">🧹 降低营销感</button>
+      <button class="btn btn-secondary" data-tooltip="临时增强 CTA 强度" onclick="enhanceCTA()" aria-label="增强CTA强度">📢 增强 CTA</button>
+      <button class="btn btn-secondary" data-tooltip="移除回复中的 CTA 钩子" onclick="removeCTA()" aria-label="移除CTA钩子">🚫 移除 CTA</button>
     </div>
 
     <!-- Rewrite Section Buttons -->
     <div class="action-row" style="margin-top:4px;padding-top:12px;border-top:1px dashed var(--line);">
       <span style="font-size:11px;color:var(--muted);margin-right:4px;display:flex;align-items:center;">✏️ 局部重写：</span>
-      <button class="btn btn-secondary btn-small" onclick="rewriteSection('empathy')">重写开头</button>
-      <button class="btn btn-secondary btn-small" onclick="rewriteSection('diagnosis')">重写诊断</button>
-      <button class="btn btn-secondary btn-small" onclick="rewriteSection('example')">重写示例</button>
-      <button class="btn btn-secondary btn-small" onclick="rewriteSection('cta')">重写结尾</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('empathy')" aria-label="重写共情开头部分">重写开头</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('diagnosis')" aria-label="重写问题诊断部分">重写诊断</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('example')" aria-label="重写示例句部分">重写示例</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('cta')" aria-label="重写结尾CTA部分">重写结尾</button>
     </div>
 
     <!-- Risk Panel -->
@@ -1587,7 +1720,7 @@ function renderReply() {
 //  HANDLE GENERATE: Full implementation
 // ============================================================
 
-function handleGenerate() {
+function handleGenerate(skipShortCheck) {
   if (state.isGenerating) return;
 
   // a) Input validation
@@ -1599,16 +1732,34 @@ function handleGenerate() {
     return;
   }
 
-  // Short input warning
-  if (text.length < 20) {
-    els.errorMsg.textContent = '⚠️ 输入内容较短（' + text.length + ' 字符），生成结果可能不够精准。';
+  // Short input warning with continue/cancel
+  if (text.length < 20 && !skipShortCheck) {
+    els.errorMsg.innerHTML = '⚠️ 输入内容较短（' + text.length + ' 字符），生成结果可能不够精准。' +
+      ' <a href="javascript:void(0)" onclick="handleGenerate(true)" style="color:var(--blue);text-decoration:underline;font-weight:600;">继续</a>' +
+      ' <a href="javascript:void(0)" onclick="document.getElementById(\'errorMsg\').innerHTML=\'\'" style="color:var(--muted);text-decoration:underline;">取消</a>';
     els.errorMsg.style.color = '#b47d25';
-    // Continue anyway
-  } else {
-    els.errorMsg.textContent = '';
+    return;
   }
 
-  // b) Set generating state
+  els.errorMsg.textContent = '';
+  els.errorMsg.style.color = 'var(--red)';
+
+  // b) Long input truncation
+  var MAX_INPUT = 2000;
+  var originalLength = text.length;
+  if (text.length > MAX_INPUT) {
+    text = text.substring(0, MAX_INPUT);
+    els.sourceText.value = text;
+    state.sourceText = text;
+    els.errorMsg.textContent = '输入内容较长（' + originalLength + ' 字符），已自动截取前 ' + MAX_INPUT + ' 字符进行处理。';
+    els.errorMsg.style.color = '#b47d25';
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 4000);
+  }
+
+  // c) HTML escape for XSS prevention (applied in rendering)
+  state.sourceText = text;
+
+  // d) Set generating state
   state.isGenerating = true;
   var btn = els.btnGenerate;
   var originalText = btn.textContent;
@@ -2493,6 +2644,81 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+// ============================================================
+//  OFFLINE DETECTION & MOBILE NAV
+// ============================================================
+
+function checkOnlineStatus() {
+  var banner = document.getElementById('offlineBanner');
+  if (!banner) return;
+  if (!navigator.onLine) {
+    banner.classList.add('show');
+  } else {
+    banner.classList.remove('show');
+  }
+}
+
+window.addEventListener('online', checkOnlineStatus);
+window.addEventListener('offline', checkOnlineStatus);
+
+function toggleMobileNav() {
+  var dropdown = document.getElementById('mobileNavDropdown');
+  if (dropdown) {
+    dropdown.classList.toggle('open');
+  }
+}
+
+// Close mobile nav when clicking outside
+document.addEventListener('click', function(e) {
+  var dropdown = document.getElementById('mobileNavDropdown');
+  var hamburger = document.getElementById('hamburgerBtn');
+  if (dropdown && dropdown.classList.contains('open') &&
+      !dropdown.contains(e.target) &&
+      hamburger && !hamburger.contains(e.target)) {
+    dropdown.classList.remove('open');
+  }
+});
+
+// ============================================================
+//  LOCALSTORAGE AVAILABILITY CHECK
+// ============================================================
+
+var localStorageAvailable = (function() {
+  try {
+    var test = '__ls_test__';
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
+// Patch saveHistory to check availability
+var _originalSaveHistory = saveHistory;
+saveHistory = function() {
+  if (!localStorageAvailable) return;
+  _originalSaveHistory();
+};
+
+var _originalRenderHistory = renderHistory;
+renderHistory = function() {
+  if (!localStorageAvailable) {
+    var container = document.getElementById('historyList');
+    if (container) {
+      container.innerHTML = '<div style="font-size:11px;color:var(--muted);text-align:center;padding:12px 0;">历史记录不可用（localStorage 未启用）</div>';
+    }
+    return;
+  }
+  _originalRenderHistory();
+};
+
+var _originalGetHistory = getHistory;
+getHistory = function() {
+  if (!localStorageAvailable) return [];
+  return _originalGetHistory();
+};
+
 // ===== Keyboard Shortcuts =====
 document.addEventListener('keydown', function(e) {
   // Ctrl/Cmd + Enter: Generate
@@ -2514,12 +2740,14 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ===== Initialize =====
+checkOnlineStatus();
 syncState();
 renderCtaSuggestion();
 renderHistory();
-console.log('Reddit Reply Assistant — Batch 5 loaded.');
+console.log('Reddit Reply Assistant v1.0 — All 6 batches complete.');
+console.log('Features: reply generation | 8 templates | risk detection | 6 editing tools | history');
+console.log('Accessibility: aria-labels | keyboard shortcuts | responsive layout');
 console.log('State:', state);
-console.log('Reply generation + risk detection + editing tools + history ready.');
 </script>
 
 </body>
