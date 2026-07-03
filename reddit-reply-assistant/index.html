@@ -389,6 +389,11 @@
 
     .reply-content.visible {
       display: block;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+      white-space: pre-wrap;
+      word-wrap: break-word;
     }
 
     .reply-placeholder.hidden {
@@ -1266,26 +1271,186 @@ function switchVersion(version) {
   renderReply();
 }
 
-// ===== Render Reply =====
+// ============================================================
+//  CORE: Reply Generation Engine
+// ============================================================
+
+// -- applyTone: Adjust text based on tone selection --
+function applyTone(text, tone) {
+  switch (tone) {
+    case 'warm':
+      return text;
+    case 'direct':
+      return text
+        .replace(/That's a really common but frustrating/i, 'This is a common')
+        .replace(/genuinely /gi, '')
+        .replace(/Take a breath\. /gi, '')
+        .replace(/You're not alone in this\. /gi, '');
+    case 'expert':
+      return text
+        .replace(/I know this can feel/i, 'From a methodological perspective, this')
+        .replace(/I wouldn't start by/i, 'The recommended approach is to');
+    case 'casual':
+      return text
+        .replace(/I wouldn't start by/i, "Don't just")
+        .replace(/A useful way to think about this/i, 'One way to think about it')
+        .replace(/I recommend/i, "I'd say");
+    default:
+      return text;
+  }
+}
+
+// -- selectCTA: Pick CTA based on level, version, and context --
+function selectCTA(template, ctaLevel, version) {
+  // Short version: no CTA unless Direct
+  if (version === 'short' && ctaLevel !== 'direct') return null;
+
+  // Deep version: boost soft → medium for stronger engagement
+  var effectiveLevel = ctaLevel;
+  if (version === 'deep' && ctaLevel === 'soft') {
+    effectiveLevel = 'medium';
+  }
+
+  // Context-aware weakening: emotional-support problem types keep CTA soft
+  var weakCtaTypes = ['revise_resubmit_anxiety', 'thesis_structure', 'harsh_reviewer'];
+  if (weakCtaTypes.indexOf(state.problemType) !== -1 && effectiveLevel === 'medium') {
+    effectiveLevel = 'soft';
+  }
+
+  // Context-aware strengthening: english_editing can go stronger
+  if (state.problemType === 'english_editing' && effectiveLevel === 'soft') {
+    effectiveLevel = 'medium';
+  }
+
+  switch (effectiveLevel) {
+    case 'none':
+      return 'Hope that helps.';
+    case 'soft':
+      return template.logic.cta || CTA_LIBRARY.checklist[0];
+    case 'medium':
+      return CTA_LIBRARY.light_diagnosis[Math.floor(Math.random() * CTA_LIBRARY.light_diagnosis.length)];
+    case 'direct':
+      return CTA_LIBRARY.service_aware[Math.floor(Math.random() * CTA_LIBRARY.service_aware.length)];
+    default:
+      return template.logic.cta || 'Hope that helps.';
+  }
+}
+
+// -- truncateToWordLimit: Cut text at word limit, ending on sentence boundary --
+function truncateToWordLimit(text, maxWords) {
+  var words = text.split(/\s+/);
+  if (words.length <= maxWords) return text;
+  var truncated = words.slice(0, maxWords).join(' ');
+  var lastPeriod = truncated.lastIndexOf('.');
+  if (lastPeriod > maxWords * 0.7) {
+    return truncated.substring(0, lastPeriod + 1);
+  }
+  return truncated + '...';
+}
+
+// -- generateReply: Core generation for one version --
+function generateReply(version) {
+  var template = PROBLEM_TEMPLATES[state.problemType];
+  if (!template) {
+    return { text: '(No template selected)', wordCount: 0 };
+  }
+  var logic = template.logic;
+  var tone = state.tone;
+  var ctaLevel = state.ctaLevel;
+
+  var config = {
+    short:   { empathy: true, diagnosis: true, framework: false, example: false, action: false, cta: false, maxWords: 120 },
+    helpful: { empathy: true, diagnosis: true, framework: true,  example: true,  action: true,  cta: true,  maxWords: 220 },
+    deep:    { empathy: true, diagnosis: true, framework: true,  example: true,  action: true,  cta: true,  maxWords: 400 },
+  }[version];
+
+  if (!config) {
+    return { text: '(Invalid version: ' + version + ')', wordCount: 0 };
+  }
+
+  var paragraphs = [];
+
+  // 1. Empathy
+  if (config.empathy && logic.empathy) {
+    paragraphs.push(applyTone(logic.empathy, tone));
+  }
+
+  // 2. Diagnosis
+  if (config.diagnosis && logic.diagnosis) {
+    paragraphs.push(applyTone(logic.diagnosis, tone));
+  }
+
+  // 3. Framework
+  if (config.framework && logic.framework && logic.framework.length) {
+    var items = logic.framework;
+    if (version === 'helpful') {
+      paragraphs.push('A useful way to think about this: ' + items.join(' '));
+    } else if (version === 'deep') {
+      paragraphs.push('Here is how I would approach this step by step:');
+      items.forEach(function(item, i) {
+        paragraphs.push((i + 1) + '. ' + item);
+      });
+    }
+    // Short: framework is false, skipped
+  }
+
+  // 4. Example
+  if (config.example && logic.example) {
+    paragraphs.push(applyTone('For example, ' + logic.example, tone));
+  }
+
+  // 5. Action
+  if (config.action && logic.action) {
+    paragraphs.push(applyTone(logic.action, tone));
+  }
+
+  // 6. CTA
+  if (config.cta && ctaLevel !== 'none') {
+    var cta = selectCTA(template, ctaLevel, version);
+    if (cta) paragraphs.push(cta);
+  }
+
+  var fullText = paragraphs.join('\n\n');
+  var wordCount = fullText.split(/\s+/).filter(Boolean).length;
+
+  // Truncate if significantly over
+  if (wordCount > config.maxWords * 1.3) {
+    fullText = truncateToWordLimit(fullText, config.maxWords);
+    wordCount = fullText.split(/\s+/).filter(Boolean).length;
+  }
+
+  return { text: fullText, wordCount: wordCount };
+}
+
+// ============================================================
+//  RENDER: Display reply in right panel
+// ============================================================
+
 function renderReply() {
   var reply = state.replies[state.activeVersion];
+  var tabs = document.querySelectorAll('.version-tab');
+
+  // Update tab states (disabled if no content generated)
+  tabs.forEach(function(t) {
+    var v = t.getAttribute('data-version');
+    var r = state.replies[v];
+    var hasContent = r && r.text;
+    t.style.opacity = hasContent ? '1' : '0.5';
+    t.style.pointerEvents = hasContent ? 'auto' : 'auto'; // still clickable, just looks dim
+    var rangeEl = t.querySelector('.word-range');
+    if (rangeEl && r && r.wordCount > 0) {
+      rangeEl.textContent = r.wordCount + ' words';
+    } else if (rangeEl && !hasContent) {
+      // Reset to default range label
+      var defaults = { short: '80-120 words', helpful: '150-220 words', deep: '250-400 words' };
+      rangeEl.textContent = defaults[v] || '';
+    }
+  });
+
   if (reply && reply.text) {
     els.replyPlaceholder.classList.add('hidden');
     els.replyContent.classList.add('visible');
     els.replyContent.textContent = reply.text;
-
-    // Update word count in tabs
-    var tabs = document.querySelectorAll('.version-tab');
-    tabs.forEach(function(t) {
-      var v = t.getAttribute('data-version');
-      var r = state.replies[v];
-      if (r && r.wordCount) {
-        var rangeEl = t.querySelector('.word-range');
-        if (rangeEl) {
-          rangeEl.textContent = r.wordCount + ' words';
-        }
-      }
-    });
   } else {
     els.replyPlaceholder.classList.remove('hidden');
     els.replyContent.classList.remove('visible');
@@ -1293,28 +1458,91 @@ function renderReply() {
   }
 }
 
-// ===== Handle Generate (placeholder for now) =====
+// ============================================================
+//  HANDLE GENERATE: Full implementation
+// ============================================================
+
 function handleGenerate() {
   if (state.isGenerating) return;
 
+  // a) Input validation
   var text = (els.sourceText.value || '').trim();
   if (!text) {
     els.errorMsg.textContent = '请先粘贴 Reddit 评论或帖子内容。';
+    els.errorMsg.style.color = 'var(--red)';
     setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
     return;
   }
 
-  els.errorMsg.textContent = '';
-  console.log('Generate clicked — generation logic coming in Batch 3');
-  showError('生成功能将在第三批次实现。当前可验证所有控件与 state 的联动。');
-  setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+  // Short input warning
+  if (text.length < 20) {
+    els.errorMsg.textContent = '⚠️ 输入内容较短（' + text.length + ' 字符），生成结果可能不够精准。';
+    els.errorMsg.style.color = '#b47d25';
+    // Continue anyway
+  } else {
+    els.errorMsg.textContent = '';
+  }
+
+  // b) Set generating state
+  state.isGenerating = true;
+  var btn = els.btnGenerate;
+  var originalText = btn.textContent;
+  btn.textContent = '⏳ 生成中...';
+  btn.disabled = true;
+  els.replyCard.classList.add('generating');
+
+  // c) Generate with slight delay for UX feedback
+  setTimeout(function() {
+    try {
+      // Generate all three versions
+      state.replies.short   = generateReply('short');
+      state.replies.helpful = generateReply('helpful');
+      state.replies.deep    = generateReply('deep');
+
+      // Default to Helpful tab
+      state.activeVersion = 'helpful';
+      var tabs = document.querySelectorAll('.version-tab');
+      tabs.forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-version') === 'helpful');
+      });
+
+      // Render
+      renderReply();
+
+      // Log for debugging
+      console.log('Generated replies:');
+      console.log('  Short:', state.replies.short.wordCount, 'words');
+      console.log('  Helpful:', state.replies.helpful.wordCount, 'words');
+      console.log('  Deep:', state.replies.deep.wordCount, 'words');
+      console.log('  Tone:', state.tone, '| CTA:', state.ctaLevel);
+
+      state.generationError = null;
+    } catch (err) {
+      console.error('Generation error:', err);
+      state.generationError = err.message || 'Unknown error';
+      els.errorMsg.textContent = '生成失败，请稍后重试。如果问题持续出现，请刷新页面。';
+      els.errorMsg.style.color = 'var(--red)';
+      setTimeout(function() { els.errorMsg.textContent = ''; }, 5000);
+    }
+
+    // e) Restore button state
+    state.isGenerating = false;
+    btn.textContent = originalText;
+    btn.disabled = false;
+    els.replyCard.classList.remove('generating');
+  }, 600);
 }
 
 function showError(msg) {
   els.errorMsg.textContent = msg;
+  els.errorMsg.style.color = 'var(--red)';
 }
 
-// ===== Placeholder action buttons =====
+// ============================================================
+//  ACTION BUTTONS
+// ============================================================
+
+// -- Copy Reply --
 function copyReply() {
   var reply = state.replies[state.activeVersion];
   if (!reply || !reply.text) {
@@ -1322,11 +1550,50 @@ function copyReply() {
     setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
     return;
   }
-  // Full implementation in Batch 3
-  console.log('Copy — full implementation in Batch 3');
+
+  copyToClipboard(reply.text).then(function() {
+    var copyBtns = document.querySelectorAll('.btn-primary');
+    copyBtns.forEach(function(b) {
+      if (b.textContent.indexOf('复制回复') !== -1 || b.textContent.indexOf('已复制') !== -1) {
+        b.textContent = '✅ 已复制';
+        b.style.background = 'var(--green)';
+        setTimeout(function() {
+          b.textContent = '📋 复制回复';
+          b.style.background = '';
+        }, 1500);
+      }
+    });
+  }).catch(function() {
+    showError('复制失败，请手动选中文本后 Ctrl+C 复制。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+  });
 }
 
-function regenerate() { console.log('Regenerate — Batch 3'); }
+// -- Regenerate --
+function regenerate() {
+  if (state.isGenerating) return;
+
+  var text = (els.sourceText.value || '').trim();
+  if (!text) {
+    showError('请先粘贴 Reddit 评论或帖子内容。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  // Quick regenerate without full loading state
+  try {
+    state.replies.short   = generateReply('short');
+    state.replies.helpful = generateReply('helpful');
+    state.replies.deep    = generateReply('deep');
+    renderReply();
+    console.log('Regenerated all versions.');
+  } catch (err) {
+    console.error('Regenerate error:', err);
+    showError('重新生成失败，请稍后重试。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+  }
+}
+
 function shortenReply() { console.log('Shorten — Batch 4'); }
 function expandReply() { console.log('Expand — Batch 4'); }
 function reduceMarketing() { console.log('Reduce marketing — Batch 4'); }
@@ -1507,9 +1774,9 @@ document.addEventListener('keydown', function(e) {
 
 // ===== Initialize =====
 syncState();
-console.log('Reddit Reply Assistant — Batch 1 loaded.');
+console.log('Reddit Reply Assistant — Batch 3 loaded.');
 console.log('State:', state);
-console.log('All controls bound. Generation logic coming in Batch 3.');
+console.log('Reply generation engine ready. Type a Reddit comment and click Generate.');
 </script>
 
 </body>
