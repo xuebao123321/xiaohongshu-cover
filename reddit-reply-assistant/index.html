@@ -533,6 +533,72 @@
       animation: pulse 1.2s ease-in-out infinite;
     }
 
+    /* ===== CTA Library Items ===== */
+    .cta-category {
+      margin-bottom: 4px;
+    }
+    .cta-category-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--line);
+    }
+    .cta-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink);
+      border-bottom: 1px dotted var(--line);
+    }
+    .cta-item:last-child {
+      border-bottom: none;
+    }
+    .cta-copy-btn {
+      flex-shrink: 0;
+      height: 24px;
+      padding: 0 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--gray);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .cta-copy-btn:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+    .cta-copy-btn.copied {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+
+    /* ===== Risk Word Tags ===== */
+    .risk-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #fff5f5;
+      color: var(--red);
+      border: 1px solid #fcd5d5;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
     /* ===== Tooltip ===== */
     [data-tooltip] {
       position: relative;
@@ -757,10 +823,12 @@
   <div class="bottom-section" style="grid-column:1/-1;grid-row:3/4;position:relative;z-index:5;">
     <!-- Expandable Bottom Panels -->
     <div class="expand-panel" id="panelCtaLibrary">
-      <div class="panel-title" style="margin-bottom:8px;">📚 CTA 钩子库 — 即将在下一批次实现</div>
+      <div class="panel-title" style="margin-bottom:8px;">📚 CTA 钩子库 — 点击条目右侧按钮复制</div>
+      <div id="ctaLibraryContent" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;"></div>
     </div>
     <div class="expand-panel" id="panelRiskWords">
-      <div class="panel-title" style="margin-bottom:8px;">⚠️ 风险词提示 — 即将在下一批次实现</div>
+      <div class="panel-title" style="margin-bottom:8px;">⚠️ 风险词提示 — 以下表述严禁出现在回复中</div>
+      <div id="riskWordsContent" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
     </div>
     <div class="expand-panel" id="panelUsageGuide">
       <div class="panel-title" style="margin-bottom:8px;">📖 使用说明 — 即将在下一批次实现</div>
@@ -778,6 +846,239 @@
 </div>
 
 <script>
+// ============================================================
+//  DATA: Problem Type Templates (8 types)
+// ============================================================
+const PROBLEM_TEMPLATES = {
+  lack_of_novelty: {
+    id: 'lack_of_novelty',
+    name: 'Rejected for Lack of Novelty',
+    keywords: ['lack of novelty', 'not novel', 'contribution', 'limited novelty', 'incremental'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "That's a really common but frustrating reviewer comment, because 'lack of novelty' often sounds vague and unfair.",
+      diagnosis: "I wouldn't start by just adding sentences like 'this study is novel.' Usually the issue is that the paper hasn't positioned itself clearly enough against prior work. This is a positioning problem, not a quality problem.",
+      framework: [
+        "What have previous studies already done?",
+        "What specific gap remains?",
+        "What does your study add that changes or extends that work?",
+      ],
+      example: "Instead of writing 'This study is novel and important,' you could write: 'Unlike prior studies that focus on X, this study examines Y under Z conditions.' Then in the response letter, cite exactly where you revised the manuscript, such as the final paragraph of the Introduction.",
+      action: "Revise your Introduction's final paragraph and the Discussion section to make the gap and contribution more explicit. Then quote those exact revisions in your response letter.",
+      cta: 'Happy to share a reviewer-response checklist if useful.',
+    },
+  },
+
+  harsh_reviewer: {
+    id: 'harsh_reviewer',
+    name: 'Harsh Reviewer Response',
+    keywords: ['harsh', 'rude', 'aggressive', 'mean', 'unfair', 'personal'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "I know this can feel personal, but try to remember that harsh reviewer comments often say more about the reviewer's communication style than about your work.",
+      diagnosis: "The key is to separate tone from substance. Even a rude comment usually contains a technical concern underneath. Your job is to extract the actionable point and ignore the delivery.",
+      framework: [
+        "What is the actual technical concern behind the harsh wording?",
+        "Is this a real methodological issue, or just presentation?",
+        "Can you address it with a concrete revision?",
+      ],
+      example: "If the reviewer wrote 'This analysis is completely wrong,' don't defend yourself emotionally. Instead: 'We thank the reviewer for pointing this out. We have re-examined the analysis and made the following revisions: [specific changes]. We believe these revisions strengthen the paper.'",
+      action: "Create a response matrix: each reviewer comment in the left column, your calm, evidence-based response in the right column. Never match their tone.",
+      cta: 'Happy to share a reviewer-response checklist if useful.',
+    },
+  },
+
+  writing_unclear: {
+    id: 'writing_unclear',
+    name: 'Advisor Says Writing Is Unclear',
+    keywords: ['unclear', 'writing', 'advisor', 'supervisor', 'rewrite', 'vague'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "'Unclear' is one of the most frustrating feedback to receive because it's so vague. You're not alone in this.",
+      diagnosis: "Usually 'unclear' means the reader can't follow the logical thread: why this sentence connects to the next, why this paragraph exists, what point it's making. It's typically a structure and flow problem, not a grammar problem.",
+      framework: [
+        "Does each paragraph have a clear topic sentence that states its argument?",
+        "Does each sentence logically connect to the one before it?",
+        "Is the contribution of each paragraph obvious to a reader?",
+      ],
+      example: "Instead of 'The results show that X affects Y,' try: 'This paragraph argues that X is the primary driver of Y, because [evidence].' This tells the reader WHY this information matters.",
+      action: "Try this: next time you meet your advisor, ask 'At what level is it unclear — the sentence, the paragraph, or the overall argument?' This gives you something concrete to work with.",
+      cta: 'I can share a paragraph-level checklist if useful.',
+    },
+  },
+
+  english_editing: {
+    id: 'english_editing',
+    name: 'English Editing Recommendation',
+    keywords: ['editing', 'English', 'native speaker', 'ESL', 'language editing', 'proofread'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'medium',
+    logic: {
+      empathy: "ESL academic writing is genuinely hard — you're not only managing complex ideas but also expressing them in a language that isn't your first. Respect for putting yourself out there.",
+      diagnosis: "First, figure out what kind of help you actually need: surface-level grammar editing, or deeper logic and structure work. A pure language edit won't fix an unclear argument. A structure coach won't fix your grammar. Most papers need both at different stages.",
+      framework: [
+        "Stage 1: Is your argument structure solid? If not, fix that first.",
+        "Stage 2: Is the logic clear at the paragraph level?",
+        "Stage 3: Now polish the English at the sentence level.",
+      ],
+      example: "When you do hire an editor, ask them to comment on structure and clarity, not just wording. A good editor should be able to tell you 'this paragraph's argument is unclear' — that's more valuable than just fixing grammar.",
+      action: "Choose editing support based on your manuscript's stage: early draft → focus on argument structure; near-final draft → focus on language polish.",
+      cta: "I work with ESL researchers on manuscript clarity and reviewer responses, but I'd start with the diagnosis above before considering paid editing.",
+    },
+  },
+
+  journal_selection: {
+    id: 'journal_selection',
+    name: 'Journal Selection',
+    keywords: ['journal', 'submit', 'impact factor', 'scope', 'where to publish'],
+    defaultTone: 'direct',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "Journal selection is confusing because everyone talks about impact factor, but that's only one piece of the puzzle.",
+      diagnosis: "Don't choose a journal by impact factor alone. Start with scope: does this journal actually publish papers like yours? Read 5-10 recent articles from your shortlisted journals to check.",
+      framework: [
+        "Scope: Do they publish your type of research?",
+        "Article type: Do they accept your article category?",
+        "Recent papers: What have they published in the last 1-2 years?",
+        "Review speed: Check average turnaround times.",
+        "Red flags: Predatory practices, excessive APCs, fake editorial boards.",
+      ],
+      example: "Make a spreadsheet with 5 candidate journals. For each, list: scope match (yes/no), average review time, APC cost, 3 recent similar papers. This makes the decision data-driven, not emotional.",
+      action: "Create a shortlist of 3 journals ranked by fit, not by prestige. Submit to the best-fit journal first.",
+      cta: 'Happy to share a journal selection checklist if useful.',
+    },
+  },
+
+  revise_resubmit_anxiety: {
+    id: 'revise_resubmit_anxiety',
+    name: 'Revise and Resubmit Anxiety',
+    keywords: ['revise and resubmit', 'R&R', 'major revision', 'anxiety', 'overwhelmed', 'stress'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "Getting a major revision can feel overwhelming — it's like being told 'your paper is not good enough, but try again.' Take a breath. A revise-and-resubmit is actually good news: they didn't reject it.",
+      diagnosis: "Not all reviewer comments have equal weight. Some are must-fix, some are negotiable, some are simple clarifications. Your first step is to categorize them so you don't treat every comment as equally urgent.",
+      framework: [
+        "Must-fix: Major methodological or logical issues. These are non-negotiable.",
+        "Negotiate: Points you disagree with. You can politely explain why, with evidence.",
+        "Clarify: Misunderstandings. Fix the wording so future readers don't have the same confusion.",
+      ],
+      example: "Don't respond to 30 comments in random order. Group them by theme first: all comments about the method go together, all comments about the literature review go together. Respond to each theme as a block, not comment-by-comment.",
+      action: "Make a revision matrix: columns for reviewer comment, your response, manuscript changes, and page/line numbers. This keeps you organized and makes writing the response letter much easier.",
+      cta: 'Happy to share a revision planning checklist if useful.',
+    },
+  },
+
+  ai_writing_concern: {
+    id: 'ai_writing_concern',
+    name: 'AI Writing / AI Polishing Concern',
+    keywords: ['AI', 'ChatGPT', 'polish', 'generic', 'sounds like AI', 'AI writing'],
+    defaultTone: 'expert',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "AI polishing tools can improve surface-level clarity, but they often make academic writing sound generic — like every other paper. You're right to be concerned.",
+      diagnosis: "The problem isn't AI itself; it's that AI defaults to safe, generic academic phrases. It strips away specificity: your unique claims, your specific evidence, your nuanced limitations. Readers (and reviewers) can tell when writing has been homogenized.",
+      framework: [
+        "Claim: What exactly are you arguing? Be specific to your study.",
+        "Evidence: What data or reasoning supports this claim?",
+        "Limitation: What's the boundary of this claim?",
+        "Contribution: How does this advance the conversation beyond prior work?",
+      ],
+      example: "Instead of 'This study contributes to the literature on X,' write: 'Unlike [Author 2022], who found X increases Y, this study shows X only increases Y when Z is present — suggesting the relationship is conditional, not universal.' AI won't write that. Only you can.",
+      action: "Use AI for sentence-level options ('give me 5 ways to say this'), not for full-paragraph generation. YOU make the argument decisions. AI just gives you wording choices.",
+      cta: 'Happy to share an AI polishing checklist if useful.',
+    },
+  },
+
+  thesis_structure: {
+    id: 'thesis_structure',
+    name: 'Dissertation / Thesis Structure Confusion',
+    keywords: ['thesis', 'dissertation', 'structure', 'chapter', 'messy', 'organization'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "Large writing projects become messy quickly. A dissertation isn't one big paper — it's several chapters that need to work together as a coherent argument. That's genuinely hard.",
+      diagnosis: "A structure problem is usually an architecture problem: your chapters might individually be fine, but they don't form a single, progressive argument from question to answer.",
+      framework: [
+        "What is the ONE research question your whole dissertation answers?",
+        "What is the job of each chapter in answering that question?",
+        "How does each chapter's conclusion set up the next chapter?",
+      ],
+      example: "For each chapter, write a one-sentence job description: 'This chapter establishes that existing methods for measuring X are unreliable under condition Y.' If you can't write that sentence, the chapter's purpose isn't clear.",
+      action: "Write a one-page 'dissertation map': research question at the top, then for each chapter: its job, its key finding, and how it transitions to the next chapter. Share this with your advisor before sending full chapters.",
+      cta: 'Happy to share a thesis structure worksheet if useful.',
+    },
+  },
+};
+
+// ============================================================
+//  DATA: CTA Library
+// ============================================================
+const CTA_LIBRARY = {
+  checklist: [
+    "Happy to share a reviewer-response checklist if useful.",
+    "I have a short checklist for this kind of revision if you want it.",
+    "Happy to share the checklist I use for sorting reviewer comments.",
+    "I can share a paragraph-level checklist if useful.",
+    "Happy to share a revision planning checklist if useful.",
+    "Happy to share a journal selection checklist if useful.",
+    "Happy to share an AI polishing checklist if useful.",
+  ],
+  template: [
+    "I can share a simple response-letter structure if that helps.",
+    "Happy to share a template for organizing the response letter.",
+    "I can share the structure I use for response letters if that helps.",
+    "Happy to share a thesis structure worksheet if useful.",
+  ],
+  light_diagnosis: [
+    "If you want, paste the reviewer comment here and I can help classify what it's really asking for.",
+    "If you want another pair of eyes on the reviewer wording, feel free to DM me.",
+    "I'm happy to share a response-letter template by DM.",
+    "Feel free to DM me 'REVIEWER' and I can send the checklist.",
+  ],
+  service_aware: [
+    "I work with ESL researchers on manuscript clarity and reviewer responses, but I'd start with the diagnosis above before considering paid editing.",
+    "If you want another pair of eyes on the reviewer comments, feel free to DM me.",
+    "I work with ESL researchers on manuscript revision and reviewer responses. Happy to point you in the right direction if useful.",
+  ],
+};
+
+// ============================================================
+//  DATA: Risk Patterns & Replacements
+// ============================================================
+const RISK_PATTERNS = {
+  banned: [
+    { pattern: /guaranteed?\\s*acceptance/i, label: '禁止承诺发表' },
+    { pattern: /we\\s*(can|will)\\s*publish/i, label: '禁止代投承诺' },
+    { pattern: /we\\s*(can|will)\\s*write\\s*(your\\s*)?paper/i, label: '禁止代写暗示' },
+    { pattern: /ghostwriting/i, label: '禁止提及代写' },
+    { pattern: /contract\\s*cheating/i, label: '禁止提及合同作弊' },
+    { pattern: /submit\\s*on\\s*your\\s*behalf/i, label: '禁止代投' },
+    { pattern: /write\\s*my\\s*essay/i, label: '禁止代写' },
+  ],
+  highRisk: [
+    { pattern: /paid\\s*manuscript/i, label: '高风险：付费手稿' },
+    { pattern: /guaranteed?\\s*(grade|score|pass)/i, label: '高风险：承诺分数' },
+  ],
+  marketing: [
+    { pattern: /\\bDM\\s+me\\b.*\\bDM\\s+me\\b/i, label: 'DM me 出现多次' },
+    { pattern: /\\b(service|paid|client|company)\\b.*\\b(service|paid|client|company)\\b/i, label: '营销词汇过多' },
+  ],
+};
+
+const RISK_REPLACEMENTS = {
+  'guaranteed acceptance': 'improve manuscript competitiveness',
+  'we publish it for you': 'journal submission strategy',
+  'we write your paper': 'academic writing coaching',
+  'ghostwriting': 'research communication support',
+  'contract cheating': 'manuscript diagnosis',
+  'submit on your behalf': 'journal submission guidance',
+  'write my essay': 'language editing',
+};
+
 // ===== State Management =====
 const state = {
   // Input
@@ -837,6 +1138,60 @@ function updatePreview() {
   console.log('State updated:', JSON.parse(JSON.stringify(state)));
 }
 
+// ===== Problem Type Change: Auto-set Tone & CTA from Template =====
+function onProblemTypeChange(problemType) {
+  state.problemType = problemType;
+  var template = PROBLEM_TEMPLATES[problemType];
+  if (!template) {
+    updatePreview();
+    return;
+  }
+
+  // Auto-set tone from template default
+  var newTone = template.defaultTone;
+  state.tone = newTone;
+  var toneCards = document.querySelectorAll('.tone-card');
+  toneCards.forEach(function(c) {
+    c.classList.toggle('selected', c.getAttribute('data-tone') === newTone);
+  });
+
+  // Auto-set CTA level from template default
+  var newCta = template.defaultCtaLevel;
+  state.ctaLevel = newCta;
+  var ctaSegs = document.querySelectorAll('.cta-seg');
+  ctaSegs.forEach(function(s) {
+    s.classList.toggle('selected', s.getAttribute('data-cta') === newCta);
+  });
+
+  // Log template info
+  console.log('Template matched:', template.name);
+  console.log('  Auto tone →', newTone);
+  console.log('  Auto CTA →', newCta);
+  console.log('  Empathy:', template.logic.empathy.substring(0, 50) + '...');
+  console.log('  Diagnosis:', template.logic.diagnosis.substring(0, 50) + '...');
+  console.log('  Default CTA:', template.logic.cta);
+
+  updatePreview();
+}
+
+// Update the tooltip on hover for the ℹ️ icon
+var templateInfoIcon = document.getElementById('templateInfoIcon');
+if (templateInfoIcon) {
+  templateInfoIcon.addEventListener('mouseenter', function() {
+    var template = PROBLEM_TEMPLATES[state.problemType];
+    if (template) {
+      this.title = [
+        '模板：' + template.name,
+        '默认语气：' + template.defaultTone,
+        '默认CTA：' + template.defaultCtaLevel,
+        '共情：' + template.logic.empathy.substring(0, 60) + '…',
+        '诊断：' + template.logic.diagnosis.substring(0, 60) + '…',
+        '默认钩子：' + template.logic.cta,
+      ].join('\n');
+    }
+  });
+}
+
 // ===== Sync state from DOM =====
 function syncState() {
   state.sourceText = els.sourceText.value;
@@ -860,8 +1215,8 @@ function syncState() {
   }
 });
 
-// ===== Event Bindings: Selects =====
-['problemType', 'userType', 'field', 'replyGoal'].forEach(function(id) {
+// ===== Event Bindings: Selects (non-problemType) =====
+['userType', 'field', 'replyGoal'].forEach(function(id) {
   var el = document.getElementById(id);
   if (el) {
     el.addEventListener('change', function() {
@@ -870,6 +1225,14 @@ function syncState() {
     });
   }
 });
+
+// ===== Event Binding: Problem Type (special — triggers auto-fill) =====
+var problemTypeEl = document.getElementById('problemType');
+if (problemTypeEl) {
+  problemTypeEl.addEventListener('change', function() {
+    onProblemTypeChange(this.value);
+  });
+}
 
 // ===== Event Bindings: Tone Cards =====
 var toneCards = document.querySelectorAll('.tone-card');
@@ -973,15 +1336,153 @@ function removeCTA() { console.log('Remove CTA — Batch 4'); }
 // ===== Bottom Panel Toggle =====
 var openPanel = null;
 function togglePanel(name) {
-  var panel = document.getElementById('panel' + name.charAt(0).toUpperCase() + name.slice(1));
+  var capName = name.charAt(0).toUpperCase() + name.slice(1);
+  var panelId = 'panel' + capName;
+  var panel = document.getElementById(panelId);
   if (!panel) return;
 
   if (openPanel && openPanel !== panel) {
     openPanel.classList.remove('open');
   }
 
+  var isOpening = !panel.classList.contains('open');
   panel.classList.toggle('open');
   openPanel = panel.classList.contains('open') ? panel : null;
+
+  // Populate content when opening
+  if (isOpening) {
+    if (name === 'ctaLibrary') renderCtaLibrary();
+    if (name === 'riskWords') renderRiskWords();
+  }
+}
+
+// ===== Render CTA Library Panel =====
+function renderCtaLibrary() {
+  var container = document.getElementById('ctaLibraryContent');
+  if (!container || container.hasAttribute('data-rendered')) return;
+  container.setAttribute('data-rendered', 'true');
+
+  var categories = [
+    { key: 'checklist', title: '📋 Checklist 型' },
+    { key: 'template', title: '📄 Template 型' },
+    { key: 'light_diagnosis', title: '🔍 轻诊断型' },
+    { key: 'service_aware', title: '🤝 服务边界型' },
+  ];
+
+  var html = '';
+  categories.forEach(function(cat) {
+    var items = CTA_LIBRARY[cat.key];
+    if (!items || items.length === 0) return;
+    html += '<div class="cta-category">';
+    html += '<div class="cta-category-title">' + cat.title + '</div>';
+    items.forEach(function(item, idx) {
+      var itemId = 'cta-' + cat.key + '-' + idx;
+      html += '<div class="cta-item">';
+      html += '<span>' + escapeHtml(item) + '</span>';
+      html += '<button class="cta-copy-btn" onclick="copyCtaItem(\'' + itemId + '\')" id="' + itemId + '">复制</button>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+
+  // Store original items for copy
+  window._ctaItems = {};
+  categories.forEach(function(cat) {
+    var items = CTA_LIBRARY[cat.key];
+    if (!items) return;
+    items.forEach(function(item, idx) {
+      window._ctaItems['cta-' + cat.key + '-' + idx] = item;
+    });
+  });
+}
+
+// ===== Copy CTA Item =====
+function copyCtaItem(btnId) {
+  var text = window._ctaItems && window._ctaItems[btnId] ? window._ctaItems[btnId] : '';
+  if (!text) return;
+  copyToClipboard(text).then(function() {
+    var btn = document.getElementById(btnId);
+    if (btn) {
+      btn.textContent = '✅';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = '复制';
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+  });
+}
+
+// ===== Render Risk Words Panel =====
+function renderRiskWords() {
+  var container = document.getElementById('riskWordsContent');
+  if (!container || container.hasAttribute('data-rendered')) return;
+  container.setAttribute('data-rendered', 'true');
+
+  var words = [];
+  if (RISK_PATTERNS && RISK_PATTERNS.banned) {
+    RISK_PATTERNS.banned.forEach(function(item) {
+      words.push(item.label);
+    });
+  }
+
+  var html = '';
+  words.forEach(function(w) {
+    html += '<span class="risk-tag">🚫 ' + escapeHtml(w) + '</span>';
+  });
+
+  // Also add high-risk items
+  if (RISK_PATTERNS && RISK_PATTERNS.highRisk) {
+    RISK_PATTERNS.highRisk.forEach(function(item) {
+      html += '<span class="risk-tag" style="background:#fff8f0;color:#b47d25;border-color:#fce4c8;">⚠️ ' + escapeHtml(item.label) + '</span>';
+    });
+  }
+
+  container.innerHTML = html || '<span style="color:var(--muted);font-size:12px;">风险词数据加载中...</span>';
+}
+
+// ===== Clipboard Helper =====
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).catch(function() {
+      return fallbackCopy(text);
+    });
+  }
+  return fallbackCopy(text);
+}
+
+function fallbackCopy(text) {
+  return new Promise(function(resolve, reject) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var success = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (success) resolve();
+      else reject(new Error('execCommand copy failed'));
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+// ===== HTML Escape =====
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 // ===== Keyboard Shortcuts =====
