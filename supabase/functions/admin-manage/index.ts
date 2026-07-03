@@ -44,6 +44,8 @@ Deno.serve(async (req) => {
         return await handleSetRole(adminClient, body);
       case 'stats':
         return await handleStats(adminClient);
+      case 'setPageAccess':
+        return await handleSetPageAccess(adminClient, body);
       case 'paymentOrders':
         return await handlePaymentOrders(adminClient, body);
       default:
@@ -62,7 +64,7 @@ async function handleListUsers(adminClient: any, body: any) {
 
   let query = adminClient
     .from('profiles')
-    .select('id, email, role, expires_at, created_at', { count: 'exact' });
+    .select('id, email, role, expires_at, page_access, created_at', { count: 'exact' });
 
   if (search) {
     query = query.ilike('email', `%${search}%`);
@@ -121,6 +123,56 @@ async function handleSetRole(adminClient: any, body: any) {
   }
 
   return corsResponse({ ok: true, user: data });
+}
+
+// ── setPageAccess ──
+async function handleSetPageAccess(adminClient: any, body: any) {
+  const userId = String(body.userId || '').trim();
+  const pageSlug = String(body.pageSlug || '').trim();
+  const granted = Boolean(body.granted);
+
+  if (!userId) {
+    return corsResponse({ ok: false, message: '缺少 userId' }, 400);
+  }
+
+  const validPages = ['ins_reviewer_carousel', 'reddit_reply_assistant'];
+  if (!validPages.includes(pageSlug)) {
+    return corsResponse({ ok: false, message: `无效的 pageSlug: ${pageSlug}` }, 400);
+  }
+
+  // Get current page_access
+  const { data: profile, error: fetchError } = await adminClient
+    .from('profiles')
+    .select('id, email, role, expires_at, page_access, created_at')
+    .eq('id', userId)
+    .single();
+
+  if (fetchError) {
+    if (fetchError.code === 'PGRST116') {
+      return corsResponse({ ok: false, message: '用户不存在' }, 404);
+    }
+    throw fetchError;
+  }
+
+  const currentAccess: string[] = Array.isArray(profile.page_access) ? profile.page_access : [];
+
+  if (granted && !currentAccess.includes(pageSlug)) {
+    currentAccess.push(pageSlug);
+  } else if (!granted) {
+    const idx = currentAccess.indexOf(pageSlug);
+    if (idx !== -1) currentAccess.splice(idx, 1);
+  }
+
+  const { data: updated, error: updateError } = await adminClient
+    .from('profiles')
+    .update({ page_access: currentAccess, updated_at: new Date().toISOString() })
+    .eq('id', userId)
+    .select('id, email, role, expires_at, page_access, created_at')
+    .single();
+
+  if (updateError) throw updateError;
+
+  return corsResponse({ ok: true, user: updated });
 }
 
 // ── stats ──

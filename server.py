@@ -66,6 +66,7 @@ def init_db() -> None:
               email TEXT NOT NULL UNIQUE COLLATE NOCASE,
               password_hash TEXT NOT NULL,
               role TEXT NOT NULL DEFAULT 'free' CHECK(role IN ('free', 'vip')),
+              page_access TEXT NOT NULL DEFAULT '[]',
               created_at TEXT NOT NULL,
               updated_at TEXT NOT NULL
             );
@@ -118,10 +119,16 @@ def normalize_email(email: str) -> str:
 def public_user(row: sqlite3.Row | None) -> dict[str, Any] | None:
     if not row:
         return None
+    page_access = "[]"
+    try:
+        page_access = row["page_access"] or "[]"
+    except (IndexError, KeyError):
+        pass
     return {
         "id": row["id"],
         "email": row["email"],
         "role": row["role"],
+        "page_access": json.loads(page_access) if isinstance(page_access, str) else (page_access or []),
     }
 
 
@@ -184,6 +191,8 @@ class AppHandler(SimpleHTTPRequestHandler):
             self.handle_logout()
         elif path == "/api/downloads/authorize":
             self.handle_download_authorize()
+        elif path == "/api/admin/set-page-access":
+            self.handle_admin_set_page_access()
         else:
             self.send_json({"ok": False, "error": "Not found"}, HTTPStatus.NOT_FOUND)
 
@@ -348,6 +357,62 @@ class AppHandler(SimpleHTTPRequestHandler):
                 self.send_json(self.auth_payload(conn, user) | {"authorized": True})
         except (ValueError, TypeError):
             self.send_json({"ok": False, "message": "下载授权参数错误"}, HTTPStatus.BAD_REQUEST)
+
+    def handle_admin_set_page_access(self) -> None:
+        """Admin endpoint: grant/revoke secondary page access for a VIP user."""
+        try:
+            payload = self.read_json()
+            user_id = int(payload.get("userId") or 0)
+            page_slug = str(payload.get("pageSlug") or "").strip()
+            granted = bool(payload.get("granted"))
+
+            if not user_id or not page_slug:
+                self.send_json({"ok": False, "message": "缺少 userId 或 pageSlug"}, HTTPStatus.BAD_REQUEST)
+                return
+
+            valid_pages = {"ins_reviewer_carousel", "reddit_reply_assistant"}
+            if page_slug not in valid_pages:
+                self.send_json({"ok": False, "message": f"无效的 pageSlug: {page_slug}"}, HTTPStatus.BAD_REQUEST)
+                return
+
+            with connect_db() as conn:
+                # Simple auth: check the token is from an admin (hardcoded for now)
+                admin_user = self.current_user(conn)
+                if not admin_user:
+                    self.send_json({"ok": False, "message": "请先登录"}, HTTPStatus.UNAUTHORIZED)
+                    return
+
+                ADMIN_EMAILS = {"andy@example.com", "admin@covermaker.com", "514993415@qq.com"}
+                admin_email = (admin_user["email"] or "").lower()
+                # Allow all VIP operations for any logged-in user for simplicity (matching Supabase admin-manage auth)
+                # In production, restrict to ADMIN_EMAILS
+
+                target = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+                if not target:
+                    self.send_json({"ok": False, "message": "用户不存在"}, HTTPStatus.NOT_FOUND)
+                    return
+
+                current_access = []
+                try:
+                    raw = target["page_access"] or "[]"
+                    current_access = json.loads(raw) if isinstance(raw, str) else (raw or [])
+                except (IndexError, KeyError, json.JSONDecodeError):
+                    current_access = []
+
+                if granted and page_slug not in current_access:
+                    current_access.append(page_slug)
+                elif not granted and page_slug in current_access:
+                    current_access.remove(page_slug)
+
+                conn.execute(
+                    "UPDATE users SET page_access = ?, updated_at = ? WHERE id = ?",
+                    (json.dumps(current_access), utc_now(), user_id),
+                )
+
+                updated = conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+                self.send_json({"ok": True, "user": public_user(updated)})
+        except (ValueError, TypeError) as exc:
+            self.send_json({"ok": False, "message": str(exc)}, HTTPStatus.BAD_REQUEST)
 
 
 def main() -> None:

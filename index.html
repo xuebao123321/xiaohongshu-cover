@@ -71,6 +71,11 @@ button{font-family:inherit}
 .account-title{font-size:13px;font-weight:800;color:#2d2a26;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .account-sub{font-size:12px;color:#8a8a8a;margin-top:1px}
 .account-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.tool-links-bar{max-width:960px;margin:0 auto 12px;padding:8px 14px;background:#f8f7f4;border:1px solid #e8e4df;border-radius:10px;display:flex;align-items:center;gap:14px;font-size:13px}
+.tool-links-bar .tl-label{font-weight:700;color:#8a8a8a;font-size:11px;letter-spacing:.5px;white-space:nowrap}
+.tool-links-bar a{color:#1f4b73;text-decoration:none;font-weight:500;transition:color .15s}
+.tool-links-bar a:hover{color:#0d2b42;text-decoration:underline}
+.tool-links-bar .tl-badge{font-size:10px;background:#eef4f8;color:#1f4b73;padding:1px 6px;border-radius:999px}
 .modal-mask{
   position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:9998;
   display:none;align-items:center;justify-content:center;padding:18px;
@@ -362,6 +367,7 @@ button{font-family:inherit}
   .header p{font-size:10px;letter-spacing:1.2px}
   .header .badge{font-size:10px;padding:3px 8px}
   .account-bar{align-items:stretch;flex-direction:column;padding:10px;gap:8px}
+  .tool-links-bar{flex-wrap:wrap;gap:8px;font-size:12px;padding:8px 10px}
   .account-actions{justify-content:stretch}
   .account-actions .btn{flex:1}
   /* 字体/风格 tabs 可横向滚动 + 44px 触摸目标 */
@@ -538,6 +544,13 @@ button{font-family:inherit}
     <button class="btn small primary" id="btnOpenAuth" type="button">登录 / 注册</button>
     <button class="btn small ghost" id="btnLogout" type="button" style="display:none">退出登录</button>
   </div>
+</div>
+
+<!-- ═══════════ 运营工具入口（仅VIP且已开通页面权限可见）═══════════ -->
+<div class="tool-links-bar" id="toolLinksBar" style="display:none">
+  <span class="tl-label">🧰 运营工具</span>
+  <a href="./ins_reviewer_carousel/" id="linkInsCarousel" style="display:none">📱 Instagram 学术内容图生成器 <span class="tl-badge">NEW</span></a>
+  <a href="./reddit-reply-assistant/" id="linkRedditReply" style="display:none">🧠 Reddit 评论回复助手 <span class="tl-badge">NEW</span></a>
 </div>
 
 <!-- ═══════════ 风格族勾选 ═══════════ -->
@@ -901,6 +914,19 @@ function renderAccountBar() {
   }
   openBtn.style.display = 'none';
   logoutBtn.style.display = '';
+
+  // Show/hide secondary page tool links based on VIP page_access
+  var toolBar = document.getElementById('toolLinksBar');
+  var linkIns = document.getElementById('linkInsCarousel');
+  var linkReddit = document.getElementById('linkRedditReply');
+  if (toolBar && linkIns && linkReddit) {
+    var pageAccess = (AUTH_STATE.user && Array.isArray(AUTH_STATE.user.page_access)) ? AUTH_STATE.user.page_access : [];
+    var hasIns = pageAccess.indexOf('ins_reviewer_carousel') !== -1;
+    var hasReddit = pageAccess.indexOf('reddit_reply_assistant') !== -1;
+    linkIns.style.display = hasIns ? '' : 'none';
+    linkReddit.style.display = hasReddit ? '' : 'none';
+    toolBar.style.display = (hasIns || hasReddit) ? '' : 'none';
+  }
 }
 
 function openAuthModal(message) {

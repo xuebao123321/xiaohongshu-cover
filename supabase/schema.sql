@@ -65,6 +65,11 @@ alter table public.profiles
   add column if not exists expires_at timestamptz;
 -- null = 免费用户, 有值且在将来 = VIP (过期后由 authorize-download 自动降级)
 
+alter table public.profiles
+  add column if not exists page_access jsonb not null default '[]'::jsonb;
+-- JSON array of page slugs the VIP user can access, e.g. ["ins_reviewer_carousel", "reddit_reply_assistant"]
+-- Admin controls this via admin-manage → setPageAccess
+
 create table if not exists public.payment_orders (
   id bigserial primary key,
   user_id uuid not null references auth.users(id) on delete cascade,

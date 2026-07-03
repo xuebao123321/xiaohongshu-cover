@@ -91,14 +91,14 @@ Deno.serve(async (req) => {
 async function ensureProfile(adminClient: any, userId: string, email: string) {
   const { data } = await adminClient
     .from('profiles')
-    .select('id,email,role,expires_at,created_at')
+    .select('id,email,role,expires_at,page_access,created_at')
     .eq('id', userId)
     .maybeSingle();
   if (data) return data;
   const { data: created, error } = await adminClient
     .from('profiles')
     .insert({ id: userId, email, role: 'free' })
-    .select('id,email,role,expires_at,created_at')
+    .select('id,email,role,expires_at,page_access,created_at')
     .single();
   if (error) throw error;
   return created;
@@ -124,6 +124,7 @@ function authPayload(profile: any, usedToday: number) {
       email: profile.email,
       role: profile.role,
       expires_at: profile.expires_at || null,
+      page_access: Array.isArray(profile.page_access) ? profile.page_access : [],
     },
     limits: limitsPayload(profile, usedToday),
   };

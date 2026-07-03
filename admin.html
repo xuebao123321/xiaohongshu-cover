@@ -75,10 +75,15 @@ button{font-family:inherit;cursor:pointer}
   background:#fff;border:1.5px solid #e8e4df;border-radius:12px;overflow:hidden;
 }
 .table-header{
-  display:grid;grid-template-columns:1fr 90px 110px 100px 100px;gap:8px;
+  display:grid;grid-template-columns:1fr 90px 110px 100px 130px 100px;gap:8px;
   padding:12px 16px;background:#faf9f7;border-bottom:1px solid #e8e4df;
   font-size:11px;font-weight:800;color:#8a8a8a;letter-spacing:.5px;text-transform:uppercase;
 }
+.page-access-row{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.page-access-chip{display:inline-flex;align-items:center;gap:2px;padding:2px 6px;font-size:10px;border-radius:4px;cursor:pointer;user-select:none;border:1px solid #d9d6ce;background:#fff;transition:all .15s;white-space:nowrap}
+.page-access-chip.granted{background:#eef7ee;border-color:#a3d9a5;color:#2f735c}
+.page-access-chip:not(.granted){color:#8a8a8a}
+.page-access-chip:hover{border-color:#1f4b73}
 .table-row{
   display:grid;grid-template-columns:1fr 90px 110px 100px 100px;gap:8px;
   padding:14px 16px;border-bottom:1px solid #f0eeea;align-items:center;
@@ -110,7 +115,7 @@ button{font-family:inherit;cursor:pointer}
   .stats-row{grid-template-columns:repeat(3,1fr);gap:8px}
   .stat-card{padding:12px 10px}
   .stat-card .num{font-size:24px}
-  .table-header,.table-row{grid-template-columns:1fr 55px 80px 70px 70px;font-size:10px;padding:10px 8px;gap:3px}
+  .table-header,.table-row{grid-template-columns:1fr 50px 75px 60px 100px 60px;font-size:9px;padding:8px 6px;gap:3px}
   .header{flex-direction:column;align-items:flex-start}
   .header h1{font-size:18px}
 }
@@ -176,7 +181,7 @@ button{font-family:inherit;cursor:pointer}
     <!-- 用户表格 -->
     <div class="table-wrap">
       <div class="table-header">
-        <span>邮箱</span><span>角色</span><span>到期时间</span><span>注册时间</span><span>操作</span>
+        <span>邮箱</span><span>角色</span><span>到期时间</span><span>注册时间</span><span>页面权限</span><span>操作</span>
       </div>
       <div id="userList"><div class="loading-overlay"><span class="spinner"></span>加载中...</div></div>
       <div class="pagination" id="pagination"></div>
@@ -358,12 +363,30 @@ function renderUsers(users, total) {
       if (daysLeft <= 7 && daysLeft > 0) expClass = ' style="color:#e08820;font-weight:700"';
       else if (daysLeft <= 0) expClass = ' style="color:#ED0108;font-weight:700"';
     }
+    const pageAccess = Array.isArray(u.page_access) ? u.page_access : [];
+    const pageChips = isVip ? `
+        <div class="page-access-row">
+          <span class="page-access-chip ${pageAccess.includes('ins_reviewer_carousel') ? 'granted' : ''}"
+                data-userid="${u.id}" data-page="ins_reviewer_carousel"
+                onclick="event.stopPropagation();window._togglePageAccess(this)"
+                title="Instagram 学术内容图生成器">
+            ${pageAccess.includes('ins_reviewer_carousel') ? '✓' : '○'} IG图
+          </span>
+          <span class="page-access-chip ${pageAccess.includes('reddit_reply_assistant') ? 'granted' : ''}"
+                data-userid="${u.id}" data-page="reddit_reply_assistant"
+                onclick="event.stopPropagation();window._togglePageAccess(this)"
+                title="Reddit 评论回复助手">
+            ${pageAccess.includes('reddit_reply_assistant') ? '✓' : '○'} Reddit
+          </span>
+        </div>` : '<span style="font-size:10px;color:#8a8a8a;">—</span>';
+
     return `
       <div class="table-row">
         <span class="email" title="${escapeHtml(u.email)}">${escapeHtml(u.email)}</span>
         <span class="role ${isVip ? 'vip' : 'free'}">${isVip ? 'VIP会员' : '普通会员'}</span>
         <span class="date"${expClass}>${expDate}</span>
         <span class="date">${regDate}</span>
+        <span>${pageChips}</span>
         <span>
           <button class="btn btn-sm ${isVip ? 'btn-free' : 'btn-vip'}"
                   data-userid="${u.id}" data-role="${isVip ? 'free' : 'vip'}"
@@ -414,6 +437,26 @@ window._toggleRole = async function(btn) {
   } catch (e) {
     showToast('❌ ' + (e.message || '操作失败'));
     btn.disabled = false;
+  }
+};
+
+// ── 切换页面权限 ──
+window._togglePageAccess = async function(chip) {
+  const userId = chip.dataset.userid;
+  const pageSlug = chip.dataset.page;
+  const granted = !chip.classList.contains('granted');
+  chip.style.pointerEvents = 'none';
+  chip.style.opacity = '0.6';
+  try {
+    const body = { action: 'setPageAccess', userId, pageSlug, granted };
+    const { data } = await supabase.functions.invoke('admin-manage', { body });
+    if (!data || !data.ok) throw new Error(data.message || '操作失败');
+    showToast(granted ? '✅ 已开通页面权限' : '🔓 已关闭页面权限');
+    await loadUsers();
+  } catch (e) {
+    showToast('❌ ' + (e.message || '操作失败'));
+    chip.style.pointerEvents = '';
+    chip.style.opacity = '';
   }
 };
 
