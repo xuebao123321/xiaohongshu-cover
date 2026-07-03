@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reviewer Response Carousel</title>
+  <style>
+    :root {
+      --ink: #182033;
+      --muted: #667085;
+      --paper: #fbfaf7;
+      --line: #d9d6ce;
+      --blue: #1f4b73;
+      --red: #c94538;
+      --green: #2f735c;
+      --gold: #b47d25;
+      --gray: #f0eee8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #d8d8d8;
+      color: var(--ink);
+      font-family: Inter, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+
+    .deck {
+      display: grid;
+      gap: 28px;
+      padding: 28px;
+    }
+
+    .slide {
+      position: relative;
+      width: 1080px;
+      height: 1350px;
+      overflow: hidden;
+      background: var(--paper);
+      isolation: isolate;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(24, 32, 51, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(24, 32, 51, 0.025) 1px, transparent 1px);
+      background-size: 54px 54px;
+      z-index: -2;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: 54px;
+      border: 1px solid rgba(24, 32, 51, 0.12);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .topline {
+      position: absolute;
+      top: 82px;
+      left: 82px;
+      right: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 46px;
+      padding: 0 18px;
+      border: 1px solid rgba(31, 75, 115, 0.22);
+      color: var(--blue);
+      background: rgba(255, 255, 255, 0.56);
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .page {
+      font-weight: 700;
+      color: rgba(24, 32, 51, 0.42);
+    }
+
+    .content {
+      position: absolute;
+      inset: 170px 82px 94px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, p {
+      margin: 0;
+    }
+
+    h1 {
+      max-width: 860px;
+      font-size: 88px;
+      line-height: 1.06;
+      font-weight: 860;
+      color: var(--ink);
+      letter-spacing: 0;
+    }
+
+    h2 {
+      max-width: 850px;
+      font-size: 70px;
+      line-height: 1.08;
+      font-weight: 850;
+      letter-spacing: 0;
+    }
+
+    .cn {
+      margin-top: 28px;
+      color: var(--blue);
+      font-size: 42px;
+      line-height: 1.35;
+      font-weight: 760;
+      letter-spacing: 0;
+    }
+
+    .body {
+      margin-top: 34px;
+      max-width: 850px;
+      color: #303849;
+      font-size: 38px;
+      line-height: 1.38;
+      font-weight: 520;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 28px;
+      line-height: 1.35;
+      font-weight: 560;
+    }
+
+    .paper-card {
+      margin-top: 60px;
+      padding: 38px 42px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      box-shadow: 0 18px 40px rgba(24, 32, 51, 0.08);
+    }
+
+    .comment {
+      position: relative;
+      padding: 30px 34px;
+      background: #fff;
+      border-left: 12px solid var(--red);
+      box-shadow: 0 10px 24px rgba(24, 32, 51, 0.08);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 40px;
+      line-height: 1.3;
+      color: #202633;
+    }
+
+    .red-note {
+      margin-top: 24px;
+      color: var(--red);
+      font-size: 32px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 54px;
+    }
+
+    .box {
+      min-height: 206px;
+      padding: 30px 30px 28px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+    }
+
+    .box-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      color: var(--blue);
+      font-size: 32px;
+      font-weight: 850;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .box p {
+      color: #344054;
+      font-size: 29px;
+      line-height: 1.32;
+      font-weight: 580;
+    }
+
+    .wrong-right {
+      display: grid;
+      gap: 28px;
+      margin-top: 54px;
+    }
+
+    .label {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 850;
+      text-transform: uppercase;
+    }
+
+    .bad .label {
+      background: var(--red);
+    }
+
+    .good .label {
+      background: var(--green);
+    }
+
+    .quote {
+      padding: 26px 30px;
+      background: #fff;
+      border: 1px solid var(--line);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 31px;
+      line-height: 1.38;
+      color: #202633;
+    }
+
+    .explain {
+      margin-top: 30px;
+      padding: 28px 32px;
+      background: rgba(31, 75, 115, 0.09);
+      border-left: 8px solid var(--blue);
+      color: #26344a;
+      font-size: 32px;
+      line-height: 1.36;
+      font-weight: 680;
+    }
+
+    .two-cards {
+      display: grid;
+      gap: 28px;
+      margin-top: 54px;
+    }
+
+    .method-card {
+      padding: 34px 38px;
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+    }
+
+    .method-card h3 {
+      margin: 0 0 18px;
+      color: var(--blue);
+      font-size: 38px;
+      line-height: 1.18;
+    }
+
+    .method-card p {
+      margin: 0;
+      color: #344054;
+      font-size: 32px;
+      line-height: 1.38;
+      font-weight: 580;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 22px;
+      margin-top: 50px;
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 24px 28px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      color: #303849;
+      font-size: 32px;
+      line-height: 1.3;
+      font-weight: 650;
+    }
+
+    .checkbox {
+      width: 38px;
+      height: 38px;
+      border: 3px solid var(--blue);
+      margin-top: 2px;
+      background: rgba(31, 75, 115, 0.05);
+    }
+
+    .cta {
+      margin-top: auto;
+      padding-top: 34px;
+      color: var(--red);
+      font-size: 34px;
+      line-height: 1.22;
+      font-weight: 850;
+    }
+
+    .footer {
+      position: absolute;
+      left: 82px;
+      right: 82px;
+      bottom: 54px;
+      display: flex;
+      justify-content: space-between;
+      color: rgba(24, 32, 51, 0.48);
+      font-size: 24px;
+      font-weight: 650;
+    }
+
+    .accent-line {
+      width: 150px;
+      height: 8px;
+      margin: 40px 0 0;
+      background: var(--red);
+    }
+
+    .cover-bg {
+      position: absolute;
+      right: -120px;
+      bottom: 100px;
+      width: 640px;
+      height: 600px;
+      transform: rotate(-8deg);
+      opacity: 0.42;
+      background:
+        linear-gradient(#fff, #fff) padding-box,
+        linear-gradient(135deg, rgba(31, 75, 115, 0.3), rgba(201, 69, 56, 0.3)) border-box;
+      border: 2px solid transparent;
+      box-shadow: 0 20px 80px rgba(24, 32, 51, 0.12);
+    }
+
+    .cover-bg .line {
+      height: 18px;
+      margin: 42px 54px;
+      background: rgba(24, 32, 51, 0.13);
+    }
+
+    .cover-bg .line:nth-child(2) {
+      width: 72%;
+    }
+
+    .cover-bg .line:nth-child(3) {
+      width: 88%;
+    }
+
+    .cover-bg .line:nth-child(4) {
+      width: 52%;
+      background: rgba(201, 69, 56, 0.35);
+    }
+
+    .highlight {
+      color: var(--red);
+    }
+
+    .mini-list {
+      display: grid;
+      gap: 20px;
+      margin-top: 42px;
+    }
+
+    .mini-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      font-size: 36px;
+      line-height: 1.25;
+      font-weight: 780;
+      color: #303849;
+    }
+
+    .mini-item span:first-child {
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .deck {
+        padding: 0;
+        gap: 0;
+      }
+    }
+
+    body.export {
+      background: #fff;
+    }
+
+    body.export .deck {
+      display: block;
+      padding: 0;
+    }
+
+    body.export .slide {
+      display: none;
+    }
+
+    body.export .slide.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide" id="slide-1">
+      <div class="cover-bg">
+        <div class="line" style="width: 64%"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+      </div>
+      <div class="topline">
+        <span class="tag">Reviewer Response</span>
+        <span class="page">01 / 07</span>
+      </div>
+      <div class="content">
+        <h1>Reviewer asked for revision?</h1>
+        <div class="accent-line"></div>
+        <p class="cn">论文被返修，别急着先改语言。</p>
+        <div class="paper-card">
+          <div class="comment">"The contribution of this manuscript is unclear."</div>
+          <p class="red-note">This may not be an English problem.</p>
+        </div>
+        <p class="cta">Save this before your next revision.</p>
+      </div>
+      <div class="footer">
+        <span>SCI / CCF writing coaching</span>
+        <span>@yourhandle</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="topline">
+        <span class="tag">First Reaction</span>
+        <span class="page">02 / 07</span>
+      </div>
+      <div class="content">
+        <h2>Many students think:</h2>
+        <p class="cn">“是不是我英文太差？”</p>
+        <p class="body">But when reviewers say <strong>unclear</strong>, they may be questioning your logic, evidence, method, or positioning.</p>
+        <div class="split">
+          <div class="box">
+            <div class="box-title"><span class="dot"></span>English?</div>
+            <p>Grammar, word choice, sentence clarity.</p>
+          </div>
+          <div class="box">
+            <div class="box-title"><span class="dot"></span>Argument?</div>
+            <p>Novelty, method, evidence, contribution.</p>
+          </div>
+        </div>
+        <p class="cta">Do not polish before you diagnose.</p>
+      </div>
+      <div class="footer">
+        <span>Revision is a strategy problem first</span>
+        <span>@yourhandle</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="topline">
+        <span class="tag">4-Part Diagnosis</span>
+        <span class="page">03 / 07</span>
+      </div>
+      <div class="content">
+        <h2>Classify the comment first.</h2>
+        <p class="cn">先判断：审稿人真正质疑什么？</p>
+        <div class="split">
+          <div class="box">
+            <div class="box-title"><span class="dot"></span>Novelty</div>
+            <p>What is new compared with prior work?</p>
+          </div>
+          <div class="box">
+            <div class="box-title"><span class="dot"></span>Method</div>
+            <p>Can readers understand and trust how you did it?</p>
+          </div>
+          <div class="box">
+            <div class="box-title"><span class="dot"></span>Data</div>
+            <p>Is the evidence sufficient for your claim?</p>
+          </div>
+          <div class="box">
+            <div class="box-title"><span class="dot"></span>Writing</div>
+            <p>Is the argument easy to follow sentence by sentence?</p>
+          </div>
+        </div>
+        <p class="cta">One reviewer comment can hide different problems.</p>
+      </div>
+      <div class="footer">
+        <span>Novelty / Method / Data / Writing</span>
+        <span>@yourhandle</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="topline">
+        <span class="tag">Novelty</span>
+        <span class="page">04 / 07</span>
+      </div>
+      <div class="content">
+        <h2>If the issue is novelty...</h2>
+        <p class="cn">不要只说“我们强调了创新性”。</p>
+        <div class="wrong-right">
+          <div class="bad">
+            <span class="label">Weak reply</span>
+            <div class="quote">Thank you. We have emphasized the novelty of our study.</div>
+          </div>
+          <div class="good">
+            <span class="label">Stronger reply</span>
+            <div class="quote">We clarified how our study differs from prior work by adding a comparison with X, Y, and Z in the final paragraph of the Introduction.</div>
+          </div>
+        </div>
+        <div class="explain">说明前人做了什么、没做什么、你补了什么。</div>
+      </div>
+      <div class="footer">
+        <span>Do not claim novelty. Position it.</span>
+        <span>@yourhandle</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="topline">
+        <span class="tag">Method & Data</span>
+        <span class="page">05 / 07</span>
+      </div>
+      <div class="content">
+        <h2>If the issue is method or data...</h2>
+        <p class="cn">回应要落到正文修改，而不是态度表态。</p>
+        <div class="two-cards">
+          <div class="method-card">
+            <h3>Method</h3>
+            <p>Add steps, parameters, sample source, evaluation metrics, or implementation details.</p>
+          </div>
+          <div class="method-card">
+            <h3>Data</h3>
+            <p>Add statistical results, robustness checks, extra experiments, or explain why current evidence is sufficient.</p>
+          </div>
+        </div>
+        <div class="quote" style="margin-top: 34px;">We added details on sample selection and model parameters in Section 2.3.</div>
+      </div>
+      <div class="footer">
+        <span>Specific revision beats polite wording</span>
+        <span>@yourhandle</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="topline">
+        <span class="tag">Writing</span>
+        <span class="page">06 / 07</span>
+      </div>
+      <div class="content">
+        <h2>If it really is a writing issue...</h2>
+        <p class="cn">也不要只做语法润色。</p>
+        <div class="mini-list">
+          <div class="mini-item"><span>1.</span><span>Does each paragraph have a clear topic sentence?</span></div>
+          <div class="mini-item"><span>2.</span><span>Do sentences connect logically?</span></div>
+          <div class="mini-item"><span>3.</span><span>Is the contribution stated explicitly?</span></div>
+        </div>
+        <div class="wrong-right">
+          <div class="bad">
+            <span class="label">Weak</span>
+            <div class="quote">This study is important.</div>
+          </div>
+          <div class="good">
+            <span class="label">Better</span>
+            <div class="quote">This study contributes to X by showing Y under Z conditions.</div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <span>Clarity is structure, not only grammar</span>
+        <span>@yourhandle</span>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="topline">
+        <span class="tag">Checklist</span>
+        <span class="page">07 / 07</span>
+      </div>
+      <div class="content">
+        <h2>Before you revise, check these 4 things.</h2>
+        <p class="cn">返修前，先做这个 4 步诊断。</p>
+        <div class="checklist">
+          <div class="check"><span class="checkbox"></span><span>Is this comment about novelty, method, data, or writing?</span></div>
+          <div class="check"><span class="checkbox"></span><span>Did I revise the manuscript, not just the response letter?</span></div>
+          <div class="check"><span class="checkbox"></span><span>Did I mention the exact section, paragraph, or line?</span></div>
+          <div class="check"><span class="checkbox"></span><span>Did I explain why this revision solves the concern?</span></div>
+        </div>
+        <p class="cta">DM “REVIEWER” for the response checklist.</p>
+      </div>
+      <div class="footer">
+        <span>Academic writing support, not ghostwriting</span>
+        <span>@yourhandle</span>
+      </div>
+    </section>
+  </main>
+  <script>
+    const slide = new URLSearchParams(window.location.search).get("slide");
+    if (slide) {
+      document.body.classList.add("export");
+      document.querySelectorAll(".slide").forEach((node) => {
+        node.classList.toggle("active", node.id === `slide-${slide}`);
+      });
+    }
+  </script>
+</body>
+</html>
