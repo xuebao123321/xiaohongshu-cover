@@ -430,7 +430,7 @@ window._toggleRole = async function(btn) {
       body.expiresAt = new Date(Date.now() + 365 * 86400000).toISOString();
     }
     const { data } = await supabase.functions.invoke('admin-manage', { body });
-    if (!data || !data.ok) throw new Error(data.message || '操作失败');
+    if (!data || !data.ok) throw new Error((data && data.message) || '操作失败');
     showToast(`✅ 已切换为 ${roleLabel}`);
     await loadUsers();
     await loadStats();
@@ -450,7 +450,7 @@ window._togglePageAccess = async function(chip) {
   try {
     const body = { action: 'setPageAccess', userId, pageSlug, granted };
     const { data } = await supabase.functions.invoke('admin-manage', { body });
-    if (!data || !data.ok) throw new Error(data.message || '操作失败');
+    if (!data || !data.ok) throw new Error((data && data.message) || '操作失败');
     showToast(granted ? '✅ 已开通页面权限' : '🔓 已关闭页面权限');
     await loadUsers();
   } catch (e) {
