@@ -462,6 +462,33 @@
     .risk-panel {
       background: #fffdf5;
       border: 1px solid #f0e8c0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .risk-panel.risk-low {
+      background: #f5fdf7;
+      border-color: #d0ead5;
+    }
+    .risk-panel.risk-medium {
+      background: #fffdf5;
+      border-color: #f0e8c0;
+    }
+    .risk-panel.risk-high {
+      background: #fff5f5;
+      border-color: #fcd5d5;
+    }
+    .risk-suggestion {
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 4px;
+      padding: 4px 0;
+    }
+    .risk-suggestion.severity-high { color: var(--red); }
+    .risk-suggestion.severity-medium { color: #b47d25; }
+    .risk-suggestion.severity-low { color: var(--green); }
+    .risk-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink);
     }
 
     .cta-suggest-panel {
@@ -809,6 +836,15 @@
       <button class="btn btn-secondary" data-tooltip="降低回复的营销感" onclick="reduceMarketing()">🧹 降低营销感</button>
       <button class="btn btn-secondary" data-tooltip="临时增强 CTA 强度" onclick="enhanceCTA()">📢 增强 CTA</button>
       <button class="btn btn-secondary" data-tooltip="移除回复中的 CTA 钩子" onclick="removeCTA()">🚫 移除 CTA</button>
+    </div>
+
+    <!-- Rewrite Section Buttons -->
+    <div class="action-row" style="margin-top:4px;padding-top:12px;border-top:1px dashed var(--line);">
+      <span style="font-size:11px;color:var(--muted);margin-right:4px;display:flex;align-items:center;">✏️ 局部重写：</span>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('empathy')">重写开头</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('diagnosis')">重写诊断</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('example')">重写示例</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('cta')">重写结尾</button>
     </div>
 
     <!-- Risk Panel -->
@@ -1451,6 +1487,10 @@ function renderReply() {
     els.replyPlaceholder.classList.add('hidden');
     els.replyContent.classList.add('visible');
     els.replyContent.textContent = reply.text;
+
+    // Update risks for this version
+    state.risks = detectRisks(reply.text);
+    renderRisks(state.risks);
   } else {
     els.replyPlaceholder.classList.remove('hidden');
     els.replyContent.classList.remove('visible');
@@ -1508,6 +1548,10 @@ function handleGenerate() {
 
       // Render
       renderReply();
+
+      // Run risk detection on the default (helpful) version
+      state.risks = detectRisks(state.replies.helpful.text);
+      renderRisks(state.risks);
 
       // Log for debugging
       console.log('Generated replies:');
@@ -1585,6 +1629,8 @@ function regenerate() {
     state.replies.short   = generateReply('short');
     state.replies.helpful = generateReply('helpful');
     state.replies.deep    = generateReply('deep');
+    state.risks = detectRisks(state.replies[state.activeVersion].text);
+    renderRisks(state.risks);
     renderReply();
     console.log('Regenerated all versions.');
   } catch (err) {
@@ -1594,11 +1640,385 @@ function regenerate() {
   }
 }
 
-function shortenReply() { console.log('Shorten — Batch 4'); }
-function expandReply() { console.log('Expand — Batch 4'); }
-function reduceMarketing() { console.log('Reduce marketing — Batch 4'); }
-function enhanceCTA() { console.log('Enhance CTA — Batch 4'); }
-function removeCTA() { console.log('Remove CTA — Batch 4'); }
+// ============================================================
+//  RISK DETECTION ENGINE
+// ============================================================
+
+function detectRisks(replyText) {
+  var risks = {
+    marketing: 'low',
+    compliance: 'low',
+    redditCommunity: 'low',
+    suggestions: [],
+  };
+
+  if (!replyText) return risks;
+
+  // 1. Compliance: banned words
+  if (RISK_PATTERNS && RISK_PATTERNS.banned) {
+    RISK_PATTERNS.banned.forEach(function(item) {
+      if (item.pattern.test(replyText)) {
+        risks.compliance = 'high';
+        risks.suggestions.push({ text: '🚫 ' + item.label + '：请立即删除相关表述。', severity: 'high' });
+      }
+    });
+  }
+
+  // 2. Compliance: high-risk words
+  if (RISK_PATTERNS && RISK_PATTERNS.highRisk) {
+    RISK_PATTERNS.highRisk.forEach(function(item) {
+      if (item.pattern.test(replyText)) {
+        if (risks.compliance !== 'high') risks.compliance = 'medium';
+        risks.suggestions.push({ text: '⚠️ ' + item.label + '：建议替换为合规表述。', severity: 'medium' });
+      }
+    });
+  }
+
+  // 3. Marketing detection
+  var dmCount = (replyText.match(/\bDM\b/gi) || []).length;
+  var mktWords = (replyText.match(/\b(service|paid|client|company|guarantee|discount|offer)\b/gi) || []).length;
+
+  if (mktWords >= 3 || dmCount >= 2) {
+    risks.marketing = 'high';
+    risks.suggestions.push({ text: '📢 营销感偏强：建议删除服务描述，只保留轻量钩子。', severity: 'high' });
+  } else if (mktWords >= 1 || dmCount >= 1) {
+    risks.marketing = 'medium';
+    risks.suggestions.push({ text: '💡 营销感适中：发布前请人工确认语气是否合适。', severity: 'medium' });
+  }
+
+  // 4. Reddit community risk
+  if (state.ctaLevel === 'medium' || state.ctaLevel === 'direct') {
+    risks.redditCommunity = 'medium';
+    risks.suggestions.push({
+      text: '📋 发布前建议检查 r/' + (state.subreddit || '该subreddit') + ' 是否允许 self-promotion 或 DM 引导。',
+      severity: 'medium'
+    });
+  }
+  if (state.ctaLevel === 'direct') {
+    risks.redditCommunity = 'high';
+    risks.suggestions.push({
+      text: '🔴 CTA 强度为 Direct，请确保用户明确在找服务，且 subreddit 规则允许。',
+      severity: 'high'
+    });
+  }
+
+  // 5. Structure check: reply must not start with CTA
+  var firstLine = replyText.split('\n')[0] || '';
+  if (/^\s*(DM me|Contact|Feel free to DM|I work with)/i.test(firstLine)) {
+    risks.marketing = 'high';
+    risks.suggestions.push({ text: '📢 回复不能以 CTA 或自我介绍开头。请确保先提供实质帮助。', severity: 'high' });
+  }
+
+  // 6. Compliance replacement suggestions
+  if (risks.compliance === 'high' || risks.compliance === 'medium') {
+    var foundReplacements = [];
+    Object.keys(RISK_REPLACEMENTS).forEach(function(key) {
+      if (replyText.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        foundReplacements.push('"' + key + '" → "' + RISK_REPLACEMENTS[key] + '"');
+      }
+    });
+    if (foundReplacements.length > 0) {
+      risks.suggestions.push({
+        text: '💡 建议替换：' + foundReplacements.join('；'),
+        severity: 'medium'
+      });
+    }
+  }
+
+  return risks;
+}
+
+// ============================================================
+//  RENDER RISK PANEL
+// ============================================================
+
+function renderRisks(risks) {
+  var panel = els.riskPanel;
+  if (!panel) return;
+
+  // Determine overall risk level
+  var overall = 'low';
+  if (risks.compliance === 'high' || risks.marketing === 'high' || risks.redditCommunity === 'high') {
+    overall = 'high';
+  } else if (risks.compliance === 'medium' || risks.marketing === 'medium' || risks.redditCommunity === 'medium') {
+    overall = 'medium';
+  }
+
+  // Update panel style
+  panel.classList.remove('risk-low', 'risk-medium', 'risk-high');
+  panel.classList.add('risk-' + overall);
+
+  // Build header
+  var icons = { low: '✅', medium: '⚠️', high: '🔴' };
+  var labels = { low: '风险检测通过', medium: '有中度风险提示', high: '有高风险项需处理' };
+
+  var html = '<div class="panel-title">' + icons[overall] + ' 风险提示：' + labels[overall] + '</div>';
+
+  // Build suggestion list
+  if (risks.suggestions && risks.suggestions.length > 0) {
+    html += '<div class="risk-body">';
+    risks.suggestions.forEach(function(s) {
+      html += '<div class="risk-suggestion severity-' + (s.severity || 'low') + '">' + escapeHtml(s.text) + '</div>';
+    });
+    html += '</div>';
+  } else {
+    html += '<div class="risk-body" style="color:var(--green);">未检测到明显风险，回复可以正常使用。</div>';
+  }
+
+  // Compliance replacement hints
+  if (risks.compliance === 'high') {
+    html += '<div class="risk-body" style="margin-top:8px;font-size:12px;color:var(--muted);">' +
+      '合规替代表达：manuscript diagnosis / academic writing coaching / language editing / journal submission strategy</div>';
+  }
+
+  panel.innerHTML = html;
+
+  // Also update CTA panel with current strategy info
+  renderCtaSuggestion();
+}
+
+function renderCtaSuggestion() {
+  var panel = els.ctaPanel;
+  if (!panel) return;
+
+  var info = {
+    none:   { label: '无 CTA',     desc: '回复仅提供帮助，不包含任何钩子。适合严肃学术讨论和规则严格社区。' },
+    soft:   { label: '轻钩子',     desc: '使用低压力的 checklist/template 邀请。默认策略，适合大多数场景。' },
+    medium: { label: '中度钩子',   desc: '引导用户私信关键词索要资源。仅在用户明确想获取资料时使用。' },
+    direct: { label: '直接钩子',   desc: '明确邀请咨询。⚠️ 仅适合用户明确在找服务的高意向场景。' },
+  }[state.ctaLevel] || { label: '未设置', desc: '' };
+
+  var template = PROBLEM_TEMPLATES[state.problemType];
+  var defaultCta = template ? template.logic.cta : '';
+
+  var html = '<div class="panel-title">💡 CTA 建议：当前 — ' + info.label + '</div>';
+  html += '<div class="risk-body" style="font-size:12px;">' + info.desc + '</div>';
+  if (defaultCta && state.ctaLevel !== 'none') {
+    html += '<div class="risk-body" style="margin-top:4px;font-size:11px;color:var(--muted);">默认钩子示例：' + escapeHtml(defaultCta.substring(0, 80)) + '</div>';
+  }
+  html += '<div class="risk-body" style="margin-top:4px;font-size:11px;color:var(--muted);">💡 同一账号最近10条评论中，带CTA的评论建议不超过2-3条。</div>';
+
+  panel.innerHTML = html;
+}
+
+// ============================================================
+//  EDITING TOOLS
+// ============================================================
+
+// -- refreshCurrentReply: Helper to update reply + risks + render --
+function refreshCurrentReply(newText) {
+  var version = state.activeVersion;
+  state.replies[version].text = newText;
+  state.replies[version].wordCount = newText.split(/\s+/).filter(Boolean).length;
+  state.risks = detectRisks(newText);
+  renderRisks(state.risks);
+  renderReply();
+}
+
+// -- Shorten: reduce by ~30%, keep core structure --
+function shortenReply() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可缩短。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var paragraphs = reply.text.split('\n\n').filter(Boolean);
+  // Keep first 2 (empathy + diagnosis), keep last if it looks like CTA
+  var core = paragraphs.slice(0, 2);
+  var last = paragraphs[paragraphs.length - 1];
+  var isCta = /DM|checklist|template|hope that helps|happy to share/i.test(last);
+
+  var kept = core.slice();
+  if (paragraphs.length > 3) {
+    // Compress middle paragraphs
+    var middle = paragraphs.slice(2, isCta ? -1 : paragraphs.length);
+    if (middle.length > 0) {
+      kept.push(middle[0].split('. ').slice(0, 2).join('. ') + '.');
+    }
+  }
+  if (isCta && last !== core[core.length - 1]) {
+    kept.push(last);
+  }
+
+  var shortened = kept.join('\n\n');
+  refreshCurrentReply(shortened);
+  console.log('Shortened: ' + reply.wordCount + ' → ' + state.replies[state.activeVersion].wordCount + ' words');
+}
+
+// -- Expand: add more detail, don't exceed version max --
+function expandReply() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可展开。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var version = state.activeVersion;
+  var maxWords = { short: 120, helpful: 220, deep: 400 }[version] || 220;
+  if (reply.wordCount >= maxWords) {
+    showError('当前版本已达到字数上限，无法继续展开。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  // Regenerate one level deeper
+  var deeperVersion = version === 'short' ? 'helpful' : 'deep';
+  var expanded = generateReply(deeperVersion);
+  // Truncate to current max
+  if (expanded.wordCount > maxWords) {
+    expanded.text = truncateToWordLimit(expanded.text, maxWords);
+    expanded.wordCount = expanded.text.split(/\s+/).filter(Boolean).length;
+  }
+  refreshCurrentReply(expanded.text);
+  console.log('Expanded: ' + reply.wordCount + ' → ' + state.replies[state.activeVersion].wordCount + ' words');
+}
+
+// -- Reduce Marketing: weaken or remove marketing language --
+function reduceMarketing() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可修改。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var text = reply.text;
+  // Replace DM me patterns
+  text = text.replace(/Feel free to DM me[^.]*\./gi, 'Happy to share more if useful.');
+  text = text.replace(/DM me[^.]*\./gi, 'Happy to share more if useful.');
+  text = text.replace(/\bDM\b/gi, 'share');
+  // Weaken service language
+  text = text.replace(/\bservice\b/gi, 'support');
+  text = text.replace(/\bpaid\b/gi, '');
+  text = text.replace(/\bclient\b/gi, 'researcher');
+  text = text.replace(/\bcompany\b/gi, 'team');
+  // Trim self-intro (keep only 1 sentence)
+  text = text.replace(/I work with[^.]*\.\s*I work with[^.]*\./gi, function(m) {
+    return m.split('. ')[0] + '.';
+  });
+  // Clean up double spaces
+  text = text.replace(/  +/g, ' ').replace(/\n\n\n+/g, '\n\n');
+
+  refreshCurrentReply(text);
+  console.log('Marketing reduced.');
+}
+
+// -- Enhance CTA: boost CTA level temporarily --
+function enhanceCTA() {
+  if (state.ctaLevel === 'direct') {
+    showError('CTA 强度已为 Direct，无法继续增强。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可修改。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  // Temporarily boost CTA for regeneration
+  var originalLevel = state.ctaLevel;
+  var boostMap = { none: 'soft', soft: 'medium', medium: 'direct' };
+  state.ctaLevel = boostMap[originalLevel] || originalLevel;
+
+  // Update UI
+  var ctaSegs = document.querySelectorAll('.cta-seg');
+  ctaSegs.forEach(function(s) {
+    s.classList.toggle('selected', s.getAttribute('data-cta') === state.ctaLevel);
+  });
+
+  // Regenerate current version
+  var newReply = generateReply(state.activeVersion);
+  refreshCurrentReply(newReply.text);
+
+  // Restore original CTA level in state but keep new text
+  state.ctaLevel = originalLevel;
+  ctaSegs.forEach(function(s) {
+    s.classList.toggle('selected', s.getAttribute('data-cta') === state.ctaLevel);
+  });
+
+  console.log('CTA enhanced to ' + boostMap[originalLevel] + ' for this reply.');
+}
+
+// -- Remove CTA: strip CTA from reply --
+function removeCTA() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可修改。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var text = reply.text;
+  // Remove last paragraph if it's a CTA
+  var paragraphs = text.split('\n\n');
+  if (paragraphs.length > 1) {
+    var last = paragraphs[paragraphs.length - 1];
+    if (/DM|checklist|template|hope that helps|happy to share|feel free/i.test(last)) {
+      paragraphs.pop();
+      paragraphs.push('Hope that helps.');
+    }
+  }
+  var cleaned = paragraphs.join('\n\n');
+
+  refreshCurrentReply(cleaned);
+  console.log('CTA removed.');
+}
+
+// -- Rewrite specific sections --
+function rewriteSection(section) {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可重写。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var template = PROBLEM_TEMPLATES[state.problemType];
+  if (!template || !template.logic) return;
+
+  var paragraphs = reply.text.split('\n\n');
+  var logic = template.logic;
+  var tone = state.tone;
+
+  switch (section) {
+    case 'empathy':
+      if (logic.empathy && paragraphs.length > 0) {
+        paragraphs[0] = applyTone(logic.empathy, tone);
+      }
+      break;
+    case 'diagnosis':
+      if (logic.diagnosis && paragraphs.length > 1) {
+        paragraphs[1] = applyTone(logic.diagnosis, tone);
+      }
+      break;
+    case 'example':
+      // Find and replace the "For example" paragraph
+      for (var i = 0; i < paragraphs.length; i++) {
+        if (/^For example/i.test(paragraphs[i])) {
+          paragraphs[i] = applyTone('For example, ' + logic.example, tone);
+          break;
+        }
+      }
+      break;
+    case 'cta':
+      // Replace last paragraph if it's CTA-like
+      var last = paragraphs[paragraphs.length - 1];
+      if (/DM|checklist|template|hope that helps|happy to share|feel free/i.test(last) && logic.cta) {
+        paragraphs[paragraphs.length - 1] = logic.cta;
+      }
+      break;
+  }
+
+  var newText = paragraphs.join('\n\n');
+  refreshCurrentReply(newText);
+  console.log('Rewrote section:', section);
+}
 
 // ===== Bottom Panel Toggle =====
 var openPanel = null;
@@ -1774,9 +2194,10 @@ document.addEventListener('keydown', function(e) {
 
 // ===== Initialize =====
 syncState();
-console.log('Reddit Reply Assistant — Batch 3 loaded.');
+renderCtaSuggestion();
+console.log('Reddit Reply Assistant — Batch 4 loaded.');
 console.log('State:', state);
-console.log('Reply generation engine ready. Type a Reddit comment and click Generate.');
+console.log('Reply generation + risk detection + editing tools ready.');
 </script>
 
 </body>
