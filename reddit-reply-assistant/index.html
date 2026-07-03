@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reddit 评论回复助手 - 学术运营工具台</title>
+  <style>
+    /* ===== CSS Custom Properties ===== */
+    :root {
+      --ink: #182033;
+      --muted: #667085;
+      --paper: #fbfaf7;
+      --line: #d9d6ce;
+      --blue: #1f4b73;
+      --red: #c94538;
+      --green: #2f735c;
+      --gold: #b47d25;
+      --gray: #f0eee8;
+      --control-bg: #f9f9f9;
+      --panel-border: #e5e5e5;
+      --card-hover-shadow: 0 4px 16px rgba(24, 32, 51, 0.12);
+      --card-selected-border: #1f4b73;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", sans-serif;
+      color: var(--ink);
+      background: #fff;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ===== App Layout ===== */
+    .app {
+      display: grid;
+      grid-template-rows: 56px 1fr 48px;
+      grid-template-columns: 400px 1fr;
+      height: 100vh;
+    }
+
+    /* ===== Top Nav ===== */
+    .topbar {
+      grid-column: 1 / -1;
+      grid-row: 1 / 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      z-index: 10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .topbar-left .icon {
+      font-size: 20px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .topbar-right a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .topbar-right a:hover {
+      color: var(--blue);
+    }
+
+    /* ===== Left Panel ===== */
+    .left-panel {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+      background: #fafaf9;
+      border-right: 1px solid var(--line);
+      padding: 24px;
+      overflow-y: auto;
+      max-height: calc(100vh - 56px);
+    }
+
+    .left-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .left-panel::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 3px;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .control-group textarea,
+    .control-group input[type="text"],
+    .control-group select {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .control-group textarea {
+      height: 160px;
+      padding: 12px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .control-group textarea:focus,
+    .control-group input[type="text"]:focus,
+    .control-group select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31, 75, 115, 0.1);
+    }
+
+    .control-group .help-text {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ===== Tone Cards ===== */
+    .tone-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .tone-card {
+      padding: 10px 12px;
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      user-select: none;
+    }
+
+    .tone-card:hover {
+      box-shadow: var(--card-hover-shadow);
+      border-color: #c0c0c0;
+    }
+
+    .tone-card.selected {
+      border-color: var(--card-selected-border);
+      background: rgba(31, 75, 115, 0.04);
+      box-shadow: 0 0 0 1px var(--card-selected-border);
+    }
+
+    .tone-card .tone-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .tone-card .tone-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ===== CTA Strength Segments ===== */
+    .cta-segments {
+      display: flex;
+      gap: 4px;
+    }
+
+    .cta-seg {
+      flex: 1;
+      padding: 8px 4px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      background: #f0eee8;
+      border: 1.5px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+      color: var(--muted);
+    }
+
+    .cta-seg:hover {
+      background: #e5e2da;
+    }
+
+    .cta-seg.selected {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .cta-seg .seg-label {
+      font-size: 11px;
+      opacity: 0.8;
+      margin-top: 2px;
+      display: block;
+      font-weight: 400;
+    }
+
+    .cta-seg.selected .seg-label {
+      opacity: 1;
+    }
+
+    /* ===== Generate Button ===== */
+    .btn-generate {
+      width: 100%;
+      height: 44px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-generate:hover {
+      background: #183d5a;
+      box-shadow: 0 2px 8px rgba(31, 75, 115, 0.25);
+    }
+
+    .btn-generate:active {
+      transform: scale(0.98);
+    }
+
+    .btn-generate:disabled {
+      background: #a0b8c8;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .generate-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .error-msg {
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 8px;
+      text-align: center;
+      min-height: 18px;
+    }
+
+    /* ===== Right Panel ===== */
+    .right-panel {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      background: #fff;
+      padding: 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .right-panel::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 3px;
+    }
+
+    /* ===== Version Tabs ===== */
+    .version-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--line);
+      margin-bottom: 24px;
+    }
+
+    .version-tab {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      position: relative;
+    }
+
+    .version-tab:hover {
+      color: var(--ink);
+    }
+
+    .version-tab.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+      font-weight: 600;
+    }
+
+    .version-tab .word-range {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .version-tab.active .word-range {
+      color: var(--blue);
+      opacity: 0.7;
+    }
+
+    /* ===== Reply Card ===== */
+    .reply-card {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 24px;
+      min-height: 200px;
+      position: relative;
+    }
+
+    .reply-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 180px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .reply-content {
+      display: none;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+      white-space: pre-wrap;
+    }
+
+    .reply-content.visible {
+      display: block;
+    }
+
+    .reply-placeholder.hidden {
+      display: none;
+    }
+
+    /* ===== Action Buttons ===== */
+    .action-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      height: 36px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #183d5a;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray);
+      border-color: #c0c0c0;
+    }
+
+    .btn-small {
+      height: 30px;
+      padding: 0 12px;
+      font-size: 12px;
+    }
+
+    /* ===== Risk & CTA Panels ===== */
+    .info-panel {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .risk-panel {
+      background: #fffdf5;
+      border: 1px solid #f0e8c0;
+    }
+
+    .cta-suggest-panel {
+      background: #f5fdf7;
+      border: 1px solid #d0ead5;
+    }
+
+    .info-panel .panel-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    /* ===== Bottom Toolbar ===== */
+    .bottom-bar {
+      grid-column: 1 / -1;
+      grid-row: 3 / 4;
+      background: #f5f5f4;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      z-index: 5;
+    }
+
+    .bottom-bar-btn {
+      height: 30px;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--muted);
+    }
+
+    .bottom-bar-btn:hover {
+      background: #fff;
+      color: var(--ink);
+      border-color: #b0b0b0;
+    }
+
+    /* ===== Expandable Panels ===== */
+    .expand-panel {
+      display: none;
+      position: absolute;
+      bottom: 48px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--line);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+      padding: 16px 24px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 4;
+    }
+
+    .expand-panel.open {
+      display: block;
+    }
+
+    /* ===== Loading / Generating State ===== */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .generating .reply-card {
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    /* ===== Tooltip ===== */
+    [data-tooltip] {
+      position: relative;
+    }
+
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 10px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 11px;
+      border-radius: 4px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ===== Top Bar ===== -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="icon">🧠</span>
+      <span>Reddit 评论回复助手</span>
+    </div>
+    <nav class="topbar-right">
+      <a href="../index.html">← 返回运营工具台</a>
+      <a href="../ins_reviewer_carousel/">📱 Instagram 图</a>
+      <a href="../index.html">🎨 封面生成器</a>
+    </nav>
+  </header>
+
+  <!-- ===== Left Panel ===== -->
+  <aside class="left-panel" id="leftPanel">
+    <!-- a) Source Text -->
+    <div class="control-group">
+      <label for="sourceText">Reddit 原评论或帖子内容 <span style="color:var(--red)">*</span></label>
+      <textarea id="sourceText" placeholder="My paper was rejected because the reviewer said it lacks novelty. I don't know how to fix that."></textarea>
+    </div>
+
+    <!-- b) Post Title -->
+    <div class="control-group">
+      <label for="postTitle">帖子标题</label>
+      <input type="text" id="postTitle" placeholder="Paper rejected for lack of novelty">
+      <span class="help-text">选填，用于生成更精准的回复</span>
+    </div>
+
+    <!-- c) Subreddit -->
+    <div class="control-group">
+      <label for="subreddit">Subreddit</label>
+      <input type="text" id="subreddit" placeholder="r/PhD">
+      <span class="help-text">选填，用于判断社区规则和语气</span>
+    </div>
+
+    <!-- d) Problem Type -->
+    <div class="control-group">
+      <label for="problemType">
+        问题类型
+        <span class="info-icon" id="templateInfoIcon" style="cursor:help;font-size:13px;" title="选择问题类型后，系统将使用预设的回复逻辑">ℹ️</span>
+      </label>
+      <select id="problemType">
+        <option value="lack_of_novelty" selected>Rejected for Lack of Novelty</option>
+        <option value="harsh_reviewer">Harsh Reviewer Response</option>
+        <option value="writing_unclear">Advisor Says Writing Is Unclear</option>
+        <option value="english_editing">English Editing Recommendation</option>
+        <option value="journal_selection">Journal Selection</option>
+        <option value="revise_resubmit_anxiety">Revise and Resubmit Anxiety</option>
+        <option value="ai_writing_concern">AI Writing / AI Polishing Concern</option>
+        <option value="thesis_structure">Dissertation / Thesis Structure Confusion</option>
+      </select>
+    </div>
+
+    <!-- e) User Type -->
+    <div class="control-group">
+      <label for="userType">用户身份</label>
+      <select id="userType">
+        <option value="Unknown" selected>Unknown</option>
+        <option value="Master">Master</option>
+        <option value="PhD">PhD</option>
+        <option value="Postdoc">Postdoc</option>
+        <option value="Faculty">Faculty</option>
+      </select>
+    </div>
+
+    <!-- f) Field -->
+    <div class="control-group">
+      <label for="field">学科领域</label>
+      <select id="field">
+        <option value="General" selected>General</option>
+        <option value="CS">CS</option>
+        <option value="Medical">Medical</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Social Science">Social Science</option>
+        <option value="Business">Business</option>
+      </select>
+    </div>
+
+    <!-- g) Tone -->
+    <div class="control-group">
+      <label>回复语气</label>
+      <div class="tone-cards" id="toneCards">
+        <div class="tone-card selected" data-tone="warm">
+          <div class="tone-name">🤗 Warm</div>
+          <div class="tone-desc">更共情，适合焦虑型用户</div>
+        </div>
+        <div class="tone-card" data-tone="direct">
+          <div class="tone-name">⚡ Direct</div>
+          <div class="tone-desc">简洁清楚，适合技术类问题</div>
+        </div>
+        <div class="tone-card" data-tone="expert">
+          <div class="tone-name">🎓 Expert</div>
+          <div class="tone-desc">专业结构化，适合学术社区</div>
+        </div>
+        <div class="tone-card" data-tone="casual">
+          <div class="tone-name">💬 Casual</div>
+          <div class="tone-desc">像普通 Reddit 用户，不太正式</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- h) Reply Goal -->
+    <div class="control-group">
+      <label for="replyGoal">回复目标</label>
+      <select id="replyGoal">
+        <option value="build_trust" selected>建立专业度</option>
+        <option value="help">帮忙</option>
+        <option value="lead_dm">引导私信</option>
+        <option value="collect_pain_points">收集痛点</option>
+      </select>
+    </div>
+
+    <!-- i) CTA Strength -->
+    <div class="control-group">
+      <label>CTA 强度</label>
+      <div class="cta-segments" id="ctaSegments">
+        <div class="cta-seg" data-cta="none">
+          None
+          <span class="seg-label">纯帮助，无钩子</span>
+        </div>
+        <div class="cta-seg selected" data-cta="soft">
+          Soft
+          <span class="seg-label">轻钩子，低压邀请</span>
+        </div>
+        <div class="cta-seg" data-cta="medium">
+          Medium
+          <span class="seg-label">引导私信关键词</span>
+        </div>
+        <div class="cta-seg" data-cta="direct">
+          Direct
+          <span class="seg-label">明确邀请咨询</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- j) Generate Button -->
+    <div class="control-group">
+      <button class="btn-generate" id="btnGenerate" onclick="handleGenerate()">
+        ✨ 生成回复草稿
+      </button>
+      <div class="generate-hint">工具生成草稿后，请人工审核再发布到 Reddit。</div>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+  </aside>
+
+  <!-- ===== Right Panel ===== -->
+  <main class="right-panel" id="rightPanel">
+    <!-- Version Tabs -->
+    <div class="version-tabs" id="versionTabs">
+      <button class="version-tab" data-version="short" onclick="switchVersion('short')">
+        Short
+        <span class="word-range">80-120 words</span>
+      </button>
+      <button class="version-tab active" data-version="helpful" onclick="switchVersion('helpful')">
+        Helpful
+        <span class="word-range">150-220 words</span>
+      </button>
+      <button class="version-tab" data-version="deep" onclick="switchVersion('deep')">
+        Deep
+        <span class="word-range">250-400 words</span>
+      </button>
+    </div>
+
+    <!-- Reply Card -->
+    <div class="reply-card" id="replyCard">
+      <div class="reply-placeholder" id="replyPlaceholder">
+        在左侧粘贴 Reddit 评论，选择问题类型和语气，<br>然后点击"生成回复草稿"。<br><br>生成的回复将显示在这里。
+      </div>
+      <div class="reply-content" id="replyContent"></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-row">
+      <button class="btn btn-primary" data-tooltip="复制当前回复到剪贴板" onclick="copyReply()">📋 复制回复</button>
+      <button class="btn btn-secondary" data-tooltip="重新生成三个版本的回复" onclick="regenerate()">🔄 重新生成</button>
+      <button class="btn btn-secondary" data-tooltip="缩短当前回复约 30%" onclick="shortenReply()">📏 缩短</button>
+      <button class="btn btn-secondary" data-tooltip="展开当前回复约 40%" onclick="expandReply()">📝 展开</button>
+      <button class="btn btn-secondary" data-tooltip="降低回复的营销感" onclick="reduceMarketing()">🧹 降低营销感</button>
+      <button class="btn btn-secondary" data-tooltip="临时增强 CTA 强度" onclick="enhanceCTA()">📢 增强 CTA</button>
+      <button class="btn btn-secondary" data-tooltip="移除回复中的 CTA 钩子" onclick="removeCTA()">🚫 移除 CTA</button>
+    </div>
+
+    <!-- Risk Panel -->
+    <div class="info-panel risk-panel" id="riskPanel">
+      <div class="panel-title">⚠️ 风险提示</div>
+      <div>生成回复后，这里会显示营销风险、合规风险和社区风险提示。</div>
+    </div>
+
+    <!-- CTA Suggestion Panel -->
+    <div class="info-panel cta-suggest-panel" id="ctaPanel">
+      <div class="panel-title">💡 CTA 建议</div>
+      <div>当前建议的钩子策略和替代方案。</div>
+    </div>
+  </main>
+
+  <!-- ===== Bottom Section Container ===== -->
+  <div class="bottom-section" style="grid-column:1/-1;grid-row:3/4;position:relative;z-index:5;">
+    <!-- Expandable Bottom Panels -->
+    <div class="expand-panel" id="panelCtaLibrary">
+      <div class="panel-title" style="margin-bottom:8px;">📚 CTA 钩子库 — 即将在下一批次实现</div>
+    </div>
+    <div class="expand-panel" id="panelRiskWords">
+      <div class="panel-title" style="margin-bottom:8px;">⚠️ 风险词提示 — 即将在下一批次实现</div>
+    </div>
+    <div class="expand-panel" id="panelUsageGuide">
+      <div class="panel-title" style="margin-bottom:8px;">📖 使用说明 — 即将在下一批次实现</div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar" id="bottomBar">
+      <button class="bottom-bar-btn" onclick="togglePanel('ctaLibrary')">📚 CTA 钩子库</button>
+      <button class="bottom-bar-btn" onclick="togglePanel('riskWords')">⚠️ 风险词提示</button>
+      <button class="bottom-bar-btn" onclick="togglePanel('usageGuide')">📖 使用说明</button>
+      <span style="flex:1"></span>
+      <span style="font-size:11px;color:var(--muted);">⌨️ 快捷键: Ctrl+Enter 生成 | Ctrl+1/2/3 切换版本</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== State Management =====
+const state = {
+  // Input
+  sourceText: '',
+  postTitle: '',
+  subreddit: '',
+  problemType: 'lack_of_novelty',
+  userType: 'Unknown',
+  field: 'General',
+  tone: 'warm',
+  replyGoal: 'build_trust',
+  ctaLevel: 'soft',
+
+  // Output
+  replies: {
+    short: { text: '', wordCount: 0 },
+    helpful: { text: '', wordCount: 0 },
+    deep: { text: '', wordCount: 0 },
+  },
+  activeVersion: 'helpful',
+
+  // Risk
+  risks: {
+    marketing: 'low',
+    compliance: 'low',
+    redditCommunity: 'low',
+    suggestions: [],
+  },
+
+  // Status
+  isGenerating: false,
+  generationError: null,
+};
+
+// ===== DOM References =====
+const $ = (id) => document.getElementById(id);
+
+const els = {
+  sourceText: $('sourceText'),
+  postTitle: $('postTitle'),
+  subreddit: $('subreddit'),
+  problemType: $('problemType'),
+  userType: $('userType'),
+  field: $('field'),
+  replyGoal: $('replyGoal'),
+  btnGenerate: $('btnGenerate'),
+  errorMsg: $('errorMsg'),
+  replyPlaceholder: $('replyPlaceholder'),
+  replyContent: $('replyContent'),
+  replyCard: $('replyCard'),
+  riskPanel: $('riskPanel'),
+  ctaPanel: $('ctaPanel'),
+};
+
+// ===== Update Preview =====
+function updatePreview() {
+  console.log('State updated:', JSON.parse(JSON.stringify(state)));
+}
+
+// ===== Sync state from DOM =====
+function syncState() {
+  state.sourceText = els.sourceText.value;
+  state.postTitle = els.postTitle.value;
+  state.subreddit = els.subreddit.value;
+  state.problemType = els.problemType.value;
+  state.userType = els.userType.value;
+  state.field = els.field.value;
+  state.replyGoal = els.replyGoal.value;
+  updatePreview();
+}
+
+// ===== Event Bindings: Text inputs =====
+['sourceText', 'postTitle', 'subreddit'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('input', function() {
+      state[id] = el.value;
+      updatePreview();
+    });
+  }
+});
+
+// ===== Event Bindings: Selects =====
+['problemType', 'userType', 'field', 'replyGoal'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('change', function() {
+      state[id] = el.value;
+      updatePreview();
+    });
+  }
+});
+
+// ===== Event Bindings: Tone Cards =====
+var toneCards = document.querySelectorAll('.tone-card');
+toneCards.forEach(function(card) {
+  card.addEventListener('click', function() {
+    toneCards.forEach(function(c) { c.classList.remove('selected'); });
+    card.classList.add('selected');
+    state.tone = card.getAttribute('data-tone');
+    updatePreview();
+  });
+});
+
+// ===== Event Bindings: CTA Segments =====
+var ctaSegs = document.querySelectorAll('.cta-seg');
+ctaSegs.forEach(function(seg) {
+  seg.addEventListener('click', function() {
+    ctaSegs.forEach(function(s) { s.classList.remove('selected'); });
+    seg.classList.add('selected');
+    state.ctaLevel = seg.getAttribute('data-cta');
+    updatePreview();
+  });
+});
+
+// ===== Version Switching =====
+function switchVersion(version) {
+  state.activeVersion = version;
+  var tabs = document.querySelectorAll('.version-tab');
+  tabs.forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-version') === version);
+  });
+  renderReply();
+}
+
+// ===== Render Reply =====
+function renderReply() {
+  var reply = state.replies[state.activeVersion];
+  if (reply && reply.text) {
+    els.replyPlaceholder.classList.add('hidden');
+    els.replyContent.classList.add('visible');
+    els.replyContent.textContent = reply.text;
+
+    // Update word count in tabs
+    var tabs = document.querySelectorAll('.version-tab');
+    tabs.forEach(function(t) {
+      var v = t.getAttribute('data-version');
+      var r = state.replies[v];
+      if (r && r.wordCount) {
+        var rangeEl = t.querySelector('.word-range');
+        if (rangeEl) {
+          rangeEl.textContent = r.wordCount + ' words';
+        }
+      }
+    });
+  } else {
+    els.replyPlaceholder.classList.remove('hidden');
+    els.replyContent.classList.remove('visible');
+    els.replyContent.textContent = '';
+  }
+}
+
+// ===== Handle Generate (placeholder for now) =====
+function handleGenerate() {
+  if (state.isGenerating) return;
+
+  var text = (els.sourceText.value || '').trim();
+  if (!text) {
+    els.errorMsg.textContent = '请先粘贴 Reddit 评论或帖子内容。';
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+    return;
+  }
+
+  els.errorMsg.textContent = '';
+  console.log('Generate clicked — generation logic coming in Batch 3');
+  showError('生成功能将在第三批次实现。当前可验证所有控件与 state 的联动。');
+  setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+}
+
+function showError(msg) {
+  els.errorMsg.textContent = msg;
+}
+
+// ===== Placeholder action buttons =====
+function copyReply() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可复制。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+  // Full implementation in Batch 3
+  console.log('Copy — full implementation in Batch 3');
+}
+
+function regenerate() { console.log('Regenerate — Batch 3'); }
+function shortenReply() { console.log('Shorten — Batch 4'); }
+function expandReply() { console.log('Expand — Batch 4'); }
+function reduceMarketing() { console.log('Reduce marketing — Batch 4'); }
+function enhanceCTA() { console.log('Enhance CTA — Batch 4'); }
+function removeCTA() { console.log('Remove CTA — Batch 4'); }
+
+// ===== Bottom Panel Toggle =====
+var openPanel = null;
+function togglePanel(name) {
+  var panel = document.getElementById('panel' + name.charAt(0).toUpperCase() + name.slice(1));
+  if (!panel) return;
+
+  if (openPanel && openPanel !== panel) {
+    openPanel.classList.remove('open');
+  }
+
+  panel.classList.toggle('open');
+  openPanel = panel.classList.contains('open') ? panel : null;
+}
+
+// ===== Keyboard Shortcuts =====
+document.addEventListener('keydown', function(e) {
+  // Ctrl/Cmd + Enter: Generate
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault();
+    handleGenerate();
+  }
+  // Ctrl/Cmd + 1/2/3: Switch version
+  if ((e.ctrlKey || e.metaKey) && e.key === '1') { e.preventDefault(); switchVersion('short'); }
+  if ((e.ctrlKey || e.metaKey) && e.key === '2') { e.preventDefault(); switchVersion('helpful'); }
+  if ((e.ctrlKey || e.metaKey) && e.key === '3') { e.preventDefault(); switchVersion('deep'); }
+  // Esc: Close panels
+  if (e.key === 'Escape') {
+    if (openPanel) {
+      openPanel.classList.remove('open');
+      openPanel = null;
+    }
+  }
+});
+
+// ===== Initialize =====
+syncState();
+console.log('Reddit Reply Assistant — Batch 1 loaded.');
+console.log('State:', state);
+console.log('All controls bound. Generation logic coming in Batch 3.');
+</script>
+
+</body>
+</html>
