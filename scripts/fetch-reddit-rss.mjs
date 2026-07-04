@@ -36,6 +36,16 @@ async function fetchWithTimeout(url, opts = {}) {
   }
 }
 
+/** Sanitize a string for safe JSON serialization */
+function sanitize(str) {
+  if (!str) return '';
+  return str
+    .replace(/\0/g, '')                          // null bytes
+    .replace(/[\uD800-\uDFFF]/g, '')             // lone surrogates
+    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '') // control chars except \t \n \r
+    .trim();
+}
+
 /** Strip HTML tags, decode entities roughly */
 function stripHtml(html) {
   if (!html) return '';
@@ -131,7 +141,7 @@ function parseEntry(raw, type, source) {
   // --- title ---
   let title = firstMatch(/<title[^>]*>([\s\S]*?)<\/title>/i, raw);
   // strip CDATA
-  title = title.replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, '');
+  title = sanitize(title.replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, ''));
 
   // --- content ---
   let content = '';
@@ -144,7 +154,7 @@ function parseEntry(raw, type, source) {
     if (!content) content = firstMatch(/<description>([\s\S]*?)<\/description>/i, raw);
   }
   content = content.replace(/^<!\[CDATA\[/, '').replace(/\]\]>$/, '');
-  content = stripHtml(content);
+  content = sanitize(stripHtml(content));
 
   // --- author ---
   let author = '';
