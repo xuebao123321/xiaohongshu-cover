@@ -14,6 +14,7 @@ await cp(join(root, 'lib'), join(publicDir, 'lib'), { recursive: true });
 await cp(join(root, 'ins_reviewer_carousel'), join(publicDir, 'ins_reviewer_carousel'), { recursive: true });
 await cp(join(root, 'reddit-reply-assistant'), join(publicDir, 'reddit-reply-assistant'), { recursive: true });
 await cp(join(root, 'reddit-radar'), join(publicDir, 'reddit-radar'), { recursive: true });
+await cp(join(root, 'reddit-post-writer'), join(publicDir, 'reddit-post-writer'), { recursive: true });
 await cp(join(root, 'data'), join(publicDir, 'data'), { recursive: true });
 
 console.log('Synced static assets to public/');
