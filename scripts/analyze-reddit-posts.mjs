@@ -223,7 +223,16 @@ async function main() {
     analyses = [];
   }
 
-  const analyzedIds = new Set(analyses.map((a) => a.postId).filter(Boolean));
+  // Only skip posts that have been successfully analyzed (analyzedAt is set).
+  // Posts with analysisError will be retried.
+  const analyzedIds = new Set(
+    analyses
+      .filter((a) => a.analyzedAt)
+      .map((a) => a.postId)
+      .filter(Boolean)
+  );
+  // Remove failed entries from analyses so they can be re-attempted
+  analyses = analyses.filter((a) => a.analyzedAt);
 
   // 3. Read sources for priority map
   let sources;
