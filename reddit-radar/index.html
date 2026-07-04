@@ -369,6 +369,19 @@ a:hover{text-decoration:underline}
           <tbody id="sourceTableBody"></tbody>
         </table>
       </div>
+      <h3 style="margin-top:20px">🔑 关键词粗筛</h3>
+      <div class="config-hint">
+        帖子标题或正文必须包含至少一个关键词才会送入 AI 分析。
+        不命中的帖子会被自动标记为「已跳过」，不消耗 API 额度。每行一个关键词。
+      </div>
+      <textarea id="keywordsTextarea" rows="10" style="
+        width:100%;padding:10px 12px;border:1.5px solid #e0dcd6;border-radius:8px;
+        font-size:12px;font-family:inherit;outline:none;resize:vertical;background:#faf9f7;
+        line-height:1.6;
+      " placeholder="每行一个关键词..."></textarea>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn-config btn-save-cfg" onclick="saveKeywords()">💾 保存关键词</button>
+      </div>
       <div class="status-msg" id="configMsg"></div>
     </div>
   </div>
@@ -836,6 +849,39 @@ function initConfigPanel() {
   var area = document.getElementById('configArea');
   if (area) area.style.display = '';
   loadSourcesToTable();
+  loadKeywords();
+}
+
+function loadKeywords() {
+  fetch('../data/reddit/keywords.json')
+    .then(function(r) { return r.json(); })
+    .then(function(kw) {
+      var ta = document.getElementById('keywordsTextarea');
+      if (ta && Array.isArray(kw)) ta.value = kw.join('\n');
+    })
+    .catch(function() {});
+}
+
+async function saveKeywords() {
+  var auth = await (window.__radarGetAuth ? window.__radarGetAuth() : null);
+  if (!auth) { showConfigMsg('请先登录', 'error'); return; }
+
+  var ta = document.getElementById('keywordsTextarea');
+  if (!ta) return;
+  var keywords = ta.value.split('\n').map(function(s) { return s.trim(); }).filter(Boolean);
+
+  showConfigMsg('保存中...', 'info');
+  try {
+    var supabase = window.__radarSupabase;
+    if (!supabase) throw new Error('Supabase 未初始化');
+    var res = await supabase.functions.invoke('radar-manage', {
+      body: { action: 'save_keywords', keywords: keywords }
+    });
+    if (res.error || !res.data || !res.data.ok) throw new Error((res.data && res.data.message) || '保存失败');
+    showConfigMsg('✅ ' + res.data.message, 'success');
+  } catch(e) {
+    showConfigMsg('❌ ' + (e.message || '保存失败'), 'error');
+  }
 }
 
 function toggleConfigPanel() {

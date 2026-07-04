@@ -53,6 +53,8 @@ Deno.serve(async (req: Request) => {
         return await handleTriggerFetch();
       case 'save_sources':
         return await handleSaveSources(body);
+      case 'save_keywords':
+        return await handleSaveKeywords(body);
       default:
         return corsResponse({ ok: false, message: `未知操作: ${action}` }, 400);
     }
@@ -138,6 +140,48 @@ async function handleSaveSources(body: any) {
 
   console.log(`[radar-manage] sources.json updated (${sources.length} sources)`);
   return corsResponse({ ok: true, message: `配置已保存（${sources.length} 个源），提交后自动生效` });
+}
+
+// ── save_keywords ──
+async function handleSaveKeywords(body: any) {
+  const keywords = body.keywords;
+  if (!Array.isArray(keywords)) {
+    return corsResponse({ ok: false, message: 'keywords 必须是数组' }, 400);
+  }
+
+  const newContent = JSON.stringify(keywords, null, 2);
+  const keywordsPath = 'data/reddit/keywords.json';
+
+  // 1. Get current file SHA
+  const getUrl = `${GITHUB_API}/repos/${GITHUB_REPO}/contents/${keywordsPath}`;
+  const getRes = await fetch(getUrl, { headers: gitHeaders() });
+  let sha = '';
+  if (getRes.ok) {
+    const fileData: any = await getRes.json();
+    sha = fileData.sha || '';
+  }
+
+  // 2. Commit updated file
+  const putBody: any = {
+    message: `Update Reddit Radar keywords [skip ci]`,
+    content: btoa(unescape(encodeURIComponent(newContent))),
+    branch: 'main',
+  };
+  if (sha) putBody.sha = sha;
+
+  const putRes = await fetch(getUrl, {
+    method: 'PUT',
+    headers: gitHeaders(),
+    body: JSON.stringify(putBody),
+  });
+
+  if (!putRes.ok) {
+    const err = await putRes.text();
+    throw new Error(`保存关键词失败: ${putRes.status} ${err.slice(0, 200)}`);
+  }
+
+  console.log(`[radar-manage] keywords.json updated (${keywords.length} keywords)`);
+  return corsResponse({ ok: true, message: `关键词已保存（${keywords.length} 个），下次分析生效` });
 }
 
 // ── helpers ──

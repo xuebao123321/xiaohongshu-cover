@@ -9,6 +9,7 @@ const DATA_DIR = join(root, 'data', 'reddit');
 const SOURCES_PATH = join(DATA_DIR, 'sources.json');
 const POSTS_PATH = join(DATA_DIR, 'posts.json');
 const ANALYSIS_PATH = join(DATA_DIR, 'analysis.json');
+const KEYWORDS_PATH = join(DATA_DIR, 'keywords.json');
 const TMP_ANALYSIS_PATH = join(DATA_DIR, '.tmp_analysis.json');
 
 const AI_API_KEY = process.env.AI_API_KEY || process.env.OPENAI_API_KEY || '';
@@ -18,6 +19,16 @@ const MAX_TO_ANALYZE = 30;
 const MAX_CONTENT_LENGTH = 4000;
 
 // ── helpers ──
+
+/** Check if post title+content matches at least one keyword (case-insensitive) */
+function matchesKeywords(post, keywords) {
+  if (!keywords || keywords.length === 0) return true; // no keywords = allow all
+  const haystack = ((post.title || '') + ' ' + (post.content || '')).toLowerCase();
+  for (const kw of keywords) {
+    if (kw && haystack.includes(kw.toLowerCase())) return true;
+  }
+  return false;
+}
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -243,30 +254,78 @@ async function main() {
   }
   const priorityMap = buildPriorityMap(sources);
 
-  // 4. Find unanalyzed posts, sort by source priority desc
+  // 4. Read keywords for pre-filter
+  let keywords = [];
+  try {
+    keywords = JSON.parse(await readFile(KEYWORDS_PATH, 'utf-8'));
+  } catch {
+    keywords = [];
+  }
+  console.log(`[analyze-reddit-posts] Loaded ${keywords.length} pre-filter keywords`);
+
+  // 5. Find unanalyzed posts, sort by source priority desc
   const unanalyzed = posts
     .filter((p) => p.id && !analyzedIds.has(p.id))
     .sort((a, b) => {
       const pa = priorityMap[a.sourceId] || 1;
       const pb = priorityMap[b.sourceId] || 1;
       return pb - pa;
-    })
-    .slice(0, MAX_TO_ANALYZE);
+    });
 
-  if (unanalyzed.length === 0) {
-    console.log('[analyze-reddit-posts] All posts already analyzed. Done.');
+  // 6. Pre-filter: split into keyword-matching (→ AI) and non-matching (→ skipped)
+  const candidates = [];
+  const skippedPosts = [];
+  for (const p of unanalyzed) {
+    if (matchesKeywords(p, keywords)) {
+      candidates.push(p);
+    } else {
+      skippedPosts.push(p);
+    }
+  }
+
+  // Mark skipped posts in analysis.json so they don't get re-checked
+  for (const sp of skippedPosts) {
+    analyses.push({
+      postId: sp.id,
+      postType: 'irrelevant',
+      painPoint: '',
+      problemType: 'irrelevant',
+      urgencyScore: 1,
+      serviceFitScore: 1,
+      replyWorthinessScore: 1,
+      riskScore: 5,
+      totalScore: 0,
+      recommendedAction: 'ignore',
+      suggestedReplyAngle: '',
+      ctaLevel: 'none',
+      summary: '',
+      xiaohongshuTopic: '',
+      instagramTopic: '',
+      complianceNotes: '',
+      analyzedAt: new Date().toISOString(),
+      skipped: true,
+    });
+  }
+
+  // Limit AI analysis to MAX_TO_ANALYZE, highest priority first
+  const toAnalyze = candidates.slice(0, MAX_TO_ANALYZE);
+
+  console.log(`[analyze-reddit-posts] ${unanalyzed.length} unanalyzed → ${candidates.length} keyword match → ${toAnalyze.length} queued for AI (${skippedPosts.length} skipped, ${analyzedIds.size} already done)`);
+
+  if (toAnalyze.length === 0) {
+    // Still write skipped posts
+    await atomicWrite(TMP_ANALYSIS_PATH, ANALYSIS_PATH, analyses);
+    console.log('[analyze-reddit-posts] No posts matched keywords. Done.');
     return;
   }
 
-  console.log(`[analyze-reddit-posts] ${unanalyzed.length} posts to analyze (${posts.length} total, ${analyzedIds.size} already analyzed)`);
-
-  // 5. Analyze each post
+  // 7. Analyze each post
   let successCount = 0;
   let failCount = 0;
 
-  for (let i = 0; i < unanalyzed.length; i++) {
-    const post = unanalyzed[i];
-    console.log(`[analyze-reddit-posts] [${i + 1}/${unanalyzed.length}] Analyzing: ${post.id} (${post.title?.slice(0, 50)}...)`);
+  for (let i = 0; i < toAnalyze.length; i++) {
+    const post = toAnalyze[i];
+    console.log(`[analyze-reddit-posts] [${i + 1}/${toAnalyze.length}] Analyzing: ${post.id} (${post.title?.slice(0, 50)}...)`);
 
     try {
       const result = await analyzePost(post, priorityMap);
@@ -300,7 +359,7 @@ async function main() {
     }
 
     // Small delay between API calls to avoid rate limiting
-    if (i < unanalyzed.length - 1) {
+    if (i < toAnalyze.length - 1) {
       await sleep(500);
     }
   }
