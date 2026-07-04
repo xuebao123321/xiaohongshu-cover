@@ -12,9 +12,9 @@ const ANALYSIS_PATH = join(DATA_DIR, 'analysis.json');
 const KEYWORDS_PATH = join(DATA_DIR, 'keywords.json');
 const TMP_ANALYSIS_PATH = join(DATA_DIR, '.tmp_analysis.json');
 
-const AI_API_KEY = process.env.AI_API_KEY || process.env.OPENAI_API_KEY || '';
-const AI_BASE_URL = (process.env.AI_BASE_URL || 'https://api.openai.com/v1').replace(/\/+$/, '');
-const AI_MODEL = process.env.AI_MODEL || 'gpt-4o-mini';
+const AI_API_KEY = (process.env.AI_API_KEY || process.env.OPENAI_API_KEY || '').trim();
+const AI_BASE_URL = (process.env.AI_BASE_URL || 'https://api.openai.com/v1').trim().replace(/\/+$/, '');
+const AI_MODEL = (process.env.AI_MODEL || 'gpt-4o-mini').trim();
 const MAX_TO_ANALYZE = 30;
 const MAX_CONTENT_LENGTH = 4000;
 
