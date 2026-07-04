@@ -188,6 +188,69 @@ a:hover{text-decoration:underline}
   .filter-bar .filter-divider{display:none}
   .filter-bar .filter-count{margin-left:0}
 }
+
+/* ═══════════ 配置面板 ═══════════ */
+.config-toggle{
+  display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;
+  color:#1f4b73;cursor:pointer;user-select:none;padding:4px 10px;
+  border:1.5px solid #e0dcd6;border-radius:6px;background:#fff;transition:all .15s;
+}
+.config-toggle:hover{background:#eef4f8;border-color:#1f4b73}
+.config-panel{
+  display:none;background:#fff;border:1.5px solid #e8e4df;border-radius:10px;
+  padding:16px;margin-bottom:14px;
+}
+.config-panel.show{display:block}
+.config-panel h3{font-size:15px;font-weight:900;margin-bottom:8px;color:#1a1a1a}
+.config-panel .config-hint{font-size:11px;color:#8a8a8a;margin-bottom:12px;line-height:1.6}
+.config-panel .btn-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.config-panel .btn-config{
+  font-size:12px;padding:8px 18px;border-radius:8px;border:1.5px solid transparent;
+  font-weight:700;cursor:pointer;transition:all .15s;
+}
+.btn-config.btn-save-cfg{background:#1a1a1a;color:#fff}
+.btn-config.btn-save-cfg:hover{background:#333}
+.btn-config.btn-fetch-now{background:#ED0108;color:#fff}
+.btn-config.btn-fetch-now:hover{background:#c70106}
+.btn-config.btn-add-source{background:#fff;border-color:#2d8a56;color:#2d8a56}
+.btn-config.btn-add-source:hover{background:#e8f5e9}
+.btn-config:disabled{opacity:.45;pointer-events:none}
+.source-table{width:100%;border-collapse:collapse;font-size:12px}
+.source-table th{
+  text-align:left;padding:8px 6px;font-size:10px;font-weight:800;color:#8a8a8a;
+  text-transform:uppercase;letter-spacing:.5px;border-bottom:1.5px solid #e8e4df;
+}
+.source-table td{padding:6px;border-bottom:1px solid #f0eeea;vertical-align:middle}
+.source-table input[type="text"],
+.source-table input[type="number"],
+.source-table select{
+  width:100%;padding:5px 8px;border:1.5px solid #e0dcd6;border-radius:5px;
+  font-size:12px;outline:none;background:#faf9f7;font-family:inherit;
+}
+.source-table input:focus,
+.source-table select:focus{border-color:#5a8cb8;background:#fff}
+.source-table input[type="number"]{width:52px;text-align:center}
+.source-table input[type="checkbox"]{width:16px;height:16px;cursor:pointer}
+.source-table .src-id{font-size:10px;color:#8a8a8a;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.source-table .btn-remove{
+  font-size:11px;padding:3px 8px;border-radius:4px;border:1px solid #e0dcd6;
+  background:#fff;color:#ED0108;cursor:pointer;
+}
+.source-table .btn-remove:hover{background:#fff5f5}
+.login-prompt{
+  text-align:center;padding:40px 20px;background:#fff;border:1.5px solid #e8e4df;
+  border-radius:10px;margin-bottom:14px;
+}
+.login-prompt .login-icon{font-size:40px;margin-bottom:8px}
+.login-prompt p{font-size:13px;color:#8a8a8a;margin-bottom:6px}
+.status-msg{font-size:12px;padding:8px 12px;border-radius:6px;margin-top:8px;display:none}
+.status-msg.success{display:block;background:#e8f5e9;color:#2d8a56}
+.status-msg.error{display:block;background:#ffe8e8;color:#ED0108}
+.status-msg.info{display:block;background:#e8f2fa;color:#1f4b73}
+@media(max-width:768px){
+  .source-table{font-size:10px}
+  .source-table th,.source-table td{padding:4px 3px}
+}
 </style>
 </head>
 <body>
@@ -269,6 +332,45 @@ a:hover{text-decoration:underline}
       <option value="replyWorth">按回复价值↓</option>
     </select>
     <span class="filter-count" id="filterCount"></span>
+  </div>
+
+  <!-- ═══════════ 配置管理（仅管理员可见） ═══════════ -->
+  <div id="configArea" style="display:none">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+      <span class="config-toggle" id="configToggle" onclick="toggleConfigPanel()">⚙️ 配置管理 ▾</span>
+      <span class="config-toggle" onclick="triggerFetch()" id="btnFetchNow" style="color:#ED0108;border-color:#ED0108">🚀 立即抓取</span>
+      <span id="configStatus" style="font-size:11px;color:#8a8a8a"></span>
+    </div>
+    <div class="config-panel" id="configPanel">
+      <h3>⚙️ RSS 源配置</h3>
+      <div class="config-hint">
+        修改后点「💾 保存配置」提交到仓库，下次定时抓取自动生效。
+        立即生效请保存后点「🚀 立即抓取」。
+      </div>
+      <div class="btn-row">
+        <button class="btn-config btn-save-cfg" onclick="saveSources()" id="btnSaveCfg">💾 保存配置</button>
+        <button class="btn-config btn-fetch-now" onclick="triggerFetch()" id="btnFetchNow2">🚀 立即抓取</button>
+        <button class="btn-config btn-add-source" onclick="addSource()">＋ 新增源</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:36px">启用</th>
+              <th>源 ID</th>
+              <th>Subreddit</th>
+              <th>关键词</th>
+              <th style="width:52px">优先级</th>
+              <th>类型</th>
+              <th style="width:100px">RSS URL</th>
+              <th style="width:44px"></th>
+            </tr>
+          </thead>
+          <tbody id="sourceTableBody"></tbody>
+        </table>
+      </div>
+      <div class="status-msg" id="configMsg"></div>
+    </div>
   </div>
 
   <!-- ═══════════ 线索列表 ═══════════ -->
@@ -725,8 +827,232 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
+/* ═══════════ 配置管理（仅管理员） ═══════════ */
+
+var configSources = [];
+var configPanelVisible = false;
+
+function initConfigPanel() {
+  var area = document.getElementById('configArea');
+  if (area) area.style.display = '';
+  loadSourcesToTable();
+}
+
+function toggleConfigPanel() {
+  configPanelVisible = !configPanelVisible;
+  var panel = document.getElementById('configPanel');
+  var toggle = document.getElementById('configToggle');
+  if (panel) panel.classList.toggle('show', configPanelVisible);
+  if (toggle) toggle.textContent = configPanelVisible ? '⚙️ 配置管理 ▴' : '⚙️ 配置管理 ▾';
+  if (configPanelVisible && configSources.length === 0) loadSourcesToTable();
+}
+
+function loadSourcesToTable() {
+  fetch('../data/reddit/sources.json')
+    .then(function(r) { return r.json(); })
+    .then(function(sources) {
+      configSources = sources;
+      renderSourceTable();
+    })
+    .catch(function() {
+      configSources = [];
+      renderSourceTable();
+    });
+}
+
+function renderSourceTable() {
+  var tbody = document.getElementById('sourceTableBody');
+  if (!tbody) return;
+
+  if (configSources.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#8a8a8a;padding:20px">暂无源配置</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = configSources.map(function(s, i) {
+    var types = ['subreddit_new', 'subreddit_search', 'global_search'];
+    var typeOptions = types.map(function(t) {
+      return '<option value="' + t + '"' + (s.type === t ? ' selected' : '') + '>' + t + '</option>';
+    }).join('');
+
+    return '<tr>' +
+      '<td><input type="checkbox"' + (s.enabled !== false ? ' checked' : '') + ' data-field="enabled" data-idx="' + i + '"></td>' +
+      '<td><input type="text" value="' + escapeAttr(s.id || '') + '" data-field="id" data-idx="' + i + '" style="font-size:10px"></td>' +
+      '<td><input type="text" value="' + escapeAttr(s.subreddit || '') + '" data-field="subreddit" data-idx="' + i + '"></td>' +
+      '<td><input type="text" value="' + escapeAttr(s.keyword || '') + '" data-field="keyword" data-idx="' + i + '"></td>' +
+      '<td><input type="number" value="' + (s.priority || 1) + '" data-field="priority" data-idx="' + i + '" min="1" max="5"></td>' +
+      '<td><select data-field="type" data-idx="' + i + '">' + typeOptions + '</select></td>' +
+      '<td><input type="text" value="' + escapeAttr(s.rssUrl || '') + '" data-field="rssUrl" data-idx="' + i + '" style="font-size:10px"></td>' +
+      '<td><button class="btn-remove" onclick="removeSource(' + i + ')" title="删除">✕</button></td>' +
+      '</tr>';
+  }).join('');
+}
+
+function collectSourceData() {
+  var rows = document.querySelectorAll('#sourceTableBody tr');
+  var sources = [];
+  rows.forEach(function(row) {
+    var inputs = row.querySelectorAll('[data-field]');
+    if (inputs.length === 0) return;
+    var src = {};
+    inputs.forEach(function(el) {
+      var field = el.dataset.field;
+      var val;
+      if (el.type === 'checkbox') {
+        val = el.checked;
+      } else if (el.type === 'number') {
+        val = parseInt(el.value, 10) || 1;
+      } else {
+        val = el.value.trim();
+      }
+      src[field] = val;
+    });
+    if (src.id) sources.push(src);
+  });
+  return sources;
+}
+
+async function saveSources() {
+  var auth = await (window.__radarGetAuth ? window.__radarGetAuth() : null);
+  if (!auth) { showConfigMsg('请先登录（刷新页面后点击首页登录）', 'error'); return; }
+
+  var sources = collectSourceData();
+  if (sources.length === 0) { showConfigMsg('至少需要一个 RSS 源', 'error'); return; }
+
+  var btn = document.getElementById('btnSaveCfg');
+  if (btn) btn.disabled = true;
+  showConfigMsg('保存中...', 'info');
+
+  try {
+    var supabase = window.__radarSupabase;
+    if (!supabase) throw new Error('Supabase 未初始化');
+    var res = await supabase.functions.invoke('radar-manage', {
+      body: { action: 'save_sources', sources: sources }
+    });
+    if (res.error || !res.data || !res.data.ok) throw new Error((res.data && res.data.message) || '保存失败');
+    configSources = sources;
+    showConfigMsg('✅ ' + res.data.message, 'success');
+  } catch(e) {
+    showConfigMsg('❌ ' + (e.message || '保存失败'), 'error');
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+async function triggerFetch() {
+  var auth = await (window.__radarGetAuth ? window.__radarGetAuth() : null);
+  if (!auth) { showConfigMsg('请先登录（刷新页面后点击首页登录）', 'error'); return; }
+
+  var btn1 = document.getElementById('btnFetchNow');
+  var btn2 = document.getElementById('btnFetchNow2');
+  if (btn1) { btn1.disabled = true; btn1.textContent = '⏳ 触发中...'; }
+  if (btn2) { btn2.disabled = true; btn2.textContent = '⏳ 触发中...'; }
+  showConfigMsg('正在触发抓取任务...', 'info');
+
+  try {
+    var supabase = window.__radarSupabase;
+    if (!supabase) throw new Error('Supabase 未初始化');
+    var res = await supabase.functions.invoke('radar-manage', {
+      body: { action: 'trigger_fetch' }
+    });
+    if (res.error || !res.data || !res.data.ok) throw new Error((res.data && res.data.message) || '触发失败');
+    showConfigMsg('✅ ' + res.data.message, 'success');
+  } catch(e) {
+    showConfigMsg('❌ ' + (e.message || '触发失败'), 'error');
+  } finally {
+    if (btn1) { btn1.disabled = false; btn1.textContent = '🚀 立即抓取'; }
+    if (btn2) { btn2.disabled = false; btn2.textContent = '🚀 立即抓取'; }
+  }
+}
+
+function addSource() {
+  configSources.push({
+    id: 'new-source-' + Date.now(),
+    enabled: true,
+    type: 'subreddit_search',
+    subreddit: '',
+    keyword: '',
+    priority: 3,
+    rssUrl: ''
+  });
+  renderSourceTable();
+}
+
+function removeSource(index) {
+  if (!confirm('确定删除这个 RSS 源？')) return;
+  configSources.splice(index, 1);
+  renderSourceTable();
+}
+
+function showConfigMsg(msg, type) {
+  var el = document.getElementById('configMsg');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'status-msg ' + (type || '');
+  if (type === 'success') setTimeout(function() { el.className = 'status-msg'; }, 5000);
+}
+
+function escapeAttr(str) {
+  return String(str || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 /* ═══════════ 启动 ═══════════ */
 loadData();
+</script>
+
+<!-- ═══════════ Supabase Auth（仅用于配置管理） ═══════════ -->
+<script src="../config.js"></script>
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+var CFG = window.COVER_MAKER_CONFIG || {};
+var SUPABASE_READY = !!(
+  CFG.supabaseUrl && CFG.supabaseAnonKey &&
+  !String(CFG.supabaseUrl).includes('YOUR_SUPABASE')
+);
+
+var supabase = SUPABASE_READY
+  ? createClient(CFG.supabaseUrl, CFG.supabaseAnonKey, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    })
+  : null;
+
+// Expose to main script
+window.__radarSupabase = supabase;
+window.__radarSupabaseReady = SUPABASE_READY;
+
+// Auth check function
+window.__radarCheckAdmin = async function() {
+  if (!supabase) return false;
+  try {
+    var { data } = await supabase.auth.getSession();
+    if (!data || !data.session) return false;
+    var res = await supabase.functions.invoke('admin-manage', {
+      body: { action: 'stats' }
+    });
+    return res.data && res.data.ok;
+  } catch(e) {
+    return false;
+  }
+};
+
+// Get auth header for radar-manage calls
+window.__radarGetAuth = async function() {
+  if (!supabase) return null;
+  var { data } = await supabase.auth.getSession();
+  if (!data || !data.session) return null;
+  return 'Bearer ' + data.session.access_token;
+};
+
+// Auto-check admin on load
+if (SUPABASE_READY) {
+  window.__radarCheckAdmin().then(function(isAdmin) {
+    window.__radarIsAdmin = isAdmin;
+    if (isAdmin && typeof initConfigPanel === 'function') {
+      initConfigPanel();
+    }
+  });
+}
 </script>
 </body>
 </html>
