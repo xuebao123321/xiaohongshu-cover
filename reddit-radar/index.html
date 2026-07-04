@@ -850,6 +850,30 @@ function initConfigPanel() {
   if (area) area.style.display = '';
   loadSourcesToTable();
   loadKeywords();
+  // Bind button events via addEventListener (more reliable than inline onclick)
+  ['btnFetchNow', 'btnFetchNow2'].forEach(function(id) {
+    var btn = document.getElementById(id);
+    if (btn) {
+      btn.onclick = null; // clear inline handler
+      btn.addEventListener('click', function(e) { e.preventDefault(); triggerFetch(); });
+    }
+  });
+  var btnSaveCfg = document.getElementById('btnSaveCfg');
+  if (btnSaveCfg) {
+    btnSaveCfg.onclick = null;
+    btnSaveCfg.addEventListener('click', function(e) { e.preventDefault(); saveSources(); });
+  }
+  var btnAddSrc = document.querySelector('.btn-add-source');
+  if (btnAddSrc) {
+    btnAddSrc.onclick = null;
+    btnAddSrc.addEventListener('click', function(e) { e.preventDefault(); addSource(); });
+  }
+  var btnSaveKw = document.querySelector('[onclick*="saveKeywords"]');
+  if (btnSaveKw) {
+    btnSaveKw.onclick = null;
+    btnSaveKw.addEventListener('click', function(e) { e.preventDefault(); saveKeywords(); });
+  }
+  console.log('[Radar] Config panel initialized, buttons bound');
 }
 
 function loadKeywords() {
@@ -987,7 +1011,12 @@ async function saveSources() {
   }
 }
 
+window._debugTriggerFetch = triggerFetch;
+window._debugSaveKeywords = saveKeywords;
+window._debugSaveSources = saveSources;
+
 async function triggerFetch() {
+  console.log('[Radar] triggerFetch() CALLED');
   var btn1 = document.getElementById('btnFetchNow');
   var btn2 = document.getElementById('btnFetchNow2');
   if (btn1) { btn1.disabled = true; btn1.textContent = '⏳ 触发中...'; }
