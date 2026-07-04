@@ -887,14 +887,18 @@ function loadKeywords() {
 }
 
 async function saveKeywords() {
-  showConfigMsg('验证权限中...', 'info');
+  console.log('[Radar] saveKeywords() CALLED');
   try {
-    var auth = await (window.__radarGetAuth ? window.__radarGetAuth() : null);
+    showConfigMsg('验证权限中...', 'info');
+    console.log('[Radar] getting auth for saveKeywords...');
+    var auth = window.__radarGetAuth ? await window.__radarGetAuth() : null;
+    console.log('[Radar] auth result:', !!auth);
     if (!auth) { showConfigMsg('❌ 登录已过期，请刷新页面后重新登录', 'error'); return; }
 
     var ta = document.getElementById('keywordsTextarea');
     if (!ta) { showConfigMsg('❌ 页面元素未找到', 'error'); return; }
     var keywords = ta.value.split('\n').map(function(s) { return s.trim(); }).filter(Boolean);
+    console.log('[Radar] keywords count:', keywords.length);
 
     showConfigMsg('保存中...', 'info');
     var supabase = window.__radarSupabase;
@@ -902,6 +906,7 @@ async function saveKeywords() {
     var res = await supabase.functions.invoke('radar-manage', {
       body: { action: 'save_keywords', keywords: keywords }
     });
+    console.log('[Radar] saveKeywords response:', res);
     if (res.error || !res.data || !res.data.ok) throw new Error((res.data && res.data.message) || '保存失败');
     showConfigMsg('✅ ' + res.data.message, 'success');
   } catch(e) {
@@ -1017,30 +1022,38 @@ window._debugSaveSources = saveSources;
 
 async function triggerFetch() {
   console.log('[Radar] triggerFetch() CALLED');
-  var btn1 = document.getElementById('btnFetchNow');
-  var btn2 = document.getElementById('btnFetchNow2');
-  if (btn1) { btn1.disabled = true; btn1.textContent = '⏳ 触发中...'; }
-  if (btn2) { btn2.disabled = true; btn2.textContent = '⏳ 触发中...'; }
-  showConfigMsg('验证权限中...', 'info');
-
   try {
-    var auth = await (window.__radarGetAuth ? window.__radarGetAuth() : null);
+    var btn1 = document.getElementById('btnFetchNow');
+    console.log('[Radar] btn1 found:', !!btn1);
+    if (btn1) { btn1.disabled = true; btn1.textContent = '⏳ 触发中...'; }
+    var btn2 = document.getElementById('btnFetchNow2');
+    console.log('[Radar] btn2 found:', !!btn2);
+    if (btn2) { btn2.disabled = true; btn2.textContent = '⏳ 触发中...'; }
+
+    showConfigMsg('验证权限中...', 'info');
+    console.log('[Radar] getting auth...');
+    var auth = window.__radarGetAuth ? await window.__radarGetAuth() : null;
+    console.log('[Radar] auth result:', !!auth);
     if (!auth) { showConfigMsg('❌ 登录已过期，请刷新页面后重新登录', 'error'); return; }
 
     showConfigMsg('正在触发抓取任务...', 'info');
+    console.log('[Radar] calling radar-manage...');
     var supabase = window.__radarSupabase;
     if (!supabase) { showConfigMsg('❌ Supabase 未初始化', 'error'); return; }
     var res = await supabase.functions.invoke('radar-manage', {
       body: { action: 'trigger_fetch' }
     });
+    console.log('[Radar] radar-manage response:', res);
     if (res.error || !res.data || !res.data.ok) throw new Error((res.data && res.data.message) || '触发失败');
     showConfigMsg('✅ ' + res.data.message, 'success');
   } catch(e) {
     console.error('[Radar] triggerFetch error:', e);
     showConfigMsg('❌ ' + (e.message || '触发失败'), 'error');
   } finally {
-    if (btn1) { btn1.disabled = false; btn1.textContent = '🚀 立即抓取'; }
-    if (btn2) { btn2.disabled = false; btn2.textContent = '🚀 立即抓取'; }
+    var b1 = document.getElementById('btnFetchNow');
+    var b2 = document.getElementById('btnFetchNow2');
+    if (b1) { b1.disabled = false; b1.textContent = '🚀 立即抓取'; }
+    if (b2) { b2.disabled = false; b2.textContent = '🚀 立即抓取'; }
   }
 }
 
@@ -1064,8 +1077,9 @@ function removeSource(index) {
 }
 
 function showConfigMsg(msg, type) {
+  console.log('[Radar] showConfigMsg:', type, msg);
   var el = document.getElementById('configMsg');
-  if (!el) return;
+  if (!el) { console.log('[Radar] configMsg element NOT FOUND'); return; }
   el.textContent = msg;
   el.className = 'status-msg ' + (type || '');
   if (type === 'success') setTimeout(function() { el.className = 'status-msg'; }, 5000);
