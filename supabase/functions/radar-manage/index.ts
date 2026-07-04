@@ -55,6 +55,8 @@ Deno.serve(async (req: Request) => {
         return await handleSaveSources(body);
       case 'save_keywords':
         return await handleSaveKeywords(body);
+      case 'save_profiles':
+        return await handleSaveProfiles(body);
       default:
         return corsResponse({ ok: false, message: `未知操作: ${action}` }, 400);
     }
@@ -182,6 +184,48 @@ async function handleSaveKeywords(body: any) {
 
   console.log(`[radar-manage] keywords.json updated (${keywords.length} keywords)`);
   return corsResponse({ ok: true, message: `关键词已保存（${keywords.length} 个），下次分析生效` });
+}
+
+// ── save_profiles ──
+async function handleSaveProfiles(body: any) {
+  const profiles = body.profiles;
+  if (!Array.isArray(profiles)) {
+    return corsResponse({ ok: false, message: 'profiles 必须是数组' }, 400);
+  }
+
+  const newContent = JSON.stringify(profiles, null, 2);
+  const profilesPath = 'data/reddit/subreddit_profiles.json';
+
+  // 1. Get current file SHA
+  const getUrl = `${GITHUB_API}/repos/${GITHUB_REPO}/contents/${profilesPath}`;
+  const getRes = await fetch(getUrl, { headers: gitHeaders() });
+  let sha = '';
+  if (getRes.ok) {
+    const fileData: any = await getRes.json();
+    sha = fileData.sha || '';
+  }
+
+  // 2. Commit updated file
+  const putBody: any = {
+    message: `Update Reddit Radar subreddit profiles [skip ci]`,
+    content: btoa(unescape(encodeURIComponent(newContent))),
+    branch: 'main',
+  };
+  if (sha) putBody.sha = sha;
+
+  const putRes = await fetch(getUrl, {
+    method: 'PUT',
+    headers: gitHeaders(),
+    body: JSON.stringify(putBody),
+  });
+
+  if (!putRes.ok) {
+    const err = await putRes.text();
+    throw new Error(`保存画像失败: ${putRes.status} ${err.slice(0, 200)}`);
+  }
+
+  console.log(`[radar-manage] subreddit_profiles.json updated (${profiles.length} profiles)`);
+  return corsResponse({ ok: true, message: `画像已保存（${profiles.length} 个版块），下次操作自动生效` });
 }
 
 // ── helpers ──

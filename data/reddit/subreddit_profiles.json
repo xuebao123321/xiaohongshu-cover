@@ -1,0 +1,192 @@
+[
+  {
+    "subreddit": "PhD",
+    "displayName": "r/PhD",
+    "description": "A community for PhD students to discuss their research, struggles, and experiences.",
+    "audienceMood": "压力大、同病相怜、互相取暖",
+    "replyProfile": {
+      "defaultTone": "warm",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "story_first",
+      "openingTemplate": "I went through something similar during my PhD. Here's what worked for me:",
+      "avoidPatterns": "hard_sell, academic_jargon, dismissive"
+    },
+    "postProfile": {
+      "storyFramework": "problem, solution, result, feedback",
+      "preferredLength": "medium",
+      "toneNotes": "真诚比专业更重要，允许脆弱和幽默",
+      "hotPostPattern": "个人经历 + 总结教训 + 邀请讨论"
+    }
+  },
+  {
+    "subreddit": "GradSchool",
+    "displayName": "r/GradSchool",
+    "description": "A community for graduate students to share advice, experiences, and support.",
+    "audienceMood": "迷茫焦虑、寻求生存指南",
+    "replyProfile": {
+      "defaultTone": "warm",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "story_first",
+      "openingTemplate": "I remember feeling exactly this way in grad school. Here's what helped me:",
+      "avoidPatterns": "hard_sell, talking_down, dismissive"
+    },
+    "postProfile": {
+      "storyFramework": "struggle, solution, lesson, feedback",
+      "preferredLength": "medium",
+      "toneNotes": "老学长/姐口吻，允许自嘲",
+      "hotPostPattern": "踩坑经历 + 总结 + 求经验分享"
+    }
+  },
+  {
+    "subreddit": "AskAcademia",
+    "displayName": "r/AskAcademia",
+    "description": "A community for academics and those interested in academia to ask and answer questions.",
+    "audienceMood": "求专业建议、学术职业导向、审慎",
+    "replyProfile": {
+      "defaultTone": "expert",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "direct_advice",
+      "openingTemplate": "Based on my experience in academic publishing:",
+      "avoidPatterns": "casual_slang, oversharing, vague_advice"
+    },
+    "postProfile": {
+      "storyFramework": "research, solution, evidence, feedback",
+      "preferredLength": "medium_long",
+      "toneNotes": "数据说话，结构清晰，引用规范",
+      "hotPostPattern": "研究发现 + 方法论 + 开放讨论"
+    }
+  },
+  {
+    "subreddit": "academia",
+    "displayName": "r/academia",
+    "description": "A community for discussion of academia, research, and higher education.",
+    "audienceMood": "职业讨论、政策关注、批判性",
+    "replyProfile": {
+      "defaultTone": "expert",
+      "defaultCtaLevel": "none",
+      "preferredStyle": "direct_advice",
+      "openingTemplate": "From an academic perspective:",
+      "avoidPatterns": "marketing_language, anecdotes, emotional_appeal"
+    },
+    "postProfile": {
+      "storyFramework": "argument, evidence, discussion, feedback",
+      "preferredLength": "medium_long",
+      "toneNotes": "学术辩论风格，尊重不同观点",
+      "hotPostPattern": "观点论证 + 引用 + 邀请反驳"
+    }
+  },
+  {
+    "subreddit": "AcademicWriting",
+    "displayName": "r/AcademicWriting",
+    "description": "A community for discussing academic writing techniques and challenges.",
+    "audienceMood": "纯技术讨论、求知欲强",
+    "replyProfile": {
+      "defaultTone": "expert",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "direct_advice",
+      "openingTemplate": "A technique that helped my writing significantly:",
+      "avoidPatterns": "oversimplification, vague_tips, emotional_stories"
+    },
+    "postProfile": {
+      "storyFramework": "problem, technique, example, feedback",
+      "preferredLength": "medium",
+      "toneNotes": "实用、具体，用例子说话",
+      "hotPostPattern": "具体技巧 + 前后对比 + 讨论"
+    }
+  },
+  {
+    "subreddit": "scientificwriting",
+    "displayName": "r/scientificwriting",
+    "description": "A community for scientific writing and communication.",
+    "audienceMood": "科研写作、技术导向",
+    "replyProfile": {
+      "defaultTone": "expert",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "direct_advice",
+      "openingTemplate": "In scientific writing, one approach that works well:",
+      "avoidPatterns": "marketing_fluff, non_scientific, overpromising"
+    },
+    "postProfile": {
+      "storyFramework": "problem, method, evidence, feedback",
+      "preferredLength": "medium",
+      "toneNotes": "科学严谨，具体可操作",
+      "hotPostPattern": "方法介绍 + 数据支持 + 讨论"
+    }
+  },
+  {
+    "subreddit": "InternationalStudents",
+    "displayName": "r/InternationalStudents",
+    "description": "A community for international students to share experiences and advice.",
+    "audienceMood": "语言/文化焦虑、寻求归属感",
+    "replyProfile": {
+      "defaultTone": "warm",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "story_first",
+      "openingTemplate": "As a fellow international student, I totally understand. Here's what I learned:",
+      "avoidPatterns": "hard_sell, condescending, complex_jargon"
+    },
+    "postProfile": {
+      "storyFramework": "struggle, insight, advice, feedback",
+      "preferredLength": "medium",
+      "toneNotes": "共鸣第一，信息第二，温暖叙述",
+      "hotPostPattern": "文化冲击故事 + 经验总结 + 讨论"
+    }
+  },
+  {
+    "subreddit": "gradadmissions",
+    "displayName": "r/gradadmissions",
+    "description": "A community for discussing graduate school admissions.",
+    "audienceMood": "申请焦虑、信息饥渴、竞争心态",
+    "replyProfile": {
+      "defaultTone": "direct",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "direct_advice",
+      "openingTemplate": "Having been through the admissions process:",
+      "avoidPatterns": "vague_encouragement, fear_mongering, hard_sell"
+    },
+    "postProfile": {
+      "storyFramework": "background, strategy, result, feedback",
+      "preferredLength": "medium",
+      "toneNotes": "信息密集，干货优先",
+      "hotPostPattern": "申请经验 + 数据 + 答疑"
+    }
+  },
+  {
+    "subreddit": "MachineLearning",
+    "displayName": "r/MachineLearning",
+    "description": "A community for discussing machine learning research and applications.",
+    "audienceMood": "技术导向、高标准、质疑精神",
+    "replyProfile": {
+      "defaultTone": "expert",
+      "defaultCtaLevel": "none",
+      "preferredStyle": "direct_advice",
+      "openingTemplate": "From a technical perspective:",
+      "avoidPatterns": "marketing_claims, non_technical, vague_benefits"
+    },
+    "postProfile": {
+      "storyFramework": "problem, method, benchmark, feedback",
+      "preferredLength": "long",
+      "toneNotes": "技术深度第一，代码/数据说话",
+      "hotPostPattern": "技术方案 + benchmark + 开源"
+    }
+  },
+  {
+    "subreddit": "bioinformatics",
+    "displayName": "r/bioinformatics",
+    "description": "A community for bioinformatics professionals and researchers.",
+    "audienceMood": "跨学科、实用导向",
+    "replyProfile": {
+      "defaultTone": "expert",
+      "defaultCtaLevel": "soft",
+      "preferredStyle": "direct_advice",
+      "openingTemplate": "In bioinformatics, here's an approach we've used:",
+      "avoidPatterns": "oversimplification, domain_ignorance"
+    },
+    "postProfile": {
+      "storyFramework": "problem, tool, validation, feedback",
+      "preferredLength": "medium",
+      "toneNotes": "bridge CS + biology, 工具导向",
+      "hotPostPattern": "工具/流程介绍 + 基准测试 + 讨论"
+    }
+  }
+]
