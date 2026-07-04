@@ -965,9 +965,17 @@
     "publishedAt": "2026-07-02T16:54:54+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "ada0bec2fb97d68ca35af8833cebbc06d43df7558919d7fbc654e209a264d3a7"
+    "contentHash": "ada0bec2fb97d68ca35af8833cebbc06d43df7558919d7fbc654e209a264d3a7",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ulmwqw",
@@ -980,9 +988,17 @@
     "publishedAt": "2026-07-02T16:22:50+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "cb935cd65cdbfca56d801a8507d53e4dc577c51506208cf9c1786dbf51128984"
+    "contentHash": "cb935cd65cdbfca56d801a8507d53e4dc577c51506208cf9c1786dbf51128984",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ulktlh",
@@ -995,9 +1011,17 @@
     "publishedAt": "2026-07-02T15:06:02+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "709c321556828ff228c07c71ca14f191060a4134bd3b9a49b4b21ffde52d574a"
+    "contentHash": "709c321556828ff228c07c71ca14f191060a4134bd3b9a49b4b21ffde52d574a",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ulcl89",
@@ -1010,9 +1034,17 @@
     "publishedAt": "2026-07-02T08:41:33+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "e72f288671397fcdacdfa5f979d7062fa7fb1a4828934c776387477dec90c915"
+    "contentHash": "e72f288671397fcdacdfa5f979d7062fa7fb1a4828934c776387477dec90c915",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ul3gbi",
@@ -1055,9 +1087,17 @@
     "publishedAt": "2026-07-01T13:31:41+00:00",
     "fetchedAt": "2026-07-04T06:45:00.952Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "098f3623fae84d35c493898cd8dae746cd4396b766273ad9c424d31f860d1a42"
+    "contentHash": "098f3623fae84d35c493898cd8dae746cd4396b766273ad9c424d31f860d1a42",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ukjo10",
@@ -1070,9 +1110,17 @@
     "publishedAt": "2026-07-01T12:01:05+00:00",
     "fetchedAt": "2026-07-04T06:45:00.952Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "483aa2761c17d097e1a9d7ccf77126fcd74a07a92b0ae54222a990c9e671cb55"
+    "contentHash": "483aa2761c17d097e1a9d7ccf77126fcd74a07a92b0ae54222a990c9e671cb55",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uki1gp",
@@ -1115,9 +1163,17 @@
     "publishedAt": "2026-06-30T10:10:23+00:00",
     "fetchedAt": "2026-07-04T06:45:00.952Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "12721b7ad9b8fa2d45b559c9b49c8aa93e38b39eec5a2c708b612882fd650183"
+    "contentHash": "12721b7ad9b8fa2d45b559c9b49c8aa93e38b39eec5a2c708b612882fd650183",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uim8ut",
@@ -1145,9 +1201,17 @@
     "publishedAt": "2026-06-28T04:07:56+00:00",
     "fetchedAt": "2026-07-04T06:45:00.952Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
-    "contentHash": "dec968f557b26c644e324b578f29ad01bb65ca6977cd18d8ace4c45ca9c712b0"
+    "contentHash": "dec968f557b26c644e324b578f29ad01bb65ca6977cd18d8ace4c45ca9c712b0",
+    "sourceKeywords": [
+      "publish",
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-publish",
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ug7yrb",
@@ -2159,7 +2223,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "e7b334ef6101d8672b57766d477fc4a7dd51a95025fd631a7fa7c35f9b7d5961"
+    "contentHash": "e7b334ef6101d8672b57766d477fc4a7dd51a95025fd631a7fa7c35f9b7d5961",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1uj614f",
@@ -2505,5 +2573,260 @@
     "sourceKeyword": "reviewer comments",
     "sourceType": "global_search",
     "contentHash": "9322cb6d3446c80a421e320d4b4a7185757c3cfa7bd3426bb7d577e6beb9a5c1"
+  },
+  {
+    "id": "reddit_1umb53x",
+    "redditId": "1umb53x",
+    "title": "Questions for seasoned academics",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey all. </p> <p>I am coming into my second year at uni. I am studying a Bachelor of Secondary Education at QUT. Given how much I love university now, I am seriously considering the prospect of whether doing a PhD might be good for me.</p> <p>In saying that though, my journey into university education wasn't straight forward. As a mature-age student, I went through TAFE to complete my senior study certificate because I didn't pass in high school. Soon enough I got my ADHD diagnosed, and decided to revisit that old chapter. </p> <p>Although that course did give me some really good study strategies, there are a lot of things that were counter productive (in text references had to have a page/paragraph number, even for massive journal articles), and I had to relearn how to properly read pubmed articles. </p> <p>Sob story aside. There are things about academia that I would like to know. Without further ado...</p> <ol> <li><p>What type of academia do you do?</p></li> <li><p>How do you study in general?</p></li> <li><p>What does your assignment timeline look like? What does your process look like?</p></li> <li><p>Within those steps, how do you do research? What information do you look for? </p></li> <li><p>How do you start assignments? What happens when you get writers block? </p></li> </ol> <p>I know these are some loaded questions. Feel free to answer in however much or little detail you wish. Because of my background, I'm really battling against my barriers to study. I want to believe that I can make myself an academic, but there is a lot I don't know. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Donttouchmybreadd\"> /u/Donttouchmybreadd </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1umb53x/questions_for_seasoned_academics/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1umb53x/questions_for_seasoned_academics/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1umb53x/questions_for_seasoned_academics/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Donttouchmybreadd",
+    "publishedAt": "2026-07-03T10:49:27+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.127Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "08155d248d63ef095c92c8157b81d233d85db71ef85302c7987c2c76c36b6b9b"
+  },
+  {
+    "id": "reddit_1ulx44u",
+    "redditId": "1ulx44u",
+    "title": "does phd student not want me in project?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>during the spring, my professor was collaborating on a project (this is in ML/agents and not to go into specifics but it was application to another field, and my professor connected me with the graduate student because it was a good project that was going to be in a good journal). However, the phd student I think now doesn't like me. At the start of summer, I texted him and got a 10 minute virtual meeting to talk about what I did, and he said he would give me the code base but never did and did not respond to any of my texts for the rest of the week and the following. I called the professor since I was concerned and he told me to stay, but was a little surprised since he said there was another intern as well (which I didn't know about) making a lot of progress. He told me that I should download WeChat since they are all Chinese and the professor connected me to the phd student through there. However, this past week again, he has not really responded to any of my texts. Over the weekend when the professor connected me, the phd student responded to me. I asked for the contact/Wechat of the other intern a few times, but he never responded. The only time he responded was this Monday when he said he had projects due this week and asked if we could meet later this week, but he never followed up. He's been ghosting me like this for the past 3 weeks, but he's also been with the other intern doing work.</p> <p>I don't know what to do, since I value my relationship with my current professor, and he seems to think that the phd is fine with me and I should just message him more, but this has not been working. I asked also if the professor could put me on another project, but he wants me to stay on this one, and I asked if I should reach out to other professors in the department to do research this summer since I've basically been left waiting with nothing to do (which is my own responsibility I know), but he said to stay here. So I dont want to lie to my professor, but I dont know what to do since I really want to spend my time doing research.</p> <p>Does anyone have any advice or insight as to what they think the phd student is thinking or whether they dont want me on the project, and what they would recommend I do now? This has been super stressful... Thank you for reading!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Kitchen-Ingenuity658\"> /u/Kitchen-Ingenuity658 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ulx44u/does_phd_student_not_want_me_in_project/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ulx44u/does_phd_student_not_want_me_in_project/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ulx44u/does_phd_student_not_want_me_in_project/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Kitchen-Ingenuity658",
+    "publishedAt": "2026-07-02T22:46:44+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.127Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "34afbe2a134a7b9ff9cfba21c252d5ed6efaa1e0eb1276ab52f3be4112840b8c"
+  },
+  {
+    "id": "reddit_1uluzfs",
+    "redditId": "1uluzfs",
+    "title": "Issues with manuscript proofs",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm having an issue with a journal right now and am wondering if anyone else has faced this issue before. My submission got accepted last week and I received the proof a few days ago. I was reviewing the proof and saw that all of my citations link to the wrong sources (thank god I noticed) and was unable to change it on the proofing website.</p> <p>Well, I emailed the journal and asked how I could fix it or whether they would and they apologized and promised to send the updated one. So, today I received the new proof and once again THE CITATIONS ARE WRONG. I seriously don't understand how they messed it up when everything was cited correctly in the manuscript.</p> <p>Has anyone else had this issue or similar issues with manuscript proofs?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Correct-Reason-6241\"> /u/Correct-Reason-6241 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uluzfs/issues_with_manuscript_proofs/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uluzfs/issues_with_manuscript_proofs/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uluzfs/issues_with_manuscript_proofs/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Correct-Reason-6241",
+    "publishedAt": "2026-07-02T21:21:58+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.127Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "61b2e9f126e7ee14a3a6d7415fe6ce70d812eefcbfe6934b641382b2d3730137"
+  },
+  {
+    "id": "reddit_1ultab9",
+    "redditId": "1ultab9",
+    "title": "One reviewer finished review at the same day that accepted review. Red flag?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I submitted journal paper to Elsevier Q1 journal two days ago. It went under review yesterday, and I found out that one reviewer accepted and finished the review yesterday. Is it red flag?</p> <p>The paper went peer review at three other journals, and rejected after review, without revision. I revised it and resubmitted.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Nice-Fix7014\"> /u/Nice-Fix7014 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ultab9/one_reviewer_finished_review_at_the_same_day_that/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ultab9/one_reviewer_finished_review_at_the_same_day_that/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ultab9/one_reviewer_finished_review_at_the_same_day_that/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Nice-Fix7014",
+    "publishedAt": "2026-07-02T20:16:48+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.127Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "12a33c0ba84b8728bd98df25f976ad1ca7d7964d1fe594ada2392aae3228871e"
+  },
+  {
+    "id": "reddit_1ulllkq",
+    "redditId": "1ulllkq",
+    "title": "IOP “Track My Article” went from “all reviewer reports received” back to “out to reviewers” — normal?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>My manuscript is currently under review at an IOP journal. The public tracking page first showed:</p> <ul> <li>“1st reviewer agreed to report”</li> <li>then “All reviewer reports received”</li> </ul> <p>The message said the editors were making a decision and might consult additional reviewers if needed.</p> <p>A short time later, the status reverted to:</p> <ul> <li>“Out to reviewers”</li> <li>with the message that they are searching for expert referees.</li> </ul> <p>Has anyone seen this sequence in an IOP journal?<br/> I just want to understand whether this status sequence is normal and what it usually means in practice.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Capital_Fisherman_75\"> /u/Capital_Fisherman_75 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ulllkq/iop_track_my_article_went_from_all_reviewer/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ulllkq/iop_track_my_article_went_from_all_reviewer/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ulllkq/iop_track_my_article_went_from_all_reviewer/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Capital_Fisherman_75",
+    "publishedAt": "2026-07-02T15:35:05+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.127Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "d471a9ebc2d9eec28bde79d7559717568400295b0a9b10077be24d5813d9f7e0"
+  },
+  {
+    "id": "reddit_1ukbki5",
+    "redditId": "1ukbki5",
+    "title": "Can you still apply for faculty positions after finishing postdoc?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Field: Engineering.</p> <p>Hypothetically, if my postdoc contract finishes in October and I get an industry job, could I still apply for faculty positions this cycle while in this new job? Assume that this job is not very related to my research. </p> <p>The reason why I want to try again, is that last year at the cycle I had a preprint out for my postdoc paper, but it was under review. I'm got it into a high impact journal this year, so I wonder if it'll make a difference. I don't want to stay as a postdoc because I've done this for a few years now and feel done with it, the project is otherwise over, funding availability in my lab is uncertain/unlikely anyways.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Separate_Ad_314\"> /u/Separate_Ad_314 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ukbki5/can_you_still_apply_for_faculty_positions_after/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ukbki5/can_you_still_apply_for_faculty_positions_after/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ukbki5/can_you_still_apply_for_faculty_positions_after/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Separate_Ad_314",
+    "publishedAt": "2026-07-01T04:31:20+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.128Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "40eecd2e1bab074abc9e7a9256575b2c5e5c48ff3b64ba03350d98ce162da489"
+  },
+  {
+    "id": "reddit_1uk3ty7",
+    "redditId": "1uk3ty7",
+    "title": "Minor revision stuck for 4 months and the journal is not responding",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I submitted a minor revision of a paper over 4 months ago, and since then its status in the tracking system hasn't changed at all: it looks like the handling editor hasn't touched it yet, or if he did, he didn't update the status in the system - in any case, I'm in the dark about what is happening. I tried contacting the editorial office several times, and later the managing editor of the journal, but I didn't receive any response. This is for a paper that's been submitted 18 months ago to a highly ranked humanities journal. Both reviews were very positive, with only small comments to address.</p> <p><strong>Would it be a breach of etiquette to politely contact the handling editor directly at this point, and ask about the status?</strong> My concern is that officially, all communication is supposed to go through the editorial office, and handling editor's contact was never explicitly mentioned - I'd have to cold email him through his institutional email (I only know his name from the \"minor revision\" decision sent by the editorial office). Should I perhaps be contacting the editor-in-chief instead?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ineedivorytower\"> /u/Ineedivorytower </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uk3ty7/minor_revision_stuck_for_4_months_and_the_journal/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uk3ty7/minor_revision_stuck_for_4_months_and_the_journal/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uk3ty7/minor_revision_stuck_for_4_months_and_the_journal/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Ineedivorytower",
+    "publishedAt": "2026-06-30T22:32:39+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.128Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "aa27c4c18f96f1e7c8a46b231a268ba687dd224a8e2f22e0368d1cefbd6a3e90"
+  },
+  {
+    "id": "reddit_1ujt0c2",
+    "redditId": "1ujt0c2",
+    "title": "How Should I Interpret a Rejection Based on &quot;Lack of Contribution&quot;?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>So I submitted a paper for publication. It passed the desk rejection stage but was then rejected on the grounds that it was not a significant enough contribution compared to the other papers the journal was receiving at the time. That's all well and good, but what I want to know is whether the reason I was given for the rejection is genuine or just a standard message that everyone receives when they are rejected at this stage. I also want to know whether the fact that it passed the desk rejection stage means anything.</p> <p>Overall, I want to know what I can learn from this to improve the paper. If what the journal said is true, then I have some idea of what I could do, such as making it clearer why my paper is a contribution to the field. However, if it's just a standard comment, then I'm basically in the dark about what I should do next.</p> <p>I'm asking mostly because I've submitted the paper to several journals, and this is the first time I've received any feedback.</p> <p>Oh, one last thing: it's a philosophy paper, in case that matters.</p> <p>EDIT: sorry for posting the same thing again, the other post got deleted because of the reddit filters. The mods fix it and put this other one that also got deleted that essentially says the same.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Piamont\"> /u/Piamont </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ujt0c2/how_should_i_interpret_a_rejection_based_on_lack/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ujt0c2/how_should_i_interpret_a_rejection_based_on_lack/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ujt0c2/how_should_i_interpret_a_rejection_based_on_lack/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Piamont",
+    "publishedAt": "2026-06-30T15:51:52+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.128Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "54350a77dca9f8d0a2ec25a185b7582bdd8530a7c9ab607e9468e5037c8b8eb1"
+  },
+  {
+    "id": "reddit_1ujr7kq",
+    "redditId": "1ujr7kq",
+    "title": "The Professor or the University",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’ve been meeting with a U.S. professor for about half a year. He’s been supportive and may accept me as a PhD student in 2027. However, his university is mid-tier, and he doesn’t have a strong publication record in top journals — though he seems more grant/funding-driven than publication-driven, which I understand is common among certain types of professors in the U.S.</p> <p>I’m considering spending six months or one year at a research institute in my home country instead and applying to stronger programs. But I also know a “better” university doesn’t guarantee a better advisor or research fit.</p> <p>For those who’ve been through this: how would you weigh advisor quality, university ranking, research fit, and long-term academic career prospects? As an international student aiming for an academic career, I’m unsure whether a mid-tier PhD is competitive enough in the long run.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/NormalBranch2476\"> /u/NormalBranch2476 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ujr7kq/the_professor_or_the_university/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ujr7kq/the_professor_or_the_university/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ujr7kq/the_professor_or_the_university/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/NormalBranch2476",
+    "publishedAt": "2026-06-30T14:44:25+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "0e9bc0a5274381073eccdc2c8dd60f3f217928a4032719611216163d597caa02"
+  },
+  {
+    "id": "reddit_1uj28ff",
+    "redditId": "1uj28ff",
+    "title": "Need advice: Already finishing a Master’s abroad, but not ready for a PhD. What are my options in the US?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,<br/> I’m from Ukraine and I really need an advice.<br/> I have a BA in Journalism and I’m currently finishing my Master’s. I’d like to move to the US, either to study or work, and I’m trying to figure out the best path<br/> I talked to a few professors in the US, and they basically told me that doing another Master’s might not be worth it, since I’ll already have one. They said a PhD in Communication would make more sense academically.<br/> But honestly, I don’t feel ready for a PhD yet. I’m interested in research, but I don’t have a strong research agenda yet.<br/> So I’m wondering what should I do? Is a second Master’s in the US a bad idea, or can it still make sense? Are there other options I should look into?<br/> Thanks a lot!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/WhiskerChief_2503\"> /u/WhiskerChief_2503 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uj28ff/need_advice_already_finishing_a_masters_abroad/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uj28ff/need_advice_already_finishing_a_masters_abroad/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uj28ff/need_advice_already_finishing_a_masters_abroad/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/WhiskerChief_2503",
+    "publishedAt": "2026-06-29T19:25:30+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "0fe0e10ce0fdaf124851c277b3468a5326d3e99b3d8abc8408ab2089c232836f"
+  },
+  {
+    "id": "reddit_1uiehgi",
+    "redditId": "1uiehgi",
+    "title": "Public health journals that offer APC waiver for LMIC researchers",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone </p> <p>I am a South Asian researcher from a LMIC and I am not affiliated with any university at the moment. Can you guys give me the name of a few public health journals that waive the APC fee (and provide open access) for accepted manuscripts?</p> <p>Thanks so much!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/loremipsum2024\"> /u/loremipsum2024 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uiehgi/public_health_journals_that_offer_apc_waiver_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uiehgi/public_health_journals_that_offer_apc_waiver_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uiehgi/public_health_journals_that_offer_apc_waiver_for/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/loremipsum2024",
+    "publishedAt": "2026-06-29T01:18:06+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "6a91324bc1e6caf709cdf4d87ae2c41b9c9b069bb30c96516aba60478559a22f"
+  },
+  {
+    "id": "reddit_1uhnq3d",
+    "redditId": "1uhnq3d",
+    "title": "Can you be rejected from a journal just based on who the author is?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Can a journal simply reject you because of your experience or lack thereof (e.g. being in high school or undergrad)? Or can you be rejected because your school isn’t prestigious enough? I know you can be rejected if you have a history of misconduct/ethical violations, lied, have been blacklisted, or have a conflict of interest, but that’s a given and is not what I am referring to.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/TTVBy_The_Way\"> /u/TTVBy_The_Way </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uhnq3d/can_you_be_rejected_from_a_journal_just_based_on/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uhnq3d/can_you_be_rejected_from_a_journal_just_based_on/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uhnq3d/can_you_be_rejected_from_a_journal_just_based_on/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/TTVBy_The_Way",
+    "publishedAt": "2026-06-28T04:39:56+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "9c58e9cb8dbe0025960e467af3c7fa4e083809aba655e8ea8d53e1d18cbb3229"
+  },
+  {
+    "id": "reddit_1uh4xsk",
+    "redditId": "1uh4xsk",
+    "title": "Disability Studies researchers (or just researchers in general), any tips on crafting widely accessible research instruments?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>* i posted this on another sub prior to this, so sorry if that’s considered spam! i just want help really badly </p> <p>** also i am not an undergrad! i am in high school but my country requires research for all people grades 11-12, or at least they did up until this newest batch (they changed the curriculum which makes me sad)</p> <p>I am currently pursuing a research project as a requirement for my Senior High School curriculum, and it is focused on what communication looks like in the only group home in my province.</p> <p>I wanted to take an ethnographic approach, but I’m 17 and not even independent yet so that’s for sure a no-go. I’m also the only person in my research group because we were grouped by common interest, and I was one of only two people who wanted to pursue communications/journalism research, and the only one in that pair who wanted to pursue something related to disability.</p> <p>Our teacher is currently asking us to make our research instruments, but I don’t know what to do or how to make it because I’m inexperienced, and I’ve only met my respondents once on a donation drive (they rely on donations to stay afloat as they are privately run) prior to the conception of my research paper, where we had very minimal interaction.</p> <p>I’m really scared of not getting the questionnaire and administration right because my topic is really sensitive, and it matters a lot to me especially because we don’t have many policies in place regarding the kind of treatment and accommodations given in group homes in my country.</p> <p>I only have low support needs autism and medium support needs ADHD, and my respondents have a wide range of disabilities, including autism, Down’s syndrome, and cerebral palsy according to the website of the religious order who run the group home. They also have a wide variety of ages; some of them I presume are younger than pre-teens, and the oldest one I know of is 34 years old.</p> <p>How do I craft a research questionnaire that is accessible enough? Any other tips on carrying out disability research? Any tips for a stupidly young and youthfully stupid guy navigating the world of research? Please help!!! I will love you forever and ever and ever. Also I can send my ongoing research through DMs if you ask for it (it has my real name and my school on it and I don’t feel like doxxing myself)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/lizard-rustler17\"> /u/lizard-rustler17 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uh4xsk/disability_studies_researchers_or_just/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uh4xsk/disability_studies_researchers_or_just/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uh4xsk/disability_studies_researchers_or_just/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/lizard-rustler17",
+    "publishedAt": "2026-06-27T15:00:31+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "63187343160f3a245f48da1a1a337c0ae1456003169c13c899d7011f5571ac73"
+  },
+  {
+    "id": "reddit_1ugr5fu",
+    "redditId": "1ugr5fu",
+    "title": "Faculty search burnouts",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am an Asian woman in engineering. This is my 5th year as a postdoc. My PhD training wasn’t ideal and my institute is not very prestigious to many people, so I intended to learn more by doing postdoc. Over the years, I accumulated relatively good publications for my fields in high profile journals. I started academia job search last summer. </p> <p>My problem is probably interview conversation rate. I had 4 zoom interviews from US R1 universities, converted one onsite of the 4. I also had one US onsite without zoom. I also had 2 uk interviews from nice universities, 1 interview from Ireland, and 1 onsite interview from Hong Kong. These were all valid positions, and the processes were all relatively fair: no preferred internal candidates or not interviewing me just because I am a female. </p> <p>I still love doing research, but I don’t know if I can get my interview skills and interpersonal skills improved so I can eventually pass one interview…. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ClassNo4330\"> /u/ClassNo4330 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ugr5fu/faculty_search_burnouts/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ugr5fu/faculty_search_burnouts/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ugr5fu/faculty_search_burnouts/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/ClassNo4330",
+    "publishedAt": "2026-06-27T03:01:09+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "4e57ffef368f062249c0ad11ff85a34293149956c5ed500fe3232bb49d814c97"
+  },
+  {
+    "id": "reddit_1ugfy3h",
+    "redditId": "1ugfy3h",
+    "title": "Can someone help me access this research paper?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I have tried annas archive and sci-hub but they both dont work :c</p> <p><a href=\"https://journals.lww.com/co-lipidology/abstract/2023/08000/inclisiran__present_and_future_perspectives_of_a.2.aspx\">https://journals.lww.com/co-lipidology/abstract/2023/08000/inclisiran__present_and_future_perspectives_of_a.2.aspx</a></p> <p>Also if anyone had any tips on more reliably accessing scientific papers that would be really helpful!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/TheOmniscientPOV\"> /u/TheOmniscientPOV </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ugfy3h/can_someone_help_me_access_this_research_paper/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ugfy3h/can_someone_help_me_access_this_research_paper/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ugfy3h/can_someone_help_me_access_this_research_paper/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/TheOmniscientPOV",
+    "publishedAt": "2026-06-26T19:08:12+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "40f97671dba5b8137be1b53855d1152992359c6aa7aa3991027445b11b4d983e"
+  },
+  {
+    "id": "reddit_1ugahnw",
+    "redditId": "1ugahnw",
+    "title": "Feeling cheap and uninspired, how can I resolve this?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I just finished my second research article, therefore I thought I'd try making a new one in hopes of getting another publication. Naturally, I tried to research a new topic. But then, as I tried to read more, I became unsure on how should I write my new paper.</p> <p>Say, that I found an article with two independent variables and one dependant variables that I want to do a research on, so to not make it a reduplication paper, I would add another independent variable as part of the originality. But then, as I searched more journals and articles, I found that those three independent variables towards the same dependent variable had already been done, then I add more, then I found out that it had also been done.</p> <p>Perhaps I could try to use different methodology, but then, y'know, someone already did what I was planning to do. It then becomes discouraging to continue, so I was wondering what you guys do. How do you deal with this kind of roadblock?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Pale-Object8321\"> /u/Pale-Object8321 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ugahnw/feeling_cheap_and_uninspired_how_can_i_resolve/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ugahnw/feeling_cheap_and_uninspired_how_can_i_resolve/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ugahnw/feeling_cheap_and_uninspired_how_can_i_resolve/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Pale-Object8321",
+    "publishedAt": "2026-06-26T15:46:27+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "3ece8de1ff6a552a091586a21587a659e3895baad442c4317b2e6fc25a418c49"
+  },
+  {
+    "id": "reddit_1ug80dk",
+    "redditId": "1ug80dk",
+    "title": "Are journal invitations ever legit?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I've been getting occasional, unsolicited email invitations to submit my work to open access journals. Is this a thing? Or is it always a red flag? </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/independentpenmyself\"> /u/independentpenmyself </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ug80dk/are_journal_invitations_ever_legit/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1ug80dk/are_journal_invitations_ever_legit/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1ug80dk/are_journal_invitations_ever_legit/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/independentpenmyself",
+    "publishedAt": "2026-06-26T14:13:07+00:00",
+    "fetchedAt": "2026-07-04T07:35:03.129Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "95cbf3343d4455c965dffe6b3b57d5764e64f52f7b1c5d5e5f9ab78abd3cfd33"
   }
 ]
