@@ -2748,6 +2748,86 @@ console.log('Reddit Reply Assistant v1.0 — All 6 batches complete.');
 console.log('Features: reply generation | 8 templates | risk detection | 6 editing tools | history');
 console.log('Accessibility: aria-labels | keyboard shortcuts | responsive layout');
 console.log('State:', state);
+
+// ── Reddit Radar 预填集成 ──
+(function checkRadarPrefill() {
+  try {
+    var prefillRaw = localStorage.getItem('reddit_reply_prefill');
+    if (!prefillRaw) return;
+    var prefill = JSON.parse(prefillRaw);
+    localStorage.removeItem('reddit_reply_prefill');
+
+    // 预填原帖内容
+    var sourceTextEl = document.getElementById('sourceText');
+    if (sourceTextEl && prefill.content) {
+      sourceTextEl.value = prefill.content;
+      sourceTextEl.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    // 预填帖子标题
+    if (prefill.title) {
+      var postTitleEl = document.getElementById('postTitle');
+      if (postTitleEl) postTitleEl.value = prefill.title;
+    }
+
+    // 预填 Subreddit
+    if (prefill.subreddit) {
+      var subredditEl = document.getElementById('subreddit');
+      if (subredditEl) subredditEl.value = prefill.subreddit;
+    }
+
+    // 预填问题类型
+    if (prefill.problemType) {
+      var problemEl = document.getElementById('problemType');
+      if (problemEl) {
+        problemEl.value = prefill.problemType;
+        problemEl.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+
+    // 预填用户身份
+    if (prefill.userType) {
+      var userTypeEl = document.getElementById('userType');
+      if (userTypeEl) userTypeEl.value = prefill.userType;
+    }
+
+    // 预填学科领域
+    if (prefill.field) {
+      var fieldEl = document.getElementById('field');
+      if (fieldEl) fieldEl.value = prefill.field;
+    }
+
+    // 预填回复语气
+    if (prefill.tone) {
+      var toneBtns = document.querySelectorAll('.tone-card');
+      toneBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-tone') === prefill.tone) {
+          btn.click();
+        }
+      });
+    }
+
+    // 预填回复目标
+    if (prefill.replyGoal) {
+      var replyGoalEl = document.getElementById('replyGoal');
+      if (replyGoalEl) replyGoalEl.value = prefill.replyGoal;
+    }
+
+    // 预填 CTA 强度
+    if (prefill.ctaLevel) {
+      var ctaBtns = document.querySelectorAll('.cta-seg');
+      ctaBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-cta') === prefill.ctaLevel) {
+          btn.click();
+        }
+      });
+    }
+
+    console.log('[Reddit Radar] 已自动预填线索数据，来源：' + (prefill.sourceUrl || 'Radar'));
+  } catch (e) {
+    console.warn('[Reddit Radar] 预填失败：', e);
+  }
+})();
 </script>
 
 </body>

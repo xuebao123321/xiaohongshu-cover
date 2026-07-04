@@ -18,7 +18,8 @@ public/
 *.log
 
 # 本地数据库
-data/
+data/*
+!data/reddit/
 .wrangler/
 
 # 临时文件

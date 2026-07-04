@@ -1,0 +1,38 @@
+name: Reddit Radar
+
+on:
+  schedule:
+    - cron: "37 2,14 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  reddit-radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch Reddit RSS
+        run: node scripts/fetch-reddit-rss.mjs
+
+      - name: Analyze new posts
+        run: node scripts/analyze-reddit-posts.mjs
+        env:
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          AI_BASE_URL: ${{ secrets.AI_BASE_URL }}
+          AI_MODEL: ${{ secrets.AI_MODEL }}
+
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add data/reddit/*.json
+          git diff --cached --quiet || git commit -m "Update Reddit radar data [skip ci]"
+          git push

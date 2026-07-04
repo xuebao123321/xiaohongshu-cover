@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit 线索雷达 · 封面生成器</title>
+<style>
+/* ═══════════ 重置 ═══════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  background:#f7f5f2;padding:24px 20px 60px;color:#2d2a26;line-height:1.5;min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer}
+a{color:#1f4b73;text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ═══════════ 容器 ═══════════ */
+.container{max-width:1100px;margin:0 auto}
+
+/* ═══════════ 顶部导航 ═══════════ */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 20px;background:#fff;border:1.5px solid #e8e4df;border-radius:12px;
+  margin-bottom:16px;flex-wrap:wrap;
+}
+.topbar h1{font-size:20px;font-weight:900;color:#1a1a1a;white-space:nowrap}
+.topbar nav{display:flex;gap:16px;font-size:13px;font-weight:500;flex-wrap:wrap}
+.topbar nav a{white-space:nowrap}
+.topbar .update-info{font-size:11px;color:#8a8a8a}
+
+/* ═══════════ 统计栏 ═══════════ */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.stat-card{
+  background:#fff;border:1.5px solid #e8e4df;border-radius:10px;
+  padding:14px 16px;text-align:center;
+}
+.stat-card .num{font-size:26px;font-weight:900;color:#1a1a1a;line-height:1.2}
+.stat-card .num.highlight{color:#ED0108}
+.stat-card .num.good{color:#2d8a56}
+.stat-card .label{font-size:11px;color:#8a8a8a;margin-top:2px}
+
+/* ═══════════ 筛选区 ═══════════ */
+.filter-bar{
+  background:#fff;border:1.5px solid #e8e4df;border-radius:10px;
+  padding:12px 16px;margin-bottom:14px;display:flex;flex-wrap:wrap;
+  gap:10px;align-items:center;font-size:12px;
+}
+.filter-bar input[type="text"],
+.filter-bar select{
+  padding:6px 10px;border:1.5px solid #e0dcd6;border-radius:6px;
+  font-size:12px;outline:none;background:#faf9f7;font-family:inherit;
+}
+.filter-bar input[type="text"]:focus,
+.filter-bar select:focus{border-color:#5a8cb8;background:#fff}
+.filter-bar input[type="text"]{min-width:160px}
+.filter-bar select{min-width:100px}
+.filter-bar input[type="number"]{
+  width:56px;padding:6px 8px;border:1.5px solid #e0dcd6;border-radius:6px;
+  font-size:12px;outline:none;background:#faf9f7;text-align:center;
+}
+.filter-bar input[type="number"]:focus{border-color:#5a8cb8;background:#fff}
+.filter-bar label{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:#5a5a5a;cursor:pointer;white-space:nowrap}
+.filter-bar .filter-divider{width:1px;height:22px;background:#e8e4df}
+.filter-bar .filter-count{font-size:11px;color:#8a8a8a;margin-left:auto;white-space:nowrap}
+
+/* ═══════════ 线索卡片 ═══════════ */
+.post-card{
+  display:flex;background:#fff;border:1.5px solid #e8e4df;border-radius:10px;
+  margin-bottom:8px;overflow:hidden;transition:box-shadow .15s;
+}
+.post-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.post-card .left-bar{min-width:4px;width:4px;flex-shrink:0}
+.post-card .left-bar.high{background:#ED0108}
+.post-card .left-bar.reply{background:#1f4b73}
+.post-card .left-bar.save{background:#2d8a56}
+.post-card .left-bar.ignore{background:#b0a89e}
+.post-card .card-body{flex:1;padding:12px 16px;min-width:0}
+.post-card .card-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.post-card .card-row+.card-row{margin-top:6px}
+.post-card .card-title{font-size:14px;font-weight:700;color:#2d2a26;flex:1;min-width:0}
+.post-card .card-title a{color:inherit}
+.post-card .card-title a:hover{color:#1f4b73}
+.post-card .score-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:32px;height:24px;border-radius:6px;font-size:12px;font-weight:900;
+  padding:0 8px;flex-shrink:0;
+}
+.post-card .score-badge.high-score{background:#ffe8e8;color:#ED0108}
+.post-card .score-badge.mid-score{background:#e8f2fa;color:#1f4b73}
+.post-card .score-badge.low-score{background:#f0eeea;color:#8a8a8a}
+.post-card .tag{
+  display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;
+  border-radius:4px;white-space:nowrap;
+}
+.tag-sub{background:#f0eeea;color:#5a5a5a}
+.tag-type{background:#fff3e0;color:#c77800}
+.tag-keyword{background:#eef4f8;color:#1f4b73}
+.tag-action{font-size:10px;font-weight:700;padding:2px 7px;border-radius:4px}
+.tag-action.high{background:#ffe8e8;color:#ED0108}
+.tag-action.reply{background:#e8f2fa;color:#1f4b73}
+.tag-action.save{background:#e8f5e9;color:#2d8a56}
+.tag-action.ignore{background:#f0eeea;color:#8a8a8a}
+.post-card .summary{font-size:12px;color:#8a8a8a;line-height:1.5;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;margin-top:4px;
+}
+.post-card .card-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.post-card .btn-sm{
+  font-size:11px;padding:4px 10px;border-radius:6px;border:1.5px solid #e0dcd6;
+  background:#fff;color:#5a5a5a;font-weight:600;transition:all .15s;
+}
+.post-card .btn-sm:hover{background:#f5f3ef;border-color:#c8c4be}
+.post-card .btn-sm.btn-reply{background:#1f4b73;color:#fff;border-color:#1f4b73}
+.post-card .btn-sm.btn-reply:hover{background:#183d5e}
+.post-card .btn-sm.btn-save{background:#2d8a56;color:#fff;border-color:#2d8a56}
+.post-card .btn-sm.btn-save:hover{background:#236e44}
+.post-card .link-icon{font-size:13px;color:#8a8a8a}
+.post-card .link-icon:hover{color:#1f4b73;text-decoration:none}
+
+/* ═══════════ 详情面板（右侧抽屉） ═══════════ */
+.detail-overlay{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,.3);z-index:999;
+}
+.detail-overlay.show{display:block}
+.detail-panel{
+  position:fixed;top:0;right:0;width:520px;max-width:100vw;height:100%;
+  background:#fff;z-index:1000;overflow-y:auto;
+  box-shadow:-4px 0 20px rgba(0,0,0,.1);padding:24px;
+  transform:translateX(100%);transition:transform .25s ease;
+}
+.detail-panel.show{transform:translateX(0)}
+.detail-panel .detail-close{
+  position:absolute;top:12px;right:16px;font-size:22px;
+  background:none;border:none;cursor:pointer;color:#8a8a8a;line-height:1;
+}
+.detail-panel .detail-close:hover{color:#1a1a1a}
+.detail-panel h3{font-size:17px;font-weight:900;margin-bottom:6px;color:#1a1a1a}
+.detail-panel .detail-link{font-size:12px;word-break:break-all;margin-bottom:12px;display:block}
+.detail-panel .detail-content{
+  font-size:13px;color:#5a5a5a;line-height:1.7;margin-bottom:16px;
+  padding:12px;background:#faf9f7;border-radius:8px;max-height:240px;overflow-y:auto;
+  white-space:pre-wrap;word-break:break-word;
+}
+.detail-panel .detail-section{margin-bottom:14px}
+.detail-panel .detail-section h4{font-size:12px;font-weight:800;color:#8a8a8a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.detail-panel .detail-section p{font-size:13px;color:#2d2a26}
+.detail-panel .score-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+.detail-panel .score-item{flex:1;min-width:80px}
+.detail-panel .score-item .score-label{font-size:10px;color:#8a8a8a;font-weight:700;margin-bottom:2px}
+.detail-panel .score-item .score-bar{
+  height:6px;background:#f0eeea;border-radius:3px;overflow:hidden;
+}
+.detail-panel .score-item .score-fill{height:100%;border-radius:3px;transition:width .3s}
+.score-fill.high-bar{background:#ED0108}
+.score-fill.mid-bar{background:#5a8cb8}
+.score-fill.low-bar{background:#b0a89e}
+.score-fill.good-bar{background:#2d8a56}
+
+/* ═══════════ 空状态 / 加载 ═══════════ */
+.empty-state{text-align:center;padding:60px 20px;color:#8a8a8a}
+.empty-state .empty-icon{font-size:48px;margin-bottom:12px}
+.empty-state p{font-size:14px;margin-bottom:6px}
+.spinner{display:inline-block;width:24px;height:24px;border:2.5px solid #e0dcd6;border-top-color:#5a8cb8;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-wrap{display:flex;align-items:center;justify-content:center;gap:10px;padding:40px;font-size:13px;color:#8a8a8a}
+.error-state{text-align:center;padding:40px 20px;color:#ED0108}
+.error-state button{font-size:13px;margin-top:10px}
+
+/* ═══════════ Toast ═══════════ */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+  background:#1a1a1a;color:#fff;padding:10px 24px;border-radius:999px;
+  font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:opacity .25s;pointer-events:none;
+}
+.toast.show{opacity:1}
+
+/* ═══════════ 响应式 ═══════════ */
+@media(max-width:768px){
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .detail-panel{width:100vw}
+  .topbar{flex-direction:column;align-items:flex-start}
+  .filter-bar{flex-direction:column;align-items:stretch}
+  .filter-bar input[type="text"]{min-width:auto}
+  .filter-bar select{min-width:auto}
+  .filter-bar .filter-divider{display:none}
+  .filter-bar .filter-count{margin-left:0}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ═══════════ 顶部导航 ═══════════ -->
+  <div class="topbar">
+    <div>
+      <h1>🔭 Reddit 线索雷达</h1>
+      <div class="update-info" id="updateInfo">数据加载中...</div>
+    </div>
+    <nav>
+      <a href="../index.html">← 封面生成器</a>
+      <a href="../reddit-reply-assistant/">🧠 回复助手</a>
+      <a href="../ins_reviewer_carousel/">📱 Instagram 图</a>
+    </nav>
+  </div>
+
+  <!-- ═══════════ 统计栏 ═══════════ -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="num" id="statNew">-</div>
+      <div class="label">今日新增</div>
+    </div>
+    <div class="stat-card">
+      <div class="num highlight" id="statHigh">-</div>
+      <div class="label">高分线索 (≥15)</div>
+    </div>
+    <div class="stat-card">
+      <div class="num good" id="statReply">-</div>
+      <div class="label">适合回复</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="statUpdate" style="font-size:18px">-</div>
+      <div class="label">最近更新</div>
+    </div>
+  </div>
+
+  <!-- ═══════════ 筛选区 ═══════════ -->
+  <div class="filter-bar">
+    <input type="text" id="filterSearch" placeholder="🔍 搜索标题/内容..." autocomplete="off">
+    <select id="filterSubreddit"><option value="">全部 Subreddit</option></select>
+    <select id="filterProblemType">
+      <option value="">全部类型</option>
+      <option value="harsh_reviewer">审稿严苛</option>
+      <option value="writing_unclear">写作不清晰</option>
+      <option value="lack_of_novelty">创新性不足</option>
+      <option value="english_editing">英文润色</option>
+      <option value="journal_selection">选刊投稿</option>
+      <option value="rr_anxiety">返修焦虑</option>
+      <option value="ai_writing">AI写作</option>
+      <option value="thesis_structure">论文结构</option>
+      <option value="other">其他</option>
+    </select>
+    <select id="filterAction">
+      <option value="">全部动作</option>
+      <option value="high_priority_reply">高优先级回复</option>
+      <option value="reply">可回复</option>
+      <option value="save_topic">保存选题</option>
+      <option value="ignore">忽略</option>
+    </select>
+    <input type="number" id="filterMinScore" value="6" min="0" max="20" title="最低分数">
+    <select id="filterTime">
+      <option value="">全部时间</option>
+      <option value="1">今天</option>
+      <option value="3">最近3天</option>
+      <option value="7">最近7天</option>
+    </select>
+    <span class="filter-divider"></span>
+    <label><input type="checkbox" id="filterReplyOnly"> 只看适合回复</label>
+    <label><input type="checkbox" id="filterTopicOnly"> 只看可转选题</label>
+    <span class="filter-divider"></span>
+    <select id="filterSort">
+      <option value="score">按线索分↓</option>
+      <option value="published">按发布时间↓</option>
+      <option value="fetched">按抓取时间↓</option>
+      <option value="serviceFit">按服务匹配度↓</option>
+      <option value="replyWorth">按回复价值↓</option>
+    </select>
+    <span class="filter-count" id="filterCount"></span>
+  </div>
+
+  <!-- ═══════════ 线索列表 ═══════════ -->
+  <div id="postList"></div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════ 详情面板 ═══════════ -->
+<div class="detail-overlay" id="detailOverlay"></div>
+<div class="detail-panel" id="detailPanel"></div>
+
+<script>
+/* ═══════════ 常量 ═══════════ */
+var PROBLEM_TYPE_LABELS = {
+  harsh_reviewer: '审稿严苛', writing_unclear: '写作不清晰',
+  lack_of_novelty: '创新性不足', english_editing: '英文润色',
+  journal_selection: '选刊投稿', rr_anxiety: '返修焦虑',
+  ai_writing: 'AI写作', thesis_structure: '论文结构',
+  other: '其他', irrelevant: '无关'
+};
+var POST_TYPE_LABELS = {
+  user_need: '用户求助', competitor_marketing: '同行营销',
+  academic_discussion: '学术讨论', irrelevant: '无关'
+};
+var ACTION_COLORS = {
+  high_priority_reply: 'high', reply: 'reply', save_topic: 'save', ignore: 'ignore'
+};
+var ACTION_LABELS = {
+  high_priority_reply: '高优回复', reply: '可回复', save_topic: '存选题', ignore: '忽略'
+};
+
+var STATE = {
+  posts: [],
+  analyses: [],
+  merged: [],
+  statuses: {},
+  topics: [],
+  detailPostId: null
+};
+
+/* ═══════════ DOM 引用 ═══════════ */
+var $ = function(id) { return document.getElementById(id); };
+var postList = $('postList');
+var detailOverlay = $('detailOverlay');
+var detailPanel = $('detailPanel');
+var toastEl = $('toast');
+
+/* ═══════════ Toast ═══════════ */
+var toastTimer;
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { toastEl.classList.remove('show'); }, 2000);
+}
+
+/* ═══════════ 数据加载 ═══════════ */
+function loadData() {
+  postList.innerHTML = '<div class="loading-wrap"><span class="spinner"></span>加载线索数据...</div>';
+
+  Promise.all([
+    fetch('../data/reddit/posts.json').then(function(r) { return r.json(); }),
+    fetch('../data/reddit/analysis.json').then(function(r) { return r.json(); })
+  ]).then(function(results) {
+    STATE.posts = Array.isArray(results[0]) ? results[0] : [];
+    STATE.analyses = Array.isArray(results[1]) ? results[1] : [];
+    loadLocalState();
+    mergeData();
+    renderAll();
+    $('updateInfo').textContent = '数据已就绪 · 最近更新: ' + getLatestUpdate();
+  }).catch(function(e) {
+    postList.innerHTML = '<div class="error-state"><p>❌ 数据加载失败</p><p style="font-size:12px;color:#8a8a8a">' + e.message + '</p><button onclick="loadData()">重新加载</button></div>';
+    $('updateInfo').textContent = '数据加载失败';
+    console.error('[Reddit Radar] Load error:', e);
+  });
+}
+
+function loadLocalState() {
+  try {
+    STATE.statuses = JSON.parse(localStorage.getItem('reddit_radar_statuses') || '{}');
+  } catch(e) { STATE.statuses = {}; }
+  try {
+    STATE.topics = JSON.parse(localStorage.getItem('reddit_radar_topics') || '[]');
+  } catch(e) { STATE.topics = []; }
+}
+
+function saveLocalState() {
+  try {
+    localStorage.setItem('reddit_radar_statuses', JSON.stringify(STATE.statuses));
+    localStorage.setItem('reddit_radar_topics', JSON.stringify(STATE.topics));
+  } catch(e) { /* quota exceeded, silent fail */ }
+}
+
+function getLatestUpdate() {
+  var latest = '';
+  for (var i = 0; i < STATE.analyses.length; i++) {
+    var t = STATE.analyses[i].analyzedAt;
+    if (t && t > latest) latest = t;
+  }
+  if (!latest) {
+    for (var j = 0; j < STATE.posts.length; j++) {
+      var ft = STATE.posts[j].fetchedAt;
+      if (ft && ft > latest) latest = ft;
+    }
+  }
+  if (!latest) return '暂无数据';
+  return new Date(latest).toLocaleString('zh-CN', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+}
+
+/* ═══════════ 数据合并 ═══════════ */
+function mergeData() {
+  var analysisMap = {};
+  for (var i = 0; i < STATE.analyses.length; i++) {
+    var a = STATE.analyses[i];
+    if (a.postId) analysisMap[a.postId] = a;
+  }
+
+  var cutoff = Date.now() - 14 * 86400000;
+  STATE.merged = [];
+  for (var j = 0; j < STATE.posts.length; j++) {
+    var post = STATE.posts[j];
+    var pubTime = new Date(post.publishedAt).getTime();
+    if (isNaN(pubTime) || pubTime < cutoff) continue;
+    var analysis = analysisMap[post.id] || {};
+    STATE.merged.push(Object.assign({}, post, analysis));
+  }
+}
+
+/* ═══════════ 筛选排序 ═══════════ */
+function getFilteredPosts() {
+  var search = ($('filterSearch').value || '').trim().toLowerCase();
+  var subreddit = $('filterSubreddit').value;
+  var problemType = $('filterProblemType').value;
+  var action = $('filterAction').value;
+  var minScore = parseInt($('filterMinScore').value, 10) || 0;
+  var timeDays = parseInt($('filterTime').value, 10) || 0;
+  var replyOnly = $('filterReplyOnly').checked;
+  var topicOnly = $('filterTopicOnly').checked;
+  var sortBy = $('filterSort').value || 'score';
+
+  var filtered = STATE.merged.filter(function(m) {
+    // search
+    if (search) {
+      var haystack = ((m.title || '') + ' ' + (m.content || '') + ' ' + (m.summary || '')).toLowerCase();
+      if (haystack.indexOf(search) === -1) return false;
+    }
+    // subreddit
+    if (subreddit && m.subreddit !== subreddit) return false;
+    // problem type
+    if (problemType && m.problemType !== problemType) return false;
+    // action
+    if (action && m.recommendedAction !== action) return false;
+    // min score
+    if ((m.totalScore || 0) < minScore) return false;
+    // time range
+    if (timeDays > 0) {
+      var cutoff = Date.now() - timeDays * 86400000;
+      if (new Date(m.publishedAt).getTime() < cutoff) return false;
+    }
+    // reply only
+    if (replyOnly && m.recommendedAction !== 'reply' && m.recommendedAction !== 'high_priority_reply') return false;
+    // topic only
+    if (topicOnly && (m.xiaohongshuTopic || m.instagramTopic ? false : true)) return false;
+    return true;
+  });
+
+  // sort
+  var sorters = {
+    score: function(a, b) { return (b.totalScore || 0) - (a.totalScore || 0); },
+    published: function(a, b) { return new Date(b.publishedAt || 0) - new Date(a.publishedAt || 0); },
+    fetched: function(a, b) { return new Date(b.fetchedAt || 0) - new Date(a.fetchedAt || 0); },
+    serviceFit: function(a, b) { return (b.serviceFitScore || 0) - (a.serviceFitScore || 0); },
+    replyWorth: function(a, b) { return (b.replyWorthinessScore || 0) - (a.replyWorthinessScore || 0); }
+  };
+  filtered.sort(sorters[sortBy] || sorters.score);
+
+  return filtered;
+}
+
+/* ═══════════ 渲染 ═══════════ */
+function renderAll() {
+  renderStats();
+  renderSubredditOptions();
+  renderList();
+}
+
+function renderStats() {
+  var today = new Date().toISOString().slice(0, 10);
+  var newToday = 0, highScore = 0, canReply = 0;
+  for (var i = 0; i < STATE.merged.length; i++) {
+    var m = STATE.merged[i];
+    if (m.fetchedAt && m.fetchedAt.slice(0, 10) === today) newToday++;
+    if ((m.totalScore || 0) >= 15) highScore++;
+    if (m.recommendedAction === 'reply' || m.recommendedAction === 'high_priority_reply') canReply++;
+  }
+  $('statNew').textContent = newToday;
+  $('statHigh').textContent = highScore;
+  $('statReply').textContent = canReply;
+  $('statUpdate').textContent = getLatestUpdate();
+}
+
+function renderSubredditOptions() {
+  var subs = {};
+  for (var i = 0; i < STATE.merged.length; i++) {
+    var s = STATE.merged[i].subreddit;
+    if (s) subs[s] = true;
+  }
+  var sel = $('filterSubreddit');
+  // keep first option
+  sel.innerHTML = '<option value="">全部 Subreddit</option>';
+  Object.keys(subs).sort().forEach(function(s) {
+    sel.innerHTML += '<option value="' + s + '">r/' + s + '</option>';
+  });
+}
+
+function renderList() {
+  var filtered = getFilteredPosts();
+  $('filterCount').textContent = '共 ' + filtered.length + ' 条';
+
+  if (filtered.length === 0) {
+    postList.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>暂无符合条件的 Reddit 线索</p><p style="font-size:12px">请调整筛选条件，或等待数据更新</p></div>';
+    return;
+  }
+
+  postList.innerHTML = filtered.map(function(m) {
+    var colorClass = ACTION_COLORS[m.recommendedAction] || 'ignore';
+    var score = m.totalScore || 0;
+    var scoreClass = score >= 15 ? 'high-score' : (score >= 10 ? 'mid-score' : 'low-score');
+    var isReplyable = m.recommendedAction === 'reply' || m.recommendedAction === 'high_priority_reply';
+    var status = STATE.statuses[m.id];
+    var isReviewed = status && status.status === 'reviewed';
+
+    var pubDate = m.publishedAt ? new Date(m.publishedAt).toLocaleDateString('zh-CN', { month:'2-digit', day:'2-digit' }) : '';
+    var typeLabel = PROBLEM_TYPE_LABELS[m.problemType] || m.problemType || '';
+    var actionLabel = ACTION_LABELS[m.recommendedAction] || m.recommendedAction || '';
+    var keywords = Array.isArray(m.sourceKeywords) ? m.sourceKeywords.join(', ') : (m.sourceKeyword || '');
+    var summary = m.summary || '';
+
+    return '' +
+    '<div class="post-card' + (isReviewed ? '' : '') + '">' +
+      '<div class="left-bar ' + colorClass + '"></div>' +
+      '<div class="card-body">' +
+        '<div class="card-row">' +
+          '<span class="card-title"><a href="' + (m.url || '#') + '" target="_blank" rel="noopener" title="查看原帖">' + escapeHtml(m.title || '(无标题)') + '</a></span>' +
+          '<span class="score-badge ' + scoreClass + '" title="线索总分">' + score + '</span>' +
+        '</div>' +
+        '<div class="card-row">' +
+          '<span class="tag tag-sub">r/' + escapeHtml(m.subreddit || '?') + '</span>' +
+          (pubDate ? '<span style="font-size:11px;color:#a8a098">' + pubDate + '</span>' : '') +
+          (keywords ? '<span class="tag tag-keyword">' + escapeHtml(keywords) + '</span>' : '') +
+          (typeLabel ? '<span class="tag tag-type">' + typeLabel + '</span>' : '') +
+          '<span class="tag-action ' + colorClass + '">' + actionLabel + '</span>' +
+        '</div>' +
+        (summary ? '<div class="summary">' + escapeHtml(summary) + '</div>' : '') +
+        '<div class="card-row card-actions" style="margin-top:8px">' +
+          (isReplyable ? '<button class="btn-sm btn-reply" onclick="goGenerateReply(\'' + m.id + '\')">✏️ 生成回复</button>' : '') +
+          '<button class="btn-sm btn-save" onclick="saveAsTopic(\'' + m.id + '\')">💾 保存选题</button>' +
+          '<button class="btn-sm" onclick="toggleDetail(\'' + m.id + '\')">📋 详情</button>' +
+          '<button class="btn-sm" onclick="markReviewed(\'' + m.id + '\')">' + (isReviewed ? '✅ 已读' : '○ 标记已读') + '</button>' +
+          '<a class="link-icon" href="' + (m.url || '#') + '" target="_blank" rel="noopener" title="打开原帖">🔗</a>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+/* ═══════════ 详情面板 ═══════════ */
+function toggleDetail(postId) {
+  if (STATE.detailPostId === postId) {
+    closeDetail();
+    return;
+  }
+  STATE.detailPostId = postId;
+  renderDetail(postId);
+}
+
+function renderDetail(postId) {
+  var m = findMerged(postId);
+  if (!m) return;
+
+  var html = '<button class="detail-close" onclick="closeDetail()">&times;</button>';
+  html += '<h3>' + escapeHtml(m.title || '(无标题)') + '</h3>';
+  html += '<a class="detail-link" href="' + (m.url || '#') + '" target="_blank" rel="noopener">🔗 ' + (m.url || '') + '</a>';
+
+  if (m.content) {
+    html += '<div class="detail-section"><h4>原帖正文</h4>';
+    html += '<div class="detail-content">' + escapeHtml(m.content) + '</div></div>';
+  }
+
+  html += '<div class="detail-section"><h4>AI 分析</h4>';
+  html += '<p><strong>帖子类型：</strong>' + (POST_TYPE_LABELS[m.postType] || m.postType || '-') + '</p>';
+  html += '<p><strong>问题类型：</strong>' + (PROBLEM_TYPE_LABELS[m.problemType] || m.problemType || '-') + '</p>';
+  html += '<p><strong>痛点：</strong>' + escapeHtml(m.painPoint || '-') + '</p>';
+
+  html += '<div class="score-row">';
+  html += scoreItem('紧急度', m.urgencyScore, 'high-bar');
+  html += scoreItem('匹配度', m.serviceFitScore, 'mid-bar');
+  html += scoreItem('回复价值', m.replyWorthinessScore, 'good-bar');
+  html += scoreItem('风险', m.riskScore, m.riskScore >= 4 ? 'high-bar' : 'low-bar');
+  html += '</div>';
+
+  html += '<p><strong>总分：</strong>' + (m.totalScore || 0) + ' / 20</p>';
+  html += '<p><strong>建议动作：</strong>' + (ACTION_LABELS[m.recommendedAction] || m.recommendedAction || '-') + '</p>';
+
+  if (m.suggestedReplyAngle) html += '<p><strong>推荐回复角度：</strong>' + escapeHtml(m.suggestedReplyAngle) + '</p>';
+  if (m.ctaLevel) html += '<p><strong>CTA 强度：</strong>' + escapeHtml(m.ctaLevel) + '</p>';
+  if (m.complianceNotes) html += '<p><strong>合规提醒：</strong>' + escapeHtml(m.complianceNotes) + '</p>';
+  if (m.xiaohongshuTopic) html += '<p><strong>小红书选题：</strong>' + escapeHtml(m.xiaohongshuTopic) + '</p>';
+  if (m.instagramTopic) html += '<p><strong>Instagram 选题：</strong>' + escapeHtml(m.instagramTopic) + '</p>';
+
+  if (m.analysisError) {
+    html += '<p style="color:#ED0108"><strong>分析错误：</strong>' + escapeHtml(m.analysisError) + '</p>';
+  }
+
+  html += '<p style="font-size:11px;color:#8a8a8a">分析时间：' + (m.analyzedAt ? new Date(m.analyzedAt).toLocaleString('zh-CN') : '分析失败') + '</p>';
+  html += '</div>';
+
+  detailPanel.innerHTML = html;
+  detailOverlay.classList.add('show');
+  detailPanel.classList.add('show');
+}
+
+function scoreItem(label, score, barClass) {
+  var pct = Math.round((score || 0) / 5 * 100);
+  return '<div class="score-item">' +
+    '<div class="score-label">' + label + ' (' + (score || 0) + '/5)</div>' +
+    '<div class="score-bar"><div class="score-fill ' + barClass + '" style="width:' + pct + '%"></div></div>' +
+    '</div>';
+}
+
+function closeDetail() {
+  STATE.detailPostId = null;
+  detailOverlay.classList.remove('show');
+  detailPanel.classList.remove('show');
+}
+
+detailOverlay.addEventListener('click', closeDetail);
+
+/* ═══════════ 查找合并数据 ═══════════ */
+function findMerged(postId) {
+  for (var i = 0; i < STATE.merged.length; i++) {
+    if (STATE.merged[i].id === postId) return STATE.merged[i];
+  }
+  return null;
+}
+
+/* ═══════════ 操作 ═══════════ */
+function goGenerateReply(postId) {
+  var m = findMerged(postId);
+  if (!m) return;
+  try {
+    localStorage.setItem('reddit_reply_prefill', JSON.stringify({
+      title: m.title || '',
+      content: m.content || '',
+      subreddit: m.subreddit || '',
+      problemType: m.problemType || '',
+      userType: 'Unknown',
+      field: 'General',
+      tone: 'warm',
+      replyGoal: 'build_trust',
+      ctaLevel: m.ctaLevel || 'soft',
+      suggestedReplyAngle: m.suggestedReplyAngle || '',
+      sourceUrl: m.url || ''
+    }));
+    showToast('✅ 已预填线索数据，正在打开回复助手...');
+    setTimeout(function() {
+      window.open('../reddit-reply-assistant/', '_blank');
+    }, 300);
+  } catch(e) {
+    showToast('❌ 操作失败: ' + e.message);
+  }
+}
+
+function saveAsTopic(postId) {
+  var m = findMerged(postId);
+  if (!m) return;
+  // Quick toggle between Instagram / 小红书 / both
+  var existing = STATE.topics.filter(function(t) { return t.sourcePostId === postId; });
+  var current = existing.length > 0 ? existing[0].platform : [];
+
+  var choice = prompt(
+    '保存为内容选题\n\n当前已选平台：' + (current.length ? current.join(', ') : '无') + '\n\n输入数字选择：\n1 = Instagram\n2 = 小红书\n3 = 两者都保存\n0 = 取消',
+    current.length === 2 ? '3' : (current.indexOf('instagram') !== -1 ? '1' : (current.indexOf('xiaohongshu') !== -1 ? '2' : '3'))
+  );
+  if (!choice) return;
+
+  var platforms = [];
+  if (choice === '1') platforms = ['instagram'];
+  else if (choice === '2') platforms = ['xiaohongshu'];
+  else if (choice === '3') platforms = ['instagram', 'xiaohongshu'];
+  else return;
+
+  // Remove existing entries for this post
+  STATE.topics = STATE.topics.filter(function(t) { return t.sourcePostId !== postId; });
+
+  // Add new
+  for (var i = 0; i < platforms.length; i++) {
+    STATE.topics.push({
+      id: 'topic_' + Date.now() + '_' + i,
+      sourcePostId: postId,
+      platform: [platforms[i]],
+      title: platforms[i] === 'instagram' ? (m.instagramTopic || m.title || '') : (m.xiaohongshuTopic || m.title || ''),
+      painPoint: m.painPoint || '',
+      problemType: m.problemType || '',
+      priority: m.totalScore || 0,
+      status: 'new',
+      createdAt: new Date().toISOString()
+    });
+  }
+
+  saveLocalState();
+  showToast('✅ 已保存为内容选题: ' + platforms.join(' + '));
+}
+
+function markReviewed(postId) {
+  STATE.statuses[postId] = {
+    status: 'reviewed',
+    note: '',
+    updatedAt: new Date().toISOString()
+  };
+  saveLocalState();
+  renderList();
+  showToast('✅ 已标记为已读');
+}
+
+/* ═══════════ 筛选事件 ═══════════ */
+function debounce(fn, ms) {
+  var timer;
+  return function() {
+    var ctx = this, args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() { fn.apply(ctx, args); }, ms);
+  };
+}
+
+var debouncedRender = debounce(renderList, 200);
+
+$('filterSearch').addEventListener('input', debouncedRender);
+$('filterSubreddit').addEventListener('change', renderList);
+$('filterProblemType').addEventListener('change', renderList);
+$('filterAction').addEventListener('change', renderList);
+$('filterMinScore').addEventListener('input', debouncedRender);
+$('filterTime').addEventListener('change', renderList);
+$('filterReplyOnly').addEventListener('change', renderList);
+$('filterTopicOnly').addEventListener('change', renderList);
+$('filterSort').addEventListener('change', renderList);
+
+/* ═══════════ 工具函数 ═══════════ */
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+/* ═══════════ 启动 ═══════════ */
+loadData();
+</script>
+</body>
+</html>

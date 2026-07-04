@@ -1,0 +1,47 @@
+[
+  {
+    "id": "reddit_sample001",
+    "redditId": "sample001",
+    "title": "Paper rejected for lack of novelty - how to respond to reviewer?",
+    "content": "My paper was rejected from a Q1 journal. The reviewer said the contribution is unclear and the paper lacks novelty. I have no idea how to revise it. Should I argue with the reviewer or just give up and submit elsewhere? Any advice would be appreciated. I'm a second-year PhD student and this is my first submission.",
+    "url": "https://www.reddit.com/r/PhD/comments/sample001/paper_rejected_lack_of_novelty/",
+    "subreddit": "PhD",
+    "author": "",
+    "publishedAt": "2026-07-04T10:00:00Z",
+    "fetchedAt": "2026-07-04T12:00:00Z",
+    "sourceId": "phd-lack-of-novelty",
+    "sourceKeyword": "lack of novelty",
+    "sourceType": "subreddit_search",
+    "contentHash": "sha256_sample001"
+  },
+  {
+    "id": "reddit_sample002",
+    "redditId": "sample002",
+    "title": "Need help choosing between two journals for my manuscript",
+    "content": "I have a manuscript ready and I'm torn between Journal A (higher IF but longer review) and Journal B (lower IF but faster). Any advice on how to decide? Field is bioinformatics.",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/sample002/choosing_journal/",
+    "subreddit": "AskAcademia",
+    "author": "",
+    "publishedAt": "2026-07-02T08:30:00Z",
+    "fetchedAt": "2026-07-04T12:01:00Z",
+    "sourceId": "askacademia-journal",
+    "sourceKeyword": "journal",
+    "sourceType": "subreddit_search",
+    "contentHash": "sha256_sample002"
+  },
+  {
+    "id": "reddit_sample003",
+    "redditId": "sample003",
+    "title": "Advisor says my writing is unclear - feeling defeated",
+    "content": "My advisor returned my draft with comments everywhere saying 'unclear', 'rewrite', 'what do you mean here?'. English is not my first language and I'm feeling really defeated. What's the best way to improve academic writing quickly?",
+    "url": "https://www.reddit.com/r/GradSchool/comments/sample003/writing_unclear/",
+    "subreddit": "GradSchool",
+    "author": "",
+    "publishedAt": "2026-07-04T09:15:00Z",
+    "fetchedAt": "2026-07-04T12:02:00Z",
+    "sourceId": "gradschool-writing",
+    "sourceKeyword": "writing",
+    "sourceType": "subreddit_search",
+    "contentHash": "sha256_sample003"
+  }
+]

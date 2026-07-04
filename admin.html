@@ -378,6 +378,12 @@ function renderUsers(users, total) {
                 title="Reddit 评论回复助手">
             ${pageAccess.includes('reddit_reply_assistant') ? '✓' : '○'} Reddit
           </span>
+          <span class="page-access-chip ${pageAccess.includes('reddit_radar') ? 'granted' : ''}"
+                data-userid="${u.id}" data-page="reddit_radar"
+                onclick="event.stopPropagation();window._togglePageAccess(this)"
+                title="Reddit 线索雷达">
+            ${pageAccess.includes('reddit_radar') ? '✓' : '○'} 雷达
+          </span>
         </div>` : '<span style="font-size:10px;color:#8a8a8a;">—</span>';
 
     return `
