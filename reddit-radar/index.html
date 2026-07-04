@@ -251,6 +251,20 @@ a:hover{text-decoration:underline}
   .source-table{font-size:10px}
   .source-table th,.source-table td{padding:4px 3px}
 }
+.profile-card{
+  background:#faf9f7;border:1.5px solid #e8e4df;border-radius:8px;
+  padding:12px 14px;margin-bottom:8px;
+}
+.profile-card h4{font-size:13px;font-weight:900;margin-bottom:4px;color:#1a1a1a}
+.profile-card .prof-row{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;margin-top:6px}
+.profile-card .prof-field{flex:1;min-width:140px}
+.profile-card .prof-label{color:#8a8a8a;font-weight:700;font-size:10px;text-transform:uppercase}
+.profile-card select,.profile-card input[type="text"]{
+  width:100%;padding:4px 6px;border:1.5px solid #e0dcd6;border-radius:4px;
+  font-size:11px;background:#fff;font-family:inherit;
+}
+.profile-card select:focus,.profile-card input:focus{border-color:#5a8cb8;outline:none}
+.profile-actions{display:flex;gap:8px;margin-top:14px}
 </style>
 </head>
 <body>
@@ -381,6 +395,14 @@ a:hover{text-decoration:underline}
       " placeholder="每行一个关键词..."></textarea>
       <div class="btn-row" style="margin-top:8px">
         <button class="btn-config btn-save-cfg" onclick="saveKeywords()">💾 保存关键词</button>
+      </div>
+      <h3 style="margin-top:20px">📋 Subreddit 画像</h3>
+      <div class="config-hint">
+        为每个 Reddit 版块设置回复风格偏好。从 Radar 点击"生成回复"时会自动应用对应版块的最佳 tone 和 CTA。
+      </div>
+      <div id="profilesContainer"></div>
+      <div class="profile-actions">
+        <button class="btn-config btn-save-cfg" onclick="saveProfiles()">💾 保存画像</button>
       </div>
       <div class="status-msg" id="configMsg"></div>
     </div>
@@ -736,6 +758,12 @@ function findMerged(postId) {
 function goGenerateReply(postId) {
   var m = findMerged(postId);
   if (!m) return;
+  // 查找对应 subreddit 的画像
+  var profile = null;
+  for (var i = 0; i < profileData.length; i++) {
+    if (profileData[i].subreddit === m.subreddit) { profile = profileData[i]; break; }
+  }
+  var rp = (profile && profile.replyProfile) ? profile.replyProfile : {};
   try {
     localStorage.setItem('reddit_reply_prefill', JSON.stringify({
       title: m.title || '',
@@ -744,10 +772,11 @@ function goGenerateReply(postId) {
       problemType: m.problemType || '',
       userType: 'Unknown',
       field: 'General',
-      tone: 'warm',
+      tone: rp.defaultTone || 'warm',
       replyGoal: 'build_trust',
-      ctaLevel: m.ctaLevel || 'soft',
+      ctaLevel: rp.defaultCtaLevel || 'soft',
       suggestedReplyAngle: m.suggestedReplyAngle || '',
+      openingTemplate: rp.openingTemplate || '',
       sourceUrl: m.url || ''
     }));
     showToast('✅ 已预填线索数据，正在打开回复助手...');
@@ -850,6 +879,7 @@ function initConfigPanel() {
   if (area) area.style.display = '';
   loadSourcesToTable();
   loadKeywords();
+  loadProfiles();
   // Bind button events via addEventListener (more reliable than inline onclick)
   ['btnFetchNow', 'btnFetchNow2'].forEach(function(id) {
     var btn = document.getElementById(id);
@@ -911,6 +941,92 @@ async function saveKeywords() {
     showConfigMsg('✅ ' + res.data.message, 'success');
   } catch(e) {
     console.error('[Radar] saveKeywords error:', e);
+    showConfigMsg('❌ ' + (e.message || '保存失败'), 'error');
+  }
+}
+
+/* ═══════════ Subreddit 画像管理 ═══════════ */
+
+var profileData = [];
+
+function loadProfiles() {
+  fetch('../data/reddit/subreddit_profiles.json')
+    .then(function(r) { return r.json(); })
+    .then(function(profiles) {
+      profileData = profiles;
+      renderProfiles();
+    })
+    .catch(function() { profileData = []; });
+}
+
+function renderProfiles() {
+  var container = document.getElementById('profilesContainer');
+  if (!container) return;
+  if (profileData.length === 0) {
+    container.innerHTML = '<p style="font-size:12px;color:#8a8a8a">暂无画像数据</p>';
+    return;
+  }
+  var tones = ['warm', 'direct', 'expert', 'casual'];
+  var ctas = ['none', 'soft', 'medium', 'direct'];
+  var styles = ['story_first', 'direct_advice'];
+
+  container.innerHTML = profileData.map(function(p, i) {
+    var toneOpts = tones.map(function(t) {
+      var replyTone = (p.replyProfile && p.replyProfile.defaultTone) || 'warm';
+      return '<option value="' + t + '"' + (replyTone === t ? ' selected' : '') + '>' + t + '</option>';
+    }).join('');
+    var ctaOpts = ctas.map(function(c) {
+      var replyCta = (p.replyProfile && p.replyProfile.defaultCtaLevel) || 'soft';
+      return '<option value="' + c + '"' + (replyCta === c ? ' selected' : '') + '>' + c + '</option>';
+    }).join('');
+    var styleOpts = styles.map(function(s) {
+      var replyStyle = (p.replyProfile && p.replyProfile.preferredStyle) || 'story_first';
+      return '<option value="' + s + '"' + (replyStyle === s ? ' selected' : '') + '>' + s + '</option>';
+    }).join('');
+    return '<div class="profile-card">' +
+      '<h4>' + escapeAttr(p.displayName || p.subreddit) + '</h4>' +
+      '<div style="font-size:10px;color:#8a8a8a;margin-bottom:4px">' + escapeAttr((p.description || '').slice(0, 100)) + '</div>' +
+      '<div class="prof-row">' +
+        '<div class="prof-field"><span class="prof-label">回复语气</span><select data-idx="' + i + '" data-field="replyTone">' + toneOpts + '</select></div>' +
+        '<div class="prof-field"><span class="prof-label">CTA强度</span><select data-idx="' + i + '" data-field="replyCta">' + ctaOpts + '</select></div>' +
+        '<div class="prof-field"><span class="prof-label">回复风格</span><select data-idx="' + i + '" data-field="replyStyle">' + styleOpts + '</select></div>' +
+      '</div>' +
+      '<div class="prof-row" style="margin-top:4px">' +
+        '<div class="prof-field" style="flex:2"><span class="prof-label">开头模板</span><input type="text" value="' + escapeAttr((p.replyProfile && p.replyProfile.openingTemplate) || '') + '" data-idx="' + i + '" data-field="openingTemplate"></div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function collectProfileData() {
+  var inputs = document.querySelectorAll('#profilesContainer [data-field]');
+  inputs.forEach(function(el) {
+    var idx = parseInt(el.dataset.idx, 10);
+    var field = el.dataset.field;
+    var val = el.value;
+    if (!profileData[idx]) return;
+    if (!profileData[idx].replyProfile) profileData[idx].replyProfile = {};
+    if (field === 'replyTone') profileData[idx].replyProfile.defaultTone = val;
+    if (field === 'replyCta') profileData[idx].replyProfile.defaultCtaLevel = val;
+    if (field === 'replyStyle') profileData[idx].replyProfile.preferredStyle = val;
+    if (field === 'openingTemplate') profileData[idx].replyProfile.openingTemplate = val;
+  });
+}
+
+async function saveProfiles() {
+  var auth = await (window.__radarGetAuth ? window.__radarGetAuth() : null);
+  if (!auth) { showConfigMsg('❌ 登录已过期', 'error'); return; }
+  collectProfileData();
+  showConfigMsg('保存中...', 'info');
+  try {
+    var supabase = window.__radarSupabase;
+    if (!supabase) throw new Error('Supabase 未初始化');
+    var res = await supabase.functions.invoke('radar-manage', {
+      body: { action: 'save_profiles', profiles: profileData }
+    });
+    if (res.error || !res.data || !res.data.ok) throw new Error((res.data && res.data.message) || '保存失败');
+    showConfigMsg('✅ ' + res.data.message, 'success');
+  } catch(e) {
     showConfigMsg('❌ ' + (e.message || '保存失败'), 'error');
   }
 }
