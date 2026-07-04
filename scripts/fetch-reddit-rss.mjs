@@ -15,7 +15,7 @@ const TMP_LOG_PATH = join(DATA_DIR, '.tmp_fetch-log.json');
 
 const USER_AGENT = 'academic-reddit-radar/1.0 (yourdomain)';
 const REQUEST_TIMEOUT_MS = 30_000;
-const DELAY_BETWEEN_MS = 2_000;
+const DELAY_BETWEEN_MS = 5_000;
 const MAX_AGE_DAYS = 14;
 
 // ── helpers ──
