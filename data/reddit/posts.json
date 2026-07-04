@@ -2242,7 +2242,13 @@
     "sourceId": "phd-reviewer-comments",
     "sourceKeyword": "reviewer comments",
     "sourceType": "subreddit_search",
-    "contentHash": "a9f6129de7f4365ab9a849d45aee411f2f612c0a358c07cd22be469ba032836d"
+    "contentHash": "a9f6129de7f4365ab9a849d45aee411f2f612c0a358c07cd22be469ba032836d",
+    "sourceKeywords": [
+      "reviewer comments"
+    ],
+    "sourceIds": [
+      "phd-reviewer-comments"
+    ]
   },
   {
     "id": "reddit_1un2bpq",
@@ -2587,7 +2593,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "08155d248d63ef095c92c8157b81d233d85db71ef85302c7987c2c76c36b6b9b"
+    "contentHash": "08155d248d63ef095c92c8157b81d233d85db71ef85302c7987c2c76c36b6b9b",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ulx44u",
@@ -2602,7 +2614,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "34afbe2a134a7b9ff9cfba21c252d5ed6efaa1e0eb1276ab52f3be4112840b8c"
+    "contentHash": "34afbe2a134a7b9ff9cfba21c252d5ed6efaa1e0eb1276ab52f3be4112840b8c",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uluzfs",
@@ -2617,7 +2635,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "61b2e9f126e7ee14a3a6d7415fe6ce70d812eefcbfe6934b641382b2d3730137"
+    "contentHash": "61b2e9f126e7ee14a3a6d7415fe6ce70d812eefcbfe6934b641382b2d3730137",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ultab9",
@@ -2632,7 +2656,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "12a33c0ba84b8728bd98df25f976ad1ca7d7964d1fe594ada2392aae3228871e"
+    "contentHash": "12a33c0ba84b8728bd98df25f976ad1ca7d7964d1fe594ada2392aae3228871e",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ulllkq",
@@ -2647,7 +2677,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "d471a9ebc2d9eec28bde79d7559717568400295b0a9b10077be24d5813d9f7e0"
+    "contentHash": "d471a9ebc2d9eec28bde79d7559717568400295b0a9b10077be24d5813d9f7e0",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ukbki5",
@@ -2662,7 +2698,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "40eecd2e1bab074abc9e7a9256575b2c5e5c48ff3b64ba03350d98ce162da489"
+    "contentHash": "40eecd2e1bab074abc9e7a9256575b2c5e5c48ff3b64ba03350d98ce162da489",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uk3ty7",
@@ -2677,7 +2719,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "aa27c4c18f96f1e7c8a46b231a268ba687dd224a8e2f22e0368d1cefbd6a3e90"
+    "contentHash": "aa27c4c18f96f1e7c8a46b231a268ba687dd224a8e2f22e0368d1cefbd6a3e90",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ujt0c2",
@@ -2692,7 +2740,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "54350a77dca9f8d0a2ec25a185b7582bdd8530a7c9ab607e9468e5037c8b8eb1"
+    "contentHash": "54350a77dca9f8d0a2ec25a185b7582bdd8530a7c9ab607e9468e5037c8b8eb1",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ujr7kq",
@@ -2707,7 +2761,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "0e9bc0a5274381073eccdc2c8dd60f3f217928a4032719611216163d597caa02"
+    "contentHash": "0e9bc0a5274381073eccdc2c8dd60f3f217928a4032719611216163d597caa02",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uj28ff",
@@ -2722,7 +2782,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "0fe0e10ce0fdaf124851c277b3468a5326d3e99b3d8abc8408ab2089c232836f"
+    "contentHash": "0fe0e10ce0fdaf124851c277b3468a5326d3e99b3d8abc8408ab2089c232836f",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uiehgi",
@@ -2737,7 +2803,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "6a91324bc1e6caf709cdf4d87ae2c41b9c9b069bb30c96516aba60478559a22f"
+    "contentHash": "6a91324bc1e6caf709cdf4d87ae2c41b9c9b069bb30c96516aba60478559a22f",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uhnq3d",
@@ -2752,7 +2824,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "9c58e9cb8dbe0025960e467af3c7fa4e083809aba655e8ea8d53e1d18cbb3229"
+    "contentHash": "9c58e9cb8dbe0025960e467af3c7fa4e083809aba655e8ea8d53e1d18cbb3229",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1uh4xsk",
@@ -2767,7 +2845,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "63187343160f3a245f48da1a1a337c0ae1456003169c13c899d7011f5571ac73"
+    "contentHash": "63187343160f3a245f48da1a1a337c0ae1456003169c13c899d7011f5571ac73",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ugr5fu",
@@ -2782,7 +2866,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "4e57ffef368f062249c0ad11ff85a34293149956c5ed500fe3232bb49d814c97"
+    "contentHash": "4e57ffef368f062249c0ad11ff85a34293149956c5ed500fe3232bb49d814c97",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ugfy3h",
@@ -2797,7 +2887,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "40f97671dba5b8137be1b53855d1152992359c6aa7aa3991027445b11b4d983e"
+    "contentHash": "40f97671dba5b8137be1b53855d1152992359c6aa7aa3991027445b11b4d983e",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ugahnw",
@@ -2812,7 +2908,13 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "3ece8de1ff6a552a091586a21587a659e3895baad442c4317b2e6fc25a418c49"
+    "contentHash": "3ece8de1ff6a552a091586a21587a659e3895baad442c4317b2e6fc25a418c49",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
   },
   {
     "id": "reddit_1ug80dk",
@@ -2827,6 +2929,27 @@
     "sourceId": "askacademia-journal",
     "sourceKeyword": "journal",
     "sourceType": "subreddit_search",
-    "contentHash": "95cbf3343d4455c965dffe6b3b57d5764e64f52f7b1c5d5e5f9ab78abd3cfd33"
+    "contentHash": "95cbf3343d4455c965dffe6b3b57d5764e64f52f7b1c5d5e5f9ab78abd3cfd33",
+    "sourceKeywords": [
+      "journal"
+    ],
+    "sourceIds": [
+      "askacademia-journal"
+    ]
+  },
+  {
+    "id": "reddit_1un3kfg",
+    "redditId": "1un3kfg",
+    "title": "Esteemed scholars, I will be starting my PhD from 1st August",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1un3kfg/esteemed_scholars_i_will_be_starting_my_phd_from/\"> <img src=\"https://preview.redd.it/zy3wgs9ea6bh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=74df7b38b9280db04d7730cbb622c48924848bc5\" alt=\"Esteemed scholars, I will be starting my PhD from 1st August\" title=\"Esteemed scholars, I will be starting my PhD from 1st August\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>Will be starting my PhD in Mechanical Engineering (applied experimental fluid mechanics) from 1st August with a professor and project of my choice P.s. frog by me :)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/betakhichdi\"> /u/betakhichdi </a> <br/> <span><a href=\"https://i.redd.it/zy3wgs9ea6bh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1un3kfg/esteemed_scholars_i_will_be_starting_my_phd_from/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/PhD/comments/1un3kfg/esteemed_scholars_i_will_be_starting_my_phd_from/",
+    "subreddit": "r/PhD",
+    "author": "/u/betakhichdi",
+    "publishedAt": "2026-07-04T08:22:27+00:00",
+    "fetchedAt": "2026-07-04T08:45:08.520Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5df05f2677fafcfa946ead8d790f31015c9ffbf9440d65fd505c00059e36d9de"
   }
 ]
