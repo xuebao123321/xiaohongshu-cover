@@ -152,7 +152,8 @@ async function analyzePost(post, priorityMap) {
 
   if (!res.ok) {
     const body = await res.text().catch(() => '');
-    throw new Error(`AI API HTTP ${res.status}: ${body.slice(0, 200)}`);
+    const reqUrl = `${AI_BASE_URL}/chat/completions`;
+    throw new Error(`AI API HTTP ${res.status} from ${reqUrl}: ${body.slice(0, 200)}`);
   }
 
   const json = await res.json();
@@ -210,7 +211,8 @@ async function main() {
     process.exit(1);
   }
 
-  console.log(`[analyze-reddit-posts] Using model: ${AI_MODEL} @ ${AI_BASE_URL}`);
+  console.log(`[analyze-reddit-posts] Using model: "${AI_MODEL}" @ "${AI_BASE_URL}"`);
+  console.log(`[analyze-reddit-posts] API_KEY present: ${!!AI_API_KEY}, length: ${AI_API_KEY.length}`);
 
   // 1. Read posts
   let posts;
