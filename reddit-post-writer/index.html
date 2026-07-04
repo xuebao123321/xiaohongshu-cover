@@ -518,7 +518,9 @@ async function generateForSub(subreddit) {
     '标题：' + STATE.title,
     '正文：' + STATE.content,
     '',
-    '请直接输出改写后的英文文章，不要输出任何解释或标注。用空行分段，保持 Reddit 自然的发帖风格。结尾包含自然的互动邀请。'
+    '请直接输出改写后的英文文章，不要输出任何解释或标注。用空行分段，保持 Reddit 自然的发帖风格。结尾包含自然的互动邀请。',
+    '',
+    '[随机标识: ' + Math.random().toString(36).slice(2, 10) + ']'
   ].join('\n');
 
   var model = $('aiModel').value || 'deepseek-chat';

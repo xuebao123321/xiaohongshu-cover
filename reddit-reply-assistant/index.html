@@ -2823,6 +2823,18 @@ console.log('State:', state);
       });
     }
 
+    // 预填 Subreddit 画像提供的开头模板
+    if (prefill.openingTemplate) {
+      var stEl = document.getElementById('sourceText');
+      if (stEl) {
+        var currentVal = stEl.value || '';
+        if (currentVal.indexOf(prefill.openingTemplate) === -1) {
+          stEl.value = prefill.openingTemplate + '\n\n' + currentVal;
+          stEl.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    }
+
     console.log('[Reddit Radar] 已自动预填线索数据，来源：' + (prefill.sourceUrl || 'Radar'));
   } catch (e) {
     console.warn('[Reddit Radar] 预填失败：', e);
