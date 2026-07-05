@@ -836,9 +836,7 @@ button{font-family:inherit;cursor:pointer}
  * ═══════════════════════════════════════════════════════════════ */
 
 // ── Config ──
-const API_BASE = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? 'http://localhost:8787'
-  : 'https://xiaohongshu-cover.514993415.workers.dev';
+const API_BASE = 'https://umerlbslkytuvqjalfai.supabase.co/functions/v1/instagram-content-api';
 
 const HIGH_RISK_WORDS = [
   'guaranteed acceptance','guaranteed publication','we write your paper',
@@ -932,7 +930,7 @@ async function generateContent() {
   showLoading(true); hideError(); hideResults();
 
   try {
-    const response = await fetch(`${API_BASE}/api/generate-instagram-content`, {
+    const response = await fetch(`${API_BASE}/generate-instagram-content`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)
@@ -1345,7 +1343,7 @@ async function doRewrite() {
   const btn = document.getElementById('btnDoRewrite');
   btn.disabled = true; btn.textContent = '⏳ 改写中...';
   try {
-    const response = await fetch(`${API_BASE}/api/rewrite-instagram-content`, {
+    const response = await fetch(`${API_BASE}/rewrite-instagram-content`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ contentType, content, rewriteGoal, tone })
     });
@@ -1392,7 +1390,7 @@ async function rewriteToReduceRisk() {
   if (!result) return;
   showLoading(true);
   try {
-    const response = await fetch(`${API_BASE}/api/rewrite-instagram-content`, {
+    const response = await fetch(`${API_BASE}/rewrite-instagram-content`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         contentType: 'full_package',
@@ -1425,7 +1423,7 @@ async function generateVideoPlan() {
   const btn = document.getElementById('btnGenerateVideoPlan');
   btn.disabled = true; btn.textContent = '⏳ 生成中...';
   try {
-    const response = await fetch(`${API_BASE}/api/generate-reels-video-plan`, {
+    const response = await fetch(`${API_BASE}/generate-reels-video-plan`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ script: result.reels.script, duration: result.reels.duration || 35, template: 'paper-annotation' })
     });
