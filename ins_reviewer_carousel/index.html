@@ -2701,7 +2701,35 @@ CTA：DM "REVIEWER" for the checklist.</textarea>
     });
 
     /* ===== 初始化 ===== */
+    function checkInstagramContentPrefill() {
+      try {
+        var prefillStr = localStorage.getItem('instagram_carousel_prefill');
+        if (!prefillStr) return;
+        var data = JSON.parse(prefillStr);
+        localStorage.removeItem('instagram_carousel_prefill');
+        // Build text from slides
+        if (data.slides && data.slides.length > 0) {
+          var textParts = [];
+          data.slides.forEach(function(s) {
+            textParts.push((s.title || '') + '\n' + (s.body || ''));
+          });
+          var fullText = textParts.join('\n---\n');
+          if (dom.textInput) dom.textInput.value = fullText;
+          state.rawText = fullText;
+        }
+        // Apply template if available
+        if (data.template && TEMPLATES[data.template]) {
+          state.template = data.template;
+        }
+        console.log('Instagram content prefill loaded:', data.slides ? data.slides.length + ' slides' : 'no slides');
+      } catch (e) {
+        console.warn('Failed to load Instagram content prefill:', e);
+      }
+    }
+
     function init() {
+      // 检查 Instagram 内容策划助手预填数据
+      checkInstagramContentPrefill();
       // 设置初始 rawText
       state.rawText = dom.textInput.value;
       // 初始字符计数

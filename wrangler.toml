@@ -14,3 +14,8 @@ database_id = "f5e7b3bd-35a6-4ea1-9faf-245c8199ea8a"
 
 [vars]
 FREE_DAILY_DOWNLOADS = "3"
+# Instagram 内容策划助手 — 模型配置（敏感信息通过 wrangler secret put 设置）
+MODEL_PROVIDER = "deepseek"
+MODEL_BASE_URL = "https://api.deepseek.com"
+MODEL_NAME = "deepseek-chat"
+# DEEPSEEK_API_KEY — set via: wrangler secret put DEEPSEEK_API_KEY

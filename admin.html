@@ -390,6 +390,12 @@ function renderUsers(users, total) {
                 title="Reddit 独立发帖助手">
             ${pageAccess.includes('reddit_post_writer') ? '✓' : '○'} 发帖
           </span>
+          <span class="page-access-chip ${pageAccess.includes('instagram_content_assistant') ? 'granted' : ''}"
+                data-userid="${u.id}" data-page="instagram_content_assistant"
+                onclick="event.stopPropagation();window._togglePageAccess(this)"
+                title="Instagram 内容策划助手">
+            ${pageAccess.includes('instagram_content_assistant') ? '✓' : '○'} IG内容
+          </span>
         </div>` : '<span style="font-size:10px;color:#8a8a8a;">—</span>';
 
     return `

@@ -10,4 +10,11 @@ window.COVER_MAKER_CONFIG = {
     wechat: '',
     alipay: '',
   },
+  // Instagram Content Assistant API
+  // Uses Cloudflare Worker proxy → DeepSeek API
+  // API Key managed via: wrangler secret put DEEPSEEK_API_KEY
+  // Worker routes:
+  //   POST /api/generate-instagram-content
+  //   POST /api/rewrite-instagram-content
+  //   POST /api/generate-reels-video-plan
 };

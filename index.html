@@ -553,6 +553,7 @@ button{font-family:inherit}
   <a href="./reddit-reply-assistant/" id="linkRedditReply" style="display:none">🧠 Reddit 评论回复助手 <span class="tl-badge">NEW</span></a>
   <a href="./reddit-radar/" id="linkRedditRadar" style="display:none">🔭 Reddit 线索雷达 <span class="tl-badge">NEW</span></a>
   <a href="./reddit-post-writer/" id="linkPostWriter" style="display:none">✍️ Reddit 独立发帖 <span class="tl-badge">NEW</span></a>
+  <a href="./instagram-content-assistant/" id="linkInstagramContent" style="display:none">📱 Instagram 内容策划 <span class="tl-badge">NEW</span></a>
 </div>
 
 <!-- ═══════════ 风格族勾选 ═══════════ -->
@@ -923,17 +924,20 @@ function renderAccountBar() {
   var linkReddit = document.getElementById('linkRedditReply');
   var linkRadar = document.getElementById('linkRedditRadar');
   var linkPostWriter = document.getElementById('linkPostWriter');
-  if (toolBar && linkIns && linkReddit && linkRadar && linkPostWriter) {
+  var linkInstagramContent = document.getElementById('linkInstagramContent');
+  if (toolBar && linkIns && linkReddit && linkRadar && linkPostWriter && linkInstagramContent) {
     var pageAccess = (AUTH_STATE.user && Array.isArray(AUTH_STATE.user.page_access)) ? AUTH_STATE.user.page_access : [];
     var hasIns = pageAccess.indexOf('ins_reviewer_carousel') !== -1;
     var hasReddit = pageAccess.indexOf('reddit_reply_assistant') !== -1;
     var hasRadar = pageAccess.indexOf('reddit_radar') !== -1;
     var hasPostWriter = pageAccess.indexOf('reddit_post_writer') !== -1;
+    var hasInstagramContent = pageAccess.indexOf('instagram_content_assistant') !== -1;
     linkIns.style.display = hasIns ? '' : 'none';
     linkReddit.style.display = hasReddit ? '' : 'none';
     linkRadar.style.display = hasRadar ? '' : 'none';
     linkPostWriter.style.display = hasPostWriter ? '' : 'none';
-    toolBar.style.display = (hasIns || hasReddit || hasRadar || hasPostWriter) ? '' : 'none';
+    linkInstagramContent.style.display = hasInstagramContent ? '' : 'none';
+    toolBar.style.display = (hasIns || hasReddit || hasRadar || hasPostWriter || hasInstagramContent) ? '' : 'none';
   }
 }
 
