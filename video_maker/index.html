@@ -369,8 +369,8 @@ button{font-family:inherit;cursor:pointer}
         <div class="upload-zone" id="imageUploadZone">
           <div class="upload-icon">🖼️</div>
           <div class="upload-text">点击上传或拖拽图片</div>
-          <div class="upload-hint">支持 PNG / JPG / WebP · 最多 30 张 · 也可 Ctrl+V 粘贴</div>
-          <input type="file" id="imageFileInput" accept="image/png,image/jpeg,image/webp" multiple hidden>
+          <div class="upload-hint">支持 PNG / JPG / WebP / MP4 / MOV · 最多 30 个 · 也可 Ctrl+V 粘贴</div>
+          <input type="file" id="imageFileInput" accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,video/webm,video/x-matroska" multiple hidden>
         </div>
         <div class="img-list" id="imgList"></div>
         <div class="vm-card-hint" id="imgSummary">预计视频时长: 0.0s</div>
@@ -872,11 +872,55 @@ function createThumbnail(file) {
   });
 }
 
-// ─── 图片上传处理 ───
+// ─── 视频缩略图提取(取第一帧) ───
+function extractVideoThumbnail(file) {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.muted = true;
+    video.playsInline = true;
+    const url = URL.createObjectURL(file);
+
+    video.onloadedmetadata = () => {
+      video.currentTime = Math.min(1, video.duration * 0.1); // 跳到 0.1s 处取帧
+    };
+
+    video.onseeked = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 360;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      resolve({
+        dataUrl: canvas.toDataURL('image/jpeg', 0.8),
+        width: canvas.width,
+        height: canvas.height,
+        duration: video.duration || 10,
+      });
+    };
+
+    video.onerror = () => {
+      URL.revokeObjectURL(url);
+      reject(new Error('视频加载失败'));
+    };
+
+    video.src = url;
+    video.load();
+  });
+}
+
+// ─── 判断是否为视频文件 ───
+function isVideoFile(file) {
+  return file.type.startsWith('video/') || /\.(mp4|mov|webm|mkv|avi|m4v)$/i.test(file.name);
+}
+
+// ─── 媒体上传处理(图片+视频) ───
 async function handleImageUpload(files) {
   const fileArray = Array.from(files).filter(f => {
-    if (!f.type.startsWith('image/')) {
-      showToast('⚠️ 请选择 PNG / JPG / WebP 格式');
+    if (!f.type.startsWith('image/') && !f.type.startsWith('video/') &&
+        !f.name.match(/\.(png|jpe?g|webp|mp4|mov|webm|mkv|avi|m4v)$/i)) {
+      showToast('⚠️ 请选择图片(PNG/JPG/WebP)或视频(MP4/MOV/WebM)格式');
       return false;
     }
     return true;
@@ -886,40 +930,63 @@ async function handleImageUpload(files) {
 
   // 数量限制检查
   if (STATE.images.length + fileArray.length > 30) {
-    showToast('⚠️ 最多上传 30 张图片,超出部分已忽略');
+    showToast('⚠️ 最多上传 30 个素材,超出部分已忽略');
     fileArray.splice(30 - STATE.images.length);
     if (fileArray.length === 0) return;
   }
 
-  showToast(`正在处理 ${fileArray.length} 张图片...`);
+  const vidCount = fileArray.filter(isVideoFile).length;
+  const imgCount = fileArray.length - vidCount;
+  showToast(`正在处理 ${imgCount} 张图片${vidCount > 0 ? ' + ' + vidCount + ' 个视频' : ''}...`);
 
   let loaded = 0;
   const newImages = [];
 
   for (const file of fileArray) {
-    // 大小警告(>10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      showToast('⚠️ 部分图片超过 10MB,可能影响生成速度');
+    // 大小警告
+    if (file.size > 50 * 1024 * 1024) {
+      showToast('⚠️ 素材超过 50MB,可能影响处理速度');
     }
 
     try {
-      const thumb = await createThumbnail(file);
+      const isVideo = isVideoFile(file);
       const objectUrl = URL.createObjectURL(file);
-      newImages.push({
-        id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-        name: file.name,
-        file: file,
-        objectUrl: objectUrl,
-        thumbnail: thumb.dataUrl,
-        width: thumb.width,
-        height: thumb.height,
-        size: file.size,
-        duration: STATE.settings.secondsPerImage,
-      });
+
+      if (isVideo) {
+        // 视频:提取第一帧缩略图 + 时长
+        const thumb = await extractVideoThumbnail(file);
+        newImages.push({
+          id: 'vid_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          name: file.name,
+          file: file,
+          objectUrl: objectUrl,
+          thumbnail: thumb.dataUrl,
+          width: thumb.width,
+          height: thumb.height,
+          size: file.size,
+          duration: thumb.duration,
+          mediaType: 'video',
+        });
+      } else {
+        // 图片:原有逻辑
+        const thumb = await createThumbnail(file);
+        newImages.push({
+          id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          name: file.name,
+          file: file,
+          objectUrl: objectUrl,
+          thumbnail: thumb.dataUrl,
+          width: thumb.width,
+          height: thumb.height,
+          size: file.size,
+          duration: STATE.settings.secondsPerImage,
+          mediaType: 'image',
+        });
+      }
       loaded++;
     } catch (err) {
-      console.warn('[video_maker] 图片加载失败:', file.name, err);
-      showToast('⚠️ 部分图片无法读取,请更换文件格式');
+      console.warn('[video_maker] 素材加载失败:', file.name, err);
+      showToast('⚠️ 部分素材无法读取,请更换文件格式');
     }
   }
 
@@ -930,7 +997,7 @@ async function handleImageUpload(files) {
     updateTotalDuration();
     updateImgCount();
     renderPreviewFrame();
-    showToast(`✅ 已添加 ${newImages.length} 张图片`);
+    showToast(`✅ 已添加 ${newImages.length} 个素材`);
   }
 }
 window.handleImageUpload = handleImageUpload;
@@ -951,9 +1018,10 @@ function renderImgList() {
   container.innerHTML = STATE.images.map((img, i) => `
     <div class="img-list-item">
       <img class="img-thumb" src="${img.thumbnail}" alt="${img.name}" loading="lazy">
+      ${img.mediaType === 'video' ? '<span style="position:absolute;top:2px;left:2px;background:#ED0108;color:#fff;font-size:9px;padding:1px 4px;border-radius:3px">🎬</span>' : ''}
       <div class="img-info">
         <div class="img-name" title="${img.name}">${img.name.length > 20 ? img.name.slice(0, 18) + '...' : img.name}</div>
-        <div class="img-meta">${img.width}×${img.height} · ${formatSize(img.size)} · ${img.duration}s</div>
+        <div class="img-meta">${img.width}×${img.height} · ${formatSize(img.size)} · ${img.mediaType === 'video' ? '🎬 ' : ''}${img.duration.toFixed(1)}s</div>
       </div>
       <button class="img-remove" title="删除" onclick="removeImage(${i})">×</button>
     </div>
@@ -1263,7 +1331,7 @@ function renderTimeline() {
          ondragleave="handleDragLeave(event)"
          ondrop="handleDrop(event, ${i})"
          ondragend="handleDragEnd(event)">
-      <div class="tl-index">${i + 1}</div>
+      <div class="tl-index">${img.mediaType === 'video' ? '🎬' : i + 1}</div>
       <img class="tl-thumb" src="${img.thumbnail}" alt="${img.name}" draggable="false">
       <div class="tl-duration">${(img.duration || STATE.settings.secondsPerImage).toFixed(1)}s</div>
       <div class="tl-actions">
@@ -1618,7 +1686,7 @@ function triggerDownload(blob, filename) {
   showToast('✅ 视频已开始下载');
 }
 
-// ─── 方案 A: Canvas + MediaRecorder 导出(主方案,兼容性最好) ───
+// ─── 方案 B: Canvas + MediaRecorder 导出(fallback,优先尝试 mp4 编码) ───
 async function exportWithMediaRecorder() {
   const canvas = document.createElement('canvas');
   canvas.width = STATE.settings.outputSize.w;
@@ -1626,9 +1694,21 @@ async function exportWithMediaRecorder() {
   const ctx = canvas.getContext('2d');
 
   const stream = canvas.captureStream(STATE.settings.fps);
-  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
-    ? 'video/webm;codecs=vp9'
-    : 'video/webm';
+  // 优先 mp4(Safari),其次 webm vp9,最后 webm vp8
+  const codecOrder = [
+    'video/mp4;codecs=avc1.42E01E',  // Safari mp4
+    'video/mp4;codecs=h264',          // Safari mp4 alt
+    'video/webm;codecs=vp9',          // Chrome/Firefox
+    'video/webm;codecs=vp8',          // Universal fallback
+    'video/webm',                     // Last resort
+  ];
+  let mimeType = 'video/webm';
+  for (const codec of codecOrder) {
+    if (MediaRecorder.isTypeSupported(codec)) { mimeType = codec; break; }
+  }
+  const isMp4 = mimeType.startsWith('video/mp4');
+  console.log('[video_maker] MediaRecorder 编码:', mimeType, isMp4 ? '(MP4 ✅)' : '(WebM)');
+
   const recorder = new MediaRecorder(stream, {
     mimeType: mimeType,
     videoBitsPerSecond: 8000000,
@@ -1723,7 +1803,8 @@ async function exportWithMediaRecorder() {
     if (audioCtx) audioCtx.close();
   }
 
-  const ext = mimeType.includes('vp9') ? 'webm' : 'webm';
+  // mp4 编码用 .mp4,webm 用 .webm
+  const ext = isMp4 ? 'mp4' : 'webm';
   const blob = new Blob(chunks, { type: mimeType });
   return { blob, ext };
 }
@@ -1807,7 +1888,7 @@ async function exportWithFFmpeg() {
   return { blob, ext: 'mp4' };
 }
 
-// ─── 主导出函数 ───
+// ─── 主导出函数(优先 mp4: ffmpeg.wasm → MediaRecorder mp4 → MediaRecorder webm) ───
 async function exportVideo() {
   if (STATE.images.length === 0) { showToast('请先上传图片'); return; }
   if (STATE.images.length < 3) { showToast('⚠️ 建议至少上传 3 张图片'); }
@@ -1818,17 +1899,22 @@ async function exportVideo() {
 
   let result;
 
+  // 方案 1: ffmpeg.wasm → mp4(最优)
   try {
-    // 尝试 ffmpeg.wasm
+    showToast('🎬 正在使用 ffmpeg.wasm 生成 MP4...');
     result = await exportWithFFmpeg();
+    console.log('[video_maker] ffmpeg.wasm MP4 导出成功');
   } catch (ffmpegErr) {
-    console.warn('[video_maker] ffmpeg.wasm 失败,降级到 MediaRecorder:', ffmpegErr.message);
-    showToast('⚠️ 使用浏览器原生编码器(兼容模式)');
+    console.warn('[video_maker] ffmpeg.wasm 失败,降级到浏览器编码器:', ffmpegErr.message);
+    // 方案 2: MediaRecorder(优先 mp4,否则 webm)
     try {
+      showToast('⚠️ 降级到浏览器原生编码器...');
       result = await exportWithMediaRecorder();
+      const formatLabel = result.ext === 'mp4' ? 'MP4' : 'WebM';
+      showToast('⚠️ 已导出为 ' + formatLabel + '(浏览器编码)');
     } catch (mrErr) {
-      console.error('[video_maker] MediaRecorder 也失败:', mrErr);
-      showToast('❌ 视频生成失败,请减少图片数量或压缩后重试');
+      console.error('[video_maker] 所有导出方案均失败:', mrErr);
+      showToast('❌ 视频生成失败,请减少图片数量或使用 Chrome 浏览器重试');
       STATE.isExporting = false;
       STATE.exportProgress = 0;
       updateExportUI();
@@ -2230,37 +2316,107 @@ function drawFullImage(ctx, imgObj) {
 }
 
 // ─── 渲染一帧(含动态效果和转场) ───
+// ─── 视频帧缓存(避免频繁 seek) ───
+const videoFrameCache = new Map();
+
+async function getVideoFrame(videoObj, progress) {
+  const cacheKey = videoObj.id + '_' + progress.toFixed(3);
+  if (videoFrameCache.has(cacheKey)) return videoFrameCache.get(cacheKey);
+
+  return new Promise((resolve) => {
+    const video = document.createElement('video');
+    video.preload = 'auto';
+    video.muted = true;
+    video.playsInline = true;
+    video.src = videoObj.objectUrl;
+
+    const targetTime = videoObj.duration * progress;
+
+    video.onloadedmetadata = () => {
+      if (video.duration && targetTime < video.duration) {
+        video.currentTime = targetTime;
+      } else {
+        // 取第一帧
+        video.currentTime = 0;
+      }
+    };
+
+    video.onseeked = () => {
+      const c = document.createElement('canvas');
+      c.width = video.videoWidth || CANVAS_W;
+      c.height = video.videoHeight || CANVAS_H;
+      c.getContext('2d').drawImage(video, 0, 0, c.width, c.height);
+      const img = new Image();
+      img.src = c.toDataURL('image/jpeg', 0.85);
+      img.onload = () => {
+        videoFrameCache.set(cacheKey, img);
+        // 限制缓存大小
+        if (videoFrameCache.size > 50) {
+          const firstKey = videoFrameCache.keys().next().value;
+          videoFrameCache.delete(firstKey);
+        }
+        URL.revokeObjectURL(video.src);
+        resolve(img);
+      };
+    };
+
+    video.onerror = () => resolve(null);
+    video.load();
+  });
+}
+
 async function renderFrame(ctx, imgIndex, imgProgress, transitionProgress, currentFrame, totalFrames) {
   const imgObj = STATE.images[imgIndex];
   if (!imgObj) return;
 
-  const img = await loadImage(imgObj.objectUrl);
+  let sourceImg;
+  if (imgObj.mediaType === 'video') {
+    // 视频:从视频中提取对应时间点的帧
+    sourceImg = await getVideoFrame(imgObj, imgProgress);
+    if (!sourceImg) {
+      // fallback: 用缩略图
+      sourceImg = await loadImage(imgObj.objectUrl).catch(() => null);
+      if (!sourceImg) sourceImg = await loadImage(imgObj.thumbnail).catch(() => null);
+      if (!sourceImg) return;
+    }
+  } else {
+    sourceImg = await loadImage(imgObj.objectUrl);
+  }
 
   // 转场中: 需要两张图
   if (transitionProgress > 0 && imgIndex < STATE.images.length - 1) {
     const nextImgObj = STATE.images[imgIndex + 1];
-    const nextImg = await loadImage(nextImgObj.objectUrl);
+    let nextSourceImg;
+    if (nextImgObj.mediaType === 'video') {
+      nextSourceImg = await getVideoFrame(nextImgObj, 0);
+      if (!nextSourceImg) nextSourceImg = await loadImage(nextImgObj.thumbnail).catch(() => null);
+    } else {
+      nextSourceImg = await loadImage(nextImgObj.objectUrl);
+    }
 
-    // 当前图 + 动态效果
-    ctx.save();
-    applyMotion(ctx, img, STATE.settings.motion, imgProgress);
-    applyBackgroundMode(ctx, img, STATE.settings.backgroundMode);
-    ctx.restore();
+    if (nextSourceImg) {
+      // 当前图 + 动态效果
+      ctx.save();
+      applyMotion(ctx, sourceImg, STATE.settings.motion, imgProgress);
+      applyBackgroundMode(ctx, sourceImg, STATE.settings.backgroundMode);
+      ctx.restore();
 
-    // 转场叠加
-    ctx.save();
-    ctx.globalAlpha = transitionProgress;
-    applyMotion(ctx, nextImg, STATE.settings.motion, 0);
-    applyBackgroundMode(ctx, nextImg, STATE.settings.backgroundMode);
-    ctx.globalAlpha = 1;
-    ctx.restore();
-  } else {
-    // 正常帧
-    ctx.save();
-    applyMotion(ctx, img, STATE.settings.motion, imgProgress);
-    applyBackgroundMode(ctx, img, STATE.settings.backgroundMode);
-    ctx.restore();
+      // 转场叠加
+      ctx.save();
+      ctx.globalAlpha = transitionProgress;
+      applyMotion(ctx, nextSourceImg, STATE.settings.motion, 0);
+      applyBackgroundMode(ctx, nextSourceImg, STATE.settings.backgroundMode);
+      ctx.globalAlpha = 1;
+      ctx.restore();
+      return;
+    }
   }
+
+  // 正常帧
+  ctx.save();
+  applyMotion(ctx, sourceImg, STATE.settings.motion, imgProgress);
+  applyBackgroundMode(ctx, sourceImg, STATE.settings.backgroundMode);
+  ctx.restore();
 }
 window.applyMotion = applyMotion;
 window.applyTransition = applyTransition;
@@ -2723,60 +2879,79 @@ window.autoCleanDuplicates = autoCleanDuplicates;
 // 上传图片时集成去重检测
 async function handleImageUploadWithDedup(files) {
   const fileArray = Array.from(files).filter(f => {
-    if (!f.type.startsWith('image/')) { showToast('⚠️ 请选择 PNG / JPG / WebP 格式'); return false; }
+    if (!f.type.startsWith('image/') && !f.type.startsWith('video/') &&
+        !f.name.match(/\.(png|jpe?g|webp|mp4|mov|webm|mkv|avi|m4v)$/i)) {
+      showToast('⚠️ 请选择图片(PNG/JPG/WebP)或视频(MP4/MOV/WebM)格式');
+      return false;
+    }
     return true;
   });
   if (fileArray.length === 0) return;
   if (STATE.images.length + fileArray.length > 30) {
-    showToast('⚠️ 最多上传 30 张图片,超出部分已忽略');
+    showToast('⚠️ 最多上传 30 个素材,超出部分已忽略');
     fileArray.splice(30 - STATE.images.length);
     if (fileArray.length === 0) return;
   }
 
-  showToast(`正在处理 ${fileArray.length} 张图片...`);
+  showToast(`正在处理 ${fileArray.length} 个素材...`);
   let loaded = 0;
   const newImages = [];
   const duplicates = [];
 
   for (const file of fileArray) {
-    if (file.size > 10 * 1024 * 1024) showToast('⚠️ 部分图片超过 10MB');
+    if (file.size > 50 * 1024 * 1024) showToast('⚠️ 素材超过 50MB');
 
     try {
-      const thumb = await createThumbnail(file);
+      const isVideo = isVideoFile(file);
       const objectUrl = URL.createObjectURL(file);
-      const imgObj = {
-        id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-        name: file.name, file: file, objectUrl: objectUrl,
-        thumbnail: thumb.dataUrl, width: thumb.width, height: thumb.height,
-        size: file.size, duration: STATE.settings.secondsPerImage,
-      };
+      let imgObj;
 
-      // 去重检测
+      if (isVideo) {
+        const thumb = await extractVideoThumbnail(file);
+        imgObj = {
+          id: 'vid_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          name: file.name, file: file, objectUrl: objectUrl,
+          thumbnail: thumb.dataUrl, width: thumb.width, height: thumb.height,
+          size: file.size, duration: thumb.duration, mediaType: 'video',
+        };
+      } else {
+        const thumb = await createThumbnail(file);
+        imgObj = {
+          id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+          name: file.name, file: file, objectUrl: objectUrl,
+          thumbnail: thumb.dataUrl, width: thumb.width, height: thumb.height,
+          size: file.size, duration: STATE.settings.secondsPerImage, mediaType: 'image',
+        };
+      }
+
+      // 去重检测(视频用第一帧做指纹,图片用原图)
       if (STATE.dedup.enabled && STATE.images.length > 0) {
-        const dupResults = await checkDuplicate(file, STATE.images);
-        const hasDup = dupResults.some(r => r.isDuplicate);
-        if (hasDup) {
-          const similar = dupResults.filter(r => r.isDuplicate).map(r => r.imageName).join(', ');
-          duplicates.push({ name: file.name, similar });
-        }
+        try {
+          const dupResults = await checkDuplicate(file, STATE.images);
+          const hasDup = dupResults.some(r => r.isDuplicate);
+          if (hasDup) {
+            const similar = dupResults.filter(r => r.isDuplicate).map(r => r.imageName).join(', ');
+            duplicates.push({ name: file.name, similar });
+          }
+        } catch(e) { console.warn('[dedup] 检测跳过:', file.name); }
       }
 
       newImages.push(imgObj);
       loaded++;
     } catch (err) {
-      console.warn('[video_maker] 图片加载失败:', file.name, err);
+      console.warn('[video_maker] 素材加载失败:', file.name, err);
     }
   }
 
   if (newImages.length > 0) {
     STATE.images.push(...newImages);
     renderTimeline(); renderImgList(); updateTotalDuration(); updateImgCount(); renderPreviewFrame();
-    showToast(`✅ 已添加 ${newImages.length} 张图片`);
+    showToast(`✅ 已添加 ${newImages.length} 个素材`);
   }
 
   if (duplicates.length > 0) {
     setTimeout(() => {
-      showToast(`⚠️ 检测到 ${duplicates.length} 张图片可能与已有图片相似`);
+      showToast(`⚠️ 检测到 ${duplicates.length} 个素材可能与已有素材相似`);
     }, 1500);
   }
 }
