@@ -135,7 +135,7 @@ async function handleSetPageAccess(adminClient: any, body: any) {
     return corsResponse({ ok: false, message: '缺少 userId' }, 400);
   }
 
-  const validPages = ['ins_reviewer_carousel', 'reddit_reply_assistant', 'reddit_radar', 'reddit_post_writer', 'instagram_content_assistant'];
+  const validPages = ['ins_reviewer_carousel', 'reddit_reply_assistant', 'reddit_radar', 'reddit_post_writer', 'instagram_content_assistant', 'video_maker'];
   if (!validPages.includes(pageSlug)) {
     return corsResponse({ ok: false, message: `无效的 pageSlug: ${pageSlug}` }, 400);
   }
