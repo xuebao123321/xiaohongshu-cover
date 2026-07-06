@@ -62,6 +62,40 @@ button{font-family:inherit;cursor:pointer}
   margin-top:2px;
 }
 
+/* ═══════════ 模式切换 Tabs ═══════════ */
+.vm-mode-tabs{display:flex;gap:4px;margin-left:auto;flex-shrink:0}
+.vm-mode-tab{
+  padding:8px 18px;border:1.5px solid #e8e4df;background:#fff;
+  border-radius:20px;font-size:12px;font-weight:700;color:#5a5a5a;
+  cursor:pointer;transition:all .2s;white-space:nowrap;
+  letter-spacing:.5px;
+}
+.vm-mode-tab:hover{border-color:#a8a098;color:#2d2a26}
+.vm-mode-tab.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.vm-mode-tab.video-mode.active{background:#ED0108;border-color:#ED0108}
+
+/* ═══════════ 视频模式面板 ═══════════ */
+.vm-video-panel{display:none}
+.vm-video-panel.show{display:flex;flex-direction:column;gap:12px}
+.vm-slideshow-panel{display:flex;flex-direction:column;gap:12px}
+.vm-slideshow-panel.hide{display:none}
+
+/* 视频播放器 */
+.vm-video-player{
+  background:#000;border-radius:12px;overflow:hidden;
+  width:100%;max-width:400px;margin:0 auto;
+}
+.vm-video-player video{display:block;width:100%}
+.vm-video-trim{
+  display:flex;align-items:center;gap:10px;padding:8px 12px;
+  background:#faf9f7;border-radius:8px;font-size:12px;
+}
+.vm-video-trim input[type="range"]{flex:1;accent-color:#ED0108}
+.vm-video-info{
+  font-size:12px;color:#2d2a26;padding:4px 0;
+}
+.vm-video-info span{color:#a8a098;margin-right:12px}
+
 /* ═══════════ 主布局 ═══════════ */
 .vm-main{
   display:flex;gap:0;max-width:1500px;margin:0 auto;
@@ -351,8 +385,12 @@ button{font-family:inherit;cursor:pointer}
 <header class="vm-header">
   <a href="../" class="vm-back-link">← 返回工具箱</a>
   <div class="vm-header-title">
-    <h1>轮播短视频生成器</h1>
-    <div class="vm-subtitle">多图 + 音乐 → 9:16 短视频 · 浏览器本地处理</div>
+    <h1 id="modeTitle">轮播短视频生成器</h1>
+    <div class="vm-subtitle" id="modeSubtitle">多图 + 音乐 → 9:16 短视频 · 浏览器本地处理</div>
+  </div>
+  <div class="vm-mode-tabs">
+    <button class="vm-mode-tab active" data-mode="slideshow" id="tabSlideshow">📷 轮播短视频</button>
+    <button class="vm-mode-tab video-mode" data-mode="video" id="tabVideo">🎬 视频处理</button>
   </div>
 </header>
 
@@ -361,6 +399,9 @@ button{font-family:inherit;cursor:pointer}
 
   <!-- ═══════════ 左侧设置区 ═══════════ -->
   <section class="vm-panel vm-settings" id="settingsPanel">
+
+    <!-- ═══════════ 轮播短视频模式 ═══════════ -->
+    <div class="vm-slideshow-panel" id="slideshowPanel">
 
     <!-- 📁 图片素材 -->
     <details class="vm-card" id="cardImages" open>
@@ -526,6 +567,97 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </div>
     </details>
+
+    </div><!-- /vm-slideshow-panel -->
+
+    <!-- ═══════════ 视频处理模式 ═══════════ -->
+    <div class="vm-video-panel" id="videoPanel">
+
+      <!-- 🎬 视频上传 -->
+      <details class="vm-card" id="cardVideoUpload" open>
+        <summary>🎬 视频素材 <span id="videoCount" style="font-weight:400;color:#a8a098;font-size:11px">0 个视频</span></summary>
+        <div class="vm-card-body">
+          <div class="upload-zone" id="videoOnlyUploadZone" style="padding:16px">
+            <div class="upload-icon">🎬</div>
+            <div class="upload-text">点击上传或拖拽视频</div>
+            <div class="upload-hint">支持 MP4 / MOV / WebM · 单文件 ≤ 200MB · 可多选</div>
+            <input type="file" id="videoOnlyInput" accept="video/mp4,video/quicktime,video/webm,video/x-matroska" multiple hidden>
+          </div>
+          <div id="videoList" style="margin-top:8px"></div>
+          <button class="btn small ghost" id="btnClearVideos" style="width:100%;margin-top:8px">🗑 清空视频</button>
+        </div>
+      </details>
+
+      <!-- 🎨 视频滤镜 -->
+      <details class="vm-card" id="cardVideoFilter">
+        <summary>🎨 滤镜效果 <span id="videoFilterLabel" style="font-weight:400;color:#a8a098;font-size:11px">无滤镜</span></summary>
+        <div class="vm-card-body">
+          <div class="option-row" id="videoFilterBtns"></div>
+          <div class="option-group" id="videoFilterStrengthRow" style="display:none;margin-top:10px">
+            <div class="option-label">滤镜强度</div>
+            <div class="slider-row">
+              <input type="range" id="videoFilterStrength" min="0" max="100" value="80">
+              <span class="slider-val" id="videoFilterStrengthVal">80%</span>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- ✂️ 视频裁剪 -->
+      <details class="vm-card" id="cardVideoTrim" open>
+        <summary>✂️ 视频裁剪 <span id="trimInfo" style="font-weight:400;color:#a8a098;font-size:11px">未选择视频</span></summary>
+        <div class="vm-card-body">
+          <div class="vm-video-trim">
+            <span style="font-size:11px;white-space:nowrap">起始</span>
+            <input type="range" id="trimStart" min="0" max="100" value="0" disabled>
+            <span class="slider-val" id="trimStartVal">00:00</span>
+          </div>
+          <div class="vm-video-trim">
+            <span style="font-size:11px;white-space:nowrap">结束</span>
+            <input type="range" id="trimEnd" min="0" max="100" value="100" disabled>
+            <span class="slider-val" id="trimEndVal">00:00</span>
+          </div>
+          <div class="vm-video-info" id="trimSummary">请先上传视频</div>
+        </div>
+      </details>
+
+      <!-- 🔄 视频去重 -->
+      <details class="vm-card" id="cardVideoDedup" open>
+        <summary>🔄 视频去重 <span id="videoDedupLabel" style="font-weight:400;color:#a8a098;font-size:11px">标准</span></summary>
+        <div class="vm-card-body">
+          <div class="option-label">检测强度</div>
+          <div class="option-row" id="videoDedupLevelBtns"></div>
+          <button class="btn small ghost" id="btnVideoDedup" style="width:100%;margin-top:10px">🔍 检测重复视频</button>
+          <div id="videoDedupResults" style="margin-top:10px"></div>
+          <div class="vm-card-hint" style="margin-top:6px">
+            💡 视频去重通过提取关键帧(pHash+直方图)比对相似度,可检测裁剪/加滤镜/调色后的重复视频。
+          </div>
+        </div>
+      </details>
+
+      <!-- ⚙️ 导出设置 -->
+      <details class="vm-card" id="cardVideoExport">
+        <summary>⚙️ 导出设置</summary>
+        <div class="vm-card-body">
+          <div class="option-group">
+            <div class="option-label">输出格式</div>
+            <div class="option-row" id="videoFormatBtns">
+              <button class="option-btn active" data-fmt="mp4">MP4 (H.264)</button>
+              <button class="option-btn" data-fmt="webm">WebM</button>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="option-label">输出分辨率</div>
+            <div class="option-row" id="videoResBtns">
+              <button class="option-btn active" data-res="original">原始</button>
+              <button class="option-btn" data-res="1080p">1080p</button>
+              <button class="option-btn" data-res="720p">720p</button>
+            </div>
+          </div>
+        </div>
+      </details>
+
+    </div><!-- /vm-video-panel -->
 
   </section>
 
@@ -3117,13 +3249,600 @@ async function loadPrefillImages() {
   }
 }
 
+// ═══════════ 视频处理模式 ═══════════
+
+const VIDEO_STATE = {
+  videos: [],           // 上传的视频列表
+  activeVideoIdx: 0,   // 当前选中的视频索引
+  filter: 'none',
+  filterStrength: 80,
+  trimStart: 0,
+  trimEnd: 0,
+  videoDuration: 0,
+  dedup: { level: 'normal' },
+  outputFormat: 'mp4',
+  outputResolution: 'original',
+};
+
+const CURRENT_MODE = { value: 'slideshow' }; // 'slideshow' | 'video'
+
+// ─── 模式切换 ───
+function switchMode(mode) {
+  CURRENT_MODE.value = mode;
+  document.querySelectorAll('.vm-mode-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(mode === 'video' ? 'tabVideo' : 'tabSlideshow').classList.add('active');
+
+  const slideshowPanel = document.getElementById('slideshowPanel');
+  const videoPanel = document.getElementById('videoPanel');
+  const timeline = document.getElementById('timeline');
+  const phoneFrame = document.querySelector('.vm-phone-frame');
+
+  if (mode === 'video') {
+    slideshowPanel.style.display = 'none';
+    videoPanel.style.display = 'flex';
+    videoPanel.style.flexDirection = 'column';
+    videoPanel.style.gap = '12px';
+    timeline.style.display = 'none';
+    if (phoneFrame) phoneFrame.style.display = 'none';
+    document.getElementById('modeTitle').textContent = '视频处理';
+    document.getElementById('modeSubtitle').textContent = '视频上传 · 滤镜 · 裁剪 · 去重 · 导出';
+    document.getElementById('btnExport').textContent = '🎬 导出视频';
+    initVideoModeUI();
+    renderVideoPreview();
+  } else {
+    slideshowPanel.style.display = 'flex';
+    slideshowPanel.style.flexDirection = 'column';
+    slideshowPanel.style.gap = '12px';
+    videoPanel.style.display = 'none';
+    timeline.style.display = '';
+    if (phoneFrame) phoneFrame.style.display = '';
+    document.getElementById('modeTitle').textContent = '轮播短视频生成器';
+    document.getElementById('modeSubtitle').textContent = '多图 + 音乐 → 9:16 短视频 · 浏览器本地处理';
+    document.getElementById('btnExport').textContent = '🎬 生成视频';
+    renderPreviewFrame();
+  }
+}
+window.switchMode = switchMode;
+
+// ─── 视频模式 UI 初始化 ───
+function initVideoModeUI() {
+  // 滤镜按钮
+  renderOptionButtons('videoFilterBtns', FILTERS, VIDEO_STATE.filter, (key, opt) => {
+    VIDEO_STATE.filter = key;
+    document.getElementById('videoFilterLabel').textContent = opt.name;
+    document.getElementById('videoFilterStrengthRow').style.display = opt.hasStrength ? '' : 'none';
+    renderVideoPreview();
+  });
+  document.getElementById('videoFilterStrength').addEventListener('input', function() {
+    VIDEO_STATE.filterStrength = parseInt(this.value);
+    document.getElementById('videoFilterStrengthVal').textContent = this.value + '%';
+    renderVideoPreview();
+  });
+
+  // 去重强度
+  renderOptionButtons('videoDedupLevelBtns', Object.fromEntries(
+    Object.entries(DEDUP_LEVELS).map(([k, v]) => [k, { name: v.name, icon: '' }])
+  ), VIDEO_STATE.dedup.level, (key) => {
+    VIDEO_STATE.dedup.level = key;
+    document.getElementById('videoDedupLabel').textContent = DEDUP_LEVELS[key].name;
+  });
+
+  // 输出格式
+  document.querySelectorAll('#videoFormatBtns .option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#videoFormatBtns .option-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      VIDEO_STATE.outputFormat = btn.dataset.fmt;
+    });
+  });
+
+  // 输出分辨率
+  document.querySelectorAll('#videoResBtns .option-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#videoResBtns .option-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      VIDEO_STATE.outputResolution = btn.dataset.res;
+    });
+  });
+
+  renderVideoList();
+}
+
+// ─── 视频上传处理 ───
+async function handleVideoOnlyUpload(files) {
+  const fileArray = Array.from(files).filter(f => {
+    if (!f.type.startsWith('video/') && !f.name.match(/\.(mp4|mov|webm|mkv|avi|m4v)$/i)) {
+      showToast('⚠️ 请选择 MP4 / MOV / WebM 格式的视频');
+      return false;
+    }
+    return true;
+  });
+  if (fileArray.length === 0) return;
+  if (VIDEO_STATE.videos.length + fileArray.length > 20) {
+    showToast('⚠️ 最多上传 20 个视频');
+    fileArray.splice(20 - VIDEO_STATE.videos.length);
+    if (fileArray.length === 0) return;
+  }
+
+  showToast(`正在处理 ${fileArray.length} 个视频...`);
+
+  for (const file of fileArray) {
+    if (file.size > 200 * 1024 * 1024) {
+      showToast('⚠️ ' + file.name + ' 超过 200MB,已跳过');
+      continue;
+    }
+    try {
+      const thumb = await extractVideoThumbnail(file);
+      const objectUrl = URL.createObjectURL(file);
+      VIDEO_STATE.videos.push({
+        id: 'vid_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        name: file.name,
+        file: file,
+        objectUrl: objectUrl,
+        thumbnail: thumb.dataUrl,
+        width: thumb.width,
+        height: thumb.height,
+        size: file.size,
+        duration: thumb.duration,
+      });
+    } catch (err) {
+      console.warn('[video_maker] 视频加载失败:', file.name, err);
+      showToast('⚠️ ' + file.name + ' 无法读取');
+    }
+  }
+
+  if (VIDEO_STATE.videos.length > 0) {
+    VIDEO_STATE.activeVideoIdx = 0;
+    updateVideoTrimForActive();
+    renderVideoList();
+    renderVideoPreview();
+    updateVideoCount();
+    showToast(`✅ 已添加视频`);
+  }
+}
+window.handleVideoOnlyUpload = handleVideoOnlyUpload;
+
+// ─── 视频列表渲染 ───
+function renderVideoList() {
+  const container = document.getElementById('videoList');
+  if (!container) return;
+  if (VIDEO_STATE.videos.length === 0) {
+    container.innerHTML = '<div class="empty-hint">暂无视频,请上传</div>';
+    return;
+  }
+  container.innerHTML = VIDEO_STATE.videos.map((v, i) => `
+    <div class="img-list-item" style="${i === VIDEO_STATE.activeVideoIdx ? 'border-color:#ED0108;background:#fff5f5' : ''}">
+      <img class="img-thumb" src="${v.thumbnail}" alt="${v.name}">
+      <div class="img-info" style="cursor:pointer" onclick="selectVideo(${i})">
+        <div class="img-name" title="${v.name}">${v.name.length > 20 ? v.name.slice(0, 18) + '...' : v.name}</div>
+        <div class="img-meta">${v.width}×${v.height} · ${formatSize(v.size)} · ${v.duration.toFixed(1)}s</div>
+      </div>
+      <button class="img-remove" title="删除" onclick="removeVideo(${i})">×</button>
+    </div>
+  `).join('');
+}
+window.renderVideoList = renderVideoList;
+
+function selectVideo(idx) {
+  VIDEO_STATE.activeVideoIdx = idx;
+  updateVideoTrimForActive();
+  renderVideoList();
+  renderVideoPreview();
+}
+window.selectVideo = selectVideo;
+
+function removeVideo(idx) {
+  const v = VIDEO_STATE.videos[idx];
+  if (v.objectUrl) URL.revokeObjectURL(v.objectUrl);
+  VIDEO_STATE.videos.splice(idx, 1);
+  if (VIDEO_STATE.activeVideoIdx >= VIDEO_STATE.videos.length) {
+    VIDEO_STATE.activeVideoIdx = Math.max(0, VIDEO_STATE.videos.length - 1);
+  }
+  updateVideoTrimForActive();
+  renderVideoList();
+  renderVideoPreview();
+  updateVideoCount();
+}
+window.removeVideo = removeVideo;
+
+function updateVideoCount() {
+  document.getElementById('videoCount').textContent = VIDEO_STATE.videos.length + ' 个视频';
+}
+
+// ─── 视频裁剪 ───
+function updateVideoTrimForActive() {
+  const v = VIDEO_STATE.videos[VIDEO_STATE.activeVideoIdx];
+  if (!v) {
+    document.getElementById('trimStart').disabled = true;
+    document.getElementById('trimEnd').disabled = true;
+    document.getElementById('trimInfo').textContent = '未选择视频';
+    document.getElementById('trimSummary').textContent = '请先上传视频';
+    return;
+  }
+  VIDEO_STATE.videoDuration = v.duration;
+  VIDEO_STATE.trimEnd = v.duration;
+  document.getElementById('trimStart').disabled = false;
+  document.getElementById('trimStart').max = Math.floor(v.duration);
+  document.getElementById('trimStart').value = 0;
+  document.getElementById('trimEnd').disabled = false;
+  document.getElementById('trimEnd').max = Math.floor(v.duration);
+  document.getElementById('trimEnd').value = Math.floor(v.duration);
+  document.getElementById('trimStartVal').textContent = formatTime(0);
+  document.getElementById('trimEndVal').textContent = formatTime(v.duration);
+  document.getElementById('trimInfo').textContent = v.name.slice(0, 20);
+  document.getElementById('trimSummary').textContent = `${v.width}×${v.height} · ${formatSize(v.size)} · 全长 ${v.duration.toFixed(1)}s`;
+}
+
+document.getElementById('trimStart').addEventListener('input', function() {
+  VIDEO_STATE.trimStart = parseFloat(this.value);
+  document.getElementById('trimStartVal').textContent = formatTime(VIDEO_STATE.trimStart);
+  renderVideoPreview();
+});
+document.getElementById('trimEnd').addEventListener('input', function() {
+  VIDEO_STATE.trimEnd = parseFloat(this.value);
+  document.getElementById('trimEndVal').textContent = formatTime(VIDEO_STATE.trimEnd);
+  renderVideoPreview();
+});
+
+// ─── 视频去重引擎(关键帧比对) ───
+async function extractVideoFingerprints(videoFile) {
+  // 提取 3 个关键帧(10% / 50% / 90% 位置)的指纹
+  const positions = [0.1, 0.5, 0.9];
+  const fingerprints = [];
+
+  for (const pos of positions) {
+    try {
+      const frame = await extractFrameAtPosition(videoFile, pos);
+      if (frame) {
+        fingerprints.push({
+          position: pos,
+          pHash: computePHash(frame),
+          histogram: computeColorHistogram(frame),
+        });
+      }
+    } catch (e) {
+      console.warn('[videoDedup] 帧提取失败:', pos, e);
+    }
+  }
+  return fingerprints;
+}
+
+function extractFrameAtPosition(file, position) {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    video.preload = 'auto';
+    video.muted = true;
+    video.playsInline = true;
+    const url = URL.createObjectURL(file);
+
+    video.onloadedmetadata = () => {
+      const targetTime = video.duration * position;
+      if (isNaN(targetTime)) { URL.revokeObjectURL(url); reject(new Error('duration NaN')); return; }
+      video.currentTime = Math.min(targetTime, video.duration - 0.1);
+    };
+
+    video.onseeked = () => {
+      const c = document.createElement('canvas');
+      c.width = 64; c.height = 64;
+      c.getContext('2d').drawImage(video, 0, 0, 64, 64);
+      const imageData = c.getContext('2d').getImageData(0, 0, 64, 64);
+      URL.revokeObjectURL(url);
+      resolve(imageData);
+    };
+
+    video.onerror = () => { URL.revokeObjectURL(url); reject(new Error('加载失败')); };
+    video.src = url;
+    video.load();
+  });
+}
+
+async function runVideoDedupCheck() {
+  if (VIDEO_STATE.videos.length < 2) {
+    showToast('至少需要 2 个视频才能检测重复');
+    return;
+  }
+
+  showToast('🔍 正在提取视频关键帧,请稍候...');
+
+  // 提取所有视频的指纹
+  const allFingerprints = [];
+  for (let i = 0; i < VIDEO_STATE.videos.length; i++) {
+    showToast(`🔍 分析视频 ${i + 1}/${VIDEO_STATE.videos.length}...`);
+    const fps = await extractVideoFingerprints(VIDEO_STATE.videos[i].file);
+    allFingerprints.push({ index: i, name: VIDEO_STATE.videos[i].name, fingerprints: fps });
+  }
+
+  // 视频间比对: 每个位置取最大相似度, 然后三个位置平均
+  const threshold = DEDUP_LEVELS[VIDEO_STATE.dedup.level]?.threshold || 0.85;
+  const groups = [];
+  const seen = new Set();
+
+  for (let i = 0; i < allFingerprints.length; i++) {
+    if (seen.has(i)) continue;
+    const group = [{ index: i, name: allFingerprints[i].name }];
+
+    for (let j = i + 1; j < allFingerprints.length; j++) {
+      if (seen.has(j)) continue;
+      const a = allFingerprints[i], b = allFingerprints[j];
+
+      // 每个关键帧位置比一次, 取平均
+      let totalSim = 0, pairs = 0;
+      for (const fa of a.fingerprints) {
+        for (const fb of b.fingerprints) {
+          // 同位置比对
+          if (fa.position === fb.position) {
+            totalSim += computeSimilarity(fa.pHash, fb.pHash, fa.histogram, fb.histogram);
+            pairs++;
+          }
+        }
+      }
+      // 补充: 不同位置最接近的也比对(考虑裁剪/变速场景)
+      if (pairs < a.fingerprints.length) {
+        for (const fa of a.fingerprints) {
+          let bestSim = 0;
+          for (const fb of b.fingerprints) {
+            const sim = computeSimilarity(fa.pHash, fb.pHash, fa.histogram, fb.histogram);
+            if (sim > bestSim) bestSim = sim;
+          }
+          totalSim += bestSim;
+          pairs++;
+        }
+      }
+
+      const avgSim = pairs > 0 ? totalSim / pairs : 0;
+      if (avgSim > threshold) {
+        group.push({ index: j, name: b.name, similarity: Math.round(avgSim * 100) / 100 });
+        seen.add(j);
+      }
+    }
+
+    if (group.length > 1) {
+      groups.push(group);
+      seen.add(i);
+    }
+  }
+
+  renderVideoDedupResults(groups);
+  return groups;
+}
+
+function renderVideoDedupResults(groups) {
+  const container = document.getElementById('videoDedupResults');
+  if (!container) return;
+
+  if (groups.length === 0) {
+    container.innerHTML = '<div style="font-size:12px;color:#52a87a;padding:8px 0">✅ 未检测到重复视频</div>';
+    showToast('✅ 未检测到重复视频');
+    return;
+  }
+
+  const dupCount = groups.reduce((sum, g) => sum + g.length - 1, 0);
+  container.innerHTML = `
+    <div style="font-size:12px;color:#e08820;font-weight:600;margin-bottom:8px">
+      ⚠️ 发现 ${groups.length} 组重复,共 ${dupCount} 个相似视频
+    </div>
+    ${groups.map((g, gi) => `
+      <div style="background:#faf9f7;border-radius:6px;padding:8px;margin-bottom:6px;font-size:11px">
+        <div style="font-weight:600;color:#2d2a26;margin-bottom:4px">相似组 #${gi + 1}:</div>
+        ${g.map(item => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:3px 0;border-bottom:1px solid #eee8e1">
+            <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${item.name}</span>
+            ${item.similarity ? `<span style="color:#e08820;font-weight:600;margin-left:8px">${(item.similarity * 100).toFixed(0)}% 相似</span>` : '<span style="color:#52a87a">保留</span>'}
+          </div>
+        `).join('')}
+        <button class="btn small ghost" onclick="removeDuplicateVideos([${g.filter(x=>x.similarity).map(x=>x.index).join(',')}])" style="width:100%;margin-top:4px">🧹 删除本组重复(保留第一个)</button>
+      </div>
+    `).join('')}
+  `;
+}
+
+function removeDuplicateVideos(indices) {
+  indices.sort((a, b) => b - a);
+  for (const idx of indices) {
+    if (VIDEO_STATE.videos[idx]?.objectUrl) URL.revokeObjectURL(VIDEO_STATE.videos[idx].objectUrl);
+    VIDEO_STATE.videos.splice(idx, 1);
+  }
+  if (VIDEO_STATE.activeVideoIdx >= VIDEO_STATE.videos.length) {
+    VIDEO_STATE.activeVideoIdx = Math.max(0, VIDEO_STATE.videos.length - 1);
+  }
+  updateVideoTrimForActive();
+  renderVideoList();
+  renderVideoPreview();
+  updateVideoCount();
+  document.getElementById('videoDedupResults').innerHTML = '<div style="font-size:12px;color:#52a87a">✅ 已清理重复视频</div>';
+  showToast('✅ 已清理重复视频');
+}
+window.removeDuplicateVideos = removeDuplicateVideos;
+
+// ─── 视频预览 ───
+function renderVideoPreview() {
+  const phoneFrame = document.querySelector('.vm-phone-frame');
+  const canvas = document.getElementById('previewCanvas');
+  if (CURRENT_MODE.value !== 'video') return;
+
+  // 显示原生视频播放器预览
+  if (phoneFrame) phoneFrame.style.display = 'none';
+
+  const v = VIDEO_STATE.videos[VIDEO_STATE.activeVideoIdx];
+  if (!v) {
+    const ctx = canvas.getContext('2d');
+    drawPlaceholderPreview(ctx);
+    return;
+  }
+
+  // 在 canvas 上绘制第一帧+滤镜预览
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.onload = () => {
+    applyBackgroundMode(ctx, img, 'cover');
+    if (VIDEO_STATE.filter !== 'none') {
+      applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
+    }
+    // 叠加裁剪信息
+    ctx.fillStyle = 'rgba(0,0,0,0.55)';
+    ctx.fillRect(0, canvas.height - 60, canvas.width, 60);
+    ctx.fillStyle = '#fff';
+    ctx.font = '24px "Noto Sans SC",sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(`🎬 ${v.name.slice(0, 30)} | ${VIDEO_STATE.trimStart.toFixed(1)}s → ${VIDEO_STATE.trimEnd.toFixed(1)}s`, 20, canvas.height - 24);
+  };
+  img.src = v.thumbnail;
+}
+
+// ─── 视频导出 ───
+async function exportVideoOnly() {
+  const v = VIDEO_STATE.videos[VIDEO_STATE.activeVideoIdx];
+  if (!v) { showToast('请先上传视频'); return; }
+
+  STATE.isExporting = true;
+  STATE.exportProgress = 0;
+  updateExportUI();
+  showToast('🎬 正在导出视频...');
+
+  try {
+    // 用 Canvas + MediaRecorder 逐帧渲染视频
+    const targetW = VIDEO_STATE.outputResolution === '1080p' ? 1920 :
+                     VIDEO_STATE.outputResolution === '720p' ? 1280 : v.width;
+    const targetH = VIDEO_STATE.outputResolution === '1080p' ? 1080 :
+                     VIDEO_STATE.outputResolution === '720p' ? 720 : v.height;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = targetW;
+    canvas.height = targetH;
+    const ctx = canvas.getContext('2d');
+
+    const stream = canvas.captureStream(30);
+    const codecOrder = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp9', 'video/webm'];
+    let mimeType = 'video/webm';
+    for (const c of codecOrder) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+    const isVideoMp4 = mimeType.startsWith('video/mp4');
+
+    const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 8000000 });
+    const chunks = [];
+    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    const done = new Promise(r => { recorder.onstop = r; });
+    recorder.start();
+
+    const videoEl = document.createElement('video');
+    videoEl.preload = 'auto';
+    videoEl.muted = true;
+    videoEl.playsInline = true;
+    videoEl.src = v.objectUrl;
+
+    await new Promise((resolve, reject) => {
+      videoEl.onloadedmetadata = resolve;
+      videoEl.onerror = reject;
+      videoEl.load();
+    });
+
+    const trimStart = VIDEO_STATE.trimStart || 0;
+    const trimEnd = VIDEO_STATE.trimEnd || v.duration;
+    const totalFrames = Math.floor((trimEnd - trimStart) * 30);
+
+    videoEl.currentTime = trimStart;
+    await new Promise(r => { videoEl.onseeked = r; });
+
+    for (let f = 0; f < totalFrames; f++) {
+      if (videoEl.paused || videoEl.ended) break;
+
+      ctx.drawImage(videoEl, 0, 0, targetW, targetH);
+      if (VIDEO_STATE.filter !== 'none') {
+        applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
+      }
+
+      STATE.exportProgress = f / totalFrames;
+      if (f % 10 === 0) updateExportUI();
+
+      await sleep(1000 / 30);
+      if (videoEl.currentTime >= trimEnd) break;
+    }
+
+    recorder.stop();
+    await done;
+
+    const ext = isVideoMp4 ? 'mp4' : 'webm';
+    const blob = new Blob(chunks, { type: mimeType });
+    const ts = new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' +
+               new Date().toTimeString().slice(0,5).replace(':','');
+    triggerDownload(blob, `processed-video-${ts}.${ext}`);
+
+  } catch (err) {
+    console.error('[video_maker] 视频导出失败:', err);
+    showToast('❌ 视频导出失败: ' + (err.message || '未知错误'));
+  }
+
+  STATE.isExporting = false;
+  STATE.exportProgress = 1;
+  updateExportUI();
+}
+
+// ─── 导出分发(根据模式选择) ───
+async function exportDispatch() {
+  if (CURRENT_MODE.value === 'video') {
+    await exportVideoOnly();
+  } else {
+    await exportVideo();
+  }
+}
+
+// ─── 更新导出按钮事件 ───
+function updateExportButton() {
+  const btn = document.getElementById('btnExport');
+  // 移除旧事件(通过克隆)
+  const newBtn = btn.cloneNode(true);
+  btn.parentNode.replaceChild(newBtn, btn);
+  newBtn.addEventListener('click', exportDispatch);
+}
+
 // ─── 启动 ───
 async function init() {
   initUI();
   bindEvents();
   renderTimeline();
   renderPreviewFrame();
-  // 检查是否有从主站封面生成器导入的图片
+
+  // 模式切换事件
+  document.getElementById('tabSlideshow').addEventListener('click', () => switchMode('slideshow'));
+  document.getElementById('tabVideo').addEventListener('click', () => switchMode('video'));
+
+  // 视频上传事件
+  document.getElementById('videoOnlyUploadZone').addEventListener('click', () => {
+    document.getElementById('videoOnlyInput').click();
+  });
+  document.getElementById('videoOnlyInput').addEventListener('change', (e) => {
+    if (e.target.files.length > 0) handleVideoOnlyUpload(e.target.files);
+    e.target.value = '';
+  });
+  // 视频拖拽
+  const vidZone = document.getElementById('videoOnlyUploadZone');
+  vidZone.addEventListener('dragover', (e) => { e.preventDefault(); vidZone.classList.add('drag-over'); });
+  vidZone.addEventListener('dragleave', () => { vidZone.classList.remove('drag-over'); });
+  vidZone.addEventListener('drop', (e) => {
+    e.preventDefault(); vidZone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length > 0) handleVideoOnlyUpload(e.dataTransfer.files);
+  });
+
+  // 清空视频
+  document.getElementById('btnClearVideos').addEventListener('click', () => {
+    if (!VIDEO_STATE.videos.length) return;
+    if (!confirm('确定清空全部视频?')) return;
+    VIDEO_STATE.videos.forEach(v => { if (v.objectUrl) URL.revokeObjectURL(v.objectUrl); });
+    VIDEO_STATE.videos = [];
+    VIDEO_STATE.activeVideoIdx = 0;
+    updateVideoTrimForActive();
+    renderVideoList();
+    renderVideoPreview();
+    updateVideoCount();
+    showToast('已清空全部视频');
+  });
+
+  // 视频去重按钮
+  document.getElementById('btnVideoDedup').addEventListener('click', runVideoDedupCheck);
+
+  // 导出按钮分发
+  updateExportButton();
+
+  // 检查预填封面
   await loadPrefillImages();
 }
 init();
