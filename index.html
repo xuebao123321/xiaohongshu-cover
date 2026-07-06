@@ -5312,6 +5312,7 @@ function generateBatchCovers() {
         '<div class="batch-group-tools">' +
         '<button class="btn small ghost' + lockClass + '" data-batch-download="selected"' + lockAttr + '>下载选中' + lockIcon + '</button>' +
         '<button class="btn small outline' + lockClass + '" data-batch-download="all"' + lockAttr + '>下载全部' + lockIcon + '</button>' +
+        '<button class="btn small primary" data-send-to-video-maker style="background:#ED0108">🎥 发送到短视频</button>' +
         '</div></div>';
       c.appendChild(batchDownloads);
       const fams = familiesForBatchCards();
@@ -5356,6 +5357,54 @@ function generateBatchCovers() {
     }
   }, 30);
 }
+
+// ── 发送选中封面到短视频生成器 ──
+function sendToVideoMaker() {
+  const cards = cardsInScope(document, true);
+  if (!cards.length) {
+    showToast('请先在卡片上点击勾选,选中要生成视频的封面');
+    return;
+  }
+  if (cards.length > 30) {
+    showToast('最多选择 30 张封面,请减少选中数量');
+    return;
+  }
+
+  const images = [];
+  for (let i = 0; i < cards.length; i++) {
+    const canvas = cards[i].querySelector('canvas');
+    if (!canvas) continue;
+    try {
+      // 使用 JPEG 压缩减小体积(质量 0.85)
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      images.push({
+        name: 'cover_' + (i + 1).toString().padStart(3, '0') + '.jpg',
+        dataUrl: dataUrl,
+      });
+    } catch (e) {
+      console.warn('[sendToVideoMaker] 封面读取失败:', i, e);
+    }
+  }
+
+  if (!images.length) {
+    showToast('无法读取选中的封面,请重试');
+    return;
+  }
+
+  // 存入 localStorage
+  try {
+    localStorage.setItem('video_maker_prefill', JSON.stringify(images));
+  } catch (e) {
+    // localStorage 满了,尝试减少图片
+    showToast('图片数据过大,请减少选中数量(建议 ≤ 10 张)');
+    return;
+  }
+
+  showToast('✅ 已发送 ' + images.length + ' 张封面到短视频生成器');
+  // 新标签页打开
+  window.open('./video_maker/', '_blank');
+}
+window.sendToVideoMaker = sendToVideoMaker;
 
 function cardsInScope(scope, onlySelected) {
   const root = scope || document;
@@ -5565,6 +5614,9 @@ document.getElementById('container').addEventListener('click', (ev) => {
   }
   if (ev.target.closest('[data-batch-download="all"]')) {
     downloadCardsSequential(cardsInScope(document, false), '批量封面');
+  }
+  if (ev.target.closest('[data-send-to-video-maker]')) {
+    sendToVideoMaker();
   }
 });
 
