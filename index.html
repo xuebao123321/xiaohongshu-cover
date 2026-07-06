@@ -4782,7 +4782,7 @@ function drawReferenceMarkupAccents(ctx, mode, variant, spice, accent) {
   ctx.restore();
 }
 
-function drawStickerShadow(ctx, x, y, w, h, blurColor) {
+function drawStickerEllipseShadow(ctx, x, y, w, h, blurColor) {
   ctx.save();
   ctx.fillStyle = blurColor || 'rgba(0,0,0,.14)';
   ctx.beginPath();
@@ -4816,7 +4816,7 @@ function drawThumb3DSticker(ctx, x, y, s, accent) {
   ctx.save();
   ctx.translate(x, y);
   drawBrushStrokeBlob(ctx, -s * 0.05, -s * 0.10, s * 1.18, s * 0.48, '#FFE08A');
-  drawStickerShadow(ctx, s * 0.03, s * 0.30, s * 0.33, s * 0.09, 'rgba(0,0,0,.16)');
+  drawStickerEllipseShadow(ctx, s * 0.03, s * 0.30, s * 0.33, s * 0.09, 'rgba(0,0,0,.16)');
   const skin = ctx.createLinearGradient(-s * 0.30, -s * 0.35, s * 0.34, s * 0.25);
   skin.addColorStop(0, '#FFE1D4');
   skin.addColorStop(0.45, '#FFB9A0');
@@ -4856,7 +4856,7 @@ function drawThumb3DSticker(ctx, x, y, s, accent) {
 function drawEmojiAngry3DSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerShadow(ctx, 0, s * 0.30, s * 0.34, s * 0.08, 'rgba(0,0,0,.18)');
+  drawStickerEllipseShadow(ctx, 0, s * 0.30, s * 0.34, s * 0.08, 'rgba(0,0,0,.18)');
   const face = ctx.createRadialGradient(-s * 0.14, -s * 0.15, s * 0.03, 0, 0, s * 0.44);
   face.addColorStop(0, '#FFE777');
   face.addColorStop(0.58, '#FFC233');
@@ -4956,7 +4956,7 @@ function drawComicFistSticker(ctx, x, y, s) {
 function drawBigEyesSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerShadow(ctx, 0, s * 0.24, s * 0.46, s * 0.07, 'rgba(0,0,0,.10)');
+  drawStickerEllipseShadow(ctx, 0, s * 0.24, s * 0.46, s * 0.07, 'rgba(0,0,0,.10)');
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#050505';
   ctx.lineWidth = Math.max(9, s * 0.060);
@@ -4990,7 +4990,7 @@ function drawPaintRollerRealSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
   drawBrushStrokeBlob(ctx, -s * 0.12, -s * 0.12, s * 1.05, s * 0.36, '#FFE16D');
-  drawStickerShadow(ctx, s * 0.08, s * 0.38, s * 0.34, s * 0.07, 'rgba(0,0,0,.15)');
+  drawStickerEllipseShadow(ctx, s * 0.08, s * 0.38, s * 0.34, s * 0.07, 'rgba(0,0,0,.15)');
   ctx.save();
   ctx.rotate(-0.22);
   const roller = ctx.createLinearGradient(-s * 0.34, -s * 0.18, s * 0.26, s * 0.10);
@@ -5034,7 +5034,7 @@ function drawPaintRollerRealSticker(ctx, x, y, s) {
 function drawPlumpCatSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerShadow(ctx, 0, s * 0.34, s * 0.34, s * 0.06, 'rgba(0,0,0,.18)');
+  drawStickerEllipseShadow(ctx, 0, s * 0.34, s * 0.34, s * 0.06, 'rgba(0,0,0,.18)');
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#111111';
   ctx.lineWidth = Math.max(4, s * 0.024);
@@ -5109,7 +5109,7 @@ function drawCatPhotoCardSticker(ctx, x, y, s) {
 function drawDogFrameSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerShadow(ctx, 0, s * 0.36, s * 0.36, s * 0.07, 'rgba(0,0,0,.12)');
+  drawStickerEllipseShadow(ctx, 0, s * 0.36, s * 0.36, s * 0.07, 'rgba(0,0,0,.12)');
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#111111';
   ctx.lineWidth = Math.max(5, s * 0.026);
@@ -5157,7 +5157,7 @@ function drawDogFrameSticker(ctx, x, y, s) {
 function drawPlushMegaphoneSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerShadow(ctx, 0, s * 0.35, s * 0.36, s * 0.08, 'rgba(0,0,0,.15)');
+  drawStickerEllipseShadow(ctx, 0, s * 0.35, s * 0.36, s * 0.08, 'rgba(0,0,0,.15)');
   drawBurstBlob(ctx, -s * 0.22, -s * 0.10, s * 0.58, '#C9F36A', '#FFFFFF');
   const plush = ctx.createRadialGradient(-s * 0.06, -s * 0.05, s * 0.02, 0, 0, s * 0.42);
   plush.addColorStop(0, '#FFF36F');
