@@ -5361,6 +5361,8 @@ function generateBatchCovers() {
 // ── 发送选中封面到短视频生成器 ──
 function sendToVideoMaker() {
   const cards = cardsInScope(document, true);
+  console.log('[sendToVideoMaker] 选中卡片数:', cards.length);
+
   if (!cards.length) {
     showToast('请先在卡片上点击勾选,选中要生成视频的封面');
     return;
@@ -5373,10 +5375,11 @@ function sendToVideoMaker() {
   const images = [];
   for (let i = 0; i < cards.length; i++) {
     const canvas = cards[i].querySelector('canvas');
-    if (!canvas) continue;
+    if (!canvas) { console.warn('[sendToVideoMaker] 卡片无 canvas:', i); continue; }
     try {
-      // 使用 JPEG 压缩减小体积(质量 0.85)
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      // 用较低质量 JPEG 减小体积
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+      console.log('[sendToVideoMaker] 封面 ' + (i+1) + ' dataUrl 长度:', (dataUrl.length / 1024).toFixed(0) + 'KB');
       images.push({
         name: 'cover_' + (i + 1).toString().padStart(3, '0') + '.jpg',
         dataUrl: dataUrl,
@@ -5393,14 +5396,16 @@ function sendToVideoMaker() {
 
   // 存入 localStorage
   try {
-    localStorage.setItem('video_maker_prefill', JSON.stringify(images));
+    const json = JSON.stringify(images);
+    console.log('[sendToVideoMaker] 总数据大小:', (json.length / 1024).toFixed(0) + 'KB, 图片数:', images.length);
+    localStorage.setItem('video_maker_prefill', json);
   } catch (e) {
-    // localStorage 满了,尝试减少图片
-    showToast('图片数据过大,请减少选中数量(建议 ≤ 10 张)');
+    console.error('[sendToVideoMaker] localStorage 写入失败:', e);
+    showToast('图片数据过大(' + (JSON.stringify(images).length / 1024).toFixed(0) + 'KB),请减少选中数量(建议 ≤ 10 张)');
     return;
   }
 
-  showToast('✅ 已发送 ' + images.length + ' 张封面到短视频生成器');
+  showToast('✅ 已发送 ' + images.length + ' 张封面,正在打开短视频生成器...');
   // 新标签页打开
   window.open('./video_maker/', '_blank');
 }
