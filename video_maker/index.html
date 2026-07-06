@@ -3700,7 +3700,6 @@ async function exportVideoOnly() {
   showToast('🎬 正在导出视频...');
 
   try {
-    // 用 Canvas + MediaRecorder 逐帧渲染视频
     const targetW = VIDEO_STATE.outputResolution === '1080p' ? 1920 :
                      VIDEO_STATE.outputResolution === '720p' ? 1280 : v.width;
     const targetH = VIDEO_STATE.outputResolution === '1080p' ? 1080 :
@@ -3709,13 +3708,14 @@ async function exportVideoOnly() {
     const canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
     const stream = canvas.captureStream(30);
     const codecOrder = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp9', 'video/webm'];
     let mimeType = 'video/webm';
     for (const c of codecOrder) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
     const isVideoMp4 = mimeType.startsWith('video/mp4');
+    console.log('[video_maker] 视频导出编码:', mimeType);
 
     const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 8000000 });
     const chunks = [];
@@ -3728,40 +3728,87 @@ async function exportVideoOnly() {
     videoEl.muted = true;
     videoEl.playsInline = true;
     videoEl.src = v.objectUrl;
+    videoEl.crossOrigin = 'anonymous';
 
     await new Promise((resolve, reject) => {
-      videoEl.onloadedmetadata = resolve;
-      videoEl.onerror = reject;
+      videoEl.onloadedmetadata = () => {
+        console.log('[video_maker] 视频加载完成,时长:', videoEl.duration, 's');
+        resolve();
+      };
+      videoEl.onerror = () => reject(new Error('视频加载失败'));
       videoEl.load();
     });
 
     const trimStart = VIDEO_STATE.trimStart || 0;
     const trimEnd = VIDEO_STATE.trimEnd || v.duration;
-    const totalFrames = Math.floor((trimEnd - trimStart) * 30);
+    const exportDuration = trimEnd - trimStart;
+    const fps = 30;
+    const totalFrames = Math.ceil(exportDuration * fps);
+    console.log('[video_maker] 裁剪:', trimStart, '→', trimEnd, '总帧数:', totalFrames);
 
+    // Seek 到起始位置
     videoEl.currentTime = trimStart;
-    await new Promise(r => { videoEl.onseeked = r; });
+    await new Promise((resolve, reject) => {
+      videoEl.onseeked = resolve;
+      videoEl.onerror = reject;
+      // 超时保护
+      setTimeout(resolve, 5000);
+    });
+
+    // 开始播放!
+    videoEl.playbackRate = 1;
+    await videoEl.play();
+    console.log('[video_maker] 视频开始播放,当前时间:', videoEl.currentTime);
+
+    const startTime = performance.now();
+    let lastFrameTime = videoEl.currentTime;
 
     for (let f = 0; f < totalFrames; f++) {
-      if (videoEl.paused || videoEl.ended) break;
+      if (videoEl.ended || videoEl.currentTime >= trimEnd) {
+        console.log('[video_maker] 视频到达终点,帧:', f, '时间:', videoEl.currentTime);
+        break;
+      }
+
+      // 等待视频时间推进(每帧间隔 = 1/fps 秒)
+      const targetTime = trimStart + (f / fps);
+      const waitStart = performance.now();
+      while (videoEl.currentTime < targetTime && !videoEl.ended) {
+        if (performance.now() - waitStart > 2000) {
+          console.warn('[video_maker] 等待视频超时,跳出');
+          break;
+        }
+        await sleep(5);
+      }
+
+      // 如果时间没有推进(视频卡住了),强制 seek
+      if (videoEl.currentTime === lastFrameTime && f > 5) {
+        videoEl.currentTime = targetTime;
+        await new Promise(r => { videoEl.onseeked = r; setTimeout(r, 2000); });
+      }
+      lastFrameTime = videoEl.currentTime;
 
       ctx.drawImage(videoEl, 0, 0, targetW, targetH);
+
       if (VIDEO_STATE.filter !== 'none') {
         applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
       }
 
-      STATE.exportProgress = f / totalFrames;
+      STATE.exportProgress = Math.min(0.99, f / Math.max(1, totalFrames));
       if (f % 10 === 0) updateExportUI();
-
-      await sleep(1000 / 30);
-      if (videoEl.currentTime >= trimEnd) break;
     }
 
+    videoEl.pause();
     recorder.stop();
     await done;
 
     const ext = isVideoMp4 ? 'mp4' : 'webm';
     const blob = new Blob(chunks, { type: mimeType });
+    console.log('[video_maker] 导出完成,大小:', formatSize(blob.size), '时长:', exportDuration, 's');
+
+    if (blob.size < 1000) {
+      throw new Error('导出文件过小,可能视频处理异常');
+    }
+
     const ts = new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' +
                new Date().toTimeString().slice(0,5).replace(':','');
     triggerDownload(blob, `processed-video-${ts}.${ext}`);
