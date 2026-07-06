@@ -1,0 +1,2862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>轮播短视频生成器</title>
+<meta name="description" content="把多张运营图片和音乐自动合成为适合 Instagram Reels / TikTok 的竖屏轮播短视频。">
+<style>
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ *  轮播短视频生成器 v1.0
+ *  ────────────────────────────────────────────────
+ *  功能: 多图 + 音乐 → 9:16 MP4 短视频
+ *  特色: 滤镜 / 特效 / 贴片水印 / 去重
+ *  渲染: Canvas 2D 预处理 → ffmpeg.wasm / MediaRecorder 导出
+ *  部署: 纯静态 HTML/CSS/JS, 零 npm 依赖
+ *  ────────────────────────────────────────────────
+ *  本文件结构:
+ *    1. <head>  : 字体 + CSS 样式 + 响应式断点
+ *    2. <body>  : Header / 左右面板 / 时间轴
+ *    3. <script>: ES Module 主逻辑
+ *               状态管理:STATE / 图片管理 / 音频管理 / 导出
+ *  ═══════════════════════════════════════════════════════════════════
+ */
+
+/* ═══════════ 字体加载 ═══════════ */
+@import url('https://fonts.font.im/css2?family=Noto+Sans+SC:wght@400;700;900&family=Noto+Serif+SC:wght@700;900&family=DM+Serif+Display&display=swap');
+
+/* ═══════════ 重置 ═══════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  background:#f7f5f2;
+  color:#2d2a26;
+  line-height:1.5;
+  min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer}
+
+/* ═══════════ 顶部导航 ═══════════ */
+.vm-header{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 20px;background:#fff;
+  border-bottom:1.5px solid #e8e4df;
+  position:sticky;top:0;z-index:100;
+}
+.vm-back-link{
+  color:#5a8cb8;text-decoration:none;font-size:13px;
+  font-weight:600;letter-spacing:.5px;
+  white-space:nowrap;transition:color .2s;
+}
+.vm-back-link:hover{color:#2d2a26}
+.vm-header-title{flex:1;min-width:0}
+.vm-header-title h1{
+  font-family:"DM Serif Display","Noto Serif SC",serif;
+  font-size:22px;font-weight:400;color:#1a1a1a;
+  letter-spacing:.5px;font-style:italic;line-height:1.2;
+}
+.vm-header-title .vm-subtitle{
+  font-size:11px;color:#8a8a8a;letter-spacing:1px;
+  margin-top:2px;
+}
+
+/* ═══════════ 主布局 ═══════════ */
+.vm-main{
+  display:flex;gap:0;max-width:1500px;margin:0 auto;
+  min-height:calc(100vh - 140px);
+}
+.vm-panel{overflow-y:auto}
+
+/* ═══════════ 左侧设置区 ═══════════ */
+.vm-settings{
+  width:400px;flex-shrink:0;padding:16px 14px;
+  border-right:1.5px solid #e8e4df;
+  display:flex;flex-direction:column;gap:12px;
+  max-height:calc(100vh - 140px);
+}
+.vm-card{
+  background:#fff;border:1.5px solid #e8e4df;
+  border-radius:12px;padding:14px 16px;
+  transition:border-color .2s;
+}
+.vm-card:hover{border-color:#c8c4be}
+.vm-card summary{
+  font-size:13px;font-weight:800;color:#1a1a1a;
+  cursor:pointer;letter-spacing:.5px;
+  list-style:none;display:flex;align-items:center;gap:8px;
+  user-select:none;-webkit-user-select:none;
+}
+.vm-card summary::-webkit-details-marker{display:none}
+.vm-card summary::before{
+  content:'▸';display:inline-block;font-size:10px;
+  transition:transform .2s;color:#a8a098;width:14px;
+}
+.vm-card[open] summary::before{transform:rotate(90deg)}
+.vm-card .vm-card-body{margin-top:12px}
+.vm-card .vm-card-hint{
+  font-size:11px;color:#a8a098;margin-top:8px;
+  line-height:1.5;
+}
+
+/* ═══════════ 按钮体系(与主站一致)═══════════ */
+.btn{
+  padding:10px 18px;background:#1a1a1a;color:#fff;border:none;
+  border-radius:10px;font-size:13px;font-weight:500;
+  cursor:pointer;white-space:nowrap;letter-spacing:1px;
+  transition:background .2s,opacity .2s;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+}
+.btn:hover{background:#3a3a3a}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.primary{background:#ED0108}
+.btn.primary:hover{background:#c10106}
+.btn.outline{background:#fff;color:#1a1a1a;border:1.5px solid #1a1a1a;font-weight:700}
+.btn.outline:hover{background:#1a1a1a;color:#fff}
+.btn.ghost{background:#f7f5f2;color:#2d2a26;border:1px solid #e8e4df}
+.btn.ghost:hover{background:#ebe6df}
+.btn.small{padding:6px 12px;font-size:11px;letter-spacing:.5px}
+.btn.icon-btn{
+  padding:8px 12px;font-size:14px;min-width:36px;min-height:36px;
+}
+
+/* ═══════════ 上传区域 ═══════════ */
+.upload-zone{
+  border:2px dashed #d8d4cf;border-radius:10px;
+  padding:20px;text-align:center;cursor:pointer;
+  transition:border-color .2s,background .2s;
+  background:#faf9f7;
+}
+.upload-zone:hover,.upload-zone.drag-over{
+  border-color:#5a8cb8;background:#f0f5fa;
+}
+.upload-zone .upload-icon{font-size:32px;margin-bottom:8px}
+.upload-zone .upload-text{font-size:13px;color:#5a5a5a;font-weight:600}
+.upload-zone .upload-hint{font-size:11px;color:#a8a098;margin-top:4px}
+.upload-zone input[type="file"]{display:none}
+
+/* ═══════════ 图片列表(在卡片内) ═══════════ */
+.img-list{display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto}
+.img-list-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 10px;background:#faf9f7;
+  border:1px solid #eee8e1;border-radius:8px;
+  font-size:12px;
+}
+.img-list-item .img-thumb{
+  width:44px;height:44px;border-radius:6px;
+  object-fit:cover;flex-shrink:0;background:#e8e4df;
+}
+.img-list-item .img-info{flex:1;min-width:0}
+.img-list-item .img-name{
+  font-weight:600;color:#2d2a26;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.img-list-item .img-meta{font-size:10px;color:#a8a098;margin-top:2px}
+.img-list-item .img-remove{
+  width:28px;height:28px;border-radius:6px;border:1px solid #ead9d9;
+  background:#fff;color:#b42323;font-size:14px;cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.img-list-item .img-remove:hover{background:#fff4f4}
+
+/* ═══════════ 选项组 ═══════════ */
+.option-group{margin-bottom:12px}
+.option-group:last-child{margin-bottom:0}
+.option-label{
+  font-size:11px;color:#8a8a8a;letter-spacing:1px;
+  font-weight:600;margin-bottom:6px;
+}
+.option-row{display:flex;gap:6px;flex-wrap:wrap}
+.option-btn{
+  padding:6px 12px;border:1.5px solid #e8e4df;background:#fff;
+  border-radius:8px;font-size:11px;color:#5a5a5a;cursor:pointer;
+  transition:all .2s;white-space:nowrap;
+}
+.option-btn:hover{border-color:#a8a098;color:#2d2a26}
+.option-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+
+/* ═══════════ 滑块 ═══════════ */
+.slider-row{display:flex;align-items:center;gap:10px}
+.slider-row input[type="range"]{flex:1;accent-color:#1a1a1a}
+.slider-row .slider-val{font-size:12px;color:#2d2a26;font-weight:600;min-width:36px;text-align:right}
+
+/* ═══════════ 开关 ═══════════ */
+.toggle-row{display:flex;align-items:center;justify-content:space-between}
+.toggle-row .toggle-label{font-size:12px;color:#2d2a26;font-weight:600}
+.toggle-switch{
+  position:relative;width:44px;height:24px;
+  background:#d8d4cf;border-radius:12px;cursor:pointer;
+  transition:background .2s;
+}
+.toggle-switch.active{background:#1a1a1a}
+.toggle-switch::after{
+  content:'';position:absolute;top:2px;left:2px;
+  width:20px;height:20px;background:#fff;
+  border-radius:50%;transition:left .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.15);
+}
+.toggle-switch.active::after{left:22px}
+
+/* ═══════════ 右侧预览区 ═══════════ */
+.vm-preview{
+  flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:20px;gap:16px;min-width:0;
+}
+.vm-phone-frame{
+  background:#1a1a1a;border-radius:24px;
+  padding:12px;box-shadow:0 12px 48px rgba(0,0,0,.15);
+}
+.vm-phone-screen{
+  width:320px;aspect-ratio:9/16;
+  background:#000;border-radius:14px;overflow:hidden;
+  position:relative;
+}
+.vm-phone-screen canvas{
+  display:block;width:100%;height:100%;
+}
+.vm-preview-controls{
+  display:flex;align-items:center;gap:12px;
+}
+.vm-preview-time{
+  font-size:13px;color:#5a5a5a;font-weight:600;
+  min-width:100px;text-align:center;
+}
+
+/* ═══════════ 导出进度 ═══════════ */
+.vm-export-bar{
+  width:100%;max-width:360px;
+}
+.vm-progress-track{
+  width:100%;height:8px;background:#e8e4df;
+  border-radius:4px;overflow:hidden;
+}
+.vm-progress-fill{
+  height:100%;background:#ED0108;border-radius:4px;
+  width:0%;transition:width .3s;
+}
+.vm-progress-fill.done{background:#52a87a}
+.vm-progress-text{
+  font-size:11px;color:#8a8a8a;text-align:center;margin-top:6px;
+}
+
+/* ═══════════ 底部时间轴 ═══════════ */
+.vm-timeline{
+  background:#fff;border-top:1.5px solid #e8e4df;
+  padding:14px 20px;overflow-x:auto;
+  display:flex;align-items:center;gap:10px;
+  min-height:90px;
+  position:sticky;bottom:0;z-index:100;
+  -webkit-overflow-scrolling:touch;
+}
+.vm-timeline .tl-empty{
+  font-size:12px;color:#a8a098;letter-spacing:1px;
+  white-space:nowrap;margin:auto;
+}
+.tl-item{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  flex-shrink:0;width:80px;cursor:grab;
+  position:relative;user-select:none;-webkit-user-select:none;
+}
+.tl-item.dragging{opacity:.4}
+.tl-item .tl-index{
+  font-size:10px;font-weight:800;color:#fff;
+  background:#1a1a1a;width:20px;height:20px;
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+}
+.tl-item .tl-thumb{
+  width:64px;height:86px;border-radius:8px;
+  object-fit:cover;background:#e8e4df;
+  border:2px solid transparent;transition:border-color .2s;
+}
+.tl-item:hover .tl-thumb{border-color:#a8a098}
+.tl-item .tl-duration{
+  font-size:10px;color:#a8a098;font-weight:600;
+}
+.tl-item .tl-actions{
+  position:absolute;top:0;right:0;display:flex;gap:2px;opacity:0;transition:opacity .2s;
+}
+.tl-item:hover .tl-actions{opacity:1}
+.tl-item .tl-btn{
+  width:20px;height:20px;border-radius:4px;border:none;
+  font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+.tl-btn.tl-remove{background:rgba(180,35,35,.85);color:#fff}
+.tl-btn.tl-replace{background:rgba(0,0,0,.6);color:#fff}
+
+/* ═══════════ Toast ═══════════ */
+.toast{
+  position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);
+  padding:12px 24px;background:rgba(0,0,0,.88);color:#fff;
+  border-radius:24px;font-size:13px;letter-spacing:1px;
+  z-index:9999;transition:transform .3s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;white-space:nowrap;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ═══════════ 空状态(时间轴为空时) ═══════════ */
+.empty-hint{
+  font-size:12px;color:#a8a098;text-align:center;
+  padding:20px;letter-spacing:.5px;
+}
+
+/* ═══════════ 响应式 ═══════════ */
+
+/* ≤ 767px: 上下布局 */
+@media (max-width:767px){
+  .vm-header{padding:10px 14px;gap:10px}
+  .vm-header-title h1{font-size:17px}
+  .vm-header-title .vm-subtitle{font-size:10px}
+  .vm-main{flex-direction:column}
+  .vm-settings{
+    width:100%;max-height:none;border-right:none;
+    border-bottom:1.5px solid #e8e4df;padding:10px 12px;gap:8px;
+  }
+  .vm-preview{padding:14px 10px}
+  .vm-phone-screen{width:260px}
+  .vm-timeline{padding:10px 12px}
+  .btn{padding:9px 14px;font-size:12px}
+}
+
+/* ≤ 480px: 单列精简 */
+@media (max-width:480px){
+  body{font-size:15px}
+  .vm-header{padding:8px 10px}
+  .vm-header-title h1{font-size:16px}
+  .vm-phone-screen{width:220px}
+  .vm-phone-frame{padding:8px;border-radius:18px}
+  .vm-card{padding:10px 12px}
+  .vm-card summary{font-size:12px}
+  .btn{padding:10px 14px;font-size:12px;min-height:44px}
+  .option-btn{padding:8px 10px;font-size:10px;min-height:40px}
+  .upload-zone{padding:14px}
+}
+
+/* ≥ 1024px: 完整左右分栏 */
+@media (min-width:1024px){
+  .vm-settings{width:420px}
+  .vm-phone-screen{width:340px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ Toast ═══════════ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════ 顶部导航 ═══════════ -->
+<header class="vm-header">
+  <a href="../" class="vm-back-link">← 返回工具箱</a>
+  <div class="vm-header-title">
+    <h1>轮播短视频生成器</h1>
+    <div class="vm-subtitle">多图 + 音乐 → 9:16 短视频 · 浏览器本地处理</div>
+  </div>
+</header>
+
+<!-- ═══════════ 主布局 ═══════════ -->
+<div class="vm-main">
+
+  <!-- ═══════════ 左侧设置区 ═══════════ -->
+  <section class="vm-panel vm-settings" id="settingsPanel">
+
+    <!-- 📁 图片素材 -->
+    <details class="vm-card" id="cardImages" open>
+      <summary>📁 图片素材 <span id="imgCount" style="font-weight:400;color:#a8a098;font-size:11px">0/30 张</span></summary>
+      <div class="vm-card-body">
+        <div class="upload-zone" id="imageUploadZone">
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-text">点击上传或拖拽图片</div>
+          <div class="upload-hint">支持 PNG / JPG / WebP · 最多 30 张 · 也可 Ctrl+V 粘贴</div>
+          <input type="file" id="imageFileInput" accept="image/png,image/jpeg,image/webp" multiple hidden>
+        </div>
+        <div class="img-list" id="imgList"></div>
+        <div class="vm-card-hint" id="imgSummary">预计视频时长: 0.0s</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn small ghost" onclick="clearAllImages()" style="flex:1">🗑 全部删除</button>
+        </div>
+      </div>
+    </details>
+
+    <!-- 🎵 背景音乐 -->
+    <details class="vm-card" id="cardAudio">
+      <summary>🎵 背景音乐 <span id="audioStatus" style="font-weight:400;color:#a8a098;font-size:11px">无音乐</span></summary>
+      <div class="vm-card-body">
+        <div class="upload-zone" id="audioUploadZone" style="padding:14px">
+          <div class="upload-icon">🎧</div>
+          <div class="upload-text">点击上传音乐</div>
+          <div class="upload-hint">MP3 / WAV / M4A · 建议 ≤ 50MB</div>
+          <input type="file" id="audioFileInput" accept="audio/mp3,audio/wav,audio/m4a,audio/aac,audio/ogg" hidden>
+        </div>
+        <div id="audioPlayer" style="display:none;margin-top:10px"></div>
+        <div class="option-group" style="margin-top:10px">
+          <div class="option-label">音量</div>
+          <div class="slider-row">
+            <input type="range" id="audioVolume" min="0" max="100" value="80">
+            <span class="slider-val" id="audioVolumeVal">80%</span>
+          </div>
+        </div>
+        <div class="option-group">
+          <div class="option-label">淡入 / 淡出</div>
+          <div class="option-row">
+            <select id="audioFadeIn" style="flex:1;padding:6px;border:1px solid #e8e4df;border-radius:6px;font-size:12px">
+              <option value="0">淡入 0s</option><option value="0.5">淡入 0.5s</option>
+              <option value="1" selected>淡入 1s</option><option value="1.5">淡入 1.5s</option><option value="2">淡入 2s</option>
+            </select>
+            <select id="audioFadeOut" style="flex:1;padding:6px;border:1px solid #e8e4df;border-radius:6px;font-size:12px">
+              <option value="0">淡出 0s</option><option value="1">淡出 1s</option>
+              <option value="2" selected>淡出 2s</option><option value="3">淡出 3s</option><option value="4">淡出 4s</option>
+            </select>
+          </div>
+        </div>
+        <div class="toggle-row" style="margin-top:8px">
+          <span class="toggle-label">无音乐模式</span>
+          <div class="toggle-switch active" id="toggleNoMusic" onclick="toggleNoMusic()"></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 🎨 滤镜效果 -->
+    <details class="vm-card" id="cardFilter">
+      <summary>🎨 滤镜效果 <span id="filterLabel" style="font-weight:400;color:#a8a098;font-size:11px">无滤镜</span></summary>
+      <div class="vm-card-body">
+        <div class="option-row" id="filterBtns"></div>
+        <div class="option-group" id="filterStrengthRow" style="display:none;margin-top:10px">
+          <div class="option-label">滤镜强度</div>
+          <div class="slider-row">
+            <input type="range" id="filterStrength" min="0" max="100" value="80">
+            <span class="slider-val" id="filterStrengthVal">80%</span>
+          </div>
+        </div>
+      </div>
+    </details>
+
+    <!-- ✨ 动态特效 -->
+    <details class="vm-card" id="cardMotion">
+      <summary>✨ 动态特效 <span id="motionLabel" style="font-weight:400;color:#a8a098;font-size:11px">缓慢放大</span></summary>
+      <div class="vm-card-body">
+        <div class="option-group">
+          <div class="option-label">动态效果</div>
+          <div class="option-row" id="motionBtns"></div>
+        </div>
+        <div class="option-group">
+          <div class="option-label">转场效果</div>
+          <div class="option-row" id="transitionBtns"></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 🎯 贴片水印 -->
+    <details class="vm-card" id="cardStickers">
+      <summary>🎯 贴片水印 <span id="stickerCount" style="font-weight:400;color:#a8a098;font-size:11px">0 个</span></summary>
+      <div class="vm-card-body">
+        <div class="option-group">
+          <div class="option-label">预设贴片模板</div>
+          <div class="option-row" id="stickerTemplates"></div>
+        </div>
+        <div class="option-group">
+          <div class="option-label">自定义贴片</div>
+          <div style="display:flex;gap:6px">
+            <input type="text" id="customStickerText" placeholder="输入文字或 emoji" style="flex:1;padding:6px 10px;border:1px solid #e8e4df;border-radius:6px;font-size:12px">
+            <button class="btn small ghost" id="btnAddCustomSticker">添加</button>
+          </div>
+        </div>
+        <div id="activeStickers" style="margin-top:8px"></div>
+        <div class="option-group" style="margin-top:12px">
+          <div class="option-label">水印设置</div>
+          <div class="toggle-row" style="margin-bottom:8px">
+            <span class="toggle-label">启用水印</span>
+            <div class="toggle-switch" id="toggleWatermark" onclick="toggleWatermark()"></div>
+          </div>
+          <input type="text" id="watermarkText" value="@yourhandle" placeholder="水印文字" style="width:100%;padding:6px 10px;border:1px solid #e8e4df;border-radius:6px;font-size:12px;margin-bottom:8px">
+          <div class="option-row" id="watermarkPosBtns"></div>
+        </div>
+      </div>
+    </details>
+
+    <!-- 🔄 去重设置 -->
+    <details class="vm-card" id="cardDedup">
+      <summary>🔄 去重设置 <span id="dedupLabel" style="font-weight:400;color:#a8a098;font-size:11px">标准</span></summary>
+      <div class="vm-card-body">
+        <div class="toggle-row" style="margin-bottom:10px">
+          <span class="toggle-label">启用来重检测</span>
+          <div class="toggle-switch active" id="toggleDedup" onclick="toggleDedup()"></div>
+        </div>
+        <div class="option-group">
+          <div class="option-label">检测强度</div>
+          <div class="option-row" id="dedupLevelBtns"></div>
+        </div>
+        <button class="btn small ghost" id="btnCheckAllDup" style="margin-top:8px;width:100%">🔍 全部检测</button>
+        <div id="dedupResults" style="display:none;margin-top:10px"></div>
+      </div>
+    </details>
+
+    <!-- ⚙️ 导出设置 -->
+    <details class="vm-card" id="cardExport">
+      <summary>⚙️ 导出设置 <span id="exportSettingsLabel" style="font-weight:400;color:#a8a098;font-size:11px">1080×1920 · 30fps</span></summary>
+      <div class="vm-card-body">
+        <div class="option-group">
+          <div class="option-label">每图时长</div>
+          <div class="slider-row">
+            <input type="range" id="secondsPerImage" min="0.5" max="10" step="0.5" value="2.5">
+            <span class="slider-val" id="secondsPerImageVal">2.5s</span>
+          </div>
+        </div>
+        <div class="option-group">
+          <div class="option-label">封面停留</div>
+          <div class="option-row">
+            <select id="coverHold" style="flex:1;padding:6px;border:1px solid #e8e4df;border-radius:6px;font-size:12px">
+              <option value="0">0s</option><option value="1" selected>1s</option><option value="2">2s</option>
+            </select>
+          </div>
+        </div>
+        <div class="option-group">
+          <div class="option-label">结尾停留</div>
+          <div class="option-row">
+            <select id="endHold" style="flex:1;padding:6px;border:1px solid #e8e4df;border-radius:6px;font-size:12px">
+              <option value="0">0s</option><option value="1" selected>1s</option><option value="2">2s</option>
+            </select>
+          </div>
+        </div>
+        <div class="option-group">
+          <div class="option-label">背景填充模式</div>
+          <div class="option-row" id="bgModeBtns"></div>
+        </div>
+      </div>
+    </details>
+
+  </section>
+
+  <!-- ═══════════ 右侧预览区 ═══════════ -->
+  <section class="vm-panel vm-preview" id="previewPanel">
+    <div class="vm-phone-frame">
+      <div class="vm-phone-screen" id="phoneScreen">
+        <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+      </div>
+    </div>
+    <div class="vm-preview-controls">
+      <button class="btn small ghost icon-btn" id="btnPreviewPlay" title="预览播放">▶</button>
+      <span class="vm-preview-time" id="previewTime">00:00 / 00:00</span>
+    </div>
+    <div class="vm-export-bar">
+      <div class="vm-progress-track" id="progressTrack" style="display:none">
+        <div class="vm-progress-fill" id="progressFill"></div>
+      </div>
+      <div class="vm-progress-text" id="progressText"></div>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:10px">
+        <button class="btn primary" id="btnExport" style="font-size:15px;padding:14px 32px">🎬 生成视频</button>
+        <button class="btn outline" id="btnDownload" style="display:none">⬇ 下载 MP4</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ═══════════ 底部时间轴 ═══════════ -->
+<section class="vm-timeline" id="timeline">
+  <div class="tl-empty">📁 请上传图片,支持拖拽排序</div>
+</section>
+
+<!-- ═══════════ 主程序 ═══════════ -->
+<script type="module">
+/* ═══════════════════════════════════════════════════════════
+ *  轮播短视频生成器 v1.0 · 主程序
+ *  ─────────────────────────────────────────────
+ *  状态管理 · 图片/音频管理 · 设置联动 · 导出入口
+ *  ═══════════════════════════════════════════════════════════ */
+
+// ─── 全局状态 ───
+const CANVAS_W = 1080;
+const CANVAS_H = 1920;
+
+const STATE = {
+  images: [],
+  audio: null,
+  settings: {
+    platform: 'reels',
+    outputSize: { w: 1080, h: 1920 },
+    fps: 30,
+    secondsPerImage: 2.5,
+    coverHold: 1,
+    endHold: 1,
+    transition: 'fade',
+    motion: 'slow_zoom',
+    backgroundMode: 'contain_blur',
+  },
+  filter: 'none',
+  filterStrength: 80,
+  stickers: [],
+  watermark: { enabled: false, text: '@yourhandle', position: 'bottom-left' },
+  dedup: { enabled: true, level: 'normal' },
+  exportProgress: 0,
+  isExporting: false,
+  noMusic: true,
+};
+
+// ─── 功能注册表(占位,后续批次填充) ───
+const FILTERS = {
+  none:        { name: '无滤镜',   icon: '🚫', category: 'basic',    hasStrength: false },
+  grayscale:   { name: '黑白',     icon: '⬛', category: 'color',    hasStrength: true },
+  sepia:       { name: '复古棕',   icon: '🟤', category: 'color',    hasStrength: true },
+  vintage:     { name: '老照片',   icon: '📷', category: 'style',    hasStrength: true },
+  vivid:       { name: '鲜艳',     icon: '🌈', category: 'color',    hasStrength: true },
+  cool:        { name: '冷色调',   icon: '🧊', category: 'color',    hasStrength: true },
+  warm:        { name: '暖色调',   icon: '🔥', category: 'color',    hasStrength: true },
+  softGlow:    { name: '柔光',     icon: '✨', category: 'style',    hasStrength: true },
+  lofi:        { name: 'Lo-Fi',    icon: '📺', category: 'style',    hasStrength: false },
+  cinema:      { name: '电影感',   icon: '🎬', category: 'style',    hasStrength: true },
+  posterize:   { name: '海报化',   icon: '🖼️', category: 'artistic', hasStrength: true },
+  sketch:      { name: '素描',     icon: '✏️', category: 'artistic', hasStrength: true },
+  pixelate:    { name: '像素化',   icon: '👾', category: 'artistic', hasStrength: true },
+  invert:      { name: '反相',     icon: '🔄', category: 'basic',    hasStrength: true },
+};
+
+const MOTION_EFFECTS = {
+  none:        { name: '无特效',     icon: '⏸️' },
+  slow_zoom:   { name: '缓慢放大',   icon: '🔍' },
+  pan_left:    { name: '左移',       icon: '⬅️' },
+  pan_right:   { name: '右移',       icon: '➡️' },
+  pan_up:      { name: '上移',       icon: '⬆️' },
+  pan_down:    { name: '下移',       icon: '⬇️' },
+  ken_burns:   { name: 'Ken Burns',  icon: '🎥' },
+  rotate_cw:   { name: '微旋转',     icon: '🔄' },
+  bounce:      { name: '弹跳',       icon: '🦘' },
+};
+
+const TRANSITIONS = {
+  none:        { name: '无转场',     icon: '⏹️' },
+  fade:        { name: '淡入淡出',   icon: '🌫️' },
+  slide_left:  { name: '左滑',       icon: '⬅️' },
+  slide_right: { name: '右滑',       icon: '➡️' },
+  slide_up:    { name: '上滑',       icon: '⬆️' },
+  zoom_in:     { name: '放大进入',   icon: '🔍' },
+  zoom_out:    { name: '缩小退出',   icon: '🔎' },
+  wipe_left:   { name: '擦除',       icon: '🧹' },
+};
+
+const STICKER_TEMPLATES = [
+  { id: 'tpl_hot',    type: 'badge',  content: '🔥 热门', x: 0.85, y: 0.08, color: '#ED0108',  animation: 'pulse' },
+  { id: 'tpl_new',    type: 'badge',  content: '🆕 新品', x: 0.15, y: 0.08, color: '#52a87a',  animation: 'bounce' },
+  { id: 'tpl_star',   type: 'badge',  content: '⭐ 推荐', x: 0.85, y: 0.08, color: '#e08820',  animation: 'pulse' },
+  { id: 'tpl_limit',  type: 'badge',  content: '限时',    x: 0.85, y: 0.08, color: '#ED0108',  animation: 'bounce' },
+  { id: 'tpl_follow', type: 'banner', content: '📢 关注获取更多干货', y: 0.95, animation: 'slide_in' },
+  { id: 'tpl_sparkle',type: 'emoji',  content: '✨',       x: 0.80, y: 0.82, scale: 1.5 },
+  { id: 'tpl_idea',   type: 'emoji',  content: '💡',       x: 0.20, y: 0.20, scale: 1.3 },
+  { id: 'tpl_target', type: 'emoji',  content: '🎯',       x: 0.75, y: 0.25, scale: 1.2 },
+  { id: 'tpl_save',   type: 'text',   content: 'SAVE THIS',x: 0.88, y: 0.92, fontSize: 28, animation: 'pulse' },
+  { id: 'tpl_bar',    type: 'progress', y: 0.97 },
+];
+
+const DEDUP_LEVELS = {
+  loose:   { threshold: 0.95, name: '宽松', desc: '仅检测几乎完全相同的图片' },
+  normal:  { threshold: 0.85, name: '标准', desc: '检测明显相似的图片' },
+  strict:  { threshold: 0.75, name: '严格', desc: '检测有一定相似度的图片(含裁剪/滤镜后)' },
+};
+
+const BG_MODES = {
+  cover:         { name: '裁切填满', icon: '📐' },
+  contain_blur:  { name: '模糊背景', icon: '🌫️' },
+  contain_solid: { name: '纯色背景', icon: '🎨' },
+};
+
+const WATERMARK_POSITIONS = {
+  'bottom-left':  '左下',
+  'bottom-right': '右下',
+  'top-left':     '左上',
+  'top-right':    '右上',
+};
+
+// ─── Toast ───
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+window.showToast = showToast;
+
+// ─── 切换开关 ───
+function toggleSwitch(el) {
+  el.classList.toggle('active');
+  return el.classList.contains('active');
+}
+window.toggleNoMusic = function() {
+  STATE.noMusic = toggleSwitch(document.getElementById('toggleNoMusic'));
+  document.getElementById('audioStatus').textContent = STATE.noMusic ? '无音乐' : '有音乐';
+};
+window.toggleWatermark = function() {
+  STATE.watermark.enabled = toggleSwitch(document.getElementById('toggleWatermark'));
+};
+window.toggleDedup = function() {
+  STATE.dedup.enabled = toggleSwitch(document.getElementById('toggleDedup'));
+};
+
+// ─── 渲染选项按钮 ───
+function renderOptionButtons(containerId, options, selectedKey, onChange, iconSize) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = '';
+  Object.entries(options).forEach(([key, opt]) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn' + (key === selectedKey ? ' active' : '');
+    btn.innerHTML = `${opt.icon || ''} ${opt.name}`;
+    btn.title = opt.name;
+    btn.addEventListener('click', () => {
+      container.querySelectorAll('.option-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      onChange(key, opt);
+    });
+    container.appendChild(btn);
+  });
+}
+
+// ─── 初始化所有 UI ───
+function initUI() {
+  // 滤镜按钮
+  renderOptionButtons('filterBtns', FILTERS, STATE.filter, (key, opt) => {
+    STATE.filter = key;
+    document.getElementById('filterLabel').textContent = opt.name;
+    document.getElementById('filterStrengthRow').style.display = opt.hasStrength ? '' : 'none';
+    renderPreviewFrame();
+  });
+
+  // 滤镜强度
+  document.getElementById('filterStrength').addEventListener('input', function() {
+    STATE.filterStrength = parseInt(this.value);
+    document.getElementById('filterStrengthVal').textContent = this.value + '%';
+    renderPreviewFrame();
+  });
+
+  // 动态效果
+  renderOptionButtons('motionBtns', MOTION_EFFECTS, STATE.settings.motion, (key, opt) => {
+    STATE.settings.motion = key;
+    document.getElementById('motionLabel').textContent = opt.name;
+    renderPreviewFrame();
+  });
+
+  // 转场效果
+  renderOptionButtons('transitionBtns', TRANSITIONS, STATE.settings.transition, (key) => {
+    STATE.settings.transition = key;
+  });
+
+  // 贴片模板
+  renderOptionButtons('stickerTemplates', Object.fromEntries(
+    STICKER_TEMPLATES.map(t => [t.id, { name: t.content, icon: '' }])
+  ), null, (key) => {
+    const tpl = STICKER_TEMPLATES.find(t => t.id === key);
+    if (tpl) {
+      STATE.stickers.push({ ...tpl, id: 'sticker_' + Date.now() });
+      renderActiveStickers();
+      document.getElementById('stickerCount').textContent = STATE.stickers.length + ' 个';
+      renderPreviewFrame();
+    }
+  });
+
+  // 水印位置
+  renderOptionButtons('watermarkPosBtns', WATERMARK_POSITIONS, STATE.watermark.position, (key) => {
+    STATE.watermark.position = key;
+    renderPreviewFrame();
+  });
+  document.getElementById('watermarkText').addEventListener('input', function() {
+    STATE.watermark.text = this.value || '@yourhandle';
+    renderPreviewFrame();
+  });
+
+  // 去重强度
+  renderOptionButtons('dedupLevelBtns', Object.fromEntries(
+    Object.entries(DEDUP_LEVELS).map(([k, v]) => [k, { name: v.name, icon: '' }])
+  ), STATE.dedup.level, (key) => {
+    STATE.dedup.level = key;
+    document.getElementById('dedupLabel').textContent = DEDUP_LEVELS[key].name;
+  });
+
+  // 背景模式
+  renderOptionButtons('bgModeBtns', BG_MODES, STATE.settings.backgroundMode, (key) => {
+    STATE.settings.backgroundMode = key;
+    renderPreviewFrame();
+  });
+
+  // 每图时长
+  document.getElementById('secondsPerImage').addEventListener('input', function() {
+    STATE.settings.secondsPerImage = parseFloat(this.value);
+    document.getElementById('secondsPerImageVal').textContent = this.value + 's';
+    updateTotalDuration();
+  });
+
+  // 封面/结尾停留
+  document.getElementById('coverHold').addEventListener('change', function() {
+    STATE.settings.coverHold = parseInt(this.value);
+    updateTotalDuration();
+  });
+  document.getElementById('endHold').addEventListener('change', function() {
+    STATE.settings.endHold = parseInt(this.value);
+    updateTotalDuration();
+  });
+
+  // 音量
+  document.getElementById('audioVolume').addEventListener('input', function() {
+    document.getElementById('audioVolumeVal').textContent = this.value + '%';
+  });
+
+  // 自定义贴片
+  document.getElementById('btnAddCustomSticker').addEventListener('click', () => {
+    const text = document.getElementById('customStickerText').value.trim();
+    if (!text) { showToast('请输入文字或 emoji'); return; }
+    const isEmoji = /^[\p{Emoji}\s]+$/u.test(text);
+    STATE.stickers.push({
+      id: 'sticker_' + Date.now(),
+      type: isEmoji ? 'emoji' : 'text',
+      content: text,
+      x: 0.5, y: 0.5, scale: 1.2, opacity: 0.9, rotation: 0,
+      fontSize: isEmoji ? 100 : 40,
+      color: '#FFFFFF', backgroundColor: 'rgba(0,0,0,0.5)',
+      borderRadius: 8, padding: 12,
+      startTime: 0, endTime: null, animation: 'none',
+    });
+    renderActiveStickers();
+    document.getElementById('stickerCount').textContent = STATE.stickers.length + ' 个';
+    document.getElementById('customStickerText').value = '';
+    renderPreviewFrame();
+  });
+}
+
+// ─── 贴片列表渲染 ───
+function renderActiveStickers() {
+  const container = document.getElementById('activeStickers');
+  if (!container) return;
+  if (STATE.stickers.length === 0) { container.innerHTML = ''; return; }
+  container.innerHTML = STATE.stickers.map((s, i) => `
+    <div style="display:flex;align-items:center;gap:8px;padding:4px 8px;background:#faf9f7;border-radius:6px;margin-bottom:4px;font-size:11px">
+      <span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s.icon || ''} ${s.content}</span>
+      <button class="tl-btn tl-remove" data-idx="${i}" onclick="removeSticker(${i})">×</button>
+    </div>
+  `).join('');
+}
+window.removeSticker = function(idx) {
+  STATE.stickers.splice(idx, 1);
+  renderActiveStickers();
+  document.getElementById('stickerCount').textContent = STATE.stickers.length + ' 个';
+  renderPreviewFrame();
+};
+
+// ═══════════ 批次 2: 图片上传、管理与时间轴 ═══════════
+
+// ─── 缩略图生成 ───
+function createThumbnail(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const maxSize = 200;
+      let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > h) { h = h * maxSize / w; w = maxSize; }
+      else { w = w * maxSize / h; h = maxSize; }
+      canvas.width = Math.round(w); canvas.height = Math.round(h);
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve({
+        dataUrl: canvas.toDataURL('image/jpeg', 0.8),
+        width: img.naturalWidth,
+        height: img.naturalHeight,
+      });
+      URL.revokeObjectURL(objectUrl);
+    };
+    img.onerror = () => { URL.revokeObjectURL(objectUrl); reject(new Error('图片加载失败')); };
+    img.src = objectUrl;
+  });
+}
+
+// ─── 图片上传处理 ───
+async function handleImageUpload(files) {
+  const fileArray = Array.from(files).filter(f => {
+    if (!f.type.startsWith('image/')) {
+      showToast('⚠️ 请选择 PNG / JPG / WebP 格式');
+      return false;
+    }
+    return true;
+  });
+
+  if (fileArray.length === 0) return;
+
+  // 数量限制检查
+  if (STATE.images.length + fileArray.length > 30) {
+    showToast('⚠️ 最多上传 30 张图片,超出部分已忽略');
+    fileArray.splice(30 - STATE.images.length);
+    if (fileArray.length === 0) return;
+  }
+
+  showToast(`正在处理 ${fileArray.length} 张图片...`);
+
+  let loaded = 0;
+  const newImages = [];
+
+  for (const file of fileArray) {
+    // 大小警告(>10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      showToast('⚠️ 部分图片超过 10MB,可能影响生成速度');
+    }
+
+    try {
+      const thumb = await createThumbnail(file);
+      const objectUrl = URL.createObjectURL(file);
+      newImages.push({
+        id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        name: file.name,
+        file: file,
+        objectUrl: objectUrl,
+        thumbnail: thumb.dataUrl,
+        width: thumb.width,
+        height: thumb.height,
+        size: file.size,
+        duration: STATE.settings.secondsPerImage,
+      });
+      loaded++;
+    } catch (err) {
+      console.warn('[video_maker] 图片加载失败:', file.name, err);
+      showToast('⚠️ 部分图片无法读取,请更换文件格式');
+    }
+  }
+
+  if (newImages.length > 0) {
+    STATE.images.push(...newImages);
+    renderTimeline();
+    renderImgList();
+    updateTotalDuration();
+    updateImgCount();
+    renderPreviewFrame();
+    showToast(`✅ 已添加 ${newImages.length} 张图片`);
+  }
+}
+window.handleImageUpload = handleImageUpload;
+
+// ─── 更新图片计数 ───
+function updateImgCount() {
+  document.getElementById('imgCount').textContent = `${STATE.images.length}/30 张`;
+}
+
+// ─── 渲染设置区图片列表 ───
+function renderImgList() {
+  const container = document.getElementById('imgList');
+  if (!container) return;
+  if (STATE.images.length === 0) {
+    container.innerHTML = '<div class="empty-hint">暂无图片,请上传</div>';
+    return;
+  }
+  container.innerHTML = STATE.images.map((img, i) => `
+    <div class="img-list-item">
+      <img class="img-thumb" src="${img.thumbnail}" alt="${img.name}" loading="lazy">
+      <div class="img-info">
+        <div class="img-name" title="${img.name}">${img.name.length > 20 ? img.name.slice(0, 18) + '...' : img.name}</div>
+        <div class="img-meta">${img.width}×${img.height} · ${formatSize(img.size)} · ${img.duration}s</div>
+      </div>
+      <button class="img-remove" title="删除" onclick="removeImage(${i})">×</button>
+    </div>
+  `).join('');
+}
+
+// ─── 格式化文件大小 ───
+function formatSize(bytes) {
+  if (!bytes) return '0B';
+  if (bytes < 1024) return bytes + 'B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + 'KB';
+  return (bytes / 1048576).toFixed(1) + 'MB';
+}
+
+// ─── 删除图片 ───
+function removeImage(index) {
+  if (STATE.images.length <= 1) {
+    // 确认删除最后一张
+    if (!confirm('确定要删除最后一张图片吗?')) return;
+  }
+  const img = STATE.images[index];
+  if (img.objectUrl) URL.revokeObjectURL(img.objectUrl);
+  STATE.images.splice(index, 1);
+  renderTimeline();
+  renderImgList();
+  updateTotalDuration();
+  updateImgCount();
+  renderPreviewFrame();
+}
+window.removeImage = removeImage;
+
+// ─── 替换图片 ───
+function replaceImage(index) {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/png,image/jpeg,image/webp';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { showToast('⚠️ 请选择 PNG / JPG / WebP 格式'); return; }
+    try {
+      const thumb = await createThumbnail(file);
+      const oldImg = STATE.images[index];
+      if (oldImg.objectUrl) URL.revokeObjectURL(oldImg.objectUrl);
+      STATE.images[index] = {
+        id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        name: file.name,
+        file: file,
+        objectUrl: URL.createObjectURL(file),
+        thumbnail: thumb.dataUrl,
+        width: thumb.width,
+        height: thumb.height,
+        size: file.size,
+        duration: oldImg.duration || STATE.settings.secondsPerImage,
+      };
+      renderTimeline();
+      renderImgList();
+      updateTotalDuration();
+      updateImgCount();
+      renderPreviewFrame();
+      showToast('✅ 已替换图片');
+    } catch (err) {
+      showToast('⚠️ 图片加载失败,请更换文件');
+    }
+  };
+  input.click();
+}
+window.replaceImage = replaceImage;
+
+// ─── 全部删除图片 ───
+function clearAllImages() {
+  if (STATE.images.length === 0) return;
+  if (!confirm(`确定要删除全部 ${STATE.images.length} 张图片吗? 此操作不可恢复。`)) return;
+  for (const img of STATE.images) {
+    if (img.objectUrl) URL.revokeObjectURL(img.objectUrl);
+  }
+  STATE.images = [];
+  renderTimeline();
+  renderImgList();
+  updateTotalDuration();
+  updateImgCount();
+  renderPreviewFrame();
+  showToast('已清空全部图片');
+}
+window.clearAllImages = clearAllImages;
+
+// ═══════════ 批次 3: 音乐上传与音频控制 ═══════════
+
+const audioEl = document.createElement('audio');
+audioEl.preload = 'metadata';
+let audioPreviewInterval = null;
+
+// ─── 音乐上传处理 ───
+function handleAudioUpload(file) {
+  // 格式校验
+  const validTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/x-wav', 'audio/m4a', 'audio/x-m4a', 'audio/aac', 'audio/ogg'];
+  if (!validTypes.includes(file.type) && !file.name.match(/\.(mp3|wav|m4a|aac|ogg)$/i)) {
+    showToast('⚠️ 请选择 MP3 / WAV / M4A 格式');
+    return;
+  }
+  // 大小警告
+  if (file.size > 50 * 1024 * 1024) {
+    showToast('⚠️ 音乐文件超过 50MB,可能影响加载速度');
+  }
+
+  // 释放旧音频资源
+  if (STATE.audio?.objectUrl) URL.revokeObjectURL(STATE.audio.objectUrl);
+  stopAudioPreview();
+
+  const objectUrl = URL.createObjectURL(file);
+  audioEl.src = objectUrl;
+
+  audioEl.onloadedmetadata = () => {
+    STATE.audio = {
+      file: file,
+      objectUrl: objectUrl,
+      startAt: 0,
+      volume: 0.8,
+      fadeIn: 1,
+      fadeOut: 2,
+      duration: audioEl.duration,
+    };
+    STATE.noMusic = false;
+    document.getElementById('toggleNoMusic').classList.remove('active');
+    document.getElementById('audioStatus').textContent = file.name.length > 18 ? file.name.slice(0, 16) + '...' : file.name;
+    renderAudioPlayer();
+    document.getElementById('audioVolume').value = 80;
+    document.getElementById('audioVolumeVal').textContent = '80%';
+    showToast('✅ 音乐已加载: ' + file.name);
+  };
+
+  audioEl.onerror = () => {
+    showToast('⚠️ 音乐文件无法解析,请更换文件');
+    URL.revokeObjectURL(objectUrl);
+    STATE.audio = null;
+    STATE.noMusic = true;
+    document.getElementById('toggleNoMusic').classList.add('active');
+    document.getElementById('audioStatus').textContent = '无音乐';
+    renderAudioPlayer();
+  };
+}
+window.handleAudioUpload = handleAudioUpload;
+
+// ─── 渲染音频播放器 ───
+function renderAudioPlayer() {
+  const container = document.getElementById('audioPlayer');
+  if (!container) return;
+
+  if (!STATE.audio || STATE.noMusic) {
+    container.style.display = 'none';
+    stopAudioPreview();
+    return;
+  }
+
+  container.style.display = 'block';
+  const dur = STATE.audio.duration || 0;
+  const durStr = formatTime(dur);
+  const startStr = formatTime(STATE.audio.startAt);
+
+  container.innerHTML = `
+    <div style="background:#faf9f7;border-radius:8px;padding:10px 12px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <button class="btn small ghost icon-btn" id="btnAudioPlay" style="min-width:36px;height:36px">▶</button>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:600;color:#2d2a26;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${STATE.audio.file.name}</div>
+          <div style="font-size:10px;color:#a8a098">
+            <span id="audioTimeDisplay">${startStr}</span> / ${durStr}
+            · 起始: ${startStr}
+          </div>
+        </div>
+        <button class="tl-btn tl-remove" id="btnAudioRemove" title="移除音乐" style="flex-shrink:0">×</button>
+      </div>
+      <div class="slider-row" style="margin-top:6px">
+        <span style="font-size:10px;color:#a8a098;white-space:nowrap">起始</span>
+        <input type="range" id="audioStartAt" min="0" max="${Math.floor(dur)}" step="0.5" value="${STATE.audio.startAt}">
+        <span class="slider-val" id="audioStartVal" style="font-size:10px">${startStr}</span>
+      </div>
+    </div>
+  `;
+
+  // 绑定播放器事件
+  document.getElementById('btnAudioPlay').addEventListener('click', toggleAudioPreview);
+  document.getElementById('btnAudioRemove').addEventListener('click', removeAudio);
+  document.getElementById('audioStartAt').addEventListener('input', function() {
+    STATE.audio.startAt = parseFloat(this.value);
+    document.getElementById('audioStartVal').textContent = formatTime(STATE.audio.startAt);
+    audioEl.currentTime = STATE.audio.startAt;
+  });
+}
+
+// ─── 音频预览控制 ───
+function toggleAudioPreview() {
+  const btn = document.getElementById('btnAudioPlay');
+  if (!btn) return;
+  if (audioEl.paused) {
+    audioEl.currentTime = STATE.audio?.startAt || 0;
+    audioEl.volume = STATE.audio?.volume || 0.8;
+    audioEl.play().catch(() => {});
+    btn.textContent = '⏸';
+    startAudioTimeUpdate();
+  } else {
+    audioEl.pause();
+    btn.textContent = '▶';
+    stopAudioPreview();
+  }
+}
+
+function startAudioTimeUpdate() {
+  stopAudioPreview();
+  audioPreviewInterval = setInterval(() => {
+    const display = document.getElementById('audioTimeDisplay');
+    if (display) display.textContent = formatTime(audioEl.currentTime);
+    // 自动停止在音频末尾
+    if (audioEl.currentTime >= (STATE.audio?.duration || 0) - 0.1) {
+      audioEl.pause();
+      const btn = document.getElementById('btnAudioPlay');
+      if (btn) btn.textContent = '▶';
+      stopAudioPreview();
+    }
+  }, 200);
+}
+
+function stopAudioPreview() {
+  if (audioPreviewInterval) { clearInterval(audioPreviewInterval); audioPreviewInterval = null; }
+}
+
+// ─── 移除音乐 ───
+function removeAudio() {
+  stopAudioPreview();
+  audioEl.pause();
+  audioEl.src = '';
+  if (STATE.audio?.objectUrl) URL.revokeObjectURL(STATE.audio.objectUrl);
+  STATE.audio = null;
+  STATE.noMusic = true;
+  document.getElementById('toggleNoMusic').classList.add('active');
+  document.getElementById('audioStatus').textContent = '无音乐';
+  renderAudioPlayer();
+  showToast('音乐已移除');
+}
+window.removeAudio = removeAudio;
+
+// ─── 无音乐模式切换 ───
+window.toggleNoMusic = function() {
+  const el = document.getElementById('toggleNoMusic');
+  STATE.noMusic = !el.classList.contains('active');
+  if (STATE.noMusic) {
+    el.classList.add('active');
+    stopAudioPreview();
+    audioEl.pause();
+    document.getElementById('audioStatus').textContent = '无音乐';
+    renderAudioPlayer();
+  } else {
+    if (!STATE.audio) {
+      showToast('请先上传音乐');
+      el.classList.add('active');
+      STATE.noMusic = true;
+      return;
+    }
+    el.classList.remove('active');
+    document.getElementById('audioStatus').textContent = STATE.audio.file.name.slice(0, 16) + '...';
+    renderAudioPlayer();
+  }
+};
+
+// ─── 时间格式化 ───
+function formatTime(seconds) {
+  if (!seconds || isNaN(seconds)) return '00:00';
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+}
+
+// ─── 更新音量同步 ───
+document.getElementById('audioVolume').addEventListener('input', function() {
+  const vol = parseInt(this.value) / 100;
+  document.getElementById('audioVolumeVal').textContent = this.value + '%';
+  if (STATE.audio) STATE.audio.volume = vol;
+  audioEl.volume = vol;
+});
+
+// ─── 淡入淡出同步 ───
+document.getElementById('audioFadeIn').addEventListener('change', function() {
+  if (STATE.audio) STATE.audio.fadeIn = parseFloat(this.value);
+});
+document.getElementById('audioFadeOut').addEventListener('change', function() {
+  if (STATE.audio) STATE.audio.fadeOut = parseFloat(this.value);
+});
+
+// ═══════════ 时间轴渲染(含拖拽排序) ═══════════
+
+let dragSrcIndex = null; // 拖拽起点索引
+
+function renderTimeline() {
+  const tl = document.getElementById('timeline');
+  if (!tl) return;
+  if (STATE.images.length === 0) {
+    tl.innerHTML = `
+      <div class="tl-empty">📁 请上传图片,支持拖拽排序</div>
+    `;
+    return;
+  }
+
+  tl.innerHTML = STATE.images.map((img, i) => `
+    <div class="tl-item" draggable="true" data-index="${i}"
+         ondragstart="handleDragStart(event, ${i})"
+         ondragover="handleDragOver(event)"
+         ondragleave="handleDragLeave(event)"
+         ondrop="handleDrop(event, ${i})"
+         ondragend="handleDragEnd(event)">
+      <div class="tl-index">${i + 1}</div>
+      <img class="tl-thumb" src="${img.thumbnail}" alt="${img.name}" draggable="false">
+      <div class="tl-duration">${(img.duration || STATE.settings.secondsPerImage).toFixed(1)}s</div>
+      <div class="tl-actions">
+        <button class="tl-btn tl-replace" title="替换" onclick="event.stopPropagation();replaceImage(${i})">🔄</button>
+        <button class="tl-btn tl-remove" title="删除" onclick="event.stopPropagation();removeImage(${i})">×</button>
+      </div>
+    </div>
+  `).join('');
+
+  // 添加"全部删除"按钮
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'btn small ghost';
+  clearBtn.textContent = '清空全部';
+  clearBtn.style.cssText = 'flex-shrink:0;margin-left:8px;align-self:center';
+  clearBtn.onclick = clearAllImages;
+  tl.appendChild(clearBtn);
+}
+
+// ─── 拖拽事件处理 ───
+function handleDragStart(e, index) {
+  dragSrcIndex = index;
+  e.target.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', String(index));
+  // 设置拖拽图像为半透明缩略图
+  const img = e.target.querySelector('.tl-thumb');
+  if (img && e.dataTransfer.setDragImage) {
+    e.dataTransfer.setDragImage(img, 32, 43);
+  }
+}
+window.handleDragStart = handleDragStart;
+
+function handleDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  const target = e.target.closest('.tl-item');
+  if (target) target.style.borderLeft = '2px solid #5a8cb8';
+  return false;
+}
+window.handleDragOver = handleDragOver;
+
+function handleDragLeave(e) {
+  const target = e.target.closest('.tl-item');
+  if (target) target.style.borderLeft = '';
+}
+window.handleDragLeave = handleDragLeave;
+
+function handleDrop(e, targetIndex) {
+  e.stopPropagation();
+  e.preventDefault();
+  // 清除插入线
+  document.querySelectorAll('.tl-item').forEach(el => el.style.borderLeft = '');
+
+  if (dragSrcIndex === null || dragSrcIndex === targetIndex) return false;
+
+  // 重排 STATE.images
+  const [moved] = STATE.images.splice(dragSrcIndex, 1);
+  STATE.images.splice(targetIndex, 0, moved);
+
+  renderTimeline();
+  renderImgList();
+  updateTotalDuration();
+  renderPreviewFrame();
+
+  dragSrcIndex = null;
+  return false;
+}
+window.handleDrop = handleDrop;
+
+function handleDragEnd(e) {
+  e.target.classList.remove('dragging');
+  document.querySelectorAll('.tl-item').forEach(el => el.style.borderLeft = '');
+  dragSrcIndex = null;
+}
+window.handleDragEnd = handleDragEnd;
+
+// ─── 移动端触摸拖拽(简易降级) ───
+(function initTouchDrag() {
+  let touchStartX = 0, touchStartY = 0, touchItem = null, touchClone = null;
+  document.addEventListener('touchstart', (e) => {
+    const item = e.target.closest('.tl-item');
+    if (!item) return;
+    touchItem = item;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!touchItem) return;
+    const dx = e.touches[0].clientX - touchStartX;
+    const dy = e.touches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
+      touchItem.style.opacity = '0.5';
+      touchItem.style.transform = `translateX(${dx}px)`;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    if (!touchItem) return;
+    const srcIdx = parseInt(touchItem.dataset.index);
+    // 查找目标位置(简化:基于触摸结束位置找最近的 tl-item)
+    const touchEnd = e.changedTouches[0];
+    const elem = document.elementFromPoint(touchEnd.clientX, touchEnd.clientY);
+    const targetItem = elem ? elem.closest('.tl-item') : null;
+    const targetIdx = targetItem ? parseInt(targetItem.dataset.index) : srcIdx;
+
+    if (!isNaN(srcIdx) && !isNaN(targetIdx) && srcIdx !== targetIdx) {
+      const [moved] = STATE.images.splice(srcIdx, 1);
+      STATE.images.splice(targetIdx, 0, moved);
+      renderTimeline();
+      renderImgList();
+      updateTotalDuration();
+      renderPreviewFrame();
+    }
+    if (touchItem) { touchItem.style.opacity = ''; touchItem.style.transform = ''; }
+    touchItem = null;
+  });
+})();
+
+window.renderTimeline = renderTimeline;
+
+// ─── 预览帧渲染 ───
+async function renderPreviewFrame() {
+  const canvas = document.getElementById('previewCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  // 如果有图片,显示第一张作为预览
+  if (STATE.images.length > 0) {
+    const img = STATE.images[0];
+    try {
+      const imageEl = await loadImage(img.objectUrl);
+      applyBackgroundMode(ctx, imageEl, STATE.settings.backgroundMode);
+      // 应用滤镜
+      if (STATE.filter !== 'none') {
+        applyFilter(ctx, STATE.filter, STATE.filterStrength / 100);
+      }
+    } catch (err) {
+      // 图片加载失败,显示占位
+      drawPlaceholderPreview(ctx);
+    }
+  } else {
+    drawPlaceholderPreview(ctx);
+  }
+
+  // 叠加设置信息标签
+  ctx.fillStyle = 'rgba(0,0,0,0.55)';
+  ctx.fillRect(0, CANVAS_H - 90, CANVAS_W, 90);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '24px "Noto Sans SC",sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText(`🎨 ${FILTERS[STATE.filter]?.name || '无'}  ✨ ${MOTION_EFFECTS[STATE.settings.motion]?.name || '无'}  🎬 ${TRANSITIONS[STATE.settings.transition]?.name || '无'}`, 30, CANVAS_H - 40);
+}
+window.renderPreviewFrame = renderPreviewFrame;
+
+// ─── 占位预览 ───
+function drawPlaceholderPreview(ctx) {
+  ctx.fillStyle = '#1a1a1a';
+  ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 72px "Noto Sans SC",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('📱 轮播短视频', CANVAS_W / 2, CANVAS_H / 2 - 50);
+  ctx.font = '36px "Noto Sans SC",sans-serif';
+  ctx.fillStyle = '#a8a098';
+  ctx.fillText('上传图片开始创作', CANVAS_W / 2, CANVAS_H / 2 + 50);
+}
+
+// ─── 图片加载辅助 ───
+function loadImage(src) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+// ─── 背景模式渲染 ───
+function applyBackgroundMode(ctx, img, mode) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const imgRatio = img.width / img.height;
+  const canvasRatio = W / H;
+
+  if (mode === 'cover') {
+    let sw, sh, sx, sy;
+    if (imgRatio > canvasRatio) {
+      sh = img.height; sw = sh * canvasRatio; sx = (img.width - sw) / 2; sy = 0;
+    } else {
+      sw = img.width; sh = sw / canvasRatio; sy = (img.height - sh) / 2; sx = 0;
+    }
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, W, H);
+  } else if (mode === 'contain_blur') {
+    ctx.filter = 'blur(40px)';
+    ctx.drawImage(img, 0, 0, W, H);
+    ctx.filter = 'none';
+    let dw, dh, dx, dy;
+    if (imgRatio > canvasRatio) {
+      dw = W; dh = W / imgRatio; dx = 0; dy = (H - dh) / 2;
+    } else {
+      dh = H; dw = H * imgRatio; dy = 0; dx = (W - dh) / 2;
+    }
+    ctx.drawImage(img, dx, dy, dw, dh);
+  } else { // contain_solid
+    ctx.fillStyle = '#2d2a26';
+    ctx.fillRect(0, 0, W, H);
+    let dw, dh, dx, dy;
+    if (imgRatio > canvasRatio) {
+      dw = W; dh = W / imgRatio; dx = 0; dy = (H - dh) / 2;
+    } else {
+      dh = H; dw = H * imgRatio; dy = 0; dx = (W - dh) / 2;
+    }
+    ctx.drawImage(img, dx, dy, dw, dh);
+  }
+}
+window.applyBackgroundMode = applyBackgroundMode;
+
+// ─── 更新总时长 ───
+function updateTotalDuration() {
+  let total = 0;
+  for (const img of STATE.images) {
+    total += img.duration || STATE.settings.secondsPerImage;
+  }
+  total += STATE.settings.coverHold + STATE.settings.endHold;
+  document.getElementById('imgSummary').textContent = `预计视频时长: ${total.toFixed(1)}s`;
+}
+window.updateTotalDuration = updateTotalDuration;
+
+// ═══════════ 批次 4: 视频合成核心(ffmpeg.wasm + MediaRecorder fallback) ═══════════
+
+// ─── 计算总帧数 ───
+function calculateTotalFrames() {
+  let total = 0;
+  for (const img of STATE.images) {
+    total += (img.duration || STATE.settings.secondsPerImage) * STATE.settings.fps;
+  }
+  total += STATE.settings.coverHold * STATE.settings.fps;
+  total += STATE.settings.endHold * STATE.settings.fps;
+  return Math.floor(total);
+}
+
+// ─── 计算视频总时长(秒) ───
+function calculateTotalDuration() {
+  let total = 0;
+  for (const img of STATE.images) {
+    total += img.duration || STATE.settings.secondsPerImage;
+  }
+  total += STATE.settings.coverHold + STATE.settings.endHold;
+  return total;
+}
+
+// ─── 帧→图片索引映射 ───
+function getImageIndexAtFrame(frame, totalFrames) {
+  const totalDuration = calculateTotalDuration();
+  const timePerFrame = totalDuration / totalFrames;
+  let time = frame * timePerFrame;
+
+  // 封面停留
+  const coverDur = STATE.settings.coverHold;
+  if (time < coverDur) return 0;
+  time -= coverDur;
+
+  // 图片序列
+  for (let i = 0; i < STATE.images.length; i++) {
+    const imgDur = STATE.images[i].duration || STATE.settings.secondsPerImage;
+    if (time < imgDur) return i;
+    time -= imgDur;
+  }
+
+  // 结尾停留(返回最后一张)
+  return STATE.images.length - 1;
+}
+
+// ─── 图片展示进度 ───
+function getProgressInImage(frame, imgIndex, totalFrames) {
+  const totalDuration = calculateTotalDuration();
+  const timePerFrame = totalDuration / totalFrames;
+  let time = frame * timePerFrame;
+
+  const coverDur = STATE.settings.coverHold;
+  if (time < coverDur) return 0;
+  time -= coverDur;
+
+  for (let i = 0; i < imgIndex; i++) {
+    time -= STATE.images[i].duration || STATE.settings.secondsPerImage;
+  }
+
+  const imgDur = STATE.images[imgIndex]?.duration || STATE.settings.secondsPerImage;
+  if (imgDur <= 0) return 0;
+  return Math.min(1, Math.max(0, time / imgDur));
+}
+
+// ─── Canvas 预处理一帧(含背景模式) ───
+async function preprocessFrame(imgObj, settings) {
+  const canvas = document.createElement('canvas');
+  canvas.width = settings.outputSize.w;
+  canvas.height = settings.outputSize.h;
+  const ctx = canvas.getContext('2d');
+
+  const img = await loadImage(imgObj.objectUrl);
+  applyBackgroundMode(ctx, img, settings.backgroundMode);
+
+  return canvas;
+}
+
+// ─── 更新导出 UI ───
+function updateExportUI() {
+  const progressTrack = document.getElementById('progressTrack');
+  const progressFill = document.getElementById('progressFill');
+  const progressText = document.getElementById('progressText');
+  const btnExport = document.getElementById('btnExport');
+  const btnDownload = document.getElementById('btnDownload');
+
+  if (STATE.isExporting) {
+    progressTrack.style.display = '';
+    const pct = Math.round(STATE.exportProgress * 100);
+    progressFill.style.width = pct + '%';
+    progressFill.classList.remove('done');
+    progressText.textContent = `生成中... ${pct}%`;
+    btnExport.textContent = `生成中... ${pct}%`;
+    btnExport.disabled = true;
+    btnDownload.style.display = 'none';
+  } else if (STATE.exportProgress >= 1) {
+    progressFill.style.width = '100%';
+    progressFill.classList.add('done');
+    progressText.textContent = '✅ 视频生成完成';
+    btnExport.textContent = '🔄 重新生成';
+    btnExport.disabled = false;
+    btnDownload.style.display = '';
+  } else {
+    progressTrack.style.display = 'none';
+    progressFill.style.width = '0%';
+    progressFill.classList.remove('done');
+    progressText.textContent = '';
+    btnExport.textContent = '🎬 生成视频';
+    btnExport.disabled = false;
+    btnDownload.style.display = 'none';
+  }
+}
+
+// ─── 触发下载 ───
+function triggerDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename || `slideshow-video-${Date.now().toString(36)}.mp4`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 3000);
+  showToast('✅ 视频已开始下载');
+}
+
+// ─── 方案 A: Canvas + MediaRecorder 导出(主方案,兼容性最好) ───
+async function exportWithMediaRecorder() {
+  const canvas = document.createElement('canvas');
+  canvas.width = STATE.settings.outputSize.w;
+  canvas.height = STATE.settings.outputSize.h;
+  const ctx = canvas.getContext('2d');
+
+  const stream = canvas.captureStream(STATE.settings.fps);
+  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9')
+    ? 'video/webm;codecs=vp9'
+    : 'video/webm';
+  const recorder = new MediaRecorder(stream, {
+    mimeType: mimeType,
+    videoBitsPerSecond: 8000000,
+  });
+
+  const chunks = [];
+  recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+
+  const recorderDone = new Promise(resolve => { recorder.onstop = resolve; });
+
+  // 如果有无音乐模式之外的音乐,用 AudioContext 混合
+  let audioCtx = null, audioSource = null, audioDest = null;
+  if (!STATE.noMusic && STATE.audio) {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const audioBuf = await STATE.audio.file.arrayBuffer();
+      const decoded = await audioCtx.decodeAudioData(audioBuf);
+      audioSource = audioCtx.createBufferSource();
+      audioSource.buffer = decoded;
+
+      // 音量 + 淡入淡出
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.value = STATE.audio.volume || 0.8;
+      const fadeIn = STATE.audio.fadeIn || 0;
+      const fadeOut = STATE.audio.fadeOut || 0;
+      const totalDur = calculateTotalDuration();
+      gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+      gainNode.gain.linearRampToValueAtTime(STATE.audio.volume, audioCtx.currentTime + fadeIn);
+      gainNode.gain.setValueAtTime(STATE.audio.volume, audioCtx.currentTime + totalDur - fadeOut);
+      gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + totalDur);
+
+      audioSource.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      const offset = STATE.audio.startAt || 0;
+      audioSource.start(audioCtx.currentTime, offset, totalDur - offset);
+    } catch (err) {
+      console.warn('[video_maker] 音频加载失败,导出无声音频:', err);
+    }
+  }
+
+  recorder.start();
+  const totalFrames = calculateTotalFrames();
+  const totalDuration = calculateTotalDuration();
+  const frameDurationMs = 1000 / STATE.settings.fps;
+
+  for (let f = 0; f < totalFrames; f++) {
+    const imgIndex = getImageIndexAtFrame(f, totalFrames);
+    const imgObj = STATE.images[imgIndex];
+    if (!imgObj) continue;
+
+    try {
+      const progress = getProgressInImage(f, imgIndex, totalFrames);
+
+      // 计算转场进度(最后 0.3s 为转场)
+      const transitionDuration = 0.3;
+      const imgDuration = imgObj.duration || STATE.settings.secondsPerImage;
+      let transitionProgress = 0;
+      if (imgIndex < STATE.images.length - 1 && progress > (imgDuration - transitionDuration) / imgDuration) {
+        transitionProgress = (progress - (imgDuration - transitionDuration) / imgDuration) / (transitionDuration / imgDuration);
+        transitionProgress = Math.min(1, Math.max(0, transitionProgress));
+      }
+
+      // 使用统一的渲染帧函数(含背景模式+动态效果+转场)
+      await renderFrame(ctx, imgIndex, progress, transitionProgress, f, totalFrames);
+
+      // 滤镜(批次 5 集成)
+      if (STATE.filter !== 'none') {
+        applyFilter(ctx, STATE.filter, STATE.filterStrength / 100);
+      }
+
+      // 贴片和水印(批次 7 增强)
+      const currentTime = (f / totalFrames) * totalDuration;
+      applyStickers(ctx, currentTime);
+      if (STATE.watermark.enabled) applyWatermark(ctx);
+
+    } catch (err) {
+      console.warn('[video_maker] 帧渲染失败:', f, err);
+      // 跳过坏帧,继续
+    }
+
+    STATE.exportProgress = f / totalFrames;
+    if (f % 5 === 0) updateExportUI();
+
+    await sleep(frameDurationMs);
+  }
+
+  recorder.stop();
+  await recorderDone;
+
+  if (audioSource) {
+    try { audioSource.stop(); } catch(e) {}
+    if (audioCtx) audioCtx.close();
+  }
+
+  const ext = mimeType.includes('vp9') ? 'webm' : 'webm';
+  const blob = new Blob(chunks, { type: mimeType });
+  return { blob, ext };
+}
+
+// ─── 方案 B: ffmpeg.wasm 导出(高级方案,需 CDN 加载) ───
+async function exportWithFFmpeg() {
+  // 动态加载 ffmpeg.wasm
+  let FFmpegClass;
+  try {
+    const mod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js');
+    FFmpegClass = mod.FFmpeg;
+  } catch (e) {
+    throw new Error('ffmpeg.wasm 加载失败: ' + e.message);
+  }
+
+  const ffmpeg = new FFmpegClass();
+  await ffmpeg.load();
+
+  const totalFrames = calculateTotalFrames();
+
+  // 预处理每张图片,写入虚拟文件系统
+  for (let i = 0; i < STATE.images.length; i++) {
+    const frameCanvas = await preprocessFrame(STATE.images[i], STATE.settings);
+    const blob = await new Promise(resolve => frameCanvas.toBlob(resolve, 'image/png'));
+    const data = new Uint8Array(await blob.arrayBuffer());
+    await ffmpeg.writeFile(`frame_${String(i).padStart(3, '0')}.png`, data);
+    STATE.exportProgress = ((i + 1) / STATE.images.length) * 0.5;
+    updateExportUI();
+  }
+
+  // 构建 FFmpeg 命令
+  const durationPerFrame = STATE.settings.secondsPerImage;
+  let cmd = [
+    '-framerate', `1/${durationPerFrame}`,
+    '-i', 'frame_%03d.png',
+    '-c:v', 'libx264',
+    '-pix_fmt', 'yuv420p',
+    '-preset', 'fast',
+    '-crf', '23',
+    '-r', String(STATE.settings.fps),
+  ];
+
+  // 音乐处理
+  if (!STATE.noMusic && STATE.audio) {
+    const audioData = new Uint8Array(await STATE.audio.file.arrayBuffer());
+    await ffmpeg.writeFile('audio_input', audioData);
+    const totalDur = calculateTotalDuration();
+    const startAt = STATE.audio.startAt || 0;
+
+    cmd.push(
+      '-ss', String(startAt),
+      '-t', String(totalDur),
+      '-i', 'audio_input',
+      '-c:a', 'aac',
+      '-b:a', '128k',
+      '-shortest',
+      '-af', `afade=t=in:d=${STATE.audio.fadeIn || 0},afade=t=out:st=${totalDur - (STATE.audio.fadeOut || 0)}:d=${STATE.audio.fadeOut || 0},volume=${STATE.audio.volume || 0.8}`
+    );
+  }
+
+  cmd.push('output.mp4');
+
+  STATE.exportProgress = 0.55;
+  updateExportUI();
+  await ffmpeg.exec(cmd);
+
+  STATE.exportProgress = 0.9;
+  updateExportUI();
+  const data = await ffmpeg.readFile('output.mp4');
+  const blob = new Blob([data.buffer], { type: 'video/mp4' });
+
+  // 清理虚拟文件
+  for (let i = 0; i < STATE.images.length; i++) {
+    await ffmpeg.deleteFile(`frame_${String(i).padStart(3, '0')}.png`).catch(() => {});
+  }
+  await ffmpeg.deleteFile('output.mp4').catch(() => {});
+  if (!STATE.noMusic && STATE.audio) {
+    await ffmpeg.deleteFile('audio_input').catch(() => {});
+  }
+
+  return { blob, ext: 'mp4' };
+}
+
+// ─── 主导出函数 ───
+async function exportVideo() {
+  if (STATE.images.length === 0) { showToast('请先上传图片'); return; }
+  if (STATE.images.length < 3) { showToast('⚠️ 建议至少上传 3 张图片'); }
+
+  STATE.isExporting = true;
+  STATE.exportProgress = 0;
+  updateExportUI();
+
+  let result;
+
+  try {
+    // 尝试 ffmpeg.wasm
+    result = await exportWithFFmpeg();
+  } catch (ffmpegErr) {
+    console.warn('[video_maker] ffmpeg.wasm 失败,降级到 MediaRecorder:', ffmpegErr.message);
+    showToast('⚠️ 使用浏览器原生编码器(兼容模式)');
+    try {
+      result = await exportWithMediaRecorder();
+    } catch (mrErr) {
+      console.error('[video_maker] MediaRecorder 也失败:', mrErr);
+      showToast('❌ 视频生成失败,请减少图片数量或压缩后重试');
+      STATE.isExporting = false;
+      STATE.exportProgress = 0;
+      updateExportUI();
+      return;
+    }
+  }
+
+  const ts = new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' +
+             new Date().toTimeString().slice(0, 5).replace(':', '');
+  const filename = `slideshow-video-${ts}.${result.ext}`;
+  triggerDownload(result.blob, filename);
+
+  STATE.isExporting = false;
+  STATE.exportProgress = 1;
+  updateExportUI();
+}
+window.exportVideo = exportVideo;
+
+// ─── 休眠辅助 ───
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// ═══════════ 批次 5: 滤镜系统(14 种滤镜 + 强度调节) ═══════════
+
+// ─── 线性插值 ───
+function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
+
+// ─── RGB → HSL ───
+function rgbToHsl(r, g, b) {
+  r /= 255; g /= 255; b /= 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h = 0, s = 0, l = (max + min) / 2;
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+      case g: h = ((b - r) / d + 2) / 6; break;
+      case b: h = ((r - g) / d + 4) / 6; break;
+    }
+  }
+  return [h, s, l];
+}
+
+// ─── HSL → RGB ───
+function hslToRgb(h, s, l) {
+  let r, g, b;
+  if (s === 0) { r = g = b = l; }
+  else {
+    const hue2rgb = (p, q, t) => {
+      if (t < 0) t += 1; if (t > 1) t -= 1;
+      if (t < 1/6) return p + (q - p) * 6 * t;
+      if (t < 1/2) return q;
+      if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+      return p;
+    };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1/3); g = hue2rgb(p, q, h); b = hue2rgb(p, q, h - 1/3);
+  }
+  return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
+}
+
+// ─── 暗角效果 ───
+function applyVignette(ctx, strength) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const cx = W / 2, cy = H / 2;
+  const maxR = Math.sqrt(cx * cx + cy * cy);
+  const gradient = ctx.createRadialGradient(cx, cy, maxR * 0.4, cx, cy, maxR);
+  gradient.addColorStop(0, 'rgba(0,0,0,0)');
+  gradient.addColorStop(1, `rgba(0,0,0,${0.6 * strength})`);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, W, H);
+}
+
+// ─── 像素化 ───
+function applyPixelateFilter(ctx, blockSize) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const imageData = ctx.getImageData(0, 0, W, H);
+  const data = imageData.data;
+  const bs = Math.max(1, Math.round(blockSize));
+  for (let y = 0; y < H; y += bs) {
+    for (let x = 0; x < W; x += bs) {
+      const i = (y * W + x) * 4;
+      const r = data[i], g = data[i+1], b = data[i+2];
+      for (let dy = 0; dy < bs && y+dy < H; dy++) {
+        for (let dx = 0; dx < bs && x+dx < W; dx++) {
+          const j = ((y+dy) * W + (x+dx)) * 4;
+          data[j] = r; data[j+1] = g; data[j+2] = b;
+        }
+      }
+    }
+  }
+  ctx.putImageData(imageData, 0, 0);
+}
+
+// ─── 核心滤镜应用函数 ───
+function applyFilter(ctx, filterName, strength) {
+  if (filterName === 'none' || !strength) return;
+  strength = Math.max(0, Math.min(1, strength));
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+
+  // 对于大部分像素操作滤镜,获取 imageData
+  let imageData;
+  const needsPixels = ['grayscale','sepia','vivid','cool','warm','posterize','invert'].includes(filterName);
+  if (needsPixels) {
+    imageData = ctx.getImageData(0, 0, W, H);
+  }
+  const data = imageData?.data;
+
+  switch (filterName) {
+    case 'grayscale':
+      for (let i = 0; i < data.length; i += 4) {
+        const gray = data[i] * 0.299 + data[i+1] * 0.587 + data[i+2] * 0.114;
+        data[i] = lerp(data[i], gray, strength);
+        data[i+1] = lerp(data[i+1], gray, strength);
+        data[i+2] = lerp(data[i+2], gray, strength);
+      }
+      break;
+
+    case 'sepia':
+      for (let i = 0; i < data.length; i += 4) {
+        const r = data[i], g = data[i+1], b = data[i+2];
+        const sr = r * 0.393 + g * 0.769 + b * 0.189;
+        const sg = r * 0.349 + g * 0.686 + b * 0.168;
+        const sb = r * 0.272 + g * 0.534 + b * 0.131;
+        data[i]   = lerp(r, Math.min(255, sr), strength);
+        data[i+1] = lerp(g, Math.min(255, sg), strength);
+        data[i+2] = lerp(b, Math.min(255, sb), strength);
+      }
+      break;
+
+    case 'vintage':
+      applyFilter(ctx, 'sepia', strength * 0.6);
+      applyVignette(ctx, strength * 0.4);
+      return; // 不需要 putImageData
+
+    case 'vivid':
+      for (let i = 0; i < data.length; i += 4) {
+        const hsl = rgbToHsl(data[i], data[i+1], data[i+2]);
+        hsl[1] = Math.min(1, hsl[1] * (1 + strength * 0.8));
+        const [rr, gg, bb] = hslToRgb(hsl[0], hsl[1], hsl[2]);
+        data[i] = rr; data[i+1] = gg; data[i+2] = bb;
+      }
+      break;
+
+    case 'cool':
+      for (let i = 0; i < data.length; i += 4) {
+        data[i]   = lerp(data[i], data[i] * 0.85, strength);
+        data[i+1] = lerp(data[i+1], data[i+1] * 0.9, strength);
+        data[i+2] = lerp(data[i+2], Math.min(255, data[i+2] * 1.2), strength);
+      }
+      break;
+
+    case 'warm':
+      for (let i = 0; i < data.length; i += 4) {
+        data[i]   = lerp(data[i], Math.min(255, data[i] * 1.15), strength);
+        data[i+1] = lerp(data[i+1], Math.min(255, data[i+1] * 1.08), strength);
+        data[i+2] = lerp(data[i+2], data[i+2] * 0.9, strength);
+      }
+      break;
+
+    case 'softGlow':
+      // 柔光: 提高亮度 + 轻微模糊模拟
+      ctx.globalAlpha = 0.3 * strength;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalAlpha = 1;
+      return;
+
+    case 'lofi':
+      applyPixelateFilter(ctx, 3);
+      const loImageData = ctx.getImageData(0, 0, W, H);
+      const loData = loImageData.data;
+      for (let i = 0; i < loData.length; i += 4) {
+        loData[i]   = Math.min(255, Math.max(0, loData[i]   + (Math.random() - 0.5) * 30));
+        loData[i+1] = Math.min(255, Math.max(0, loData[i+1] + (Math.random() - 0.5) * 30));
+        loData[i+2] = Math.min(255, Math.max(0, loData[i+2] + (Math.random() - 0.5) * 30));
+      }
+      ctx.putImageData(loImageData, 0, 0);
+      return;
+
+    case 'cinema':
+      // 电影感: 上下黑边 + S 曲线
+      const barH = H * 0.12;
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, W, barH);
+      ctx.fillRect(0, H - barH, W, barH);
+      const cinImageData = ctx.getImageData(0, 0, W, H);
+      const cinData = cinImageData.data;
+      for (let i = 0; i < cinData.length; i += 4) {
+        for (let c = 0; c < 3; c++) {
+          const v = cinData[i + c] / 255;
+          cinData[i + c] = Math.round(255 * lerp(v,
+            (v < 0.5 ? 2 * v * v : -1 + (4 - 2 * v) * v), strength));
+        }
+      }
+      ctx.putImageData(cinImageData, 0, 0);
+      return;
+
+    case 'posterize':
+      const levels = Math.round(lerp(256, 4, strength));
+      for (let i = 0; i < data.length; i += 4) {
+        data[i]   = Math.round(data[i]   / (256/levels)) * (256/levels);
+        data[i+1] = Math.round(data[i+1] / (256/levels)) * (256/levels);
+        data[i+2] = Math.round(data[i+2] / (256/levels)) * (256/levels);
+      }
+      break;
+
+    case 'sketch':
+      applyFilter(ctx, 'grayscale', 1.0);
+      const sketchData = ctx.getImageData(0, 0, W, H);
+      const skData = sketchData.data;
+      for (let i = 0; i < skData.length; i += 4) {
+        const inv = 255 - skData[i];
+        skData[i] = skData[i+1] = skData[i+2] = Math.min(255, skData[i] + (inv * skData[i]) / 255);
+      }
+      ctx.putImageData(sketchData, 0, 0);
+      return;
+
+    case 'pixelate':
+      applyPixelateFilter(ctx, lerp(1, 20, strength));
+      return;
+
+    case 'invert':
+      for (let i = 0; i < data.length; i += 4) {
+        data[i]   = lerp(data[i],   255 - data[i],   strength);
+        data[i+1] = lerp(data[i+1], 255 - data[i+1], strength);
+        data[i+2] = lerp(data[i+2], 255 - data[i+2], strength);
+      }
+      break;
+  }
+
+  if (needsPixels && imageData) {
+    ctx.putImageData(imageData, 0, 0);
+  }
+}
+window.applyFilter = applyFilter;
+
+// 在导出管线中集成滤镜调用
+// 滤镜在 renderPreviewFrame 和 exportWithMediaRecorder 中通过 applyFilter(ctx, STATE.filter, STATE.filterStrength/100) 调用
+
+// ═══════════ 批次 6: 动态特效(Ken Burns)与转场系统 ═══════════
+
+// ─── 动态效果(Ken Burns 体系) ───
+function applyMotion(ctx, img, motionType, progress) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  ctx.save();
+
+  switch (motionType) {
+    case 'none': break;
+
+    case 'slow_zoom': {
+      const scale = 1 + progress * 0.06;
+      const zx = W / 2 - (W * scale) / 2;
+      const zy = H / 2 - (H * scale) / 2;
+      ctx.translate(zx, zy);
+      ctx.scale(scale, scale);
+      break;
+    }
+
+    case 'pan_left': {
+      const px = -W * 0.05 * (1 - progress);
+      ctx.translate(px, 0);
+      break;
+    }
+
+    case 'pan_right': {
+      const px = W * 0.05 * (1 - progress);
+      ctx.translate(px, 0);
+      break;
+    }
+
+    case 'pan_up': {
+      const py = -H * 0.05 * (1 - progress);
+      ctx.translate(0, py);
+      break;
+    }
+
+    case 'pan_down': {
+      const py = H * 0.05 * (1 - progress);
+      ctx.translate(0, py);
+      break;
+    }
+
+    case 'ken_burns': {
+      const kbScale = 1 + progress * 0.08;
+      const kbX = W / 2 - (W * kbScale) / 2 + Math.sin(progress * Math.PI) * W * 0.02;
+      const kbY = H / 2 - (H * kbScale) / 2 + Math.cos(progress * Math.PI) * H * 0.02;
+      ctx.translate(kbX, kbY);
+      ctx.scale(kbScale, kbScale);
+      break;
+    }
+
+    case 'rotate_cw': {
+      const rot = progress * 2 * Math.PI / 180;
+      ctx.translate(W / 2, H / 2);
+      ctx.rotate(rot);
+      ctx.translate(-W / 2, -H / 2);
+      break;
+    }
+
+    case 'bounce': {
+      const bounceY = Math.sin(progress * Math.PI * 2) * H * 0.02 * (1 - progress);
+      ctx.translate(0, bounceY);
+      break;
+    }
+  }
+}
+
+// ─── 转场效果 ───
+function applyTransition(ctx, fromImg, toImg, progress, transitionType) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+
+  switch (transitionType) {
+    case 'none':
+      if (progress < 0.5) drawFullImage(ctx, fromImg);
+      else drawFullImage(ctx, toImg);
+      break;
+
+    case 'fade':
+      drawFullImage(ctx, fromImg);
+      ctx.globalAlpha = progress;
+      drawFullImage(ctx, toImg);
+      ctx.globalAlpha = 1;
+      break;
+
+    case 'slide_left': {
+      const sx = W * progress;
+      drawFullImage(ctx, fromImg);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(0, 0, W - sx, H); ctx.clip();
+      drawFullImage(ctx, toImg);
+      ctx.restore();
+      break;
+    }
+
+    case 'slide_right': {
+      const sx = -W * (1 - progress);
+      drawFullImage(ctx, fromImg);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(Math.max(0, sx), 0, W, H); ctx.clip();
+      drawFullImage(ctx, toImg);
+      ctx.restore();
+      break;
+    }
+
+    case 'slide_up': {
+      const sy = H * progress;
+      drawFullImage(ctx, fromImg);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(0, 0, W, H - sy); ctx.clip();
+      drawFullImage(ctx, toImg);
+      ctx.restore();
+      break;
+    }
+
+    case 'zoom_in': {
+      const ziScale = progress * 0.5 + 0.5;
+      drawFullImage(ctx, fromImg);
+      ctx.save();
+      ctx.globalAlpha = progress;
+      ctx.translate(W / 2, H / 2);
+      ctx.scale(ziScale, ziScale);
+      ctx.translate(-W / 2, -H / 2);
+      drawFullImage(ctx, toImg);
+      ctx.restore();
+      break;
+    }
+
+    case 'zoom_out': {
+      const zoScale = 1 - progress * 0.5;
+      drawFullImage(ctx, toImg);
+      ctx.save();
+      ctx.globalAlpha = 1 - progress;
+      ctx.translate(W / 2, H / 2);
+      ctx.scale(zoScale, zoScale);
+      ctx.translate(-W / 2, -H / 2);
+      drawFullImage(ctx, fromImg);
+      ctx.restore();
+      break;
+    }
+
+    case 'wipe_left': {
+      drawFullImage(ctx, fromImg);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(0, 0, W * progress, H); ctx.clip();
+      drawFullImage(ctx, toImg);
+      ctx.restore();
+      break;
+    }
+  }
+}
+
+// ─── 绘制完整图片(含背景模式) ───
+function drawFullImage(ctx, imgObj) {
+  applyBackgroundMode(ctx, imgObj, STATE.settings.backgroundMode);
+}
+
+// ─── 渲染一帧(含动态效果和转场) ───
+async function renderFrame(ctx, imgIndex, imgProgress, transitionProgress, currentFrame, totalFrames) {
+  const imgObj = STATE.images[imgIndex];
+  if (!imgObj) return;
+
+  const img = await loadImage(imgObj.objectUrl);
+
+  // 转场中: 需要两张图
+  if (transitionProgress > 0 && imgIndex < STATE.images.length - 1) {
+    const nextImgObj = STATE.images[imgIndex + 1];
+    const nextImg = await loadImage(nextImgObj.objectUrl);
+
+    // 当前图 + 动态效果
+    ctx.save();
+    applyMotion(ctx, img, STATE.settings.motion, imgProgress);
+    applyBackgroundMode(ctx, img, STATE.settings.backgroundMode);
+    ctx.restore();
+
+    // 转场叠加
+    ctx.save();
+    ctx.globalAlpha = transitionProgress;
+    applyMotion(ctx, nextImg, STATE.settings.motion, 0);
+    applyBackgroundMode(ctx, nextImg, STATE.settings.backgroundMode);
+    ctx.globalAlpha = 1;
+    ctx.restore();
+  } else {
+    // 正常帧
+    ctx.save();
+    applyMotion(ctx, img, STATE.settings.motion, imgProgress);
+    applyBackgroundMode(ctx, img, STATE.settings.backgroundMode);
+    ctx.restore();
+  }
+}
+window.applyMotion = applyMotion;
+window.applyTransition = applyTransition;
+
+// ═══════════ 批次 7: 贴片、水印与文字叠加系统 ═══════════
+
+// ─── 圆角矩形辅助 ───
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arcTo(x + w, y, x + w, y + r, r);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+  ctx.lineTo(x + r, y + h);
+  ctx.arcTo(x, y + h, x, y + h - r, r);
+  ctx.lineTo(x, y + r);
+  ctx.arcTo(x, y, x + r, y, r);
+  ctx.closePath();
+}
+
+// ─── emoji 贴片 ───
+function renderEmojiSticker(ctx, sticker) {
+  const fontSize = sticker.fontSize || 80;
+  ctx.font = `${fontSize}px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(0,0,0,0.3)';
+  ctx.shadowBlur = 8;
+  ctx.fillText(sticker.content, 0, 0);
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+}
+
+// ─── 文字贴片 ───
+function renderTextSticker(ctx, sticker) {
+  const fontSize = sticker.fontSize || 48;
+  ctx.font = `700 ${fontSize}px "Noto Sans SC",sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  if (sticker.backgroundColor) {
+    const metrics = ctx.measureText(sticker.content);
+    const pw = sticker.padding || 12;
+    const bw = metrics.width + pw * 2;
+    const bh = fontSize * 1.4 + pw * 2;
+    ctx.fillStyle = sticker.backgroundColor;
+    roundRect(ctx, -bw / 2, -bh / 2, bw, bh, sticker.borderRadius || 8);
+    ctx.fill();
+  }
+
+  ctx.fillStyle = sticker.color || '#FFFFFF';
+  ctx.fillText(sticker.content, 0, 0);
+}
+
+// ─── 角标贴片(红底白字) ───
+function renderBadgeSticker(ctx, sticker) {
+  const fontSize = sticker.fontSize || 36;
+  ctx.font = `800 ${fontSize}px "Noto Sans SC",sans-serif`;
+  const metrics = ctx.measureText(sticker.content);
+  const pw = 14, ph = 10;
+  const bw = metrics.width + pw * 2;
+  const bh = fontSize * 1.2 + ph * 2;
+
+  ctx.fillStyle = sticker.color || '#ED0108';
+  roundRect(ctx, -bw / 2, -bh / 2, bw, bh, 6);
+  ctx.fill();
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText(sticker.content, 0, 1);
+}
+
+// ─── 横幅贴片 ───
+function renderBannerSticker(ctx, sticker) {
+  const W = ctx.canvas.width;
+  const H = 72;
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  ctx.fillRect(-W / 2, -H / 2, W, H);
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '700 36px "Noto Sans SC",sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(sticker.content, 0, 0);
+}
+
+// ─── 进度条贴片 ───
+function renderProgressSticker(ctx, sticker, currentTime) {
+  const barWidth = 300;
+  const barHeight = 4;
+  const progress = Math.min(1, Math.max(0,
+    currentTime / (calculateTotalDuration() || 10)));
+
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  roundRect(ctx, -barWidth / 2, -barHeight / 2, barWidth, barHeight, 2);
+  ctx.fill();
+  ctx.fillStyle = '#ED0108';
+  roundRect(ctx, -barWidth / 2, -barHeight / 2, barWidth * progress, barHeight, 2);
+  ctx.fill();
+}
+
+// ─── 贴片渲染主函数 ───
+function applyStickers(ctx, currentTime) {
+  if (!STATE.stickers || STATE.stickers.length === 0) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+
+  for (const sticker of STATE.stickers) {
+    // 时间范围检查
+    if (currentTime < (sticker.startTime || 0)) continue;
+    if (sticker.endTime !== null && sticker.endTime !== undefined && currentTime > sticker.endTime) continue;
+
+    ctx.save();
+
+    const absX = (sticker.x || 0.5) * W;
+    const absY = (sticker.y || 0.5) * H;
+
+    // 入场动画
+    let animScale = 1, animOffsetY = 0, animAlpha = sticker.opacity ?? 0.9;
+    const elapsed = currentTime - (sticker.startTime || 0);
+    if (sticker.animation === 'pulse') {
+      animScale = 1 + Math.sin(elapsed * 3) * 0.1;
+    } else if (sticker.animation === 'bounce') {
+      animOffsetY = Math.abs(Math.sin(elapsed * 4)) * -30;
+      if (elapsed < 0.3) animAlpha = elapsed / 0.3;
+    } else if (sticker.animation === 'slide_in') {
+      if (elapsed < 0.3) {
+        animOffsetY = (1 - elapsed / 0.3) * 60;
+        animAlpha = elapsed / 0.3;
+      }
+    }
+
+    ctx.globalAlpha = animAlpha;
+    ctx.translate(absX, absY + animOffsetY);
+    ctx.rotate(((sticker.rotation || 0) * Math.PI) / 180);
+    ctx.scale((sticker.scale || 1) * animScale, (sticker.scale || 1) * animScale);
+
+    switch (sticker.type) {
+      case 'emoji':    renderEmojiSticker(ctx, sticker); break;
+      case 'text':     renderTextSticker(ctx, sticker);   break;
+      case 'badge':    renderBadgeSticker(ctx, sticker);  break;
+      case 'banner':   renderBannerSticker(ctx, sticker); break;
+      case 'progress': renderProgressSticker(ctx, sticker, currentTime); break;
+    }
+
+    ctx.restore();
+  }
+}
+window.applyStickers = applyStickers;
+
+// ─── 水印渲染 ───
+function applyWatermark(ctx) {
+  if (!STATE.watermark || !STATE.watermark.enabled) return;
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const text = STATE.watermark.text || '@yourhandle';
+
+  ctx.save();
+  ctx.globalAlpha = 0.6;
+  ctx.font = '600 36px "Noto Sans SC",sans-serif';
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'bottom';
+
+  const metrics = ctx.measureText(text);
+  const tw = metrics.width;
+  const padding = 20;
+  let x, y;
+
+  switch (STATE.watermark.position) {
+    case 'bottom-left':  x = padding;            y = H - padding; break;
+    case 'bottom-right': x = W - tw - padding;   y = H - padding; break;
+    case 'top-left':     x = padding;            y = padding + 36; break;
+    case 'top-right':    x = W - tw - padding;   y = padding + 36; break;
+    default:             x = padding;            y = H - padding;
+  }
+
+  ctx.shadowColor = 'rgba(0,0,0,0.5)';
+  ctx.shadowBlur = 4;
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText(text, x, y);
+  ctx.shadowColor = 'transparent';
+  ctx.shadowBlur = 0;
+  ctx.restore();
+}
+window.applyWatermark = applyWatermark;
+
+// ═══════════ 批次 8: 去重引擎(pHash + 颜色直方图 + 三级强度) ═══════════
+
+// ─── 图像数据加载 ───
+function loadImageDataFromFile(file) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      // 缩小到 64×64 加速哈希计算
+      const SIZE = 64;
+      const canvas = document.createElement('canvas');
+      canvas.width = SIZE; canvas.height = SIZE;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, SIZE, SIZE);
+      resolve({ imageData: ctx.getImageData(0, 0, SIZE, SIZE), url });
+      URL.revokeObjectURL(url);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('图片加载失败')); };
+    img.src = url;
+  });
+}
+
+// ─── 感知哈希(pHash) ───
+function computePHash(imageData) {
+  const { data, width, height } = imageData;
+  // 1. 转灰度
+  const gray = new Float64Array(width * height);
+  for (let i = 0; i < width * height; i++) {
+    const j = i * 4;
+    gray[i] = data[j] * 0.299 + data[j+1] * 0.587 + data[j+2] * 0.114;
+  }
+
+  // 2. 简易 DCT(8×8 从缩略图提取)
+  const dctSize = 8;
+  const dctVals = [];
+  for (let u = 0; u < dctSize; u++) {
+    for (let v = 0; v < dctSize; v++) {
+      let sum = 0;
+      for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+          sum += gray[x * width + y]
+            * Math.cos((2 * x + 1) * u * Math.PI / (2 * width))
+            * Math.cos((2 * y + 1) * v * Math.PI / (2 * height));
+        }
+      }
+      dctVals.push(sum);
+    }
+  }
+
+  // 3. 计算均值(排除 DC)
+  let sum = 0;
+  for (let i = 1; i < dctVals.length; i++) sum += dctVals[i];
+  const mean = sum / (dctVals.length - 1);
+
+  // 4. 生成 64 位哈希
+  let hash = '';
+  for (let i = 0; i < dctVals.length; i++) {
+    hash += dctVals[i] > mean ? '1' : '0';
+  }
+  return hash;
+}
+
+// ─── 颜色直方图 ───
+function computeColorHistogram(imageData, bins = 8) {
+  const histogram = new Float64Array(bins * bins * bins);
+  const data = imageData.data;
+  const totalPixels = imageData.width * imageData.height;
+
+  // 降采样(每 4 个像素取 1 个)加速
+  for (let i = 0; i < data.length; i += 16) {
+    const r = Math.floor(data[i] / (256 / bins));
+    const g = Math.floor(data[i+1] / (256 / bins));
+    const b = Math.floor(data[i+2] / (256 / bins));
+    histogram[r * bins * bins + g * bins + b]++;
+  }
+
+  // 归一化
+  const sampleCount = totalPixels / 4;
+  for (let i = 0; i < histogram.length; i++) {
+    histogram[i] /= sampleCount;
+  }
+  return histogram;
+}
+
+// ─── 相似度计算 ───
+function computeSimilarity(hash1, hash2, hist1, hist2) {
+  // 1. 汉明距离(感知哈希) - 权重 0.6
+  let hammingDist = 0;
+  const len = Math.min(hash1.length, hash2.length);
+  for (let i = 0; i < len; i++) {
+    if (hash1[i] !== hash2[i]) hammingDist++;
+  }
+  const hashSimilarity = 1 - hammingDist / len;
+
+  // 2. 巴氏系数(颜色直方图) - 权重 0.4
+  let bhattacharyya = 0;
+  const hlen = Math.min(hist1.length, hist2.length);
+  for (let i = 0; i < hlen; i++) {
+    bhattacharyya += Math.sqrt(hist1[i] * hist2[i]);
+  }
+
+  // 3. 加权融合
+  return hashSimilarity * 0.6 + bhattacharyya * 0.4;
+}
+
+// ─── 指纹提取 ───
+async function extractFingerprint(file) {
+  const { imageData } = await loadImageDataFromFile(file);
+  return {
+    pHash: computePHash(imageData),
+    histogram: computeColorHistogram(imageData),
+  };
+}
+window.extractFingerprint = extractFingerprint;
+
+// ─── 去重检测主函数 ───
+async function checkDuplicate(newImageFile, existingImages) {
+  try {
+    const newFingerprint = await extractFingerprint(newImageFile);
+    const results = [];
+
+    for (let i = 0; i < existingImages.length; i++) {
+      const existing = existingImages[i];
+      try {
+        if (!existing.fingerprint) {
+          existing.fingerprint = await extractFingerprint(existing.file);
+        }
+
+        const similarity = computeSimilarity(
+          newFingerprint.pHash,
+          existing.fingerprint.pHash,
+          newFingerprint.histogram,
+          existing.fingerprint.histogram
+        );
+
+        const threshold = DEDUP_LEVELS[STATE.dedup.level]?.threshold || 0.85;
+        results.push({
+          index: i,
+          imageName: existing.name,
+          similarity: Math.round(similarity * 100) / 100,
+          isDuplicate: similarity > threshold,
+        });
+      } catch (err) {
+        console.warn('[dedup] 跳过指纹提取失败的图片:', existing.name);
+      }
+    }
+
+    return results;
+  } catch (err) {
+    console.warn('[dedup] 去重检测失败:', err);
+    return [];
+  }
+}
+window.checkDuplicate = checkDuplicate;
+
+// ─── 全量去重检测 ───
+async function runFullDedupCheck() {
+  if (STATE.images.length < 2) {
+    showToast('至少需要 2 张图片才能检测重复');
+    return;
+  }
+
+  showToast('🔍 正在检测重复图片...');
+
+  // 确保所有图片有指纹
+  for (const img of STATE.images) {
+    if (!img.fingerprint) {
+      try { img.fingerprint = await extractFingerprint(img.file); } catch (e) {}
+    }
+  }
+
+  const threshold = DEDUP_LEVELS[STATE.dedup.level]?.threshold || 0.85;
+  const groups = [];
+  const seen = new Set();
+
+  for (let i = 0; i < STATE.images.length; i++) {
+    if (seen.has(i)) continue;
+    const group = [{ index: i, name: STATE.images[i].name }];
+    for (let j = i + 1; j < STATE.images.length; j++) {
+      if (seen.has(j)) continue;
+      try {
+        const similarity = computeSimilarity(
+          STATE.images[i].fingerprint.pHash,
+          STATE.images[j].fingerprint.pHash,
+          STATE.images[i].fingerprint.histogram,
+          STATE.images[j].fingerprint.histogram
+        );
+        if (similarity > threshold) {
+          group.push({ index: j, name: STATE.images[j].name, similarity: Math.round(similarity * 100) / 100 });
+          seen.add(j);
+        }
+      } catch (e) {}
+    }
+    if (group.length > 1) {
+      groups.push(group);
+      seen.add(i);
+    }
+  }
+
+  renderDedupResults(groups);
+  return groups;
+}
+window.runFullDedupCheck = runFullDedupCheck;
+
+// ─── 渲染去重结果 ───
+function renderDedupResults(groups) {
+  const container = document.getElementById('dedupResults');
+  if (!container) return;
+
+  if (groups.length === 0) {
+    container.style.display = 'block';
+    container.innerHTML = '<div style="font-size:12px;color:#52a87a;padding:8px 0">✅ 未检测到重复图片</div>';
+    showToast('✅ 未检测到重复图片');
+    return;
+  }
+
+  container.style.display = 'block';
+  const dupCount = groups.reduce((sum, g) => sum + g.length - 1, 0);
+  container.innerHTML = `
+    <div style="font-size:12px;color:#e08820;font-weight:600;margin-bottom:8px">
+      ⚠️ 发现 ${groups.length} 组重复,共 ${dupCount} 张相似图片
+    </div>
+    ${groups.map((g, gi) => `
+      <div style="background:#faf9f7;border-radius:6px;padding:8px;margin-bottom:6px;font-size:11px">
+        <div style="font-weight:600;color:#2d2a26;margin-bottom:4px">相似组 #${gi + 1}:</div>
+        ${g.map(item => `
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:3px 0;border-bottom:1px solid #eee8e1">
+            <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+              ${item.index + 1}. ${item.name}
+            </span>
+            ${item.similarity ? `<span style="color:#e08820;font-weight:600;margin-left:8px">${(item.similarity * 100).toFixed(0)}%</span>` : '<span style="color:#52a87a">保留</span>'}
+          </div>
+        `).join('')}
+      </div>
+    `).join('')}
+    <button class="btn small ghost" id="btnAutoCleanDup" style="width:100%;margin-top:4px">🧹 自动清理重复(保留最清晰)</button>
+  `;
+
+  // 绑定自动清理按钮
+  document.getElementById('btnAutoCleanDup').addEventListener('click', () => {
+    autoCleanDuplicates(groups);
+  });
+}
+
+// ─── 自动清理重复图片 ───
+function autoCleanDuplicates(groups) {
+  const toRemove = [];
+  for (const group of groups) {
+    // 按分辨率排序(大→小),保留第一张
+    const sorted = group.slice().sort((a, b) => {
+      const qA = (STATE.images[a.index].width || 0) * (STATE.images[a.index].height || 0);
+      const qB = (STATE.images[b.index].width || 0) * (STATE.images[b.index].height || 0);
+      return qB - qA;
+    });
+    // 删除排序后的其余项(从索引大到小删)
+    for (let k = 1; k < sorted.length; k++) {
+      toRemove.push(sorted[k].index);
+    }
+  }
+
+  // 从后往前删避免索引错乱
+  toRemove.sort((a, b) => b - a);
+  for (const idx of toRemove) {
+    if (STATE.images[idx]?.objectUrl) URL.revokeObjectURL(STATE.images[idx].objectUrl);
+    STATE.images.splice(idx, 1);
+  }
+
+  renderTimeline();
+  renderImgList();
+  updateTotalDuration();
+  updateImgCount();
+  renderPreviewFrame();
+  document.getElementById('dedupResults').innerHTML = '<div style="font-size:12px;color:#52a87a;padding:8px 0">✅ 已清理 ' + toRemove.length + ' 张重复图片</div>';
+  showToast(`✅ 已自动清理 ${toRemove.length} 张重复图片`);
+}
+window.autoCleanDuplicates = autoCleanDuplicates;
+
+// 上传图片时集成去重检测
+async function handleImageUploadWithDedup(files) {
+  const fileArray = Array.from(files).filter(f => {
+    if (!f.type.startsWith('image/')) { showToast('⚠️ 请选择 PNG / JPG / WebP 格式'); return false; }
+    return true;
+  });
+  if (fileArray.length === 0) return;
+  if (STATE.images.length + fileArray.length > 30) {
+    showToast('⚠️ 最多上传 30 张图片,超出部分已忽略');
+    fileArray.splice(30 - STATE.images.length);
+    if (fileArray.length === 0) return;
+  }
+
+  showToast(`正在处理 ${fileArray.length} 张图片...`);
+  let loaded = 0;
+  const newImages = [];
+  const duplicates = [];
+
+  for (const file of fileArray) {
+    if (file.size > 10 * 1024 * 1024) showToast('⚠️ 部分图片超过 10MB');
+
+    try {
+      const thumb = await createThumbnail(file);
+      const objectUrl = URL.createObjectURL(file);
+      const imgObj = {
+        id: 'img_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        name: file.name, file: file, objectUrl: objectUrl,
+        thumbnail: thumb.dataUrl, width: thumb.width, height: thumb.height,
+        size: file.size, duration: STATE.settings.secondsPerImage,
+      };
+
+      // 去重检测
+      if (STATE.dedup.enabled && STATE.images.length > 0) {
+        const dupResults = await checkDuplicate(file, STATE.images);
+        const hasDup = dupResults.some(r => r.isDuplicate);
+        if (hasDup) {
+          const similar = dupResults.filter(r => r.isDuplicate).map(r => r.imageName).join(', ');
+          duplicates.push({ name: file.name, similar });
+        }
+      }
+
+      newImages.push(imgObj);
+      loaded++;
+    } catch (err) {
+      console.warn('[video_maker] 图片加载失败:', file.name, err);
+    }
+  }
+
+  if (newImages.length > 0) {
+    STATE.images.push(...newImages);
+    renderTimeline(); renderImgList(); updateTotalDuration(); updateImgCount(); renderPreviewFrame();
+    showToast(`✅ 已添加 ${newImages.length} 张图片`);
+  }
+
+  if (duplicates.length > 0) {
+    setTimeout(() => {
+      showToast(`⚠️ 检测到 ${duplicates.length} 张图片可能与已有图片相似`);
+    }, 1500);
+  }
+}
+
+// 替换原有 handleImageUpload(保留旧函数但新上传走带去重的版本)
+const _originalHandleImageUpload = handleImageUpload;
+handleImageUpload = handleImageUploadWithDedup;
+window.handleImageUpload = handleImageUpload;
+
+// ─── 事件绑定 ───
+function bindEvents() {
+  // 图片上传 - 点击
+  document.getElementById('imageUploadZone').addEventListener('click', () => {
+    document.getElementById('imageFileInput').click();
+  });
+  document.getElementById('imageFileInput').addEventListener('change', (e) => {
+    if (e.target.files.length > 0) handleImageUpload(e.target.files);
+    e.target.value = '';
+  });
+
+  // 图片上传 - 拖拽
+  const imgZone = document.getElementById('imageUploadZone');
+  imgZone.addEventListener('dragover', (e) => { e.preventDefault(); imgZone.classList.add('drag-over'); });
+  imgZone.addEventListener('dragleave', () => { imgZone.classList.remove('drag-over'); });
+  imgZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    imgZone.classList.remove('drag-over');
+    if (e.dataTransfer.files.length > 0) handleImageUpload(e.dataTransfer.files);
+  });
+
+  // 图片上传 - 粘贴
+  document.addEventListener('paste', (e) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    const files = [];
+    for (const item of items) {
+      if (item.type.startsWith('image/')) files.push(item.getAsFile());
+    }
+    if (files.length > 0) handleImageUpload(files);
+  });
+
+  // 音乐上传
+  document.getElementById('audioUploadZone').addEventListener('click', () => {
+    document.getElementById('audioFileInput').click();
+  });
+  document.getElementById('audioFileInput').addEventListener('change', (e) => {
+    if (e.target.files.length > 0) handleAudioUpload(e.target.files[0]);
+    e.target.value = '';
+  });
+
+  // 导出按钮
+  document.getElementById('btnExport').addEventListener('click', exportVideo);
+  document.getElementById('btnDownload').addEventListener('click', () => {
+    showToast('请先点击"生成视频"按钮生成视频');
+  });
+
+  // 去重全检按钮
+  document.getElementById('btnCheckAllDup').addEventListener('click', runFullDedupCheck);
+}
+
+// ─── 资源清理 ───
+window.addEventListener('beforeunload', () => {
+  for (const img of STATE.images) {
+    if (img.objectUrl) URL.revokeObjectURL(img.objectUrl);
+  }
+  if (STATE.audio?.objectUrl) URL.revokeObjectURL(STATE.audio.objectUrl);
+});
+
+// ─── 启动 ───
+function init() {
+  initUI();
+  bindEvents();
+  renderTimeline();
+  renderPreviewFrame();
+}
+init();
+
+console.log('[video_maker] v1.0 骨架初始化完成');
+console.log('[video_maker] STATE:', STATE);
+</script>
+
+</body>
+</html>

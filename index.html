@@ -620,6 +620,13 @@ button{font-family:inherit}
         <span class="tc-desc">从痛点一键生成 Carousel / Reels / Caption 内容包</span>
       </span>
     </a>
+    <a href="./video_maker/" class="tool-card" id="linkVideoMaker" style="display:none" target="_blank">
+      <span class="tc-icon">🎥</span>
+      <span class="tc-body">
+        <span class="tc-name">短视频生成 <span class="tc-badge">NEW</span></span>
+        <span class="tc-desc">多图+音乐合成 Reels/TikTok 短视频,支持滤镜特效贴片去重</span>
+      </span>
+    </a>
   </div>
 </div>
 
@@ -992,6 +999,7 @@ function renderAccountBar() {
   var linkRadar = document.getElementById('linkRedditRadar');
   var linkPostWriter = document.getElementById('linkPostWriter');
   var linkInstagramContent = document.getElementById('linkInstagramContent');
+  var linkVideoMaker = document.getElementById('linkVideoMaker');
   if (toolBar && linkIns && linkReddit && linkRadar && linkPostWriter && linkInstagramContent) {
     var pageAccess = (AUTH_STATE.user && Array.isArray(AUTH_STATE.user.page_access)) ? AUTH_STATE.user.page_access : [];
     var hasIns = pageAccess.indexOf('ins_reviewer_carousel') !== -1;
@@ -999,12 +1007,14 @@ function renderAccountBar() {
     var hasRadar = pageAccess.indexOf('reddit_radar') !== -1;
     var hasPostWriter = pageAccess.indexOf('reddit_post_writer') !== -1;
     var hasInstagramContent = pageAccess.indexOf('instagram_content_assistant') !== -1;
+    var hasVideoMaker = pageAccess.indexOf('video_maker') !== -1;
     linkIns.style.display = hasIns ? '' : 'none';
     linkReddit.style.display = hasReddit ? '' : 'none';
     linkRadar.style.display = hasRadar ? '' : 'none';
     linkPostWriter.style.display = hasPostWriter ? '' : 'none';
     linkInstagramContent.style.display = hasInstagramContent ? '' : 'none';
-    var toolCount = (hasIns?1:0)+(hasReddit?1:0)+(hasRadar?1:0)+(hasPostWriter?1:0)+(hasInstagramContent?1:0);
+    if (linkVideoMaker) linkVideoMaker.style.display = hasVideoMaker ? '' : 'none';
+    var toolCount = (hasIns?1:0)+(hasReddit?1:0)+(hasRadar?1:0)+(hasPostWriter?1:0)+(hasInstagramContent?1:0)+(hasVideoMaker?1:0);
     var countEl = document.getElementById('toolCount');
     if (countEl) countEl.textContent = toolCount + ' 个可用';
     toolBar.style.display = toolCount > 0 ? '' : 'none';

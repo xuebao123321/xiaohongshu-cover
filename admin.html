@@ -396,6 +396,12 @@ function renderUsers(users, total) {
                 title="Instagram 内容策划助手">
             ${pageAccess.includes('instagram_content_assistant') ? '✓' : '○'} IG内容
           </span>
+          <span class="page-access-chip ${pageAccess.includes('video_maker') ? 'granted' : ''}"
+                data-userid="${u.id}" data-page="video_maker"
+                onclick="event.stopPropagation();window._togglePageAccess(this)"
+                title="轮播短视频生成器">
+            ${pageAccess.includes('video_maker') ? '✓' : '○'} 短视频
+          </span>
         </div>` : '<span style="font-size:10px;color:#8a8a8a;">—</span>';
 
     return `
