@@ -553,6 +553,8 @@ button{font-family:inherit}
 .candidate-card .cover-canvas {
   width: 100%;
   height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: box-shadow 0.2s, transform 0.2s;
@@ -596,11 +598,6 @@ button{font-family:inherit}
     padding: 8px 14px;
     font-size: 14px;
   }
-}
-.candidate-card .cover-canvas {
-  max-width: 100%;
-  height: auto;
-  aspect-ratio: 1242 / 1656;
 }
 </style>
 </head>
@@ -6267,42 +6264,58 @@ function generateCandidatesForText(text, textIndex, globalSeed) {
 }
 
 function selectFamiliesForCandidates(text, textSeed) {
-  const rng = window.seededRandom(textSeed);
-  const handnoteFamilies = ['A', 'J', 'L'];
-  const collageFamilies = ['F', 'I', 'M', 'T'];
-  const comicFamilies = ['B', 'C', 'G', 'H', 'N', 'P'];
-  const newspaperFamilies = ['D', 'K', 'O', 'R'];
-  const minimalFamilies = ['E', 'Q', 'S'];
+  var rng = window.seededRandom(textSeed);
 
-  const pick = (arr, n) => {
-    const shuffled = [...arr].sort(() => rng() - 0.5);
-    return shuffled.slice(0, Math.min(n, arr.length));
-  };
-
-  // 如果用户选中了特定风格族，全部用该族
-  const userFamilies = Array.from(STATE.families);
+  // ══════ P2 修复: 强制5族各取1个入口，确保30张覆盖全部真实风格族 ══════
+  // 用户指定了特定风格时仍使用用户选择
+  var userFamilies = Array.from(STATE.families);
   if (userFamilies.length > 0 && userFamilies.length < 20) {
-    const needed = [];
-    for (let i = 0; i < 6; i++) {
+    // 用户选的风格属于哪些 realFamily？
+    var userRealFamilies = new Set();
+    userFamilies.forEach(function(f) {
+      var m = window.REAL_STYLE_MAP[f];
+      if (m) userRealFamilies.add(m.realFamily);
+    });
+    // 如果用户只选了1-2个族内的风格，扩展覆盖全部5族各1个
+    if (userRealFamilies.size < 3) {
+      var allPicks = [
+        ['A', 'J', 'L'], ['F', 'I', 'M', 'T'], ['B', 'C', 'G', 'H', 'N', 'P'],
+        ['D', 'K', 'O', 'R'], ['E', 'Q', 'S'],
+      ];
+      var result = [];
+      allPicks.forEach(function(pool) {
+        var shuffled = pool.slice().sort(function() { return rng() - 0.5; });
+        result.push(shuffled[0]);
+      });
+      return result.slice(0, 6);
+    }
+    // 否则使用用户选择 + 补足6个
+    var needed = [];
+    for (var i = 0; i < 6; i++) {
       needed.push(userFamilies[i % userFamilies.length]);
     }
     return needed.slice(0, 6);
   }
 
-  const selected = [
-    ...pick(handnoteFamilies, 2),
-    ...pick(collageFamilies, rng() > 0.5 ? 2 : 1),
-    ...pick(comicFamilies, 1),
-    ...pick(newspaperFamilies, 1),
-    ...pick(minimalFamilies, rng() > 0.5 ? 1 : 0),
-  ];
+  // 默认：每个真实风格族随机取1个入口 → 5个入口
+  var handnoteFams = ['A', 'J', 'L'];
+  var collageFams = ['F', 'I', 'M', 'T'];
+  var comicFams = ['B', 'C', 'G', 'H', 'N', 'P'];
+  var newspaperFams = ['D', 'K', 'O', 'R'];
+  var minimalFams = ['E', 'Q', 'S'];
 
-  while (selected.length < 6) {
-    const fb = handnoteFamilies[selected.length % handnoteFamilies.length];
-    if (!selected.includes(fb)) { selected.push(fb); }
-    else { selected.push(comicFamilies[selected.length % comicFamilies.length]); }
-  }
-  return selected.slice(0, 6);
+  var pickOne = function(arr) {
+    return arr[Math.floor(rng() * arr.length)];
+  };
+
+  return [
+    pickOne(handnoteFams),
+    pickOne(collageFams),
+    pickOne(comicFams),
+    pickOne(newspaperFams),
+    pickOne(minimalFams),
+    pickOne(handnoteFams),  // 第6个额外给 handnote（权重最高）
+  ];
 }
 
 function renderCandidateBatch(group, startIndex, count) {
