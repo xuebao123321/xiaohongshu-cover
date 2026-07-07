@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-19","styleFamily":"comic","name":"粉色pop+白字+星星emoji+少女漫画风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FF7EB3"},
+  "backgroundOverlay":{"type":"halftone","dotSize":2.5,"spacing":11,"color":"rgba(255,255,255,0.25)"},
+  "burstLines":{"count":20,"from":{"x":621,"y":580},"color":"rgba(255,255,255,0.30)","lineWidth":2,"innerR":110,"outerR":900},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":300,"weight":900,"color":"#FFFFFF","stroke":{"color":"#D6336C","width":5},"letterSpacing":-0.045},
+  "subTitleBox":{"x":160,"y":940,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#FFE0EC"},
+  "decorations":[
+    {"id":"cm19-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"⭐","fontSize":135},
+    {"id":"cm19-sfx","type":"sfx","layer":"above","box":{"x":890,"y":1340,"w":190,"h":100},"text":"WOW!","fontSize":68,"color":"#FFE0EC","rotation":-5,"strokeColor":"#D6336C","strokeWidth":3},
+    {"id":"cm19-star","type":"starBurst","layer":"above","box":{"x":130,"y":190,"w":85,"h":85},"color":"#FFE0EC","strokeColor":"#D6336C","strokeWidth":2}
+  ]
+}

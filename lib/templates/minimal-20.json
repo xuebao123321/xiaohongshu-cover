@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-20","styleFamily":"minimal","name":"淡灰底+纯黑无衬线+底部点缀线",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F2F2F2"},
+  "titleBox":{"x":40,"y":350,"w":1162,"h":750},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":210,"max":500,"weight":900,"color":"#000000","letterSpacing":-0.055},
+  "subTitleBox":{"x":100,"y":1140,"w":1042,"h":60},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":30,"max":50,"weight":300,"color":"rgba(0,0,0,0.30)"},
+  "decorations":[
+    {"id":"mn20-line1","type":"thickLine","layer":"above","box":{"x":530,"y":1120,"w":180,"h":1},"color":"rgba(0,0,0,0.12)","lineWidth":1}
+  ]
+}

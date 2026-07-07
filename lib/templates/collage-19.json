@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-19","styleFamily":"collage","name":"灰粉底+彩色便签群+手写字印章+文艺风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F5F0F2"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#2D2028","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(45,32,40,0.55)"},
+  "decorations":[
+    {"id":"cl19-n1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FFE8EC","rotation":-3,"shadow":true},
+    {"id":"cl19-n2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#E8F0FF","rotation":-12,"shadow":true},
+    {"id":"cl19-n3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#FFF8E0","rotation":9,"shadow":true},
+    {"id":"cl19-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#B0658A","rotation":-10,"label":"POEM"},
+    {"id":"cl19-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":260,"h":32},"rotation":3,"color":"rgba(200,160,180,0.50)"},
+    {"id":"cl19-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"🎨","fontSize":100}
+  ]
+}

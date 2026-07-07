@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-19","styleFamily":"minimal","name":"奶白底+深蓝衬线+侧边竖线+杂志封面",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FBFAF7"},
+  "titleBox":{"x":60,"y":350,"w":1122,"h":730},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":200,"max":460,"weight":900,"color":"#0D1B2A","letterSpacing":-0.05},
+  "subTitleBox":{"x":100,"y":1120,"w":1042,"h":70},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":32,"max":54,"weight":300,"color":"rgba(13,27,42,0.35)"},
+  "decorations":[
+    {"id":"mn19-line","type":"thickLine","layer":"above","box":{"x":40,"y":340,"w":3,"h":120},"color":"rgba(13,27,42,0.20)","lineWidth":3}
+  ]
+}
