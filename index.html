@@ -486,6 +486,122 @@ button{font-family:inherit}
   .input-row{max-width:760px}
   .grid{grid-template-columns:repeat(5,1fr);gap:16px}
 }
+
+/* ===== 批量候选横向滚动 ===== */
+.batch-group {
+  margin-bottom: 32px;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  padding: 16px;
+  background: #FAFAFA;
+}
+.batch-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.batch-header-row h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+}
+.batch-text-preview {
+  color: #6B7280;
+  font-size: 13px;
+  flex: 1;
+  min-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.batch-actions-row {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.candidate-scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(200px, 260px);
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 12px;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+.candidate-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.candidate-scroll::-webkit-scrollbar-track {
+  background: #F3F4F6;
+  border-radius: 3px;
+}
+.candidate-scroll::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 3px;
+}
+.candidate-card {
+  scroll-snap-align: start;
+  position: relative;
+  flex-shrink: 0;
+}
+.candidate-card .cover-canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.candidate-card:hover .cover-canvas {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+}
+.candidate-checkbox {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 2;
+  accent-color: #4F46E5;
+}
+.candidate-card.selected .cover-canvas {
+  outline: 3px solid #4F46E5;
+  outline-offset: -2px;
+  border-radius: 10px;
+}
+@media (max-width: 768px) {
+  .candidate-scroll {
+    grid-auto-columns: minmax(180px, 78vw);
+    gap: 10px;
+  }
+  .batch-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .batch-actions-row {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .batch-actions-row button,
+  .batch-actions button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+}
+.candidate-card .cover-canvas {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 1242 / 1656;
+}
 </style>
 </head>
 <body>
@@ -858,6 +974,14 @@ import {
   getTotalCount,
 } from './lib/stickers.js';
 import { analyzeTextAndRoute, matchEmojiForText, analyzeTextTone } from './lib/color-ai.js';
+import './lib/real-style-map.js';
+import './lib/real-style-typography.js';
+import './lib/real-style-center-shapes.js';
+import './lib/real-style-layouts.js';
+import './lib/real-style-decorations.js';
+import './lib/real-style-renderer.js';
+import './lib/real-style-random.js';
+import './lib/real-style-stickers.js';
 
 // ═══════════ 全局配置 ═══════════
 const CANVAS_W = 1242;   // 3:4 标准小红书尺寸
@@ -917,11 +1041,19 @@ const STATE = {
   activeCount: 0,
   currentLayoutMode: '',  // v5.0: 当前排版模式(headline/standard/subhead/newspaper)
   textAnalysis: null,      // v5.0: 文案分析结果(色调/Emoji/推荐风格族)
+  realStyleMode: true,     // 真实风格模式开关（?mode=legacy 可关闭）
 };
 
 const BATCH_STATE = {
   items: [],
   generated: false,
+};
+
+const CANDIDATE_CONFIG = {
+  candidatesPerText: 30,
+  initialRenderCount: 6,
+  lazyLoadBatchSize: 6,
+  familiesPerText: 6,
 };
 
 const AUTH_STATE = {
@@ -935,6 +1067,19 @@ const AUTH_STATE = {
     canBatchDownload: false,
   },
 };
+
+// URL 参数工具
+function getUrlParam(name) {
+  try {
+    const url = new URL(window.location.href);
+    return url.searchParams.get(name);
+  } catch (e) { return null; }
+}
+
+// 真实风格模式：URL 参数 ?mode=legacy 可回退旧版
+if (getUrlParam('mode') === 'legacy') {
+  STATE.realStyleMode = false;
+}
 
 // 暴露给调试
 window.STATE = STATE;
@@ -3499,6 +3644,15 @@ const LOCKED_TEMPLATE_STYLES = Object.freeze({
  * 与 drawLockedTemplateCover 接口完全一致,可直接替换。
  */
 function drawTemplateEnhancedCover(ctx, text, palette, options, family) {
+  // ── 真实风格模式路由 ──
+  if (STATE.realStyleMode && window.drawRealStyleCover) {
+    try {
+      return window.drawRealStyleCover(ctx, text, palette, options, family);
+    } catch (err) {
+      console.warn('真实风格渲染失败，回退到旧版:', err.message || err);
+      // 继续执行旧版渲染
+    }
+  }
   // 所有 v5 功能已在 drawLockedTemplateCover 中集成,
   // 此处直接委托(若需差异逻辑可在此扩展)
   return drawLockedTemplateCover(ctx, text, palette, options, family);
@@ -6080,6 +6234,209 @@ window.copyCanvas = copyCanvas;
 
 // ═══════════ 批量文案识别 + 生成 ═══════════
 
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+function generateCandidatesForText(text, textIndex, globalSeed) {
+  const candidates = [];
+  const textSeed = window.getTextSeed(text, textIndex, globalSeed);
+  const selectedFamilies = selectFamiliesForCandidates(text, textSeed);
+
+  let candidateIndex = 0;
+  for (const family of selectedFamilies) {
+    for (let vi = 0; vi < 5; vi++) {
+      candidates.push({
+        textIndex: textIndex,
+        candidateIndex: candidateIndex,
+        family: family,
+        vi: vi,
+        seed: window.getTextSeed(text, textIndex, globalSeed) + candidateIndex * 7919,
+        _text: text,
+      });
+      candidateIndex++;
+    }
+  }
+  // 同文案内去重
+  const deduped = window.deduplicateCandidatesForText
+    ? window.deduplicateCandidatesForText(candidates)
+    : candidates;
+  return deduped;
+}
+
+function selectFamiliesForCandidates(text, textSeed) {
+  const rng = window.seededRandom(textSeed);
+  const handnoteFamilies = ['A', 'J', 'L'];
+  const collageFamilies = ['F', 'I', 'M', 'T'];
+  const comicFamilies = ['B', 'C', 'G', 'H', 'N', 'P'];
+  const newspaperFamilies = ['D', 'K', 'O', 'R'];
+  const minimalFamilies = ['E', 'Q', 'S'];
+
+  const pick = (arr, n) => {
+    const shuffled = [...arr].sort(() => rng() - 0.5);
+    return shuffled.slice(0, Math.min(n, arr.length));
+  };
+
+  // 如果用户选中了特定风格族，全部用该族
+  const userFamilies = Array.from(STATE.families);
+  if (userFamilies.length > 0 && userFamilies.length < 20) {
+    const needed = [];
+    for (let i = 0; i < 6; i++) {
+      needed.push(userFamilies[i % userFamilies.length]);
+    }
+    return needed.slice(0, 6);
+  }
+
+  const selected = [
+    ...pick(handnoteFamilies, 2),
+    ...pick(collageFamilies, rng() > 0.5 ? 2 : 1),
+    ...pick(comicFamilies, 1),
+    ...pick(newspaperFamilies, 1),
+    ...pick(minimalFamilies, rng() > 0.5 ? 1 : 0),
+  ];
+
+  while (selected.length < 6) {
+    const fb = handnoteFamilies[selected.length % handnoteFamilies.length];
+    if (!selected.includes(fb)) { selected.push(fb); }
+    else { selected.push(comicFamilies[selected.length % comicFamilies.length]); }
+  }
+  return selected.slice(0, 6);
+}
+
+function renderCandidateBatch(group, startIndex, count) {
+  const scrollContainer = group.querySelector('.candidate-scroll');
+  const candidates = group._candidates;
+  if (!candidates || !scrollContainer) return;
+  const endIndex = Math.min(startIndex + count, candidates.length);
+
+  const fragment = document.createDocumentFragment();
+  for (let i = startIndex; i < endIndex; i++) {
+    const candidate = candidates[i];
+    const cardWrap = document.createElement('article');
+    cardWrap.className = 'card-wrap candidate-card';
+    cardWrap.dataset.candidateIndex = i;
+    cardWrap.dataset.family = candidate.family;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 1242;
+    canvas.height = 1656;
+    canvas.className = 'cover-canvas';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'candidate-checkbox';
+    checkbox.dataset.candidateIndex = i;
+    checkbox.addEventListener('change', function () {
+      cardWrap.classList.toggle('selected', this.checked);
+    });
+
+    cardWrap.appendChild(canvas);
+    cardWrap.appendChild(checkbox);
+    fragment.appendChild(cardWrap);
+
+    // 渲染封面
+    try {
+      const ctx = canvas.getContext('2d');
+      const palette = pickPalette(candidate.family, candidate.vi);
+      const options = { vi: candidate.vi, seed: candidate.seed, font: STATE.font || 'black' };
+      window.drawRealStyleCover(ctx, candidate._text || '', palette, options, candidate.family);
+    } catch (err) {
+      console.error('候选 ' + i + ' 渲染失败:', err);
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, 1242, 1656);
+      ctx.fillStyle = '#FF4444';
+      ctx.font = 'bold 48px "Noto Sans SC", sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('✕ 渲染失败', 621, 800);
+    }
+  }
+  scrollContainer.appendChild(fragment);
+  group._renderedCount = endIndex;
+}
+
+function setupLazyLoading(group) {
+  const scrollContainer = group.querySelector('.candidate-scroll');
+  if (!scrollContainer) return;
+  const sentinel = document.createElement('div');
+  sentinel.className = 'lazy-sentinel';
+  sentinel.style.cssText = 'min-width:1px;min-height:1px;';
+  scrollContainer.appendChild(sentinel);
+
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        const current = group._renderedCount || 0;
+        const total = (group._candidates || []).length;
+        if (current < total) {
+          renderCandidateBatch(group, current, CANDIDATE_CONFIG.lazyLoadBatchSize);
+        }
+        if (current + CANDIDATE_CONFIG.lazyLoadBatchSize >= total) {
+          observer.disconnect();
+          sentinel.remove();
+        }
+      }
+    }
+  }, { root: scrollContainer, rootMargin: '300px' });
+
+  observer.observe(sentinel);
+}
+
+function downloadSelectedCandidates(textIndex) {
+  const group = document.querySelector('.batch-group[data-text-index="' + textIndex + '"]');
+  if (!group) return;
+  const checkboxes = group.querySelectorAll('.candidate-checkbox:checked');
+  if (checkboxes.length === 0) { showToast('请至少选中一张候选图'); return; }
+  const canvases = [];
+  checkboxes.forEach(function (cb) {
+    const card = cb.closest('.candidate-card');
+    if (card) { const c = card.querySelector('canvas'); if (c) canvases.push(c); }
+  });
+  downloadCanvasesFromList(canvases, 'cover_batch_' + (textIndex + 1));
+}
+
+function downloadAllCandidates(textIndex) {
+  const group = document.querySelector('.batch-group[data-text-index="' + textIndex + '"]');
+  if (!group) return;
+  const total = group._candidates ? group._candidates.length : 0;
+  if (total > 30) {
+    if (!confirm('将下载 ' + total + ' 张图片，可能需要一些时间。确定继续？')) return;
+  }
+  const canvases = Array.from(group.querySelectorAll('.candidate-card canvas'));
+  downloadCanvasesFromList(canvases, 'cover_batch_' + (textIndex + 1) + '_all');
+}
+
+function downloadCanvasesFromList(canvases, baseName) {
+  if (!canvases || canvases.length === 0) { showToast('没有可下载的封面'); return; }
+  canvases.forEach(function (canvas, i) {
+    try {
+      const link = document.createElement('a');
+      link.download = baseName + '_' + String(i + 1).padStart(2, '0') + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (e) {
+      console.error('下载失败:', i, e);
+    }
+  });
+}
+
+function bindBatchDownloadEvents() {
+  document.querySelectorAll('.btn-download-selected').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var ti = parseInt(btn.dataset.textIndex);
+      if (!isNaN(ti)) downloadSelectedCandidates(ti);
+    });
+  });
+  document.querySelectorAll('.btn-download-all').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var ti = parseInt(btn.dataset.textIndex);
+      if (!isNaN(ti)) downloadAllCandidates(ti);
+    });
+  });
+}
+
 function parseBatchTexts(raw) {
   return String(raw || '')
     .split(/\n?\s*888\s*\n?/g)
@@ -6114,7 +6471,7 @@ function renderBatchPanel() {
   panel.classList.toggle('show', items.length > 0);
   meta.textContent = items.length ? '共识别出 ' + items.length + ' 条文案' : '使用 888 分隔每条文案';
   const selectedCount = items.filter((item) => item.selected && hasVisibleText(item.text)).length;
-  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成精选 5 张。';
+  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成 30 张候选。';
   list.innerHTML = '';
   items.forEach((item, index) => {
     const row = document.createElement('div');
@@ -6168,7 +6525,7 @@ function updateBatchMetaOnly() {
   const hint = document.getElementById('batchHint');
   if (!hint) return;
   const selectedCount = BATCH_STATE.items.filter((item) => item.selected && hasVisibleText(item.text)).length;
-  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成精选 5 张。';
+  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成 30 张候选。';
   document.querySelectorAll('.batch-item').forEach((row, index) => {
     const count = row.querySelector('.batch-count');
     if (count && BATCH_STATE.items[index]) {
@@ -6211,58 +6568,68 @@ function generateBatchCovers() {
   btn.disabled = true;
   btn.textContent = '生成中...';
   const c = document.getElementById('container');
-  c.innerHTML = '<div class="loading">批量生成中</div>';
-  setTimeout(() => {
+  c.innerHTML = '<div class="loading">批量生成中 (' + items.length + ' 条文案 × 30 张候选)...</div>';
+  setTimeout(function () {
     try {
       c.innerHTML = '';
-      const batchDownloads = document.createElement('div');
-      batchDownloads.className = 'batch-group';
+      // 顶部工具栏
       const isFreeUser = !AUTH_STATE.authenticated || (AUTH_STATE.user && AUTH_STATE.user.role !== 'vip');
       const lockAttr = isFreeUser ? ' data-locked="1"' : '';
       const lockClass = isFreeUser ? ' btn-locked' : '';
       const lockIcon = isFreeUser ? ' 🔒' : '';
-      batchDownloads.innerHTML =
-        '<div class="batch-group-head">' +
-        '<div class="batch-group-title"><strong>ALL</strong><div><div class="batch-group-preview">批量下载</div><div class="batch-group-sub">支持单张、多选和全部下载' + (isFreeUser ? ' · <span style="color:#ED0108;font-weight:700">升级VIP解锁批量下载</span>' : '') + '</div></div></div>' +
-        '<div class="batch-group-tools">' +
+      const toolbar = document.createElement('div');
+      toolbar.className = 'batch-group';
+      toolbar.innerHTML =
+        '<div class="batch-header-row">' +
+        '<div><strong>ALL</strong> 批量下载</div>' +
+        '<div style="font-size:13px;color:#6B7280">支持单张、多选和全部下载' + (isFreeUser ? ' · <span style="color:#ED0108;font-weight:700">升级VIP解锁批量下载</span>' : '') + '</div>' +
+        '<div class="batch-actions-row">' +
         '<button class="btn small ghost' + lockClass + '" data-batch-download="selected"' + lockAttr + '>下载选中' + lockIcon + '</button>' +
         '<button class="btn small outline' + lockClass + '" data-batch-download="all"' + lockAttr + '>下载全部' + lockIcon + '</button>' +
         '<button class="btn small primary" data-send-to-video-maker style="background:#ED0108">🎥 发送到短视频</button>' +
         '</div></div>';
-      c.appendChild(batchDownloads);
-      const fams = familiesForBatchCards();
-      items.forEach((item, groupIndex) => {
-        const group = document.createElement('section');
-        group.className = 'batch-group';
-        group.dataset.batchGroup = String(groupIndex + 1);
-        const preview = item.text.replace(/\s+/g, ' ').slice(0, 46);
-        group.innerHTML =
-          '<div class="batch-group-head">' +
-          '<div class="batch-group-title"><strong>' + String(groupIndex + 1).padStart(2, '0') + '</strong>' +
-          '<div><div class="batch-group-preview"></div><div class="batch-group-sub">精选 5 张封面</div></div></div>' +
-          '<div class="batch-group-tools">' +
-          '<button class="btn small ghost" data-group-select>全选本组</button>' +
-          '<button class="btn small ghost' + lockClass + '" data-group-download-selected' + lockAttr + '>下载本组选中' + lockIcon + '</button>' +
-          '<button class="btn small outline' + lockClass + '" data-group-download-all' + lockAttr + '>下载本组全部' + lockIcon + '</button>' +
-          '</div></div>';
-        group.querySelector('.batch-group-preview').textContent = preview || '未命名文案';
-        const grid = document.createElement('div');
-        grid.className = 'grid';
-        fams.forEach((fam, cardIndex) => {
-          const vi = cardIndex % TEMPLATE_CONTRACT.variantsPerStyle;
-          const card = buildOneCard(fam, vi, item.text, STATE.seed + groupIndex * 17 + cardIndex, {
-            selectable: true,
-            batchIndex: groupIndex + 1,
-            cardIndex: cardIndex + 1,
-            text: item.text,
-          });
-          grid.appendChild(card);
-        });
-        group.appendChild(grid);
-        c.appendChild(group);
+      c.appendChild(toolbar);
+
+      var globalSeed = Date.now();
+
+      // 先为每条文案生成候选 → 再跨文案去重
+      var allCandidates = items.map(function (item, i) {
+        return generateCandidatesForText(item.text, i, globalSeed);
       });
+      var dedupedAll = window.deduplicateAcrossTexts
+        ? window.deduplicateAcrossTexts(allCandidates)
+        : allCandidates;
+
+      items.forEach(function (item, groupIndex) {
+        var candidates = dedupedAll[groupIndex] || [];
+        var group = document.createElement('section');
+        group.className = 'batch-group';
+        group.dataset.textIndex = String(groupIndex);
+        var preview = item.text.replace(/\s+/g, ' ').slice(0, 46);
+        group.innerHTML =
+          '<header class="batch-header-row">' +
+          '<h3>文案 ' + (groupIndex + 1) + '</h3>' +
+          '<span class="batch-text-preview">' + escapeHtml(item.text.substring(0, 30)) + (item.text.length > 30 ? '...' : '') + '</span>' +
+          '<div class="batch-actions-row">' +
+          '<button class="btn small ghost btn-download-selected" data-text-index="' + groupIndex + '">下载选中</button>' +
+          '<button class="btn small outline btn-download-all" data-text-index="' + groupIndex + '">下载本组(' + candidates.length + '张)</button>' +
+          '</div></header>' +
+          '<div class="candidate-scroll" data-text-index="' + groupIndex + '"></div>';
+        c.appendChild(group);
+
+        group._candidates = candidates;
+        group._text = item.text;
+        group._renderedCount = 0;
+
+        // 首屏渲染前6张
+        renderCandidateBatch(group, 0, CANDIDATE_CONFIG.initialRenderCount);
+        // 设置懒加载
+        setupLazyLoading(group);
+      });
+
       BATCH_STATE.generated = true;
-      showToast('已生成 ' + items.length + ' 组 · 共 ' + (items.length * 5) + ' 张');
+      bindBatchDownloadEvents();
+      showToast('已生成 ' + items.length + ' 组 · 共 ' + (items.length * 30) + ' 张候选');
     } catch (e) {
       console.error(e);
       showToast('❌ 批量生成失败: ' + e.message);
@@ -6922,6 +7289,79 @@ function setupTabOrder() {
       if (parent) parent.style.outline = '';
     }
   });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 真实风格族诊断工具
+// ═══════════════════════════════════════════════════════════════
+window.diagnose = {
+  checkModules() {
+    var modules = [
+      'REAL_STYLE_MAP', 'REAL_STYLE_CONFIGS', 'REAL_SUBSTYLE_CONFIGS',
+      'REAL_STYLE_LAYOUTS', 'CENTER_SHAPE_LIBRARY',
+      'parseCoverContent', 'computeTypographyPlan',
+      'selectLayout', 'selectCenterShape',
+      'buildDecorationPlan', 'allocateDecorationSlots',
+      'drawRealStyleCover', 'drawRealBackground',
+      'drawStructuredTypography', 'drawTextWithSpacing',
+      'filterStickersByFamily', 'pickStickersForCard',
+      'getTextSeed', 'createDeduplicationContext',
+      'FAMILY_RANDOMIZATION_BOUNDS',
+    ];
+    var results = {};
+    modules.forEach(function (name) {
+      results[name] = {
+        loaded: typeof window[name] !== 'undefined',
+        type: typeof window[name],
+      };
+    });
+    console.table(results);
+    return results;
+  },
+
+  testAllFamilies() {
+    var results = {};
+    for (var f = 0; f < 20; f++) {
+      var family = 'ABCDEFGHIJKLMNOPQRST'[f];
+      var canvas = document.createElement('canvas');
+      canvas.width = 1242;
+      canvas.height = 1656;
+      var ctx = canvas.getContext('2d');
+      var start = performance.now();
+      try {
+        window.drawRealStyleCover(ctx, '测试标题文字',
+          { bg: ['#FBFAF4'], text: '#111111', accent: '#E6213D', second: '#FFEC47' },
+          { vi: 0, seed: 42, font: 'black' }, family);
+        results[family] = { success: true, time: Math.round(performance.now() - start) + 'ms' };
+      } catch (e) {
+        results[family] = { success: false, error: (e.message || '').slice(0, 60) };
+      }
+    }
+    console.table(results);
+    return results;
+  },
+
+  stats() {
+    var centerShapes = {};
+    if (window.CENTER_SHAPE_LIBRARY) {
+      Object.keys(window.CENTER_SHAPE_LIBRARY).forEach(function (f) {
+        centerShapes[f] = window.CENTER_SHAPE_LIBRARY[f].length;
+      });
+    }
+    var layouts = {};
+    if (window.REAL_STYLE_LAYOUTS) {
+      Object.keys(window.REAL_STYLE_LAYOUTS).forEach(function (f) {
+        layouts[f] = window.REAL_STYLE_LAYOUTS[f].length;
+      });
+    }
+    console.log('中央图形统计:', centerShapes, '(total: ' + Object.values(centerShapes).reduce(function(a,b){return a+b;},0) + ')');
+    console.log('Layout 统计:', layouts, '(total: ' + Object.values(layouts).reduce(function(a,b){return a+b;},0) + ')');
+    console.log('真实风格模式:', STATE.realStyleMode ? '✅ 开启' : '❌ 关闭 (legacy)');
+    console.log('Lib 模块: map/typography/center-shapes/layouts/decorations/renderer/random/stickers = 8 files');
+  },
+};
+
+console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / testAllFamilies() / stats()');
 }
 setupTabOrder();
 </script>
