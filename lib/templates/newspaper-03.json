@@ -1,0 +1,18 @@
+{
+  "templateId":"newspaper-03","styleFamily":"newspaper","name":"纯黑块+金黄文字+杂志标题版式",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#050505"},
+  "headerBar":{"y":0,"h":10,"color":"#C9A45C"},
+  "footerBar":{"y":1646,"h":10,"color":"#C9A45C"},
+  "titleBox":{"x":80,"y":380,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":140,"max":280,"weight":900,"color":"#F5F0E8","letterSpacing":-0.04},
+  "subTitleBox":{"x":120,"y":920,"w":1002,"h":100},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":76,"weight":400,"color":"rgba(245,240,232,0.60)"},
+  "footerBox":{"x":80,"y":1520,"w":1082,"h":60},
+  "footerFont":{"family":"\"Noto Sans SC\",sans-serif","min":22,"max":38,"weight":400,"color":"rgba(245,240,232,0.35)"},
+  "decorations":[
+    {"id":"np3-divider","type":"divider","layer":"behind","box":{"x":80,"y":900,"w":1082,"h":2},"color":"rgba(201,164,92,0.50)","lineWidth":2},
+    {"id":"np3-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":200,"w":130,"h":130},"color":"#C9A45C","rotation":-10,"label":"PREMIUM"},
+    {"id":"np3-badge","type":"badge","layer":"above","box":{"x":80,"y":120,"w":130,"h":42},"color":"#C9A45C","labelColor":"#050505","fontSize":16}
+  ]
+}

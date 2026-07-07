@@ -599,6 +599,40 @@ button{font-family:inherit}
     font-size: 14px;
   }
 }
+
+/* ===== 模板管理面板 ===== */
+.template-manager-toggle {
+  position: fixed; bottom: 20px; right: 20px; z-index: 999;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: #4F46E5; color: #fff; border: none; font-size: 20px;
+  cursor: pointer; box-shadow: 0 4px 12px rgba(79,70,229,0.35);
+  display: flex; align-items: center; justify-content: center;
+}
+.template-manager-panel {
+  position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh;
+  background: #fff; z-index: 1000; box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+  overflow-y: auto; padding: 20px; display: none;
+}
+.template-manager-panel.show { display: block; }
+.tm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.tm-header h2 { font-size: 18px; margin: 0; }
+.tm-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #6B7280; }
+.tm-family-group { margin-bottom: 16px; }
+.tm-family-title { font-size: 13px; font-weight: 700; color: #6B7280; text-transform: uppercase; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #F3F4F6; }
+.tm-template-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; margin-bottom: 4px; cursor: pointer; transition: background 0.15s; }
+.tm-template-item:hover { background: #F9FAFB; }
+.tm-template-item.active { background: #EEF2FF; border: 1px solid #C7D2FE; }
+.tm-thumb { width: 48px; height: 64px; border-radius: 4px; background: #F3F4F6; flex-shrink: 0; overflow: hidden; }
+.tm-thumb canvas { width: 100%; height: 100%; object-fit: cover; }
+.tm-info { flex: 1; min-width: 0; }
+.tm-name { font-size: 13px; font-weight: 600; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tm-meta { font-size: 11px; color: #9CA3AF; }
+.tm-del { background: none; border: 1px solid #FCA5A5; color: #EF4444; border-radius: 4px; padding: 2px 8px; font-size: 11px; cursor: pointer; flex-shrink: 0; }
+.tm-del:hover { background: #FEF2F2; }
+.tm-upload-area { border: 2px dashed #D1D5DB; border-radius: 8px; padding: 16px; text-align: center; margin-top: 12px; cursor: pointer; }
+.tm-upload-area:hover { border-color: #4F46E5; background: #F9FAFB; }
+.tm-upload-area p { font-size: 12px; color: #9CA3AF; margin: 4px 0 0 0; }
+.tm-stats { font-size: 11px; color: #9CA3AF; margin-top: 8px; text-align: center; }
 </style>
 </head>
 <body>
@@ -7411,8 +7445,101 @@ window.diagnose = {
 
 console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / testAllFamilies() / stats()');
 
+// ═══════════ 模板管理面板 ═══════════
+(function () {
+  var panel = document.getElementById('tmPanel');
+  var toggle = document.getElementById('tmToggle');
+  var close = document.getElementById('tmClose');
+  var list = document.getElementById('tmTemplateList');
+  var stats = document.getElementById('tmStats');
+  var fileInput = document.getElementById('tmFileInput');
+  var uploadArea = document.getElementById('tmUpload');
+  var pendingDiv = document.getElementById('tmPendingUploads');
+  var pendingFiles = [];
+
+  toggle.addEventListener('click', function () { panel.classList.toggle('show'); renderTemplateList(); });
+  close.addEventListener('click', function () { panel.classList.remove('show'); });
+  uploadArea.addEventListener('click', function () { fileInput.click(); });
+  fileInput.addEventListener('change', function () {
+    for (var i = 0; i < fileInput.files.length; i++) pendingFiles.push(fileInput.files[i]);
+    renderPendingUploads();
+    fileInput.value = '';
+  });
+
+  function renderPendingUploads() {
+    if (pendingFiles.length === 0) { pendingDiv.innerHTML = ''; return; }
+    var html = '<div style=\"font-size:12px;color:#6B7280;margin-bottom:4px\">📤 待提炼 (' + pendingFiles.length + ' 张):</div>';
+    pendingFiles.forEach(function (f, i) {
+      html += '<span style=\"display:inline-block;background:#EEF2FF;padding:2px 8px;border-radius:4px;font-size:11px;margin:2px\">' + f.name + ' <button onclick=\"this.parentElement.remove();pendingFiles.splice(' + i + ',1);renderPendingUploads()\" style=\"border:none;background:none;cursor:pointer;color:#EF4444\">✕</button></span>';
+    });
+    pendingDiv.innerHTML = html;
+  }
+
+  function renderTemplateList() {
+    var lib = window.TEMPLATE_LIBRARY || {};
+    var registry = window.TEMPLATE_REGISTRY || [];
+    var families = { handnote: '手绘便签', collage: '拼贴', comic: '漫画pop', newspaper: '报纸大字', minimal: '极简大字' };
+    var html = '';
+    var totalLoaded = 0;
+    Object.keys(families).forEach(function (fam) {
+      var famTemplates = registry.filter(function (id) { return id.indexOf(fam) === 0; });
+      if (famTemplates.length === 0) return;
+      html += '<div class=\"tm-family-group\"><div class=\"tm-family-title\">' + families[fam] + ' (' + famTemplates.length + ')</div>';
+      famTemplates.forEach(function (id) {
+        var tpl = lib[id];
+        var loaded = !!tpl;
+        if (loaded) totalLoaded++;
+        html += '<div class=\"tm-template-item' + (loaded ? '' : '') + '\">';
+        html += '<div class=\"tm-thumb\"><div style=\"width:48px;height:64px;display:flex;align-items:center;justify-content:center;font-size:18px\">' + (loaded ? '✅' : '⏳') + '</div></div>';
+        html += '<div class=\"tm-info\"><div class=\"tm-name\">' + (tpl ? tpl.name : id) + '</div><div class=\"tm-meta\">' + id + (loaded ? '' : ' (加载中...)') + '</div></div>';
+        html += '<button class=\"tm-del\" data-tpl-id=\"' + id + '\">移除</button>';
+        html += '</div>';
+      });
+      html += '</div>';
+    });
+    list.innerHTML = html || '<p style=\"color:#9CA3AF;font-size:13px\">暂无模板</p>';
+    stats.textContent = '已加载: ' + totalLoaded + ' / ' + registry.length + ' 个模板 | 5 个风格族';
+
+    // 绑定删除事件
+    list.querySelectorAll('.tm-del').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var id = btn.dataset.tplId;
+        if (confirm('确定要移除模板 ' + id + ' 吗？\n\n模板将从本地删除，下次生成不再出现。')) {
+          delete window.TEMPLATE_LIBRARY[id];
+          window.TEMPLATE_REGISTRY = window.TEMPLATE_REGISTRY.filter(function (x) { return x !== id; });
+          renderTemplateList();
+          showToast('已移除: ' + id + '（刷新后恢复，永久删除需提交代码）');
+        }
+      });
+    });
+  }
+
+  // 模板加载完成后自动刷新面板
+  window.onTemplatesLoaded = function () { if (panel.classList.contains('show')) renderTemplateList(); };
+  // 暴露给全局
+  window.renderTemplateList = renderTemplateList;
+  window.TM_PENDING_FILES = function () { return pendingFiles; };
+})();
+
 setupTabOrder();
 </script>
 
+<!-- ═══════════ 模板管理面板 ═══════════ -->
+<button class="template-manager-toggle" id="tmToggle" title="模板管理">📁</button>
+<div class="template-manager-panel" id="tmPanel">
+  <div class="tm-header">
+    <h2>📁 模板管理</h2>
+    <button class="tm-close" id="tmClose">✕</button>
+  </div>
+  <div class="tm-upload-area" id="tmUpload">
+    <span style="font-size:24px">📤</span>
+    <p>上传参考图（暂存）</p>
+    <input type="file" id="tmFileInput" accept="image/*" multiple style="display:none">
+  </div>
+  <div id="tmPendingUploads" style="margin:8px 0"></div>
+  <div id="tmTemplateList">加载中...</div>
+  <div class="tm-stats" id="tmStats"></div>
+</div>
 </body>
 </html>

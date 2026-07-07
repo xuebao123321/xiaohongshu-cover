@@ -1,0 +1,18 @@
+{
+  "templateId": "handnote-03",
+  "styleFamily": "handnote",
+  "name": "暖黄胶带+马克笔倾斜手写+咖啡涂鸦",
+  "canvas": [1242,1656],
+  "background": {"type":"solid","color":"#FDF6E9"},
+  "titleBox": {"x":100,"y":460,"w":1042,"h":540},
+  "titleFont": {"family":"\"ZCOOL QingKe HuangYou\",\"Noto Sans SC\",sans-serif","min":160,"max":320,"weight":400,"color":"#3A2E1A","letterSpacing":-0.03},
+  "subTitleBox": {"x":160,"y":1020,"w":920,"h":80},
+  "subTitleFont": {"family":"\"Noto Sans SC\",sans-serif","min":44,"max":88,"weight":400,"color":"rgba(58,46,26,0.70)"},
+  "decorations": [
+    {"id":"hn3-tape1","type":"tape","layer":"above","box":{"x":380,"y":240,"w":320,"h":38},"rotation":-4,"color":"rgba(240,220,180,0.55)"},
+    {"id":"hn3-tape2","type":"tape","layer":"above","box":{"x":620,"y":270,"w":240,"h":32},"rotation":3,"color":"rgba(235,215,170,0.45)"},
+    {"id":"hn3-circle","type":"handCircle","layer":"behind","box":{"x":450,"y":440,"w":300,"h":120},"color":"#C8A050","lineWidth":2.5,"dashed":true},
+    {"id":"hn3-doodle-coffee","type":"doodle","layer":"above","box":{"x":980,"y":1380,"w":120,"h":120},"doodleType":"coffee","color":"#8B6F47","lineWidth":2},
+    {"id":"hn3-emoji-thumb","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"👍","fontSize":100}
+  ]
+}
