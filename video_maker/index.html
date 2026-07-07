@@ -3705,27 +3705,23 @@ async function exportVideoOnly() {
     const targetH = VIDEO_STATE.outputResolution === '1080p' ? 1080 :
                      VIDEO_STATE.outputResolution === '720p' ? 720 : v.height;
 
+    const fps = 30;
+    const trimStart = VIDEO_STATE.trimStart || 0;
+    const trimEnd = VIDEO_STATE.trimEnd || v.duration;
+    const exportDuration = trimEnd - trimStart;
+    const totalFrames = Math.ceil(exportDuration * fps);
+    const frameIntervalMs = 1000 / fps; // ~33.3ms
+    console.log('[video_maker] 裁剪:', trimStart, '→', trimEnd, '总帧数:', totalFrames, '帧间隔:', frameIntervalMs.toFixed(1), 'ms');
+
+    // ══════ 视频帧处理: seek 到每一帧位置再 drawImage(不依赖实时播放) ══════
     const canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-    const stream = canvas.captureStream(30);
-    const codecOrder = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp9', 'video/webm'];
-    let mimeType = 'video/webm';
-    for (const c of codecOrder) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-    const isVideoMp4 = mimeType.startsWith('video/mp4');
-    console.log('[video_maker] 视频导出编码:', mimeType);
-
-    const recorder = new MediaRecorder(stream, { mimeType, videoBitsPerSecond: 8000000 });
-    const chunks = [];
-    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-    const done = new Promise(r => { recorder.onstop = r; });
-    recorder.start();
-
     const videoEl = document.createElement('video');
     videoEl.preload = 'auto';
-    videoEl.muted = true;
+    videoEl.muted = true; // 视频元素静音(音频单独处理)
     videoEl.playsInline = true;
     videoEl.src = v.objectUrl;
     videoEl.crossOrigin = 'anonymous';
@@ -3739,54 +3735,76 @@ async function exportVideoOnly() {
       videoEl.load();
     });
 
-    const trimStart = VIDEO_STATE.trimStart || 0;
-    const trimEnd = VIDEO_STATE.trimEnd || v.duration;
-    const exportDuration = trimEnd - trimStart;
-    const fps = 30;
-    const totalFrames = Math.ceil(exportDuration * fps);
-    console.log('[video_maker] 裁剪:', trimStart, '→', trimEnd, '总帧数:', totalFrames);
+    // ══════ 音频: 从原始文件解码,与视频帧同步播放 ══════
+    let audioCtx = null, audioSource = null, audioDest = null;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const arrayBuf = await v.file.arrayBuffer();
+      const audioBuffer = await audioCtx.decodeAudioData(arrayBuf.slice(0));
+      if (audioBuffer.duration > 0) {
+        audioSource = audioCtx.createBufferSource();
+        audioSource.buffer = audioBuffer;
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.value = 1.0;
+        audioSource.connect(gainNode);
+        audioDest = audioCtx.createMediaStreamDestination();
+        gainNode.connect(audioDest);
+        console.log('[video_maker] 音频轨道已解码,时长:', audioBuffer.duration.toFixed(1), 's');
+      }
+    } catch (e) {
+      console.warn('[video_maker] 音频解码失败,导出无声音视频:', e.message || e);
+    }
 
-    // Seek 到起始位置
-    videoEl.currentTime = trimStart;
-    await new Promise((resolve, reject) => {
-      videoEl.onseeked = resolve;
-      videoEl.onerror = reject;
-      // 超时保护
-      setTimeout(resolve, 5000);
-    });
+    // ══════ 构建混合流(视频+音频) ══════
+    const canvasStream = canvas.captureStream(fps);
+    let combinedStream = canvasStream;
+    if (audioDest) {
+      const videoTrack = canvasStream.getVideoTracks()[0];
+      const audioTracks = audioDest.stream.getAudioTracks();
+      if (audioTracks.length > 0) {
+        combinedStream = new MediaStream([videoTrack, ...audioTracks]);
+        console.log('[video_maker] 混合流包含音频轨道:', audioTracks.length);
+      }
+    }
 
-    // 开始播放!
-    videoEl.playbackRate = 1;
-    await videoEl.play();
-    console.log('[video_maker] 视频开始播放,当前时间:', videoEl.currentTime);
+    // ══════ MediaRecorder 录制 ══════
+    const codecOrder = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp9', 'video/webm'];
+    let mimeType = 'video/webm';
+    for (const c of codecOrder) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+    const isVideoMp4 = mimeType.startsWith('video/mp4');
+    console.log('[video_maker] 视频导出编码:', mimeType);
 
-    const startTime = performance.now();
-    let lastFrameTime = videoEl.currentTime;
+    const recorder = new MediaRecorder(combinedStream, { mimeType, videoBitsPerSecond: 8000000 });
+    const chunks = [];
+    recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    const recorderDone = new Promise(r => { recorder.onstop = r; });
 
+    // ══════ 启动录制: 先开始录制,再启动音频,再逐帧绘制 ══════
+    recorder.start();
+
+    // 音频在录制开始后启动,与视频帧时间对齐
+    if (audioSource && audioCtx) {
+      const now = audioCtx.currentTime;
+      audioSource.start(now, trimStart, exportDuration);
+      console.log('[video_maker] 音频开始播放,偏移:', trimStart, '时长:', exportDuration);
+    }
+
+    // ══════ 逐帧 seek + 绘制 + 精确等间隔 ══════
     for (let f = 0; f < totalFrames; f++) {
-      if (videoEl.ended || videoEl.currentTime >= trimEnd) {
-        console.log('[video_maker] 视频到达终点,帧:', f, '时间:', videoEl.currentTime);
-        break;
-      }
-
-      // 等待视频时间推进(每帧间隔 = 1/fps 秒)
+      const frameStart = performance.now();
       const targetTime = trimStart + (f / fps);
-      const waitStart = performance.now();
-      while (videoEl.currentTime < targetTime && !videoEl.ended) {
-        if (performance.now() - waitStart > 2000) {
-          console.warn('[video_maker] 等待视频超时,跳出');
-          break;
-        }
-        await sleep(5);
-      }
 
-      // 如果时间没有推进(视频卡住了),强制 seek
-      if (videoEl.currentTime === lastFrameTime && f > 5) {
+      // Seek 到目标时间
+      if (Math.abs(videoEl.currentTime - targetTime) > 0.01) {
         videoEl.currentTime = targetTime;
-        await new Promise(r => { videoEl.onseeked = r; setTimeout(r, 2000); });
+        await new Promise(r => {
+          const onSeeked = () => { videoEl.removeEventListener('seeked', onSeeked); r(); };
+          videoEl.addEventListener('seeked', onSeeked);
+          setTimeout(() => { videoEl.removeEventListener('seeked', onSeeked); r(); }, 3000);
+        });
       }
-      lastFrameTime = videoEl.currentTime;
 
+      // 绘制当前帧
       ctx.drawImage(videoEl, 0, 0, targetW, targetH);
 
       if (VIDEO_STATE.filter !== 'none') {
@@ -3794,12 +3812,23 @@ async function exportVideoOnly() {
       }
 
       STATE.exportProgress = Math.min(0.99, f / Math.max(1, totalFrames));
-      if (f % 10 === 0) updateExportUI();
+      if (f % 5 === 0) updateExportUI();
+
+      // 精确控制帧间隔,使 canvas.captureStream(fps) 均匀捕获
+      const elapsed = performance.now() - frameStart;
+      const waitMs = frameIntervalMs - elapsed;
+      if (waitMs > 2) {
+        await sleep(waitMs);
+      }
     }
 
-    videoEl.pause();
+    // ══════ 停止录制 ══════
+    if (audioSource) {
+      try { audioSource.stop(); } catch (e) { /* 可能已自然结束 */ }
+    }
     recorder.stop();
-    await done;
+    await recorderDone;
+    if (audioCtx) { audioCtx.close(); audioCtx = null; }
 
     const ext = isVideoMp4 ? 'mp4' : 'webm';
     const blob = new Blob(chunks, { type: mimeType });
