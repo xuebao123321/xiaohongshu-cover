@@ -6730,7 +6730,7 @@ window.sendToVideoMaker = sendToVideoMaker;
 
 function cardsInScope(scope, onlySelected) {
   const root = scope || document;
-  let cards = Array.from(root.querySelectorAll('.card-wrap[data-batch-index]'));
+  let cards = Array.from(root.querySelectorAll('.card-wrap[data-batch-index], .card-wrap[data-candidate-index]'));
   if (onlySelected) cards = cards.filter((card) => card.classList.contains('selected'));
   return cards;
 }
