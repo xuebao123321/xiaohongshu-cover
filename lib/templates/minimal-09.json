@@ -1,0 +1,13 @@
+{
+  "templateId":"minimal-09","styleFamily":"minimal","name":"米白底+超大无衬线+底部双线",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFDF7"},
+  "titleBox":{"x":50,"y":360,"w":1142,"h":740},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":200,"max":490,"weight":900,"color":"#111111","letterSpacing":-0.055},
+  "subTitleBox":{"x":100,"y":1140,"w":1042,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":34,"max":58,"weight":300,"color":"rgba(0,0,0,0.38)"},
+  "decorations":[
+    {"id":"mn9-line1","type":"thickLine","layer":"above","box":{"x":530,"y":1120,"w":180,"h":2},"color":"rgba(0,0,0,0.20)","lineWidth":2},
+    {"id":"mn9-line2","type":"thickLine","layer":"above","box":{"x":550,"y":1130,"w":140,"h":1},"color":"rgba(0,0,0,0.10)","lineWidth":1}
+  ]
+}

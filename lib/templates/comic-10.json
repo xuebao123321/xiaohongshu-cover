@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-10","styleFamily":"comic","name":"米黄底+黑色漫画框+粗体大字+惊叹号",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF8DC"},
+  "backgroundOverlay":{"type":"halftone","dotSize":2,"spacing":15,"color":"rgba(0,0,0,0.08)"},
+  "titleBox":{"x":70,"y":380,"w":1102,"h":520},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":160,"max":330,"weight":900,"color":"#000000","stroke":{"color":"#ED0108","width":4},"letterSpacing":-0.04},
+  "subTitleBox":{"x":150,"y":940,"w":940,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":82,"weight":700,"color":"#ED0108"},
+  "decorations":[
+    {"id":"cm10-bubble","type":"speechBubble","layer":"above","box":{"x":880,"y":160,"w":190,"h":110},"color":"#FFFFFF","strokeColor":"#000000","strokeWidth":3,"text":"必見!","textSize":34},
+    {"id":"cm10-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1280,"w":160,"h":160},"emoji":"💪","fontSize":140},
+    {"id":"cm10-sfx","type":"sfx","layer":"above","box":{"x":900,"y":1340,"w":180,"h":100},"text":"YEAH!","fontSize":74,"color":"#ED0108","rotation":6,"strokeColor":"#000000","strokeWidth":3},
+    {"id":"cm10-star","type":"starBurst","layer":"above","box":{"x":140,"y":190,"w":85,"h":85},"color":"#ED0108","strokeColor":"#000000","strokeWidth":2}
+  ]
+}

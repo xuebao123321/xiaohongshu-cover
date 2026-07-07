@@ -1,0 +1,13 @@
+{
+  "templateId":"minimal-10","styleFamily":"minimal","name":"粉白渐变+超大轻字+极简圆点",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF5F5"},
+  "focusShape":{"type":"circle","cx":621,"cy":800,"r":380,"color":"rgba(255,107,157,0.04)"},
+  "titleBox":{"x":60,"y":390,"w":1122,"h":700},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":200,"max":470,"weight":900,"color":"#111111","letterSpacing":-0.05},
+  "subTitleBox":{"x":100,"y":1130,"w":1042,"h":70},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":32,"max":56,"weight":300,"color":"rgba(0,0,0,0.35)"},
+  "decorations":[
+    {"id":"mn10-dot","type":"colorBlock","layer":"above","box":{"x":610,"y":1110,"w":20,"h":20},"color":"rgba(255,107,157,0.30)","shape":"circle"}
+  ]
+}

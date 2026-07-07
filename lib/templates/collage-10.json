@@ -1,0 +1,19 @@
+{
+  "templateId":"collage-10","styleFamily":"collage","name":"冷色都市+蓝白灰便签+几何三角+箭头群",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#E8EEF5"},
+  "titleBox":{"x":110,"y":370,"w":1022,"h":480},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#111111","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.04},
+  "subTitleBox":{"x":170,"y":900,"w":900,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":74,"weight":400,"color":"rgba(0,0,0,0.55)"},
+  "decorations":[
+    {"id":"cl10-note1","type":"tornNote","layer":"behind","box":{"x":280,"y":310,"w":680,"h":510},"color":"#FFFFFF","rotation":-3,"shadow":true},
+    {"id":"cl10-note2","type":"tornNote","layer":"behind","box":{"x":120,"y":400,"w":500,"h":450},"color":"#CFEAFE","rotation":-12,"shadow":true},
+    {"id":"cl10-note3","type":"tornNote","layer":"behind","box":{"x":520,"y":470,"w":520,"h":420},"color":"#CFDCFE","rotation":8,"shadow":true},
+    {"id":"cl10-block","type":"colorBlock","layer":"behind","box":{"x":70,"y":140,"w":100,"h":100},"color":"rgba(1,47,167,0.22)","shape":"rect"},
+    {"id":"cl10-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":210,"w":125,"h":125},"color":"#012FA7","rotation":-9,"label":"COOL"},
+    {"id":"cl10-arrow1","type":"arrow","layer":"above","box":{"x":200,"y":1080,"w":140,"h":45},"color":"#012FA7","lineWidth":2.5,"direction":"topLeft"},
+    {"id":"cl10-arrow2","type":"arrow","layer":"above","box":{"x":800,"y":1050,"w":150,"h":45},"color":"#F78DE9","lineWidth":2.5,"direction":"bottomRight"},
+    {"id":"cl10-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1420,"w":100,"h":100},"emoji":"💎","fontSize":90}
+  ]
+}

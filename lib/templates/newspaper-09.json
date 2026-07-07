@@ -1,0 +1,17 @@
+{
+  "templateId":"newspaper-09","styleFamily":"newspaper","name":"米黄底+衬线标题+双色块分割+经典印章",
+  "canvas":[1242,1656],
+  "background":{"type":"split","splitY":1050,"topColor":"#F5EBD8","bottomColor":"#E8E4D8"},
+  "bannerStrip":{"y":320,"h":420,"color":"rgba(200,37,44,0.05)"},
+  "titleBox":{"x":80,"y":340,"w":1082,"h":400},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":140,"max":280,"weight":900,"color":"#2D2520","letterSpacing":-0.03},
+  "subTitleBox":{"x":130,"y":800,"w":980,"h":90},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":74,"weight":400,"color":"rgba(45,37,32,0.60)"},
+  "footerBox":{"x":80,"y":1480,"w":1082,"h":60},
+  "footerFont":{"family":"\"Noto Serif SC\",serif","min":22,"max":36,"weight":400,"color":"rgba(45,37,32,0.40)"},
+  "decorations":[
+    {"id":"np9-divider","type":"divider","layer":"behind","box":{"x":80,"y":1050,"w":1082,"h":2},"color":"rgba(200,37,44,0.20)","lineWidth":2},
+    {"id":"np9-stamp","type":"stamp","layer":"above","box":{"x":1020,"y":200,"w":125,"h":125},"color":"#C8252C","rotation":-10,"label":"經典"},
+    {"id":"np9-badge","type":"badge","layer":"above","box":{"x":80,"y":120,"w":120,"h":40},"color":"#2D2520","labelColor":"#F5EBD8","fontSize":16}
+  ]
+}
