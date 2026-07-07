@@ -7541,6 +7541,15 @@ console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / 
     renderTemplateList();
   });
 
+  document.getElementById('tmApplyGenerate').addEventListener('click', function(){
+    panel.classList.remove('show');
+    // 触发自动生图
+    var genBtn = document.getElementById('btnGenerate');
+    if (genBtn) genBtn.click();
+    var filtered = getFilteredTemplateIds();
+    showToast('🎯 使用 ' + filtered.length + ' 个筛选模板生成');
+  });
+
   // ══════ 全局过滤函数（生图时调用）══════
   window.getFilteredTemplateIds = function(){
     var lib = window.TEMPLATE_LIBRARY || {};
@@ -7587,8 +7596,11 @@ setupTabOrder();
     <div class="tm-filter-row"><span class="tm-flabel">字体</span><div class="tm-fopts" id="fFont"></div></div>
     <div class="tm-filter-row"><span class="tm-flabel">结构</span><div class="tm-fopts" id="fStruct"></div></div>
     <div class="tm-filter-row"><span class="tm-flabel">密度</span><div class="tm-fopts" id="fDensity"></div></div>
-    <button id="tmResetFilter" style="margin-top:6px;font-size:11px;padding:2px 12px;border:1px solid #D1D5DB;border-radius:4px;background:#fff;cursor:pointer">重置筛选</button>
-    <span id="tmFilterCount" style="font-size:11px;color:#9CA3AF;margin-left:8px"></span>
+    <div style="display:flex;gap:6px;margin-top:6px;align-items:center">
+      <button id="tmResetFilter" style="font-size:11px;padding:4px 12px;border:1px solid #D1D5DB;border-radius:4px;background:#fff;cursor:pointer">重置</button>
+      <button id="tmApplyGenerate" style="font-size:11px;padding:4px 12px;border:none;border-radius:4px;background:#4F46E5;color:#fff;cursor:pointer;font-weight:600">🤖 应用并生图</button>
+      <span id="tmFilterCount" style="font-size:11px;color:#9CA3AF"></span>
+    </div>
   </div>
   <div id="tmTemplateList">加载中...</div>
   <div class="tm-stats" id="tmStats"></div>
