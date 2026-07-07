@@ -309,6 +309,9 @@ button{font-family:inherit}
   font-size:12px;color:#a8a098;font-weight:400;font-style:normal;
   letter-spacing:.5px;font-family:"Noto Sans SC","PingFang SC",sans-serif;
 }
+.fam-emoji{font-size:16px;flex-shrink:0;}
+.fam-count{font-size:10px;color:#9CA3AF;font-weight:400;background:#F3F4F6;padding:1px 6px;border-radius:8px;margin-left:2px;}
+.tab[data-real-family]{gap:2px;padding:9px 16px;font-size:13px;font-weight:600;}
 .s-tag{
   display:inline-block;padding:3px 9px;border-radius:4px;
   font-size:11px;font-weight:500;background:#f0ebe5;color:#7a7a7a;
@@ -798,28 +801,23 @@ button{font-family:inherit}
 
 <!-- ═══════════ 风格族勾选 ═══════════ -->
 <div class="tab-group">
-  <div class="label">风 格 模 板(默认全选,每种展示 5 张)</div>
+  <div class="label">风 格 族(默认全选,每族含多个模板)</div>
   <div class="tabs" id="familyTabs">
-    <button class="tab active" data-family="A">手账白底</button>
-    <button class="tab active" data-family="B">黄底提醒</button>
-    <button class="tab active" data-family="C">红色事件</button>
-    <button class="tab active" data-family="D">蓝绿信息</button>
-    <button class="tab active" data-family="E">极简金句</button>
-    <button class="tab active" data-family="F">复古胶片</button>
-    <button class="tab active" data-family="G">多巴胺</button>
-    <button class="tab active" data-family="H">酸性设计</button>
-    <button class="tab active" data-family="I">孟菲斯</button>
-    <button class="tab active" data-family="J">国风</button>
-    <button class="tab active" data-family="K">赛博朋克</button>
-    <button class="tab active" data-family="L">日系清新</button>
-    <button class="tab active" data-family="M">3D 渲染</button>
-    <button class="tab active" data-family="N">蒸汽波</button>
-    <button class="tab active" data-family="O">暗黑系</button>
-    <button class="tab active" data-family="P">像素风</button>
-    <button class="tab active" data-family="Q">极光渐变</button>
-    <button class="tab active" data-family="R">复古海报</button>
-    <button class="tab active" data-family="S">玻璃拟态</button>
-    <button class="tab active" data-family="T">卡通插画</button>
+    <button class="tab active" data-real-family="handnote">
+      <span class="fam-emoji">📝</span> 手绘便签 <span class="fam-count" id="count-handnote">12</span> 模板
+    </button>
+    <button class="tab active" data-real-family="collage">
+      <span class="fam-emoji">✂️</span> 拼贴 <span class="fam-count" id="count-collage">12</span> 模板
+    </button>
+    <button class="tab active" data-real-family="comic">
+      <span class="fam-emoji">💥</span> 漫画pop <span class="fam-count" id="count-comic">12</span> 模板
+    </button>
+    <button class="tab active" data-real-family="newspaper">
+      <span class="fam-emoji">📰</span> 报纸大字 <span class="fam-count" id="count-newspaper">12</span> 模板
+    </button>
+    <button class="tab active" data-real-family="minimal">
+      <span class="fam-emoji">◼️</span> 极简大字 <span class="fam-count" id="count-minimal">12</span> 模板
+    </button>
   </div>
 </div>
 
@@ -6121,13 +6119,16 @@ function generate() {
       c.innerHTML = '';
       const families = Array.from(STATE.families).sort();
       for (const fam of families) {
-        // section 标签
-        const lb = document.createElement('div');
+        var map = window.REAL_STYLE_MAP ? window.REAL_STYLE_MAP[fam] : null;
+        var rf = map ? map.realFamily : '';
+        var familyNames = {handnote:'手绘便签',collage:'拼贴collage',comic:'漫画pop',newspaper:'报纸大字',minimal:'极简大字'};
+        var familyEmoji = {handnote:'📝',collage:'✂️',comic:'💥',newspaper:'📰',minimal:'◼️'};
+        var lb = document.createElement('div');
         lb.className = 'section-label';
         lb.innerHTML =
-          '<span class="section-num">' + fam + '</span>' +
-          '<span>' + FAMILY_LABELS[fam].name + '</span>' +
-          '<span class="s-tag">' + FAMILY_LABELS[fam].tag + '</span>' +
+          '<span class="section-num">' + (familyEmoji[rf] || fam) + '</span>' +
+          '<span>' + (familyNames[rf] || FAMILY_LABELS[fam].name) + '</span>' +
+          '<span class="s-tag">' + fam + ' · ' + FAMILY_LABELS[fam].name + '</span>' +
           '<span class="section-desc">' + FAMILY_LABELS[fam].desc + '</span>';
         c.appendChild(lb);
         const g = document.createElement('div');
@@ -6928,21 +6929,56 @@ function updateGenerateButton() {
 
 // ═══════════ Tab 事件绑定 ═══════════
 
-document.querySelectorAll('#familyTabs .tab').forEach((btn) => {
-  btn.addEventListener('click', () => {
-    btn.classList.toggle('active');
-    const fam = btn.dataset.family;
-    if (STATE.families.has(fam)) STATE.families.delete(fam);
-    else STATE.families.add(fam);
-    if (STATE.families.size === 0) {
-      // 至少保留 1 个
-      STATE.families.add(fam);
+// ══════ 5族按钮 — 联动切换 A-T ══════
+var REAL_FAMILY_MEMBERS = {
+  handnote:  ['A','J','L'],
+  collage:   ['F','I','M','T'],
+  comic:     ['B','C','G','H','N','P'],
+  newspaper: ['D','K','O','R'],
+  minimal:   ['E','Q','S'],
+};
+document.querySelectorAll('#familyTabs .tab[data-real-family]').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var rf = btn.dataset.realFamily;
+    var members = REAL_FAMILY_MEMBERS[rf] || [];
+    // 判断当前是否全激活
+    var allActive = members.every(function(f){ return STATE.families.has(f); });
+    if (allActive) {
+      // 全部取消（至少留一个族）
+      var otherActive = Array.from(STATE.families).filter(function(f){ return members.indexOf(f) === -1; });
+      if (otherActive.length === 0) {
+        showToast('至少启用 1 个风格族');
+        return;
+      }
+      members.forEach(function(f){ STATE.families.delete(f); });
+      btn.classList.remove('active');
+    } else {
+      // 全部激活
+      members.forEach(function(f){ STATE.families.add(f); });
       btn.classList.add('active');
-      showToast('至少启用 1 个风格族');
     }
+    updateTemplateCounts();
     updateGenerateButton();
   });
 });
+
+function updateTemplateCounts() {
+  var reg = window.TEMPLATE_REGISTRY || [];
+  ['handnote','collage','comic','newspaper','minimal'].forEach(function(rf){
+    var el = document.getElementById('count-' + rf);
+    if (el) {
+      var count = reg.filter(function(id){ return id.indexOf(rf) === 0; }).length;
+      el.textContent = count || '?';
+    }
+  });
+}
+// 模板加载完成后更新计数
+window._origOnTemplatesLoaded = window.onTemplatesLoaded;
+window.onTemplatesLoaded = function(){
+  updateTemplateCounts();
+  if (window._origOnTemplatesLoaded) window._origOnTemplatesLoaded();
+};
+updateTemplateCounts();
 
 document.querySelectorAll('#fontTabs .tab').forEach((btn) => {
   btn.addEventListener('click', () => {
