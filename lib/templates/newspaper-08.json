@@ -1,17 +1,108 @@
 {
-  "templateId":"newspaper-08","styleFamily":"newspaper","name":"绿底白字+环保主题+标签式标题",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#E6FFF4"},
-  "bannerStrip":{"y":300,"h":440,"color":"rgba(34,178,107,0.06)"},
-  "titleBox":{"x":70,"y":320,"w":1102,"h":400},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":300,"weight":900,"color":"#111111","letterSpacing":-0.035},
-  "subTitleBox":{"x":120,"y":760,"w":1002,"h":100},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":76,"weight":400,"color":"rgba(0,0,0,0.55)"},
-  "footerBox":{"x":70,"y":1500,"w":1102,"h":60},
-  "footerFont":{"family":"\"Noto Sans SC\",sans-serif","min":22,"max":36,"weight":400,"color":"rgba(0,0,0,0.35)"},
-  "decorations":[
-    {"id":"np8-divider","type":"divider","layer":"behind","box":{"x":70,"y":730,"w":1102,"h":2},"color":"rgba(34,178,107,0.30)","lineWidth":2},
-    {"id":"np8-stamp","type":"stamp","layer":"above","box":{"x":1020,"y":190,"w":130,"h":130},"color":"#22B26B","rotation":-9,"label":"ECO"},
-    {"id":"np8-badge","type":"badge","layer":"above","box":{"x":70,"y":110,"w":120,"h":40},"color":"#22B26B","labelColor":"#FFFFFF","fontSize":16}
-  ]
+  "templateId": "newspaper-08",
+  "styleFamily": "newspaper",
+  "name": "绿底白字+环保主题+标签式标题",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#E6FFF4"
+  },
+  "bannerStrip": {
+    "y": 300,
+    "h": 440,
+    "color": "rgba(34,178,107,0.06)"
+  },
+  "titleBox": {
+    "x": 70,
+    "y": 320,
+    "w": 1102,
+    "h": 400
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 150,
+    "max": 300,
+    "weight": 900,
+    "color": "#111111",
+    "letterSpacing": -0.035
+  },
+  "subTitleBox": {
+    "x": 120,
+    "y": 760,
+    "w": 1002,
+    "h": 100
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 38,
+    "max": 76,
+    "weight": 400,
+    "color": "rgba(0,0,0,0.55)"
+  },
+  "footerBox": {
+    "x": 70,
+    "y": 1500,
+    "w": 1102,
+    "h": 60
+  },
+  "footerFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 22,
+    "max": 36,
+    "weight": 400,
+    "color": "rgba(0,0,0,0.35)"
+  },
+  "decorations": [
+    {
+      "id": "np8-divider",
+      "type": "divider",
+      "layer": "behind",
+      "box": {
+        "x": 70,
+        "y": 730,
+        "w": 1102,
+        "h": 2
+      },
+      "color": "rgba(34,178,107,0.30)",
+      "lineWidth": 2
+    },
+    {
+      "id": "np8-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 1020,
+        "y": 190,
+        "w": 130,
+        "h": 130
+      },
+      "color": "#22B26B",
+      "rotation": -9,
+      "label": "ECO"
+    },
+    {
+      "id": "np8-badge",
+      "type": "badge",
+      "layer": "above",
+      "box": {
+        "x": 70,
+        "y": 110,
+        "w": 120,
+        "h": 40
+      },
+      "color": "#22B26B",
+      "labelColor": "#FFFFFF",
+      "fontSize": 16
+    }
+  ],
+  "tags": {
+    "styleFamily": "newspaper",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "顶部",
+    "density": "标准"
+  }
 }

@@ -3,20 +3,140 @@
   "styleFamily": "comic",
   "name": "红色爆炸框+半色调+粗描边+拟声词",
   "source": "REFERENCE_IMAGES_ANALYSIS.md §5 风格族C漫画pop风",
-  "canvas": [1242, 1656],
-  "background": { "type": "solid", "color": "#ED0108" },
-  "backgroundOverlay": { "type": "halftone", "dotSize": 3, "spacing": 10, "color": "rgba(0,0,0,0.30)" },
-  "burstLines": { "count": 20, "from": {"x": 621, "y": 600}, "color": "rgba(255,255,255,0.40)", "lineWidth": 2, "innerR": 120, "outerR": 1000 },
-  "titleBox": { "x": 100, "y": 440, "w": 1042, "h": 500 },
-  "titleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 150, "max": 300, "weight": 900, "color": "#FFFFFF", "stroke": { "color": "#000000", "width": 5 }, "letterSpacing": -0.05 },
-  "subTitleBox": { "x": 180, "y": 980, "w": 880, "h": 80 },
-  "subTitleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 40, "max": 80, "weight": 700, "color": "#FFEC47" },
-  "decorations": [
-    { "id": "cm1-bubble", "type": "speechBubble", "layer": "above", "box": { "x": 880, "y": 180, "w": 200, "h": 120 }, "color": "#FFFFFF", "strokeColor": "#000000", "strokeWidth": 3, "text": "哇!", "textSize": 36 },
-    { "id": "cm1-emoji-fire", "type": "emoji", "layer": "above", "box": { "x": 80, "y": 1300, "w": 150, "h": 150 }, "emoji": "🔥", "fontSize": 130 },
-    { "id": "cm1-sfx-boom", "type": "sfx", "layer": "above", "box": { "x": 900, "y": 1350, "w": 200, "h": 120 }, "text": "BOOM!", "fontSize": 80, "color": "#FFEC47", "rotation": 8, "strokeColor": "#000000", "strokeWidth": 3 },
-    { "id": "cm1-starburst", "type": "starBurst", "layer": "above", "box": { "x": 150, "y": 200, "w": 80, "h": 80 }, "color": "#FFEC47", "strokeColor": "#000000", "strokeWidth": 2 }
+  "canvas": [
+    1242,
+    1656
   ],
-  "forbiddenDecorations": ["tinyDot", "thinLine", "smallDecor"],
-  "titleSafeRect": { "x": 60, "y": 400, "w": 1122, "h": 580 }
+  "background": {
+    "type": "solid",
+    "color": "#ED0108"
+  },
+  "backgroundOverlay": {
+    "type": "halftone",
+    "dotSize": 3,
+    "spacing": 10,
+    "color": "rgba(0,0,0,0.30)"
+  },
+  "burstLines": {
+    "count": 20,
+    "from": {
+      "x": 621,
+      "y": 600
+    },
+    "color": "rgba(255,255,255,0.40)",
+    "lineWidth": 2,
+    "innerR": 120,
+    "outerR": 1000
+  },
+  "titleBox": {
+    "x": 100,
+    "y": 440,
+    "w": 1042,
+    "h": 500
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 150,
+    "max": 300,
+    "weight": 900,
+    "color": "#FFFFFF",
+    "stroke": {
+      "color": "#000000",
+      "width": 5
+    },
+    "letterSpacing": -0.05
+  },
+  "subTitleBox": {
+    "x": 180,
+    "y": 980,
+    "w": 880,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 40,
+    "max": 80,
+    "weight": 700,
+    "color": "#FFEC47"
+  },
+  "decorations": [
+    {
+      "id": "cm1-bubble",
+      "type": "speechBubble",
+      "layer": "above",
+      "box": {
+        "x": 880,
+        "y": 180,
+        "w": 200,
+        "h": 120
+      },
+      "color": "#FFFFFF",
+      "strokeColor": "#000000",
+      "strokeWidth": 3,
+      "text": "哇!",
+      "textSize": 36
+    },
+    {
+      "id": "cm1-emoji-fire",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 80,
+        "y": 1300,
+        "w": 150,
+        "h": 150
+      },
+      "emoji": "🔥",
+      "fontSize": 130
+    },
+    {
+      "id": "cm1-sfx-boom",
+      "type": "sfx",
+      "layer": "above",
+      "box": {
+        "x": 900,
+        "y": 1350,
+        "w": 200,
+        "h": 120
+      },
+      "text": "BOOM!",
+      "fontSize": 80,
+      "color": "#FFEC47",
+      "rotation": 8,
+      "strokeColor": "#000000",
+      "strokeWidth": 3
+    },
+    {
+      "id": "cm1-starburst",
+      "type": "starBurst",
+      "layer": "above",
+      "box": {
+        "x": 150,
+        "y": 200,
+        "w": 80,
+        "h": 80
+      },
+      "color": "#FFEC47",
+      "strokeColor": "#000000",
+      "strokeWidth": 2
+    }
+  ],
+  "forbiddenDecorations": [
+    "tinyDot",
+    "thinLine",
+    "smallDecor"
+  ],
+  "titleSafeRect": {
+    "x": 60,
+    "y": 400,
+    "w": 1122,
+    "h": 580
+  },
+  "tags": {
+    "styleFamily": "comic",
+    "colorTone": "红色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "标准"
+  }
 }

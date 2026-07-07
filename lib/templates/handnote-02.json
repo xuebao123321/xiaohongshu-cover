@@ -3,24 +3,131 @@
   "styleFamily": "handnote",
   "name": "横线纸+马克笔重影+日期标签",
   "source": "REFERENCE_IMAGES_ANALYSIS.md §3 风格族A",
-  "canvas": [1242, 1656],
+  "canvas": [
+    1242,
+    1656
+  ],
   "background": {
     "type": "solid",
     "color": "#FAF8F5",
-    "overlay": { "type": "lines", "spacing": 28, "color": "rgba(0,0,0,0.05)", "lineWidth": 0.8 }
+    "overlay": {
+      "type": "lines",
+      "spacing": 28,
+      "color": "rgba(0,0,0,0.05)",
+      "lineWidth": 0.8
+    }
   },
-  "titleBox": { "x": 100, "y": 520, "w": 1042, "h": 480 },
-  "titleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 160, "max": 300, "weight": 900, "color": "#1A1A1A", "letterSpacing": -0.04 },
-  "subTitleBox": { "x": 160, "y": 1020, "w": 920, "h": 80 },
-  "subTitleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 44, "max": 90, "weight": 400, "color": "rgba(26,26,26,0.70)" },
-  "keywordBox": { "x": 100, "y": 410, "w": 400, "h": 90 },
-  "keywordFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 44, "max": 100, "weight": 700, "color": "#A8A098" },
+  "titleBox": {
+    "x": 100,
+    "y": 520,
+    "w": 1042,
+    "h": 480
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 160,
+    "max": 300,
+    "weight": 900,
+    "color": "#1A1A1A",
+    "letterSpacing": -0.04
+  },
+  "subTitleBox": {
+    "x": 160,
+    "y": 1020,
+    "w": 920,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 44,
+    "max": 90,
+    "weight": 400,
+    "color": "rgba(26,26,26,0.70)"
+  },
+  "keywordBox": {
+    "x": 100,
+    "y": 410,
+    "w": 400,
+    "h": 90
+  },
+  "keywordFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 44,
+    "max": 100,
+    "weight": 700,
+    "color": "#A8A098"
+  },
   "decorations": [
-    { "id": "hn2-tape", "type": "tape", "layer": "above", "box": { "x": 520, "y": 240, "w": 280, "h": 34 }, "rotation": 2, "color": "rgba(225,210,175,0.50)" },
-    { "id": "hn2-marker-ghost", "type": "markerGhost", "layer": "behind", "box": { "x": 98, "y": 518, "w": 1046, "h": 484 }, "color": "rgba(26,26,26,0.12)", "offsetX": 3, "offsetY": 2 },
-    { "id": "hn2-date-label", "type": "badge", "layer": "above", "box": { "x": 80, "y": 140, "w": 140, "h": 44 }, "color": "#A8A098", "labelColor": "#FFFFFF", "fontSize": 18 },
-    { "id": "hn2-emoji-book", "type": "emoji", "layer": "above", "box": { "x": 1040, "y": 1400, "w": 110, "h": 110 }, "emoji": "📖", "fontSize": 100 }
+    {
+      "id": "hn2-tape",
+      "type": "tape",
+      "layer": "above",
+      "box": {
+        "x": 520,
+        "y": 240,
+        "w": 280,
+        "h": 34
+      },
+      "rotation": 2,
+      "color": "rgba(225,210,175,0.50)"
+    },
+    {
+      "id": "hn2-marker-ghost",
+      "type": "markerGhost",
+      "layer": "behind",
+      "box": {
+        "x": 98,
+        "y": 518,
+        "w": 1046,
+        "h": 484
+      },
+      "color": "rgba(26,26,26,0.12)",
+      "offsetX": 3,
+      "offsetY": 2
+    },
+    {
+      "id": "hn2-date-label",
+      "type": "badge",
+      "layer": "above",
+      "box": {
+        "x": 80,
+        "y": 140,
+        "w": 140,
+        "h": 44
+      },
+      "color": "#A8A098",
+      "labelColor": "#FFFFFF",
+      "fontSize": 18
+    },
+    {
+      "id": "hn2-emoji-book",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 1040,
+        "y": 1400,
+        "w": 110,
+        "h": 110
+      },
+      "emoji": "📖",
+      "fontSize": 100
+    }
   ],
-  "forbiddenDecorations": ["tinyDot", "thinLine"],
-  "titleSafeRect": { "x": 60, "y": 480, "w": 1122, "h": 560 }
+  "forbiddenDecorations": [
+    "tinyDot",
+    "thinLine"
+  ],
+  "titleSafeRect": {
+    "x": 60,
+    "y": 480,
+    "w": 1122,
+    "h": 560
+  },
+  "tags": {
+    "styleFamily": "handnote",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "偏下",
+    "density": "标准"
+  }
 }

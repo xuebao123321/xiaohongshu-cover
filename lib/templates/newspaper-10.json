@@ -1,18 +1,121 @@
 {
-  "templateId":"newspaper-10","styleFamily":"newspaper","name":"深灰底+白字标题+金线分割+高端杂志",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#1A1A1A"},
-  "headerBar":{"y":0,"h":8,"color":"#C9A45C"},
-  "titleBox":{"x":70,"y":320,"w":1102,"h":460},
-  "titleFont":{"family":"\"Noto Serif SC\",serif","min":140,"max":280,"weight":900,"color":"#F5F0E8","letterSpacing":-0.03},
-  "subTitleBox":{"x":120,"y":840,"w":1002,"h":100},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":36,"max":72,"weight":400,"color":"rgba(245,240,232,0.55)"},
-  "footerBox":{"x":70,"y":1500,"w":1102,"h":60},
-  "footerFont":{"family":"\"Noto Sans SC\",sans-serif","min":22,"max":36,"weight":400,"color":"rgba(245,240,232,0.35)"},
-  "decorations":[
-    {"id":"np10-divider1","type":"divider","layer":"behind","box":{"x":70,"y":800,"w":1102,"h":1},"color":"rgba(201,164,92,0.40)","lineWidth":1.5},
-    {"id":"np10-divider2","type":"divider","layer":"behind","box":{"x":70,"y":1480,"w":1102,"h":1},"color":"rgba(201,164,92,0.25)","lineWidth":1},
-    {"id":"np10-stamp","type":"stamp","layer":"above","box":{"x":1020,"y":200,"w":130,"h":130},"color":"#C9A45C","rotation":-10,"label":"LUXE"},
-    {"id":"np10-badge","type":"badge","layer":"above","box":{"x":70,"y":110,"w":120,"h":40},"color":"#C9A45C","labelColor":"#1A1A1A","fontSize":16}
-  ]
+  "templateId": "newspaper-10",
+  "styleFamily": "newspaper",
+  "name": "深灰底+白字标题+金线分割+高端杂志",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#1A1A1A"
+  },
+  "headerBar": {
+    "y": 0,
+    "h": 8,
+    "color": "#C9A45C"
+  },
+  "titleBox": {
+    "x": 70,
+    "y": 320,
+    "w": 1102,
+    "h": 460
+  },
+  "titleFont": {
+    "family": "\"Noto Serif SC\",serif",
+    "min": 140,
+    "max": 280,
+    "weight": 900,
+    "color": "#F5F0E8",
+    "letterSpacing": -0.03
+  },
+  "subTitleBox": {
+    "x": 120,
+    "y": 840,
+    "w": 1002,
+    "h": 100
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 36,
+    "max": 72,
+    "weight": 400,
+    "color": "rgba(245,240,232,0.55)"
+  },
+  "footerBox": {
+    "x": 70,
+    "y": 1500,
+    "w": 1102,
+    "h": 60
+  },
+  "footerFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 22,
+    "max": 36,
+    "weight": 400,
+    "color": "rgba(245,240,232,0.35)"
+  },
+  "decorations": [
+    {
+      "id": "np10-divider1",
+      "type": "divider",
+      "layer": "behind",
+      "box": {
+        "x": 70,
+        "y": 800,
+        "w": 1102,
+        "h": 1
+      },
+      "color": "rgba(201,164,92,0.40)",
+      "lineWidth": 1.5
+    },
+    {
+      "id": "np10-divider2",
+      "type": "divider",
+      "layer": "behind",
+      "box": {
+        "x": 70,
+        "y": 1480,
+        "w": 1102,
+        "h": 1
+      },
+      "color": "rgba(201,164,92,0.25)",
+      "lineWidth": 1
+    },
+    {
+      "id": "np10-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 1020,
+        "y": 200,
+        "w": 130,
+        "h": 130
+      },
+      "color": "#C9A45C",
+      "rotation": -10,
+      "label": "LUXE"
+    },
+    {
+      "id": "np10-badge",
+      "type": "badge",
+      "layer": "above",
+      "box": {
+        "x": 70,
+        "y": 110,
+        "w": 120,
+        "h": 40
+      },
+      "color": "#C9A45C",
+      "labelColor": "#1A1A1A",
+      "fontSize": 16
+    }
+  ],
+  "tags": {
+    "styleFamily": "newspaper",
+    "colorTone": "暗黑",
+    "fontStyle": "衬线",
+    "structure": "顶部",
+    "density": "标准"
+  }
 }

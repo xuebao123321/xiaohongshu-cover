@@ -1,13 +1,70 @@
 {
-  "templateId":"minimal-07","styleFamily":"minimal","name":"极淡蓝底+细长胶囊形+顶部对齐",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#F4F7FF"},
-  "focusShape":{"type":"block","x":0,"y":0,"w":1242,"h":8,"color":"rgba(38,119,222,0.20)"},
-  "titleBox":{"x":80,"y":280,"w":1082,"h":720},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":190,"max":460,"weight":900,"color":"#111111","letterSpacing":-0.05},
-  "subTitleBox":{"x":120,"y":1040,"w":1002,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":34,"max":60,"weight":300,"color":"rgba(0,0,0,0.40)"},
-  "decorations":[
-    {"id":"mn7-pill","type":"colorBlock","layer":"behind","box":{"x":240,"y":300,"w":760,"h":680},"color":"rgba(38,119,222,0.04)","shape":"pill"}
-  ]
+  "templateId": "minimal-07",
+  "styleFamily": "minimal",
+  "name": "极淡蓝底+细长胶囊形+顶部对齐",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#F4F7FF"
+  },
+  "focusShape": {
+    "type": "block",
+    "x": 0,
+    "y": 0,
+    "w": 1242,
+    "h": 8,
+    "color": "rgba(38,119,222,0.20)"
+  },
+  "titleBox": {
+    "x": 80,
+    "y": 280,
+    "w": 1082,
+    "h": 720
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 190,
+    "max": 460,
+    "weight": 900,
+    "color": "#111111",
+    "letterSpacing": -0.05
+  },
+  "subTitleBox": {
+    "x": 120,
+    "y": 1040,
+    "w": 1002,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 34,
+    "max": 60,
+    "weight": 300,
+    "color": "rgba(0,0,0,0.40)"
+  },
+  "decorations": [
+    {
+      "id": "mn7-pill",
+      "type": "colorBlock",
+      "layer": "behind",
+      "box": {
+        "x": 240,
+        "y": 300,
+        "w": 760,
+        "h": 680
+      },
+      "color": "rgba(38,119,222,0.04)",
+      "shape": "pill"
+    }
+  ],
+  "tags": {
+    "styleFamily": "minimal",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "顶部",
+    "density": "极简"
+  }
 }

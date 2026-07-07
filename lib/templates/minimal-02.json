@@ -3,14 +3,71 @@
   "styleFamily": "minimal",
   "name": "超大圆形底+纯黑大字",
   "source": "REFERENCE_IMAGES_ANALYSIS.md §7 风格族E",
-  "canvas": [1242, 1656],
-  "background": { "type": "solid", "color": "#F6FFF9" },
-  "focusShape": { "type": "circle", "cx": 621, "cy": 820, "r": 420, "color": "rgba(42,182,115,0.08)" },
-  "titleBox": { "x": 80, "y": 420, "w": 1082, "h": 680 },
-  "titleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 180, "max": 440, "weight": 900, "color": "#111111", "letterSpacing": -0.05 },
-  "subTitleBox": { "x": 120, "y": 1140, "w": 1002, "h": 60 },
-  "subTitleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 34, "max": 60, "weight": 300, "color": "rgba(0,0,0,0.40)" },
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#F6FFF9"
+  },
+  "focusShape": {
+    "type": "circle",
+    "cx": 621,
+    "cy": 820,
+    "r": 420,
+    "color": "rgba(42,182,115,0.08)"
+  },
+  "titleBox": {
+    "x": 80,
+    "y": 420,
+    "w": 1082,
+    "h": 680
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 180,
+    "max": 440,
+    "weight": 900,
+    "color": "#111111",
+    "letterSpacing": -0.05
+  },
+  "subTitleBox": {
+    "x": 120,
+    "y": 1140,
+    "w": 1002,
+    "h": 60
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 34,
+    "max": 60,
+    "weight": 300,
+    "color": "rgba(0,0,0,0.40)"
+  },
   "decorations": [],
-  "forbiddenDecorations": ["tape", "stamp", "emoji", "doodle", "dot", "thinLine", "badge", "bubble", "thickLine"],
-  "titleSafeRect": { "x": 60, "y": 380, "w": 1122, "h": 760 }
+  "forbiddenDecorations": [
+    "tape",
+    "stamp",
+    "emoji",
+    "doodle",
+    "dot",
+    "thinLine",
+    "badge",
+    "bubble",
+    "thickLine"
+  ],
+  "titleSafeRect": {
+    "x": 60,
+    "y": 380,
+    "w": 1122,
+    "h": 760
+  },
+  "tags": {
+    "styleFamily": "minimal",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "极简"
+  }
 }

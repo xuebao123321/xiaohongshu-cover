@@ -1,17 +1,136 @@
 {
-  "templateId":"collage-11","styleFamily":"collage","name":"粉紫梦幻+三层渐变纸+星星印章+闪光",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#FCE7FF"},
-  "titleBox":{"x":120,"y":380,"w":1000,"h":470},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#2D1040","stroke":{"color":"#FFFFFF","width":3},"letterSpacing":-0.03},
-  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(45,16,64,0.55)"},
-  "decorations":[
-    {"id":"cl11-note1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#F5D0FF","rotation":-3,"shadow":true},
-    {"id":"cl11-note2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#FFD0F0","rotation":-12,"shadow":true},
-    {"id":"cl11-note3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#D0D0FF","rotation":9,"shadow":true},
-    {"id":"cl11-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#9B5DE5","rotation":-10,"label":"DREAM"},
-    {"id":"cl11-arrow","type":"arrow","layer":"above","box":{"x":800,"y":1060,"w":150,"h":50},"color":"#9B5DE5","lineWidth":2.5,"direction":"bottomRight"},
-    {"id":"cl11-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"🌟","fontSize":100}
-  ]
+  "templateId": "collage-11",
+  "styleFamily": "collage",
+  "name": "粉紫梦幻+三层渐变纸+星星印章+闪光",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#FCE7FF"
+  },
+  "titleBox": {
+    "x": 120,
+    "y": 380,
+    "w": 1000,
+    "h": 470
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 135,
+    "max": 255,
+    "weight": 900,
+    "color": "#2D1040",
+    "stroke": {
+      "color": "#FFFFFF",
+      "width": 3
+    },
+    "letterSpacing": -0.03
+  },
+  "subTitleBox": {
+    "x": 180,
+    "y": 900,
+    "w": 880,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 38,
+    "max": 72,
+    "weight": 400,
+    "color": "rgba(45,16,64,0.55)"
+  },
+  "decorations": [
+    {
+      "id": "cl11-note1",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 260,
+        "y": 300,
+        "w": 680,
+        "h": 500
+      },
+      "color": "#F5D0FF",
+      "rotation": -3,
+      "shadow": true
+    },
+    {
+      "id": "cl11-note2",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 100,
+        "y": 400,
+        "w": 480,
+        "h": 440
+      },
+      "color": "#FFD0F0",
+      "rotation": -12,
+      "shadow": true
+    },
+    {
+      "id": "cl11-note3",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 540,
+        "y": 460,
+        "w": 500,
+        "h": 420
+      },
+      "color": "#D0D0FF",
+      "rotation": 9,
+      "shadow": true
+    },
+    {
+      "id": "cl11-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 980,
+        "y": 200,
+        "w": 130,
+        "h": 130
+      },
+      "color": "#9B5DE5",
+      "rotation": -10,
+      "label": "DREAM"
+    },
+    {
+      "id": "cl11-arrow",
+      "type": "arrow",
+      "layer": "above",
+      "box": {
+        "x": 800,
+        "y": 1060,
+        "w": 150,
+        "h": 50
+      },
+      "color": "#9B5DE5",
+      "lineWidth": 2.5,
+      "direction": "bottomRight"
+    },
+    {
+      "id": "cl11-emoji",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 80,
+        "y": 1400,
+        "w": 110,
+        "h": 110
+      },
+      "emoji": "🌟",
+      "fontSize": 100
+    }
+  ],
+  "tags": {
+    "styleFamily": "collage",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "丰富"
+  }
 }

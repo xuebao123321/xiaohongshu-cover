@@ -1,15 +1,103 @@
 {
-  "templateId":"handnote-06","styleFamily":"handnote","name":"粉彩便签+花朵贴纸+少女手账",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#FFF2F6"},
-  "titleBox":{"x":100,"y":480,"w":1042,"h":500},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":300,"weight":700,"color":"#222222","letterSpacing":-0.03},
-  "subTitleBox":{"x":160,"y":1020,"w":920,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":400,"color":"rgba(34,34,34,0.60)"},
-  "decorations":[
-    {"id":"hn6-tape-pink","type":"tape","layer":"above","box":{"x":440,"y":260,"w":260,"h":32},"rotation":3,"color":"rgba(255,184,200,0.45)"},
-    {"id":"hn6-circle","type":"handCircle","layer":"behind","box":{"x":460,"y":460,"w":280,"h":100},"color":"#FFB8C8","lineWidth":2,"dashed":true},
-    {"id":"hn6-emoji-flower","type":"emoji","layer":"above","box":{"x":80,"y":1380,"w":120,"h":120},"emoji":"🌸","fontSize":110},
-    {"id":"hn6-doodle-heart","type":"doodle","layer":"above","box":{"x":1000,"y":1400,"w":90,"h":90},"doodleType":"star","color":"#FFB8C8","lineWidth":1.5}
-  ]
+  "templateId": "handnote-06",
+  "styleFamily": "handnote",
+  "name": "粉彩便签+花朵贴纸+少女手账",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#FFF2F6"
+  },
+  "titleBox": {
+    "x": 100,
+    "y": 480,
+    "w": 1042,
+    "h": 500
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 150,
+    "max": 300,
+    "weight": 700,
+    "color": "#222222",
+    "letterSpacing": -0.03
+  },
+  "subTitleBox": {
+    "x": 160,
+    "y": 1020,
+    "w": 920,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 40,
+    "max": 80,
+    "weight": 400,
+    "color": "rgba(34,34,34,0.60)"
+  },
+  "decorations": [
+    {
+      "id": "hn6-tape-pink",
+      "type": "tape",
+      "layer": "above",
+      "box": {
+        "x": 440,
+        "y": 260,
+        "w": 260,
+        "h": 32
+      },
+      "rotation": 3,
+      "color": "rgba(255,184,200,0.45)"
+    },
+    {
+      "id": "hn6-circle",
+      "type": "handCircle",
+      "layer": "behind",
+      "box": {
+        "x": 460,
+        "y": 460,
+        "w": 280,
+        "h": 100
+      },
+      "color": "#FFB8C8",
+      "lineWidth": 2,
+      "dashed": true
+    },
+    {
+      "id": "hn6-emoji-flower",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 80,
+        "y": 1380,
+        "w": 120,
+        "h": 120
+      },
+      "emoji": "🌸",
+      "fontSize": 110
+    },
+    {
+      "id": "hn6-doodle-heart",
+      "type": "doodle",
+      "layer": "above",
+      "box": {
+        "x": 1000,
+        "y": 1400,
+        "w": 90,
+        "h": 90
+      },
+      "doodleType": "star",
+      "color": "#FFB8C8",
+      "lineWidth": 1.5
+    }
+  ],
+  "tags": {
+    "styleFamily": "handnote",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "标准"
+  }
 }

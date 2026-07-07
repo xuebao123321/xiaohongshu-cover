@@ -1,11 +1,55 @@
 {
-  "templateId":"minimal-06","styleFamily":"minimal","name":"渐变色底+超轻量大字+全屏出血",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#FFF4D6"},
-  "focusShape":{"type":"circle","cx":621,"cy":800,"r":500,"color":"rgba(255,193,6,0.06)"},
-  "titleBox":{"x":40,"y":340,"w":1162,"h":780},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":210,"max":500,"weight":900,"color":"#111111","letterSpacing":-0.055},
-  "subTitleBox":{"x":100,"y":1160,"w":1042,"h":60},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":32,"max":56,"weight":300,"color":"rgba(0,0,0,0.35)"},
-  "decorations":[]
+  "templateId": "minimal-06",
+  "styleFamily": "minimal",
+  "name": "渐变色底+超轻量大字+全屏出血",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#FFF4D6"
+  },
+  "focusShape": {
+    "type": "circle",
+    "cx": 621,
+    "cy": 800,
+    "r": 500,
+    "color": "rgba(255,193,6,0.06)"
+  },
+  "titleBox": {
+    "x": 40,
+    "y": 340,
+    "w": 1162,
+    "h": 780
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 210,
+    "max": 500,
+    "weight": 900,
+    "color": "#111111",
+    "letterSpacing": -0.055
+  },
+  "subTitleBox": {
+    "x": 100,
+    "y": 1160,
+    "w": 1042,
+    "h": 60
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 32,
+    "max": 56,
+    "weight": 300,
+    "color": "rgba(0,0,0,0.35)"
+  },
+  "decorations": [],
+  "tags": {
+    "styleFamily": "minimal",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "顶部",
+    "density": "极简"
+  }
 }

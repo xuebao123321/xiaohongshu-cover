@@ -1,17 +1,120 @@
 {
-  "templateId":"handnote-04","styleFamily":"handnote","name":"蓝白横线学习笔记+荧光笔标注",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#E8EEF5","overlay":{"type":"lines","spacing":28,"color":"rgba(0,0,0,0.05)","lineWidth":0.8}},
-  "titleBox":{"x":100,"y":500,"w":1042,"h":500},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":160,"max":310,"weight":900,"color":"#1E3A52","letterSpacing":-0.035},
-  "subTitleBox":{"x":160,"y":1040,"w":920,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":84,"weight":400,"color":"rgba(30,58,82,0.65)"},
-  "keywordBox":{"x":100,"y":400,"w":350,"h":80},
-  "keywordFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":100,"weight":700,"color":"#5D8CB8"},
-  "decorations":[
-    {"id":"hn4-tape","type":"tape","layer":"above","box":{"x":480,"y":260,"w":280,"h":34},"rotation":2,"color":"rgba(200,215,230,0.50)"},
-    {"id":"hn4-highlighter-blue","type":"highlighter","layer":"behind","box":{"x":140,"y":720,"w":960,"h":52},"color":"rgba(93,140,184,0.30)"},
-    {"id":"hn4-doodle-lightbulb","type":"doodle","layer":"above","box":{"x":1020,"y":1400,"w":100,"h":100},"doodleType":"star","color":"#5D8CB8","lineWidth":1.5},
-    {"id":"hn4-emoji-pin","type":"emoji","layer":"above","box":{"x":70,"y":1420,"w":100,"h":100},"emoji":"📌","fontSize":90}
-  ]
+  "templateId": "handnote-04",
+  "styleFamily": "handnote",
+  "name": "蓝白横线学习笔记+荧光笔标注",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#E8EEF5",
+    "overlay": {
+      "type": "lines",
+      "spacing": 28,
+      "color": "rgba(0,0,0,0.05)",
+      "lineWidth": 0.8
+    }
+  },
+  "titleBox": {
+    "x": 100,
+    "y": 500,
+    "w": 1042,
+    "h": 500
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 160,
+    "max": 310,
+    "weight": 900,
+    "color": "#1E3A52",
+    "letterSpacing": -0.035
+  },
+  "subTitleBox": {
+    "x": 160,
+    "y": 1040,
+    "w": 920,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 42,
+    "max": 84,
+    "weight": 400,
+    "color": "rgba(30,58,82,0.65)"
+  },
+  "keywordBox": {
+    "x": 100,
+    "y": 400,
+    "w": 350,
+    "h": 80
+  },
+  "keywordFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 42,
+    "max": 100,
+    "weight": 700,
+    "color": "#5D8CB8"
+  },
+  "decorations": [
+    {
+      "id": "hn4-tape",
+      "type": "tape",
+      "layer": "above",
+      "box": {
+        "x": 480,
+        "y": 260,
+        "w": 280,
+        "h": 34
+      },
+      "rotation": 2,
+      "color": "rgba(200,215,230,0.50)"
+    },
+    {
+      "id": "hn4-highlighter-blue",
+      "type": "highlighter",
+      "layer": "behind",
+      "box": {
+        "x": 140,
+        "y": 720,
+        "w": 960,
+        "h": 52
+      },
+      "color": "rgba(93,140,184,0.30)"
+    },
+    {
+      "id": "hn4-doodle-lightbulb",
+      "type": "doodle",
+      "layer": "above",
+      "box": {
+        "x": 1020,
+        "y": 1400,
+        "w": 100,
+        "h": 100
+      },
+      "doodleType": "star",
+      "color": "#5D8CB8",
+      "lineWidth": 1.5
+    },
+    {
+      "id": "hn4-emoji-pin",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 70,
+        "y": 1420,
+        "w": 100,
+        "h": 100
+      },
+      "emoji": "📌",
+      "fontSize": 90
+    }
+  ],
+  "tags": {
+    "styleFamily": "handnote",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "标准"
+  }
 }

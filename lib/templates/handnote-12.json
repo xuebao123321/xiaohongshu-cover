@@ -1,15 +1,102 @@
 {
-  "templateId":"handnote-12","styleFamily":"handnote","name":"橙黄暖调+双胶带+太阳涂鸦+手写体",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#FFF7E8"},
-  "titleBox":{"x":100,"y":450,"w":1042,"h":510},
-  "titleFont":{"family":"\"ZCOOL QingKe HuangYou\",\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":400,"color":"#5D3A00","letterSpacing":-0.025},
-  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":78,"weight":400,"color":"rgba(93,58,0,0.60)"},
-  "decorations":[
-    {"id":"hn12-tape1","type":"tape","layer":"above","box":{"x":380,"y":230,"w":300,"h":34},"rotation":-4,"color":"rgba(255,184,80,0.45)"},
-    {"id":"hn12-tape2","type":"tape","layer":"above","box":{"x":600,"y":250,"w":260,"h":30},"rotation":3,"color":"rgba(255,200,120,0.40)"},
-    {"id":"hn12-doodle-sun","type":"doodle","layer":"above","box":{"x":1000,"y":1380,"w":110,"h":110},"doodleType":"star","color":"#FFB840","lineWidth":2},
-    {"id":"hn12-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1400,"w":100,"h":100},"emoji":"☀️","fontSize":90}
-  ]
+  "templateId": "handnote-12",
+  "styleFamily": "handnote",
+  "name": "橙黄暖调+双胶带+太阳涂鸦+手写体",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#FFF7E8"
+  },
+  "titleBox": {
+    "x": 100,
+    "y": 450,
+    "w": 1042,
+    "h": 510
+  },
+  "titleFont": {
+    "family": "\"ZCOOL QingKe HuangYou\",\"Noto Sans SC\",sans-serif",
+    "min": 150,
+    "max": 290,
+    "weight": 400,
+    "color": "#5D3A00",
+    "letterSpacing": -0.025
+  },
+  "subTitleBox": {
+    "x": 160,
+    "y": 1000,
+    "w": 920,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 40,
+    "max": 78,
+    "weight": 400,
+    "color": "rgba(93,58,0,0.60)"
+  },
+  "decorations": [
+    {
+      "id": "hn12-tape1",
+      "type": "tape",
+      "layer": "above",
+      "box": {
+        "x": 380,
+        "y": 230,
+        "w": 300,
+        "h": 34
+      },
+      "rotation": -4,
+      "color": "rgba(255,184,80,0.45)"
+    },
+    {
+      "id": "hn12-tape2",
+      "type": "tape",
+      "layer": "above",
+      "box": {
+        "x": 600,
+        "y": 250,
+        "w": 260,
+        "h": 30
+      },
+      "rotation": 3,
+      "color": "rgba(255,200,120,0.40)"
+    },
+    {
+      "id": "hn12-doodle-sun",
+      "type": "doodle",
+      "layer": "above",
+      "box": {
+        "x": 1000,
+        "y": 1380,
+        "w": 110,
+        "h": 110
+      },
+      "doodleType": "star",
+      "color": "#FFB840",
+      "lineWidth": 2
+    },
+    {
+      "id": "hn12-emoji",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 70,
+        "y": 1400,
+        "w": 100,
+        "h": 100
+      },
+      "emoji": "☀️",
+      "fontSize": 90
+    }
+  ],
+  "tags": {
+    "styleFamily": "handnote",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "标准"
+  }
 }

@@ -1,19 +1,162 @@
 {
-  "templateId":"collage-03","styleFamily":"collage","name":"纯白清新多层色块+便签+手绘箭头",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#FFFFFF"},
-  "titleBox":{"x":120,"y":400,"w":1002,"h":480},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":270,"weight":900,"color":"#111111","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.03},
-  "subTitleBox":{"x":180,"y":920,"w":880,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":400,"color":"rgba(0,0,0,0.60)"},
-  "decorations":[
-    {"id":"cl3-note-y","type":"tornNote","layer":"behind","box":{"x":320,"y":320,"w":640,"h":500},"color":"#FFE082","rotation":-6,"shadow":true},
-    {"id":"cl3-note-p","type":"tornNote","layer":"behind","box":{"x":140,"y":420,"w":480,"h":420},"color":"#FFB8C8","rotation":-15,"shadow":true},
-    {"id":"cl3-block-g","type":"colorBlock","layer":"behind","box":{"x":80,"y":140,"w":100,"h":100},"color":"rgba(168,216,144,0.35)","shape":"circle"},
-    {"id":"cl3-block-r","type":"colorBlock","layer":"behind","box":{"x":1050,"y":850,"w":100,"h":80},"color":"rgba(255,99,51,0.25)","shape":"rect"},
-    {"id":"cl3-stamp","type":"stamp","layer":"above","box":{"x":980,"y":240,"w":125,"h":125},"color":"#FF6333","rotation":-7,"label":"NEW"},
-    {"id":"cl3-arrow-left","type":"arrow","layer":"above","box":{"x":200,"y":1100,"w":140,"h":50},"color":"#88C0BC","lineWidth":2.5,"direction":"topLeft"},
-    {"id":"cl3-arrow-right","type":"arrow","layer":"above","box":{"x":800,"y":1080,"w":160,"h":50},"color":"#A890D0","lineWidth":2.5,"direction":"bottomRight"},
-    {"id":"cl3-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1420,"w":100,"h":100},"emoji":"💡","fontSize":90}
-  ]
+  "templateId": "collage-03",
+  "styleFamily": "collage",
+  "name": "纯白清新多层色块+便签+手绘箭头",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#FFFFFF"
+  },
+  "titleBox": {
+    "x": 120,
+    "y": 400,
+    "w": 1002,
+    "h": 480
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 140,
+    "max": 270,
+    "weight": 900,
+    "color": "#111111",
+    "stroke": {
+      "color": "#FFFFFF",
+      "width": 4
+    },
+    "letterSpacing": -0.03
+  },
+  "subTitleBox": {
+    "x": 180,
+    "y": 920,
+    "w": 880,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 40,
+    "max": 80,
+    "weight": 400,
+    "color": "rgba(0,0,0,0.60)"
+  },
+  "decorations": [
+    {
+      "id": "cl3-note-y",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 320,
+        "y": 320,
+        "w": 640,
+        "h": 500
+      },
+      "color": "#FFE082",
+      "rotation": -6,
+      "shadow": true
+    },
+    {
+      "id": "cl3-note-p",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 140,
+        "y": 420,
+        "w": 480,
+        "h": 420
+      },
+      "color": "#FFB8C8",
+      "rotation": -15,
+      "shadow": true
+    },
+    {
+      "id": "cl3-block-g",
+      "type": "colorBlock",
+      "layer": "behind",
+      "box": {
+        "x": 80,
+        "y": 140,
+        "w": 100,
+        "h": 100
+      },
+      "color": "rgba(168,216,144,0.35)",
+      "shape": "circle"
+    },
+    {
+      "id": "cl3-block-r",
+      "type": "colorBlock",
+      "layer": "behind",
+      "box": {
+        "x": 1050,
+        "y": 850,
+        "w": 100,
+        "h": 80
+      },
+      "color": "rgba(255,99,51,0.25)",
+      "shape": "rect"
+    },
+    {
+      "id": "cl3-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 980,
+        "y": 240,
+        "w": 125,
+        "h": 125
+      },
+      "color": "#FF6333",
+      "rotation": -7,
+      "label": "NEW"
+    },
+    {
+      "id": "cl3-arrow-left",
+      "type": "arrow",
+      "layer": "above",
+      "box": {
+        "x": 200,
+        "y": 1100,
+        "w": 140,
+        "h": 50
+      },
+      "color": "#88C0BC",
+      "lineWidth": 2.5,
+      "direction": "topLeft"
+    },
+    {
+      "id": "cl3-arrow-right",
+      "type": "arrow",
+      "layer": "above",
+      "box": {
+        "x": 800,
+        "y": 1080,
+        "w": 160,
+        "h": 50
+      },
+      "color": "#A890D0",
+      "lineWidth": 2.5,
+      "direction": "bottomRight"
+    },
+    {
+      "id": "cl3-emoji",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 80,
+        "y": 1420,
+        "w": 100,
+        "h": 100
+      },
+      "emoji": "💡",
+      "fontSize": 90
+    }
+  ],
+  "tags": {
+    "styleFamily": "collage",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "丰富"
+  }
 }

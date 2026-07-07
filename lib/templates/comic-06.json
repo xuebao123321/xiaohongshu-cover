@@ -1,18 +1,144 @@
 {
-  "templateId":"comic-06","styleFamily":"comic","name":"橙色pop+黑字+火焰emoji+爆炸星",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#FF6333"},
-  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":11,"color":"rgba(0,0,0,0.25)"},
-  "burstLines":{"count":24,"from":{"x":621,"y":560},"color":"rgba(255,255,255,0.30)","lineWidth":2,"innerR":90,"outerR":960},
-  "titleBox":{"x":70,"y":400,"w":1102,"h":530},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":160,"max":320,"weight":900,"color":"#FFFFFF","stroke":{"color":"#000000","width":6},"letterSpacing":-0.05},
-  "subTitleBox":{"x":150,"y":970,"w":940,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":84,"weight":700,"color":"#012FA7"},
-  "decorations":[
-    {"id":"cm6-bubble","type":"speechBubble","layer":"above","box":{"x":880,"y":150,"w":200,"h":110},"color":"#FFFFFF","strokeColor":"#000000","strokeWidth":3,"text":"緊急!","textSize":34},
-    {"id":"cm6-emoji-fire","type":"emoji","layer":"above","box":{"x":70,"y":1280,"w":160,"h":160},"emoji":"🔥","fontSize":140},
-    {"id":"cm6-sfx","type":"sfx","layer":"above","box":{"x":920,"y":1350,"w":180,"h":100},"text":"HOT!","fontSize":78,"color":"#FFEC47","rotation":-7,"strokeColor":"#000000","strokeWidth":3},
-    {"id":"cm6-star1","type":"starBurst","layer":"above","box":{"x":120,"y":190,"w":85,"h":85},"color":"#FFEC47","strokeColor":"#000000","strokeWidth":2},
-    {"id":"cm6-star2","type":"starBurst","layer":"above","box":{"x":1000,"y":1150,"w":65,"h":65},"color":"#012FA7","strokeColor":"#FFFFFF","strokeWidth":2}
-  ]
+  "templateId": "comic-06",
+  "styleFamily": "comic",
+  "name": "橙色pop+黑字+火焰emoji+爆炸星",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#FF6333"
+  },
+  "backgroundOverlay": {
+    "type": "halftone",
+    "dotSize": 3,
+    "spacing": 11,
+    "color": "rgba(0,0,0,0.25)"
+  },
+  "burstLines": {
+    "count": 24,
+    "from": {
+      "x": 621,
+      "y": 560
+    },
+    "color": "rgba(255,255,255,0.30)",
+    "lineWidth": 2,
+    "innerR": 90,
+    "outerR": 960
+  },
+  "titleBox": {
+    "x": 70,
+    "y": 400,
+    "w": 1102,
+    "h": 530
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 160,
+    "max": 320,
+    "weight": 900,
+    "color": "#FFFFFF",
+    "stroke": {
+      "color": "#000000",
+      "width": 6
+    },
+    "letterSpacing": -0.05
+  },
+  "subTitleBox": {
+    "x": 150,
+    "y": 970,
+    "w": 940,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 42,
+    "max": 84,
+    "weight": 700,
+    "color": "#012FA7"
+  },
+  "decorations": [
+    {
+      "id": "cm6-bubble",
+      "type": "speechBubble",
+      "layer": "above",
+      "box": {
+        "x": 880,
+        "y": 150,
+        "w": 200,
+        "h": 110
+      },
+      "color": "#FFFFFF",
+      "strokeColor": "#000000",
+      "strokeWidth": 3,
+      "text": "緊急!",
+      "textSize": 34
+    },
+    {
+      "id": "cm6-emoji-fire",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 70,
+        "y": 1280,
+        "w": 160,
+        "h": 160
+      },
+      "emoji": "🔥",
+      "fontSize": 140
+    },
+    {
+      "id": "cm6-sfx",
+      "type": "sfx",
+      "layer": "above",
+      "box": {
+        "x": 920,
+        "y": 1350,
+        "w": 180,
+        "h": 100
+      },
+      "text": "HOT!",
+      "fontSize": 78,
+      "color": "#FFEC47",
+      "rotation": -7,
+      "strokeColor": "#000000",
+      "strokeWidth": 3
+    },
+    {
+      "id": "cm6-star1",
+      "type": "starBurst",
+      "layer": "above",
+      "box": {
+        "x": 120,
+        "y": 190,
+        "w": 85,
+        "h": 85
+      },
+      "color": "#FFEC47",
+      "strokeColor": "#000000",
+      "strokeWidth": 2
+    },
+    {
+      "id": "cm6-star2",
+      "type": "starBurst",
+      "layer": "above",
+      "box": {
+        "x": 1000,
+        "y": 1150,
+        "w": 65,
+        "h": 65
+      },
+      "color": "#012FA7",
+      "strokeColor": "#FFFFFF",
+      "strokeWidth": 2
+    }
+  ],
+  "tags": {
+    "styleFamily": "comic",
+    "colorTone": "红色",
+    "fontStyle": "衬线",
+    "structure": "全屏",
+    "density": "丰富"
+  }
 }

@@ -636,6 +636,12 @@ button{font-family:inherit}
 .tm-upload-area:hover { border-color: #4F46E5; background: #F9FAFB; }
 .tm-upload-area p { font-size: 12px; color: #9CA3AF; margin: 4px 0 0 0; }
 .tm-stats { font-size: 11px; color: #9CA3AF; margin-top: 8px; text-align: center; }
+.tm-filter-row { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.tm-flabel { font-size: 11px; color: #6B7280; min-width: 32px; flex-shrink: 0; }
+.tm-fopts { display: flex; gap: 3px; flex-wrap: wrap; }
+.tm-fopt { font-size: 10px; padding: 2px 8px; border-radius: 10px; border: 1px solid #E5E7EB; background: #fff; cursor: pointer; white-space: nowrap; transition: all 0.15s; }
+.tm-fopt.active { background: #4F46E5; color: #fff; border-color: #4F46E5; }
+.tm-fopt:hover:not(.active) { background: #F3F4F6; }
 </style>
 </head>
 <body>
@@ -6133,8 +6139,9 @@ function generate() {
       var activeFamilies = Array.from(STATE.families).sort();
 
       activeFamilies.forEach(function(rf){
-        // 获取该族所有已加载的模板
-        var tplIds = (window.TEMPLATE_REGISTRY || []).filter(function(id){ return id.indexOf(rf) === 0; });
+        // 获取该族所有符合筛选的模板
+        var filteredAll = window.getFilteredTemplateIds ? window.getFilteredTemplateIds() : Object.keys(window.TEMPLATE_LIBRARY || {});
+        var tplIds = filteredAll.filter(function(id){ return id.indexOf(rf) === 0; });
         if (tplIds.length === 0) return;
 
         var lb = document.createElement('div');
@@ -6575,10 +6582,14 @@ function familiesForBatchCards() {
   return out;
 }
 
-// ══════ 模板池驱动的候选生成（只取已加载的模板） ══════
+// ══════ 模板池驱动的候选生成（受筛选器影响） ══════
 function getShuffledTemplateIds(seed) {
-  var lib = window.TEMPLATE_LIBRARY || {};
-  var allIds = Object.keys(lib).filter(function(id){ return lib[id]; });
+  // 优先使用筛选后的模板
+  var allIds = window.getFilteredTemplateIds ? window.getFilteredTemplateIds() : [];
+  if (allIds.length === 0) {
+    var lib = window.TEMPLATE_LIBRARY || {};
+    allIds = Object.keys(lib).filter(function(id){ return lib[id]; });
+  }
   if (allIds.length === 0) allIds = (window.TEMPLATE_REGISTRY || []).slice();
   var rng = window.seededRandom ? window.seededRandom(seed) : Math.random;
   for (var i = allIds.length - 1; i > 0; i--) {
@@ -7492,9 +7503,63 @@ console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / 
     });
   }
 
+  // ══════ 筛选器 ══════
+  var FILTER_STATE = { colorTone: '', fontStyle: '', structure: '', density: '' };
+  var FILTER_OPTIONS = {
+    colorTone: ['全部','暖黄','红色','蓝色','绿色','粉色','紫色','暗黑','白色','奶油','灰色'],
+    fontStyle: ['全部','无衬线','衬线','手写体'],
+    structure: ['全部','居中','顶部','偏下','全屏','偏右'],
+    density: ['全部','极简','标准','丰富'],
+  };
+
+  function buildFilterBar() {
+    Object.keys(FILTER_OPTIONS).forEach(function(dim){
+      var container = document.getElementById('f' + (dim==='colorTone'?'Color':dim==='fontStyle'?'Font':dim==='structure'?'Struct':'Density'));
+      if (!container) return;
+      container.innerHTML = '';
+      FILTER_OPTIONS[dim].forEach(function(opt){
+        var btn = document.createElement('button');
+        btn.className = 'tm-fopt' + ((FILTER_STATE[dim] === opt || (opt === '全部' && !FILTER_STATE[dim])) ? ' active' : '');
+        btn.textContent = opt;
+        btn.addEventListener('click', function(){
+          FILTER_STATE[dim] = (opt === '全部') ? '' : opt;
+          buildFilterBar();
+          renderTemplateList();
+        });
+        container.appendChild(btn);
+      });
+    });
+    // 计数
+    var filtered = getFilteredTemplateIds();
+    var el = document.getElementById('tmFilterCount');
+    if (el) el.textContent = filtered.length + ' / ' + (window.TEMPLATE_REGISTRY || []).length + ' 模板';
+  }
+
+  document.getElementById('tmResetFilter').addEventListener('click', function(){
+    FILTER_STATE = { colorTone: '', fontStyle: '', structure: '', density: '' };
+    buildFilterBar();
+    renderTemplateList();
+  });
+
+  // ══════ 全局过滤函数（生图时调用）══════
+  window.getFilteredTemplateIds = function(){
+    var lib = window.TEMPLATE_LIBRARY || {};
+    return Object.keys(lib).filter(function(id){
+      var tpl = lib[id];
+      if (!tpl || !tpl.tags) return true;
+      var tags = tpl.tags;
+      if (FILTER_STATE.colorTone && tags.colorTone !== FILTER_STATE.colorTone) return false;
+      if (FILTER_STATE.fontStyle && tags.fontStyle !== FILTER_STATE.fontStyle) return false;
+      if (FILTER_STATE.structure && tags.structure !== FILTER_STATE.structure) return false;
+      if (FILTER_STATE.density && tags.density !== FILTER_STATE.density) return false;
+      return true;
+    });
+  };
+
+  buildFilterBar();
+
   // 模板加载完成后自动刷新面板
-  window.onTemplatesLoaded = function () { if (panel.classList.contains('show')) renderTemplateList(); };
-  // 暴露给全局
+  window.onTemplatesLoaded = function () { if (panel.classList.contains('show')) renderTemplateList(); buildFilterBar(); };
   window.renderTemplateList = renderTemplateList;
   window.TM_PENDING_FILES = function () { return pendingFiles; };
 })();
@@ -7515,6 +7580,16 @@ setupTabOrder();
     <input type="file" id="tmFileInput" accept="image/*" multiple style="display:none">
   </div>
   <div id="tmPendingUploads" style="margin:8px 0"></div>
+  <!-- ══════ 5维筛选器 ══════ -->
+  <div style="background:#F9FAFB;border-radius:8px;padding:10px;margin-bottom:12px">
+    <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:8px">🔍 模板筛选</div>
+    <div class="tm-filter-row"><span class="tm-flabel">配色</span><div class="tm-fopts" id="fColor"></div></div>
+    <div class="tm-filter-row"><span class="tm-flabel">字体</span><div class="tm-fopts" id="fFont"></div></div>
+    <div class="tm-filter-row"><span class="tm-flabel">结构</span><div class="tm-fopts" id="fStruct"></div></div>
+    <div class="tm-filter-row"><span class="tm-flabel">密度</span><div class="tm-fopts" id="fDensity"></div></div>
+    <button id="tmResetFilter" style="margin-top:6px;font-size:11px;padding:2px 12px;border:1px solid #D1D5DB;border-radius:4px;background:#fff;cursor:pointer">重置筛选</button>
+    <span id="tmFilterCount" style="font-size:11px;color:#9CA3AF;margin-left:8px"></span>
+  </div>
   <div id="tmTemplateList">加载中...</div>
   <div class="tm-stats" id="tmStats"></div>
 </div>

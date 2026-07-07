@@ -3,21 +3,158 @@
   "styleFamily": "collage",
   "name": "三层撕边便签+印章+粗黑描边标题",
   "source": "REFERENCE_IMAGES_ANALYSIS.md §4 风格族B拼贴collage风",
-  "canvas": [1242, 1656],
-  "background": { "type": "solid", "color": "#FAF5EA" },
-  "titleBox": { "x": 140, "y": 420, "w": 920, "h": 480 },
-  "titleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 140, "max": 280, "weight": 900, "color": "#1A1A1A", "stroke": { "color": "#FFFFFF", "width": 4 }, "letterSpacing": -0.03 },
-  "subTitleBox": { "x": 180, "y": 940, "w": 840, "h": 80 },
-  "subTitleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 40, "max": 84, "weight": 400, "color": "rgba(26,26,26,0.70)" },
-  "decorations": [
-    { "id": "cl1-note-yellow", "type": "tornNote", "layer": "behind", "box": { "x": 280, "y": 340, "w": 680, "h": 520 }, "color": "#FFF9E1", "rotation": -5, "shadow": true },
-    { "id": "cl1-note-pink", "type": "tornNote", "layer": "behind", "box": { "x": 100, "y": 440, "w": 520, "h": 440 }, "color": "#FFB8C8", "rotation": -12, "shadow": true },
-    { "id": "cl1-note-blue", "type": "tornNote", "layer": "behind", "box": { "x": 520, "y": 500, "w": 520, "h": 400 }, "color": "#A8C8E8", "rotation": 8, "shadow": true },
-    { "id": "cl1-stamp", "type": "stamp", "layer": "above", "box": { "x": 960, "y": 220, "w": 140, "h": 140 }, "color": "#E6213D", "rotation": -10, "label": "HOT" },
-    { "id": "cl1-arrow", "type": "arrow", "layer": "above", "box": { "x": 750, "y": 1120, "w": 180, "h": 60 }, "color": "#E6213D", "lineWidth": 2.5, "direction": "bottomRight" },
-    { "id": "cl1-block-yellow", "type": "colorBlock", "layer": "behind", "box": { "x": 80, "y": 160, "w": 80, "h": 80 }, "color": "rgba(255,236,71,0.30)" },
-    { "id": "cl1-emoji-fire", "type": "emoji", "layer": "above", "box": { "x": 1080, "y": 1380, "w": 100, "h": 100 }, "emoji": "🔥", "fontSize": 90 }
+  "canvas": [
+    1242,
+    1656
   ],
-  "forbiddenDecorations": ["tinyDot", "thinLine", "smallRect"],
-  "titleSafeRect": { "x": 100, "y": 380, "w": 1000, "h": 560 }
+  "background": {
+    "type": "solid",
+    "color": "#FAF5EA"
+  },
+  "titleBox": {
+    "x": 140,
+    "y": 420,
+    "w": 920,
+    "h": 480
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 140,
+    "max": 280,
+    "weight": 900,
+    "color": "#1A1A1A",
+    "stroke": {
+      "color": "#FFFFFF",
+      "width": 4
+    },
+    "letterSpacing": -0.03
+  },
+  "subTitleBox": {
+    "x": 180,
+    "y": 940,
+    "w": 840,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 40,
+    "max": 84,
+    "weight": 400,
+    "color": "rgba(26,26,26,0.70)"
+  },
+  "decorations": [
+    {
+      "id": "cl1-note-yellow",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 280,
+        "y": 340,
+        "w": 680,
+        "h": 520
+      },
+      "color": "#FFF9E1",
+      "rotation": -5,
+      "shadow": true
+    },
+    {
+      "id": "cl1-note-pink",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 100,
+        "y": 440,
+        "w": 520,
+        "h": 440
+      },
+      "color": "#FFB8C8",
+      "rotation": -12,
+      "shadow": true
+    },
+    {
+      "id": "cl1-note-blue",
+      "type": "tornNote",
+      "layer": "behind",
+      "box": {
+        "x": 520,
+        "y": 500,
+        "w": 520,
+        "h": 400
+      },
+      "color": "#A8C8E8",
+      "rotation": 8,
+      "shadow": true
+    },
+    {
+      "id": "cl1-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 960,
+        "y": 220,
+        "w": 140,
+        "h": 140
+      },
+      "color": "#E6213D",
+      "rotation": -10,
+      "label": "HOT"
+    },
+    {
+      "id": "cl1-arrow",
+      "type": "arrow",
+      "layer": "above",
+      "box": {
+        "x": 750,
+        "y": 1120,
+        "w": 180,
+        "h": 60
+      },
+      "color": "#E6213D",
+      "lineWidth": 2.5,
+      "direction": "bottomRight"
+    },
+    {
+      "id": "cl1-block-yellow",
+      "type": "colorBlock",
+      "layer": "behind",
+      "box": {
+        "x": 80,
+        "y": 160,
+        "w": 80,
+        "h": 80
+      },
+      "color": "rgba(255,236,71,0.30)"
+    },
+    {
+      "id": "cl1-emoji-fire",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 1080,
+        "y": 1380,
+        "w": 100,
+        "h": 100
+      },
+      "emoji": "🔥",
+      "fontSize": 90
+    }
+  ],
+  "forbiddenDecorations": [
+    "tinyDot",
+    "thinLine",
+    "smallRect"
+  ],
+  "titleSafeRect": {
+    "x": 100,
+    "y": 380,
+    "w": 1000,
+    "h": 560
+  },
+  "tags": {
+    "styleFamily": "collage",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "丰富"
+  }
 }

@@ -1,17 +1,125 @@
 {
-  "templateId":"comic-04","styleFamily":"comic","name":"荧光绿pop+黑色粗体+漫画速度线",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#B8E300"},
-  "backgroundOverlay":{"type":"halftone","dotSize":2.5,"spacing":12,"color":"rgba(0,0,0,0.22)"},
-  "speedLines":{"direction":"horizontal","count":16,"color":"rgba(0,0,0,0.10)","lineWidth":1.5},
-  "titleBox":{"x":60,"y":360,"w":1122,"h":540},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":160,"max":340,"weight":900,"color":"#000000","stroke":{"color":"#FFFFFF","width":3},"letterSpacing":-0.04},
-  "subTitleBox":{"x":140,"y":940,"w":960,"h":80},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":84,"weight":700,"color":"#ED0108"},
-  "decorations":[
-    {"id":"cm4-bubble","type":"speechBubble","layer":"above","box":{"x":880,"y":150,"w":180,"h":100},"color":"#FFFFFF","strokeColor":"#000000","strokeWidth":3,"text":"衝!","textSize":38},
-    {"id":"cm4-emoji","type":"emoji","layer":"above","box":{"x":1020,"y":1340,"w":140,"h":140},"emoji":"⚡","fontSize":125},
-    {"id":"cm4-sfx","type":"sfx","layer":"above","box":{"x":80,"y":1400,"w":150,"h":90},"text":"GO!","fontSize":72,"color":"#ED0108","rotation":5,"strokeColor":"#000000","strokeWidth":2},
-    {"id":"cm4-star","type":"starBurst","layer":"above","box":{"x":120,"y":180,"w":75,"h":75},"color":"#ED0108","strokeColor":"#000000","strokeWidth":2}
-  ]
+  "templateId": "comic-04",
+  "styleFamily": "comic",
+  "name": "荧光绿pop+黑色粗体+漫画速度线",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#B8E300"
+  },
+  "backgroundOverlay": {
+    "type": "halftone",
+    "dotSize": 2.5,
+    "spacing": 12,
+    "color": "rgba(0,0,0,0.22)"
+  },
+  "speedLines": {
+    "direction": "horizontal",
+    "count": 16,
+    "color": "rgba(0,0,0,0.10)",
+    "lineWidth": 1.5
+  },
+  "titleBox": {
+    "x": 60,
+    "y": 360,
+    "w": 1122,
+    "h": 540
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 160,
+    "max": 340,
+    "weight": 900,
+    "color": "#000000",
+    "stroke": {
+      "color": "#FFFFFF",
+      "width": 3
+    },
+    "letterSpacing": -0.04
+  },
+  "subTitleBox": {
+    "x": 140,
+    "y": 940,
+    "w": 960,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 42,
+    "max": 84,
+    "weight": 700,
+    "color": "#ED0108"
+  },
+  "decorations": [
+    {
+      "id": "cm4-bubble",
+      "type": "speechBubble",
+      "layer": "above",
+      "box": {
+        "x": 880,
+        "y": 150,
+        "w": 180,
+        "h": 100
+      },
+      "color": "#FFFFFF",
+      "strokeColor": "#000000",
+      "strokeWidth": 3,
+      "text": "衝!",
+      "textSize": 38
+    },
+    {
+      "id": "cm4-emoji",
+      "type": "emoji",
+      "layer": "above",
+      "box": {
+        "x": 1020,
+        "y": 1340,
+        "w": 140,
+        "h": 140
+      },
+      "emoji": "⚡",
+      "fontSize": 125
+    },
+    {
+      "id": "cm4-sfx",
+      "type": "sfx",
+      "layer": "above",
+      "box": {
+        "x": 80,
+        "y": 1400,
+        "w": 150,
+        "h": 90
+      },
+      "text": "GO!",
+      "fontSize": 72,
+      "color": "#ED0108",
+      "rotation": 5,
+      "strokeColor": "#000000",
+      "strokeWidth": 2
+    },
+    {
+      "id": "cm4-star",
+      "type": "starBurst",
+      "layer": "above",
+      "box": {
+        "x": 120,
+        "y": 180,
+        "w": 75,
+        "h": 75
+      },
+      "color": "#ED0108",
+      "strokeColor": "#000000",
+      "strokeWidth": 2
+    }
+  ],
+  "tags": {
+    "styleFamily": "comic",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "全屏",
+    "density": "标准"
+  }
 }

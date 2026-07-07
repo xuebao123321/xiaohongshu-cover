@@ -3,7 +3,10 @@
   "styleFamily": "handnote",
   "name": "米黄方格纸+胶带+手绘圈",
   "source": "REFERENCE_IMAGES_ANALYSIS.md §3 风格族A手绘便签风",
-  "canvas": [1242, 1656],
+  "canvas": [
+    1242,
+    1656
+  ],
   "background": {
     "type": "solid",
     "color": "#F5EFD8",
@@ -18,7 +21,12 @@
     "type": "paperGrain",
     "opacity": 0.04
   },
-  "titleBox": { "x": 120, "y": 480, "w": 1002, "h": 520 },
+  "titleBox": {
+    "x": 120,
+    "y": 480,
+    "w": 1002,
+    "h": 520
+  },
   "titleFont": {
     "family": "\"Noto Sans SC\", sans-serif",
     "min": 180,
@@ -27,7 +35,12 @@
     "color": "#2D2A26",
     "letterSpacing": -0.035
   },
-  "subTitleBox": { "x": 180, "y": 1020, "w": 880, "h": 80 },
+  "subTitleBox": {
+    "x": 180,
+    "y": 1020,
+    "w": 880,
+    "h": 80
+  },
   "subTitleFont": {
     "family": "\"Noto Sans SC\", sans-serif",
     "min": 48,
@@ -35,7 +48,12 @@
     "weight": 400,
     "color": "rgba(45,42,38,0.75)"
   },
-  "keywordBox": { "x": 450, "y": 380, "w": 342, "h": 80 },
+  "keywordBox": {
+    "x": 450,
+    "y": 380,
+    "w": 342,
+    "h": 80
+  },
   "keywordFont": {
     "family": "\"Noto Sans SC\", sans-serif",
     "min": 48,
@@ -48,7 +66,12 @@
       "id": "handnote-tape-top",
       "type": "tape",
       "layer": "above",
-      "box": { "x": 420, "y": 260, "w": 300, "h": 36 },
+      "box": {
+        "x": 420,
+        "y": 260,
+        "w": 300,
+        "h": 36
+      },
       "rotation": -3,
       "color": "rgba(230,210,170,0.55)"
     },
@@ -56,7 +79,12 @@
       "id": "handnote-circle-keyword",
       "type": "handCircle",
       "layer": "behind",
-      "box": { "x": 440, "y": 370, "w": 362, "h": 100 },
+      "box": {
+        "x": 440,
+        "y": 370,
+        "w": 362,
+        "h": 100
+      },
       "color": "#5D4E37",
       "lineWidth": 2.5,
       "dashed": true
@@ -65,14 +93,24 @@
       "id": "handnote-highlighter",
       "type": "highlighter",
       "layer": "behind",
-      "box": { "x": 160, "y": 720, "w": 920, "h": 48 },
+      "box": {
+        "x": 160,
+        "y": 720,
+        "w": 920,
+        "h": 48
+      },
       "color": "rgba(255,236,71,0.40)"
     },
     {
       "id": "handnote-doodle-star",
       "type": "doodle",
       "layer": "above",
-      "box": { "x": 980, "y": 1360, "w": 100, "h": 100 },
+      "box": {
+        "x": 980,
+        "y": 1360,
+        "w": 100,
+        "h": 100
+      },
       "doodleType": "star",
       "color": "#5D4E37",
       "lineWidth": 1.5
@@ -81,11 +119,32 @@
       "id": "handnote-emoji-pencil",
       "type": "emoji",
       "layer": "above",
-      "box": { "x": 80, "y": 1380, "w": 120, "h": 120 },
+      "box": {
+        "x": 80,
+        "y": 1380,
+        "w": 120,
+        "h": 120
+      },
       "emoji": "✏️",
       "fontSize": 100
     }
   ],
-  "forbiddenDecorations": ["tinyDot", "thinLine", "smallRect"],
-  "titleSafeRect": { "x": 80, "y": 440, "w": 1082, "h": 600 }
+  "forbiddenDecorations": [
+    "tinyDot",
+    "thinLine",
+    "smallRect"
+  ],
+  "titleSafeRect": {
+    "x": 80,
+    "y": 440,
+    "w": 1082,
+    "h": 600
+  },
+  "tags": {
+    "styleFamily": "handnote",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "丰富"
+  }
 }

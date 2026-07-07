@@ -3,15 +3,77 @@
   "styleFamily": "minimal",
   "name": "纯白超大黑字+底部短横线",
   "source": "REFERENCE_IMAGES_ANALYSIS.md §7 风格族E极简大字风",
-  "canvas": [1242, 1656],
-  "background": { "type": "solid", "color": "#FFFFFF" },
-  "titleBox": { "x": 60, "y": 380, "w": 1122, "h": 700 },
-  "titleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 200, "max": 480, "weight": 900, "color": "#111111", "letterSpacing": -0.05 },
-  "subTitleBox": { "x": 100, "y": 1120, "w": 1042, "h": 80 },
-  "subTitleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 36, "max": 64, "weight": 300, "color": "rgba(0,0,0,0.45)" },
-  "decorations": [
-    { "id": "mn1-bottom-line", "type": "thickLine", "layer": "above", "box": { "x": 520, "y": 1100, "w": 200, "h": 5 }, "color": "#111111", "lineWidth": 5 }
+  "canvas": [
+    1242,
+    1656
   ],
-  "forbiddenDecorations": ["tape", "stamp", "emoji", "doodle", "dot", "thinLine", "badge", "bubble"],
-  "titleSafeRect": { "x": 40, "y": 340, "w": 1162, "h": 780 }
+  "background": {
+    "type": "solid",
+    "color": "#FFFFFF"
+  },
+  "titleBox": {
+    "x": 60,
+    "y": 380,
+    "w": 1122,
+    "h": 700
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 200,
+    "max": 480,
+    "weight": 900,
+    "color": "#111111",
+    "letterSpacing": -0.05
+  },
+  "subTitleBox": {
+    "x": 100,
+    "y": 1120,
+    "w": 1042,
+    "h": 80
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\", sans-serif",
+    "min": 36,
+    "max": 64,
+    "weight": 300,
+    "color": "rgba(0,0,0,0.45)"
+  },
+  "decorations": [
+    {
+      "id": "mn1-bottom-line",
+      "type": "thickLine",
+      "layer": "above",
+      "box": {
+        "x": 520,
+        "y": 1100,
+        "w": 200,
+        "h": 5
+      },
+      "color": "#111111",
+      "lineWidth": 5
+    }
+  ],
+  "forbiddenDecorations": [
+    "tape",
+    "stamp",
+    "emoji",
+    "doodle",
+    "dot",
+    "thinLine",
+    "badge",
+    "bubble"
+  ],
+  "titleSafeRect": {
+    "x": 40,
+    "y": 340,
+    "w": 1162,
+    "h": 780
+  },
+  "tags": {
+    "styleFamily": "minimal",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "全屏",
+    "density": "极简"
+  }
 }

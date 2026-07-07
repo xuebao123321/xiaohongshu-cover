@@ -1,17 +1,116 @@
 {
-  "templateId":"newspaper-06","styleFamily":"newspaper","name":"蓝白信息图+数据标签+清单风格",
-  "canvas":[1242,1656],
-  "background":{"type":"solid","color":"#E9F3FF"},
-  "titleBox":{"x":80,"y":280,"w":1082,"h":440},
-  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":300,"weight":900,"color":"#111111","letterSpacing":-0.035},
-  "subTitleBox":{"x":120,"y":760,"w":1002,"h":90},
-  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":76,"weight":400,"color":"rgba(0,0,0,0.60)"},
-  "footerBox":{"x":80,"y":1480,"w":1082,"h":60},
-  "footerFont":{"family":"\"Noto Sans SC\",sans-serif","min":22,"max":38,"weight":400,"color":"rgba(0,0,0,0.40)"},
-  "decorations":[
-    {"id":"np6-divider","type":"divider","layer":"behind","box":{"x":80,"y":740,"w":1082,"h":2},"color":"rgba(38,119,222,0.30)","lineWidth":2},
-    {"id":"np6-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":180,"w":130,"h":130},"color":"#2677DE","rotation":-8,"label":"INFO"},
-    {"id":"np6-badge","type":"badge","layer":"above","box":{"x":80,"y":110,"w":120,"h":40},"color":"#2677DE","labelColor":"#FFFFFF","fontSize":16},
-    {"id":"np6-block-blue","type":"colorBlock","layer":"behind","box":{"x":80,"y":850,"w":1082,"h":3},"color":"rgba(38,119,222,0.15)","shape":"rect"}
-  ]
+  "templateId": "newspaper-06",
+  "styleFamily": "newspaper",
+  "name": "蓝白信息图+数据标签+清单风格",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#E9F3FF"
+  },
+  "titleBox": {
+    "x": 80,
+    "y": 280,
+    "w": 1082,
+    "h": 440
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 150,
+    "max": 300,
+    "weight": 900,
+    "color": "#111111",
+    "letterSpacing": -0.035
+  },
+  "subTitleBox": {
+    "x": 120,
+    "y": 760,
+    "w": 1002,
+    "h": 90
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 38,
+    "max": 76,
+    "weight": 400,
+    "color": "rgba(0,0,0,0.60)"
+  },
+  "footerBox": {
+    "x": 80,
+    "y": 1480,
+    "w": 1082,
+    "h": 60
+  },
+  "footerFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 22,
+    "max": 38,
+    "weight": 400,
+    "color": "rgba(0,0,0,0.40)"
+  },
+  "decorations": [
+    {
+      "id": "np6-divider",
+      "type": "divider",
+      "layer": "behind",
+      "box": {
+        "x": 80,
+        "y": 740,
+        "w": 1082,
+        "h": 2
+      },
+      "color": "rgba(38,119,222,0.30)",
+      "lineWidth": 2
+    },
+    {
+      "id": "np6-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 1000,
+        "y": 180,
+        "w": 130,
+        "h": 130
+      },
+      "color": "#2677DE",
+      "rotation": -8,
+      "label": "INFO"
+    },
+    {
+      "id": "np6-badge",
+      "type": "badge",
+      "layer": "above",
+      "box": {
+        "x": 80,
+        "y": 110,
+        "w": 120,
+        "h": 40
+      },
+      "color": "#2677DE",
+      "labelColor": "#FFFFFF",
+      "fontSize": 16
+    },
+    {
+      "id": "np6-block-blue",
+      "type": "colorBlock",
+      "layer": "behind",
+      "box": {
+        "x": 80,
+        "y": 850,
+        "w": 1082,
+        "h": 3
+      },
+      "color": "rgba(38,119,222,0.15)",
+      "shape": "rect"
+    }
+  ],
+  "tags": {
+    "styleFamily": "newspaper",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "顶部",
+    "density": "标准"
+  }
 }
