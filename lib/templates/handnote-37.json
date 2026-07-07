@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-37","styleFamily":"handnote","name":"燕麦纸+深棕字+咖啡印章+早餐笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FAF6EE","overlay":{"type":"lines","spacing":26,"color":"rgba(120,90,60,0.05)","lineWidth":0.5}},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":520},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":150,"max":290,"weight":900,"color":"#4A3020","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(74,48,32,0.50)"},
+  "decorations":[
+    {"id":"hn37-tape","type":"tape","layer":"above","box":{"x":430,"y":235,"w":290,"h":34},"rotation":-3,"color":"rgba(180,150,120,0.48)"},
+    {"id":"hn37-highlighter","type":"highlighter","layer":"behind","box":{"x":140,"y":710,"w":960,"h":46},"color":"rgba(210,170,100,0.28)"},
+    {"id":"hn37-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":155,"w":115,"h":115},"color":"#6B4A2A","rotation":-7,"label":"COFFEE"},
+    {"id":"hn37-emoji","type":"emoji","layer":"above","box":{"x":95,"y":1380,"w":110,"h":110},"emoji":"☕","fontSize":100}
+  ]
+}

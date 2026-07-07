@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-37","styleFamily":"minimal","name":"纯白底+黑字衬线+底部长线+书卷极简",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFFFF"},
+  "titleBox":{"x":60,"y":370,"w":1122,"h":710},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":200,"max":450,"weight":900,"color":"#0A0A0A","letterSpacing":-0.05},
+  "subTitleBox":{"x":100,"y":1130,"w":1042,"h":65},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":30,"max":52,"weight":300,"color":"rgba(0,0,0,0.30)"},
+  "decorations":[
+    {"id":"mn37-line","type":"thickLine","layer":"above","box":{"x":60,"y":1115,"w":1122,"h":1},"color":"rgba(0,0,0,0.10)","lineWidth":1}
+  ]
+}
