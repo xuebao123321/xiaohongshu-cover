@@ -1,0 +1,13 @@
+{
+  "templateId":"minimal-23","styleFamily":"minimal","name":"米白底+深棕衬线+双横线装饰+书籍封面",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDF9F2"},
+  "titleBox":{"x":60,"y":370,"w":1122,"h":700},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":200,"max":450,"weight":900,"color":"#2D2018","letterSpacing":-0.05},
+  "subTitleBox":{"x":100,"y":1110,"w":1042,"h":70},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":32,"max":54,"weight":300,"color":"rgba(45,32,24,0.38)"},
+  "decorations":[
+    {"id":"mn23-line1","type":"thickLine","layer":"above","box":{"x":540,"y":330,"w":160,"h":2},"color":"rgba(45,32,24,0.18)","lineWidth":2},
+    {"id":"mn23-line2","type":"thickLine","layer":"above","box":{"x":540,"y":1090,"w":160,"h":2},"color":"rgba(45,32,24,0.18)","lineWidth":2}
+  ]
+}

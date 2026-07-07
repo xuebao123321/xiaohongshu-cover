@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-23","styleFamily":"comic","name":"桃红pop+黄字+爱心+甜蜜恋爱风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FF4088"},
+  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":10,"color":"rgba(255,255,255,0.22)"},
+  "burstLines":{"count":20,"from":{"x":621,"y":580},"color":"rgba(255,255,255,0.28)","lineWidth":2,"innerR":110,"outerR":900},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":300,"weight":900,"color":"#FFE947","stroke":{"color":"#C02060","width":5},"letterSpacing":-0.045},
+  "subTitleBox":{"x":160,"y":940,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#FFD0E0"},
+  "decorations":[
+    {"id":"cm23-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"💕","fontSize":135},
+    {"id":"cm23-sfx","type":"sfx","layer":"above","box":{"x":900,"y":1340,"w":180,"h":100},"text":"LOVE!","fontSize":68,"color":"#FFE947","rotation":-5,"strokeColor":"#C02060","strokeWidth":3},
+    {"id":"cm23-star","type":"starBurst","layer":"above","box":{"x":130,"y":190,"w":85,"h":85},"color":"#FFE947","strokeColor":"#C02060","strokeWidth":2}
+  ]
+}

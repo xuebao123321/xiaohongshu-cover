@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-23","styleFamily":"collage","name":"桃红底+金色便签+皇冠印章+华丽拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF0F5"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#3A1030","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(58,16,48,0.55)"},
+  "decorations":[
+    {"id":"cl23-n1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FFE0EC","rotation":-3,"shadow":true},
+    {"id":"cl23-n2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#FFF8E0","rotation":-12,"shadow":true},
+    {"id":"cl23-n3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#FFE8F0","rotation":9,"shadow":true},
+    {"id":"cl23-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#D4A843","rotation":-10,"label":"QUEEN"},
+    {"id":"cl23-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":260,"h":32},"rotation":3,"color":"rgba(220,180,200,0.50)"},
+    {"id":"cl23-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"👑","fontSize":100}
+  ]
+}

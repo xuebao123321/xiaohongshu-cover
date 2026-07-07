@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-24","styleFamily":"handnote","name":"橙色方格+黑字标题+火焰涂鸦+活力笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF5F0","overlay":{"type":"grid","spacing":22,"color":"rgba(255,140,80,0.08)","lineWidth":0.6}},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":510},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#3A1A0A","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(58,26,10,0.55)"},
+  "decorations":[
+    {"id":"hn24-tape","type":"tape","layer":"above","box":{"x":420,"y":240,"w":300,"h":34},"rotation":-4,"color":"rgba(255,180,140,0.55)"},
+    {"id":"hn24-highlighter","type":"highlighter","layer":"behind","box":{"x":150,"y":720,"w":940,"h":44},"color":"rgba(255,160,80,0.30)"},
+    {"id":"hn24-doodle","type":"doodle","layer":"above","box":{"x":990,"y":1390,"w":100,"h":100},"doodleType":"burst","color":"#E87A3A","lineWidth":2},
+    {"id":"hn24-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1400,"w":100,"h":100},"emoji":"🔥","fontSize":90}
+  ]
+}
