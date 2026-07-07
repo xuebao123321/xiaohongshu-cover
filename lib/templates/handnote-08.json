@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-08","styleFamily":"handnote","name":"奶油咖啡慢生活+马克笔涂鸦+拍立得贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FAF5EA"},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":500},
+  "titleFont":{"family":"\"ZCOOL QingKe HuangYou\",\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":400,"color":"#5D4E00","letterSpacing":-0.025},
+  "subTitleBox":{"x":160,"y":980,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":84,"weight":400,"color":"rgba(93,78,0,0.65)"},
+  "decorations":[
+    {"id":"hn8-tape","type":"tape","layer":"above","box":{"x":400,"y":230,"w":310,"h":36},"rotation":3,"color":"rgba(220,200,160,0.55)"},
+    {"id":"hn8-marker","type":"markerGhost","layer":"behind","box":{"x":98,"y":438,"w":1046,"h":504},"color":"rgba(139,111,71,0.10)","offsetX":3,"offsetY":3},
+    {"id":"hn8-polaroid","type":"polaroid","layer":"behind","box":{"x":340,"y":340,"w":560,"h":580},"rotation":-2,"shadow":true},
+    {"id":"hn8-emoji-coffee","type":"emoji","layer":"above","box":{"x":1020,"y":1380,"w":110,"h":110},"emoji":"☕","fontSize":100}
+  ]
+}

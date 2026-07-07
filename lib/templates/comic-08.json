@@ -1,0 +1,18 @@
+{
+  "templateId":"comic-08","styleFamily":"comic","name":"紫色pop+黄字+闪电emoji+锯齿框",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#53278D"},
+  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":10,"color":"rgba(255,255,255,0.25)"},
+  "burstLines":{"count":22,"from":{"x":621,"y":600},"color":"rgba(255,255,255,0.30)","lineWidth":2,"innerR":100,"outerR":950},
+  "titleBox":{"x":80,"y":420,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":300,"weight":900,"color":"#FFEC47","stroke":{"color":"#000000","width":6},"letterSpacing":-0.05},
+  "subTitleBox":{"x":160,"y":960,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#FF8BD1"},
+  "decorations":[
+    {"id":"cm8-bubble","type":"speechBubble","layer":"above","box":{"x":880,"y":170,"w":190,"h":110},"color":"#FFFFFF","strokeColor":"#000000","strokeWidth":3,"text":"速報!","textSize":32},
+    {"id":"cm8-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"⚡","fontSize":135},
+    {"id":"cm8-sfx","type":"sfx","layer":"above","box":{"x":920,"y":1350,"w":180,"h":100},"text":"BANG!","fontSize":76,"color":"#FF8BD1","rotation":7,"strokeColor":"#000000","strokeWidth":3},
+    {"id":"cm8-star","type":"starBurst","layer":"above","box":{"x":140,"y":200,"w":85,"h":85},"color":"#FF8BD1","strokeColor":"#FFFFFF","strokeWidth":2},
+    {"id":"cm8-star2","type":"starBurst","layer":"above","box":{"x":1000,"y":1160,"w":60,"h":60},"color":"#FFEC47","strokeColor":"#000000","strokeWidth":1.5}
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "templateId":"collage-07","styleFamily":"collage","name":"奶油拼接+彩虹色块+活泼便签群",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDF6E9"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#1A1A1A","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":76,"weight":400,"color":"rgba(0,0,0,0.55)"},
+  "decorations":[
+    {"id":"cl7-note-y","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FFD95F","rotation":-4,"shadow":true},
+    {"id":"cl7-note-o","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":460,"h":430},"color":"#FF9F90","rotation":-14,"shadow":true},
+    {"id":"cl7-note-g","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":480,"h":420},"color":"#B8E300","rotation":9,"shadow":true},
+    {"id":"cl7-block-p","type":"colorBlock","layer":"behind","box":{"x":70,"y":140,"w":90,"h":90},"color":"rgba(247,141,233,0.30)","shape":"circle"},
+    {"id":"cl7-block-b","type":"colorBlock","layer":"behind","box":{"x":1060,"y":880,"w":90,"h":90},"color":"rgba(1,47,167,0.20)","shape":"rect"},
+    {"id":"cl7-stamp","type":"stamp","layer":"above","box":{"x":980,"y":220,"w":125,"h":125},"color":"#000000","rotation":-9,"label":"FUN"},
+    {"id":"cl7-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":270,"h":32},"rotation":2,"color":"rgba(230,210,170,0.50)"},
+    {"id":"cl7-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"🎉","fontSize":100}
+  ]
+}
