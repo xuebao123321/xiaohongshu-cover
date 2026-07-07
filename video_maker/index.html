@@ -2508,6 +2508,27 @@ function applyFilter(ctx, filterName, strength) {
       }
       break;
     }
+
+    case 'cinema': {
+      // 电影感: 上下黑边(letterbox) + 冷暖对比调色
+      const barH = H * 0.08 * strength;
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, W, barH);
+      ctx.fillRect(0, H - barH, W, barH);
+      // 暗角
+      applyVignette(ctx, strength * 0.3);
+      // 微调色温: 阴影偏蓝,高光偏暖
+      if (strength > 0.3) {
+        const imgData = ctx.getImageData(0, 0, W, H);
+        const d = imgData.data;
+        for (let i = 0; i < d.length; i += 4) {
+          const brightness = (d[i] + d[i+1] + d[i+2]) / 3;
+          if (brightness < 80) { d[i+2] = Math.min(255, d[i+2] + 15 * strength); }
+          if (brightness > 200) { d[i] = Math.min(255, d[i] + 10 * strength); d[i+1] = Math.min(255, d[i+1] + 5 * strength); }
+        }
+        ctx.putImageData(imgData, 0, 0);
+      }
+      break;
     }
 
     case 'sketch':
