@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-25","styleFamily":"handnote","name":"浅黄横线+深蓝钢笔+锚涂鸦+航海笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFDF5","overlay":{"type":"lines","spacing":26,"color":"rgba(0,0,0,0.05)","lineWidth":0.6}},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":510},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#0D2B45","letterSpacing":-0.035},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(13,43,69,0.55)"},
+  "decorations":[
+    {"id":"hn25-tape","type":"tape","layer":"above","box":{"x":430,"y":240,"w":290,"h":32},"rotation":-4,"color":"rgba(160,190,220,0.50)"},
+    {"id":"hn25-circle","type":"handCircle","layer":"behind","box":{"x":430,"y":430,"w":340,"h":120},"color":"#1A5B8A","lineWidth":2.5,"dashed":true},
+    {"id":"hn25-highlighter","type":"highlighter","layer":"behind","box":{"x":150,"y":720,"w":940,"h":44},"color":"rgba(26,91,138,0.22)"},
+    {"id":"hn25-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":100,"h":100},"emoji":"⚓","fontSize":90}
+  ]
+}

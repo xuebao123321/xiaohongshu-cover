@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-26","styleFamily":"collage","name":"浅绿底+白便签+花印章+田园拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F2FAF0"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#1A3A18","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(26,58,24,0.55)"},
+  "decorations":[
+    {"id":"cl26-n1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FFFFFF","rotation":-3,"shadow":true},
+    {"id":"cl26-n2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#F0FFF0","rotation":-12,"shadow":true},
+    {"id":"cl26-n3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#E8F5E0","rotation":9,"shadow":true},
+    {"id":"cl26-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#5A9A4A","rotation":-10,"label":"BLOOM"},
+    {"id":"cl26-arrow","type":"arrow","layer":"above","box":{"x":800,"y":1060,"w":150,"h":55},"color":"#5A9A4A","lineWidth":2.5,"direction":"bottomRight"},
+    {"id":"cl26-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"🌻","fontSize":100}
+  ]
+}

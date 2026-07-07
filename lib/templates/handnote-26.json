@@ -1,0 +1,16 @@
+{
+  "templateId":"handnote-26","styleFamily":"handnote","name":"白纸+红蓝双色笔迹+星标+复习笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFFFF","overlay":{"type":"lines","spacing":27,"color":"rgba(0,0,0,0.03)","lineWidth":0.5}},
+  "titleBox":{"x":100,"y":450,"w":1042,"h":510},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#111111","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(0,0,0,0.55)"},
+  "decorations":[
+    {"id":"hn26-tape","type":"tape","layer":"above","box":{"x":440,"y":240,"w":280,"h":32},"rotation":-3,"color":"rgba(200,200,200,0.40)"},
+    {"id":"hn26-circle-red","type":"handCircle","layer":"behind","box":{"x":410,"y":440,"w":360,"h":120},"color":"#E63946","lineWidth":3,"dashed":true},
+    {"id":"hn26-highlighter","type":"highlighter","layer":"behind","box":{"x":150,"y":720,"w":940,"h":44},"color":"rgba(37,99,235,0.20)"},
+    {"id":"hn26-badge","type":"badge","layer":"above","box":{"x":80,"y":140,"w":130,"h":42},"color":"#E63946","labelColor":"#FFFFFF","fontSize":16},
+    {"id":"hn26-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1380,"w":110,"h":110},"emoji":"⭐","fontSize":100}
+  ]
+}

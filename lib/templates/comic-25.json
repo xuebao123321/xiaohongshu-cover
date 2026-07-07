@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-25","styleFamily":"comic","name":"青色pop+深蓝字+水滴+清爽海洋风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#00C9C9"},
+  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":10,"color":"rgba(255,255,255,0.25)"},
+  "burstLines":{"count":20,"from":{"x":621,"y":580},"color":"rgba(255,255,255,0.28)","lineWidth":2,"innerR":110,"outerR":900},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":300,"weight":900,"color":"#004D5A","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.045},
+  "subTitleBox":{"x":160,"y":940,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#004D5A"},
+  "decorations":[
+    {"id":"cm25-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"💧","fontSize":135},
+    {"id":"cm25-sfx","type":"sfx","layer":"above","box":{"x":900,"y":1340,"w":180,"h":100},"text":"SPLASH","fontSize":58,"color":"#004D5A","rotation":-5,"strokeColor":"#FFFFFF","strokeWidth":2},
+    {"id":"cm25-star","type":"starBurst","layer":"above","box":{"x":130,"y":190,"w":85,"h":85},"color":"#FFFFFF","strokeColor":"#004D5A","strokeWidth":2}
+  ]
+}
