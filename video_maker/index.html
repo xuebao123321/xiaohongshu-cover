@@ -3894,6 +3894,8 @@ function renderVideoPreview() {
   if (canvas) canvas.style.display = 'none';
   if (previewVideo) {
     previewVideo.style.display = '';
+    previewVideo.muted = false;
+    previewVideo.volume = 1.0;
     previewVideo.src = v.objectUrl;
     previewVideo.currentTime = VIDEO_STATE.trimStart || 0;
     previewVideo.load();
@@ -3974,32 +3976,31 @@ async function exportVideoOnly() {
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     const canvasStream = canvas.captureStream(fps);
 
-    // ══════ 音频混合: 视频原声 + 背景音乐 ══════
-    let mixerCtx = null, bgmSource = null, audioVideoSource = null;
+    // ══════ 音频混合: 视频原声(captureStream) + 背景音乐(AudioContext) ══════
+    let mixerCtx = null, bgmSource = null;
     let recorderStream = canvasStream;
+    let videoAudioTrack = null;
     const hasBGM = !VIDEO_STATE.noMusic && VIDEO_STATE.audio;
 
+    // ── 视频原声: 通过 video.captureStream() 获取(可靠,不抢占音频输出) ──
     try {
-      mixerCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const audioDest = mixerCtx.createMediaStreamDestination();
+      const videoCapture = videoForAudio.captureStream();
+      const audioTracks = videoCapture.getAudioTracks();
+      if (audioTracks.length > 0) {
+        videoAudioTrack = audioTracks[0];
+        console.log('[video_maker] ✅ 视频音频轨道已捕获(label:', videoAudioTrack.label, ')');
+      } else {
+        console.warn('[video_maker] ⚠️ 视频无音频轨道(可能源文件无音轨)');
+      }
+    } catch (e) {
+      console.warn('[video_maker] ⚠️ video.captureStream() 失败:', e.message);
+    }
 
-      // 视频原声: 从 videoForAudio 的播放中捕获
+    // ── 背景音乐: AudioContext 解码 + 混入 ──
+    let bgmAudioTrack = null;
+    if (hasBGM) {
       try {
-        audioVideoSource = mixerCtx.createMediaElementSource(videoForAudio);
-      } catch (e) {
-        console.warn('[video_maker] createMediaElementSource 失败:', e.message);
-      }
-
-      if (audioVideoSource) {
-        const srcGain = mixerCtx.createGain();
-        srcGain.gain.value = hasBGM ? 0.75 : 1.0;
-        audioVideoSource.connect(srcGain);
-        srcGain.connect(audioDest);
-        console.log('[video_maker] ✅ 视频原声已接入(AudioContext)');
-      }
-
-      // 背景音乐
-      if (hasBGM) {
+        mixerCtx = new (window.AudioContext || window.webkitAudioContext)();
         const bgmFile = VIDEO_STATE.audio.file;
         const arrayBuf = await bgmFile.arrayBuffer();
         const audioBuffer = await mixerCtx.decodeAudioData(arrayBuf.slice(0));
@@ -4020,19 +4021,26 @@ async function exportVideoOnly() {
         bgmGain.gain.linearRampToValueAtTime(0, t0 + exportDuration);
 
         bgmSource.connect(bgmGain);
-        bgmGain.connect(audioDest);
-        console.log('[video_maker] ✅ BGM 已解码,音量:', (bgmVol * 100).toFixed(0) + '%');
+        // BGM 输出到 MediaStreamDestination
+        const bgmDest = mixerCtx.createMediaStreamDestination();
+        bgmGain.connect(bgmDest);
+        const bgmTracks = bgmDest.stream.getAudioTracks();
+        if (bgmTracks.length > 0) {
+          bgmAudioTrack = bgmTracks[0];
+          console.log('[video_maker] ✅ BGM 已解码,音量:', (bgmVol * 100).toFixed(0) + '%');
+        }
+      } catch (bgmErr) {
+        console.warn('[video_maker] BGM 解码失败,跳过:', bgmErr.message);
       }
+    }
 
-      // 混合音频轨道
-      const mixedAudioTracks = audioDest.stream.getAudioTracks();
-      if (mixedAudioTracks.length > 0) {
-        const videoTrack = canvasStream.getVideoTracks()[0];
-        recorderStream = new MediaStream([videoTrack, ...mixedAudioTracks]);
-        console.log('[video_maker] ✅ 混合音频流就绪(原声' + (audioVideoSource ? '✓' : '✗') + ' BGM:' + (hasBGM ? '✓' : '✗') + ')');
-      }
-    } catch (audioErr) {
-      console.warn('[video_maker] 音频混合失败,继续导出无音频:', audioErr.message);
+    // ── 组装最终流: 画布视频 + 视频原声 + BGM ──
+    const tracks = [canvasStream.getVideoTracks()[0]];
+    if (videoAudioTrack) tracks.push(videoAudioTrack);
+    if (bgmAudioTrack) tracks.push(bgmAudioTrack);
+    if (tracks.length > 1) {
+      recorderStream = new MediaStream(tracks);
+      console.log('[video_maker] ✅ 混合流:', tracks.length, '条轨道(视频' + (videoAudioTrack ? '+原声' : '') + (bgmAudioTrack ? '+BGM' : '') + ')');
     }
 
     // ══════ MediaRecorder ══════
