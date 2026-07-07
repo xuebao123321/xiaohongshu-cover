@@ -738,20 +738,6 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </details>
 
-      <!-- 🔄 视频去重 -->
-      <details class="vm-card" id="cardVideoDedup" open>
-        <summary>🔄 视频去重 <span id="videoDedupLabel" style="font-weight:400;color:#a8a098;font-size:11px">标准</span></summary>
-        <div class="vm-card-body">
-          <div class="option-label">检测强度</div>
-          <div class="option-row" id="videoDedupLevelBtns"></div>
-          <button class="btn small ghost" id="btnVideoDedup" style="width:100%;margin-top:10px">🔍 检测重复视频</button>
-          <div id="videoDedupResults" style="margin-top:10px"></div>
-          <div class="vm-card-hint" style="margin-top:6px">
-            💡 视频去重通过提取关键帧(pHash+直方图)比对相似度,可检测裁剪/加滤镜/调色后的重复视频。
-          </div>
-        </div>
-      </details>
-
       <!-- ⚙️ 导出设置 -->
       <details class="vm-card" id="cardVideoExport">
         <summary>⚙️ 导出设置</summary>
@@ -3994,7 +3980,6 @@ const VIDEO_STATE = {
   trimStart: 0,
   trimEnd: 0,
   videoDuration: 0,
-  dedup: { level: 'normal' },
   outputFormat: 'mp4',
   outputResolution: 'original',
   audio: null,          // 背景音乐 { file, objectUrl, volume, fadeIn, fadeOut, startAt, duration }
@@ -4065,14 +4050,6 @@ function initVideoModeUI() {
     VIDEO_STATE.filterStrength = parseInt(this.value);
     document.getElementById('videoFilterStrengthVal').textContent = this.value + '%';
     renderVideoPreview();
-  });
-
-  // 去重强度
-  renderOptionButtons('videoDedupLevelBtns', Object.fromEntries(
-    Object.entries(DEDUP_LEVELS).map(([k, v]) => [k, { name: v.name, icon: '' }])
-  ), VIDEO_STATE.dedup.level, (key) => {
-    VIDEO_STATE.dedup.level = key;
-    document.getElementById('videoDedupLabel').textContent = DEDUP_LEVELS[key].name;
   });
 
   // 输出格式
@@ -4754,7 +4731,8 @@ async function init() {
   });
 
   // 视频去重按钮
-  document.getElementById('btnVideoDedup').addEventListener('click', runVideoDedupCheck);
+  const btnVideoDedup = document.getElementById('btnVideoDedup');
+  if (btnVideoDedup) btnVideoDedup.addEventListener('click', runVideoDedupCheck);
 
   // ── 去重变换 UI 事件 ──
   window.toggleFlipH = function() {
