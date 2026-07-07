@@ -7525,6 +7525,30 @@ setupTabOrder();
     <input type="file" id="tmFileInput" accept="image/*" multiple style="display:none">
   </div>
   <div id="tmPendingUploads" style="margin:8px 0"></div>
+  <details style="margin-bottom:8px;font-size:11px;color:#6B7280;background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:8px">
+    <summary style="cursor:pointer;font-weight:600;color:#92400E">📋 当前生图规则（点击展开）</summary>
+    <div style="margin-top:6px;line-height:1.6">
+      <b>文字规则</b><br>
+      ① <b>零丢字</b>：用户输入的每一个字都必须出现在图上，不截断<br>
+      ② <b>统一字号</b>：换行时所有行同一字号，不区分主副标题<br>
+      ③ <b>不超边框</b>：文字自动缩小到画布内，不裁切不溢出<br>
+      ④ <b>禁止重复</b>：标题和关键词相同→只保留一个<br>
+      ⑤ <b>75-85%占比</b>：字多时文字面积扩展到画布84%<br>
+      ⑥ <b>禁止自动加字</b>：系统不添加额外文案<br><br>
+      <b>自动识别</b><br>
+      ⑦ <b>Badge标签</b>：检测学术词(论文/SCI/审稿)→自动REVISION等英文标签<br>
+      ⑧ <b>英文短句保护</b>：≤20字符的英文整句不拆分<br><br>
+      <b>分隔符</b><br>
+      ⑨ 换行(\n)→全部行合并为统一字号<br>
+      ⑩ 分隔符(｜/—/-/：/:)→拆主副标题<br>
+      ⑪ 无分隔符→全文为主标题<br><br>
+      <b>生成规则</b><br>
+      ⑫ 每模板×1张（60模板=60张）<br>
+      ⑬ 模板按seed随机打乱，不按固定顺序<br>
+      ⑭ 5个风格族按钮自由勾选<br>
+      ⑮ 仅comic/minimal特定模板允许5%出血(bleed)<br>
+    </div>
+  </details>
   <div id="tmTemplateList">加载中...</div>
   <div class="tm-stats" id="tmStats"></div>
 </div>
