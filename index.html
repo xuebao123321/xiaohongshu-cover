@@ -3685,15 +3685,20 @@ function drawTemplateEnhancedCover(ctx, text, palette, options, family) {
       // 映射 family → 模板ID
       var map = window.REAL_STYLE_MAP ? window.REAL_STYLE_MAP[family] : null;
       var realFamily = map ? map.realFamily : 'handnote';
-      // 每个真实风格族有2个模板，按vi选择
+      // 从该族所有模板中按种子抽取（每族最多12个模板全部参与）
       var vi = (options && options.vi) || 0;
-      var templateId = realFamily + '-0' + (vi % 2 + 1);
+      var seed = (options && options.seed) || 42;
+      var totalTemplates = window.TEMPLATE_REGISTRY
+        ? window.TEMPLATE_REGISTRY.filter(function(id){ return id.indexOf(realFamily) === 0; }).length
+        : 12;
+      var tplIndex = ((seed + vi * 7919) % totalTemplates) + 1;
+      var tplNum = tplIndex < 10 ? '0' + tplIndex : String(tplIndex);
+      var templateId = realFamily + '-' + tplNum;
       var result = window.renderTemplate(ctx, templateId, content, options);
       if (result && result.success) return;
-      // 模板失败 → 尝试另一个
-      var altId = realFamily + '-0' + ((vi + 1) % 2 + 1);
-      var altResult = window.renderTemplate(ctx, altId, content, options);
-      if (altResult && altResult.success) return;
+      // 模板失败 → 尝试 -01 兜底
+      var fbResult = window.renderTemplate(ctx, realFamily + '-01', content, options);
+      if (fbResult && fbResult.success) return;
       console.warn('Template render failed for ' + templateId + ', falling back to rule-based');
     } catch (err) {
       console.warn('模板驱动失败，回退到规则生成:', err.message || err);
