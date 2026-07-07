@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-16","styleFamily":"handnote","name":"灰蓝横线+荧光蓝标注+学习笔记+回形针",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#EEF2F7","overlay":{"type":"lines","spacing":26,"color":"rgba(0,0,0,0.04)","lineWidth":0.6}},
+  "titleBox":{"x":100,"y":460,"w":1042,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":295,"weight":900,"color":"#1E3A52","letterSpacing":-0.035},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(30,58,82,0.55)"},
+  "decorations":[
+    {"id":"hn16-tape","type":"tape","layer":"above","box":{"x":430,"y":240,"w":290,"h":32},"rotation":-3,"color":"rgba(180,200,220,0.45)"},
+    {"id":"hn16-highlighter","type":"highlighter","layer":"behind","box":{"x":150,"y":720,"w":940,"h":44},"color":"rgba(93,140,184,0.28)"},
+    {"id":"hn16-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1380,"w":110,"h":110},"emoji":"📎","fontSize":95},
+    {"id":"hn16-doodle","type":"doodle","layer":"above","box":{"x":1000,"y":1400,"w":90,"h":90},"doodleType":"star","color":"#5D8CB8","lineWidth":1.5}
+  ]
+}

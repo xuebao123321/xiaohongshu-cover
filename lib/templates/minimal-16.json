@@ -1,0 +1,62 @@
+{
+  "templateId": "minimal-16",
+  "styleFamily": "minimal",
+  "name": "暖灰底+超黑大字+底部短横+极简风",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#F5F3F0"
+  },
+  "titleBox": {
+    "x": 50,
+    "y": 360,
+    "w": 1142,
+    "h": 740
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 200,
+    "max": 480,
+    "weight": 900,
+    "color": "#111111",
+    "letterSpacing": -0.055
+  },
+  "subTitleBox": {
+    "x": 100,
+    "y": 1140,
+    "w": 1042,
+    "h": 60
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 32,
+    "max": 52,
+    "weight": 300,
+    "color": "rgba(0,0,0,0.32)"
+  },
+  "decorations": [
+    {
+      "id": "mn16-line",
+      "type": "thickLine",
+      "layer": "above",
+      "box": {
+        "x": 550,
+        "y": 1120,
+        "w": 140,
+        "h": 2
+      },
+      "color": "rgba(0,0,0,0.15)",
+      "lineWidth": 2
+    }
+  ],
+  "tags": {
+    "styleFamily": "minimal",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "极简"
+  }
+}

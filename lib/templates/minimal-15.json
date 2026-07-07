@@ -1,0 +1,62 @@
+{
+  "templateId": "minimal-15",
+  "styleFamily": "minimal",
+  "name": "淡青底+衬线大字+极简横线+优雅风",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#F4FAFA"
+  },
+  "titleBox": {
+    "x": 50,
+    "y": 370,
+    "w": 1142,
+    "h": 720
+  },
+  "titleFont": {
+    "family": "\"Noto Serif SC\",serif",
+    "min": 195,
+    "max": 460,
+    "weight": 900,
+    "color": "#1A2A2A",
+    "letterSpacing": -0.045
+  },
+  "subTitleBox": {
+    "x": 100,
+    "y": 1130,
+    "w": 1042,
+    "h": 70
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 32,
+    "max": 54,
+    "weight": 300,
+    "color": "rgba(26,42,42,0.35)"
+  },
+  "decorations": [
+    {
+      "id": "mn15-line",
+      "type": "thickLine",
+      "layer": "above",
+      "box": {
+        "x": 540,
+        "y": 1110,
+        "w": 160,
+        "h": 2
+      },
+      "color": "rgba(26,42,42,0.18)",
+      "lineWidth": 2
+    }
+  ],
+  "tags": {
+    "styleFamily": "minimal",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "居中",
+    "density": "极简"
+  }
+}

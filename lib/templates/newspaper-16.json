@@ -1,0 +1,108 @@
+{
+  "templateId": "newspaper-16",
+  "styleFamily": "newspaper",
+  "name": "暗红底+白字标题+金色点缀+特刊风格",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#8B1A1A"
+  },
+  "headerBar": {
+    "y": 0,
+    "h": 6,
+    "color": "#C9A45C"
+  },
+  "titleBox": {
+    "x": 70,
+    "y": 310,
+    "w": 1102,
+    "h": 450
+  },
+  "titleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 150,
+    "max": 290,
+    "weight": 900,
+    "color": "#FFFFFF",
+    "letterSpacing": -0.04
+  },
+  "subTitleBox": {
+    "x": 120,
+    "y": 810,
+    "w": 1002,
+    "h": 100
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 38,
+    "max": 74,
+    "weight": 400,
+    "color": "rgba(255,255,255,0.55)"
+  },
+  "footerBox": {
+    "x": 70,
+    "y": 1500,
+    "w": 1102,
+    "h": 60
+  },
+  "footerFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 22,
+    "max": 36,
+    "weight": 400,
+    "color": "rgba(255,255,255,0.35)"
+  },
+  "decorations": [
+    {
+      "id": "np16-divider",
+      "type": "divider",
+      "layer": "behind",
+      "box": {
+        "x": 70,
+        "y": 780,
+        "w": 1102,
+        "h": 1
+      },
+      "color": "rgba(201,164,92,0.35)",
+      "lineWidth": 1.5
+    },
+    {
+      "id": "np16-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 1020,
+        "y": 190,
+        "w": 130,
+        "h": 130
+      },
+      "color": "#C9A45C",
+      "rotation": -10,
+      "label": "特刊"
+    },
+    {
+      "id": "np16-badge",
+      "type": "badge",
+      "layer": "above",
+      "box": {
+        "x": 70,
+        "y": 110,
+        "w": 120,
+        "h": 40
+      },
+      "color": "#C9A45C",
+      "labelColor": "#8B1A1A",
+      "fontSize": 16
+    }
+  ],
+  "tags": {
+    "styleFamily": "newspaper",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "顶部",
+    "density": "标准"
+  }
+}

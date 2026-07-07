@@ -1,0 +1,108 @@
+{
+  "templateId": "newspaper-15",
+  "styleFamily": "newspaper",
+  "name": "米白底+衬线大标题+金色印章+典雅杂志",
+  "canvas": [
+    1242,
+    1656
+  ],
+  "background": {
+    "type": "solid",
+    "color": "#F8F5F0"
+  },
+  "headerBar": {
+    "y": 0,
+    "h": 4,
+    "color": "#B0823B"
+  },
+  "titleBox": {
+    "x": 70,
+    "y": 290,
+    "w": 1102,
+    "h": 480
+  },
+  "titleFont": {
+    "family": "\"Noto Serif SC\",serif",
+    "min": 145,
+    "max": 280,
+    "weight": 900,
+    "color": "#2D2520",
+    "letterSpacing": -0.03
+  },
+  "subTitleBox": {
+    "x": 120,
+    "y": 820,
+    "w": 1002,
+    "h": 90
+  },
+  "subTitleFont": {
+    "family": "\"Noto Sans SC\",sans-serif",
+    "min": 36,
+    "max": 72,
+    "weight": 400,
+    "color": "rgba(45,37,32,0.55)"
+  },
+  "footerBox": {
+    "x": 70,
+    "y": 1500,
+    "w": 1102,
+    "h": 60
+  },
+  "footerFont": {
+    "family": "\"Noto Serif SC\",serif",
+    "min": 22,
+    "max": 36,
+    "weight": 400,
+    "color": "rgba(45,37,32,0.38)"
+  },
+  "decorations": [
+    {
+      "id": "np15-divider",
+      "type": "divider",
+      "layer": "behind",
+      "box": {
+        "x": 70,
+        "y": 790,
+        "w": 1102,
+        "h": 2
+      },
+      "color": "rgba(176,130,59,0.25)",
+      "lineWidth": 2
+    },
+    {
+      "id": "np15-stamp",
+      "type": "stamp",
+      "layer": "above",
+      "box": {
+        "x": 1020,
+        "y": 190,
+        "w": 125,
+        "h": 125
+      },
+      "color": "#B0823B",
+      "rotation": -10,
+      "label": "ELEGANT"
+    },
+    {
+      "id": "np15-badge",
+      "type": "badge",
+      "layer": "above",
+      "box": {
+        "x": 70,
+        "y": 110,
+        "w": 120,
+        "h": 40
+      },
+      "color": "#2D2520",
+      "labelColor": "#F8F5F0",
+      "fontSize": 16
+    }
+  ],
+  "tags": {
+    "styleFamily": "newspaper",
+    "colorTone": "白色",
+    "fontStyle": "衬线",
+    "structure": "顶部",
+    "density": "标准"
+  }
+}

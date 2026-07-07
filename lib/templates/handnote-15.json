@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-15","styleFamily":"handnote","name":"暖黄方格+马克笔重影+咖啡杯涂鸦+手撕胶带",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDF6E9","overlay":{"type":"grid","spacing":24,"color":"rgba(0,0,0,0.05)","lineWidth":0.7}},
+  "titleBox":{"x":100,"y":450,"w":1042,"h":510},
+  "titleFont":{"family":"\"ZCOOL QingKe HuangYou\",\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":400,"color":"#3A2E1A","letterSpacing":-0.025},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(58,46,26,0.60)"},
+  "decorations":[
+    {"id":"hn15-tape","type":"tape","layer":"above","box":{"x":400,"y":240,"w":310,"h":36},"rotation":-5,"color":"rgba(220,200,150,0.55)"},
+    {"id":"hn15-marker","type":"markerGhost","layer":"behind","box":{"x":98,"y":448,"w":1046,"h":514},"color":"rgba(139,111,71,0.10)","offsetX":3,"offsetY":3},
+    {"id":"hn15-doodle","type":"doodle","layer":"above","box":{"x":980,"y":1380,"w":110,"h":110},"doodleType":"star","color":"#8B6F47","lineWidth":2},
+    {"id":"hn15-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1400,"w":100,"h":100},"emoji":"☕","fontSize":90}
+  ]
+}
