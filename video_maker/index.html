@@ -649,12 +649,12 @@ button{font-family:inherit;cursor:pointer}
         <div class="vm-card-body">
           <div class="vm-video-trim">
             <span style="font-size:11px;white-space:nowrap">起始</span>
-            <input type="range" id="trimStart" min="0" max="100" value="0" disabled>
+            <input type="range" id="trimStart" min="0" max="100" step="0.1" value="0" disabled>
             <span class="slider-val" id="trimStartVal">00:00</span>
           </div>
           <div class="vm-video-trim">
             <span style="font-size:11px;white-space:nowrap">结束</span>
-            <input type="range" id="trimEnd" min="0" max="100" value="100" disabled>
+            <input type="range" id="trimEnd" min="0" max="100" step="0.1" value="100" disabled>
             <span class="slider-val" id="trimEndVal">00:00</span>
           </div>
           <div class="vm-video-info" id="trimSummary">请先上传视频</div>
@@ -1180,7 +1180,7 @@ async function handleImageUpload(files) {
           width: thumb.width,
           height: thumb.height,
           size: file.size,
-          duration: STATE.settings.secondsPerImage,
+          duration: STATE.settings.secondsPerImage,  // 图片时长跟随全局设置
           mediaType: 'image',
         });
       }
@@ -1675,7 +1675,7 @@ function renderTimeline() {
          ondragend="handleDragEnd(event)">
       <div class="tl-index">${img.mediaType === 'video' ? '🎬' : i + 1}</div>
       <img class="tl-thumb" src="${img.thumbnail}" alt="${img.name}" draggable="false">
-      <div class="tl-duration">${(img.duration || STATE.settings.secondsPerImage).toFixed(1)}s</div>
+      <div class="tl-duration">${(img.mediaType === 'video' ? img.duration : STATE.settings.secondsPerImage).toFixed(1)}s</div>
       <div class="tl-actions">
         <button class="tl-btn tl-replace" title="替换" onclick="event.stopPropagation();replaceImage(${i})">🔄</button>
         <button class="tl-btn tl-remove" title="删除" onclick="event.stopPropagation();removeImage(${i})">×</button>
@@ -1896,7 +1896,7 @@ window.applyBackgroundMode = applyBackgroundMode;
 function updateTotalDuration() {
   let total = 0;
   for (const img of STATE.images) {
-    total += img.duration || STATE.settings.secondsPerImage;
+    total += (img.mediaType === 'video' ? img.duration : STATE.settings.secondsPerImage);
   }
   total += STATE.settings.coverHold + STATE.settings.endHold;
 
@@ -1904,8 +1904,8 @@ function updateTotalDuration() {
   const tStart = document.getElementById('slideshowTrimStart');
   const tEnd = document.getElementById('slideshowTrimEnd');
   if (STATE.images.length > 0) {
-    tStart.disabled = false; tStart.max = total;
-    tEnd.disabled = false;   tEnd.max = total;
+    tStart.disabled = false; tStart.max = total; tStart.setAttribute('max', total);
+    tEnd.disabled = false;   tEnd.max = total;   tEnd.setAttribute('max', total);
     // 首次加载或内容增加时自动扩展 trimEnd 到全长(用户手动调过则不覆盖)
     if (!STATE._trimAdjusted || STATE.settings.trimEnd > total || STATE.settings.trimEnd <= 0) {
       STATE.settings.trimEnd = total;
@@ -1953,7 +1953,7 @@ function calculateTotalFrames() {
 function calculateTotalDuration() {
   let total = 0;
   for (const img of STATE.images) {
-    total += img.duration || STATE.settings.secondsPerImage;
+    total += (img.mediaType === 'video' ? img.duration : STATE.settings.secondsPerImage);
   }
   total += STATE.settings.coverHold + STATE.settings.endHold;
   // 应用剪辑
@@ -1966,7 +1966,7 @@ function calculateTotalDuration() {
 function calculateFullDuration() {
   let total = 0;
   for (const img of STATE.images) {
-    total += img.duration || STATE.settings.secondsPerImage;
+    total += (img.mediaType === 'video' ? img.duration : STATE.settings.secondsPerImage);
   }
   total += STATE.settings.coverHold + STATE.settings.endHold;
   return total;
@@ -3751,11 +3751,11 @@ function updateVideoTrimForActive() {
   VIDEO_STATE.trimStart = 0;
   VIDEO_STATE.trimEnd = v.duration;
   document.getElementById('trimStart').disabled = false;
-  document.getElementById('trimStart').max = Math.floor(v.duration);
+  document.getElementById('trimStart').max = v.duration;
   document.getElementById('trimStart').value = 0;
   document.getElementById('trimEnd').disabled = false;
-  document.getElementById('trimEnd').max = Math.floor(v.duration);
-  document.getElementById('trimEnd').value = Math.floor(v.duration);
+  document.getElementById('trimEnd').max = v.duration;
+  document.getElementById('trimEnd').value = v.duration;
   document.getElementById('trimStartVal').textContent = formatTime(0);
   document.getElementById('trimEndVal').textContent = formatTime(v.duration);
   document.getElementById('trimInfo').textContent = v.name.slice(0, 20);
