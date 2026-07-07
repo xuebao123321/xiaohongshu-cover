@@ -1,0 +1,19 @@
+{
+  "templateId":"collage-06","styleFamily":"collage","name":"都市冷色+几何色块+票根风格",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#E8EEF5"},
+  "titleBox":{"x":120,"y":380,"w":1002,"h":480},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#1A1A1A","stroke":{"color":"#FFFFFF","width":3},"letterSpacing":-0.04},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":400,"color":"rgba(0,0,0,0.60)"},
+  "decorations":[
+    {"id":"cl6-ticket","type":"tornNote","layer":"behind","box":{"x":300,"y":300,"w":640,"h":540},"color":"#FFFFFF","rotation":-3,"shadow":true},
+    {"id":"cl6-block-blue","type":"colorBlock","layer":"behind","box":{"x":60,"y":120,"w":100,"h":100},"color":"rgba(1,47,167,0.20)","shape":"rect"},
+    {"id":"cl6-block-pink","type":"colorBlock","layer":"behind","box":{"x":1050,"y":880,"w":110,"h":90},"color":"rgba(247,141,233,0.22)","shape":"circle"},
+    {"id":"cl6-block-yellow","type":"colorBlock","layer":"behind","box":{"x":60,"y":900,"w":80,"h":80},"color":"rgba(255,236,71,0.25)","shape":"rect"},
+    {"id":"cl6-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":220,"w":125,"h":125},"color":"#012FA7","rotation":-9,"label":"URBAN"},
+    {"id":"cl6-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":240,"h":30},"rotation":-2,"color":"rgba(200,215,230,0.50)"},
+    {"id":"cl6-arrow","type":"arrow","layer":"above","box":{"x":800,"y":1080,"w":150,"h":50},"color":"#012FA7","lineWidth":2.5,"direction":"bottomRight"},
+    {"id":"cl6-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1420,"w":100,"h":100},"emoji":"🌆","fontSize":90}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-05","styleFamily":"collage","name":"暗色拼贴+金色印章+撕纸层次",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#1A1A1A"},
+  "titleBox":{"x":120,"y":400,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":130,"max":260,"weight":900,"color":"#FFFFFF","stroke":{"color":"#000000","width":4},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":920,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":76,"weight":400,"color":"rgba(255,255,255,0.55)"},
+  "decorations":[
+    {"id":"cl5-note1","type":"tornNote","layer":"behind","box":{"x":280,"y":320,"w":660,"h":500},"color":"#2A2A2A","rotation":-4,"shadow":true},
+    {"id":"cl5-note2","type":"tornNote","layer":"behind","box":{"x":120,"y":420,"w":480,"h":430},"color":"#333333","rotation":-11,"shadow":true},
+    {"id":"cl5-note3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#3A3A3A","rotation":9,"shadow":true},
+    {"id":"cl5-stamp-gold","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":140,"h":140},"color":"#C9A45C","rotation":-12,"label":"GOLD"},
+    {"id":"cl5-arrow","type":"arrow","layer":"above","box":{"x":200,"y":1080,"w":160,"h":50},"color":"#C9A45C","lineWidth":2.5,"direction":"topLeft"},
+    {"id":"cl5-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1420,"w":100,"h":100},"emoji":"💫","fontSize":90}
+  ]
+}

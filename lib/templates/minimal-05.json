@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-05","styleFamily":"minimal","name":"暖灰底+超大衬线标题+极细装饰线",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F7F5F2"},
+  "titleBox":{"x":60,"y":380,"w":1122,"h":720},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":190,"max":460,"weight":900,"color":"#1A1614","letterSpacing":-0.04},
+  "subTitleBox":{"x":100,"y":1140,"w":1042,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":34,"max":60,"weight":300,"color":"rgba(26,22,20,0.40)"},
+  "decorations":[
+    {"id":"mn5-line","type":"thickLine","layer":"above","box":{"x":540,"y":1120,"w":160,"h":2},"color":"rgba(26,22,20,0.25)","lineWidth":1.5}
+  ]
+}
