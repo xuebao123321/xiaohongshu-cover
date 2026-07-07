@@ -6200,18 +6200,21 @@ function allocDecorPositions(seed) {
  * @param {HTMLElement} wrap - 卡片容器元素
  */
 function rerollOne(wrap) {
-  const fam = wrap.dataset.family;
-  const vi = parseInt(wrap.dataset.vi, 10);
-  const newVi = (vi + 1) % TEMPLATE_CONTRACT.variantsPerStyle;
-  const baseSeed = parseInt(wrap.dataset.seed || STATE.seed, 10) || STATE.seed;
-  const newSeed = baseSeed + TEMPLATE_CONTRACT.variantsPerStyle;
-  const text = wrap.dataset.sourceText || STATE.text;
-  const newCard = buildOneCard(fam, newVi, text, newSeed, {
+  var fam = wrap.dataset.family;
+  var vi = parseInt(wrap.dataset.vi, 10);
+  var newVi = (vi + 1) % 3;
+  var baseSeed = parseInt(wrap.dataset.seed || STATE.seed, 10) || STATE.seed;
+  var newSeed = baseSeed + 97;
+  var text = wrap.dataset.sourceText || STATE.text;
+  var meta = {
     selectable: wrap.classList.contains('selectable-card'),
     batchIndex: wrap.dataset.batchIndex,
     cardIndex: wrap.dataset.cardIndex,
-    text,
-  });
+    text: text,
+  };
+  // 保留 templateId（如果存在）
+  if (wrap.dataset.templateId) meta.templateId = wrap.dataset.templateId;
+  var newCard = buildOneCard(fam, newVi, text, newSeed, meta);
 
   // 0.3s 淡入淡出过渡(批次 5 要求)
   newCard.style.opacity = '0';
@@ -6348,15 +6351,8 @@ function renderCandidateBatch(group, startIndex, count) {
       var ctx = canvas.getContext('2d');
       var content = window.parseCoverContent ? window.parseCoverContent(candidate._text || '') : { mainTitle: candidate._text || '' };
       var options = { vi: 0, seed: candidate.seed, font: STATE.font || 'black', templateId: candidate.templateId };
-      if (window.renderTemplate) {
-        var result = window.renderTemplate(ctx, candidate.templateId, content, options);
-        if (!result || !result.success) {
-          // 回退规则引擎
-          window.drawRealStyleCover(ctx, candidate._text || '', {}, options, candidate.family);
-        }
-      } else {
-        window.drawRealStyleCover(ctx, candidate._text || '', {}, options, candidate.family);
-      }
+      // 模板优先 → 规则引擎 → 旧版
+      drawTemplateEnhancedCover(ctx, candidate._text || '', {}, options, candidate.family);
     } catch (err) {
       console.error('候选 ' + i + ' 渲染失败:', err);
       const ctx = canvas.getContext('2d');
@@ -7157,7 +7153,10 @@ function assertTemplateSafeBounds(ctx, safePad, family, vi) {
   }
   if (minX >= maxX || minY >= maxY) return;
   if (minX >= safePad && minY >= safePad && maxX <= W - safePad && maxY <= H - safePad) return;
-  console.warn('[v4.0] 模板内容接近边界,请调整模板槽位:', family, vi, { minX, minY, maxX, maxY, safePad });
+  // 模板模式下静默（模板自带 titleSafeRect，边界由模板定义）
+  if (!STATE.realStyleMode) {
+    console.warn('[v4.0] 模板内容接近边界,请调整模板槽位:', family, vi, { minX, minY, maxX, maxY, safePad });
+  }
 }
 
 /**
