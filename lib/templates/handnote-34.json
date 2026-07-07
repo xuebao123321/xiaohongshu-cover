@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-34","styleFamily":"handnote","name":"牛皮纸+棕墨字+羽毛涂鸦+复古笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F5ECD7","overlay":{"type":"lines","spacing":26,"color":"rgba(139,105,60,0.08)","lineWidth":0.6}},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":520},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":150,"max":290,"weight":900,"color":"#4A3020","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(74,48,32,0.50)"},
+  "decorations":[
+    {"id":"hn34-tape","type":"tape","layer":"above","box":{"x":420,"y":240,"w":300,"h":35},"rotation":3,"color":"rgba(180,150,100,0.50)"},
+    {"id":"hn34-highlighter","type":"highlighter","layer":"behind","box":{"x":140,"y":710,"w":960,"h":46},"color":"rgba(210,180,120,0.30)"},
+    {"id":"hn34-badge","type":"badge","layer":"above","box":{"x":80,"y":140,"w":130,"h":42},"color":"#6B4A2A","labelColor":"#F5ECD7","fontSize":16},
+    {"id":"hn34-emoji","type":"emoji","layer":"above","box":{"x":85,"y":1380,"w":110,"h":110},"emoji":"🪶","fontSize":100}
+  ]
+}

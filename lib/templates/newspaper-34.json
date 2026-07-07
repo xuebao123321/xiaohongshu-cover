@@ -1,0 +1,17 @@
+{
+  "templateId":"newspaper-34","styleFamily":"newspaper","name":"炭底+银白标题+铂金印章+暗夜特刊",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#1C1C20"},
+  "headerBar":{"y":0,"h":5,"color":"#C0C0C0"},
+  "titleBox":{"x":70,"y":280,"w":1102,"h":470},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#E8E8E8","letterSpacing":-0.035},
+  "subTitleBox":{"x":120,"y":800,"w":1002,"h":90},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":74,"weight":400,"color":"rgba(232,232,232,0.45)"},
+  "footerBox":{"x":70,"y":1500,"w":1102,"h":60},
+  "footerFont":{"family":"\"Noto Sans SC\",sans-serif","min":22,"max":36,"weight":400,"color":"rgba(232,232,232,0.28)"},
+  "decorations":[
+    {"id":"np34-divider","type":"divider","layer":"behind","box":{"x":70,"y":770,"w":1102,"h":1},"color":"rgba(192,192,192,0.22)","lineWidth":1.5},
+    {"id":"np34-stamp","type":"stamp","layer":"above","box":{"x":1020,"y":190,"w":130,"h":130},"color":"#C0C0C0","rotation":-10,"label":"NOIR"},
+    {"id":"np34-badge","type":"badge","layer":"above","box":{"x":70,"y":110,"w":120,"h":40},"color":"#C0C0C0","labelColor":"#1C1C20","fontSize":16}
+  ]
+}
