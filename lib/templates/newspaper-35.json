@@ -1,0 +1,17 @@
+{
+  "templateId":"newspaper-35","styleFamily":"newspaper","name":"奶白底+黑衬线+红印章+经典日报",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDFBF7"},
+  "headerBar":{"y":0,"h":5,"color":"#1A1A1A"},
+  "titleBox":{"x":70,"y":280,"w":1102,"h":470},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":150,"max":290,"weight":900,"color":"#0A0A0A","letterSpacing":-0.04},
+  "subTitleBox":{"x":120,"y":800,"w":1002,"h":90},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":74,"weight":400,"color":"rgba(0,0,0,0.50)"},
+  "footerBox":{"x":70,"y":1500,"w":1102,"h":60},
+  "footerFont":{"family":"\"Noto Serif SC\",serif","min":22,"max":36,"weight":400,"color":"rgba(0,0,0,0.30)"},
+  "decorations":[
+    {"id":"np35-divider","type":"divider","layer":"behind","box":{"x":70,"y":770,"w":1102,"h":1},"color":"rgba(0,0,0,0.18)","lineWidth":1.5},
+    {"id":"np35-stamp","type":"stamp","layer":"above","box":{"x":1020,"y":190,"w":130,"h":130},"color":"#CC2233","rotation":-9,"label":"DAILY"},
+    {"id":"np35-badge","type":"badge","layer":"above","box":{"x":70,"y":110,"w":120,"h":40},"color":"#1A1A1A","labelColor":"#FDFBF7","fontSize":16}
+  ]
+}

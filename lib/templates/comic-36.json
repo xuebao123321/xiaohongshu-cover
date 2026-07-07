@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-36","styleFamily":"comic","name":"白底pop+七彩字+派对emoji+庆典风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFFFF"},
+  "backgroundOverlay":{"type":"halftone","dotSize":2,"spacing":12,"color":"rgba(0,0,0,0.04)"},
+  "burstLines":{"count":18,"from":{"x":621,"y":580},"color":"rgba(255,0,128,0.12)","lineWidth":2,"innerR":120,"outerR":860},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":300,"weight":900,"color":"#FF1493","stroke":{"color":"#1A1A1A","width":4},"letterSpacing":-0.04},
+  "subTitleBox":{"x":160,"y":940,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#6A0A4A"},
+  "decorations":[
+    {"id":"cm36-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"🎉","fontSize":140},
+    {"id":"cm36-sfx","type":"sfx","layer":"above","box":{"x":870,"y":1340,"w":210,"h":100},"text":"YAY!","fontSize":68,"color":"#FF1493","rotation":5,"strokeColor":"#1A1A1A","strokeWidth":3},
+    {"id":"cm36-star","type":"starBurst","layer":"above","box":{"x":140,"y":190,"w":80,"h":80},"color":"#FFD700","strokeColor":"#1A1A1A","strokeWidth":1.5}
+  ]
+}

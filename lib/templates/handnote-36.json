@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-36","styleFamily":"handnote","name":"桃粉纸+玫红字+唇印印章+甜心笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF5F7","overlay":{"type":"lines","spacing":25,"color":"rgba(200,80,120,0.04)","lineWidth":0.5}},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":520},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#C04060","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(192,64,96,0.50)"},
+  "decorations":[
+    {"id":"hn36-tape","type":"tape","layer":"above","box":{"x":420,"y":240,"w":300,"h":35},"rotation":-4,"color":"rgba(230,160,180,0.45)"},
+    {"id":"hn36-highlighter","type":"highlighter","layer":"behind","box":{"x":140,"y":710,"w":960,"h":46},"color":"rgba(255,180,200,0.28)"},
+    {"id":"hn36-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":155,"w":115,"h":115},"color":"#C04060","rotation":-8,"label":"LOVE"},
+    {"id":"hn36-emoji","type":"emoji","layer":"above","box":{"x":85,"y":1380,"w":110,"h":110},"emoji":"💋","fontSize":100}
+  ]
+}

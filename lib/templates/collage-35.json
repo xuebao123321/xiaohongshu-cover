@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-35","styleFamily":"collage","name":"桃橙底+米白便签+太阳印章+暖阳拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF3ED"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#C0502A","stroke":{"color":"#FFFFFF","width":3},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(192,80,42,0.50)"},
+  "decorations":[
+    {"id":"cl35-n1","type":"tornNote","layer":"behind","box":{"x":250,"y":300,"w":680,"h":510},"color":"#FFFDF8","rotation":-3,"shadow":true},
+    {"id":"cl35-n2","type":"tornNote","layer":"behind","box":{"x":80,"y":395,"w":500,"h":450},"color":"#FFF8F0","rotation":-12,"shadow":true},
+    {"id":"cl35-n3","type":"tornNote","layer":"behind","box":{"x":525,"y":445,"w":510,"h":430},"color":"#FFFFFF","rotation":8,"shadow":true},
+    {"id":"cl35-stamp","type":"stamp","layer":"above","box":{"x":985,"y":195,"w":130,"h":130},"color":"#F08040","rotation":-9,"label":"SUNNY"},
+    {"id":"cl35-tape","type":"tape","layer":"above","box":{"x":385,"y":270,"w":280,"h":34},"rotation":-4,"color":"rgba(240,160,120,0.45)"},
+    {"id":"cl35-emoji","type":"emoji","layer":"above","box":{"x":75,"y":1400,"w":110,"h":110},"emoji":"☀️","fontSize":100}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-36","styleFamily":"collage","name":"森林绿底+奶白便签+松果印章+森林拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#2A4A3A"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":140,"max":260,"weight":900,"color":"#FFFFFF","stroke":{"color":"#1A3020","width":3},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(255,255,255,0.48)"},
+  "decorations":[
+    {"id":"cl36-n1","type":"tornNote","layer":"behind","box":{"x":250,"y":300,"w":680,"h":500},"color":"#F5F0E0","rotation":-3,"shadow":true},
+    {"id":"cl36-n2","type":"tornNote","layer":"behind","box":{"x":90,"y":400,"w":490,"h":440},"color":"#FFF8EE","rotation":-12,"shadow":true},
+    {"id":"cl36-n3","type":"tornNote","layer":"behind","box":{"x":530,"y":450,"w":510,"h":430},"color":"#FAF2E0","rotation":9,"shadow":true},
+    {"id":"cl36-stamp","type":"stamp","layer":"above","box":{"x":980,"y":195,"w":130,"h":130},"color":"#D4A84A","rotation":-8,"label":"FOREST"},
+    {"id":"cl36-tape","type":"tape","layer":"above","box":{"x":390,"y":270,"w":270,"h":33},"rotation":3,"color":"rgba(255,255,255,0.12)"},
+    {"id":"cl36-emoji","type":"emoji","layer":"above","box":{"x":75,"y":1400,"w":110,"h":110},"emoji":"🌲","fontSize":100}
+  ]
+}
