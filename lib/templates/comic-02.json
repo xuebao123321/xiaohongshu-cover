@@ -1,0 +1,21 @@
+{
+  "templateId": "comic-02",
+  "styleFamily": "comic",
+  "name": "黄色pop+对话气泡+3D emoji+速度线",
+  "source": "REFERENCE_IMAGES_ANALYSIS.md §5 风格族C",
+  "canvas": [1242, 1656],
+  "background": { "type": "solid", "color": "#FFEC47" },
+  "backgroundOverlay": { "type": "halftone", "dotSize": 2.5, "spacing": 12, "color": "rgba(0,0,0,0.22)" },
+  "speedLines": { "direction": "horizontal", "count": 14, "color": "rgba(0,0,0,0.12)", "lineWidth": 1.5 },
+  "titleBox": { "x": 80, "y": 380, "w": 1082, "h": 520 },
+  "titleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 160, "max": 320, "weight": 900, "color": "#000000", "stroke": { "color": "#FFFFFF", "width": 4 }, "letterSpacing": -0.04 },
+  "subTitleBox": { "x": 140, "y": 940, "w": 960, "h": 80 },
+  "subTitleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 42, "max": 84, "weight": 700, "color": "#ED0108" },
+  "decorations": [
+    { "id": "cm2-bubble", "type": "speechBubble", "layer": "above", "box": { "x": 880, "y": 160, "w": 180, "h": 110 }, "color": "#FFFFFF", "strokeColor": "#000000", "strokeWidth": 3, "text": "OMG!", "textSize": 30 },
+    { "id": "cm2-emoji-star", "type": "emoji", "layer": "above", "box": { "x": 1000, "y": 1320, "w": 140, "h": 140 }, "emoji": "⭐", "fontSize": 120 },
+    { "id": "cm2-starburst", "type": "starBurst", "layer": "above", "box": { "x": 100, "y": 220, "w": 90, "h": 90 }, "color": "#ED0108", "strokeColor": "#000000", "strokeWidth": 2 },
+    { "id": "cm2-sfx", "type": "sfx", "layer": "above", "box": { "x": 100, "y": 1400, "w": 160, "h": 100 }, "text": "WOW", "fontSize": 70, "color": "#012FA7", "rotation": -5, "strokeColor": "#FFFFFF", "strokeWidth": 2 }
+  ],
+  "titleSafeRect": { "x": 50, "y": 340, "w": 1142, "h": 600 }
+}

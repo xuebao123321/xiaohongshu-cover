@@ -1,0 +1,21 @@
+{
+  "templateId": "newspaper-02",
+  "styleFamily": "newspaper",
+  "name": "上下色块分割+横幅标题+编号标签",
+  "source": "REFERENCE_IMAGES_ANALYSIS.md §6 风格族D",
+  "canvas": [1242, 1656],
+  "background": { "type": "split", "splitY": 1100, "topColor": "#F5E6CF", "bottomColor": "#EFE1C7" },
+  "bannerStrip": { "y": 350, "h": 420, "color": "rgba(176,130,59,0.08)" },
+  "titleBox": { "x": 100, "y": 370, "w": 1042, "h": 380 },
+  "titleFont": { "family": "\"Noto Serif SC\", serif", "min": 140, "max": 280, "weight": 900, "color": "#21170F", "letterSpacing": -0.03 },
+  "subTitleBox": { "x": 140, "y": 800, "w": 960, "h": 90 },
+  "subTitleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 38, "max": 76, "weight": 400, "color": "rgba(33,23,15,0.70)" },
+  "footerBox": { "x": 80, "y": 1480, "w": 1082, "h": 60 },
+  "footerFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 22, "max": 38, "weight": 400, "color": "rgba(33,23,15,0.45)" },
+  "decorations": [
+    { "id": "np2-divider", "type": "divider", "layer": "behind", "box": { "x": 100, "y": 1100, "w": 1042, "h": 3 }, "color": "#B0823B", "lineWidth": 3 },
+    { "id": "np2-stamp", "type": "stamp", "layer": "above", "box": { "x": 1020, "y": 220, "w": 120, "h": 120 }, "color": "#B0823B", "rotation": -12, "label": "TOP" },
+    { "id": "np2-badge", "type": "badge", "layer": "above", "box": { "x": 100, "y": 140, "w": 110, "h": 38 }, "color": "#21170F", "labelColor": "#F5E6CF", "fontSize": 16 }
+  ],
+  "titleSafeRect": { "x": 80, "y": 330, "w": 1082, "h": 500 }
+}

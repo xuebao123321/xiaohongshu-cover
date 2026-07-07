@@ -1,0 +1,22 @@
+{
+  "templateId": "collage-02",
+  "styleFamily": "collage",
+  "name": "杂志拼贴+色块散布+拍立得框",
+  "source": "REFERENCE_IMAGES_ANALYSIS.md §4 风格族B",
+  "canvas": [1242, 1656],
+  "background": { "type": "solid", "color": "#F0F0F0" },
+  "titleBox": { "x": 120, "y": 380, "w": 1002, "h": 500 },
+  "titleFont": { "family": "\"Noto Sans SC\", sans-serif", "min": 140, "max": 270, "weight": 900, "color": "#1A1A1A", "stroke": { "color": "#FFFFFF", "width": 3 }, "letterSpacing": -0.04 },
+  "subTitleBox": { "x": 180, "y": 920, "w": 880, "h": 80 },
+  "subTitleFont": { "family": "\"Noto Serif SC\", serif", "min": 40, "max": 80, "weight": 400, "color": "rgba(26,26,26,0.65)" },
+  "decorations": [
+    { "id": "cl2-polaroid", "type": "polaroid", "layer": "behind", "box": { "x": 300, "y": 280, "w": 640, "h": 640 }, "rotation": -3, "shadow": true },
+    { "id": "cl2-block-red", "type": "colorBlock", "layer": "behind", "box": { "x": 50, "y": 120, "w": 120, "h": 120 }, "color": "rgba(237,1,8,0.25)", "shape": "circle" },
+    { "id": "cl2-block-blue", "type": "colorBlock", "layer": "behind", "box": { "x": 1020, "y": 900, "w": 140, "h": 100 }, "color": "rgba(1,47,167,0.20)", "shape": "rect" },
+    { "id": "cl2-stamp", "type": "stamp", "layer": "above", "box": { "x": 1000, "y": 200, "w": 130, "h": 130 }, "color": "#012FA7", "rotation": -8, "label": "NEW" },
+    { "id": "cl2-arrow", "type": "arrow", "layer": "above", "box": { "x": 160, "y": 1100, "w": 160, "h": 50 }, "color": "#ED0108", "lineWidth": 2.5, "direction": "topLeft" },
+    { "id": "cl2-tape", "type": "tape", "layer": "above", "box": { "x": 440, "y": 270, "w": 250, "h": 32 }, "rotation": 2, "color": "rgba(230,210,170,0.50)" },
+    { "id": "cl2-emoji-sparkle", "type": "emoji", "layer": "above", "box": { "x": 80, "y": 1420, "w": 100, "h": 100 }, "emoji": "✨", "fontSize": 90 }
+  ],
+  "titleSafeRect": { "x": 80, "y": 340, "w": 1082, "h": 580 }
+}

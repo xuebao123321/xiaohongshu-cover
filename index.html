@@ -979,6 +979,8 @@ import './lib/real-style-decorations.js';
 import './lib/real-style-renderer.js';
 import './lib/real-style-random.js';
 import './lib/real-style-stickers.js';
+import './lib/template-loader.js';
+import './lib/template-renderer.js';
 
 // ═══════════ 全局配置 ═══════════
 const CANVAS_W = 1242;   // 3:4 标准小红书尺寸
@@ -3641,17 +3643,36 @@ const LOCKED_TEMPLATE_STYLES = Object.freeze({
  * 与 drawLockedTemplateCover 接口完全一致,可直接替换。
  */
 function drawTemplateEnhancedCover(ctx, text, palette, options, family) {
-  // ── 真实风格模式路由 ──
+  // ══════ 模板驱动模式（优先）══════
+  if (STATE.realStyleMode && window.TEMPLATE_LIBRARY && window.renderTemplate) {
+    try {
+      // 解析内容
+      var content = window.parseCoverContent ? window.parseCoverContent(text || '') : { mainTitle: text || '', subTitle: '', keyword: '', badgeText: '', footerText: '' };
+      // 映射 family → 模板ID
+      var map = window.REAL_STYLE_MAP ? window.REAL_STYLE_MAP[family] : null;
+      var realFamily = map ? map.realFamily : 'handnote';
+      // 每个真实风格族有2个模板，按vi选择
+      var vi = (options && options.vi) || 0;
+      var templateId = realFamily + '-0' + (vi % 2 + 1);
+      var result = window.renderTemplate(ctx, templateId, content, options);
+      if (result && result.success) return;
+      // 模板失败 → 尝试另一个
+      var altId = realFamily + '-0' + ((vi + 1) % 2 + 1);
+      var altResult = window.renderTemplate(ctx, altId, content, options);
+      if (altResult && altResult.success) return;
+      console.warn('Template render failed for ' + templateId + ', falling back to rule-based');
+    } catch (err) {
+      console.warn('模板驱动失败，回退到规则生成:', err.message || err);
+    }
+  }
+  // ── 规则生成模式（回退）──
   if (STATE.realStyleMode && window.drawRealStyleCover) {
     try {
       return window.drawRealStyleCover(ctx, text, palette, options, family);
     } catch (err) {
       console.warn('真实风格渲染失败，回退到旧版:', err.message || err);
-      // 继续执行旧版渲染
     }
   }
-  // 所有 v5 功能已在 drawLockedTemplateCover 中集成,
-  // 此处直接委托(若需差异逻辑可在此扩展)
   return drawLockedTemplateCover(ctx, text, palette, options, family);
 }
 
