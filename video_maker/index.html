@@ -977,6 +977,7 @@ function initUI() {
 
   // 剪辑滑块
   document.getElementById('slideshowTrimStart').addEventListener('input', function() {
+    if (STATE._programmaticTrim) return;
     STATE._trimAdjusted = true;
     STATE.settings.trimStart = parseFloat(this.value);
     document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart);
@@ -988,6 +989,7 @@ function initUI() {
     updateSlideshowTrimEstimate();
   });
   document.getElementById('slideshowTrimEnd').addEventListener('input', function() {
+    if (STATE._programmaticTrim) return;
     STATE._trimAdjusted = true;
     STATE.settings.trimEnd = parseFloat(this.value);
     document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd);
@@ -1906,12 +1908,22 @@ function updateTotalDuration() {
   if (STATE.images.length > 0) {
     tStart.disabled = false; tStart.max = total; tStart.setAttribute('max', total);
     tEnd.disabled = false;   tEnd.max = total;   tEnd.setAttribute('max', total);
-    // 首次加载或内容增加时自动扩展 trimEnd 到全长(用户手动调过则不覆盖)
-    if (!STATE._trimAdjusted || STATE.settings.trimEnd > total || STATE.settings.trimEnd <= 0) {
+    // 自动同步 trimEnd:
+    // 1. 初始化时设为全长
+    // 2. 用户未手动调过时,内容增加自动扩展
+    // 3. 总时长缩小后超出范围时收缩
+    if (STATE.settings.trimEnd <= 0) {
+      STATE.settings.trimEnd = total;
+    } else if (!STATE._trimAdjusted && total > STATE.settings.trimEnd) {
+      STATE.settings.trimEnd = total;
+    } else if (STATE.settings.trimEnd > total) {
       STATE.settings.trimEnd = total;
     }
+    // 防止 set value 触发 input 事件污染 _trimAdjusted 标志
+    STATE._programmaticTrim = true;
     tStart.value = STATE.settings.trimStart || 0;
     tEnd.value = STATE.settings.trimEnd;
+    STATE._programmaticTrim = false;
   } else {
     tStart.disabled = true; tEnd.disabled = true;
     STATE.settings.trimStart = 0;
