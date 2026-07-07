@@ -534,6 +534,25 @@ button{font-family:inherit;cursor:pointer}
       </div>
     </details>
 
+    <!-- ✂️ 视频剪辑 -->
+    <details class="vm-card" id="cardSlideshowTrim" open>
+      <summary>✂️ 视频剪辑 <span id="slideshowTrimLabel" style="font-weight:400;color:#a8a098;font-size:11px">完整视频</span></summary>
+      <div class="vm-card-body">
+        <div class="vm-video-trim">
+          <span style="font-size:11px;white-space:nowrap">起始</span>
+          <input type="range" id="slideshowTrimStart" min="0" max="100" value="0" disabled>
+          <span class="slider-val" id="slideshowTrimStartVal">00:00</span>
+        </div>
+        <div class="vm-video-trim">
+          <span style="font-size:11px;white-space:nowrap">结束</span>
+          <input type="range" id="slideshowTrimEnd" min="0" max="100" value="100" disabled>
+          <span class="slider-val" id="slideshowTrimEndVal">00:00</span>
+        </div>
+        <div class="vm-video-info" id="slideshowTrimEstimate" style="color:#ED0108;font-weight:600"></div>
+        <div class="vm-card-hint">💡 拖动滑块裁剪视频起止位置,导出时仅输出选中区间</div>
+      </div>
+    </details>
+
     <!-- ⚙️ 导出设置 -->
     <details class="vm-card" id="cardExport">
       <summary>⚙️ 导出设置 <span id="exportSettingsLabel" style="font-weight:400;color:#a8a098;font-size:11px">1080×1920 · 30fps</span></summary>
@@ -565,25 +584,6 @@ button{font-family:inherit;cursor:pointer}
           <div class="option-label">背景填充模式</div>
           <div class="option-row" id="bgModeBtns"></div>
         </div>
-      </div>
-    </details>
-
-    <!-- ✂️ 视频剪辑 -->
-    <details class="vm-card" id="cardSlideshowTrim">
-      <summary>✂️ 视频剪辑 <span id="slideshowTrimLabel" style="font-weight:400;color:#a8a098;font-size:11px">完整视频</span></summary>
-      <div class="vm-card-body">
-        <div class="vm-video-trim">
-          <span style="font-size:11px;white-space:nowrap">起始</span>
-          <input type="range" id="slideshowTrimStart" min="0" max="100" value="0" disabled>
-          <span class="slider-val" id="slideshowTrimStartVal">00:00</span>
-        </div>
-        <div class="vm-video-trim">
-          <span style="font-size:11px;white-space:nowrap">结束</span>
-          <input type="range" id="slideshowTrimEnd" min="0" max="100" value="100" disabled>
-          <span class="slider-val" id="slideshowTrimEndVal">00:00</span>
-        </div>
-        <div class="vm-video-info" id="slideshowTrimEstimate" style="color:#ED0108;font-weight:600"></div>
-        <div class="vm-card-hint">💡 拖动滑块裁剪视频起止位置,导出时仅输出选中区间</div>
       </div>
     </details>
 
