@@ -1067,7 +1067,7 @@ const FAMILY_TO_PALETTE = {
 const STATE = {
   text: '',
   font: 'black',
-  families: new Set(Object.keys(FAMILY_LABELS)),
+  families: new Set(['handnote','collage','comic','newspaper','minimal']),
   seed: 0,
   activeCount: 0,
   currentLayoutMode: '',  // v5.0: 当前排版模式(headline/standard/subhead/newspaper)
@@ -3677,6 +3677,12 @@ const LOCKED_TEMPLATE_STYLES = Object.freeze({
 function drawTemplateEnhancedCover(ctx, text, palette, options, family) {
   // ══════ 模板驱动模式（优先）══════
   if (STATE.realStyleMode && window.TEMPLATE_LIBRARY && window.renderTemplate) {
+    // 如果 options 里指定了 templateId，直接用
+    if (options && options.templateId) {
+      var content = window.parseCoverContent ? window.parseCoverContent(text || '') : { mainTitle: text || '', subTitle: '', keyword: '', badgeText: '', footerText: '' };
+      var dirResult = window.renderTemplate(ctx, options.templateId, content, options);
+      if (dirResult && dirResult.success) return;
+    }
     try {
       // 解析内容
       var content = window.parseCoverContent ? window.parseCoverContent(text || '') : { mainTitle: text || '', subTitle: '', keyword: '', badgeText: '', footerText: '' };
@@ -6001,8 +6007,9 @@ function buildOneCard(family, vi, text, seedOffset, meta) {
   if (meta.text) wrap.dataset.sourceText = meta.text;
 
   const canvas = document.createElement('canvas');
-  canvas.setAttribute('aria-label', FAMILY_LABELS[family].name + ' 第 ' + (vi + 1) + ' 张');
-  renderCard(canvas, family, vi, text, seedOffset);
+  var labelName = (FAMILY_LABELS[family] || {}).name || family || '封面';
+  canvas.setAttribute('aria-label', labelName + ' 第 ' + (vi + 1) + ' 张');
+  renderCard(canvas, family, vi, text, seedOffset, meta);
 
   // actions:下载 / 复制 / 换一换
   const actions = document.createElement('div');
@@ -6114,34 +6121,41 @@ function generate() {
   c.innerHTML = '<div class="loading">生成中</div>';
 
   // 用 setTimeout 让 UI 先更新
-  setTimeout(() => {
+  setTimeout(function(){
     try {
       c.innerHTML = '';
-      const families = Array.from(STATE.families).sort();
-      for (const fam of families) {
-        var map = window.REAL_STYLE_MAP ? window.REAL_STYLE_MAP[fam] : null;
-        var rf = map ? map.realFamily : '';
-        var familyNames = {handnote:'手绘便签',collage:'拼贴collage',comic:'漫画pop',newspaper:'报纸大字',minimal:'极简大字'};
-        var familyEmoji = {handnote:'📝',collage:'✂️',comic:'💥',newspaper:'📰',minimal:'◼️'};
+      var familyNames = {handnote:'📝 手绘便签',collage:'✂️ 拼贴collage',comic:'💥 漫画pop',newspaper:'📰 报纸大字',minimal:'◼️ 极简大字'};
+      var variantsPerTemplate = 3;
+      var totalCards = 0;
+      var activeFamilies = Array.from(STATE.families).sort();
+
+      activeFamilies.forEach(function(rf){
+        // 获取该族所有已加载的模板
+        var tplIds = (window.TEMPLATE_REGISTRY || []).filter(function(id){ return id.indexOf(rf) === 0; });
+        if (tplIds.length === 0) return;
+
         var lb = document.createElement('div');
         lb.className = 'section-label';
-        lb.innerHTML =
-          '<span class="section-num">' + (familyEmoji[rf] || fam) + '</span>' +
-          '<span>' + (familyNames[rf] || FAMILY_LABELS[fam].name) + '</span>' +
-          '<span class="s-tag">' + fam + ' · ' + FAMILY_LABELS[fam].name + '</span>' +
-          '<span class="section-desc">' + FAMILY_LABELS[fam].desc + '</span>';
+        lb.innerHTML = '<span class=\"section-num\">' + tplIds.length + '</span>' +
+          '<span>' + familyNames[rf] + '</span>' +
+          '<span class=\"s-tag\">' + tplIds.length + ' 模板 × ' + variantsPerTemplate + ' 张</span>';
         c.appendChild(lb);
-        const g = document.createElement('div');
+        var g = document.createElement('div');
         g.className = 'grid';
         c.appendChild(g);
-        for (let vi = 0; vi < CARDS_PER_FAMILY; vi++) {
-          const card = buildOneCard(fam, vi, text, STATE.seed);
-          g.appendChild(card);
-        }
-      }
-      STATE.activeCount = families.length * CARDS_PER_FAMILY;
-      const fontName = (FONT_MAP[STATE.font] || FONT_MAP.black).name;
-      showToast('✅ ' + families.length + ' 族 × ' + CARDS_PER_FAMILY + ' 张 · ' + fontName + ' · ' + text.length + ' 字');
+
+        tplIds.forEach(function(tid, ti){
+          for (var v = 0; v < variantsPerTemplate; v++) {
+            var card = buildOneCard(rf, v, text, STATE.seed + ti * 13 + v * 7, { templateId: tid });
+            g.appendChild(card);
+            totalCards++;
+          }
+        });
+      });
+
+      STATE.activeCount = totalCards;
+      var fontName = (FONT_MAP[STATE.font] || FONT_MAP.black).name;
+      showToast('✅ ' + activeFamilies.length + ' 族 · ' + totalCards + ' 张 · ' + fontName);
     } catch (e) {
       console.error(e);
       showToast('❌ 生成失败: ' + e.message);
@@ -6929,33 +6943,21 @@ function updateGenerateButton() {
 
 // ═══════════ Tab 事件绑定 ═══════════
 
-// ══════ 5族按钮 — 联动切换 A-T ══════
-var REAL_FAMILY_MEMBERS = {
-  handnote:  ['A','J','L'],
-  collage:   ['F','I','M','T'],
-  comic:     ['B','C','G','H','N','P'],
-  newspaper: ['D','K','O','R'],
-  minimal:   ['E','Q','S'],
-};
+// ══════ 5族按钮 — STATE.families 直接存族名 ══════
 document.querySelectorAll('#familyTabs .tab[data-real-family]').forEach(function(btn){
   btn.addEventListener('click', function(){
     var rf = btn.dataset.realFamily;
-    var members = REAL_FAMILY_MEMBERS[rf] || [];
-    // 判断当前是否全激活
-    var allActive = members.every(function(f){ return STATE.families.has(f); });
-    if (allActive) {
-      // 全部取消（至少留一个族）
-      var otherActive = Array.from(STATE.families).filter(function(f){ return members.indexOf(f) === -1; });
-      if (otherActive.length === 0) {
-        showToast('至少启用 1 个风格族');
-        return;
-      }
-      members.forEach(function(f){ STATE.families.delete(f); });
+    if (STATE.families.has(rf)) {
+      STATE.families.delete(rf);
       btn.classList.remove('active');
     } else {
-      // 全部激活
-      members.forEach(function(f){ STATE.families.add(f); });
+      STATE.families.add(rf);
       btn.classList.add('active');
+    }
+    if (STATE.families.size === 0) {
+      STATE.families.add(rf);
+      btn.classList.add('active');
+      showToast('至少启用 1 个风格族');
     }
     updateTemplateCounts();
     updateGenerateButton();
@@ -6972,7 +6974,6 @@ function updateTemplateCounts() {
     }
   });
 }
-// 模板加载完成后更新计数
 window._origOnTemplatesLoaded = window.onTemplatesLoaded;
 window.onTemplatesLoaded = function(){
   updateTemplateCounts();
@@ -7162,17 +7163,19 @@ console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
  * @param {string} text
  * @param {number} seedOffset
  */
-function renderCard(canvas, family, vi, text, seedOffset) {
+function renderCard(canvas, family, vi, text, seedOffset, meta) {
   try {
     const ctx = canvas.getContext('2d');
     canvas.width = CANVAS_W;
     canvas.height = CANVAS_H;
+    var options = { seed: vi + seedOffset, vi: vi };
+    // 模板直传 — 如果有 templateId，直接用于渲染
+    if (meta && meta.templateId) options.templateId = meta.templateId;
     const palette = pickPalette(family, vi, seedOffset);
-    const fn = STYLE_FUNCS[family];
-    if (!fn) throw new Error('Style family ' + family + ' undefined');
-    // 性能监控(单张 < 50ms 目标)
+    const fn = STYLE_FUNCS[family] || STYLE_FUNCS.A || drawTemplateEnhancedCover;
+    if (!fn) throw new Error('Style function undefined');
     const t0 = performance.now();
-    fn(ctx, text, palette, { seed: vi + seedOffset, vi });
+    fn(ctx, text, palette, options);
     assertTemplateSafeBounds(ctx, 54, family, vi);
     const t1 = performance.now();
     if (t1 - t0 > 80) {
