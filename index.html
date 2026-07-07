@@ -827,6 +827,22 @@ button{font-family:inherit}
   </div>
 </div>
 
+<!-- ═══════════ 模板筛选 ═══════════ -->
+<div class="tab-group" style="background:#F9FAFB;border-radius:8px;padding:8px 12px">
+  <div class="label" style="margin-bottom:4px">🔍 筛 选(可选，默认全部)</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <select id="sfColor" style="font-size:12px;padding:4px 8px;border:1px solid #D1D5DB;border-radius:6px;background:#fff">
+      <option value="">配色: 全部</option></select>
+    <select id="sfFont" style="font-size:12px;padding:4px 8px;border:1px solid #D1D5DB;border-radius:6px;background:#fff">
+      <option value="">字体: 全部</option></select>
+    <select id="sfStruct" style="font-size:12px;padding:4px 8px;border:1px solid #D1D5DB;border-radius:6px;background:#fff">
+      <option value="">结构: 全部</option></select>
+    <select id="sfDensity" style="font-size:12px;padding:4px 8px;border:1px solid #D1D5DB;border-radius:6px;background:#fff">
+      <option value="">密度: 全部</option></select>
+    <span id="sfCount" style="font-size:11px;color:#6B7280;white-space:nowrap">60 模板</span>
+  </div>
+</div>
+
 <!-- ═══════════ 字体切换 ═══════════ -->
 <div class="tab-group">
   <div class="label">字 体(全局切换)</div>
@@ -6881,6 +6897,50 @@ function updateGenerateButton() {
   btn.textContent = batchCount > 1 ? '🤖 自动生图' : ('🤖 自动生图 (' + tplCount + ' 模板)');
 }
 
+// ══════ 首页筛选器 — 同步 FILTER_STATE ══════
+(function(){
+  var dims = [
+    { id:'sfColor', key:'colorTone', opts:['全部','暖黄','红色','蓝色','绿色','粉色','紫色','暗黑','白色','奶油','灰色'] },
+    { id:'sfFont', key:'fontStyle', opts:['全部','无衬线','衬线','手写体'] },
+    { id:'sfStruct', key:'structure', opts:['全部','居中','顶部','偏下','全屏','偏右'] },
+    { id:'sfDensity', key:'density', opts:['全部','极简','标准','丰富'] },
+  ];
+  dims.forEach(function(d){
+    var sel = document.getElementById(d.id);
+    if (!sel) return;
+    d.opts.forEach(function(o){
+      var opt = document.createElement('option');
+      opt.value = o === '全部' ? '' : o;
+      opt.textContent = (d.key==='colorTone'?'配色: ':'') + (d.key==='fontStyle'?'字体: ':'') + (d.key==='structure'?'结构: ':'') + (d.key==='density'?'密度: ':'') + o;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', function(){
+      FILTER_STATE[d.key] = sel.value;
+      updateFilterCount();
+      updateTemplateCounts();
+      // 同步面板按钮
+      if (typeof buildFilterBar === 'function') buildFilterBar();
+    });
+  });
+
+  window.updateFilterCount = function(){
+    var el = document.getElementById('sfCount');
+    if (!el) return;
+    var filtered = window.getFilteredTemplateIds ? window.getFilteredTemplateIds() : [];
+    var total = (window.TEMPLATE_REGISTRY || []).length;
+    el.textContent = filtered.length + ' / ' + total + ' 模板';
+    if (filtered.length === 0) el.style.color = '#EF4444';
+    else el.style.color = '#6B7280';
+  };
+
+  // 模板加载后刷新计数
+  var _origOnLoad2 = window.onTemplatesLoaded;
+  window.onTemplatesLoaded = function(){
+    updateFilterCount();
+    if (_origOnLoad2) _origOnLoad2();
+  };
+})();
+
 // ═══════════ Tab 事件绑定 ═══════════
 
 // ══════ 5族按钮 — STATE.families 直接存族名 ══════
@@ -7525,6 +7585,11 @@ console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / 
           FILTER_STATE[dim] = (opt === '全部') ? '' : opt;
           buildFilterBar();
           renderTemplateList();
+          // 同步首页下拉框
+          var selMap = {colorTone:'sfColor', fontStyle:'sfFont', structure:'sfStruct', density:'sfDensity'};
+          var sel = document.getElementById(selMap[dim]);
+          if (sel) sel.value = FILTER_STATE[dim] || '';
+          updateFilterCount();
         });
         container.appendChild(btn);
       });
@@ -7550,10 +7615,10 @@ console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / 
     showToast('🎯 使用 ' + filtered.length + ' 个筛选模板生成');
   });
 
-  // ══════ 全局过滤函数（生图时调用）══════
+  // ══════ 全局过滤函数（生图时调用，0结果自动兜底）══════
   window.getFilteredTemplateIds = function(){
     var lib = window.TEMPLATE_LIBRARY || {};
-    return Object.keys(lib).filter(function(id){
+    var result = Object.keys(lib).filter(function(id){
       var tpl = lib[id];
       if (!tpl || !tpl.tags) return true;
       var tags = tpl.tags;
@@ -7563,6 +7628,12 @@ console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / 
       if (FILTER_STATE.density && tags.density !== FILTER_STATE.density) return false;
       return true;
     });
+    // 0结果兜底：返回全部
+    if (result.length === 0) {
+      result = Object.keys(lib);
+      if (typeof showToast === 'function') showToast('⚠️ 筛选无结果，使用全部 ' + result.length + ' 模板');
+    }
+    return result;
   };
 
   buildFilterBar();
