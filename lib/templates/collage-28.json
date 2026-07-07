@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-28","styleFamily":"collage","name":"灰底+霓虹便签+闪电印章+街头拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#2A2A2E"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#FFFFFF","stroke":{"color":"#1A1A1E","width":3},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(255,255,255,0.48)"},
+  "decorations":[
+    {"id":"cl28-n1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FF4088","rotation":-3,"shadow":true},
+    {"id":"cl28-n2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#00BFA5","rotation":-12,"shadow":true},
+    {"id":"cl28-n3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#FFD740","rotation":9,"shadow":true},
+    {"id":"cl28-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#FFFFFF","rotation":-10,"label":"BOLD"},
+    {"id":"cl28-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":260,"h":32},"rotation":3,"color":"rgba(255,255,255,0.15)"},
+    {"id":"cl28-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"⚡","fontSize":100}
+  ]
+}

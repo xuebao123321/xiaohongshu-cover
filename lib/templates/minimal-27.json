@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-27","styleFamily":"minimal","name":"淡粉底+深紫衬线+居中细线+婚礼极简",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDF8FA"},
+  "titleBox":{"x":60,"y":360,"w":1122,"h":720},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":200,"max":450,"weight":900,"color":"#3A1A3A","letterSpacing":-0.05},
+  "subTitleBox":{"x":100,"y":1120,"w":1042,"h":70},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":32,"max":54,"weight":300,"color":"rgba(58,26,58,0.35)"},
+  "decorations":[
+    {"id":"mn27-line","type":"thickLine","layer":"above","box":{"x":540,"y":1100,"w":160,"h":1},"color":"rgba(58,26,58,0.15)","lineWidth":1}
+  ]
+}

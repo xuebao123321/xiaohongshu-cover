@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-27","styleFamily":"collage","name":"纯白底+彩虹便签+笑脸印章+快乐拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFFFF"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#1A1A1A","stroke":{"color":"#FFFFFF","width":3},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(0,0,0,0.50)"},
+  "decorations":[
+    {"id":"cl27-n1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FFF0F0","rotation":-3,"shadow":true},
+    {"id":"cl27-n2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#F0F8FF","rotation":-12,"shadow":true},
+    {"id":"cl27-n3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#FFFBE0","rotation":9,"shadow":true},
+    {"id":"cl27-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#FF6B35","rotation":-10,"label":"SMILE"},
+    {"id":"cl27-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":260,"h":32},"rotation":3,"color":"rgba(200,200,200,0.45)"},
+    {"id":"cl27-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"🌈","fontSize":100}
+  ]
+}

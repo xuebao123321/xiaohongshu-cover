@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-27","styleFamily":"comic","name":"白底pop+黑字+红蓝点缀+报纸漫画风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFFFF"},
+  "backgroundOverlay":{"type":"halftone","dotSize":2,"spacing":14,"color":"rgba(0,0,0,0.04)"},
+  "burstLines":{"count":16,"from":{"x":621,"y":580},"color":"rgba(0,0,0,0.08)","lineWidth":1.5,"innerR":130,"outerR":850},
+  "titleBox":{"x":70,"y":380,"w":1102,"h":520},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":160,"max":310,"weight":900,"color":"#000000","stroke":{"color":"#DC2626","width":3},"letterSpacing":-0.045},
+  "subTitleBox":{"x":150,"y":940,"w":940,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#2563EB"},
+  "decorations":[
+    {"id":"cm27-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"💬","fontSize":130},
+    {"id":"cm27-sfx","type":"sfx","layer":"above","box":{"x":880,"y":1340,"w":200,"h":100},"text":"NEWS!","fontSize":66,"color":"#DC2626","rotation":-5,"strokeColor":"#000000","strokeWidth":2},
+    {"id":"cm27-star","type":"starBurst","layer":"above","box":{"x":140,"y":190,"w":80,"h":80},"color":"#2563EB","strokeColor":"#000000","strokeWidth":1.5}
+  ]
+}

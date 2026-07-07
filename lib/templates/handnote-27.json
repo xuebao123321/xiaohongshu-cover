@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-27","styleFamily":"handnote","name":"浅灰方格+黑字+黄色荧光笔+极简笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F7F8F9","overlay":{"type":"grid","spacing":22,"color":"rgba(0,0,0,0.04)","lineWidth":0.6}},
+  "titleBox":{"x":100,"y":450,"w":1042,"h":510},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#1A1A1A","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(0,0,0,0.55)"},
+  "decorations":[
+    {"id":"hn27-tape","type":"tape","layer":"above","box":{"x":440,"y":240,"w":280,"h":32},"rotation":-3,"color":"rgba(180,180,190,0.45)"},
+    {"id":"hn27-highlighter","type":"highlighter","layer":"behind","box":{"x":150,"y":720,"w":940,"h":44},"color":"rgba(255,220,60,0.35)"},
+    {"id":"hn27-badge","type":"badge","layer":"above","box":{"x":80,"y":140,"w":130,"h":42},"color":"#333333","labelColor":"#FFFFFF","fontSize":16},
+    {"id":"hn27-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1380,"w":110,"h":110},"emoji":"📝","fontSize":100}
+  ]
+}
