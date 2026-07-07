@@ -568,6 +568,25 @@ button{font-family:inherit;cursor:pointer}
       </div>
     </details>
 
+    <!-- ✂️ 视频剪辑 -->
+    <details class="vm-card" id="cardSlideshowTrim">
+      <summary>✂️ 视频剪辑 <span id="slideshowTrimLabel" style="font-weight:400;color:#a8a098;font-size:11px">完整视频</span></summary>
+      <div class="vm-card-body">
+        <div class="vm-video-trim">
+          <span style="font-size:11px;white-space:nowrap">起始</span>
+          <input type="range" id="slideshowTrimStart" min="0" max="100" value="0" disabled>
+          <span class="slider-val" id="slideshowTrimStartVal">00:00</span>
+        </div>
+        <div class="vm-video-trim">
+          <span style="font-size:11px;white-space:nowrap">结束</span>
+          <input type="range" id="slideshowTrimEnd" min="0" max="100" value="100" disabled>
+          <span class="slider-val" id="slideshowTrimEndVal">00:00</span>
+        </div>
+        <div class="vm-video-info" id="slideshowTrimEstimate" style="color:#ED0108;font-weight:600"></div>
+        <div class="vm-card-hint">💡 拖动滑块裁剪视频起止位置,导出时仅输出选中区间</div>
+      </div>
+    </details>
+
     </div><!-- /vm-slideshow-panel -->
 
     <!-- ═══════════ 视频处理模式 ═══════════ -->
@@ -757,6 +776,8 @@ const STATE = {
     transition: 'fade',
     motion: 'slow_zoom',
     backgroundMode: 'contain_blur',
+    trimStart: 0,
+    trimEnd: 0,
   },
   filter: 'none',
   filterStrength: 80,
@@ -969,6 +990,28 @@ function initUI() {
   document.getElementById('endHold').addEventListener('change', function() {
     STATE.settings.endHold = parseInt(this.value);
     updateTotalDuration();
+  });
+
+  // 剪辑滑块
+  document.getElementById('slideshowTrimStart').addEventListener('input', function() {
+    STATE.settings.trimStart = parseFloat(this.value);
+    document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart);
+    if (STATE.settings.trimStart >= STATE.settings.trimEnd) {
+      STATE.settings.trimEnd = Math.min(calculateFullDuration(), STATE.settings.trimStart + 0.5);
+      document.getElementById('slideshowTrimEnd').value = STATE.settings.trimEnd;
+      document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd);
+    }
+    updateSlideshowTrimEstimate();
+  });
+  document.getElementById('slideshowTrimEnd').addEventListener('input', function() {
+    STATE.settings.trimEnd = parseFloat(this.value);
+    document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd);
+    if (STATE.settings.trimEnd <= STATE.settings.trimStart) {
+      STATE.settings.trimStart = Math.max(0, STATE.settings.trimEnd - 0.5);
+      document.getElementById('slideshowTrimStart').value = STATE.settings.trimStart;
+      document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart);
+    }
+    updateSlideshowTrimEstimate();
   });
 
   // 音量
@@ -1871,25 +1914,70 @@ function updateTotalDuration() {
     total += img.duration || STATE.settings.secondsPerImage;
   }
   total += STATE.settings.coverHold + STATE.settings.endHold;
+
+  // 更新剪辑滑块范围
+  const tStart = document.getElementById('slideshowTrimStart');
+  const tEnd = document.getElementById('slideshowTrimEnd');
+  if (STATE.images.length > 0) {
+    tStart.disabled = false; tStart.max = Math.floor(total);
+    tEnd.disabled = false;   tEnd.max = Math.floor(total);
+    if (STATE.settings.trimEnd === 0 || STATE.settings.trimEnd > total) {
+      STATE.settings.trimEnd = total;
+      tEnd.value = Math.floor(total);
+    }
+    tStart.value = STATE.settings.trimStart || 0;
+    tEnd.value = STATE.settings.trimEnd || total;
+  } else {
+    tStart.disabled = true; tEnd.disabled = true;
+    STATE.settings.trimStart = 0;
+    STATE.settings.trimEnd = 0;
+  }
+  document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart || 0);
+  document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd || total);
+  updateSlideshowTrimEstimate();
   document.getElementById('imgSummary').textContent = `预计视频时长: ${total.toFixed(1)}s`;
 }
 window.updateTotalDuration = updateTotalDuration;
 
-// ═══════════ 批次 4: 视频合成核心(ffmpeg.wasm + MediaRecorder fallback) ═══════════
-
-// ─── 计算总帧数 ───
-function calculateTotalFrames() {
-  let total = 0;
-  for (const img of STATE.images) {
-    total += (img.duration || STATE.settings.secondsPerImage) * STATE.settings.fps;
+function updateSlideshowTrimEstimate() {
+  const el = document.getElementById('slideshowTrimEstimate');
+  if (!el) return;
+  const start = STATE.settings.trimStart || 0;
+  const end = STATE.settings.trimEnd || calculateTotalDuration();
+  const dur = Math.max(0, end - start);
+  const mb = dur * 1; // ~1 MB/s
+  if (dur > 0 && (start > 0 || end < calculateTotalDuration())) {
+    el.textContent = `📐 导出区间: ${formatTime(start)} → ${formatTime(end)} · 时长: ${dur.toFixed(1)}s · 预估: ~${mb.toFixed(0)}MB`;
+    document.getElementById('slideshowTrimLabel').textContent = dur.toFixed(1) + 's';
+  } else {
+    el.textContent = '';
+    document.getElementById('slideshowTrimLabel').textContent = '完整视频';
   }
-  total += STATE.settings.coverHold * STATE.settings.fps;
-  total += STATE.settings.endHold * STATE.settings.fps;
-  return Math.floor(total);
 }
 
-// ─── 计算视频总时长(秒) ───
+// ═══════════ 批次 4: 视频合成核心(ffmpeg.wasm + MediaRecorder fallback) ═══════════
+
+// ─── 计算总帧数(考虑剪辑) ───
+function calculateTotalFrames() {
+  const dur = calculateTotalDuration();
+  return Math.floor(dur * STATE.settings.fps);
+}
+
+// ─── 计算视频总时长(秒,考虑剪辑) ───
 function calculateTotalDuration() {
+  let total = 0;
+  for (const img of STATE.images) {
+    total += img.duration || STATE.settings.secondsPerImage;
+  }
+  total += STATE.settings.coverHold + STATE.settings.endHold;
+  // 应用剪辑
+  const start = STATE.settings.trimStart || 0;
+  const end = STATE.settings.trimEnd || total;
+  return Math.max(0, end - start);
+}
+
+// ─── 总时长(不含剪辑,用于滑块max) ───
+function calculateFullDuration() {
   let total = 0;
   for (const img of STATE.images) {
     total += img.duration || STATE.settings.secondsPerImage;
@@ -1898,11 +1986,14 @@ function calculateTotalDuration() {
   return total;
 }
 
-// ─── 帧→图片索引映射 ───
+// ─── 帧→图片索引映射(考虑剪辑偏移) ───
 function getImageIndexAtFrame(frame, totalFrames) {
-  const totalDuration = calculateTotalDuration();
-  const timePerFrame = totalDuration / totalFrames;
-  let time = frame * timePerFrame;
+  const exportDuration = calculateTotalDuration();
+  const fullDuration = calculateFullDuration();
+  const trimStart = STATE.settings.trimStart || 0;
+  const timePerFrame = exportDuration / totalFrames;
+  // 输出帧0对应原时间线 trimStart 位置
+  let time = trimStart + frame * timePerFrame;
 
   // 封面停留
   const coverDur = STATE.settings.coverHold;
@@ -1920,11 +2011,12 @@ function getImageIndexAtFrame(frame, totalFrames) {
   return STATE.images.length - 1;
 }
 
-// ─── 图片展示进度 ───
+// ─── 图片展示进度(考虑剪辑偏移) ───
 function getProgressInImage(frame, imgIndex, totalFrames) {
-  const totalDuration = calculateTotalDuration();
-  const timePerFrame = totalDuration / totalFrames;
-  let time = frame * timePerFrame;
+  const exportDuration = calculateTotalDuration();
+  const trimStart = STATE.settings.trimStart || 0;
+  const timePerFrame = exportDuration / totalFrames;
+  let time = trimStart + frame * timePerFrame;
 
   const coverDur = STATE.settings.coverHold;
   if (time < coverDur) return 0;
