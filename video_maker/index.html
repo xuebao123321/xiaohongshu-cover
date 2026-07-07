@@ -3936,229 +3936,179 @@ async function exportVideoOnly() {
                      VIDEO_STATE.outputResolution === '720p' ? 720 : v.height;
 
     const fps = 30;
-    const frameIntervalMs = 1000 / fps;
     const trimStart = VIDEO_STATE.trimStart || 0;
     const trimEnd = VIDEO_STATE.trimEnd || v.duration;
     const exportDuration = trimEnd - trimStart;
-    const totalFrames = Math.ceil(exportDuration * fps);
-    console.log('[video_maker] 裁剪:', trimStart.toFixed(2), '→', trimEnd.toFixed(2),
-                '导出时长:', exportDuration.toFixed(1), 's', '总帧数:', totalFrames);
+    console.log('[video_maker] 裁剪:', trimStart.toFixed(2), '→', trimEnd.toFixed(2), '时长:', exportDuration.toFixed(1), 's');
 
-    // ══════ 双视频元素架构 ══════
-    // videoForFrames: seek 到每一帧精确位置 → drawImage(不播放)
-    // videoForAudio:  连续播放 → createMediaElementSource 捕获原声音频
-    const videoForFrames = document.createElement('video');
-    videoForFrames.preload = 'auto';
-    videoForFrames.muted = true;
-    videoForFrames.playsInline = true;
-    videoForFrames.src = v.objectUrl;
-    videoForFrames.crossOrigin = 'anonymous';
-    videoForFrames.setAttribute('playsinline', '');
+    // ══════ 单一视频元素: 匀速播放,同时提供画面和音频 ══════
+    const videoEl = document.createElement('video');
+    videoEl.preload = 'auto';
+    videoEl.muted = false;
+    videoEl.playsInline = true;
+    videoEl.src = v.objectUrl;
+    videoEl.crossOrigin = 'anonymous';
+    videoEl.setAttribute('playsinline', '');
+    videoEl.volume = 1.0;
 
-    const videoForAudio = document.createElement('video');
-    videoForAudio.preload = 'auto';
-    videoForAudio.muted = false;
-    videoForAudio.playsInline = true;
-    videoForAudio.src = v.objectUrl;
-    videoForAudio.crossOrigin = 'anonymous';
-    videoForAudio.setAttribute('playsinline', '');
-    videoForAudio.volume = 1.0;
+    await new Promise((resolve, reject) => {
+      videoEl.onloadedmetadata = () => resolve();
+      videoEl.onerror = () => reject(new Error('视频加载失败'));
+      videoEl.load();
+    });
+    console.log('[video_maker] 视频就绪,时长:', videoEl.duration.toFixed(1), 's');
 
-    // 并行加载两个视频元素
-    await Promise.all([
-      new Promise((resolve, reject) => {
-        videoForFrames.onloadedmetadata = () => resolve();
-        videoForFrames.onerror = () => reject(new Error('视频帧源加载失败'));
-        videoForFrames.load();
-      }),
-      new Promise((resolve, reject) => {
-        videoForAudio.onloadedmetadata = () => resolve();
-        videoForAudio.onerror = () => reject(new Error('视频音频源加载失败'));
-        videoForAudio.load();
-      })
-    ]);
-    console.log('[video_maker] 双视频源就绪,时长:', videoForFrames.duration.toFixed(1), 's');
-
-    // ══════ 画布 + 视频流 ══════
+    // ══════ 画布: requestAnimationFrame 持续绘制(不 seek,平台无关) ══════
     const canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     const canvasStream = canvas.captureStream(fps);
 
-    // ══════ 音频混合: 视频原声(captureStream) + 背景音乐(AudioContext) ══════
-    let mixerCtx = null, bgmSource = null;
-    let recorderStream = canvasStream;
+    // ══════ 音频: video.captureStream() 原生音轨 ══════
     let videoAudioTrack = null;
-    const hasBGM = !VIDEO_STATE.noMusic && VIDEO_STATE.audio;
-
-    // ── 视频原声: 通过 video.captureStream() 获取(可靠,不抢占音频输出) ──
     try {
-      const videoCapture = videoForAudio.captureStream();
-      const audioTracks = videoCapture.getAudioTracks();
-      if (audioTracks.length > 0) {
-        videoAudioTrack = audioTracks[0];
-        console.log('[video_maker] ✅ 视频音频轨道已捕获(label:', videoAudioTrack.label, ')');
+      const videoCapStream = videoEl.captureStream();
+      const at = videoCapStream.getAudioTracks();
+      if (at.length > 0) {
+        videoAudioTrack = at[0];
+        console.log('[video_maker] ✅ 音频轨道:', videoAudioTrack.label);
       } else {
-        console.warn('[video_maker] ⚠️ 视频无音频轨道(可能源文件无音轨)');
+        console.warn('[video_maker] ⚠️ 视频无音轨');
       }
     } catch (e) {
-      console.warn('[video_maker] ⚠️ video.captureStream() 失败:', e.message);
+      console.warn('[video_maker] ⚠️ captureStream 失败:', e.message);
     }
 
-    // ── 背景音乐: AudioContext 解码 + 混入 ──
-    let bgmAudioTrack = null;
+    // ══════ 背景音乐: AudioContext 独立解码 ══════
+    let mixerCtx = null, bgmSource = null, bgmAudioTrack = null;
+    const hasBGM = !VIDEO_STATE.noMusic && VIDEO_STATE.audio;
     if (hasBGM) {
       try {
         mixerCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const bgmFile = VIDEO_STATE.audio.file;
-        const arrayBuf = await bgmFile.arrayBuffer();
-        const audioBuffer = await mixerCtx.decodeAudioData(arrayBuf.slice(0));
-
+        const arrayBuf = await VIDEO_STATE.audio.file.arrayBuffer();
+        const audioBuf = await mixerCtx.decodeAudioData(arrayBuf.slice(0));
         bgmSource = mixerCtx.createBufferSource();
-        bgmSource.buffer = audioBuffer;
-        const bgmGain = mixerCtx.createGain();
+        bgmSource.buffer = audioBuf;
+        const gain = mixerCtx.createGain();
         const bgmVol = (VIDEO_STATE.audio.volume !== undefined) ? VIDEO_STATE.audio.volume : 0.3;
-        bgmGain.gain.value = bgmVol;
-
-        // 淡入淡出
-        const fadeIn = VIDEO_STATE.audio.fadeIn || 1;
-        const fadeOut = VIDEO_STATE.audio.fadeOut || 2;
+        gain.gain.value = bgmVol;
+        const fi = VIDEO_STATE.audio.fadeIn || 1;
+        const fo = VIDEO_STATE.audio.fadeOut || 2;
         const t0 = mixerCtx.currentTime;
-        bgmGain.gain.setValueAtTime(0, t0);
-        bgmGain.gain.linearRampToValueAtTime(bgmVol, t0 + fadeIn);
-        bgmGain.gain.setValueAtTime(bgmVol, t0 + exportDuration - fadeOut);
-        bgmGain.gain.linearRampToValueAtTime(0, t0 + exportDuration);
-
-        bgmSource.connect(bgmGain);
-        // BGM 输出到 MediaStreamDestination
-        const bgmDest = mixerCtx.createMediaStreamDestination();
-        bgmGain.connect(bgmDest);
-        const bgmTracks = bgmDest.stream.getAudioTracks();
-        if (bgmTracks.length > 0) {
-          bgmAudioTrack = bgmTracks[0];
-          console.log('[video_maker] ✅ BGM 已解码,音量:', (bgmVol * 100).toFixed(0) + '%');
-        }
-      } catch (bgmErr) {
-        console.warn('[video_maker] BGM 解码失败,跳过:', bgmErr.message);
-      }
+        gain.gain.setValueAtTime(0, t0);
+        gain.gain.linearRampToValueAtTime(bgmVol, t0 + fi);
+        gain.gain.setValueAtTime(bgmVol, t0 + exportDuration - fo);
+        gain.gain.linearRampToValueAtTime(0, t0 + exportDuration);
+        bgmSource.connect(gain);
+        const dest = mixerCtx.createMediaStreamDestination();
+        gain.connect(dest);
+        const bt = dest.stream.getAudioTracks();
+        if (bt.length > 0) { bgmAudioTrack = bt[0]; }
+        console.log('[video_maker] ✅ BGM 就绪,音量:', (bgmVol * 100).toFixed(0) + '%');
+      } catch (e) { console.warn('[video_maker] BGM 失败:', e.message); }
     }
 
-    // ── 组装最终流: 画布视频 + 视频原声 + BGM ──
-    const tracks = [canvasStream.getVideoTracks()[0]];
-    if (videoAudioTrack) tracks.push(videoAudioTrack);
-    if (bgmAudioTrack) tracks.push(bgmAudioTrack);
-    if (tracks.length > 1) {
-      recorderStream = new MediaStream(tracks);
-      console.log('[video_maker] ✅ 混合流:', tracks.length, '条轨道(视频' + (videoAudioTrack ? '+原声' : '') + (bgmAudioTrack ? '+BGM' : '') + ')');
-    }
+    // ══════ 组装输出流 ══════
+    const outTracks = [canvasStream.getVideoTracks()[0]];
+    if (videoAudioTrack) outTracks.push(videoAudioTrack);
+    if (bgmAudioTrack) outTracks.push(bgmAudioTrack);
+    const recorderStream = outTracks.length > 1
+      ? new MediaStream(outTracks)
+      : canvasStream;
+    console.log('[video_maker] 输出流:', outTracks.length, '轨(视频+原声' + (videoAudioTrack ? '✓' : '✗') + '+BGM' + (bgmAudioTrack ? '✓' : '✗') + ')');
 
-    // ══════ MediaRecorder 编码器选择 ══════
-    // 关键: MediaRecorder 的 MP4 容器不支持音频轨道! 有音频时必须用 WebM。
-    const hasAudioTrack = !!(videoAudioTrack || bgmAudioTrack);
-    let mimeType, isVideoMp4;
-    if (hasAudioTrack) {
-      // 有音频 → 强制 WebM (VP8/VP9 视频 + Opus 音频,浏览器/VLC 均可播放)
-      const webmCodecs = [
-        'video/webm;codecs=vp8,opus',
-        'video/webm;codecs=vp9,opus',
-        'video/webm;codecs=vp8',
-        'video/webm',
-      ];
-      mimeType = 'video/webm';
-      for (const c of webmCodecs) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-      isVideoMp4 = false;
+    // ══════ MediaRecorder ══════
+    const hasAudio = !!(videoAudioTrack || bgmAudioTrack);
+    let mimeType, isMp4;
+    if (hasAudio) {
+      const wc = ['video/webm;codecs=vp8,opus', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8', 'video/webm'];
+      mimeType = 'video/webm'; for (const c of wc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+      isMp4 = false;
     } else {
-      // 无音频 → 优先 MP4 (H.264 兼容性更好)
-      const mp4Codecs = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp8', 'video/webm'];
-      mimeType = 'video/webm';
-      for (const c of mp4Codecs) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-      isVideoMp4 = mimeType.startsWith('video/mp4');
+      const mc = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp8', 'video/webm'];
+      mimeType = 'video/webm'; for (const c of mc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+      isMp4 = mimeType.startsWith('video/mp4');
     }
-    const bitrate = 8000000;
-    console.log('[video_maker] MediaRecorder:', mimeType, '容器:', isVideoMp4 ? 'MP4' : 'WebM', '音频:', hasAudioTrack ? '有' : '无');
+    console.log('[video_maker] 编码:', mimeType, isMp4 ? 'MP4' : 'WebM');
 
     const chunks = [];
-    const recorder = new MediaRecorder(recorderStream, { mimeType, videoBitsPerSecond: bitrate });
+    const recorder = new MediaRecorder(recorderStream, { mimeType, videoBitsPerSecond: 8000000 });
     recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
     const recorderDone = new Promise(r => { recorder.onstop = r; });
 
-    // ══════ 启动 ══════
+    // ══════ 启动: 录制 → BGM → seek → 播放 → rAF绘制 ══════
     recorder.start();
 
-    // 启动背景音乐
     if (bgmSource && mixerCtx) {
       bgmSource.start(mixerCtx.currentTime, VIDEO_STATE.audio.startAt || 0, exportDuration);
-      console.log('[video_maker] BGM 启动,偏移:', (VIDEO_STATE.audio.startAt || 0).toFixed(1));
     }
 
-    // 启动音频视频(连续播放,驱动 createMediaElementSource)
-    videoForAudio.currentTime = trimStart;
+    // seek 到裁剪起点
+    videoEl.currentTime = trimStart;
     await new Promise(r => {
-      const onSeeked = () => { videoForAudio.removeEventListener('seeked', onSeeked); r(); };
-      videoForAudio.addEventListener('seeked', onSeeked);
-      setTimeout(() => { videoForAudio.removeEventListener('seeked', onSeeked); r(); }, 5000);
+      const onS = () => { videoEl.removeEventListener('seeked', onS); r(); };
+      videoEl.addEventListener('seeked', onS);
+      setTimeout(() => { videoEl.removeEventListener('seeked', onS); r(); }, 5000);
     });
-    await videoForAudio.play();
-    console.log('[video_maker] 音频视频开始播放');
 
-    // ══════ 逐帧 seek + 绘制 + 精确计时 ══════
-    // 用 canvas.captureStream(fps) 按固定频率采样,配合精确 frameIntervalMs 睡眠,
-    // 确保 MediaRecorder 捕获的每帧都是唯一、准时的画面。
+    await videoEl.play();
+    console.log('[video_maker] 开始播放,起点:', videoEl.currentTime);
+
+    // ══════ requestAnimationFrame 绘制循环(匀速,平台无关) ══════
     const startWall = performance.now();
-    for (let f = 0; f < totalFrames; f++) {
-      const frameStart = performance.now();
-      const targetTime = trimStart + (f / fps);
+    let lastProgress = 0;
+    let frameCount = 0;
 
-      // Seek 帧源到目标时间
-      if (Math.abs(videoForFrames.currentTime - targetTime) > 0.001) {
-        videoForFrames.currentTime = targetTime;
-        await new Promise(r => {
-          const onSeeked = () => { videoForFrames.removeEventListener('seeked', onSeeked); r(); };
-          videoForFrames.addEventListener('seeked', onSeeked);
-          setTimeout(() => { videoForFrames.removeEventListener('seeked', onSeeked); r(); }, 3000);
-        });
-      }
+    await new Promise(resolve => {
+      function drawLoop() {
+        if (!STATE.isExporting) { videoEl.pause(); return resolve(); }
 
-      // 绘制
-      try {
-        ctx.drawImage(videoForFrames, 0, 0, targetW, targetH);
-        if (VIDEO_STATE.filter !== 'none' && f % 2 === 0) {
-          // 滤镜每隔一帧应用以降低性能开销(30fps 下肉眼不可察)
-          applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
+        const t = videoEl.currentTime;
+        const progress = Math.min(1, (t - trimStart) / exportDuration);
+
+        // 到达裁剪终点或视频结束
+        if (videoEl.ended || videoEl.paused || t >= trimEnd || progress >= 0.999) {
+          console.log('[video_maker] 播放结束, t:', t.toFixed(2), 'trimEnd:', trimEnd.toFixed(2), '帧数:', frameCount);
+          videoEl.pause();
+          return resolve();
         }
-      } catch (drawErr) {
-        // 极少数情况视频帧未解码完,重试一次
-        try { ctx.drawImage(videoForFrames, 0, 0, targetW, targetH); } catch (e) {}
-      }
 
-      // 进度
-      STATE.exportProgress = Math.min(0.99, f / Math.max(1, totalFrames - 1));
-      if (f % 6 === 0) updateExportUI();
+        // 绘制当前帧到画布
+        try {
+          ctx.drawImage(videoEl, 0, 0, targetW, targetH);
+          if (VIDEO_STATE.filter !== 'none') {
+            applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
+          }
+          frameCount++;
+        } catch (e) { /* 跳过坏帧 */ }
 
-      // 精确计时: 保证每帧间隔严格为 frameIntervalMs
-      const elapsed = performance.now() - frameStart;
-      const waitMs = frameIntervalMs - elapsed;
-      if (waitMs > 1) {
-        await sleep(waitMs);
+        // 进度更新(每3%一次)
+        if (progress - lastProgress > 0.03 || progress >= 0.99) {
+          lastProgress = progress;
+          STATE.exportProgress = Math.min(0.99, progress);
+          updateExportUI();
+        }
+
+        requestAnimationFrame(drawLoop);
       }
-    }
+      requestAnimationFrame(drawLoop);
+    });
 
     // ══════ 收尾 ══════
-    videoForAudio.pause();
+    videoEl.pause();
     if (bgmSource) { try { bgmSource.stop(); } catch (e) {} }
-    // 等待最后一帧被 captureStream 捕获
-    await sleep(100);
+    await sleep(120); // 等 captureStream 捕获最后几帧
     if (recorder.state === 'recording') recorder.stop();
     await recorderDone;
     if (mixerCtx) { mixerCtx.close(); mixerCtx = null; }
 
-    const ext = isVideoMp4 ? 'mp4' : 'webm';
+    const ext = isMp4 ? 'mp4' : 'webm';
     const blob = new Blob(chunks, { type: mimeType });
     const wallTime = (performance.now() - startWall) / 1000;
-    console.log('[video_maker] 完成 | 容器:', ext, '| 大小:', formatSize(blob.size),
-                '| 时长:', exportDuration.toFixed(1), 's', '| 耗时:', wallTime.toFixed(1), 's',
-                '| 帧数:', totalFrames, '| 编码:', mimeType);
+    console.log('[video_maker] 完成 |', ext, '|', formatSize(blob.size),
+                '| 输入:', exportDuration.toFixed(1), 's',
+                '| rAF帧:', frameCount, '| 耗时:', wallTime.toFixed(1), 's');
 
     if (blob.size < 1000) {
       throw new Error('导出文件过小,可能视频处理异常');
