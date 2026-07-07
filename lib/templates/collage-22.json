@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-22","styleFamily":"collage","name":"深蓝底+白便签群+金色印章+夜空拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#1A2740"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#FFFFFF","stroke":{"color":"#0D1A2D","width":3},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(255,255,255,0.50)"},
+  "decorations":[
+    {"id":"cl22-n1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FFFFFF","rotation":-3,"shadow":true},
+    {"id":"cl22-n2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#F0F2F8","rotation":-12,"shadow":true},
+    {"id":"cl22-n3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#E0E4F0","rotation":9,"shadow":true},
+    {"id":"cl22-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#D4A843","rotation":-10,"label":"NIGHT"},
+    {"id":"cl22-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":260,"h":32},"rotation":3,"color":"rgba(255,255,255,0.18)"},
+    {"id":"cl22-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"🌙","fontSize":100}
+  ]
+}

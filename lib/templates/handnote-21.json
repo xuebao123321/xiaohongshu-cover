@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-21","styleFamily":"handnote","name":"奶油横线+棕黑钢笔+咖啡印章+暖调手账",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDF8F0","overlay":{"type":"lines","spacing":25,"color":"rgba(0,0,0,0.05)","lineWidth":0.7}},
+  "titleBox":{"x":100,"y":450,"w":1042,"h":510},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#3A2E1E","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(58,46,30,0.55)"},
+  "decorations":[
+    {"id":"hn21-tape","type":"tape","layer":"above","box":{"x":420,"y":240,"w":300,"h":34},"rotation":-4,"color":"rgba(210,180,140,0.50)"},
+    {"id":"hn21-highlighter","type":"highlighter","layer":"behind","box":{"x":150,"y":720,"w":940,"h":44},"color":"rgba(200,160,100,0.25)"},
+    {"id":"hn21-stamp","type":"stamp","layer":"above","box":{"x":1020,"y":160,"w":110,"h":110},"color":"#8B6914","rotation":-8,"label":"COFFEE"},
+    {"id":"hn21-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1400,"w":100,"h":100},"emoji":"☕","fontSize":90}
+  ]
+}

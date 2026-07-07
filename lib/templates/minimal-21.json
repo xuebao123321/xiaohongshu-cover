@@ -1,0 +1,10 @@
+{
+  "templateId":"minimal-21","styleFamily":"minimal","name":"纯白底+超大衬线体+左对齐+极简杂志",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFFFFF"},
+  "titleBox":{"x":60,"y":340,"w":1122,"h":760},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":210,"max":480,"weight":900,"color":"#0A0A0A","letterSpacing":-0.05},
+  "subTitleBox":{"x":70,"y":1140,"w":1112,"h":60},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":30,"max":50,"weight":300,"color":"rgba(0,0,0,0.28)"},
+  "decorations":[]
+}

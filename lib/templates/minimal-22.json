@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-22","styleFamily":"minimal","name":"深绿底+白字超大+底部金线+奢华极简",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#1A3A2A"},
+  "titleBox":{"x":50,"y":350,"w":1142,"h":730},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":200,"max":460,"weight":900,"color":"#FFFFFF","letterSpacing":-0.05},
+  "subTitleBox":{"x":100,"y":1120,"w":1042,"h":70},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":32,"max":54,"weight":300,"color":"rgba(255,255,255,0.32)"},
+  "decorations":[
+    {"id":"mn22-line","type":"thickLine","layer":"above","box":{"x":540,"y":1100,"w":160,"h":2},"color":"rgba(212,168,80,0.45)","lineWidth":2}
+  ]
+}
