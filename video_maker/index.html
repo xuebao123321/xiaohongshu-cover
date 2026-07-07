@@ -86,6 +86,23 @@ button{font-family:inherit;cursor:pointer}
   width:100%;max-width:400px;margin:0 auto;
 }
 .vm-video-player video{display:block;width:100%}
+/* ═══════ 可视化时间轴 ═══════ */
+.trim-timeline{position:relative;height:80px;user-select:none;-webkit-user-select:none}
+.trim-timeline canvas{display:block}
+.trim-handle{
+  position:absolute;top:0;width:8px;height:80px;
+  background:#ED0108;border-radius:4px;cursor:ew-resize;
+  transform:translateX(-50%);z-index:10;
+  box-shadow:0 0 4px rgba(237,1,8,.5);
+  transition:box-shadow .15s;
+}
+.trim-handle:hover{box-shadow:0 0 8px rgba(237,1,8,.8)}
+.trim-handle::after{
+  content:'';position:absolute;top:30px;left:-6px;
+  width:20px;height:20px;background:#ED0108;
+  border-radius:50%;opacity:.85;
+}
+.trim-handle.dragging{box-shadow:0 0 12px rgba(237,1,8,.9)}
 .vm-video-trim{
   display:flex;align-items:center;gap:10px;padding:8px 12px;
   background:#faf9f7;border-radius:8px;font-size:12px;
@@ -521,18 +538,22 @@ button{font-family:inherit;cursor:pointer}
     <details class="vm-card" id="cardSlideshowTrim" open>
       <summary>✂️ 视频剪辑 <span id="slideshowTrimLabel" style="font-weight:400;color:#a8a098;font-size:11px">完整视频</span></summary>
       <div class="vm-card-body">
-        <div class="vm-video-trim">
-          <span style="font-size:11px;white-space:nowrap">起始</span>
-          <input type="range" id="slideshowTrimStart" min="0" max="100" step="0.1" value="0" disabled>
-          <span class="slider-val" id="slideshowTrimStartVal">00:00</span>
+        <!-- 可视化时间轴 -->
+        <div class="trim-timeline" id="trimTimeline" style="position:relative;margin-bottom:10px">
+          <canvas id="trimTimelineCanvas" width="760" height="80" style="width:100%;height:80px;border-radius:8px;cursor:pointer;background:#f0ede8"></canvas>
+          <div id="trimHandleStart" class="trim-handle" style="left:0%" title="起始"></div>
+          <div id="trimHandleEnd" class="trim-handle" style="left:100%" title="结束"></div>
         </div>
-        <div class="vm-video-trim">
-          <span style="font-size:11px;white-space:nowrap">结束</span>
-          <input type="range" id="slideshowTrimEnd" min="0" max="100" step="0.1" value="100" disabled>
-          <span class="slider-val" id="slideshowTrimEndVal">00:00</span>
+        <!-- 数值显示 -->
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span class="slider-val" id="slideshowTrimStartVal" style="font-size:14px;font-weight:700;color:#ED0108">00:00</span>
+          <span id="slideshowTrimEstimate" style="font-size:13px;font-weight:600;color:#2d2a26"></span>
+          <span class="slider-val" id="slideshowTrimEndVal" style="font-size:14px;font-weight:700;color:#ED0108">00:00</span>
         </div>
-        <div class="vm-video-info" id="slideshowTrimEstimate" style="color:#ED0108;font-weight:600"></div>
-        <div class="vm-card-hint">💡 拖动滑块裁剪视频起止位置,导出时仅输出选中区间</div>
+        <!-- 隐藏滑块(保持逻辑兼容) -->
+        <input type="range" id="slideshowTrimStart" min="0" max="100" step="0.1" value="0" style="display:none">
+        <input type="range" id="slideshowTrimEnd" min="0" max="100" step="0.1" value="100" style="display:none">
+        <div class="vm-card-hint">💡 拖拽时间轴上的红色手柄裁剪视频起止位置,导出时仅输出高亮区间</div>
       </div>
     </details>
 
@@ -1933,6 +1954,7 @@ function updateTotalDuration() {
   document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart || 0);
   document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd || total);
   updateSlideshowTrimEstimate();
+  renderTrimTimeline();
   document.getElementById('imgSummary').textContent = `预计视频时长: ${total.toFixed(1)}s`;
 }
 window.updateTotalDuration = updateTotalDuration;
@@ -1952,6 +1974,147 @@ function updateSlideshowTrimEstimate() {
     document.getElementById('slideshowTrimLabel').textContent = '完整视频';
   }
 }
+
+// ─── 可视化时间轴渲染 ───
+function renderTrimTimeline() {
+  const canvas = document.getElementById('trimTimelineCanvas');
+  if (!canvas || CURRENT_MODE.value !== 'slideshow') return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const fullDur = calculateFullDuration();
+  if (fullDur <= 0) { ctx.clearRect(0, 0, W, H); return; }
+
+  const start = STATE.settings.trimStart || 0;
+  const end = STATE.settings.trimEnd || fullDur;
+  const startX = (start / fullDur) * W;
+  const endX = (end / fullDur) * W;
+
+  // 背景
+  ctx.fillStyle = '#e8e4df'; ctx.fillRect(0, 0, W, H);
+  // 网格刻度
+  ctx.strokeStyle = '#d4d0ca'; ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 10; i++) {
+    const x = (i / 10) * W;
+    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    ctx.fillStyle = '#a8a098'; ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(formatTime((i / 10) * fullDur), x, H - 4);
+  }
+
+  // 图片标记(小竖条)
+  const totalImgDur = fullDur - STATE.settings.coverHold - STATE.settings.endHold;
+  let imgX = 0;
+  for (let i = 0; i < STATE.images.length; i++) {
+    const dur = (STATE.images[i].mediaType === 'video' ? STATE.images[i].duration : STATE.settings.secondsPerImage);
+    const x = STATE.settings.coverHold + imgX;
+    const w = dur;
+    const px = (x / fullDur) * W;
+    const pw = Math.max(2, (w / fullDur) * W);
+    ctx.fillStyle = STATE.images[i].mediaType === 'video' ? '#ED0108' : '#5a8cb8';
+    ctx.fillRect(px, 8, pw, 16);
+    ctx.fillStyle = '#fff'; ctx.font = '7px sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(String(i + 1), px + pw / 2, 20);
+    imgX += dur;
+  }
+
+  // 封面/结尾标记
+  ctx.fillStyle = 'rgba(0,0,0,0.08)';
+  if (STATE.settings.coverHold > 0) ctx.fillRect(0, 40, (STATE.settings.coverHold / fullDur) * W, H - 40);
+  if (STATE.settings.endHold > 0) ctx.fillRect(W - (STATE.settings.endHold / fullDur) * W, 40, (STATE.settings.endHold / fullDur) * W, H - 40);
+
+  // 音频波形(简化)
+  if (!STATE.noMusic && STATE.audio) {
+    ctx.fillStyle = '#52a87a';
+    for (let i = 0; i < 100; i++) {
+      const h = 6 + Math.random() * 14;
+      ctx.fillRect((i / 100) * W, H - h, W / 100 - 1, h);
+    }
+    ctx.fillStyle = '#52a87a'; ctx.font = '8px sans-serif'; ctx.textAlign = 'right';
+    ctx.fillText('🎵 ' + (STATE.audio.duration || 0).toFixed(0) + 's', W - 6, 12);
+  }
+
+  // 选中区域高亮
+  ctx.fillStyle = 'rgba(237,1,8,0.12)'; ctx.fillRect(startX, 0, endX - startX, H);
+  ctx.strokeStyle = '#ED0108'; ctx.lineWidth = 2;
+  ctx.strokeRect(startX, 0, endX - startX, H);
+
+  // 更新拖拽手柄位置
+  document.getElementById('trimHandleStart').style.left = ((start / fullDur) * 100) + '%';
+  document.getElementById('trimHandleEnd').style.left = ((end / fullDur) * 100) + '%';
+}
+
+// ─── 时间轴拖拽交互 ───
+(function initTrimDrag() {
+  let dragHandle = null;
+  const canvas = document.getElementById('trimTimelineCanvas');
+  const hStart = document.getElementById('trimHandleStart');
+  const hEnd = document.getElementById('trimHandleEnd');
+
+  function getTimeFromEvent(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const ratio = Math.max(0, Math.min(1, x / rect.width));
+    return ratio * calculateFullDuration();
+  }
+
+  function onDown(e, handle) {
+    dragHandle = handle;
+    (handle === 'start' ? hStart : hEnd).classList.add('dragging');
+    e.preventDefault();
+  }
+
+  hStart.addEventListener('mousedown', e => onDown(e, 'start'));
+  hStart.addEventListener('touchstart', e => onDown(e, 'start'), {passive: false});
+  hEnd.addEventListener('mousedown', e => onDown(e, 'end'));
+  hEnd.addEventListener('touchstart', e => onDown(e, 'end'), {passive: false});
+
+  canvas.addEventListener('mousedown', e => {
+    if (dragHandle) return;
+    const t = getTimeFromEvent(e);
+    // 点击更靠近哪个手柄就拖哪个
+    const s = STATE.settings.trimStart || 0;
+    const e2 = STATE.settings.trimEnd || calculateFullDuration();
+    dragHandle = (Math.abs(t - s) < Math.abs(t - e2)) ? 'start' : 'end';
+    (dragHandle === 'start' ? hStart : hEnd).classList.add('dragging');
+    onMove(e);
+  });
+  canvas.addEventListener('touchstart', e => {
+    if (dragHandle) return;
+    const t = getTimeFromEvent(e);
+    const s = STATE.settings.trimStart || 0;
+    const e2 = STATE.settings.trimEnd || calculateFullDuration();
+    dragHandle = (Math.abs(t - s) < Math.abs(t - e2)) ? 'start' : 'end';
+    (dragHandle === 'start' ? hStart : hEnd).classList.add('dragging');
+    onMove(e);
+  }, {passive: false});
+
+  function onMove(e) {
+    if (!dragHandle) return;
+    const t = getTimeFromEvent(e);
+    STATE._trimAdjusted = true;
+    if (dragHandle === 'start') {
+      STATE.settings.trimStart = Math.max(0, Math.min(t, (STATE.settings.trimEnd || calculateFullDuration()) - 0.1));
+    } else {
+      STATE.settings.trimEnd = Math.min(calculateFullDuration(), Math.max(t, (STATE.settings.trimStart || 0) + 0.1));
+    }
+    document.getElementById('slideshowTrimStart').value = STATE.settings.trimStart || 0;
+    document.getElementById('slideshowTrimEnd').value = STATE.settings.trimEnd || calculateFullDuration();
+    document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart || 0);
+    document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd || calculateFullDuration());
+    updateSlideshowTrimEstimate();
+    renderTrimTimeline();
+  }
+
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, {passive: false});
+  document.addEventListener('mouseup', () => {
+    if (dragHandle) { hStart.classList.remove('dragging'); hEnd.classList.remove('dragging'); }
+    dragHandle = null;
+  });
+  document.addEventListener('touchend', () => {
+    if (dragHandle) { hStart.classList.remove('dragging'); hEnd.classList.remove('dragging'); }
+    dragHandle = null;
+  });
+})();
 
 // ═══════════ 批次 4: 视频合成核心(ffmpeg.wasm + MediaRecorder fallback) ═══════════
 
@@ -2132,7 +2295,10 @@ async function exportWithMediaRecorder() {
         recorderStream = new MediaStream([videoTrack, audioTracks[0]]);
       }
       const offset = STATE.audio.startAt || 0;
-      audioSource.start(audioCtx.currentTime, offset, totalDur - offset);
+      const playDuration = Math.max(0.1, totalDur - offset);
+      audioSource.start(audioCtx.currentTime, offset, playDuration);
+      // 显式定时停止,确保音频不超过视频时长
+      audioSource.stop(audioCtx.currentTime + playDuration + 0.05);
     } catch (err) {
       console.warn('[video_maker] 音频加载失败,导出无声音频:', err);
     }
@@ -3599,6 +3765,7 @@ function switchMode(mode) {
     document.getElementById('modeSubtitle').textContent = '多图 + 音乐 → 9:16 短视频 · 浏览器本地处理';
     document.getElementById('btnExport').textContent = '🎬 生成视频';
     renderPreviewFrame();
+    renderTrimTimeline();
   }
 }
 window.switchMode = switchMode;
