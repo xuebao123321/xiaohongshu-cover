@@ -1,0 +1,17 @@
+{
+  "templateId":"newspaper-14","styleFamily":"newspaper","name":"浅蓝底+深蓝标题+白印章+信息图表风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#E9F3FF"},
+  "columnDividers":{"count":3,"yStart":1050,"yEnd":1560,"color":"rgba(38,119,222,0.08)","lineWidth":0.7},
+  "titleBox":{"x":70,"y":280,"w":1102,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#1E3A52","letterSpacing":-0.035},
+  "subTitleBox":{"x":120,"y":800,"w":1002,"h":100},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":74,"weight":400,"color":"rgba(30,58,82,0.55)"},
+  "footerBox":{"x":70,"y":1500,"w":1102,"h":60},
+  "footerFont":{"family":"\"Noto Sans SC\",sans-serif","min":22,"max":36,"weight":400,"color":"rgba(30,58,82,0.35)"},
+  "decorations":[
+    {"id":"np14-divider","type":"divider","layer":"behind","box":{"x":70,"y":770,"w":1102,"h":2},"color":"rgba(38,119,222,0.25)","lineWidth":2},
+    {"id":"np14-stamp","type":"stamp","layer":"above","box":{"x":1020,"y":190,"w":130,"h":130},"color":"#2677DE","rotation":-9,"label":"DATA"},
+    {"id":"np14-badge","type":"badge","layer":"above","box":{"x":70,"y":110,"w":120,"h":40},"color":"#2677DE","labelColor":"#FFFFFF","fontSize":16}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-13","styleFamily":"minimal","name":"淡米底+超大衬线+顶部极细线",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDFBF7"},
+  "titleBox":{"x":50,"y":360,"w":1142,"h":740},
+  "titleFont":{"family":"\"Noto Serif SC\",serif","min":195,"max":470,"weight":900,"color":"#1A1614","letterSpacing":-0.045},
+  "subTitleBox":{"x":100,"y":1140,"w":1042,"h":70},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":32,"max":56,"weight":300,"color":"rgba(26,22,20,0.35)"},
+  "decorations":[
+    {"id":"mn13-line","type":"thickLine","layer":"above","box":{"x":540,"y":320,"w":160,"h":1},"color":"rgba(26,22,20,0.15)","lineWidth":1}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "templateId":"collage-13","styleFamily":"collage","name":"粉彩便签群+心形印章+丝带胶带+少女风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF2F6"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#2D2028","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(45,32,40,0.55)"},
+  "decorations":[
+    {"id":"cl13-note1","type":"tornNote","layer":"behind","box":{"x":260,"y":300,"w":680,"h":500},"color":"#FFD0E8","rotation":-3,"shadow":true},
+    {"id":"cl13-note2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#FFE0F0","rotation":-12,"shadow":true},
+    {"id":"cl13-note3","type":"tornNote","layer":"behind","box":{"x":540,"y":460,"w":500,"h":420},"color":"#FFE8D0","rotation":9,"shadow":true},
+    {"id":"cl13-stamp","type":"stamp","layer":"above","box":{"x":980,"y":200,"w":130,"h":130},"color":"#FF6B9D","rotation":-10,"label":"LOVE"},
+    {"id":"cl13-tape","type":"tape","layer":"above","box":{"x":400,"y":280,"w":260,"h":32},"rotation":3,"color":"rgba(255,184,200,0.50)"},
+    {"id":"cl13-arrow","type":"arrow","layer":"above","box":{"x":800,"y":1060,"w":140,"h":50},"color":"#FF6B9D","lineWidth":2.5,"direction":"bottomRight"},
+    {"id":"cl13-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1400,"w":110,"h":110},"emoji":"💕","fontSize":100}
+  ]
+}

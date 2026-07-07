@@ -1,0 +1,17 @@
+{
+  "templateId":"comic-14","styleFamily":"comic","name":"金色pop+黑字+皇冠emoji+豪华闪亮",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFD700"},
+  "backgroundOverlay":{"type":"halftone","dotSize":2.5,"spacing":12,"color":"rgba(0,0,0,0.15)"},
+  "burstLines":{"count":22,"from":{"x":621,"y":580},"color":"rgba(255,255,255,0.35)","lineWidth":2,"innerR":100,"outerR":900},
+  "titleBox":{"x":70,"y":400,"w":1102,"h":520},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":160,"max":320,"weight":900,"color":"#000000","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.04},
+  "subTitleBox":{"x":150,"y":960,"w":940,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":82,"weight":700,"color":"#8B6914"},
+  "decorations":[
+    {"id":"cm14-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1280,"w":160,"h":160},"emoji":"👑","fontSize":145},
+    {"id":"cm14-sfx","type":"sfx","layer":"above","box":{"x":900,"y":1340,"w":200,"h":100},"text":"PREMIUM","fontSize":58,"color":"#8B6914","rotation":-5,"strokeColor":"#FFFFFF","strokeWidth":2},
+    {"id":"cm14-star1","type":"starBurst","layer":"above","box":{"x":130,"y":190,"w":85,"h":85},"color":"#FFFFFF","strokeColor":"#8B6914","strokeWidth":2},
+    {"id":"cm14-star2","type":"starBurst","layer":"above","box":{"x":1000,"y":1150,"w":65,"h":65},"color":"#8B6914","strokeColor":"#FFFFFF","strokeWidth":1.5}
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-14","styleFamily":"collage","name":"牛皮纸底+黑白便签+红印章+极简拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F2EAD3"},
+  "titleBox":{"x":120,"y":390,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#2D2520","stroke":{"color":"#FFFFFF","width":3},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(45,37,32,0.55)"},
+  "decorations":[
+    {"id":"cl14-note1","type":"tornNote","layer":"behind","box":{"x":280,"y":310,"w":680,"h":510},"color":"#FFFFFF","rotation":-3,"shadow":true},
+    {"id":"cl14-note2","type":"tornNote","layer":"behind","box":{"x":100,"y":410,"w":480,"h":440},"color":"#F5F0E8","rotation":-11,"shadow":true},
+    {"id":"cl14-note3","type":"tornNote","layer":"behind","box":{"x":520,"y":470,"w":520,"h":420},"color":"#EEEEEE","rotation":8,"shadow":true},
+    {"id":"cl14-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":210,"w":125,"h":125},"color":"#C8252C","rotation":-10,"label":"VINTAGE"},
+    {"id":"cl14-arrow","type":"arrow","layer":"above","box":{"x":200,"y":1080,"w":150,"h":45},"color":"#C8252C","lineWidth":2.5,"direction":"topLeft"},
+    {"id":"cl14-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1420,"w":100,"h":100},"emoji":"📜","fontSize":90}
+  ]
+}
