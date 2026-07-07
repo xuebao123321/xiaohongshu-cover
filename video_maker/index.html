@@ -517,23 +517,6 @@ button{font-family:inherit;cursor:pointer}
       </div>
     </details>
 
-    <!-- 🔄 去重设置 -->
-    <details class="vm-card" id="cardDedup">
-      <summary>🔄 去重设置 <span id="dedupLabel" style="font-weight:400;color:#a8a098;font-size:11px">标准</span></summary>
-      <div class="vm-card-body">
-        <div class="toggle-row" style="margin-bottom:10px">
-          <span class="toggle-label">启用来重检测</span>
-          <div class="toggle-switch active" id="toggleDedup" onclick="toggleDedup()"></div>
-        </div>
-        <div class="option-group">
-          <div class="option-label">检测强度</div>
-          <div class="option-row" id="dedupLevelBtns"></div>
-        </div>
-        <button class="btn small ghost" id="btnCheckAllDup" style="margin-top:8px;width:100%">🔍 全部检测</button>
-        <div id="dedupResults" style="display:none;margin-top:10px"></div>
-      </div>
-    </details>
-
     <!-- ✂️ 视频剪辑 -->
     <details class="vm-card" id="cardSlideshowTrim" open>
       <summary>✂️ 视频剪辑 <span id="slideshowTrimLabel" style="font-weight:400;color:#a8a098;font-size:11px">完整视频</span></summary>
@@ -2428,6 +2411,21 @@ function applyPixelateFilter(ctx, blockSize) {
   ctx.putImageData(imageData, 0, 0);
 }
 
+
+// ─── 胶片颗粒效果 ───
+function addFilmGrain(ctx, intensity) {
+  const W = ctx.canvas.width, H = ctx.canvas.height;
+  const imageData = ctx.getImageData(0, 0, W, H);
+  const data = imageData.data;
+  for (let i = 0; i < data.length; i += 4) {
+    const noise = (Math.random() - 0.5) * intensity * 50;
+    data[i] = Math.min(255, Math.max(0, data[i] + noise));
+    data[i+1] = Math.min(255, Math.max(0, data[i+1] + noise));
+    data[i+2] = Math.min(255, Math.max(0, data[i+2] + noise));
+  }
+  ctx.putImageData(imageData, 0, 0);
+}
+
 // ─── 核心滤镜应用函数 ───
 function applyFilter(ctx, filterName, strength) {
   if (filterName === 'none' || !strength) return;
@@ -2465,8 +2463,12 @@ function applyFilter(ctx, filterName, strength) {
       break;
 
     case 'vintage':
-      applyFilter(ctx, 'sepia', strength * 0.6);
-      applyVignette(ctx, strength * 0.4);
+      applyFilter(ctx, 'sepia', strength * 0.5);
+      applyVignette(ctx, strength * 0.5);
+      // 添加颗粒感
+      if (strength > 0.3) {
+        addFilmGrain(ctx, strength * 0.25);
+      }
       return; // 不需要 putImageData
 
     case 'vivid':
@@ -2494,52 +2496,19 @@ function applyFilter(ctx, filterName, strength) {
       }
       break;
 
-    case 'softGlow':
-      // 柔光: 提高亮度 + 轻微模糊模拟
-      ctx.globalAlpha = 0.3 * strength;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, W, H);
-      ctx.globalAlpha = 1;
-      return;
-
-    case 'lofi':
-      applyPixelateFilter(ctx, 3);
-      const loImageData = ctx.getImageData(0, 0, W, H);
-      const loData = loImageData.data;
-      for (let i = 0; i < loData.length; i += 4) {
-        loData[i]   = Math.min(255, Math.max(0, loData[i]   + (Math.random() - 0.5) * 30));
-        loData[i+1] = Math.min(255, Math.max(0, loData[i+1] + (Math.random() - 0.5) * 30));
-        loData[i+2] = Math.min(255, Math.max(0, loData[i+2] + (Math.random() - 0.5) * 30));
-      }
-      ctx.putImageData(loImageData, 0, 0);
-      return;
-
-    case 'cinema':
-      // 电影感: 上下黑边 + S 曲线
-      const barH = H * 0.12;
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, W, barH);
-      ctx.fillRect(0, H - barH, W, barH);
-      const cinImageData = ctx.getImageData(0, 0, W, H);
-      const cinData = cinImageData.data;
-      for (let i = 0; i < cinData.length; i += 4) {
-        for (let c = 0; c < 3; c++) {
-          const v = cinData[i + c] / 255;
-          cinData[i + c] = Math.round(255 * lerp(v,
-            (v < 0.5 ? 2 * v * v : -1 + (4 - 2 * v) * v), strength));
-        }
-      }
-      ctx.putImageData(cinImageData, 0, 0);
-      return;
-
-    case 'posterize':
-      const levels = Math.round(lerp(256, 4, strength));
-      for (let i = 0; i < data.length; i += 4) {
-        data[i]   = Math.round(data[i]   / (256/levels)) * (256/levels);
-        data[i+1] = Math.round(data[i+1] / (256/levels)) * (256/levels);
-        data[i+2] = Math.round(data[i+2] / (256/levels)) * (256/levels);
+    case 'softGlow': {
+      // 柔光: 高斯模糊叠加(multi-pass box blur) + 降低对比度
+      const blurAmount = Math.round(strength * 8);
+      if (blurAmount > 0) {
+        ctx.filter = `blur(${blurAmount}px)`;
+        ctx.globalAlpha = strength * 0.35;
+        ctx.drawImage(ctx.canvas, 0, 0);
+        ctx.filter = 'none';
+        ctx.globalAlpha = 1;
       }
       break;
+    }
+    }
 
     case 'sketch':
       applyFilter(ctx, 'grayscale', 1.0);
@@ -2585,7 +2554,9 @@ function applyMotion(ctx, img, motionType, progress) {
     case 'none': break;
 
     case 'slow_zoom': {
-      const scale = 1 + progress * 0.06;
+      // 缓入缓出缩放: 从1.0→1.12,使用easeInOut曲线
+      const t = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      const scale = 1 + t * 0.12;
       const zx = W / 2 - (W * scale) / 2;
       const zy = H / 2 - (H * scale) / 2;
       ctx.translate(zx, zy);
@@ -2618,9 +2589,13 @@ function applyMotion(ctx, img, motionType, progress) {
     }
 
     case 'ken_burns': {
-      const kbScale = 1 + progress * 0.08;
-      const kbX = W / 2 - (W * kbScale) / 2 + Math.sin(progress * Math.PI) * W * 0.02;
-      const kbY = H / 2 - (H * kbScale) / 2 + Math.cos(progress * Math.PI) * H * 0.02;
+      // 经典Ken Burns: 缩放1.0→1.15 + 对角线微移,缓入缓出
+      const t = progress < 0.5 ? 2 * progress * progress : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+      const kbScale = 1 + t * 0.15;
+      const panX = (t - 0.5) * W * 0.06;
+      const panY = (t - 0.5) * H * 0.04;
+      const kbX = W / 2 - (W * kbScale) / 2 + panX;
+      const kbY = H / 2 - (H * kbScale) / 2 + panY;
       ctx.translate(kbX, kbY);
       ctx.scale(kbScale, kbScale);
       break;
@@ -2635,7 +2610,9 @@ function applyMotion(ctx, img, motionType, progress) {
     }
 
     case 'bounce': {
-      const bounceY = Math.sin(progress * Math.PI * 2) * H * 0.02 * (1 - progress);
+      // 衰减弹跳: 幅度从5%衰减到0,频率2次完整弹跳
+      const decay = 1 - progress;
+      const bounceY = Math.sin(progress * Math.PI * 3) * H * 0.05 * decay * decay;
       ctx.translate(0, bounceY);
       break;
     }
@@ -3425,7 +3402,7 @@ function bindEvents() {
   });
 
   // 去重全检按钮
-  document.getElementById('btnCheckAllDup').addEventListener('click', runFullDedupCheck);
+  const btnDedup = document.getElementById('btnCheckAllDup'); if (btnDedup) btnDedup.addEventListener('click', runFullDedupCheck);
 }
 
 // ─── 资源清理 ───
