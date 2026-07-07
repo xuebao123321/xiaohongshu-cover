@@ -626,6 +626,57 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </details>
 
+      <!-- 🔄 去重变换 -->
+      <details class="vm-card" id="cardVideoTransform">
+        <summary>🔄 去重变换 <span id="videoTransformLabel" style="font-weight:400;color:#a8a098;font-size:11px">默认</span></summary>
+        <div class="vm-card-body">
+          <div class="toggle-row" style="margin-bottom:6px">
+            <span class="toggle-label">水平翻转</span>
+            <div class="toggle-switch" id="toggleFlipH" onclick="toggleFlipH()"></div>
+          </div>
+          <div class="option-group">
+            <div class="option-label">随机裁剪 <span id="cropPctVal" style="font-weight:400">2%</span></div>
+            <div class="slider-row">
+              <input type="range" id="cropPct" min="0" max="5" step="0.5" value="2">
+              <span class="slider-val" id="cropPctDisplay">2%</span>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="option-label">微旋转 <span id="rotationVal" style="font-weight:400">0.5°</span></div>
+            <div class="slider-row">
+              <input type="range" id="rotationDeg" min="0" max="2" step="0.1" value="0.5">
+              <span class="slider-val" id="rotationDegDisplay">0.5°</span>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="option-label">亮度偏移 <span id="brightnessVal" style="font-weight:400">0</span></div>
+            <div class="slider-row">
+              <input type="range" id="brightnessShift" min="-10" max="10" step="1" value="0">
+              <span class="slider-val" id="brightnessShiftDisplay">0</span>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="option-label">对比度偏移 <span id="contrastVal" style="font-weight:400">0</span></div>
+            <div class="slider-row">
+              <input type="range" id="contrastShift" min="-10" max="10" step="1" value="0">
+              <span class="slider-val" id="contrastShiftDisplay">0</span>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="option-label">播放速率 <span id="speedVal" style="font-weight:400">1.0x</span></div>
+            <div class="slider-row">
+              <input type="range" id="speedRate" min="90" max="110" step="1" value="100">
+              <span class="slider-val" id="speedRateDisplay">1.0x</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:10px">
+            <button class="btn small ghost" id="btnRandomize" style="flex:1">🎲 随机变换</button>
+            <button class="btn small ghost" id="btnResetTransform" style="flex:1">↩ 重置</button>
+          </div>
+          <div class="vm-card-hint">💡 导出时对画面施加微变换(翻转/裁剪/旋转/调色),让不同平台的视频指纹各异,规避查重</div>
+        </div>
+      </details>
+
       <!-- 🎵 背景音乐 -->
       <details class="vm-card" id="cardVideoAudio">
         <summary>🎵 背景音乐 <span id="videoAudioStatus" style="font-weight:400;color:#a8a098;font-size:11px">无音乐</span></summary>
@@ -3948,6 +3999,16 @@ const VIDEO_STATE = {
   outputResolution: 'original',
   audio: null,          // 背景音乐 { file, objectUrl, volume, fadeIn, fadeOut, startAt, duration }
   noMusic: true,        // 无音乐模式默认开启
+  // 去重变换参数(用户可调)
+  transform: {
+    flipH: false,        // 水平翻转
+    cropPct: 2,          // 随机裁剪比例 0-5%
+    rotation: 0.5,       // 微旋转角度 0-2°
+    brightness: 0,       // 亮度微调 -10 ~ +10
+    contrast: 0,         // 对比度微调 -10 ~ +10
+    speed: 1.0,          // 播放速率 0.9x ~ 1.1x
+    seed: 42,            // 随机种子(相同种子产生相同变换)
+  },
 };
 
 const CURRENT_MODE = { value: 'slideshow' }; // 'slideshow' | 'video'
@@ -4170,9 +4231,12 @@ function updateTrimEstimate() {
   if (!el) return;
   const start = VIDEO_STATE.trimStart || 0;
   const end = VIDEO_STATE.trimEnd || VIDEO_STATE.videoDuration || 0;
-  const dur = Math.max(0, end - start);
-  const estimatedBytes = dur * 1000000; // ~1 MB/s at 8 Mbps
-  el.textContent = `📐 导出时长: ${dur.toFixed(1)}s · 预估大小: ${formatSize(estimatedBytes)} (8 Mbps)`;
+  const rawDur = Math.max(0, end - start);
+  const speed = VIDEO_STATE.transform.speed || 1.0;
+  const dur = rawDur / speed;
+  const estimatedBytes = dur * 1000000;
+  const speedNote = speed !== 1.0 ? ` · ${speed.toFixed(2)}x` : '';
+  el.textContent = `📐 导出时长: ${dur.toFixed(1)}s${speedNote} · 预估大小: ${formatSize(estimatedBytes)} (8 Mbps)`;
 }
 
 document.getElementById('trimStart').addEventListener('input', function() {
@@ -4433,8 +4497,11 @@ async function exportVideoOnly() {
     const fps = 30;
     const trimStart = (VIDEO_STATE.trimStart != null && !isNaN(VIDEO_STATE.trimStart)) ? VIDEO_STATE.trimStart : 0;
     const trimEnd = (VIDEO_STATE.trimEnd != null && !isNaN(VIDEO_STATE.trimEnd)) ? VIDEO_STATE.trimEnd : v.duration;
-    const exportDuration = trimEnd - trimStart;
-    console.log('[video_maker] 裁剪:', trimStart.toFixed(2), '→', trimEnd.toFixed(2), '时长:', exportDuration.toFixed(1), 's');
+    const rawDuration = trimEnd - trimStart;
+    const speed = VIDEO_STATE.transform.speed || 1.0;
+    const exportDuration = rawDuration / speed;  // speed≠1时实际录制时长会变化
+    console.log('[video_maker] 裁剪:', trimStart.toFixed(2), '→', trimEnd.toFixed(2),
+                '原时长:', rawDuration.toFixed(1), 's', '速率:', speed.toFixed(2), 'x', '输出时长:', exportDuration.toFixed(1), 's');
 
     // ══════ 单一视频元素: 匀速播放,同时提供画面和音频 ══════
     const videoEl = document.createElement('video');
@@ -4493,7 +4560,7 @@ async function exportVideoOnly() {
         const t0 = mixerCtx.currentTime;
         gain.gain.setValueAtTime(0, t0);
         gain.gain.linearRampToValueAtTime(bgmVol, t0 + fi);
-        gain.gain.setValueAtTime(bgmVol, t0 + exportDuration - fo);
+        gain.gain.setValueAtTime(bgmVol, t0 + exportDuration - fo / speed);
         gain.gain.linearRampToValueAtTime(0, t0 + exportDuration);
         bgmSource.connect(gain);
         const dest = mixerCtx.createMediaStreamDestination();
@@ -4536,7 +4603,7 @@ async function exportVideoOnly() {
     recorder.start();
 
     if (bgmSource && mixerCtx) {
-      bgmSource.start(mixerCtx.currentTime, VIDEO_STATE.audio.startAt || 0, exportDuration);
+      bgmSource.start(mixerCtx.currentTime, (VIDEO_STATE.audio.startAt || 0) / speed, exportDuration);
     }
 
     // seek 到裁剪起点
@@ -4547,8 +4614,10 @@ async function exportVideoOnly() {
       setTimeout(() => { videoEl.removeEventListener('seeked', onS); r(); }, 5000);
     });
 
+    // 应用播放速率变换
+    videoEl.playbackRate = VIDEO_STATE.transform.speed || 1.0;
     await videoEl.play();
-    console.log('[video_maker] 开始播放,起点:', videoEl.currentTime);
+    console.log('[video_maker] 开始播放,起点:', videoEl.currentTime, '速率:', videoEl.playbackRate);
 
     // ══════ requestAnimationFrame 绘制循环(匀速,平台无关) ══════
     const startWall = performance.now();
@@ -4686,6 +4755,160 @@ async function init() {
 
   // 视频去重按钮
   document.getElementById('btnVideoDedup').addEventListener('click', runVideoDedupCheck);
+
+  // ── 去重变换 UI 事件 ──
+  window.toggleFlipH = function() {
+    const el = document.getElementById('toggleFlipH');
+    VIDEO_STATE.transform.flipH = !el.classList.contains('active');
+    if (VIDEO_STATE.transform.flipH) el.classList.add('active');
+    else el.classList.remove('active');
+    updateTransformLabel();
+  };
+  document.getElementById('cropPct').addEventListener('input', function() {
+    VIDEO_STATE.transform.cropPct = parseFloat(this.value);
+    document.getElementById('cropPctDisplay').textContent = this.value + '%';
+    document.getElementById('cropPctVal').textContent = this.value + '%';
+    updateTransformLabel();
+  });
+  document.getElementById('rotationDeg').addEventListener('input', function() {
+    VIDEO_STATE.transform.rotation = parseFloat(this.value);
+    document.getElementById('rotationDegDisplay').textContent = this.value + '°';
+    document.getElementById('rotationVal').textContent = this.value + '°';
+    updateTransformLabel();
+  });
+  document.getElementById('brightnessShift').addEventListener('input', function() {
+    VIDEO_STATE.transform.brightness = parseInt(this.value);
+    document.getElementById('brightnessShiftDisplay').textContent = this.value;
+    document.getElementById('brightnessVal').textContent = this.value;
+    updateTransformLabel();
+  });
+  document.getElementById('contrastShift').addEventListener('input', function() {
+    VIDEO_STATE.transform.contrast = parseInt(this.value);
+    document.getElementById('contrastShiftDisplay').textContent = this.value;
+    document.getElementById('contrastVal').textContent = this.value;
+    updateTransformLabel();
+  });
+  document.getElementById('speedRate').addEventListener('input', function() {
+    VIDEO_STATE.transform.speed = parseInt(this.value) / 100;
+    document.getElementById('speedRateDisplay').textContent = (parseInt(this.value) / 100).toFixed(2) + 'x';
+    document.getElementById('speedVal').textContent = (parseInt(this.value) / 100).toFixed(2) + 'x';
+    updateTransformLabel();
+  });
+  // 随机变换
+  document.getElementById('btnRandomize').addEventListener('click', () => {
+    VIDEO_STATE.transform.seed = Math.floor(Math.random() * 99999);
+    VIDEO_STATE.transform.flipH = Math.random() > 0.5;
+    VIDEO_STATE.transform.cropPct = Math.round((1 + Math.random() * 4) * 2) / 2;
+    VIDEO_STATE.transform.rotation = Math.round((0.3 + Math.random() * 1.5) * 10) / 10;
+    VIDEO_STATE.transform.brightness = Math.round((Math.random() - 0.5) * 12);
+    VIDEO_STATE.transform.contrast = Math.round((Math.random() - 0.5) * 12);
+    VIDEO_STATE.transform.speed = Math.round((0.93 + Math.random() * 0.14) * 100) / 100;
+    syncTransformUI();
+    updateTransformLabel();
+    showToast('🎲 已随机生成变换参数(seed:' + VIDEO_STATE.transform.seed + ')');
+  });
+  // 重置
+  document.getElementById('btnResetTransform').addEventListener('click', () => {
+    VIDEO_STATE.transform.flipH = false;
+    VIDEO_STATE.transform.cropPct = 2;
+    VIDEO_STATE.transform.rotation = 0.5;
+    VIDEO_STATE.transform.brightness = 0;
+    VIDEO_STATE.transform.contrast = 0;
+    VIDEO_STATE.transform.speed = 1.0;
+    syncTransformUI();
+    updateTransformLabel();
+    showToast('↩ 已重置为默认值');
+  });
+  function syncTransformUI() {
+    const t = VIDEO_STATE.transform;
+    document.getElementById('toggleFlipH').classList.toggle('active', t.flipH);
+    document.getElementById('cropPct').value = t.cropPct;
+    document.getElementById('cropPctDisplay').textContent = t.cropPct + '%';
+    document.getElementById('cropPctVal').textContent = t.cropPct + '%';
+    document.getElementById('rotationDeg').value = t.rotation;
+    document.getElementById('rotationDegDisplay').textContent = t.rotation + '°';
+    document.getElementById('rotationVal').textContent = t.rotation + '°';
+    document.getElementById('brightnessShift').value = t.brightness;
+    document.getElementById('brightnessShiftDisplay').textContent = t.brightness;
+    document.getElementById('brightnessVal').textContent = t.brightness;
+    document.getElementById('contrastShift').value = t.contrast;
+    document.getElementById('contrastShiftDisplay').textContent = t.contrast;
+    document.getElementById('contrastVal').textContent = t.contrast;
+    document.getElementById('speedRate').value = Math.round(t.speed * 100);
+    document.getElementById('speedRateDisplay').textContent = t.speed.toFixed(2) + 'x';
+    document.getElementById('speedVal').textContent = t.speed.toFixed(2) + 'x';
+  }
+  function updateTransformLabel() {
+    const t = VIDEO_STATE.transform;
+    const parts = [];
+    if (t.flipH) parts.push('翻转');
+    if (t.cropPct > 0) parts.push('裁剪' + t.cropPct + '%');
+    if (t.rotation > 0) parts.push('旋转' + t.rotation + '°');
+    if (t.brightness !== 0 || t.contrast !== 0) parts.push('调色');
+    if (t.speed !== 1.0) parts.push(t.speed.toFixed(2) + 'x');
+    document.getElementById('videoTransformLabel').textContent = parts.length > 0 ? parts.join('+') : '默认';
+  }
+
+// ─── 视频帧变换(去重) ───
+function applyVideoTransform(ctx, seed, W, H) {
+  const t = VIDEO_STATE.transform;
+  // 用种子生成确定性的伪随机偏移(同一种子每次导出结果一致)
+  const rng = (s) => { s = Math.abs(s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+  let s = seed;
+  const rand = () => { s = Math.abs(s * 16807 + 1) % 2147483647; return (s - 1) / 2147483646; };
+
+  ctx.save();
+
+  // 水平翻转
+  if (t.flipH) {
+    ctx.translate(W, 0);
+    ctx.scale(-1, 1);
+  }
+
+  // 微旋转(以画面中心)
+  if (t.rotation > 0) {
+    const deg = (rand() - 0.5) * 2 * t.rotation;
+    ctx.translate(W/2, H/2);
+    ctx.rotate(deg * Math.PI / 180);
+    ctx.translate(-W/2, -H/2);
+  }
+
+  // 随机裁剪(缩小后居中)
+  if (t.cropPct > 0) {
+    const pct = t.cropPct / 100;
+    const cw = W * (1 - pct);
+    const ch = H * (1 - pct);
+    const ox = (rand() - 0.5) * (W - cw);
+    const oy = (rand() - 0.5) * (H - ch);
+    // 用 clip 实现裁剪
+    ctx.beginPath();
+    ctx.rect(W/2 - cw/2, H/2 - ch/2, cw, ch);
+    ctx.clip();
+    // 缩放以填充裁剪区域
+    const scale = 1 / (1 - pct);
+    ctx.translate(W/2, H/2);
+    ctx.scale(scale, scale);
+    ctx.translate(-W/2, -H/2);
+  }
+
+  ctx.restore();
+
+  // 亮度/对比度(通过像素操作)
+  if (t.brightness !== 0 || t.contrast !== 0) {
+    try {
+      const imgData = ctx.getImageData(0, 0, W, H);
+      const d = imgData.data;
+      const contrastFactor = (100 + t.contrast) / 100;
+      const brightnessOffset = t.brightness * 2.55;
+      for (let i = 0; i < d.length; i += 4) {
+        d[i]   = Math.min(255, Math.max(0, (d[i] - 128) * contrastFactor + 128 + brightnessOffset));
+        d[i+1] = Math.min(255, Math.max(0, (d[i+1] - 128) * contrastFactor + 128 + brightnessOffset));
+        d[i+2] = Math.min(255, Math.max(0, (d[i+2] - 128) * contrastFactor + 128 + brightnessOffset));
+      }
+      ctx.putImageData(imgData, 0, 0);
+    } catch(e) { /* 像素操作在部分浏览器可能失败 */ }
+  }
+}
 
   // 视频音频: 上传 + 控制
   document.getElementById('videoAudioUploadZone').addEventListener('click', () => {
