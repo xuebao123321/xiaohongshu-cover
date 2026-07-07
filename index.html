@@ -1081,10 +1081,10 @@ const BATCH_STATE = {
 };
 
 const CANDIDATE_CONFIG = {
-  candidatesPerText: 30,
-  initialRenderCount: 6,
-  lazyLoadBatchSize: 6,
-  familiesPerText: 6,
+  candidatesPerText: 0,   // 0 = 动态：全部模板数
+  initialRenderCount: 8,
+  lazyLoadBatchSize: 12,   // 每批加载12张，60张分5批
+  familiesPerText: 5,
 };
 
 const AUTH_STATE = {
@@ -6369,28 +6369,30 @@ function renderCandidateBatch(group, startIndex, count) {
 }
 
 function setupLazyLoading(group) {
-  const scrollContainer = group.querySelector('.candidate-scroll');
+  var scrollContainer = group.querySelector('.candidate-scroll');
   if (!scrollContainer) return;
-  const sentinel = document.createElement('div');
+  var sentinel = document.createElement('div');
   sentinel.className = 'lazy-sentinel';
-  sentinel.style.cssText = 'min-width:1px;min-height:1px;';
+  sentinel.style.cssText = 'min-width:1px;min-height:1px;flex-shrink:0;';
   scrollContainer.appendChild(sentinel);
 
-  const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
+  var observer = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
       if (entry.isIntersecting) {
-        const current = group._renderedCount || 0;
-        const total = (group._candidates || []).length;
+        var current = group._renderedCount || 0;
+        var total = (group._candidates || []).length;
         if (current < total) {
           renderCandidateBatch(group, current, CANDIDATE_CONFIG.lazyLoadBatchSize);
+          // 重新把 sentinel 放最后
+          scrollContainer.appendChild(sentinel);
         }
-        if (current + CANDIDATE_CONFIG.lazyLoadBatchSize >= total) {
+        if (group._renderedCount >= total) {
           observer.disconnect();
-          sentinel.remove();
+          if (sentinel.parentNode) sentinel.parentNode.removeChild(sentinel);
         }
       }
-    }
-  }, { root: scrollContainer, rootMargin: '300px' });
+    });
+  }, { root: scrollContainer, rootMargin: '600px' });
 
   observer.observe(sentinel);
 }
@@ -6568,11 +6570,11 @@ function familiesForBatchCards() {
   return out;
 }
 
-// ══════ 模板池驱动的候选生成（随机打乱） ══════
+// ══════ 模板池驱动的候选生成（只取已加载的模板） ══════
 function getShuffledTemplateIds(seed) {
-  var allIds = (window.TEMPLATE_REGISTRY || []).slice();
-  if (allIds.length === 0) return [];
-  // Fisher-Yates 随机打乱
+  var lib = window.TEMPLATE_LIBRARY || {};
+  var allIds = Object.keys(lib).filter(function(id){ return lib[id]; });
+  if (allIds.length === 0) allIds = (window.TEMPLATE_REGISTRY || []).slice();
   var rng = window.seededRandom ? window.seededRandom(seed) : Math.random;
   for (var i = allIds.length - 1; i > 0; i--) {
     var j = Math.floor(rng() * (i + 1));
