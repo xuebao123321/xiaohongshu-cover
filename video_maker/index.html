@@ -523,12 +523,12 @@ button{font-family:inherit;cursor:pointer}
       <div class="vm-card-body">
         <div class="vm-video-trim">
           <span style="font-size:11px;white-space:nowrap">起始</span>
-          <input type="range" id="slideshowTrimStart" min="0" max="100" value="0" disabled>
+          <input type="range" id="slideshowTrimStart" min="0" max="100" step="0.1" value="0" disabled>
           <span class="slider-val" id="slideshowTrimStartVal">00:00</span>
         </div>
         <div class="vm-video-trim">
           <span style="font-size:11px;white-space:nowrap">结束</span>
-          <input type="range" id="slideshowTrimEnd" min="0" max="100" value="100" disabled>
+          <input type="range" id="slideshowTrimEnd" min="0" max="100" step="0.1" value="100" disabled>
           <span class="slider-val" id="slideshowTrimEndVal">00:00</span>
         </div>
         <div class="vm-video-info" id="slideshowTrimEstimate" style="color:#ED0108;font-weight:600"></div>
@@ -977,6 +977,7 @@ function initUI() {
 
   // 剪辑滑块
   document.getElementById('slideshowTrimStart').addEventListener('input', function() {
+    STATE._trimAdjusted = true;
     STATE.settings.trimStart = parseFloat(this.value);
     document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart);
     if (STATE.settings.trimStart >= STATE.settings.trimEnd) {
@@ -987,6 +988,7 @@ function initUI() {
     updateSlideshowTrimEstimate();
   });
   document.getElementById('slideshowTrimEnd').addEventListener('input', function() {
+    STATE._trimAdjusted = true;
     STATE.settings.trimEnd = parseFloat(this.value);
     document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd);
     if (STATE.settings.trimEnd <= STATE.settings.trimStart) {
@@ -1902,18 +1904,19 @@ function updateTotalDuration() {
   const tStart = document.getElementById('slideshowTrimStart');
   const tEnd = document.getElementById('slideshowTrimEnd');
   if (STATE.images.length > 0) {
-    tStart.disabled = false; tStart.max = Math.floor(total);
-    tEnd.disabled = false;   tEnd.max = Math.floor(total);
-    if (STATE.settings.trimEnd === 0 || STATE.settings.trimEnd > total) {
+    tStart.disabled = false; tStart.max = total;
+    tEnd.disabled = false;   tEnd.max = total;
+    // 首次加载或内容增加时自动扩展 trimEnd 到全长(用户手动调过则不覆盖)
+    if (!STATE._trimAdjusted || STATE.settings.trimEnd > total || STATE.settings.trimEnd <= 0) {
       STATE.settings.trimEnd = total;
-      tEnd.value = Math.floor(total);
     }
     tStart.value = STATE.settings.trimStart || 0;
-    tEnd.value = STATE.settings.trimEnd || total;
+    tEnd.value = STATE.settings.trimEnd;
   } else {
     tStart.disabled = true; tEnd.disabled = true;
     STATE.settings.trimStart = 0;
     STATE.settings.trimEnd = 0;
+    STATE._trimAdjusted = false;
   }
   document.getElementById('slideshowTrimStartVal').textContent = formatTime(STATE.settings.trimStart || 0);
   document.getElementById('slideshowTrimEndVal').textContent = formatTime(STATE.settings.trimEnd || total);
