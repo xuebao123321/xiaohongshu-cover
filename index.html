@@ -843,7 +843,7 @@ button{font-family:inherit}
     placeholder="输入文案,字数不限&#10;批量模式请用 888 分隔每条文案"
     aria-label="封面文案输入"></textarea>
   <div class="btn-wrap">
-    <button class="btn primary" id="btnGenerate">生成 100 张</button>
+    <button class="btn primary" id="btnGenerate">🤖 自动生图</button>
     <button class="btn ghost" id="btnAnalyzeBatch">识别批量文案</button>
     <button class="btn outline" id="btnRerollAll">全部换一换</button>
   </div>
@@ -3677,9 +3677,12 @@ const LOCKED_TEMPLATE_STYLES = Object.freeze({
 function drawTemplateEnhancedCover(ctx, text, palette, options, family) {
   // ══════ 模板驱动模式（优先）══════
   if (STATE.realStyleMode && window.TEMPLATE_LIBRARY && window.renderTemplate) {
-    // 如果 options 里指定了 templateId，直接用
     if (options && options.templateId) {
       var content = window.parseCoverContent ? window.parseCoverContent(text || '') : { mainTitle: text || '', subTitle: '', keyword: '', badgeText: '', footerText: '' };
+      // ══════ 变体差异化：不同 variantMode 用不同文字层级 ══════
+      var vm = (options.variantMode !== undefined) ? options.variantMode : 0;
+      if (vm === 1) { content.subTitle = ''; content.keyword = ''; content.badgeText = ''; }
+      else if (vm === 2) { content.subTitle = ''; }
       var dirResult = window.renderTemplate(ctx, options.templateId, content, options);
       if (dirResult && dirResult.success) return;
     }
@@ -6146,7 +6149,9 @@ function generate() {
 
         tplIds.forEach(function(tid, ti){
           for (var v = 0; v < variantsPerTemplate; v++) {
-            var card = buildOneCard(rf, v, text, STATE.seed + ti * 13 + v * 7, { templateId: tid });
+            // ══════ 3张变体 = 不同种子 + 不同文字层级 ══════
+            var meta = { templateId: tid, variantMode: v };
+            var card = buildOneCard(rf, v, text, STATE.seed + ti * 13 + v * 7919, meta);
             g.appendChild(card);
             totalCards++;
           }
@@ -6857,11 +6862,12 @@ function highlightRecommendedFamilies(families) {
 }
 
 function updateGenerateButton() {
-  const btn = document.getElementById('btnGenerate');
+  var btn = document.getElementById('btnGenerate');
   if (!btn || btn.disabled) return;
-  const raw = document.getElementById('textInput').value || '';
-  const batchCount = raw.includes('888') ? parseBatchTexts(raw).length : 0;
-  btn.textContent = batchCount > 1 ? '生成当前输入' : ('生成 ' + (STATE.families.size * CARDS_PER_FAMILY) + ' 张');
+  var raw = document.getElementById('textInput').value || '';
+  var batchCount = raw.includes('888') ? parseBatchTexts(raw).length : 0;
+  var tplCount = (window.TEMPLATE_REGISTRY || []).length;
+  btn.textContent = batchCount > 1 ? '🤖 自动生图' : ('🤖 自动生图 (' + tplCount + ' 模板)');
 }
 
 // ═══════════ Tab 事件绑定 ═══════════
@@ -7092,8 +7098,9 @@ function renderCard(canvas, family, vi, text, seedOffset, meta) {
     canvas.width = CANVAS_W;
     canvas.height = CANVAS_H;
     var options = { seed: vi + seedOffset, vi: vi };
-    // 模板直传 — 如果有 templateId，直接用于渲染
-    if (meta && meta.templateId) options.templateId = meta.templateId;
+    // 模板直传 — templateId + variantMode
+    if (meta && meta.templateId) { options.templateId = meta.templateId; }
+    if (meta && meta.variantMode !== undefined) { options.variantMode = meta.variantMode; }
     const palette = pickPalette(family, vi, seedOffset);
     const fn = STYLE_FUNCS[family] || STYLE_FUNCS.A || drawTemplateEnhancedCover;
     if (!fn) throw new Error('Style function undefined');
