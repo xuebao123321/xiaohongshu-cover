@@ -603,6 +603,44 @@ button{font-family:inherit;cursor:pointer}
         </div>
       </details>
 
+      <!-- 🎵 背景音乐 -->
+      <details class="vm-card" id="cardVideoAudio">
+        <summary>🎵 背景音乐 <span id="videoAudioStatus" style="font-weight:400;color:#a8a098;font-size:11px">无音乐</span></summary>
+        <div class="vm-card-body">
+          <div class="upload-zone" id="videoAudioUploadZone" style="padding:14px">
+            <div class="upload-icon">🎧</div>
+            <div class="upload-text">点击上传音乐</div>
+            <div class="upload-hint">MP3 / WAV / M4A · 建议 ≤ 50MB · 将与视频原声混合</div>
+            <input type="file" id="videoAudioFileInput" accept="audio/mp3,audio/wav,audio/m4a,audio/aac,audio/ogg" hidden>
+          </div>
+          <div id="videoAudioPlayer" style="display:none;margin-top:10px"></div>
+          <div class="option-group" style="margin-top:10px">
+            <div class="option-label">背景音量</div>
+            <div class="slider-row">
+              <input type="range" id="videoAudioVolume" min="0" max="100" value="30">
+              <span class="slider-val" id="videoAudioVolumeVal">30%</span>
+            </div>
+          </div>
+          <div class="option-group">
+            <div class="option-label">淡入 / 淡出</div>
+            <div class="option-row">
+              <select id="videoAudioFadeIn" style="flex:1;padding:6px;border:1px solid #e8e4df;border-radius:6px;font-size:12px">
+                <option value="0">淡入 0s</option><option value="0.5">淡入 0.5s</option>
+                <option value="1" selected>淡入 1s</option><option value="1.5">淡入 1.5s</option><option value="2">淡入 2s</option>
+              </select>
+              <select id="videoAudioFadeOut" style="flex:1;padding:6px;border:1px solid #e8e4df;border-radius:6px;font-size:12px">
+                <option value="0">淡出 0s</option><option value="1">淡出 1s</option>
+                <option value="2" selected>淡出 2s</option><option value="3">淡出 3s</option><option value="4">淡出 4s</option>
+              </select>
+            </div>
+          </div>
+          <div class="toggle-row" style="margin-top:8px">
+            <span class="toggle-label">无音乐模式</span>
+            <div class="toggle-switch active" id="toggleVideoNoMusic" onclick="toggleVideoNoMusic()"></div>
+          </div>
+        </div>
+      </details>
+
       <!-- ✂️ 视频裁剪 -->
       <details class="vm-card" id="cardVideoTrim" open>
         <summary>✂️ 视频裁剪 <span id="trimInfo" style="font-weight:400;color:#a8a098;font-size:11px">未选择视频</span></summary>
@@ -1419,6 +1457,147 @@ window.toggleNoMusic = function() {
     renderAudioPlayer();
   }
 };
+
+// ─── 视频模式: 无音乐切换 ───
+window.toggleVideoNoMusic = function() {
+  const el = document.getElementById('toggleVideoNoMusic');
+  VIDEO_STATE.noMusic = !el.classList.contains('active');
+  if (VIDEO_STATE.noMusic) {
+    el.classList.add('active');
+    stopVideoAudioPreview();
+    document.getElementById('videoAudioStatus').textContent = '无音乐';
+    renderVideoAudioPlayer();
+  } else {
+    if (!VIDEO_STATE.audio) {
+      showToast('请先上传音乐');
+      el.classList.add('active');
+      VIDEO_STATE.noMusic = true;
+      return;
+    }
+    el.classList.remove('active');
+    document.getElementById('videoAudioStatus').textContent = VIDEO_STATE.audio.file.name.slice(0, 16) + '...';
+    renderVideoAudioPlayer();
+  }
+};
+
+// ─── 视频模式: 音乐上传 ───
+function handleVideoAudioUpload(file) {
+  const validTypes = ['audio/mp3', 'audio/mpeg', 'audio/wav', 'audio/x-wav', 'audio/m4a', 'audio/x-m4a', 'audio/aac', 'audio/ogg'];
+  if (!validTypes.includes(file.type) && !file.name.match(/\.(mp3|wav|m4a|aac|ogg)$/i)) {
+    showToast('⚠️ 请选择 MP3 / WAV / M4A 格式');
+    return;
+  }
+  if (file.size > 50 * 1024 * 1024) {
+    showToast('⚠️ 音乐文件超过 50MB,可能影响加载速度');
+  }
+
+  // 释放旧资源
+  if (VIDEO_STATE.audio?.objectUrl) URL.revokeObjectURL(VIDEO_STATE.audio.objectUrl);
+  stopVideoAudioPreview();
+
+  const objectUrl = URL.createObjectURL(file);
+  const tempAudio = new Audio();
+  tempAudio.preload = 'metadata';
+  tempAudio.src = objectUrl;
+
+  tempAudio.onloadedmetadata = () => {
+    VIDEO_STATE.audio = {
+      file: file,
+      objectUrl: objectUrl,
+      volume: 0.3,
+      fadeIn: 1,
+      fadeOut: 2,
+      startAt: 0,
+      duration: tempAudio.duration,
+    };
+    VIDEO_STATE.noMusic = false;
+    document.getElementById('toggleVideoNoMusic').classList.remove('active');
+    document.getElementById('videoAudioStatus').textContent = file.name.length > 18 ? file.name.slice(0, 16) + '...' : file.name;
+    renderVideoAudioPlayer();
+    document.getElementById('videoAudioVolume').value = 30;
+    document.getElementById('videoAudioVolumeVal').textContent = '30%';
+    showToast('✅ 背景音乐已加载: ' + file.name);
+  };
+  tempAudio.onerror = () => {
+    showToast('⚠️ 音乐文件无法解析,请更换文件');
+    URL.revokeObjectURL(objectUrl);
+  };
+}
+window.handleVideoAudioUpload = handleVideoAudioUpload;
+
+// ─── 视频模式: 音频播放器渲染 ───
+function renderVideoAudioPlayer() {
+  const container = document.getElementById('videoAudioPlayer');
+  if (!container) return;
+  if (!VIDEO_STATE.audio || VIDEO_STATE.noMusic) {
+    container.style.display = 'none';
+    stopVideoAudioPreview();
+    return;
+  }
+  container.style.display = 'block';
+  const dur = VIDEO_STATE.audio.duration || 0;
+  const startStr = formatTime(VIDEO_STATE.audio.startAt || 0);
+  container.innerHTML = `
+    <div style="background:#faf9f7;border-radius:8px;padding:10px 12px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <button class="btn small ghost icon-btn" id="btnVideoAudioPlay" style="min-width:36px;height:36px">▶</button>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:600;color:#2d2a26;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${VIDEO_STATE.audio.file.name}</div>
+          <div style="font-size:10px;color:#a8a098">${startStr} / ${formatTime(dur)} · 起始: ${startStr}</div>
+        </div>
+        <button class="tl-btn tl-remove" id="btnVideoAudioRemove" title="移除音乐" style="flex-shrink:0">×</button>
+      </div>
+      <div class="slider-row" style="margin-top:6px">
+        <span style="font-size:10px;color:#a8a098;white-space:nowrap">起始</span>
+        <input type="range" id="videoAudioStartAt" min="0" max="${Math.floor(dur)}" step="0.5" value="${VIDEO_STATE.audio.startAt || 0}">
+        <span class="slider-val" id="videoAudioStartVal" style="font-size:10px">${startStr}</span>
+      </div>
+    </div>
+  `;
+  document.getElementById('btnVideoAudioPlay').addEventListener('click', toggleVideoAudioPreview);
+  document.getElementById('btnVideoAudioRemove').addEventListener('click', removeVideoAudio);
+  document.getElementById('videoAudioStartAt').addEventListener('input', function() {
+    VIDEO_STATE.audio.startAt = parseFloat(this.value);
+    document.getElementById('videoAudioStartVal').textContent = formatTime(VIDEO_STATE.audio.startAt);
+  });
+}
+
+// ─── 视频模式: 音频预览 ───
+let videoAudioPreviewEl = null, videoAudioPreviewInterval = null;
+function toggleVideoAudioPreview() {
+  const btn = document.getElementById('btnVideoAudioPlay');
+  if (!btn) return;
+  if (!videoAudioPreviewEl) {
+    videoAudioPreviewEl = new Audio();
+    videoAudioPreviewEl.preload = 'auto';
+  }
+  if (videoAudioPreviewEl.paused) {
+    videoAudioPreviewEl.src = VIDEO_STATE.audio?.objectUrl || '';
+    videoAudioPreviewEl.currentTime = VIDEO_STATE.audio?.startAt || 0;
+    videoAudioPreviewEl.volume = VIDEO_STATE.audio?.volume || 0.3;
+    videoAudioPreviewEl.play().catch(() => {});
+    btn.textContent = '⏸';
+  } else {
+    videoAudioPreviewEl.pause();
+    btn.textContent = '▶';
+    stopVideoAudioPreview();
+  }
+}
+function stopVideoAudioPreview() {
+  if (videoAudioPreviewInterval) { clearInterval(videoAudioPreviewInterval); videoAudioPreviewInterval = null; }
+  if (videoAudioPreviewEl) { videoAudioPreviewEl.pause(); videoAudioPreviewEl = null; }
+}
+function removeVideoAudio() {
+  stopVideoAudioPreview();
+  if (VIDEO_STATE.audio?.objectUrl) URL.revokeObjectURL(VIDEO_STATE.audio.objectUrl);
+  VIDEO_STATE.audio = null;
+  VIDEO_STATE.noMusic = true;
+  document.getElementById('toggleVideoNoMusic').classList.add('active');
+  document.getElementById('videoAudioStatus').textContent = '无音乐';
+  renderVideoAudioPlayer();
+  showToast('背景音乐已移除');
+}
+window.removeVideoAudio = removeVideoAudio;
 
 // ─── 时间格式化 ───
 function formatTime(seconds) {
@@ -3264,6 +3443,8 @@ const VIDEO_STATE = {
   dedup: { level: 'normal' },
   outputFormat: 'mp4',
   outputResolution: 'original',
+  audio: null,          // 背景音乐 { file, objectUrl, volume, fadeIn, fadeOut, startAt, duration }
+  noMusic: true,        // 无音乐模式默认开启
 };
 
 const CURRENT_MODE = { value: 'slideshow' }; // 'slideshow' | 'video'
@@ -3748,24 +3929,78 @@ async function exportVideoOnly() {
       videoEl.load();
     });
 
-    // ══════ 构建混合流(画布视频 + 原始音频) ══════
+    // ══════ 构建混合流(画布视频 + 视频原声 + 背景音乐) ══════
     let recorderStream = canvasStream;
-    let videoStreamForAudio = null;
-    try {
-      videoStreamForAudio = videoEl.captureStream ? videoEl.captureStream() : null;
-    } catch(e) { console.warn('[video_maker] video.captureStream 不支持:', e); }
+    let mixAudioCtx = null, bgmSource = null, bgmGain = null;
+    const hasBGM = !VIDEO_STATE.noMusic && VIDEO_STATE.audio;
 
-    if (videoStreamForAudio) {
-      const audioTracks = videoStreamForAudio.getAudioTracks();
-      if (audioTracks.length > 0) {
-        const videoTrack = canvasStream.getVideoTracks()[0];
-        recorderStream = new MediaStream([videoTrack, audioTracks[0]]);
-        console.log('[video_maker] ✅ 音频轨道已捕获,混合流就绪');
-      } else {
-        console.warn('[video_maker] ⚠️ video.captureStream 无音频轨道(可能视频本身无音轨)');
+    try {
+      mixAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const audioDest = mixAudioCtx.createMediaStreamDestination();
+
+      // 视频原声: 通过 createMediaElementSource 捕获
+      let videoAudioSource = null;
+      try {
+        videoAudioSource = mixAudioCtx.createMediaElementSource(videoEl);
+      } catch (e) {
+        console.warn('[video_maker] createMediaElementSource 失败(可能已被占用):', e.message);
       }
-    } else {
-      console.warn('[video_maker] ⚠️ 无法获取音频流,导出无声音视频');
+
+      if (videoAudioSource) {
+        const videoGain = mixAudioCtx.createGain();
+        // 如果有背景音乐,视频原声保持100%; 如果无BGM,也是100%
+        videoGain.gain.value = hasBGM ? 0.7 : 1.0;
+        videoAudioSource.connect(videoGain);
+        videoGain.connect(audioDest);
+        console.log('[video_maker] ✅ 视频原声已接入');
+      }
+
+      // 背景音乐: 从文件解码并播放
+      if (hasBGM) {
+        const bgmFile = VIDEO_STATE.audio.file;
+        const arrayBuf = await bgmFile.arrayBuffer();
+        const audioBuffer = await mixAudioCtx.decodeAudioData(arrayBuf.slice(0));
+
+        bgmSource = mixAudioCtx.createBufferSource();
+        bgmSource.buffer = audioBuffer;
+        bgmGain = mixAudioCtx.createGain();
+        const bgmVol = (VIDEO_STATE.audio.volume !== undefined) ? VIDEO_STATE.audio.volume : 0.3;
+        bgmGain.gain.value = bgmVol;
+
+        // 淡入淡出
+        const fadeIn = VIDEO_STATE.audio.fadeIn || 1;
+        const fadeOut = VIDEO_STATE.audio.fadeOut || 2;
+        const now = mixAudioCtx.currentTime;
+        bgmGain.gain.setValueAtTime(0, now);
+        bgmGain.gain.linearRampToValueAtTime(bgmVol, now + fadeIn);
+        bgmGain.gain.setValueAtTime(bgmVol, now + exportDuration - fadeOut);
+        bgmGain.gain.linearRampToValueAtTime(0, now + exportDuration);
+
+        bgmSource.connect(bgmGain);
+        bgmGain.connect(audioDest);
+        console.log('[video_maker] ✅ 背景音乐已解码,音量:', (bgmVol * 100).toFixed(0) + '%');
+      }
+
+      // 获取混合后的音频轨道
+      const mixedAudioTracks = audioDest.stream.getAudioTracks();
+      if (mixedAudioTracks.length > 0) {
+        const videoTrack = canvasStream.getVideoTracks()[0];
+        recorderStream = new MediaStream([videoTrack, ...mixedAudioTracks]);
+        console.log('[video_maker] ✅ 混合音频流就绪(视频原声' + (videoAudioSource ? '+' : '') + (hasBGM ? 'BGM' : '') + ')');
+      }
+    } catch (e) {
+      console.warn('[video_maker] 音频混合失败,回退到原始音频:', e.message || e);
+      // 回退: 尝试直接使用 video.captureStream 的音频
+      try {
+        const fallbackStream = videoEl.captureStream ? videoEl.captureStream() : null;
+        if (fallbackStream) {
+          const audioTracks = fallbackStream.getAudioTracks();
+          if (audioTracks.length > 0) {
+            const videoTrack = canvasStream.getVideoTracks()[0];
+            recorderStream = new MediaStream([videoTrack, audioTracks[0]]);
+          }
+        }
+      } catch (e2) { /* 静默 */ }
     }
 
     // ══════ MediaRecorder ══════
@@ -3786,6 +4021,13 @@ async function exportVideoOnly() {
 
     // ══════ 开始录制 + 播放视频 ══════
     recorder.start();
+
+    // 背景音乐与视频同步启动
+    if (bgmSource && mixAudioCtx) {
+      const bStart = (VIDEO_STATE.audio.startAt || 0);
+      bgmSource.start(mixAudioCtx.currentTime, bStart, exportDuration);
+      console.log('[video_maker] BGM 开始播放,偏移:', bStart.toFixed(1), 's');
+    }
 
     // Seek 到裁剪起始位置后开始播放
     videoEl.currentTime = trimStart;
@@ -3847,10 +4089,12 @@ async function exportVideoOnly() {
 
     // ══════ 停止录制 ══════
     videoEl.pause();
+    if (bgmSource) { try { bgmSource.stop(); } catch (e) { /* 可能已结束 */ } }
     if (recorder.state === 'recording') {
       recorder.stop();
     }
     await recorderDone;
+    if (mixAudioCtx) { mixAudioCtx.close(); mixAudioCtx = null; }
 
     const ext = isVideoMp4 ? 'mp4' : 'webm';
     const blob = new Blob(chunks, { type: mimeType });
@@ -3938,6 +4182,26 @@ async function init() {
 
   // 视频去重按钮
   document.getElementById('btnVideoDedup').addEventListener('click', runVideoDedupCheck);
+
+  // 视频音频: 上传 + 控制
+  document.getElementById('videoAudioUploadZone').addEventListener('click', () => {
+    document.getElementById('videoAudioFileInput').click();
+  });
+  document.getElementById('videoAudioFileInput').addEventListener('change', (e) => {
+    if (e.target.files.length > 0) handleVideoAudioUpload(e.target.files[0]);
+    e.target.value = '';
+  });
+  document.getElementById('videoAudioVolume').addEventListener('input', function() {
+    const vol = parseInt(this.value) / 100;
+    document.getElementById('videoAudioVolumeVal').textContent = this.value + '%';
+    if (VIDEO_STATE.audio) VIDEO_STATE.audio.volume = vol;
+  });
+  document.getElementById('videoAudioFadeIn').addEventListener('change', function() {
+    if (VIDEO_STATE.audio) VIDEO_STATE.audio.fadeIn = parseFloat(this.value);
+  });
+  document.getElementById('videoAudioFadeOut').addEventListener('change', function() {
+    if (VIDEO_STATE.audio) VIDEO_STATE.audio.fadeOut = parseFloat(this.value);
+  });
 
   // 导出按钮分发
   updateExportButton();
