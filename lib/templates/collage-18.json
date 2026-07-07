@@ -1,0 +1,18 @@
+{
+  "templateId":"collage-18","styleFamily":"collage","name":"天蓝底+杂志剪报+红箭头+拼贴手账",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#E8F4FD"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":135,"max":255,"weight":900,"color":"#0D2B45","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.03},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(13,43,69,0.55)"},
+  "decorations":[
+    {"id":"cl18-n1","type":"tornNote","layer":"behind","box":{"x":280,"y":310,"w":700,"h":490},"color":"#FFFFFF","rotation":-4,"shadow":true},
+    {"id":"cl18-n2","type":"tornNote","layer":"behind","box":{"x":100,"y":420,"w":460,"h":430},"color":"#F0F7FF","rotation":-10,"shadow":true},
+    {"id":"cl18-n3","type":"tornNote","layer":"behind","box":{"x":520,"y":480,"w":520,"h":410},"color":"#E0EDF8","rotation":7,"shadow":true},
+    {"id":"cl18-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":210,"w":125,"h":125},"color":"#D9363E","rotation":-10,"label":"HOT"},
+    {"id":"cl18-arrow","type":"arrow","layer":"above","box":{"x":820,"y":1060,"w":150,"h":55},"color":"#D9363E","lineWidth":3,"direction":"bottomRight"},
+    {"id":"cl18-tape","type":"tape","layer":"above","box":{"x":420,"y":290,"w":250,"h":30},"rotation":-4,"color":"rgba(150,200,240,0.50)"},
+    {"id":"cl18-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1420,"w":100,"h":100},"emoji":"📰","fontSize":90}
+  ]
+}
