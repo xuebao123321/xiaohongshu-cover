@@ -656,6 +656,7 @@ button{font-family:inherit;cursor:pointer}
             <span class="slider-val" id="trimEndVal">00:00</span>
           </div>
           <div class="vm-video-info" id="trimSummary">请先上传视频</div>
+          <div class="vm-video-info" id="trimEstimate" style="color:#ED0108;font-weight:600"></div>
         </div>
       </details>
 
@@ -3640,9 +3641,11 @@ function updateVideoTrimForActive() {
     document.getElementById('trimEnd').disabled = true;
     document.getElementById('trimInfo').textContent = '未选择视频';
     document.getElementById('trimSummary').textContent = '请先上传视频';
+    document.getElementById('trimEstimate').textContent = '';
     return;
   }
   VIDEO_STATE.videoDuration = v.duration;
+  VIDEO_STATE.trimStart = 0;
   VIDEO_STATE.trimEnd = v.duration;
   document.getElementById('trimStart').disabled = false;
   document.getElementById('trimStart').max = Math.floor(v.duration);
@@ -3654,16 +3657,39 @@ function updateVideoTrimForActive() {
   document.getElementById('trimEndVal').textContent = formatTime(v.duration);
   document.getElementById('trimInfo').textContent = v.name.slice(0, 20);
   document.getElementById('trimSummary').textContent = `${v.width}×${v.height} · ${formatSize(v.size)} · 全长 ${v.duration.toFixed(1)}s`;
+  updateTrimEstimate();
+}
+
+function updateTrimEstimate() {
+  const el = document.getElementById('trimEstimate');
+  if (!el) return;
+  const start = VIDEO_STATE.trimStart || 0;
+  const end = VIDEO_STATE.trimEnd || VIDEO_STATE.videoDuration || 0;
+  const dur = Math.max(0, end - start);
+  const estimatedBytes = dur * 1000000; // ~1 MB/s at 8 Mbps
+  el.textContent = `📐 导出时长: ${dur.toFixed(1)}s · 预估大小: ${formatSize(estimatedBytes)} (8 Mbps)`;
 }
 
 document.getElementById('trimStart').addEventListener('input', function() {
   VIDEO_STATE.trimStart = parseFloat(this.value);
   document.getElementById('trimStartVal').textContent = formatTime(VIDEO_STATE.trimStart);
+  if (VIDEO_STATE.trimStart >= VIDEO_STATE.trimEnd) {
+    VIDEO_STATE.trimEnd = Math.min(VIDEO_STATE.videoDuration, VIDEO_STATE.trimStart + 0.5);
+    document.getElementById('trimEnd').value = VIDEO_STATE.trimEnd;
+    document.getElementById('trimEndVal').textContent = formatTime(VIDEO_STATE.trimEnd);
+  }
+  updateTrimEstimate();
   renderVideoPreview();
 });
 document.getElementById('trimEnd').addEventListener('input', function() {
   VIDEO_STATE.trimEnd = parseFloat(this.value);
   document.getElementById('trimEndVal').textContent = formatTime(VIDEO_STATE.trimEnd);
+  if (VIDEO_STATE.trimEnd <= VIDEO_STATE.trimStart) {
+    VIDEO_STATE.trimStart = Math.max(0, VIDEO_STATE.trimEnd - 0.5);
+    document.getElementById('trimStart').value = VIDEO_STATE.trimStart;
+    document.getElementById('trimStartVal').textContent = formatTime(VIDEO_STATE.trimStart);
+  }
+  updateTrimEstimate();
   renderVideoPreview();
 });
 
@@ -3898,109 +3924,115 @@ async function exportVideoOnly() {
                      VIDEO_STATE.outputResolution === '720p' ? 720 : v.height;
 
     const fps = 30;
+    const frameIntervalMs = 1000 / fps;
     const trimStart = VIDEO_STATE.trimStart || 0;
     const trimEnd = VIDEO_STATE.trimEnd || v.duration;
     const exportDuration = trimEnd - trimStart;
-    console.log('[video_maker] 裁剪:', trimStart, '→', trimEnd, '导出时长:', exportDuration, 's');
+    const totalFrames = Math.ceil(exportDuration * fps);
+    console.log('[video_maker] 裁剪:', trimStart.toFixed(2), '→', trimEnd.toFixed(2),
+                '导出时长:', exportDuration.toFixed(1), 's', '总帧数:', totalFrames);
 
-    // ══════ 画布: 视频帧绘制 ══════
+    // ══════ 双视频元素架构 ══════
+    // videoForFrames: seek 到每一帧精确位置 → drawImage(不播放)
+    // videoForAudio:  连续播放 → createMediaElementSource 捕获原声音频
+    const videoForFrames = document.createElement('video');
+    videoForFrames.preload = 'auto';
+    videoForFrames.muted = true;
+    videoForFrames.playsInline = true;
+    videoForFrames.src = v.objectUrl;
+    videoForFrames.crossOrigin = 'anonymous';
+    videoForFrames.setAttribute('playsinline', '');
+
+    const videoForAudio = document.createElement('video');
+    videoForAudio.preload = 'auto';
+    videoForAudio.muted = false;
+    videoForAudio.playsInline = true;
+    videoForAudio.src = v.objectUrl;
+    videoForAudio.crossOrigin = 'anonymous';
+    videoForAudio.setAttribute('playsinline', '');
+    videoForAudio.volume = 1.0;
+
+    // 并行加载两个视频元素
+    await Promise.all([
+      new Promise((resolve, reject) => {
+        videoForFrames.onloadedmetadata = () => resolve();
+        videoForFrames.onerror = () => reject(new Error('视频帧源加载失败'));
+        videoForFrames.load();
+      }),
+      new Promise((resolve, reject) => {
+        videoForAudio.onloadedmetadata = () => resolve();
+        videoForAudio.onerror = () => reject(new Error('视频音频源加载失败'));
+        videoForAudio.load();
+      })
+    ]);
+    console.log('[video_maker] 双视频源就绪,时长:', videoForFrames.duration.toFixed(1), 's');
+
+    // ══════ 画布 + 视频流 ══════
     const canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     const canvasStream = canvas.captureStream(fps);
 
-    // ══════ 视频元素: 播放原始视频(不静音,用于音频捕获) ══════
-    const videoEl = document.createElement('video');
-    videoEl.preload = 'auto';
-    videoEl.muted = false;   // ← 不静音! 音频通过 captureStream 获取
-    videoEl.playsInline = true;
-    videoEl.src = v.objectUrl;
-    videoEl.crossOrigin = 'anonymous';
-    videoEl.setAttribute('playsinline', '');
-    videoEl.volume = 1.0;
-
-    await new Promise((resolve, reject) => {
-      videoEl.onloadedmetadata = () => {
-        console.log('[video_maker] 视频元数据加载完成,时长:', videoEl.duration, 's');
-        resolve();
-      };
-      videoEl.onerror = () => reject(new Error('视频加载失败'));
-      videoEl.load();
-    });
-
-    // ══════ 构建混合流(画布视频 + 视频原声 + 背景音乐) ══════
+    // ══════ 音频混合: 视频原声 + 背景音乐 ══════
+    let mixerCtx = null, bgmSource = null, audioVideoSource = null;
     let recorderStream = canvasStream;
-    let mixAudioCtx = null, bgmSource = null, bgmGain = null;
     const hasBGM = !VIDEO_STATE.noMusic && VIDEO_STATE.audio;
 
     try {
-      mixAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const audioDest = mixAudioCtx.createMediaStreamDestination();
+      mixerCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const audioDest = mixerCtx.createMediaStreamDestination();
 
-      // 视频原声: 通过 createMediaElementSource 捕获
-      let videoAudioSource = null;
+      // 视频原声: 从 videoForAudio 的播放中捕获
       try {
-        videoAudioSource = mixAudioCtx.createMediaElementSource(videoEl);
+        audioVideoSource = mixerCtx.createMediaElementSource(videoForAudio);
       } catch (e) {
-        console.warn('[video_maker] createMediaElementSource 失败(可能已被占用):', e.message);
+        console.warn('[video_maker] createMediaElementSource 失败:', e.message);
       }
 
-      if (videoAudioSource) {
-        const videoGain = mixAudioCtx.createGain();
-        // 如果有背景音乐,视频原声保持100%; 如果无BGM,也是100%
-        videoGain.gain.value = hasBGM ? 0.7 : 1.0;
-        videoAudioSource.connect(videoGain);
-        videoGain.connect(audioDest);
-        console.log('[video_maker] ✅ 视频原声已接入');
+      if (audioVideoSource) {
+        const srcGain = mixerCtx.createGain();
+        srcGain.gain.value = hasBGM ? 0.75 : 1.0;
+        audioVideoSource.connect(srcGain);
+        srcGain.connect(audioDest);
+        console.log('[video_maker] ✅ 视频原声已接入(AudioContext)');
       }
 
-      // 背景音乐: 从文件解码并播放
+      // 背景音乐
       if (hasBGM) {
         const bgmFile = VIDEO_STATE.audio.file;
         const arrayBuf = await bgmFile.arrayBuffer();
-        const audioBuffer = await mixAudioCtx.decodeAudioData(arrayBuf.slice(0));
+        const audioBuffer = await mixerCtx.decodeAudioData(arrayBuf.slice(0));
 
-        bgmSource = mixAudioCtx.createBufferSource();
+        bgmSource = mixerCtx.createBufferSource();
         bgmSource.buffer = audioBuffer;
-        bgmGain = mixAudioCtx.createGain();
+        const bgmGain = mixerCtx.createGain();
         const bgmVol = (VIDEO_STATE.audio.volume !== undefined) ? VIDEO_STATE.audio.volume : 0.3;
         bgmGain.gain.value = bgmVol;
 
         // 淡入淡出
         const fadeIn = VIDEO_STATE.audio.fadeIn || 1;
         const fadeOut = VIDEO_STATE.audio.fadeOut || 2;
-        const now = mixAudioCtx.currentTime;
-        bgmGain.gain.setValueAtTime(0, now);
-        bgmGain.gain.linearRampToValueAtTime(bgmVol, now + fadeIn);
-        bgmGain.gain.setValueAtTime(bgmVol, now + exportDuration - fadeOut);
-        bgmGain.gain.linearRampToValueAtTime(0, now + exportDuration);
+        const t0 = mixerCtx.currentTime;
+        bgmGain.gain.setValueAtTime(0, t0);
+        bgmGain.gain.linearRampToValueAtTime(bgmVol, t0 + fadeIn);
+        bgmGain.gain.setValueAtTime(bgmVol, t0 + exportDuration - fadeOut);
+        bgmGain.gain.linearRampToValueAtTime(0, t0 + exportDuration);
 
         bgmSource.connect(bgmGain);
         bgmGain.connect(audioDest);
-        console.log('[video_maker] ✅ 背景音乐已解码,音量:', (bgmVol * 100).toFixed(0) + '%');
+        console.log('[video_maker] ✅ BGM 已解码,音量:', (bgmVol * 100).toFixed(0) + '%');
       }
 
-      // 获取混合后的音频轨道
+      // 混合音频轨道
       const mixedAudioTracks = audioDest.stream.getAudioTracks();
       if (mixedAudioTracks.length > 0) {
         const videoTrack = canvasStream.getVideoTracks()[0];
         recorderStream = new MediaStream([videoTrack, ...mixedAudioTracks]);
-        console.log('[video_maker] ✅ 混合音频流就绪(视频原声' + (videoAudioSource ? '+' : '') + (hasBGM ? 'BGM' : '') + ')');
+        console.log('[video_maker] ✅ 混合音频流就绪(原声' + (audioVideoSource ? '✓' : '✗') + ' BGM:' + (hasBGM ? '✓' : '✗') + ')');
       }
-    } catch (e) {
-      console.warn('[video_maker] 音频混合失败,回退到原始音频:', e.message || e);
-      // 回退: 尝试直接使用 video.captureStream 的音频
-      try {
-        const fallbackStream = videoEl.captureStream ? videoEl.captureStream() : null;
-        if (fallbackStream) {
-          const audioTracks = fallbackStream.getAudioTracks();
-          if (audioTracks.length > 0) {
-            const videoTrack = canvasStream.getVideoTracks()[0];
-            recorderStream = new MediaStream([videoTrack, audioTracks[0]]);
-          }
-        }
-      } catch (e2) { /* 静默 */ }
+    } catch (audioErr) {
+      console.warn('[video_maker] 音频混合失败,继续导出无音频:', audioErr.message);
     }
 
     // ══════ MediaRecorder ══════
@@ -4008,98 +4040,91 @@ async function exportVideoOnly() {
     let mimeType = 'video/webm';
     for (const c of codecOrder) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
     const isVideoMp4 = mimeType.startsWith('video/mp4');
-    console.log('[video_maker] MediaRecorder 编码:', mimeType, isVideoMp4 ? '(MP4)' : '(WebM)');
+    const bitrate = 8000000; // 8 Mbps
+    console.log('[video_maker] MediaRecorder:', mimeType, '码率:', (bitrate / 1000000).toFixed(0), 'Mbps');
 
     const chunks = [];
-    const recorder = new MediaRecorder(recorderStream, { mimeType, videoBitsPerSecond: 8000000 });
+    const recorder = new MediaRecorder(recorderStream, { mimeType, videoBitsPerSecond: bitrate });
     recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    const recorderDone = new Promise(r => { recorder.onstop = r; });
 
-    const recorderDone = new Promise(resolve => {
-      recorder.onstop = resolve;
-      recorder.onerror = (e) => { console.error('[video_maker] MediaRecorder 错误:', e); resolve(); };
-    });
-
-    // ══════ 开始录制 + 播放视频 ══════
+    // ══════ 启动 ══════
     recorder.start();
 
-    // 背景音乐与视频同步启动
-    if (bgmSource && mixAudioCtx) {
-      const bStart = (VIDEO_STATE.audio.startAt || 0);
-      bgmSource.start(mixAudioCtx.currentTime, bStart, exportDuration);
-      console.log('[video_maker] BGM 开始播放,偏移:', bStart.toFixed(1), 's');
+    // 启动背景音乐
+    if (bgmSource && mixerCtx) {
+      bgmSource.start(mixerCtx.currentTime, VIDEO_STATE.audio.startAt || 0, exportDuration);
+      console.log('[video_maker] BGM 启动,偏移:', (VIDEO_STATE.audio.startAt || 0).toFixed(1));
     }
 
-    // Seek 到裁剪起始位置后开始播放
-    videoEl.currentTime = trimStart;
+    // 启动音频视频(连续播放,驱动 createMediaElementSource)
+    videoForAudio.currentTime = trimStart;
     await new Promise(r => {
-      const onSeeked = () => { videoEl.removeEventListener('seeked', onSeeked); r(); };
-      videoEl.addEventListener('seeked', onSeeked);
-      setTimeout(() => { videoEl.removeEventListener('seeked', onSeeked); r(); }, 5000);
+      const onSeeked = () => { videoForAudio.removeEventListener('seeked', onSeeked); r(); };
+      videoForAudio.addEventListener('seeked', onSeeked);
+      setTimeout(() => { videoForAudio.removeEventListener('seeked', onSeeked); r(); }, 5000);
     });
+    await videoForAudio.play();
+    console.log('[video_maker] 音频视频开始播放');
 
-    await videoEl.play();
-    console.log('[video_maker] 视频开始播放,currentTime:', videoEl.currentTime);
+    // ══════ 逐帧 seek + 绘制 + 精确计时 ══════
+    // 用 canvas.captureStream(fps) 按固定频率采样,配合精确 frameIntervalMs 睡眠,
+    // 确保 MediaRecorder 捕获的每帧都是唯一、准时的画面。
+    const startWall = performance.now();
+    for (let f = 0; f < totalFrames; f++) {
+      const frameStart = performance.now();
+      const targetTime = trimStart + (f / fps);
 
-    // ══════ requestAnimationFrame 循环: 持续绘制视频帧到画布 ══════
-    // canvas.captureStream(fps) 按固定频率(30fps)采样画布,
-    // rAF 以屏幕刷新率(~60fps)绘制,保证画布始终有最新帧。
-    const startWallClock = performance.now();
-    let lastProgressUpdate = 0;
-
-    await new Promise(resolve => {
-      function drawLoop() {
-        if (!STATE.isExporting) {
-          // 用户取消/中止
-          videoEl.pause();
-          return resolve();
-        }
-
-        const currentTime = videoEl.currentTime;
-        const progress = Math.min(1, (currentTime - trimStart) / exportDuration);
-
-        // 检查是否到达终点
-        if (videoEl.ended || videoEl.paused || currentTime >= trimEnd || progress >= 0.999) {
-          console.log('[video_maker] 播放结束,currentTime:', currentTime, 'trimEnd:', trimEnd);
-          videoEl.pause();
-          return resolve();
-        }
-
-        // 绘制当前视频帧到画布
-        try {
-          ctx.drawImage(videoEl, 0, 0, targetW, targetH);
-          if (VIDEO_STATE.filter !== 'none') {
-            applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
-          }
-        } catch (drawErr) {
-          // drawImage 偶尔在视频尚未准备好时失败,跳过单帧
-        }
-
-        // 更新进度(每 2% 更新一次 UI)
-        if (progress - lastProgressUpdate > 0.02 || progress >= 0.99) {
-          lastProgressUpdate = progress;
-          STATE.exportProgress = Math.min(0.99, progress);
-          updateExportUI();
-        }
-
-        requestAnimationFrame(drawLoop);
+      // Seek 帧源到目标时间
+      if (Math.abs(videoForFrames.currentTime - targetTime) > 0.001) {
+        videoForFrames.currentTime = targetTime;
+        await new Promise(r => {
+          const onSeeked = () => { videoForFrames.removeEventListener('seeked', onSeeked); r(); };
+          videoForFrames.addEventListener('seeked', onSeeked);
+          setTimeout(() => { videoForFrames.removeEventListener('seeked', onSeeked); r(); }, 3000);
+        });
       }
 
-      requestAnimationFrame(drawLoop);
-    });
+      // 绘制
+      try {
+        ctx.drawImage(videoForFrames, 0, 0, targetW, targetH);
+        if (VIDEO_STATE.filter !== 'none' && f % 2 === 0) {
+          // 滤镜每隔一帧应用以降低性能开销(30fps 下肉眼不可察)
+          applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
+        }
+      } catch (drawErr) {
+        // 极少数情况视频帧未解码完,重试一次
+        try { ctx.drawImage(videoForFrames, 0, 0, targetW, targetH); } catch (e) {}
+      }
 
-    // ══════ 停止录制 ══════
-    videoEl.pause();
-    if (bgmSource) { try { bgmSource.stop(); } catch (e) { /* 可能已结束 */ } }
-    if (recorder.state === 'recording') {
-      recorder.stop();
+      // 进度
+      STATE.exportProgress = Math.min(0.99, f / Math.max(1, totalFrames - 1));
+      if (f % 6 === 0) updateExportUI();
+
+      // 精确计时: 保证每帧间隔严格为 frameIntervalMs
+      const elapsed = performance.now() - frameStart;
+      const waitMs = frameIntervalMs - elapsed;
+      if (waitMs > 1) {
+        await sleep(waitMs);
+      }
     }
+
+    // ══════ 收尾 ══════
+    videoForAudio.pause();
+    if (bgmSource) { try { bgmSource.stop(); } catch (e) {} }
+    // 等待最后一帧被 captureStream 捕获
+    await sleep(100);
+    if (recorder.state === 'recording') recorder.stop();
     await recorderDone;
-    if (mixAudioCtx) { mixAudioCtx.close(); mixAudioCtx = null; }
+    if (mixerCtx) { mixerCtx.close(); mixerCtx = null; }
 
     const ext = isVideoMp4 ? 'mp4' : 'webm';
     const blob = new Blob(chunks, { type: mimeType });
-    const wallTime = (performance.now() - startWallClock) / 1000;
-    console.log('[video_maker] 导出完成 | 大小:', formatSize(blob.size), '| 导出时长:', exportDuration.toFixed(1), 's | 耗时:', wallTime.toFixed(1), 's');
+    const wallTime = (performance.now() - startWall) / 1000;
+    console.log('[video_maker] 完成 | 大小:', formatSize(blob.size),
+                '| 输入:', exportDuration.toFixed(1), 's',
+                '| 耗时:', wallTime.toFixed(1), 's',
+                '| 帧数:', totalFrames);
 
     if (blob.size < 1000) {
       throw new Error('导出文件过小,可能视频处理异常');
@@ -4111,7 +4136,7 @@ async function exportVideoOnly() {
     showToast('✅ 导出完成! ' + formatSize(blob.size) + ' · ' + exportDuration.toFixed(1) + 's');
 
   } catch (err) {
-    console.error('[video_maker] 视频导出失败:', err);
+    console.error('[video_maker] 导出失败:', err);
     showToast('❌ 视频导出失败: ' + (err.message || '未知错误'));
   }
 
