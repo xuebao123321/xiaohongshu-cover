@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-29","styleFamily":"handnote","name":"米黄纸+橄榄绿字+植物涂鸦+自然笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FDFAF2","overlay":{"type":"lines","spacing":24,"color":"rgba(80,100,60,0.05)","lineWidth":0.5}},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":520},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#3A4A2A","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(58,74,42,0.50)"},
+  "decorations":[
+    {"id":"hn29-tape","type":"tape","layer":"above","box":{"x":400,"y":230,"w":320,"h":36},"rotation":-4,"color":"rgba(140,170,120,0.45)"},
+    {"id":"hn29-highlighter","type":"highlighter","layer":"behind","box":{"x":140,"y":710,"w":960,"h":46},"color":"rgba(160,200,100,0.30)"},
+    {"id":"hn29-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":150,"w":115,"h":115},"color":"#6B8A4A","rotation":-7,"label":"LEAF"},
+    {"id":"hn29-emoji","type":"emoji","layer":"above","box":{"x":100,"y":1380,"w":110,"h":110},"emoji":"🌿","fontSize":100}
+  ]
+}

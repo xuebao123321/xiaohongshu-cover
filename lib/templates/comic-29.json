@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-29","styleFamily":"comic","name":"粉红pop+白字+爱心emoji+甜蜜风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FF6B9D"},
+  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":10,"color":"rgba(255,255,255,0.18)"},
+  "burstLines":{"count":20,"from":{"x":621,"y":580},"color":"rgba(255,255,255,0.28)","lineWidth":2,"innerR":100,"outerR":900},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":300,"weight":900,"color":"#FFFFFF","stroke":{"color":"#C2185B","width":4},"letterSpacing":-0.045},
+  "subTitleBox":{"x":160,"y":940,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#6A0030"},
+  "decorations":[
+    {"id":"cm29-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"💕","fontSize":140},
+    {"id":"cm29-sfx","type":"sfx","layer":"above","box":{"x":880,"y":1340,"w":200,"h":100},"text":"LOVE!","fontSize":64,"color":"#FFFFFF","rotation":-5,"strokeColor":"#C2185B","strokeWidth":3},
+    {"id":"cm29-star","type":"starBurst","layer":"above","box":{"x":140,"y":190,"w":80,"h":80},"color":"#FFFFFF","strokeColor":"#C2185B","strokeWidth":2}
+  ]
+}

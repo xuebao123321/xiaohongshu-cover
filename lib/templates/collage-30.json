@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-30","styleFamily":"collage","name":"深海蓝底+贝壳便签+珍珠印章+海洋拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#1A2A3A"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#FFFFFF","stroke":{"color":"#0D1B2A","width":3},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(255,255,255,0.48)"},
+  "decorations":[
+    {"id":"cl30-n1","type":"tornNote","layer":"behind","box":{"x":250,"y":300,"w":680,"h":500},"color":"#6BC5D9","rotation":-3,"shadow":true},
+    {"id":"cl30-n2","type":"tornNote","layer":"behind","box":{"x":90,"y":400,"w":490,"h":440},"color":"#A8E6F0","rotation":-12,"shadow":true},
+    {"id":"cl30-n3","type":"tornNote","layer":"behind","box":{"x":530,"y":450,"w":510,"h":430},"color":"#FFF8E7","rotation":9,"shadow":true},
+    {"id":"cl30-stamp","type":"stamp","layer":"above","box":{"x":980,"y":195,"w":130,"h":130},"color":"#FFFFFF","rotation":-10,"label":"OCEAN"},
+    {"id":"cl30-tape","type":"tape","layer":"above","box":{"x":390,"y":275,"w":270,"h":33},"rotation":3,"color":"rgba(255,255,255,0.15)"},
+    {"id":"cl30-emoji","type":"emoji","layer":"above","box":{"x":75,"y":1400,"w":110,"h":110},"emoji":"🐚","fontSize":100}
+  ]
+}
