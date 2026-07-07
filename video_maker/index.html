@@ -3936,8 +3936,8 @@ async function exportVideoOnly() {
                      VIDEO_STATE.outputResolution === '720p' ? 720 : v.height;
 
     const fps = 30;
-    const trimStart = VIDEO_STATE.trimStart || 0;
-    const trimEnd = VIDEO_STATE.trimEnd || v.duration;
+    const trimStart = (VIDEO_STATE.trimStart != null && !isNaN(VIDEO_STATE.trimStart)) ? VIDEO_STATE.trimStart : 0;
+    const trimEnd = (VIDEO_STATE.trimEnd != null && !isNaN(VIDEO_STATE.trimEnd)) ? VIDEO_STATE.trimEnd : v.duration;
     const exportDuration = trimEnd - trimStart;
     console.log('[video_maker] 裁剪:', trimStart.toFixed(2), '→', trimEnd.toFixed(2), '时长:', exportDuration.toFixed(1), 's');
 
@@ -3962,7 +3962,7 @@ async function exportVideoOnly() {
     const canvas = document.createElement('canvas');
     canvas.width = targetW;
     canvas.height = targetH;
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const ctx = canvas.getContext('2d');  // 不加 willReadFrequently,避免Windows软渲染导致性能骤降
     const canvasStream = canvas.captureStream(fps);
 
     // ══════ 音频: video.captureStream() 原生音轨 ══════
@@ -4077,7 +4077,7 @@ async function exportVideoOnly() {
         // 绘制当前帧到画布
         try {
           ctx.drawImage(videoEl, 0, 0, targetW, targetH);
-          if (VIDEO_STATE.filter !== 'none') {
+          if (VIDEO_STATE.filter !== 'none' && frameCount % 3 === 0) {
             applyFilter(ctx, VIDEO_STATE.filter, VIDEO_STATE.filterStrength / 100);
           }
           frameCount++;
