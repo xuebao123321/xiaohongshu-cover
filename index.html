@@ -6238,13 +6238,17 @@ function escapeHtml(str) {
 }
 
 function generateCandidatesForText(text, textIndex, globalSeed) {
-  const candidates = [];
-  const textSeed = window.getTextSeed(text, textIndex, globalSeed);
-  const selectedFamilies = selectFamiliesForCandidates(text, textSeed);
+  var candidates = [];
+  var textSeed = window.getTextSeed(text, textIndex, globalSeed);
+  var selectedFamilies = selectFamiliesForCandidates(text, textSeed);
 
-  let candidateIndex = 0;
-  for (const family of selectedFamilies) {
-    for (let vi = 0; vi < 5; vi++) {
+  // ══════ #2: 强制 5族 × 6张 = 30 ══════
+  // 每个真实风格族生成6张候选（5个标准vi + 1个jitter版）
+  var candidateIndex = 0;
+  for (var fi = 0; fi < selectedFamilies.length; fi++) {
+    var family = selectedFamilies[fi];
+    // 标准5个变体
+    for (var vi = 0; vi < 5; vi++) {
       candidates.push({
         textIndex: textIndex,
         candidateIndex: candidateIndex,
@@ -6255,6 +6259,16 @@ function generateCandidatesForText(text, textIndex, globalSeed) {
       });
       candidateIndex++;
     }
+    // 第6张: vi=2 + 不同seed（换centerShape/decoration），确保30张不重样
+    candidates.push({
+      textIndex: textIndex,
+      candidateIndex: candidateIndex,
+      family: family,
+      vi: 2,
+      seed: window.getTextSeed(text, textIndex, globalSeed) + candidateIndex * 7919 + 99999,
+      _text: text,
+    });
+    candidateIndex++;
   }
   // 同文案内去重
   const deduped = window.deduplicateCandidatesForText
@@ -6308,13 +6322,13 @@ function selectFamiliesForCandidates(text, textSeed) {
     return arr[Math.floor(rng() * arr.length)];
   };
 
+  // ══════ #2: 恰好5族各1个入口，每族生成6张 = 30 ══════
   return [
     pickOne(handnoteFams),
     pickOne(collageFams),
     pickOne(comicFams),
     pickOne(newspaperFams),
     pickOne(minimalFams),
-    pickOne(handnoteFams),  // 第6个额外给 handnote（权重最高）
   ];
 }
 
