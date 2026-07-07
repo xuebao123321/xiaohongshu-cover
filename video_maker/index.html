@@ -666,20 +666,24 @@ button{font-family:inherit;cursor:pointer}
 
       <!-- ✂️ 视频裁剪 -->
       <details class="vm-card" id="cardVideoTrim" open>
-        <summary>✂️ 视频裁剪 <span id="trimInfo" style="font-weight:400;color:#a8a098;font-size:11px">未选择视频</span></summary>
+        <summary>✂️ 视频剪辑 <span id="trimInfo" style="font-weight:400;color:#a8a098;font-size:11px">未选择视频</span></summary>
         <div class="vm-card-body">
-          <div class="vm-video-trim">
-            <span style="font-size:11px;white-space:nowrap">起始</span>
-            <input type="range" id="trimStart" min="0" max="100" step="0.1" value="0" disabled>
-            <span class="slider-val" id="trimStartVal">00:00</span>
+          <!-- 可视化时间轴 -->
+          <div class="trim-timeline" id="videoTrimTimeline" style="position:relative;margin-bottom:10px">
+            <canvas id="videoTrimTimelineCanvas" width="760" height="80" style="width:100%;height:80px;border-radius:8px;cursor:pointer;background:#f0ede8"></canvas>
+            <div id="videoTrimHandleStart" class="trim-handle" style="left:0%" title="起始"></div>
+            <div id="videoTrimHandleEnd" class="trim-handle" style="left:100%" title="结束"></div>
           </div>
-          <div class="vm-video-trim">
-            <span style="font-size:11px;white-space:nowrap">结束</span>
-            <input type="range" id="trimEnd" min="0" max="100" step="0.1" value="100" disabled>
-            <span class="slider-val" id="trimEndVal">00:00</span>
+          <!-- 数值显示 -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span class="slider-val" id="trimStartVal" style="font-size:14px;font-weight:700;color:#ED0108">00:00</span>
+            <span id="trimEstimate" style="font-size:13px;font-weight:600;color:#2d2a26"></span>
+            <span class="slider-val" id="trimEndVal" style="font-size:14px;font-weight:700;color:#ED0108">00:00</span>
           </div>
           <div class="vm-video-info" id="trimSummary">请先上传视频</div>
-          <div class="vm-video-info" id="trimEstimate" style="color:#ED0108;font-weight:600"></div>
+          <!-- 隐藏滑块(保持逻辑兼容) -->
+          <input type="range" id="trimStart" min="0" max="100" step="0.1" value="0" style="display:none">
+          <input type="range" id="trimEnd" min="0" max="100" step="0.1" value="100" style="display:none">
         </div>
       </details>
 
@@ -1567,6 +1571,7 @@ function handleVideoAudioUpload(file) {
     document.getElementById('toggleVideoNoMusic').classList.remove('active');
     document.getElementById('videoAudioStatus').textContent = file.name.length > 18 ? file.name.slice(0, 16) + '...' : file.name;
     renderVideoAudioPlayer();
+    renderVideoTrimTimeline();
     document.getElementById('videoAudioVolume').value = 30;
     document.getElementById('videoAudioVolumeVal').textContent = '30%';
     showToast('✅ 背景音乐已加载: ' + file.name);
@@ -2096,7 +2101,167 @@ function renderTrimTimeline() {
 }
 
 // ─── 响应式重绘 ───
-window.addEventListener('resize', () => { if (CURRENT_MODE.value === 'slideshow') renderTrimTimeline(); });
+window.addEventListener('resize', () => {
+  if (CURRENT_MODE.value === 'slideshow') renderTrimTimeline();
+  if (CURRENT_MODE.value === 'video') renderVideoTrimTimeline();
+});
+
+// ─── 视频模式可视化时间轴(与轮播同步的设计) ───
+function renderVideoTrimTimeline() {
+  const canvas = document.getElementById('videoTrimTimelineCanvas');
+  const container = document.getElementById('videoTrimTimeline');
+  if (!canvas || !container || CURRENT_MODE.value !== 'video') return;
+
+  const rect = container.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  const W = rect.width, H = 80;
+  if (canvas.width !== W * dpr || canvas.height !== H * dpr) {
+    canvas.width = W * dpr; canvas.height = H * dpr;
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  }
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const v = VIDEO_STATE.videos[VIDEO_STATE.activeVideoIdx];
+  const fullDur = v ? v.duration : 0;
+  if (fullDur <= 0) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#e8e4df'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#a8a098'; ctx.font = '12px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('🎬 请先上传视频素材', W/2, H/2);
+    return;
+  }
+
+  const start = VIDEO_STATE.trimStart || 0;
+  const end = (VIDEO_STATE.trimEnd != null && !isNaN(VIDEO_STATE.trimEnd)) ? VIDEO_STATE.trimEnd : fullDur;
+  const startX = (start / fullDur) * W;
+  const endX = (end / fullDur) * W;
+
+  // 背景
+  ctx.fillStyle = '#f0ede8'; ctx.fillRect(0, 0, W, H);
+
+  // 视频条(深色)
+  ctx.fillStyle = '#3a3a3e'; ctx.fillRect(0, 40, W, 40);
+  ctx.fillStyle = '#666'; ctx.font = '9px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText(v ? v.name.slice(0, 25) : '', W/2, 53);
+
+  // 视频帧采样标记(小竖线)
+  if (v) {
+    const frameCount = Math.min(30, Math.floor(fullDur));
+    for (let i = 0; i < frameCount; i++) {
+      const fx = ((i / frameCount) * W);
+      ctx.fillStyle = i % 5 === 0 ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.15)';
+      ctx.fillRect(fx, 55, 1, 10);
+    }
+  }
+
+  // 音频波形(绿色,如果有原声音频)
+  const hasAudioTrack = v && VIDEO_STATE.videos[VIDEO_STATE.activeVideoIdx];
+  if (hasAudioTrack) {
+    ctx.fillStyle = 'rgba(82,168,122,0.15)';
+    ctx.fillRect(0, H - 25, W, 25);
+    ctx.fillStyle = '#52a87a';
+    const barCount = Math.floor(W / 2);
+    for (let i = 0; i < barCount; i++) {
+      const bh = 3 + Math.sin(i * 0.5 + 1) * 7 + Math.cos(i * 0.8) * 5;
+      ctx.fillRect(i * 2, H - bh - 10, 1.5, bh);
+    }
+    ctx.fillStyle = '#3a7a5a'; ctx.font = 'bold 9px "Noto Sans SC",sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText('🎬 视频原声', 4, H - 28);
+  }
+
+  // BGM 音频条(如果有)
+  if (!VIDEO_STATE.noMusic && VIDEO_STATE.audio) {
+    const audioDur = VIDEO_STATE.audio.duration || 0;
+    const audioW = Math.min(W, (audioDur / fullDur) * W);
+    ctx.fillStyle = 'rgba(240,160,40,0.18)';
+    ctx.fillRect(0, H - 50, audioW, 22);
+    ctx.fillStyle = '#e08820'; ctx.font = 'bold 8px "Noto Sans SC",sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText('🎵 BGM ' + formatTime(audioDur), 4, H - 52);
+    if (audioDur > fullDur) {
+      ctx.fillStyle = 'rgba(237,1,8,0.25)';
+      ctx.fillRect((fullDur / audioDur) * audioW, H - 50, audioW - (fullDur / audioDur) * audioW, 22);
+      ctx.fillStyle = '#ED0108'; ctx.font = 'bold 7px "Noto Sans SC",sans-serif'; ctx.textAlign = 'right';
+      ctx.fillText('超出', W - 2, H - 53);
+    }
+  }
+
+  // 时间刻度
+  ctx.fillStyle = '#a8a098'; ctx.font = '9px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+  const tickCount = Math.min(10, Math.floor(fullDur));
+  for (let i = 0; i <= tickCount; i++) {
+    const x = (i / tickCount) * W;
+    ctx.strokeStyle = '#d4d0ca'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(x, H - 12); ctx.lineTo(x, H); ctx.stroke();
+    ctx.fillText(formatTime((i / tickCount) * fullDur), x, H - 2);
+  }
+
+  // 选中区域高亮
+  ctx.fillStyle = 'rgba(237,1,8,0.10)'; ctx.fillRect(startX, 0, endX - startX, H);
+  ctx.strokeStyle = '#ED0108'; ctx.lineWidth = 2.5;
+  ctx.strokeRect(startX, 1, endX - startX, H - 2);
+
+  // 手柄位置
+  document.getElementById('videoTrimHandleStart').style.left = ((start / fullDur) * 100) + '%';
+  document.getElementById('videoTrimHandleEnd').style.left = ((end / fullDur) * 100) + '%';
+}
+
+// ─── 视频模式时间轴拖拽 ───
+(function initVideoTrimDrag() {
+  let dragHandle = null;
+  const canvas = document.getElementById('videoTrimTimelineCanvas');
+  const hStart = document.getElementById('videoTrimHandleStart');
+  const hEnd = document.getElementById('videoTrimHandleEnd');
+
+  function getTime(e) {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const ratio = Math.max(0, Math.min(1, x / rect.width));
+    return ratio * (VIDEO_STATE.videoDuration || 60);
+  }
+
+  function onDown(e, handle) {
+    dragHandle = handle;
+    (handle === 'start' ? hStart : hEnd).classList.add('dragging');
+    e.preventDefault();
+  }
+  hStart.addEventListener('mousedown', e => onDown(e, 'start'));
+  hStart.addEventListener('touchstart', e => onDown(e, 'start'), {passive: false});
+  hEnd.addEventListener('mousedown', e => onDown(e, 'end'));
+  hEnd.addEventListener('touchstart', e => onDown(e, 'end'), {passive: false});
+
+  canvas.addEventListener('mousedown', e => {
+    if (dragHandle) return;
+    const t = getTime(e);
+    const s = VIDEO_STATE.trimStart || 0;
+    const e2 = VIDEO_STATE.trimEnd || VIDEO_STATE.videoDuration || 60;
+    dragHandle = (Math.abs(t - s) < Math.abs(t - e2)) ? 'start' : 'end';
+    (dragHandle === 'start' ? hStart : hEnd).classList.add('dragging');
+    onMove(e);
+  });
+
+  function onMove(e) {
+    if (!dragHandle) return;
+    const t = getTime(e);
+    const fullDur = VIDEO_STATE.videoDuration || 60;
+    if (dragHandle === 'start') {
+      VIDEO_STATE.trimStart = Math.max(0, Math.min(t, (VIDEO_STATE.trimEnd || fullDur) - 0.1));
+    } else {
+      VIDEO_STATE.trimEnd = Math.min(fullDur, Math.max(t, (VIDEO_STATE.trimStart || 0) + 0.1));
+    }
+    document.getElementById('trimStart').value = VIDEO_STATE.trimStart || 0;
+    document.getElementById('trimEnd').value = VIDEO_STATE.trimEnd || fullDur;
+    document.getElementById('trimStartVal').textContent = formatTime(VIDEO_STATE.trimStart || 0);
+    document.getElementById('trimEndVal').textContent = formatTime(VIDEO_STATE.trimEnd || fullDur);
+    updateTrimEstimate();
+    renderVideoTrimTimeline();
+  }
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('touchmove', onMove, {passive: false});
+  document.addEventListener('mouseup', () => { hStart.classList.remove('dragging'); hEnd.classList.remove('dragging'); dragHandle = null; });
+  document.addEventListener('touchend', () => { hStart.classList.remove('dragging'); hEnd.classList.remove('dragging'); dragHandle = null; });
+})();
+
 
 // ─── 时间轴拖拽交互 ───
 (function initTrimDrag() {
@@ -3916,6 +4081,7 @@ async function handleVideoOnlyUpload(files) {
   if (VIDEO_STATE.videos.length > 0) {
     VIDEO_STATE.activeVideoIdx = 0;
     updateVideoTrimForActive();
+    renderVideoTrimTimeline();
     renderVideoList();
     renderVideoPreview();
     updateVideoCount();
@@ -3996,6 +4162,7 @@ function updateVideoTrimForActive() {
   document.getElementById('trimInfo').textContent = v.name.slice(0, 20);
   document.getElementById('trimSummary').textContent = `${v.width}×${v.height} · ${formatSize(v.size)} · 全长 ${v.duration.toFixed(1)}s`;
   updateTrimEstimate();
+  renderVideoTrimTimeline();
 }
 
 function updateTrimEstimate() {
