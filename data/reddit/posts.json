@@ -971,15 +971,17 @@
     "publishedAt": "2026-07-03T06:56:33+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
+    "sourceKeyword": "publish, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "d2e434e7daefd363842d7fe3046b9fb2dd939bce51f3427cb992e63ff308c8bf",
     "sourceKeywords": [
-      "publish"
+      "publish",
+      "reviewer"
     ],
     "sourceIds": [
       "askacademia-publish",
-      "askacademia-new"
+      "askacademia-new",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -1031,16 +1033,18 @@
     "publishedAt": "2026-07-02T16:22:50+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish, journal",
+    "sourceKeyword": "publish, journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "cb935cd65cdbfca56d801a8507d53e4dc577c51506208cf9c1786dbf51128984",
     "sourceKeywords": [
       "publish",
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
       "askacademia-publish",
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -1054,16 +1058,18 @@
     "publishedAt": "2026-07-02T15:06:02+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish, journal",
+    "sourceKeyword": "publish, journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "709c321556828ff228c07c71ca14f191060a4134bd3b9a49b4b21ffde52d574a",
     "sourceKeywords": [
       "publish",
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
       "askacademia-publish",
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -1077,16 +1083,18 @@
     "publishedAt": "2026-07-02T08:41:33+00:00",
     "fetchedAt": "2026-07-04T06:45:00.951Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish, journal",
+    "sourceKeyword": "publish, journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "e72f288671397fcdacdfa5f979d7062fa7fb1a4828934c776387477dec90c915",
     "sourceKeywords": [
       "publish",
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
       "askacademia-publish",
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -1130,16 +1138,18 @@
     "publishedAt": "2026-07-01T13:31:41+00:00",
     "fetchedAt": "2026-07-04T06:45:00.952Z",
     "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish, journal",
+    "sourceKeyword": "publish, journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "098f3623fae84d35c493898cd8dae746cd4396b766273ad9c424d31f860d1a42",
     "sourceKeywords": [
       "publish",
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
       "askacademia-publish",
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -2021,27 +2031,6 @@
     ]
   },
   {
-    "id": "reddit_1ud1q3l",
-    "redditId": "1ud1q3l",
-    "title": "My advisor rejected my paper 2 times",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’m just tired, done and sad. This paper is gonna end my life tbh.</p> <p>I’m a PhD candidate in Law and I’m writing a paper that has been rejected two times by my advisor. I feel like a disappointment for him although he said it’s well written, but needs a better structure</p> <p>I swear I’m tired of all of this my mind is blocked and I don’t have any neurons left lol and this weeks suck since I have two congresses in two different countries which means that I won’t have enough time to correct the paper. Also, I’m tired. I’m on period and I’m done lol sorry for repeating everything again I just need to vent</p> <p>I’m now in my 2nd year and this would me my first paper (I already have some publications like chapters, which count a bit in law) </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Namernadi\"> /u/Namernadi </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1ud1q3l/my_advisor_rejected_my_paper_2_times/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1ud1q3l/my_advisor_rejected_my_paper_2_times/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1ud1q3l/my_advisor_rejected_my_paper_2_times/",
-    "subreddit": "r/PhD",
-    "author": "/u/Namernadi",
-    "publishedAt": "2026-06-23T00:16:24+00:00",
-    "fetchedAt": "2026-07-04T06:57:03.028Z",
-    "sourceId": "phd-paper-rejected",
-    "sourceKeyword": "paper rejected",
-    "sourceType": "subreddit_search",
-    "contentHash": "12bf73c9e31816619496d2034ea031db1ab36fa9c38f96dcb3042645d7899df5",
-    "sourceKeywords": [
-      "paper rejected"
-    ],
-    "sourceIds": [
-      "phd-paper-rejected"
-    ]
-  },
-  {
     "id": "reddit_1un1x18",
     "redditId": "1un1x18",
     "title": "Chance me for MIT",
@@ -2795,14 +2784,16 @@
     "publishedAt": "2026-07-02T21:21:58+00:00",
     "fetchedAt": "2026-07-04T07:35:03.127Z",
     "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal",
+    "sourceKeyword": "journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "61b2e9f126e7ee14a3a6d7415fe6ce70d812eefcbfe6934b641382b2d3730137",
     "sourceKeywords": [
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -2816,14 +2807,16 @@
     "publishedAt": "2026-07-02T20:16:48+00:00",
     "fetchedAt": "2026-07-04T07:35:03.127Z",
     "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal",
+    "sourceKeyword": "journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "12a33c0ba84b8728bd98df25f976ad1ca7d7964d1fe594ada2392aae3228871e",
     "sourceKeywords": [
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -2837,14 +2830,16 @@
     "publishedAt": "2026-07-02T15:35:05+00:00",
     "fetchedAt": "2026-07-04T07:35:03.127Z",
     "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal",
+    "sourceKeyword": "journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "d471a9ebc2d9eec28bde79d7559717568400295b0a9b10077be24d5813d9f7e0",
     "sourceKeywords": [
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -2858,14 +2853,16 @@
     "publishedAt": "2026-07-01T04:31:20+00:00",
     "fetchedAt": "2026-07-04T07:35:03.128Z",
     "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal",
+    "sourceKeyword": "journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "40eecd2e1bab074abc9e7a9256575b2c5e5c48ff3b64ba03350d98ce162da489",
     "sourceKeywords": [
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -2879,14 +2876,16 @@
     "publishedAt": "2026-06-30T22:32:39+00:00",
     "fetchedAt": "2026-07-04T07:35:03.128Z",
     "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal",
+    "sourceKeyword": "journal, reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "aa27c4c18f96f1e7c8a46b231a268ba687dd224a8e2f22e0368d1cefbd6a3e90",
     "sourceKeywords": [
-      "journal"
+      "journal",
+      "reviewer"
     ],
     "sourceIds": [
-      "askacademia-journal"
+      "askacademia-journal",
+      "askacademia-reviewer"
     ]
   },
   {
@@ -3719,36 +3718,6 @@
     "contentHash": "91dea9d7eea4033dd17c9c61b065bfb15ad8c033f9969f1302057c9071fc2212"
   },
   {
-    "id": "reddit_1udd220",
-    "redditId": "1udd220",
-    "title": "Help with submitting first paper to a paper",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey could you advise on the best approach and some journals where I can publish my first paper? I am Phd student in business management doing my research in the field of governance and business process optimisation. thanks</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ok-Teaching112\"> /u/Ok-Teaching112 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1udd220/help_with_submitting_first_paper_to_a_paper/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1udd220/help_with_submitting_first_paper_to_a_paper/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1udd220/help_with_submitting_first_paper_to_a_paper/",
-    "subreddit": "r/PhD",
-    "author": "/u/Ok-Teaching112",
-    "publishedAt": "2026-06-23T10:09:17+00:00",
-    "fetchedAt": "2026-07-04T09:22:04.089Z",
-    "sourceId": "phd-journal",
-    "sourceKeyword": "journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "0c0b43176018256b6ff2dfa8f980a0c61dc4638fb6b603a528b99cfa635c4b94"
-  },
-  {
-    "id": "reddit_1ud1615",
-    "redditId": "1ud1615",
-    "title": "PhD in one year?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello,</p> <p>I am a research assistant with over seven years of professional experience, a masters degree, and first authorships for several research articles on a related topic in important journals in my field. Is there any feasible way to spin this into an accelerated phd. I don’t want to have to go back to school for very long, I was hoping for less than 2 years. I heard that some people are able to do a PhD through publications? Does anyone have experience with this? </p> <p>Thank you for your time! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/matt-the-dickhead\"> /u/matt-the-dickhead </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1ud1615/phd_in_one_year/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1ud1615/phd_in_one_year/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1ud1615/phd_in_one_year/",
-    "subreddit": "r/PhD",
-    "author": "/u/matt-the-dickhead",
-    "publishedAt": "2026-06-22T23:52:11+00:00",
-    "fetchedAt": "2026-07-04T09:22:04.089Z",
-    "sourceId": "phd-journal",
-    "sourceKeyword": "journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "4601029213df5ba0ddf64fb9d71adfbe8825c89a24b8e7dfca44f85a50f66e7d"
-  },
-  {
     "id": "reddit_1umv7ko",
     "redditId": "1umv7ko",
     "title": "Variations on a Theme of Bracewell",
@@ -4120,9 +4089,16 @@
     "publishedAt": "2026-07-04T08:32:58+00:00",
     "fetchedAt": "2026-07-04T15:45:02.334Z",
     "sourceId": "askacademia-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "reviewer",
     "sourceType": "subreddit_new",
-    "contentHash": "5a29a201a922088aa4fc8920516ba29c0d0476a80b29ae7dd17091702e203529"
+    "contentHash": "5a29a201a922088aa4fc8920516ba29c0d0476a80b29ae7dd17091702e203529",
+    "sourceKeywords": [
+      "reviewer"
+    ],
+    "sourceIds": [
+      "askacademia-new",
+      "askacademia-reviewer"
+    ]
   },
   {
     "id": "reddit_1un19hf",
@@ -4345,9 +4321,16 @@
     "publishedAt": "2026-07-03T10:27:33+00:00",
     "fetchedAt": "2026-07-04T15:45:02.335Z",
     "sourceId": "askacademia-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "reviewer",
     "sourceType": "subreddit_new",
-    "contentHash": "907c6339666b15b8ec4f1c59d115feb7bd4a60b9b37be3a2634e9d631c98416e"
+    "contentHash": "907c6339666b15b8ec4f1c59d115feb7bd4a60b9b37be3a2634e9d631c98416e",
+    "sourceKeywords": [
+      "reviewer"
+    ],
+    "sourceIds": [
+      "askacademia-new",
+      "askacademia-reviewer"
+    ]
   },
   {
     "id": "reddit_1umaj0f",
@@ -4979,7 +4962,11 @@
     "sourceId": "machinelearning-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "7640039a8218f0f061d7202c9ec74b6075569b445470eaf2e4b065d808dc7fdf"
+    "contentHash": "7640039a8218f0f061d7202c9ec74b6075569b445470eaf2e4b065d808dc7fdf",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "machinelearning-new"
+    ]
   },
   {
     "id": "reddit_1unl62q",
@@ -5009,7 +4996,11 @@
     "sourceId": "machinelearning-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "14806fc121987043609545df3fbbfeec33e023e5ddf85d7f672fd85392bbd8d0"
+    "contentHash": "14806fc121987043609545df3fbbfeec33e023e5ddf85d7f672fd85392bbd8d0",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "machinelearning-new"
+    ]
   },
   {
     "id": "reddit_1un3lsf",
@@ -5039,7 +5030,11 @@
     "sourceId": "machinelearning-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "e3747bd1ebfa0938804f6bba6c61d89c0f97b1328a09d0255bec5b3c312c29e7"
+    "contentHash": "e3747bd1ebfa0938804f6bba6c61d89c0f97b1328a09d0255bec5b3c312c29e7",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "machinelearning-new"
+    ]
   },
   {
     "id": "reddit_1umn2dk",
@@ -5054,7 +5049,11 @@
     "sourceId": "machinelearning-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "7b559d3a467389d351ef7c13038485946fbaea67886a61ae64694959e1e58ff9"
+    "contentHash": "7b559d3a467389d351ef7c13038485946fbaea67886a61ae64694959e1e58ff9",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "machinelearning-new"
+    ]
   },
   {
     "id": "reddit_1umissr",
@@ -5069,7 +5068,11 @@
     "sourceId": "machinelearning-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "84afb96cdc24a70fae781e70762769c41b80b6eac3bf5ac853f301490caf26e4"
+    "contentHash": "84afb96cdc24a70fae781e70762769c41b80b6eac3bf5ac853f301490caf26e4",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "machinelearning-new"
+    ]
   },
   {
     "id": "reddit_1um9bs7",
@@ -5547,69 +5550,6 @@
     "sourceKeyword": "writing",
     "sourceType": "subreddit_search",
     "contentHash": "810d89a13db68bbfff731d512fff437359a86ffcf319e4dfcd1debfc37b1b8f9",
-    "sourceKeywords": [
-      "writing"
-    ],
-    "sourceIds": [
-      "gradschool-writing"
-    ]
-  },
-  {
-    "id": "reddit_1udf2j2",
-    "redditId": "1udf2j2",
-    "title": "Help with personal essay",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone. I'm using my phone to type this. </p> <p>I will be applying for grad school soon. One of the requirements is to write a personal essay on why you think the program will help you on your journey, and why that school specifically.</p> <p>I don't even know where to start. I know why I want to. Its to better help the environment. How long should the essay be? How much should I research the school I want to go to? I'm in need of tips, thoughts. Anything really. </p> <p>Thank you. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/VexingFantasy\"> /u/VexingFantasy </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1udf2j2/help_with_personal_essay/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1udf2j2/help_with_personal_essay/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1udf2j2/help_with_personal_essay/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/VexingFantasy",
-    "publishedAt": "2026-06-23T11:55:38+00:00",
-    "fetchedAt": "2026-07-05T06:27:00.713Z",
-    "sourceId": "gradschool-writing",
-    "sourceKeyword": "writing",
-    "sourceType": "subreddit_search",
-    "contentHash": "1bf58c8df90e4f5a647c274e61cdf2ef5b3cb40f2c0c057aae20106deb24afa3",
-    "sourceKeywords": [
-      "writing"
-    ],
-    "sourceIds": [
-      "gradschool-writing"
-    ]
-  },
-  {
-    "id": "reddit_1udarw6",
-    "redditId": "1udarw6",
-    "title": "Tech suggestions for my post grad course",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi all,</p> <p>I'm going to do a post grad in September. I'd love some input on electronic devices.</p> <p>First: I'm mid fifties, and whilst I still work full time in a fairly cognitive heavy job, I do fear all the reading and generally switching back into academia. Brain fog for the post meno woman is a real thing (so is a diminished reading attention span, despite being a published novelist!!).</p> <p>So, I'm looking for things to support me - especially until I get the hang of it.</p> <p>I have a Mac Book Air - 2022 - which is pretty good and lightweight, for all things writing. I'm already linked to Zotero for work.</p> <p>But I want something where I can store ebooks, papers, documents - and also elextronically make notes/amends etc. All in one place. I really love the feel of a proper book, but I don't think it's the most pragmatic thing here.</p> <p>So, is a device like a Remarkable Paper Pro better or worse than an airpad with a pen?</p> <p>All thoughts welcome, thank you</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ok-Stage9604\"> /u/Ok-Stage9604 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1udarw6/tech_suggestions_for_my_post_grad_course/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1udarw6/tech_suggestions_for_my_post_grad_course/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1udarw6/tech_suggestions_for_my_post_grad_course/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/Ok-Stage9604",
-    "publishedAt": "2026-06-23T07:55:24+00:00",
-    "fetchedAt": "2026-07-05T06:27:00.713Z",
-    "sourceId": "gradschool-writing",
-    "sourceKeyword": "writing",
-    "sourceType": "subreddit_search",
-    "contentHash": "3b9d0225c49d83c88c97693581e784531fbad74269c64c60a1fa8b56e566f7b8",
-    "sourceKeywords": [
-      "writing"
-    ],
-    "sourceIds": [
-      "gradschool-writing"
-    ]
-  },
-  {
-    "id": "reddit_1ud79ac",
-    "redditId": "1ud79ac",
-    "title": "Getting an English MA and MFA concurrently -- is it feasible? and is it worth it?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm wondering if anyone here has gotten both an English MA and an MFA at the same time. I'm interested in both an English MA and a Creative Writing MFA, and I'm trying to determine if it's feasible. </p> <p>Northwestern's Litowitz program is a combined MA and MFA program that is specifically designed for this, which is appealing to me. It's possible to get both at other universities, but it's something you'd have to coordinate yourself, and I'd like to see if others found the workload reasonable.</p> <p>I'm also wondering if this path is redundant. It seems that a good chunk of a creative writing MFA curriculum is taking literature courses, so perhaps you get many of the benefits of an English MA in an MFA program. At the same time, though, it seems like you wouldn't have to do that much more work to get the English MA in addition to the MFA.</p> <p>Thoughts?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/complectogram_\"> /u/complectogram_ </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1ud79ac/getting_an_english_ma_and_mfa_concurrently_is_it/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1ud79ac/getting_an_english_ma_and_mfa_concurrently_is_it/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1ud79ac/getting_an_english_ma_and_mfa_concurrently_is_it/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/complectogram_",
-    "publishedAt": "2026-06-23T04:37:07+00:00",
-    "fetchedAt": "2026-07-05T06:27:00.713Z",
-    "sourceId": "gradschool-writing",
-    "sourceKeyword": "writing",
-    "sourceType": "subreddit_search",
-    "contentHash": "5f470d98eebbcc34224efb9aa2664faa71fd3679a18ae1ae5edb6d5b0ceec1bd",
     "sourceKeywords": [
       "writing"
     ],
@@ -8252,5 +8192,875 @@
     "sourceKeyword": "ChatGPT academic writing",
     "sourceType": "global_search",
     "contentHash": "77ad1b82bb705590d969447f674e8f4be485f1c28cccd1b4b107a842295cb803"
+  },
+  {
+    "id": "reddit_1uq0sqd",
+    "redditId": "1uq0sqd",
+    "title": "I think my supervisors are trying to kick me out of the program",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I made a post earlier. My supervisory teams seems to have changed their opinions on prior progress. I am second year and have written three chapters. One Literature review, one theortical background and my methodology section. My advisors told me the chapters were good enough to start research and I can edit them once the research section is complete in July 2025. During the July 2025 meeting I was asked if I needed to go part time because I work full time and my supervisors are concerned about burn out. I said no. In the progression board entry, they stated if I go part time my whole thesis is due by Decemember. They did not say that in the meeting. I ended up moving to part time because I felt forced to.</p> <p>I sent an update of the methodology section taking their feedback to show progress because I was still working on analyzing research. In December 2025 meeting, I was put on cause of concern because the chapter did not meet expectations. Then stated my theortical chapter is unacceptable. One supervisor said I came off as defensive. I told them I had some medical issues that caused a slight delay in research. My chair advised I stop spending time with friends to focus on my work. I am not sure why that advise was given. I was told I should reach out if I have questions. To get back to satisfactory, i was told to revise the methodology section. I was told I need a final draft. I don't understand how I can have a final draft when the research section is not finished.</p> <p>I asked for updated feedback on the theortical chapter because that last feedback I received was from April 2025. Only one supervisor provided feedback and just wanted the chapter to be better structured which does not feel like a critique that warrants an unacceptable chapter. Then feedback on the methodology section was more about restructuring the chapter but nothing about research questions or the actual methods.</p> <p>I also had a one supervisor review my methodology section and give feedback before submitting to the full committee in May 2026. I then was told I am still cause for concern. The new feedback was less in depth than any other feedback I received and stated my project was too narrow. Then I was told not address it and to send my documents to a third party for review to see if my work is phd level. I asked the supervisor who gave the first round of feedback for a meeting and was ignored for two days. I sent a followup email expressing my confusion because it feels like a 180 on all my work so far. She stated her feedback was a courtsey and I was told about the issues the whole time and forwarded the email to everyone in my committee. I also asked what the third party procedures were and got no answers. I was told my committee would not meet with me until after the third party review. </p> <p>I reached out to the program advisor to get information and the associate dean responded and set up a meeting. My supervisor then said they did not feel comfortable meeting with me due to the meeting. I got no answers in the meeting. The dean sent an email asking just about the procedures and my committee just brought up my feedback and stated it was informal. </p> <p>The third party meeting was just asking about my research. I did not submit my most updated drafts which I was clear about because I wanted the third party reviewer to see the feedback I received and how I addressed it when my supervisors said my work is satisfactory. The third party reviewer gave good feedback but gave no indication about my work being too narrow or not up to level. He did say that revisions were needed which I already knew and was working on. One note I have been given starting in December is that I need to work independently. I am not sure what that means because I have looked at other dissertations for structure but my supervors don't like when I copy them. I came up with the research methods with their input and was told it was good and found all the literature. My only guess is that I get feedback multiple times on the same chapter. But I have told them I don't understand some feedback. I ask clarifying questions in the comments sections and get no answer. When i ask in meetings, i get vague repsonses and I can only ask like 3 questions because my committee will take 15 minutes repeating the same feedback.</p> <p>My new progression board from my supervisors still shows me cause of concern and are now saying I may need to be suspended to get work down in time. Meanwhile, i was told to stop working on the research section. I was not given direction on what I need to do to be back to satifactory. The comments read like they are saying I am not trying. Which, i don't understand because they marked my progress on these chapters as good before.</p> <p>I feel like the goalposts are moving. I don't know if I just don't remember feedback being so concerned previously. My committee just now said they would be open to meet after posting their decision. I don't know how to address some feedback without finishing the research section first but I still have not been told to start. I gave a timeline of completion and was told it was too ambitious and I have time but i am also told I should be suspended for more time.</p> <p>I don't know what changed. My methodolgy was approved and my supervisors said they felt comfortable with me moving to research and they have backpedaled on all of my work. My family thinks I should withdraw. I am not sure if my supervisors can get me ready for defense because, they either moved me forward when I shouldn't have been or no longer believe in my project or work ethic. This all started after I talked about working full time in July but I told them I was working full time during my enrollment. I don't know how to move forward. I don't feel like I understand their feedback and they won't clarify. But maybe it is my fault. Am i asking too much from my supervisors? I am remote and have no other phd students in the program around me. I feel like I try to do things independently but supervisors seem to have specific requirements that I am still trying to understand.</p> <p>I asked one supervisor if they want me in the program and was told they can't answer and I need to ask the full committee. It makes me think they don't want to supervise me anymore.</p> <p>I don't know what to do? Can I find away to move forward? How can I reestablish a dialogue when I don't feel like I am being heard? Are my supervisors trying get me out of the program? Is it better to withdraw? </p> <p>Sorry for long post.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Own_Funny7161\"> /u/Own_Funny7161 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uq0sqd/i_think_my_supervisors_are_trying_to_kick_me_out/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uq0sqd/i_think_my_supervisors_are_trying_to_kick_me_out/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1uq0sqd/i_think_my_supervisors_are_trying_to_kick_me_out/",
+    "subreddit": "r/PhD",
+    "author": "/u/Own_Funny7161",
+    "publishedAt": "2026-07-07T16:51:55+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.377Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "d0e1480b35920e0ebe982a71a5b6c6887dc26078221d63d8b20fa8631502a97a"
+  },
+  {
+    "id": "reddit_1upz8ul",
+    "redditId": "1upz8ul",
+    "title": "What papers should I mimic to improve my academic writing? (Accounting PhD)",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>I'm a PhD student in accounting, and English is not my first language. One of the biggest challenges I face is academic writing. </p> <p>I've heard that one good way to improve is to closely study and mimic well-written papers before developing my own style. Could anyone recommend accounting papers that are particularly well written? I'm especially interested in papers with clear organization, smooth transitions, and concise writing.</p> <p>If you learned academic writing this way, I'd also love to hear how you approached it. Did you focus on introductions, literature reviews, or another section first?</p> <p>Thanks in advance!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Judyloveswriting\"> /u/Judyloveswriting </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upz8ul/what_papers_should_i_mimic_to_improve_my_academic/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upz8ul/what_papers_should_i_mimic_to_improve_my_academic/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upz8ul/what_papers_should_i_mimic_to_improve_my_academic/",
+    "subreddit": "r/PhD",
+    "author": "/u/Judyloveswriting",
+    "publishedAt": "2026-07-07T15:56:33+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.377Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "e6e443e69e8e8b2fc564222905406d1c6fb3411b4051c90f084e12888cf2a83c"
+  },
+  {
+    "id": "reddit_1upz15i",
+    "redditId": "1upz15i",
+    "title": "Have you ever argued your way from a desk reject to an eventual accept?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>hello! inspired by my own experience and some posts I’ve seen here recently, I have a question. have you ever argued against a desk reject that was eventually sent out for review and then accepted? it feels like, in both my case and others, that a desk reject turned send out for review ultimately just leads to an eventual reject, and I’m wondering how much my perception matches reality. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Kanoncyn\"> /u/Kanoncyn </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upz15i/have_you_ever_argued_your_way_from_a_desk_reject/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upz15i/have_you_ever_argued_your_way_from_a_desk_reject/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upz15i/have_you_ever_argued_your_way_from_a_desk_reject/",
+    "subreddit": "r/PhD",
+    "author": "/u/Kanoncyn",
+    "publishedAt": "2026-07-07T15:49:06+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.377Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "783a50422947903e9f4375f3b0550077cb2bb19d633b5895f2bb4ca251abdd06"
+  },
+  {
+    "id": "reddit_1upwo5z",
+    "redditId": "1upwo5z",
+    "title": "NVivo importing Japanese transcripts",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey y'all, I've written up transcripts for some Japanese language interviews and for some reason it's not importing properly to NVivo. I am hoping to use Import Rows --> Create one transcript row for each timestamp.</p> <p>My data is formatted like this in a .txt file:</p> <p>[00:00:00] - transcript text</p> <p>[00:00:02] - transcript text</p> <p>etc.</p> <p>This format works fine for English (timestamps get imported correctly, as does the text) but Japanese language text is transformed into gobbledygook. Instead of Japanese text I get</p> <p>- ãã‚Œã„!ãã‚Œã¯èª°ã§ã™ã‹?</p> <p>although the timestamps import correctly. I've checked the encoding is correct, and the Japanese imports properly when I change the setting to \"Create one transcript row for each <em>paragraph</em>\" so clearly it's some kind of issue with timestamps AND Japanese.</p> <p>Anyone else had these issues? What did you do? Thanks... annoyed I've spent ages transcribing only for it not to work properly.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/stellwyn\"> /u/stellwyn </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upwo5z/nvivo_importing_japanese_transcripts/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upwo5z/nvivo_importing_japanese_transcripts/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upwo5z/nvivo_importing_japanese_transcripts/",
+    "subreddit": "r/PhD",
+    "author": "/u/stellwyn",
+    "publishedAt": "2026-07-07T14:25:40+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.377Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8c113795cdd1bf13cbbc31a0944ca88a1785e079ffb933c9a11238345c0989a0"
+  },
+  {
+    "id": "reddit_1upwem2",
+    "redditId": "1upwem2",
+    "title": "Asia vs EU PhD",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey everyone! I need some advice on choosing between two uni offers. I got into a top 30 school in Asia and a top 200 school in the EU (Italy). My end goal is to live and work in the EU. Is it better to take the higher-ranked Asian university and try to transition to Europe for a postdoc later? Or is it smarter to move to Italy now to get my foot in the door early, even if the university ranking is lower? Thanks!</p> <p>Field: STEM - Microbiology</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/anon9723lin\"> /u/anon9723lin </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upwem2/asia_vs_eu_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upwem2/asia_vs_eu_phd/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upwem2/asia_vs_eu_phd/",
+    "subreddit": "r/PhD",
+    "author": "/u/anon9723lin",
+    "publishedAt": "2026-07-07T14:16:02+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.378Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8c5018bfba279938fde100b88da2d6fcdc0e9829eafc6fd6636fb44b996b2feb"
+  },
+  {
+    "id": "reddit_1upw29g",
+    "redditId": "1upw29g",
+    "title": "What is the most &quot;unspoken rule&quot; of managing your PI that nobody tells you before starting a PhD?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><blockquote> <p>I’ve been reading through past threads here and looking at general literature on academic mentorship dynamics. Most standard advice says to \"communicate openly\" and \"set clear boundaries.\"<br/> However, now that I’m deeper into the PhD experience, I’ve realized that managing up is much more nuanced. For example, I quickly learned that sending my PI a massive list of problems completely paralyzes them. If I instead send three distinct solutions and ask them to just pick one, I get a response in five minutes.<br/> We often talk about the explicit milestones, but what are the subtle, unspoken rules of managing an advisor relationship that you had to learn the hard way? Looking for shared wisdom and strategies from different fields!</p> </blockquote> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Appropriate_Bird1981\"> /u/Appropriate_Bird1981 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upw29g/what_is_the_most_unspoken_rule_of_managing_your/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upw29g/what_is_the_most_unspoken_rule_of_managing_your/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upw29g/what_is_the_most_unspoken_rule_of_managing_your/",
+    "subreddit": "r/PhD",
+    "author": "/u/Appropriate_Bird1981",
+    "publishedAt": "2026-07-07T14:03:39+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.378Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "ec94ef718d85def2b9b974492b2897c8856ce7ee4528a279fa47537bb0ed0de8"
+  },
+  {
+    "id": "reddit_1uptvt3",
+    "redditId": "1uptvt3",
+    "title": "How does defending your thesis feel like?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey guys! I've am really curious about how defending thesis actually works. I've heard things like defending for 4hrs and stuff. Can you all share your experiences and advice pls? (I'm open to hearing about different fields/countries) I wanna start phd after 2 years. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/spareapple1\"> /u/spareapple1 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uptvt3/how_does_defending_your_thesis_feel_like/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uptvt3/how_does_defending_your_thesis_feel_like/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1uptvt3/how_does_defending_your_thesis_feel_like/",
+    "subreddit": "r/PhD",
+    "author": "/u/spareapple1",
+    "publishedAt": "2026-07-07T12:39:14+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.378Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5770ec83915ed56b92ed725dd91c6078dca2f8cbcbca2f4853b872ca85464137"
+  },
+  {
+    "id": "reddit_1uprip8",
+    "redditId": "1uprip8",
+    "title": "Phd and Ai",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>So I am in my first year of PhD in business and marketing. I use a bunch of different AI, for example I use notebooklm to screen papers, then I cross check them and then I feed/ train claude and GPT window by giving it the different papers discuss with it for very long and then I write myself and then ask any of the agent to further improve it and extend it in specific way and I keep cross checking if it has hallucinating. So my question is this is it wrong ? I am almost done with my first paper as the part of the PhD and I have to submit it to journal but before that I will present it to my supervisors. What should I do? What areas should I be careful for when presenting it. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Any_Swordfish2247\"> /u/Any_Swordfish2247 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uprip8/phd_and_ai/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uprip8/phd_and_ai/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1uprip8/phd_and_ai/",
+    "subreddit": "r/PhD",
+    "author": "/u/Any_Swordfish2247",
+    "publishedAt": "2026-07-07T10:50:30+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.378Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "27e3ad08fa205776e24d75b45dd4a15ecbd6269c62b4383917d33082c525ca22"
+  },
+  {
+    "id": "reddit_1upqflb",
+    "redditId": "1upqflb",
+    "title": "How important is choosing the right PhD supervisor?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Honestly, your supervisor can completely make or break your PhD experience. Don't just chase someone with a huge h-index or crazy research prestige.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/conference-1234\"> /u/conference-1234 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upqflb/how_important_is_choosing_the_right_phd_supervisor/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upqflb/how_important_is_choosing_the_right_phd_supervisor/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upqflb/how_important_is_choosing_the_right_phd_supervisor/",
+    "subreddit": "r/PhD",
+    "author": "/u/conference-1234",
+    "publishedAt": "2026-07-07T09:53:27+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.378Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "ad10944010c73061ad0ab3ce40eca8b7070398983c4c1a7b4159214c63991a80"
+  },
+  {
+    "id": "reddit_1upqc76",
+    "redditId": "1upqc76",
+    "title": "Getting talked down to by someone with more experience",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>For context, I'm a yr 1 PhD student. I went directly from a bachelor's to a PhD, so I have less experience than many of my peers who have already completed a master's. </p> <p>An experienced colleague, who is 10 years my senior, has been working under my PI for 6 years or so as an RA and is also (now) a year 1 PhD student (we started our PhD at the same time). </p> <p>I've been here for over 5 months, but there are still some things I need help with. There have been a couple of times when he responds to me very poorly. Grimacing, shaking his head, saying \"you've already done this before/I've told you this before.\" The work I am doing is biolab-based.</p> <p>I don't ask him for help all the time, but there are times when I simply need to, as he has the most experience. However, his poor attitude towards me is seriously making me reconsider things. I don't want to make a big deal about it, but I am genuinely bothered by this \"patronising\" attitude.</p> <p>Is this normal? Should I talk to my PI about it? I don't want to be hyperbolic, but sometimes I think, \"You understand I'm a human too, right?\" </p> <p>Any advice would be appreciated. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Sensitive-Pace4610\"> /u/Sensitive-Pace4610 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upqc76/getting_talked_down_to_by_someone_with_more/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upqc76/getting_talked_down_to_by_someone_with_more/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upqc76/getting_talked_down_to_by_someone_with_more/",
+    "subreddit": "r/PhD",
+    "author": "/u/Sensitive-Pace4610",
+    "publishedAt": "2026-07-07T09:48:12+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.378Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "f9a63e12314fe26cbc493f913a52d9d9286dc8e8d8a2cc4e5814e7cbfe0ad089"
+  },
+  {
+    "id": "reddit_1upp7ql",
+    "redditId": "1upp7ql",
+    "title": "First time reviewing",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>This is my first time reviewing a paper. I have looked at the abstract, intro, methodology and part of the findings. I am always looking for something good to say first, but so far I haven't find anything. The whole thing is a mess... with the authors not even understanding what mix methods is, changing research question mid way, findings that don't match the data or frameworks they are using.. and the list goes on. Every new paragraph gets worse!</p> <p>I already spent like 5 hours just trying to get my head around it. It has like 30 pages and i don't want to waste my time on it even more. Is it possible to write to the journal or editor and just explain this? I don't want to complete the whole form, which is looking part by part. Has anyone dealt with a situation like this? </p> <p>It does say they used AI to help write the paper, but even AI knows data collection does not include a description of all the different ways the technology was used by the participants. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/lost_nondoctor\"> /u/lost_nondoctor </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upp7ql/first_time_reviewing/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upp7ql/first_time_reviewing/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upp7ql/first_time_reviewing/",
+    "subreddit": "r/PhD",
+    "author": "/u/lost_nondoctor",
+    "publishedAt": "2026-07-07T08:44:17+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.378Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "3a451fced1e71ce2bf9faba14b9f554d1298e53f08ad8fef2bdea8d8ed0b2cd6"
+  },
+  {
+    "id": "reddit_1upow92",
+    "redditId": "1upow92",
+    "title": "For those who stayed in academia after their PhD, why did you choose to do so?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’m close to finishing my PhD, and I’ve been feeling mentally exhausted for quite a while. At this point, I’ve pretty much decided to leave research and work as a quant instead.</p> <p>Part of this is practical: the financial upside and career structure outside academia seem much clearer to me. But I also realize that my current view of academia may be heavily colored by burnout, so I’m trying to understand what I might be missing.</p> <p>For those who continued in academia after your PhD, what made you choose that path?</p> <p>Was it mainly intellectual freedom, love of research, teaching, lifestyle, lack of better alternatives, or something else?</p> <p>I’m especially curious how you thought about the trade-offs: job security, pay, pressure to publish, mobility, work-life balance, and whether the intrinsic motivation was enough to justify staying.</p> <p>I’m not trying to argue for or against academia. I just want to understand what makes people continue despite the obvious difficulties, especially from people who have seen both the appeal and the costs.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ReputationNo9488\"> /u/ReputationNo9488 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upow92/for_those_who_stayed_in_academia_after_their_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upow92/for_those_who_stayed_in_academia_after_their_phd/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upow92/for_those_who_stayed_in_academia_after_their_phd/",
+    "subreddit": "r/PhD",
+    "author": "/u/ReputationNo9488",
+    "publishedAt": "2026-07-07T08:25:12+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.379Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "348b961c91244f5c4817320a1d34fd6ee4985e2259a3b587e85faf12af95e740"
+  },
+  {
+    "id": "reddit_1upo4xp",
+    "redditId": "1upo4xp",
+    "title": "What do you miss out on by not attending a top university for PhD?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'll be attending a mid-tier university (~250 QS), top 20 in my country (Canada) for my PhD in physics. I've been wondering, what exactly do you miss out on by not attending a top university like MIT? Of course, there's the prestige of a name-brand school and the world-class professors. Is there any way that someone from a mid-tier school could make up for these shortcomings, e.g. by grinding harder, networking harder, publishing harder? I'm kind of sad because attending MIT was like a dream for me since high school, but I realized there is only one lab there which aligns with my research interests, so I did not apply this year.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ieat5orangeseveryday\"> /u/ieat5orangeseveryday </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upo4xp/what_do_you_miss_out_on_by_not_attending_a_top/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upo4xp/what_do_you_miss_out_on_by_not_attending_a_top/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upo4xp/what_do_you_miss_out_on_by_not_attending_a_top/",
+    "subreddit": "r/PhD",
+    "author": "/u/ieat5orangeseveryday",
+    "publishedAt": "2026-07-07T07:41:41+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.379Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "c554f7d991c517cba812398b7531de4bb0b1aedc4078837b57ed25869be79319"
+  },
+  {
+    "id": "reddit_1upllmi",
+    "redditId": "1upllmi",
+    "title": "June 2026 had on average 1000 brand-new Arxiv submissions PER DAY",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1upllmi/june_2026_had_on_average_1000_brandnew_arxiv/\"> <img src=\"https://preview.redd.it/fk99i8r4qqbh1.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=8607048c460598023f028a2d2cc4afa5f5514512\" alt=\"June 2026 had on average 1000 brand-new Arxiv submissions PER DAY\" title=\"June 2026 had on average 1000 brand-new Arxiv submissions PER DAY\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p><a href=\"https://arxiv.org/stats/monthly_submissions\">https://arxiv.org/stats/monthly_submissions</a></p> <p>Today there has been more than 400 submissions on the subtopic cs.LG alone: <a href=\"https://arxiv.org/list/cs.LG/recent?skip=0&amp;show=500\">https://arxiv.org/list/cs.LG/recent?skip=0&amp;show=500</a> The average paper is 50 pages long and nobody is getting through that in a day.</p> <p>People are not reading 400+ papers a day or cross-checking or citing each other. And not all papers are uploaded to Arxiv.</p> <p>I have encountered multiple papers saying exact opposite thing regarding a single topic and both are published and subsequently built upon by other people. If glaring contradictions like this is not even resolved (and nobody even cares if it is resolved), then academia no longer has authority on knowledge or truth and will quickly become irrelevant.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/NeighborhoodFatCat\"> /u/NeighborhoodFatCat </a> <br/> <span><a href=\"https://i.redd.it/fk99i8r4qqbh1.png\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upllmi/june_2026_had_on_average_1000_brandnew_arxiv/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upllmi/june_2026_had_on_average_1000_brandnew_arxiv/",
+    "subreddit": "r/PhD",
+    "author": "/u/NeighborhoodFatCat",
+    "publishedAt": "2026-07-07T05:21:36+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.379Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5ab3965ae48fe2e632b71ee5daa2c21bb069b4ee1a4cb9177d421a92646d1605"
+  },
+  {
+    "id": "reddit_1upizsf",
+    "redditId": "1upizsf",
+    "title": "Dealing with lab changes",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I really like my advisor and my old labmates. We would actually exchange resources and talk about our research and discuss it. We would not hesitate to ask each other for help. Oh, and unsolicited advice? We share them enthusiastically (positive advice, like look at this 101 papers you should read or have you heard about x y z). But of course they have to graduate and leave, and new students will come.</p> <p>I think I might not be warm enough or inviting. Or my whole world just revolves around academia and my weird hobbies. People just leave and go back to their desks after the lab meeting, instead of casual chit chat for a couple mins. None of the new students seem to want to sit in our office. In their defense some of them are \"co-advised\". No one asks questions or share weird articles anymore. Our MS Teams channel is just flooded by me and my advisor (mostly it's hey look at this thing !!!). </p> <p>I don't want to be pushy to \"offer help\" to the new students. They probably have life outside and get their resources somewhere. But it is just defeating coming into an empty office. I even brought snacks and drinks to the lab. I miss my old environment. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/potatokid07\"> /u/potatokid07 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upizsf/dealing_with_lab_changes/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upizsf/dealing_with_lab_changes/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upizsf/dealing_with_lab_changes/",
+    "subreddit": "r/PhD",
+    "author": "/u/potatokid07",
+    "publishedAt": "2026-07-07T03:10:59+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.379Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "2ce93dbacd79f80164502553849bd891b748e0e05f4d5dae797444ebdb8c4c91"
+  },
+  {
+    "id": "reddit_1upi9pi",
+    "redditId": "1upi9pi",
+    "title": "does it feel like ai is trivializing your academic contribution/future utility?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Apologies in advance for the disorganization of this post. I’ve been kinda crashing out about this whole thing and this is the abbreviated version of word-vomit thoughts on the situation.</p> <p>I am an incoming PhD student starting with a biomedical sciences umbrella program in about a month. My niche until now has been in computational biology, and I was hoping to stay in that computational realm for the PhD, too, but I’m suddenly getting cold feet—95% due to a sinking feeling about “AI stealing my job.”</p> <p>The program itself is objectively good and I already have my living situation figured out, but I’m becoming increasingly hesitant to commit myself to a program that will set me up for a career path that…maybe won’t really exist soon? I’m not entirely sure what I want to do AFTER the PhD anymore…but I am just trying to keep an open mind for now. Initially, I’d wanted to become a PI to pursue a particular niche I was passionate about. But first, the PhD application/interview process convinced me that life as a PI (constantly seeking funding and trying to prove that my work is good enough for publishing rather than the pure pursuit of knowledge for the sake of medical advancement) isn’t for me, and second, I the PhD program that I ended up choosing actually no longer has opportunities in that field for me (none of the five relevant professors who I applied to the program for have funding…or left the country.) But now, thinking about alternate career paths, I can’t help but think that anything I’d want to pursue might not even exist in 4-6 years thanks to an AI tool being able to do that job significantly better than I ever could…</p> <p>From an intellectual standpoint, I’d love to do the PhD for the “love of the game”—I’ve always loved learning and I’m stoked to be able to put the next few years towards learning while getting paid for it.<br/> My issue is just that the work that I’ll be doing during the PhD might amount to what could become a 10-minute task for ChatGPT 15.0 in 2030…</p> <p>Is anyone else feeling a bit lost with their post-PhD career trajectory? Is it foolish to go into a program thinking that I might just have to pivot to some other career because AI will replace me if I’m not some total intellectual trailblazer? Does anyone have any words of encouragement or hope to share…?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/abcmdmd\"> /u/abcmdmd </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upi9pi/does_it_feel_like_ai_is_trivializing_your/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upi9pi/does_it_feel_like_ai_is_trivializing_your/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upi9pi/does_it_feel_like_ai_is_trivializing_your/",
+    "subreddit": "r/PhD",
+    "author": "/u/abcmdmd",
+    "publishedAt": "2026-07-07T02:37:43+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.379Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "706a78fe1cbb6b656bdae1382117b901d63392cefe264c1f9df36789e53d556e"
+  },
+  {
+    "id": "reddit_1uphngq",
+    "redditId": "1uphngq",
+    "title": "Do you talk about academics with your academia friends outside of school? I know it can get competitive.",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I understand that academia is quite competitive, and I’m interested in hearing how everyone manages their relationships outside of school with people in academia. </p> <p>I have a friend who’s in a PhD program, and we’ve been friends for two years now. We met through Yoga, and I only started sharing more about academic-related stuff to her in our second year of friendship. </p> <p>She started her program four years before me. We’re in similar but different fields — hers is statistics, mine is biostatistics. I fully acknowledge her program is harder than mine, and I’ve never claimed otherwise. She’s very supportive and kind when it comes to my personal life, but I’ve noticed she gets competitive whenever our conversations turn to academics. A few examples:</p> <ol> <li><p>I once told her I wished my program had better courses. She responded defensively, “Well, your program isn’t statistics — you guys don’t have to know this.” I pushed back a couple times, then realized I was just getting into unnecessary arguments, so I stopped.</p></li> <li><p>I told her I plan to graduate next year, my 4th year. It typically takes students 5 years to graduate. She said, “Oh, maybe it’s because you’re using easier methods and data. But that’s good, you get to finish fast.”</p></li> <li><p>I published 2 papers (1 first-author, 1 second-author), and she said, “Well, my field is different — it takes longer to publish.” This felt like she was downplaying it. I actually have real experience with the publishing process, since I was heavily involved in research and worked as a research manager after my master’s. She hasn’t published before, so I’m assuming it might be the reason why she’s so triggered. </p></li> <li><p>I told her I received a grant. She genuinely congratulated me but added, “You’re lucky your PI is good at writing grants.”</p></li> </ol> <p>Outside of academics, she’s a great friend. But I’m starting to wonder if I should just keep this part of my life separate from her — only talk about personal stuff, and not bring up school/work wins at all. Has anyone else dealt with this? Do you draw a hard line between personal and professional life with friends like this, or is there a better way to handle it?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/RoleMaleficent9409\"> /u/RoleMaleficent9409 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uphngq/do_you_talk_about_academics_with_your_academia/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uphngq/do_you_talk_about_academics_with_your_academia/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1uphngq/do_you_talk_about_academics_with_your_academia/",
+    "subreddit": "r/PhD",
+    "author": "/u/RoleMaleficent9409",
+    "publishedAt": "2026-07-07T02:09:53+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.379Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "557f6b1c83769b5eebbc4777c3d1cab9659f547ba83560b943647973257f7a2c"
+  },
+  {
+    "id": "reddit_1upfu3d",
+    "redditId": "1upfu3d",
+    "title": "Got accepted into a DBA at University of Dundee, is it worth it and how do you fund one?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey everyone,</p> <p>Looking for honest perspectives from people who have done a DBA or know about it.</p> <p>Quick background on me: I am in my late 20s with about 7 years of work experience across policy research, business development, and entrepreneurship. Just finished a Master's in International Business at the University of Dundee, graduating with First Class Honours and awarded Best Student. Got accepted into the DBA programme at the same uni, and I have accepted the offer.</p> <p>My research focus is on entrepreneurship and agriculture in Africa, specifically how policy, regulation, and institutional infrastructure can unlock the sector's potential. The long term goal is to influence policy, work with and consult for development organisations like the African Development Bank and the African Union and contribute to building an environment where entrepreneurs in Africa's agricultural space can actually thrive. I believe in what I am researching and it connects deeply to my personal background.</p> <p>Here is where I need honest input:</p> <p>Is a DBA actually worth it for what I want to do? I am not looking to become a full time academic. I want to use the research to influence real change, open doors with institutions and governments, and build credibility as someone who bridges practice and policy. Does a DBA actually move the needle for that or is it just an expensive credential?</p> <p>The funding aspect is an issue too - Since the DBA is classified as part time with the Uni, I was not eligible for the university's main scholarship programmes. I have just come off financing a master's degree and I am not in a position to self fund this. I have been reaching out to external organizations, development banks, foundations, agriculture focused institutions, looking for grants or research funding and have not had any success yet and the start date is Sept 2026. Has anyone successfully funded a DBA externally? What routes actually worked?</p> <p>Would really appreciate hearing from anyone who has been through this or has thoughts on either question. Be brutally honest!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Huge-Cake5085\"> /u/Huge-Cake5085 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upfu3d/got_accepted_into_a_dba_at_university_of_dundee/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upfu3d/got_accepted_into_a_dba_at_university_of_dundee/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upfu3d/got_accepted_into_a_dba_at_university_of_dundee/",
+    "subreddit": "r/PhD",
+    "author": "/u/Huge-Cake5085",
+    "publishedAt": "2026-07-07T00:48:28+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.379Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "9f0a34fcc2327c71df86bc4a6a1edeab55e8dd6e2851d79620a5ffbde8a00e17"
+  },
+  {
+    "id": "reddit_1upfagk",
+    "redditId": "1upfagk",
+    "title": "AI for literature reviews",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>My research advisor has recently taken a liking to AI and has been spending considerable time integrating it into his workflow. </p> <p>As a PhD student, I've spent a lot of time thinking about (and chatting with them about) how to use it in such a way that I don't jeopardize or outsource my own development. </p> <p>I think a great use case for it is to ask for a list of papers related to whatever you're researching, and to synthesize that information. Basically to do a literature review for you to read. What do others think?</p> <p>More generally, to the advisors on this Reddit, what are the ways you would encourage your students to use AI and ways you would not want them using it? </p> <p>I'm a PhD in mathematics fyi. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Indefiable\"> /u/Indefiable </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upfagk/ai_for_literature_reviews/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upfagk/ai_for_literature_reviews/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upfagk/ai_for_literature_reviews/",
+    "subreddit": "r/PhD",
+    "author": "/u/Indefiable",
+    "publishedAt": "2026-07-07T00:23:51+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.380Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "6bfdb07b3d63c71e434dab6b45ce920d9858397f6bef79c6c656c3aba4f38766"
+  },
+  {
+    "id": "reddit_1updekm",
+    "redditId": "1updekm",
+    "title": "My advisor is completely not worried about my defense, and I'm not processing it super well",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm defending next week, and I guess I expected nearing the defense would feel better. More celebratory. Happier? And it's just kind of bittersweet in a lot of ways. I didn't have the easiest time for a lot of reasons and it feels like I'm grieving a lot more than celebrating anything frankly. I feel like I'm just one massive raw nerve exposed to air and I can't shake this constant humming existential dread below everything. I simultaneously can't be bothered prepping and am having massive anxiety about it.</p> <p>My advisor is a great guy; we genuinely get along and he has been extremely supportive given everything. But the fact remains that my dissertation ended up requiring very little of his guidance and most of the feedback I would receive were mostly just minor exposition/argumentation things or expansion advice. Now that I submitted, he seems just very calm and unbothered by the defense. </p> <p>It's a great place to be, I'm sure. It's not that he's dismissive, just that he thinks the committee is not trying to trip me up, he's talking about like the celebration and then having me think about where I want to go eat afterwards. </p> <p>I understand that it's a good thing. I'm just... not doing great. I've had at least one breakdown a day since January 2025 and I have a hard time taking his chill attitude as something that isn't abandonment. He's saying all the right things and I just don't really internalize any of it. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/BaroclinicBard\"> /u/BaroclinicBard </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1updekm/my_advisor_is_completely_not_worried_about_my/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1updekm/my_advisor_is_completely_not_worried_about_my/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1updekm/my_advisor_is_completely_not_worried_about_my/",
+    "subreddit": "r/PhD",
+    "author": "/u/BaroclinicBard",
+    "publishedAt": "2026-07-06T23:05:47+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.380Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "c8a8f90dd865f410586231d41e5b1b1179a696d66c074a70d0479c9bb7db1eed"
+  },
+  {
+    "id": "reddit_1upcfsj",
+    "redditId": "1upcfsj",
+    "title": "I feel like I missed out on the best years of my life and the future is still unclear",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I started my PhD when I was 23, I am now finishing it at 26. (I know a lot of people take way much time and all but please)</p> <p>Initially I wanted to do a PhD because my masters and things I studied before were still general (computer science, embedded electronics). So I thought doing a PhD might help me being more specialized and also I wanted to do a PhD now because I wouldn't want to regret not doing one later as it's hard to interrupt a career to come back in academia.</p> <p>However my PhD turned out to be quite high level still and I learned no real hard skills that could be valuable to an employer. I've also forgotten a lot of the useful stuff I learned in masters because I did not practice in years.</p> <p>Meanwhile I see some friends and people around me who chose to end their studies on masters degree. Now they have a job, they rent their appartement, they save to buy a house, they live in a place that enables them to have a social life, they have a relationship, etc... My PhD had the downside of requiring me to travel between countries frequently and hence I was never in a setting that allowed me to improve socially (I wasn't very good to start with) because of the language barrier and the constant pressure of having to move in the near future.</p> <p>I really feel like I would have needed stability in the past few years to build myself, improve socially and live with people of my age. Now I'm heading out of academia and it will only get harder to socialize with people.</p> <p>My PhD supervisors mentioned there might be a postdoc position opening at the lab to which I could apply but honestly I don't know. I don't think I'm qualified enough to work in the industry and at the same time if I go for a postdoc I will keep burning myself out and miss out on the last few years of my 20s. </p> <p>I really feel like sht I may have one more diploma with this PhD but it doesn't guarantee me to find work and I've missed out on maybe the best years of one's life. I feel like I'm doomed professionally and socially. I couldn't even afford a therapist due to the moving around situation. I'm moving back to my parents in a few weeks and they are hardcore against mental health. I would disregard them but if I'm moving again after defending in like 3-4 months what's the point.</p> <p>I really need stability and privacy to build myself but I just can't have it. I think I can manage it professionally but the social part is 90% of what breaks me. When I started my PhD, by chance I had a crush on someone for the first time. It made me reflect a lot on myself but since then I can only notice the gap in social skills between me and normal people. I'm not bad but I really don't have that spark that makes life enjoyable and makes you confident to go towards people. Maybe I'm too burnt out but I don't recall ever having it and it makes me incredibly sad.</p> <p>Edit: as I feared people focus solely on my age so I have to develop this: I did not have good social experiences during the rest of my studies or life in general (Master, bachelor, high school and before even) with a lot of loneliness, unfulfilling friendships and little privacy. My PhD is not the problem in itself, my problem is studies, family and shyness were always in the way and I deeply feel like I have yet to start living. Most people around me have alrady experienced relationships, been invited to parties, went to holidays with friends, have someone to talk to and share feelings with, have a strong network of old friends, traveled around the work, got an aesthetic, hobbies, etc... I have lived none of that and it's likely not coming back as people of my generation get older, have a job and move ahead. The last few years where I could have done that have been spent into a PhD which I do not find fulfilling profesionnally and brought me only loneliness with no bright perspectives ahead. I want to be DONE with studies, I want a job that leaves me with a bit of personal space and energy to construct myself but idfk when that will happen.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Mechanizen\"> /u/Mechanizen </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upcfsj/i_feel_like_i_missed_out_on_the_best_years_of_my/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upcfsj/i_feel_like_i_missed_out_on_the_best_years_of_my/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upcfsj/i_feel_like_i_missed_out_on_the_best_years_of_my/",
+    "subreddit": "r/PhD",
+    "author": "/u/Mechanizen",
+    "publishedAt": "2026-07-06T22:29:37+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.380Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8b1b3ce9543b6598d5adee45705ca2882008b4046cb774c79ad3f9eb851b73a2"
+  },
+  {
+    "id": "reddit_1upayv7",
+    "redditId": "1upayv7",
+    "title": "What does a PhD really mean to you?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm about to start my PhD under the same professor who supervised my master's, and while I'm genuinely excited, I've been thinking about something beyond publications, funding, and the degree itself.</p> <p>Why is it called a <strong>Doctor of Philosophy</strong>?</p> <p>Is the \"philosophy\" part just historical, or is there something deeper to it?Lately, I've been wondering if a real PhD is about learning to ask better questions without becoming attached to the answers. About being comfortable saying, \"I don't know.\" About observing your own ideas without falling in love with them. Maybe it's about constantly trying to prove yourself wrong in the pursuit of truth.I also find myself thinking about life outside research. Does a PhD change the way you see the world? Does it make you more humble? More curious? More skeptical? Does it help you become a better version of yourself, or is that a completely separate journey?I'm not looking for motivational quotes or career advice. I'm genuinely curious how people who've been through a PhD or are in the middle of one see it.</p> <p>What does a <strong>real</strong> PhD mean to you?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/AgreeableInterest717\"> /u/AgreeableInterest717 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1upayv7/what_does_a_phd_really_mean_to_you/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1upayv7/what_does_a_phd_really_mean_to_you/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1upayv7/what_does_a_phd_really_mean_to_you/",
+    "subreddit": "r/PhD",
+    "author": "/u/AgreeableInterest717",
+    "publishedAt": "2026-07-06T21:34:06+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.380Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "d365681dae6c9eed599bfffdbc0cb81bd1371514e8408c326cad37628bf04c8a"
+  },
+  {
+    "id": "reddit_1up9ws7",
+    "redditId": "1up9ws7",
+    "title": "Publishing in Nature",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am a 5th year PhD student who just submitted my thesis. I wrapped up all my work (or so I thought) and submitted my one manuscript describing a majority of my PhD work a few months ago to Nature Microbiology. The editor rejected it citing lack of scope and interest to broad readership. We filed an appeal and to our surprise (maybe the editor payed a closer attention to the manuscript) the editor agreed to send it for peer review. After a few months, we heard back from the Editor saying the manuscript is rejected once again as central hypothesis are not well supported and there is no significant advance. Going through the three reviewer comments (which were rather lengthy), all three of them agreed that the manuscript deals with an important topic and does extensive work. However all three reviewers had concerns with a few of our central claims and they agree that the central claims are well established through indirect evidence but one or two key experiments could strengthen the claims (I think the central claims are well supported with the insane number of ways we characterised). Apart from this, each of the reviewer had a few experiments they would like us to do. One reviewer says most of the data is expected and is therefore not novel when we give experimental evidence to long standing hypotheses. </p> <p>Now my PI wants to fight once again and file an appeal and is promising the editor we will do all the experiments in 4-6 months. If the editor rejects, my PI wants me to still do all the suggested experiments before we submit to the next journal. The entire process with Nature Microbiology took about 4 months only to end in rejection. My funding runs out this month. I am stuck in this limbo of waiting for the paper to get accepted somewhere good so I can apply for a decent postdoc. Will this ever end?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Cypher_Green\"> /u/Cypher_Green </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1up9ws7/publishing_in_nature/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1up9ws7/publishing_in_nature/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1up9ws7/publishing_in_nature/",
+    "subreddit": "r/PhD",
+    "author": "/u/Cypher_Green",
+    "publishedAt": "2026-07-06T20:54:52+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.380Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "67f891ecf9f6ee2a6350828d165410fd62642e201966d3d749d7996e25ef3173"
+  },
+  {
+    "id": "reddit_1up8wg8",
+    "redditId": "1up8wg8",
+    "title": "A year in and my project is completely changing",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>A year into my PhD and my project is shifting to work with a completely new bacteria. But idk I’m feeling like a failure because I’m a year in and barely have anything to show for it. I’ve worked on a lot of my labmates animal studies so I’m getting 4 or 5 coauthor pubs but I feel stupid because I’ve done almost nothing for my project and don’t have any meaningful results. </p> <p>I don’t understand why I’m feeling this way. My PI is happy with me and said I’ve tried very hard with my old project. I’m excited for my new project and it’s something I have a lot of external support in because it’s one of my committee member’s bread and butter and something I actually have experience in. My committee member is very invested in me and my project because he’s my undergrad PI and I’m very close to him. He basically acts as a Co-PI and is willing to write a combined NIH grant because he has many of them. </p> <p>But man, this shit’s hard. I’m trying not to put myself a down too much.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/conflictw_SOmom\"> /u/conflictw_SOmom </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1up8wg8/a_year_in_and_my_project_is_completely_changing/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1up8wg8/a_year_in_and_my_project_is_completely_changing/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1up8wg8/a_year_in_and_my_project_is_completely_changing/",
+    "subreddit": "r/PhD",
+    "author": "/u/conflictw_SOmom",
+    "publishedAt": "2026-07-06T20:17:14+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.380Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "f17743da14ce56ae361c0fa7ea73bf6d79fb61a78facb59f5ba40ed08b3a886c"
+  },
+  {
+    "id": "reddit_1up7xag",
+    "redditId": "1up7xag",
+    "title": "Going for phd interview! Need guidance",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>So i just completed my masters in English this june and applied for phd in the same university. I haven’t qualified NET yet so i have to give their entrance exam and then appear for the interview on the very same day if i get selected. So i needed some guidance regarding what to expect in the interview and how to write a good research proposal. Im confused between various topics. I am good in academics but i have my presentation skill sucks. Pls help me out!!!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Euphoric_Shoulder959\"> /u/Euphoric_Shoulder959 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1up7xag/going_for_phd_interview_need_guidance/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1up7xag/going_for_phd_interview_need_guidance/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1up7xag/going_for_phd_interview_need_guidance/",
+    "subreddit": "r/PhD",
+    "author": "/u/Euphoric_Shoulder959",
+    "publishedAt": "2026-07-06T19:41:57+00:00",
+    "fetchedAt": "2026-07-07T16:58:21.380Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "6e45e8f7eac3479f11b0d42d5cec0b7ff8321108205781727ff2746f2c25e1e5"
+  },
+  {
+    "id": "reddit_1upzxk2",
+    "redditId": "1upzxk2",
+    "title": "TorchJD: Training with multiple losses in PyTorch [P]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone! I wanted to share some recent progress on <a href=\"https://github.com/SimplexLab/TorchJD\">TorchJD</a> that might be useful to the machine learning community.</p> <p>When training models with multiple losses (multiple tasks, constraints, auxiliary losses, regularization terms, etc.), you typically have two options:</p> <ul> <li>Scalarization: Various ways to combine those losses into a single loss (e.g. average them or combine them with trainable weights); then you can do gradient descent on it.</li> <li>Jacobian descent: Compute the Jacobian of the vector of losses (i.e. one gradient per loss), and aggregate it into an update vector that will decrease each individual loss (rather than just the average loss). There are many ways to do this aggregation step.</li> </ul> <p>Scalarization methods are generally cheaper in memory, but in some cases there is so much disagreement between your objectives that it's better to use a Jacobian descent method. In any case, thanks to our amazing new contributors, we've now finally implemented most existing methods of the literature from both categories into our library TorchJD, so that you can try anything in just a few line changes!</p> <p>Recently, TorchJD has been accepted into the PyTorch ecosystem, and we're trying to make it become the go-to library for training with multiple losses. If you'd like to help build the future of the project, come join us on Discord (link can be found in the readme of the repo). New ideas, contributions, bug reports, experiments, and any form of feedback are all welcome. We have many ideas on how to make all this even more efficient, and we will need help for that.</p> <p>If you want to support us, a star on <a href=\"https://github.com/SimplexLab/TorchJD\">GitHub</a> also helps a lot!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Skeylos2\"> /u/Skeylos2 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upzxk2/torchjd_training_with_multiple_losses_in_pytorch_p/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upzxk2/torchjd_training_with_multiple_losses_in_pytorch_p/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upzxk2/torchjd_training_with_multiple_losses_in_pytorch_p/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Skeylos2",
+    "publishedAt": "2026-07-07T16:20:47+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.662Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "d4e5914ccf432635300dfc9ad6940a28186c4e6388b9a29ab972ec5f7edfa875"
+  },
+  {
+    "id": "reddit_1upxdvc",
+    "redditId": "1upxdvc",
+    "title": "Raffi Krikorian (CTO, Mozilla) — AMA on the State of Open Source AI (July 14 @ 1pm EDT) [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi <a href=\"/r/MachineLearning\">r/MachineLearning</a>,</p> <p>i’m Raffi, CTO at Mozilla. on Tuesday July 14 we publish our inaugural <strong>State of Open Source AI</strong> report, and i'll be here live answering whatever questions you throw at me!</p> <p><strong>AMA time: 1pm ET / 10am PT / 6pm BST.</strong></p> <p>the report is about what's actually happening with open source AI in production — developers, enterprises, the whole ecosystem — not the version of the story everyone already believes.</p> <p>things i want to dig into with you:</p> <ul> <li>the hidden tax on \"free\" models — what it actually costs a business to run on closed tools they don't own</li> <li>enterprise adoption — what's real versus what's marketing, and exactly where teams get stuck</li> <li>the China effect — free, capable Chinese models are rewriting who has leverage here</li> <li>developer trust — what 950+ developers told us about which tools they actually trust, and why</li> <li>the “agentic harness” — why the real fight has moved off the model and onto the layer sitting on top of it, and what that means for open</li> </ul> <p>also game to deep dive into: open vs closed, what \"open source ai\" should even mean in 2026, where this goes for anyone building on it.</p> <p>drop questions early if you've got them. i'll start answering live at the time above.</p> <p>— Raffi</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/raffikrikorian\"> /u/raffikrikorian </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upxdvc/raffi_krikorian_cto_mozilla_ama_on_the_state_of/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upxdvc/raffi_krikorian_cto_mozilla_ama_on_the_state_of/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upxdvc/raffi_krikorian_cto_mozilla_ama_on_the_state_of/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/raffikrikorian",
+    "publishedAt": "2026-07-07T14:51:29+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.662Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "7e10be92524e028113cfab0c340853b75a68f2b1bddec831b77783aa16684055"
+  },
+  {
+    "id": "reddit_1upvkp5",
+    "redditId": "1upvkp5",
+    "title": "Ph.D. thesis on Differentiable Ray Tracing for Radio Propagation Modeling [R]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone, I recently finished my Ph.D. thesis on <strong>Differentiable Ray Tracing for Radio Propagation Modeling</strong>. Instead of just compiling my published papers, I tried to write it as an accessible, self-contained textbook for anyone interested in the intersection of radio propagation simulation, autodiff, and ML.</p> <ul> <li><strong>Permanent handle</strong>: <a href=\"https://hdl.handle.net/2078.5/278727\">https://hdl.handle.net/2078.5/278727</a></li> <li><a href=\"https://github.com/jeertmans/DiffeRT-thesis\"><strong>Repo with TeX source files</strong></a></li> </ul> <p>While my research focuses on wireless communications rather than pure ML, I think it fits right in here. A major part of the project revolves around automatic differentiation. By taking frameworks like JAX out of their traditional ML context and integrating differentiability into a ray tracing pipeline, we can compute exact gradients through complex physical environments. This allows us to solve inverse problems and directly train machine learning models, which is currently a hot topic in next-gen wireless design.</p> <p>To make the physics and the math easy to digest, the manuscript is split into three parts:</p> <ul> <li><strong>Understanding:</strong> The physics fundamentals (electromagnetic theory, geometrical optics, and diffraction).</li> <li><strong>Building:</strong> The algorithmic core, including GPU-accelerated path tracing and the discontinuity smoothing techniques you need to actually make differentiable simulations stable.</li> <li><strong>Using:</strong> Practical applications like channel modeling, localization, material calibration, and ML-assisted generative path sampling.</li> </ul> <p>A major focus of my thesis is the link between scientific research and reproducible open-source software. On that note, I want to give a massive shoutout to Patrick Kidger (<a href=\"/u/patrickkidger\">u/patrickkidger</a>). His own thesis inspired me to go the <em>\"textbook way\"</em> for my manuscript, and I heavily relied on his fantastic JAX packages (<code>jaxtyping</code>, <code>equinox</code>, and <code>optimistix</code>) when developing my open-source libraries, such as <a href=\"https://github.com/jeertmans/DiffeRT\">DiffeRT</a>.</p> <p>I hope you find it an interesting read! I'd be happy to answer any questions in the comments about differentiable simulation, ray tracing, or building ray tracing engines in JAX :-)</p> <p><em>If you are curious, you can watch <a href=\"https://eertmans.be/posts/public-defense/\">the presentation slides and video teaser here</a></em></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/jeertmans\"> /u/jeertmans </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upvkp5/phd_thesis_on_differentiable_ray_tracing_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upvkp5/phd_thesis_on_differentiable_ray_tracing_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upvkp5/phd_thesis_on_differentiable_ray_tracing_for/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/jeertmans",
+    "publishedAt": "2026-07-07T13:45:40+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.663Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "cc7c88eadfe7db303f127f2c98f32b0ba72aee07c775c9e5f9f5e3e925971f79"
+  },
+  {
+    "id": "reddit_1upr21d",
+    "redditId": "1upr21d",
+    "title": "[D] Issue with arxiv - abstract not matching pdf/html [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi, I was reading the openRLHF paper: <a href=\"https://arxiv.org/pdf/2501.03262v4\">https://arxiv.org/pdf/2501.03262v4</a> , but when I click the abstract page: <a href=\"https://arxiv.org/abs/2501.03262v4\">https://arxiv.org/abs/2501.03262v4</a> , it shows \"REINFORCE++\". Note that <a href=\"https://arxiv.org/html/2501.03262v4\">https://arxiv.org/html/2501.03262v4</a> still shows the correct openRLHF paper. I believe Arxiv is having some incorrect symlinks?</p> <p>Is there anyone working at arxiv here who would like to look into this?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ok-Painter573\"> /u/Ok-Painter573 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upr21d/d_issue_with_arxiv_abstract_not_matching_pdfhtml_d/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upr21d/d_issue_with_arxiv_abstract_not_matching_pdfhtml_d/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upr21d/d_issue_with_arxiv_abstract_not_matching_pdfhtml_d/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Ok-Painter573",
+    "publishedAt": "2026-07-07T10:26:18+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.663Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "9582e09d8f8f1a38cb4017f26673e47ae1b94e996d51b0017c6c57e822f21826"
+  },
+  {
+    "id": "reddit_1upqghy",
+    "redditId": "1upqghy",
+    "title": "Masked depth modeling with sensor-validity masking: reports best RMSE on 7 of 8 masked/sparse depth benchmarks, plus a controlled encoder-init study[R]",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/MachineLearning/comments/1upqghy/masked_depth_modeling_with_sensorvalidity_masking/\"> <img src=\"https://preview.redd.it/jfsxqgnx4sbh1.png?width=140&amp;height=41&amp;auto=webp&amp;s=c9d6b3a3d3ceffc8d77a713d0c41c4011d091a2f\" alt=\"Masked depth modeling with sensor-validity masking: reports best RMSE on 7 of 8 masked/sparse depth benchmarks, plus a controlled encoder-init study[R]\" title=\"Masked depth modeling with sensor-validity masking: reports best RMSE on 7 of 8 masked/sparse depth benchmarks, plus a controlled encoder-init study[R]\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>The core idea in masked depth modeling is to treat the sensor's own missing regions as the masking signal rather than using random block dropout. Specular highlights, transparent surfaces, and textureless areas where RGB-D cameras return no valid depth become the natural training target. The model therefore learns on exactly the failure distribution it faces at inference. Robbyant, an embodied AI company under Ant Group, describes this framing in LingBot-Depth 2.0.</p> <p>Version 2.0 changes nothing in the training recipe except the encoder initialization and data scale. The encoder-init study is the clean experiment here: same MDM pipeline, same data curation, only the pretrained backbone swapped. Per the paper, the LingBot-Vision init wins on nearly every benchmark at ViT-L and on most benchmarks at ViT-g, with one concession: DINOv2 keeps an edge on the Hammer captures. The gap widens with data scale rather than washing out, per their scaling figure. They report best RMSE on 7 of 8 block-mask and sparse benchmarks and 6 of 8 real camera configurations across three capture suites (Hammer D435/L515/ToF, ClearGrasp D415/D435, and their own D415/D435/D455 set). They report the strongest numbers on the transparent-object ClearGrasp captures, with block-masked DIODE-Indoor RMSE roughly halving versus the 1.0 release. The attached images are screenshots from their paper (Tables 6, 7, 8 and a qualitative mirror/glass point-cloud figure); interactive point-cloud demos live on the project page.</p> <p>Depth 2.0 weights are not released, so none of these completion numbers can be independently rerun. Only the four Vision backbones are open under Apache-2.0 and checkable at <a href=\"https://github.com/robbyant/lingbot-vision\">https://github.com/robbyant/lingbot-vision</a>, which hosts the paper and the open weights. The renders shown come from the vendor's comparison page.</p> <p>Does sensor-validity masking beat random masking for other sensing modalities, say lidar or thermal? That would test how general the framing really is.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ok-Line2658\"> /u/Ok-Line2658 </a> <br/> <span><a href=\"https://www.reddit.com/gallery/1upqghy\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upqghy/masked_depth_modeling_with_sensorvalidity_masking/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upqghy/masked_depth_modeling_with_sensorvalidity_masking/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Ok-Line2658",
+    "publishedAt": "2026-07-07T09:54:50+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.663Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "eb94cb8e7e55a9508cb8320fdbe22c969ad15288c08ff8cda0bd9add53b6e960"
+  },
+  {
+    "id": "reddit_1upofuw",
+    "redditId": "1upofuw",
+    "title": "MIRA: Multiplayer Interactive World Models trained on Rocket League [R]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>We're happy to release MIRA, a collaboration between General Intuition, Kyutai, and Epic Games.</p> <p>Mira was trained on 10k hours of synthetic Rocket League data. The model has 5B parameters and runs for 4 players at 20 fps on a single B200.</p> <p>We've released a playable online demo, an in-depth technical report as well as a 1k hour dataset of 4-players gameplay:</p> <p><strong>Demo: <a href=\"https://mira-wm.com\">https://mira-wm.com</a></strong> Technical report: <a href=\"https://mira-wm.com/paper\">https://mira-wm.com/paper</a> Repo: <a href=\"https://github.com/mira-wm/mira\">https://github.com/mira-wm/mira</a></p> <p>If you're at ICML, we're also running an interactive demo (booth 111) where you can play it with us using proper PlayStation controllers!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/MasterScrat\"> /u/MasterScrat </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upofuw/mira_multiplayer_interactive_world_models_trained/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upofuw/mira_multiplayer_interactive_world_models_trained/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upofuw/mira_multiplayer_interactive_world_models_trained/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/MasterScrat",
+    "publishedAt": "2026-07-07T07:59:10+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.663Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "40d5855da3039792eda1b6510c3ef1bc309abb4b0e5175427d1e2dccec427f70"
+  },
+  {
+    "id": "reddit_1upjftu",
+    "redditId": "1upjftu",
+    "title": "ICML Position Track: Want Better ML Reviews? Stop Asking Nicely and Start Incentivizing with a Credit System [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>“Maybe the real AGI was the friends we made along the way” is a sentiment that always hits me, and conferences are the places where I reunite with old friends and meet new ones. However, when it comes to the submission/review experience, it might not be much of an exaggeration to say that almost everyone has many unpleasant experiences to share.</p> <p>So I wrote a position paper to discuss this. I argue that current conference organizers lack proper tools to instill accountability and incentives for reviewers/authors/ACs/SACs… The result is that undesired behaviors (e.g., lack of engagement) often go unchecked, while good behaviors are rarely rewarded and therefore don’t happen (honestly, when was the last time you witnessed any constructive internal discussion among reviewers/ACs?). And this won’t change by writing nice words in Reviewer Guidelines or issuing a few desk rejections.</p> <p>I propose a CREDIT SYSTEM where community members earn points by “doing good” — e.g., reviewing a paper would get you +1, being outstanding gets you +3. Then, members can spend points to redeem perks ranging from traditional ones already adopted in current ML conferences (e.g., free registration) to new ones, such as requesting an additional reviewer to sort through a muddy situation. Such a system could also support explorative ideas like:</p> <p>- Refundable submission fees: say 10 points per submission, which are then refunded regardless of acceptance, unless the submission is uniformly voted to be unready / ultra-low quality.</p> <p>- Mobilizing non-author reviewers: non-author reviewers don’t have the bandwidth issue of wearing both the author and reviewer hats and are not influenced by their own submissions. </p> <p>and many more...</p> <p>My proposed system is far from perfect, but I’d like to think it takes a step toward a better conference review mechanism. I am also glad to see the position paper track becoming a welcoming platform for researchers to hash out their proposals and build toward a better future (see other review-related position papers below.)</p> <p><strong>For a topic that affects literally everyone at ICML, I am eager to hear your thoughts.</strong> </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/choHZ\"> /u/choHZ </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upjftu/icml_position_track_want_better_ml_reviews_stop/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upjftu/icml_position_track_want_better_ml_reviews_stop/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upjftu/icml_position_track_want_better_ml_reviews_stop/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/choHZ",
+    "publishedAt": "2026-07-07T03:32:18+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.663Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "a4d2e035e6bf77c71a26ec3427f28ee45ec6905899eadc0ff86fe93577112ee2"
+  },
+  {
+    "id": "reddit_1upa8yc",
+    "redditId": "1upa8yc",
+    "title": "How should I encode both target and feature variable for a multiclass classification? [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am preprocessing a CSV dataset for multiclass classification with XGBoost. My <strong>Feature variable</strong> contain <strong>numerical and categorical values</strong>, while <strong>the target variable contain many categorical value.</strong> For example, <strong>feature variables contain patient name, phone number, and exercise history,</strong> while <strong>Target variable contain different disease name</strong> such as heart attack, stroke, Alzheimer's etc.</p> <p>I know that feature variables can be encoded using one-hot encoding, but should the target variable also be encoded using the same method, or should I use a different encoding method for target variable (e.g., label encoding)?</p> <p>If anyone know the answer, please let me know. I have searched everywhere, but failed to get any clear idea about it. Thank you.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Rami02021\"> /u/Rami02021 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upa8yc/how_should_i_encode_both_target_and_feature/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1upa8yc/how_should_i_encode_both_target_and_feature/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1upa8yc/how_should_i_encode_both_target_and_feature/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Rami02021",
+    "publishedAt": "2026-07-06T21:07:37+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "c20ac8ce712f7b2f45f025376009b9a2669e2646fa0c8bc7f4a37ba1282cf269"
+  },
+  {
+    "id": "reddit_1up4cjh",
+    "redditId": "1up4cjh",
+    "title": "LingBot-Vision: masked boundary modeling for self-supervised pretraining (0.296 NYUv2 linear-probe RMSE at 1.1B vs 0.309 for DINOv3-7B, trails on ImageNet); weights in 4 sizes[R]",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/MachineLearning/comments/1up4cjh/lingbotvision_masked_boundary_modeling_for/\"> <img src=\"https://preview.redd.it/ha08vg49bnbh1.png?width=140&amp;height=78&amp;auto=webp&amp;s=cbd1e4aed6c0571b7f0acee245c21543fe356719\" alt=\"LingBot-Vision: masked boundary modeling for self-supervised pretraining (0.296 NYUv2 linear-probe RMSE at 1.1B vs 0.309 for DINOv3-7B, trails on ImageNet); weights in 4 sizes[R]\" title=\"LingBot-Vision: masked boundary modeling for self-supervised pretraining (0.296 NYUv2 linear-probe RMSE at 1.1B vs 0.309 for DINOv3-7B, trails on ImageNet); weights in 4 sizes[R]\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>The idea: instead of masking random patches and hoping boundary structure emerges, the teacher predicts a dense boundary field online and the boundary-bearing tokens are forced into the student's mask, so the student has to reconstruct exactly the regions that can't be inferred by copying context. The boundary targets come from the teacher itself rather than labels or an external edge detector. Two design choices that look load-bearing: boundary fields are recast as per-pixel categorical distributions so the geometric branch can reuse the centering/sharpening machinery that keeps self-distillation from collapsing (continuous regression targets drift under an EMA teacher), and decoded segments pass an a-contrario validation test before they're allowed to supervise anything.</p> <p>Numbers, all self-reported (images): they report the best NYUv2 linear-probe RMSE of their comparison (0.296 at 1.1B/patch-16 vs 0.309 for DINOv3-7B), with segmentation on par with the distilled DINOv3 ViT-H+. The distilled ViT-L (0.3B) lands at 0.310 NYUv2, basically the 7B's number. Data budget per the report: 161M images, less than a third of DINOv3's samples. Where it loses in the same tables: ImageNet classification trails at giant and L scale (their B/S students lead their class on linear probe), ADE20K trails the DINOv3 family, KITTI favors the bigger models. The encoder-initialization study (last image) is the part I find hardest to dismiss: the exact same depth-completion pipeline trained on the same data, only the init swapped. The LingBot init wins across the board at ViT-L and on most benchmarks at ViT-g (they concede DINOv2 keeps an edge on the Hammer captures), and the data-scaling curve shows the gap growing rather than washing out as training data grows.</p> <p>What I'd want before treating the DINOv3 comparison as settled: they do run all baselines under one probe protocol, which helps, but a 0.013 RMSE delta is within what probe LR/resolution choices can produce, and there's no ablation against learned/hard-masking baselines (ADIOS/AttMask-style), which seems like the natural comparison for \"mask the hard tokens\". Checkpoints are public so the probes are cheap to rerun. Given the eval complaints around Ant's Ling-1T release, I'd treat the numbers as unverified until that happens.</p> <p>One thing I can't square: DINOv3 needed Gram anchoring to stop dense-feature degradation over long schedules, and this method keeps it, so boundary forcing looks complementary rather than a replacement. Anyone read it differently?</p> <p>Links: report <a href=\"https://technology.robbyant.com/lingbot-vision\">https://technology.robbyant.com/lingbot-vision</a><br/> code: <a href=\"https://github.com/robbyant/lingbot-vision\">https://github.com/robbyant/lingbot-vision</a><br/> weights (4 sizes, Apache-2.0): <a href=\"https://huggingface.co/collections/robbyant/lingbot-vision\">https://huggingface.co/collections/robbyant/lingbot-vision</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/StillThese3747\"> /u/StillThese3747 </a> <br/> <span><a href=\"https://www.reddit.com/gallery/1up4cjh\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1up4cjh/lingbotvision_masked_boundary_modeling_for/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1up4cjh/lingbotvision_masked_boundary_modeling_for/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/StillThese3747",
+    "publishedAt": "2026-07-06T17:37:58+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "e588c5e776b51f7b58933c70c26c0351eaff7945c34363acb57f35d7cae004cf"
+  },
+  {
+    "id": "reddit_1up3kby",
+    "redditId": "1up3kby",
+    "title": "Edge AI ASL Recognition on Raspberry Pi 5 – Looking for Feedback on My System Design [P]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><blockquote> </blockquote> <p>I'm implementing an offline ASL recognition system on Raspberry Pi 5 using MediaPipe hand landmarks and TensorFlow Lite. The system recognizes the ASL alphabet and converts it to text and speech without an internet connection.</p> <p>My current pipeline is:</p> <ul> <li>MediaPipe (21 hand landmarks)</li> <li>Landmark normalization</li> <li>TensorFlow Lite model on Raspberry Pi 5</li> <li>OLED display + offline TTS</li> </ul> <p>I'm trying to decide between a <strong>1D CNN, MLP, or GRU</strong> for landmark-based classification. My priority is low latency and efficient edge deployment rather than maximum accuracy.</p> <p>I'd appreciate feedback from anyone who has deployed ML models on embedded devices or worked on sign language recognition. I'm especially interested in architecture trade-offs and potential pitfalls</p> <blockquote> </blockquote> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Unlikely_Let_9147\"> /u/Unlikely_Let_9147 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1up3kby/edge_ai_asl_recognition_on_raspberry_pi_5_looking/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1up3kby/edge_ai_asl_recognition_on_raspberry_pi_5_looking/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1up3kby/edge_ai_asl_recognition_on_raspberry_pi_5_looking/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Unlikely_Let_9147",
+    "publishedAt": "2026-07-06T17:10:57+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "6553a28cad59d6c535e2b7d3b06fb885e4ad0e909438bc20baa65ca5b66c10fc"
+  },
+  {
+    "id": "reddit_1up0azr",
+    "redditId": "1up0azr",
+    "title": "CPU TTS benchmark with UTMOS MOS scoring: Kokoro, Supertonic, Inflect-Nano, and Kyutai's new Pocket TTS [P]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Sharing a CPU TTS benchmark with objective MOS scores in case it's useful for anyone evaluating small TTS models. Adding this because Kyutai's Pocket TTS is architecturally different from the others in the field and I hadn't seen a head-to-head with it yet.</p> <p><strong>Models:</strong></p> <ul> <li>Kokoro 82M (PyTorch and ONNX Runtime, StyleTTS2-inspired)</li> <li>Supertonic 3 at 2 and 5 flow-matching steps (Vector Estimator backbone)</li> <li>Inflect-Nano-v1 (4.6M param FastSpeech-style, tiny end of the spectrum)</li> <li>Pocket TTS (~100M param streaming LM over Kyutai's Mimi neural audio codec)</li> </ul> <p><strong>Setup:</strong> Intel Xeon 8272CL, 4 cores, 15.6GB RAM. CUDA disabled at env level. ONNX sessions pinned to CPUExecutionProvider. Six configs, six text lengths (12 to 1712 chars), five timed reps per cell after a discarded warmup. 180 total runs. Every saved WAV scored with UTMOS (<code>utmos22_strong</code>) for objective MOS.</p> <p><strong>Aggregate results:</strong></p> <table><thead> <tr> <th align=\"left\">Config</th> <th align=\"left\">Mean RTF</th> <th align=\"left\">UTMOS</th> </tr> </thead><tbody> <tr> <td align=\"left\">Supertonic 3 (2-step)</td> <td align=\"left\">0.121</td> <td align=\"left\">1.53</td> </tr> <tr> <td align=\"left\">Inflect-Nano-v1</td> <td align=\"left\">0.145</td> <td align=\"left\">3.48</td> </tr> <tr> <td align=\"left\">Supertonic 3 (5-step)</td> <td align=\"left\">0.240</td> <td align=\"left\">4.32</td> </tr> <tr> <td align=\"left\">Kokoro 82M (ONNX)</td> <td align=\"left\">0.641</td> <td align=\"left\">4.44</td> </tr> <tr> <td align=\"left\">Kokoro 82M (PyTorch)</td> <td align=\"left\">0.665</td> <td align=\"left\">4.46</td> </tr> <tr> <td align=\"left\">Pocket TTS</td> <td align=\"left\">0.714</td> <td align=\"left\">4.10</td> </tr> </tbody></table> <p><strong>Findings I think are actually interesting:</strong></p> <p><strong>1. Streaming LM architecture produces flat RTF scaling.</strong> Pocket TTS's RTF is 0.69 to 0.76 across the entire text length range. Because it emits audio tokens autoregressively at a steady rate, cost is linear in output length with no fixed overhead to amortize. Compare to Kokoro PyTorch, which climbs from 0.49 on tiny to 0.83 on long inputs, or Supertonic which goes the other way (0.36 on tiny down to 0.20 on medium) because of high per-call fixed overhead. If you're budgeting worst-case latency for an interactive system, flat is worth a lot.</p> <p><strong>2. UTMOS has a known failure mode on small vocoders.</strong> Inflect-Nano-v1 scored 3.48, which reads mid-pack. By ear it's buzzy and robotic. This is a documented issue: UTMOS rewards HiFi-GAN outputs for being clean even when they lack prosodic naturalness. Pocket TTS scored similarly (4.10) but sounds legitimately natural. The point isn't that UTMOS is broken, it's that a single quality number can't distinguish \"clean and mechanical\" from \"clean and natural\" on small models. Worth pairing with human listening or a naturalness-specific metric like NISQA.</p> <p><strong>3. Inflect-Nano has an undocumented ~15s output cap.</strong> The model config sets <code>max_frames = 1400</code>, which caps synthesis at ~14.93s regardless of input text length. Its RTF and throughput on long/paragraph/extended inputs are inflated because it's doing less work than the models it's compared against. Real comparison for that model is on tiny/short/medium only.</p> <p><strong>4. Kokoro ONNX vs PyTorch results reverse from the previous run.</strong> I ran an earlier version of this benchmark on AMD EPYC and PyTorch beat ONNX in aggregate. On this Xeon, ONNX is faster (0.641 vs 0.665). Same code, different silicon. AMD vs Intel kernel optimization differences at CPU inference are apparently real enough to flip the ranking. If anyone has replicated this on ARM I'd be curious.</p> <p><strong>Zero-shot voice cloning as a capability that doesn't fit the benchmark axes:</strong></p> <p>Pocket TTS can clone a voice from ~5 seconds of reference audio, zero-shot, on CPU. No other model in this field does this. I pinned it to a preset voice for the speed/quality comparison to be fair, so the cloning capability isn't reflected in the numbers. This is a real limitation of RTF-and-MOS-based comparisons: they can't capture capabilities that only one model has. Might want a separate speaker-similarity evaluation for a v2.</p> <p><strong>Limitations:</strong></p> <ul> <li>Single hardware platform</li> <li>English only</li> <li>UTMOS is one MOS predictor; NISQA or a listening panel would strengthen the quality claims</li> <li>Voice cloning quality was not evaluated</li> <li>No batched inference tested</li> </ul> <p><strong>Disclosure:</strong> The benchmark harness was written by an AI engineering agent (Neo) from a prompt I specified. I chose the methodology, validated the outputs, and reviewed the audio. Mentioning it because it's relevant to how you'd want to weight the code. </p> <p>All code, raw CSVs (180 rows), MOS CSV (36 rows), and WAV samples are in the repo mentioned in the comments below </p> <p>Feedback on the protocol welcome, especially on the MOS methodology and what a proper voice-cloning eval would look like.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/gvij\"> /u/gvij </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1up0azr/cpu_tts_benchmark_with_utmos_mos_scoring_kokoro/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1up0azr/cpu_tts_benchmark_with_utmos_mos_scoring_kokoro/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1up0azr/cpu_tts_benchmark_with_utmos_mos_scoring_kokoro/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/gvij",
+    "publishedAt": "2026-07-06T15:17:36+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "ab5e9e6abc714356b49cc18dcedf8f7c2085565a6043a10db52b16498e78b909"
+  },
+  {
+    "id": "reddit_1uoz5jo",
+    "redditId": "1uoz5jo",
+    "title": "TRACE: open-source hierarchical memory for LLM agents, 82.5% on MemoryAgentBench’s EventQA using gpt-oss-20B [P]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Built a memory system called TRACE that organizes agent conversation history into a topic tree (branches + summaries) instead of flat RAG chunks, and benchmarked it on MemoryAgentBench (ICLR 2026), specifically the EventQA accurate-retrieval task.</p> <p>Its a pypi package:</p> <p>pip install trace-memory</p> <p>Results (F1):<br/> • TRACE (gpt-oss-20B): 82.5%<br/> • TRACE (gpt-oss-120B): 83.8%<br/> • Mem0 (GPT-4o-mini, paper’s official number): 37.5%<br/> • MemGPT/Letta (GPT-4o-mini, paper’s official number): 26.2%</p> <p>Ran gpt-oss locally, so this is an open-weights model against MemGPT/Mem0 on GPT-4o-mini, not an apples-to-apples same-backbone test (I don’t have the money for open ai tokens).</p> <p>I tried to get Mem0 running on gpt-oss-20B directly for fairness, but its fact-extraction step needs strict JSON output and gpt-oss’s responses didn’t parse cleanly (known issue, not gpt-oss specific. Same bug shows up with Gemini/Mistral too). Letta needs a full server setup so I skipped it.</p> <p>Full JSON logs from both runs are in the repo if you want to dig into the methodology yourselves. GitHub: <a href=\"https://github.com/husain34/TRACE\">https://github.com/husain34/TRACE</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/PsychologicalDot7749\"> /u/PsychologicalDot7749 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uoz5jo/trace_opensource_hierarchical_memory_for_llm/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uoz5jo/trace_opensource_hierarchical_memory_for_llm/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1uoz5jo/trace_opensource_hierarchical_memory_for_llm/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/PsychologicalDot7749",
+    "publishedAt": "2026-07-06T14:35:56+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5e66c0a583da6b9a2810b6555b9a9f16049c980898dd05313d3357ea846e264b"
+  },
+  {
+    "id": "reddit_1uov7or",
+    "redditId": "1uov7or",
+    "title": "Machine learning industry job requirements used to be myopic, but now it feels impossible. Anyone else seeing this? [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Today I was just casually browsing some jobs with tags [machine learning] on one of those large popular job-sites. What I am seeing really had me astonished. I want to check with Reddit whether I am hallucinating.</p> <p>A non-FAANG/non-Deepmind/.../non-Anthropic industrial automation company is hiring people to work on ML for robots (the latest hot topic). Fine. But then I saw their laundry list of job requirements (\"you must meet these\"), which include:</p> <ul> <li>Deep expertise in LLM, VLA, VLM, action transformers</li> <li>Deep expertise in robot dynamic and kinematic modelling (forward, inverse kinematics, trajectory generation, planning), sensor fusion, model predictive control, reinforcement learning</li> <li>Deep expertise in CUDA GPU programming, FPGA hardware acceleration</li> <li>Familiarity with latest software engineering best practices in Python3 and C++23</li> <li>Familiarity in one or more of popular ML framework</li> <li>Have top publications in one or more typical ML and robotics conferences</li> </ul> <p>This is before they go off listing familiarity with a set of standard softwares/simulators, one of which is called RLib, something I've never heard of. Oh and of course they had these 3+, 5+ \"non-academic\" experience requirements. I forgot which is which.</p> <p>I was just sitting there confused. Then I checked several more jobs, and it was more of the same (except for some banks).</p> <p>I remember there was a talk by Terence Tao where he divided mathematician into two camps, the analysts and algebraists. He said even among top mathematicians, it is exceedingly rare to find someone who possess deep expertise in both, as each tends to require a different mode of thinking and each is infinitely deep in terms of specialization, theory and insights.</p> <p>And here we have a bunch of ML companies treating these infinitely deep academic fields ranging from robot dynamic and kinematic modelling to large language models like some bizarre MMORPG video-game scenario where you need to be a warrior archer warlock who is also a shaman priest mage.</p> <p>Who are they even hiring, lol?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/NeighborhoodFatCat\"> /u/NeighborhoodFatCat </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uov7or/machine_learning_industry_job_requirements_used/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uov7or/machine_learning_industry_job_requirements_used/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1uov7or/machine_learning_industry_job_requirements_used/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/NeighborhoodFatCat",
+    "publishedAt": "2026-07-06T11:57:00+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8a817a4c6d6437d010fed48c84a2e5237944b5c5582e78856dfc0cd1730d7b65"
+  },
+  {
+    "id": "reddit_1uon503",
+    "redditId": "1uon503",
+    "title": "Does anyone have a name for that subtle &quot;Sameness&quot; creeping into model outputs lately? [R]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I've been running a lot of comparative evals across recent model releases—both API and open-weight—and there's a pattern I can't unsee.</p> <p>After a certain number of turns, or when you push into niche territory, the outputs start converging. Same cadence. Same hedging phrases. Same blind spots. It's not full collapse. It's a kind of... homogenization. A creep.</p> <p>My working theory: we're deep enough into the synthetic data flywheel now that we're seeing the first-generation effects. Not model collapse in the catastrophic sense, but a gradual loss of \"texture\" across models that share overlapping synthetic ancestry.</p> <p>I've been calling this <em>EchoCreep</em> in my notes. The slow, creeping homogenization of model behavior driven by shared synthetic data lineage.</p> <p>Has anyone else been tracking this? Is there a formal term yet? If not, what are you seeing in your evals that fits this pattern? I'm especially interested in:</p> <ul> <li>Concrete eval metrics that might capture it</li> <li>Whether fine-tuning on entirely human-curated data clears it</li> <li>If you've seen it worsen between checkpoint versions</li> </ul> <p>any feedback would be appreciated?</p> <p>Thanks</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/BCondor3\"> /u/BCondor3 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uon503/does_anyone_have_a_name_for_that_subtle_sameness/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uon503/does_anyone_have_a_name_for_that_subtle_sameness/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1uon503/does_anyone_have_a_name_for_that_subtle_sameness/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/BCondor3",
+    "publishedAt": "2026-07-06T04:27:28+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "a600088ec230efc481dec61003fbe39860f2b12bb885a9490cdc8e55c76c0904"
+  },
+  {
+    "id": "reddit_1uoejrl",
+    "redditId": "1uoejrl",
+    "title": "Best models for generating red-team attacks? Also looking for public datasets [R]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone, I'm currently working on a framework to evaluate the security of LLM applications and AI agents, and I've been stuck on one part for a while.</p> <p>Most red-teaming frameworks rely on an LLM to generate adversarial prompts. My question is more about <strong>which model to use</strong>.</p> <ul> <li>Which <strong>closed-source</strong> models would you recommend for generating high-quality attacks?</li> <li>Which <strong>open-source</strong> models have worked well for you?</li> <li>Have you noticed any models that consistently generate more realistic or challenging attacks than others?</li> </ul> <p>I'm looking for models that can generate attacks such as Toxicity, prompt injection, SQL injection, jailbreaks, indirect prompt injection, prompt leakage, tool misuse, multi-turn attacks, and other agent-specific attacks ect...</p> <p>I also have another question.</p> <p>Is there a good <strong>public dataset</strong> that people use to benchmark or validate the security of AI agents? I'd prefer a \"golden\" dataset with predefined, high-quality attacks rather than generating everything from scratch.</p> <p>I'm curious about what people actually use in practice if you've worked on LLM security or red teaming, I'd really appreciate any recommendations, whether it's models, datasets, papers, or GitHub repositories.</p> <p>Thanks in advance! Any advice or insights would be greatly appreciated.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Background-Song2007\"> /u/Background-Song2007 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uoejrl/best_models_for_generating_redteam_attacks_also/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uoejrl/best_models_for_generating_redteam_attacks_also/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1uoejrl/best_models_for_generating_redteam_attacks_also/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Background-Song2007",
+    "publishedAt": "2026-07-05T21:49:16+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.664Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "e2654c5808768a7f96c83220732fe4048db677d1d5b8ec98e1afbea8137ff486"
+  },
+  {
+    "id": "reddit_1uo92vz",
+    "redditId": "1uo92vz",
+    "title": "I built an open, from-scratch MT pipeline + parallel corpus for Tunisian Darija (Arabizi) early baseline, and I'm growing it into a curated community corpus [P]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm an 18-year-old independent student from Tunisia. I built and I'm leading an open, from-scratch machine-translation pipeline and parallel corpus for Tunisian Darija. Sharing it for feedback.</p> <p>Why: Tunisian Darija, written in Arabizi (Latin letters + numerals like 3/7/9/5 for Arabic phonemes), has almost no open NLP resources. Existing Arabic tools route it through MSA and mishandle the orthography. To the best of my knowledge there was no open parallel </p> <p>corpus or from-scratch baseline for it.</p> <p>What I built (all open):</p> <p>- Arabizi-aware SentencePiece BPE tokenizer (3/7/9/5 as protected symbols), shared 16k vocab.</p> <p>- ~15.6M-param encoder–decoder Transformer, from scratch (no pretrained LM): transfer-learned from cleaned Moroccan Darija, then fine-tuned on hand-crafted Tunisian pairs.</p> <p>- Full cleaning / training / eval pipeline.</p> <p>Honest results &amp; limitations: v1 BLEU is 3.89 on a small locked test set low, and I'll be upfront about it. The corpus is ~553 hand-crafted pairs, so data is the bottleneck, not architecture. I treat 3.89 as a first honest baseline to beat as the corpus grows. </p> <p>Where I'm taking it: I'm expanding this into a larger, ethically-collected Darija corpus that I curate and validate consent-documented field collection, every pair provenance-tagged. I'm looking for contributors to help grow it, with every contribution reviewed </p> <p>to keep quality and consent standards.</p> <p>Looking for: technical feedback/critique, and anyone interested in contributing data or collaborating on low-resource / dialectal Arabic MT.</p> <p>Links:</p> <p>github repo: <a href=\"https://github.com/Dhiadev-tn/darija-translator\">https://github.com/Dhiadev-tn/darija-translator</a></p> <p>Hugging faces dataset: <a href=\"https://huggingface.co/datasets/Dhiadev-tn/tunisian-darija-english\">https://huggingface.co/datasets/Dhiadev-tn/tunisian-darija-english</a></p> <p>hugging faces model: <a href=\"https://huggingface.co/Dhiadev-tn/darija-translator\">https://huggingface.co/Dhiadev-tn/darija-translator</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Dhiadev-tn\"> /u/Dhiadev-tn </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uo92vz/i_built_an_open_fromscratch_mt_pipeline_parallel/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uo92vz/i_built_an_open_fromscratch_mt_pipeline_parallel/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1uo92vz/i_built_an_open_fromscratch_mt_pipeline_parallel/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Dhiadev-tn",
+    "publishedAt": "2026-07-05T18:08:49+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.665Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "3a4eb38f2a5863c9ec55dc6fe9c03d5b7894a43418ce0846c4d2267eb9eb6509"
+  },
+  {
+    "id": "reddit_1uo5kg6",
+    "redditId": "1uo5kg6",
+    "title": "Is Intrinsic Motivation a Viable PhD Topic in 2026? [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I started a PhD in CS about a year an a half ago. Generally speaking my topic is on intrinsic motivation (more commonly people refer to it as unsupervised RL).</p> <p>Intrinsic motivation (IM) is a niche field within AI. It seeks to develop reward signals which are not specific to any task but rather something closer to the low level motivators that drive intelligent behaviors in animals. Some prominent examples are:</p> <ul> <li>Empowerment: <a href=\"https://arxiv.org/abs/2301.00005\">https://arxiv.org/abs/2301.00005</a></li> <li>Diversity is all you need: <a href=\"https://arxiv.org/abs/1802.06070\">https://arxiv.org/abs/1802.06070</a></li> <li>Intrinsic curiosity module: <a href=\"https://arxiv.org/abs/1705.05363\">https://arxiv.org/abs/1705.05363</a></li> <li>Random network distillation: <a href=\"https://arxiv.org/abs/1810.12894\">https://arxiv.org/abs/1810.12894</a></li> </ul> <p>and many more...</p> <p>My question is: is this topic still \"worth\" pursuing now? Almost every day I see a new video of a robot doing some amazing acrobatic flip, navigating over hostile terrain, or performing some dexterous manipulation task. I believe that most of this is being done with human supervision through either a carefully tuned reward signal or behavior cloning from human demonstrations. If incredible advances are being made in robot learning without IM then why is it necessary at all? Furthermore IM has typically been restricted to very simple scenarios such as low dimensional robotic systems in simulation (hopper, walker, etc...).</p> <p>On a more personal note I have some concerns about future employability. If I focus too heavily on this niche topic during my PhD I worry that it may be impossible to get hired at a research lab that would prefer a candidate with experience in behavior cloning or other hot topics.</p> <p>Im curious to hear what this community thinks. Has anyone been in a similar situation with their PhD topic?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/soup----\"> /u/soup---- </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uo5kg6/is_intrinsic_motivation_a_viable_phd_topic_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uo5kg6/is_intrinsic_motivation_a_viable_phd_topic_in/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1uo5kg6/is_intrinsic_motivation_a_viable_phd_topic_in/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/soup----",
+    "publishedAt": "2026-07-05T15:50:02+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.665Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "fc9030c151bf301179ff1534ab27b481730b07afed319f7b187a0b6025b9678b"
+  },
+  {
+    "id": "reddit_1uo0dqi",
+    "redditId": "1uo0dqi",
+    "title": "Is machine learning research worth it for now? [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am a scientist who just applied machine learning to my research (JEPA/Representation/Geometric branch) and it did wonder! Allowed me to see so many papers that I am still struggling to write up.</p> <p>From what I see, there are clearly a million possibilities not done yet, e.g., industrial data, patterns in nature, etc.</p> <p>Why is the job perspective so pessimistic? We clearly have problems unsolved, and for many, the potential of ML will be proven for sure. We also have money (according to the news), and then why are jobs almost impossible? </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/nebula7293\"> /u/nebula7293 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uo0dqi/is_machine_learning_research_worth_it_for_now_d/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1uo0dqi/is_machine_learning_research_worth_it_for_now_d/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1uo0dqi/is_machine_learning_research_worth_it_for_now_d/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/nebula7293",
+    "publishedAt": "2026-07-05T11:58:49+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.665Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "1f8d9e035afbbf225fd7e5a004fee805ae89d23f55f5a6191ee06067fe0fb30f"
+  },
+  {
+    "id": "reddit_1unx5f8",
+    "redditId": "1unx5f8",
+    "title": "ECCV travel support program [D]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Has anyone gotten a response from the eccv travel support program listed on their website? <a href=\"https://eccv.ecva.net/Conferences/2026/DEI\">https://eccv.ecva.net/Conferences/2026/DEI</a></p> <p>Edit: also have anyone applied for this program as an accepted author? I have an independent research paper accepted and am currently looking for funds for paying for the registration fees</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/tedd235\"> /u/tedd235 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1unx5f8/eccv_travel_support_program_d/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1unx5f8/eccv_travel_support_program_d/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1unx5f8/eccv_travel_support_program_d/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/tedd235",
+    "publishedAt": "2026-07-05T08:49:12+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.665Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "3b1725a4823fa76dfc342ab2ed4ae7585c6959a5d2652ee2f7e81bd9f4c3d1a6"
+  },
+  {
+    "id": "reddit_1unw5un",
+    "redditId": "1unw5un",
+    "title": "Competence Gate: gating tool-use on a small model's internal confidence signal instead of its verbalised one — Qwen3.5-4B, open weights [P]",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I made a 10MB LoRA adapter for Qwen3.5-4B plus a small orchestration layer. It decides, per query, whether to answer directly, search the web, or retrieve from your own local documents and it refuses to make things up when it can't verify an answer.</p> <p>It runs locally (Apple Silicon / MLX, with a GGUF build for llama.cpp/Ollama).</p> <p>Basically small instruct models are poor at telling users how confident they really are. They can't verbalise it and tend to say they are confident for everyhting. In my past research I tested seven 3-9b models and they all hit a confidence ceiling. But the information is there in the internal activations. The adapter reads the internal signal directly and gates tool use on it.</p> <p>The main elements are that:</p> <p>- it catches its own errors better than the base model's tool calling (d′ improvement of 0.46 (95% CI [0.01, 0.89])). Of the cases the gate flagged that the base model didn't, 87% were genuinely wrong answers.</p> <p>- it is less likely to leak your private queries to public search. A two-signal version routes personal information related questions such as \"what did my discharge summary say\" to a local retriever instead of a websearch. It cut the rate of private questions sent to public search from 22% to 10% (reduction 0.12, 95% CI [0.02, 0.22]). This is useful for those who are using the LLM for confidential docs.</p> <p>- every answer is traceable. When it retrieves, it cites the specific passage (<code>report.md ¶2</code>), verifies the answer is actually in that passage, and shows a confidence band. Worst case, it says \"I couldn't verify that\". It is built to say \"I don't know,\" instead of lie.</p> <p>limitations:</p> <p>- Privacy result is n=60; the retrieval/competence dissociation is n=126 hand-authored items. Screened and CI'd, but small.</p> <p>- GGUF reproduces the MLX gate's decisions at <code>--lora-scaled ...:8</code> (found by sweep — scale 1 does nothing; effective scale ≈ the training scale). Agreement 0.83 on a 24-item probe; disagreements are all conservative-direction (GGUF answers a couple of borderline items MLX would look up), and knowns never false-fire. Faithful on the safety-critical directions, marginally more conservative at the margin.</p> <p>- Serve-time confidence is coarse (grounded / declined / answered) — the distilled gate reads nothing at inference, so finer bands need probe access (offline).</p> <p>- Inherits Qwen3.5-4B's knowledge and biases. The gate governs <em>when to trust</em> the model, not what it knows.</p> <p>The approach isn't Qwen-specific — I started on SmolLM3-3B, and it should extend to other models and larger sizes.</p> <p><strong>Repo (weights + code + model card):</strong> <a href=\"https://huggingface.co/synthiumjp/competence-gate-qwen3.5-4b\">https://huggingface.co/synthiumjp/competence-gate-qwen3.5-4b</a></p> <p>Apache-2.0. It's an open research release. I hope people might find some use for it. Methodology and papers are cited in the model card. Genuinely interested in critique, it's screened work, so if there are any issues it be great to know.</p> <p><strong>**** Update ***\\</strong>*</p> <p>I ran the gate against external benchmarks it hadn't been tested on, and one use case did not survive. The gate does not improve grounded document QA — answering faithfully from a provided passage and abstaining when the passage doesn't support an answer. On SQuAD 2.0 unanswerables, fabrication was actually higher with the gate than without it.</p> <p>The reason is a example of construct specificity. \"Knowing when to defer\" is not one capability. There are at least two distinct signals hiding inside it:</p> <p>- Parametric competence: do I know this from my own weights? The gate reads this. It's what the probe was validated against.</p> <p>- Evidential grounding: is this answer supported by the passage in front of me? A different question, from a different information source.</p> <p>A probe validated for one carries no usable signal for the other. A parametric-competence signal applied to an evidential-grounding task doesn't just fail to help, it actually interferes by pushing toward answering and suppressing the base model's (Qwen's) own abstention. The base model already handles the easy case (0% fabrication when the passage plainly lacks the answer). The hard case (adversarial unanswerables) needs purpose-built grounded-abstention training, not a post-hoc firewall.</p> <p>The release is scoped to what's validated: parametric tool-call routing and privacy-aware retrieval routing. The \"refuses to fabricate about documents\" framing in the original post above is the part that doesn't hold.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Synthium-\"> /u/Synthium- </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1unw5un/competence_gate_gating_tooluse_on_a_small_models/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1unw5un/competence_gate_gating_tooluse_on_a_small_models/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MachineLearning/comments/1unw5un/competence_gate_gating_tooluse_on_a_small_models/",
+    "subreddit": "r/MachineLearning",
+    "author": "/u/Synthium-",
+    "publishedAt": "2026-07-05T07:49:09+00:00",
+    "fetchedAt": "2026-07-07T16:59:02.665Z",
+    "sourceId": "machinelearning-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "44ea0a6a2e41450bb5e8a609a97532fa22969a2a73aa1dab39a2005efc199b3a"
+  },
+  {
+    "id": "reddit_1upytwy",
+    "redditId": "1upytwy",
+    "title": "Rising CS senior confused about Quantum ML or computing for PhD. Where should I apply, and is this even the right call?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey all! Im looking for some outside perspective before I lock in my PhD application strategy this fall.</p> <p><strong>Quick background:</strong></p> <ul> <li>Rising senior, CS, mid-tier state school (3.9 GPA)</li> <li>Currently doing a summer research fellowship in quantum computer vision (QAOA applied to image segmentation)</li> <li>Also do undergrad research in two other labs (one blockchain/security, one AI safety-adjacent)</li> <li>Some industry ML deployment experience from an internship</li> <li>2 accepted publications so far (one quantum-safe crypto, one LLM evaluation), 2 more under review</li> <li>Reviewing for an AI ethics/safety conference this cycle</li> </ul> <p><strong>The dilemma:</strong> My summer project has pulled me hard toward Quantum Machine Learning / quantum computer vision — QAOA-based approaches to CV problems, quantum-inspired optimization for tracking, that kind of thing. I like it a lot. But I also know QML is a much smaller field with a narrower industry pipeline compared to mainstream ML/AI, which has way more open roles and faster-moving research.</p> <p>I dont even know if I wanna get into QML so far I want to do somehting in the field of quantum but i dont know what it is yet</p> <p>My current plan is to frame my PhD as <strong>applied QML with classical ML as a first-class fallback</strong> like every quantum method I develop gets benchmarked against a strong classical baseline in the same pipeline, so the thesis stands on its own even if quantum advantage doesn't materialize on my specific problem. </p> <p><strong>What I'm trying to figure out:</strong></p> <ol> <li><strong>Where should I actually apply?</strong> I want strong funding above all else, ideally somewhere with real QML/quantum optimization strength, not just a token quantum course. West coast preferred but not a hard requirement.</li> <li><strong>How do I make my application stronger</strong> given I still have a full year before applying? More publications, specific coursework, a stronger SOP narrative, reaching out to POIs now vs. later?</li> <li><strong>Is QML actually a defensible bet for someone who wants industry after the PhD</strong> (not academia)? Or am I romanticizing a niche field and should I just pivot to mainstream ML/CV now while I still can?</li> </ol> <p>Would love to hear from anyone who's done a PhD in this space, anyone who works in quantum industry roles now, or honestly anyone who made a similar \"niche vs. mainstream\" call and can tell me how it played out. Brutal honesty welcome.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/lazerx2reem23\"> /u/lazerx2reem23 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upytwy/rising_cs_senior_confused_about_quantum_ml_or/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upytwy/rising_cs_senior_confused_about_quantum_ml_or/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1upytwy/rising_cs_senior_confused_about_quantum_ml_or/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/lazerx2reem23",
+    "publishedAt": "2026-07-07T15:42:10+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.601Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "74e1b0e6a836b7e27dd4d39dc5675f93bb3b3d18da2c1cf014485fbb8830b8fb"
+  },
+  {
+    "id": "reddit_1upqffo",
+    "redditId": "1upqffo",
+    "title": "How do academics actually manage the unpaid labor of peer review - do you set limits or just accept it?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I've been thinking a lot about the structural expectations around peer review lately, especially as someone trying to be a conscientious member of a research community. There's this unspoken norm that you just say yes when requests come in, partly out of obligation and partly because you know the system collapses if people don't participate.</p> <p>But the math never quite adds up. Journals profit, editors are often volunteers or minimally compensated, and reviewers get nothing except maybe a discount on an APC they shouldn't have to pay in the first place. Meanwhile, the time cost is real and it compounds across a career.</p> <p>I'm curious how people at different career stages actually handle this in practice. Do senior faculty decline more often, or does visibility in a field just mean more requests piling up? Do earlycareer researchers feel pressure to say yes to everything to build reputation? Is there any department or institutional culture you've encountered that actively normalizes putting a cap on review work?</p> <p>I'm not looking to opt out entirely. Contributing does have value. I just want to understand how people handle it without burning out or feeling like they're being extracted from. Would love to hear from people across disciplines and career stages</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No-Communication1543\"> /u/No-Communication1543 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upqffo/how_do_academics_actually_manage_the_unpaid_labor/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upqffo/how_do_academics_actually_manage_the_unpaid_labor/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1upqffo/how_do_academics_actually_manage_the_unpaid_labor/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/No-Communication1543",
+    "publishedAt": "2026-07-07T09:53:11+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.601Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "d9354bd1939f3cbec05150e4b8abae31677fdf43e7e66812aec74fbf14104933"
+  },
+  {
+    "id": "reddit_1uppco5",
+    "redditId": "1uppco5",
+    "title": "Reject or R&amp;R: where is the cut off line?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>As a junior academic I struggle a bit to know when to reject and when to R&amp;R, I had a paper recently that had some interesting data and analysis but the rest was a mess, and not well developed, I rejected but the other reviewer provided very detailed feedback for an review and resubmit, I felt like that would cost so much effort the author should have another go first. Where do you put the line? </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Relative_Cow_8245\"> /u/Relative_Cow_8245 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uppco5/reject_or_rr_where_is_the_cut_off_line/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uppco5/reject_or_rr_where_is_the_cut_off_line/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uppco5/reject_or_rr_where_is_the_cut_off_line/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Relative_Cow_8245",
+    "publishedAt": "2026-07-07T08:52:20+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.601Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "aea591bacdf345fc1bec8bed2eb1211ef080cfddb69627376d61ef864a1b74dd"
+  },
+  {
+    "id": "reddit_1upnin8",
+    "redditId": "1upnin8",
+    "title": "How do I professionally thank Reviewer 2 for calling me out on my nonsense?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Materials science postdoc here -- I recently sent a paper out for review, and got back two reasonable responses. Reviewer 1 had some nitpicks, and Reviewer 2 asked why my correlation was so low (R=0.2).</p> <p>I revised and resubmitted, with the big thing being the addition of some analysis showing that one sample in particular is an outlier, and actually the correlation is high (R=0.9).</p> <p>Reviewer 1 is happy, but Reviewer 2 (rightly, in retrospect) sent back another round and called me out on my, eh, nonsense: \"Your analysis is a really convoluted way of making your data look good. It still doesn't look good, for reasons [a], [b]. and [c], plus [two pages of analysis]. Your paper is useful, it's just not as positive of a result as you say it is. Please fix this.\"</p> <p>After getting over my ego, I'm now in the midst of tearing out the analysis and adding discussion on why the paper is useful even with a less impressive result.</p> <p>My question for y'all is, though, how do I appropriately thank the reviewer for being steadfast in the face of my analytic nonsense? I don't want to be obsequious, but a basic \"we appreciate the reviewer's refined insight regarding the work, and we're fixing\" feels inadequate.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/aedificatori\"> /u/aedificatori </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upnin8/how_do_i_professionally_thank_reviewer_2_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upnin8/how_do_i_professionally_thank_reviewer_2_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1upnin8/how_do_i_professionally_thank_reviewer_2_for/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/aedificatori",
+    "publishedAt": "2026-07-07T07:06:43+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.601Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "1abb07354e057913a189ae6bff933721ad529282f4dcbece78163be561201ac2"
+  },
+  {
+    "id": "reddit_1upf5ma",
+    "redditId": "1upf5ma",
+    "title": "How long does administrative staff hiring process take at universities?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I applied to a staff position at a university at the end of May on their website. A couple days later I was contacted to schedule an interview. I had the in-person panel interview in mid-June. They told me I was actually the last interviewee so they're done interviewing all the applicants for the initial stage and said they'll let me know by the end of the week if they'll invite me for the 2nd interview.</p> <p>But it's been nearly 3 weeks since then and I haven't heard anything from them. I checked the application website and my application status still says \"Under Review\".</p> <p>Seems like a really long time between 1st and 2nd interview.</p> <p>How long does staff hiring process usually take at universities? Or do you think it's over? Should I just take this as an L and move on?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/foxgodkumiho\"> /u/foxgodkumiho </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upf5ma/how_long_does_administrative_staff_hiring_process/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upf5ma/how_long_does_administrative_staff_hiring_process/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1upf5ma/how_long_does_administrative_staff_hiring_process/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/foxgodkumiho",
+    "publishedAt": "2026-07-07T00:18:00+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.601Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "325f7bad93032ed457e0d67fafdab988653b970d8d33d1841e59bf8d09c231d0"
+  },
+  {
+    "id": "reddit_1upeg50",
+    "redditId": "1upeg50",
+    "title": "Newer reviewer — asked for major revisions, got the &quot;revised&quot; manuscript back in under a week. Review again or decline?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm relatively new to peer review and recently reviewed a submission for a legitimate journal in my field. I recommended major revisions, flagging things like:</p> <ol> <li>An introduction that overlooked substantial existing evidence and instead framed AI as essentially the only viable path forward.</li> <li>Missing key methodological details.</li> <li>An overly brief results section.</li> <li>A discussion that needed restructuring - it didn't contextualize findings, had many gaps, and again leaned on \"AI is the answer\" instead of engaging with the actual results which had nothing to do with AI.</li> <li>Sparse references throughout, especially where strong claims were made.</li> </ol> <p>I've now been asked to re-review the revised manuscript, and it's been less than a week since my original review went back. Addressing all of that properly in that timeframe seems like a lot.</p> <p>I know this is ultimately my judgment call, and I'll look at the actual revision before deciding anything. But as someone newer to this, I'd appreciate input from more experienced reviewers:</p> <ul> <li>Is a turnaround this fast a red flag, or have others seen legit quick revisions like this?</li> <li>Do you review anyway and judge it on the merits, or does the timeline itself factor in?</li> <li>Any tips for spotting markers of AI-assisted writing in a revision (vs. genuine reworking), especially in the prose/argumentation itself rather than just factual content?</li> </ul> <p>Appreciate any perspective here.</p> <p><strong>TL;DR:</strong> Recommended major revisions on a manuscript, got asked to re-review the \"revised\" version less than a week later. Wondering if this timeline is a red flag, whether to review anyway, and how to spot AI-assisted writing in a revision.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Brief_Step\"> /u/Brief_Step </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upeg50/newer_reviewer_asked_for_major_revisions_got_the/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upeg50/newer_reviewer_asked_for_major_revisions_got_the/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1upeg50/newer_reviewer_asked_for_major_revisions_got_the/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Brief_Step",
+    "publishedAt": "2026-07-06T23:48:25+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "bf38fa312e991c7cef89533f039c6d9358be709b61347cb9ce8abd539a039617"
+  },
+  {
+    "id": "reddit_1upaj9k",
+    "redditId": "1upaj9k",
+    "title": "Journal is stonewalling our corrigendum",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>We noticed an error in our published paper last year. Correcting the error slightly altered transcript counts and thus slightly altered most figures but ultimately didn't impact the conclusions of the paper. We repeated our analyses to confirm our results and reached out to the journal in October 2025. They replied and explained how to submit materials for the correction. That's the last we've heard from them. We asked several questions that have gone unanswered, and also requested they confirm receipt of the correction materials we submitted (in December) and heard nothing. We have poked our original editor, the editor we were assigned for the correction, and the associate editorial director for the journal and still nothing. We expected the process to take awhile and knew the corrigendum would have to go back out for review, but this significant delay and lack of communication seems unprofessional.</p> <p>In the meantime people are citing this paper, and we're designing studies and seeking additional funding based on findings from this paper. Correcting it is important to us!</p> <p>Is there anything else we can do at this point other than wait for them to reply?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/MadMoths_FlutterRoad\"> /u/MadMoths_FlutterRoad </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upaj9k/journal_is_stonewalling_our_corrigendum/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1upaj9k/journal_is_stonewalling_our_corrigendum/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1upaj9k/journal_is_stonewalling_our_corrigendum/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/MadMoths_FlutterRoad",
+    "publishedAt": "2026-07-06T21:17:58+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "3cbbc830c9b11d056516449e7c179f5ac81095ebd8440ffe6704fd8b2262499a"
+  },
+  {
+    "id": "reddit_1up8yz5",
+    "redditId": "1up8yz5",
+    "title": "Getting edits on papers from supervisor as a postdoc - is a lot normal?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi there. I’m going into my third year of my postdoc, and on papers I’m usually first author and my supervisor is last author. I’m struggling because my supervisor almost always gives me heavy feedback and edits on papers - similar to when I was a grad student. I always do the first round of writing and then edits when papers get r&amp;r’s. Anyways even when I feel like I’ve addressed comments from reviewers, my supervisor still almost always adds a substantial amount or changes things I’ve done. I guess I’m not sure if this is normal at this stage. In many ways I feel like I’m an imposter, or why do I have a PhD if I can’t adequately address comments? I also don’t disagree with the edits, I think they’re well and good and add new perspectives.</p> <p>I have near 20 publications, I’m well familiar with the publication process but I guess I’m just curious if at this stage, this is still normal. I was used to it as a grad student, and didn’t mind getting heavy feedback. I think as I’m older and now have the degree, it feels different. Maybe it never changes!?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Acceptable_Fee_9551\"> /u/Acceptable_Fee_9551 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1up8yz5/getting_edits_on_papers_from_supervisor_as_a/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1up8yz5/getting_edits_on_papers_from_supervisor_as_a/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1up8yz5/getting_edits_on_papers_from_supervisor_as_a/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Acceptable_Fee_9551",
+    "publishedAt": "2026-07-06T20:19:47+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "a7c4f6830c2f57aff153cf2919c9357db6bebd065d7b71b76b538f650611eaac"
+  },
+  {
+    "id": "reddit_1uoz3u6",
+    "redditId": "1uoz3u6",
+    "title": "Solutions &amp; reaction to the change of authorship",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi, Professors in this community!<br/> I am seeking advice and help on how to resolve an abrupt change to the author contribution plan. I am kinda new in the research community (2 yrs of RA).</p> <p><strong><em>Situation:</em></strong></p> <ol> <li><p>Met my coauthor 6 weeks ago at a conference. We agreed on merging our research projects and ideas because we pursue the same direction. When I joined the project, they had the 60-70% proposal finished. My research idea added layers and contextualized it. We agreed that I would be the third/fourth author and would be in charge of mentor outreach and other work. </p></li> <li><p>Within 6 weeks, I laid the groundwork for mentor outreach, helped with the revision of the research interview protocol, and suggested ways to improve the research. </p></li> <li><p>I gave up on one grant opportunity because they wanted the publication to be independent from any institution. I forwent that opportunity to collaborate with them. Now it's too late for me to restart another similar idea. </p></li> <li><p>Now, they decided to restructure the authorship. They asked me to leave the project and hand the tasks to an incoming RA. </p></li> <li><p>Looking forward, the ideation phase is done, and the project is going for implementation and analysis: outreach, interviews, mentor-mentee revision, data digitization and revision, conducting analysis, and outputting research products. </p></li> </ol> <p><strong><em>Ask:</em></strong> </p> <ol> <li> <strong>Continue collaboration</strong>: I am still interested in this research direction, but the idea has been done by them. They thought it was also a bit ignorant for them to change abruptly. If I still want to collaborate, what are the feasible ways I can ask? What are ways to make clear the authorship, contribution, and the output?</li> </ol> <p>1.1 The two people in the group will be in charge of interviews. They would want RA or me to help them do literature review, outreach, mentor-mentee revision, and data digitization and revision. I will only be an RA. </p> <p>If I continue on this work, is it too much to ask for a co-author? What is a common way for you to distinguish the authorship and responsibility?</p> <ol> <li><p><strong>Stop collaboration</strong>: I clearly have lost the research idea and the grant opportunity. If I am unable to collaborate with them, what is a reasonable way to show my contribution in the research process? What is a reasonable ask in the research output? Is asking for early entry to the data reasonable?</p></li> <li><p>Any other clarification or reflective questions would be extremely helpful for me to decide what to do and how to collaborate at the next step!! </p></li> </ol> <p>Thank you a lot!!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Buge_0510\"> /u/Buge_0510 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uoz3u6/solutions_reaction_to_the_change_of_authorship/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uoz3u6/solutions_reaction_to_the_change_of_authorship/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uoz3u6/solutions_reaction_to_the_change_of_authorship/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Buge_0510",
+    "publishedAt": "2026-07-06T14:34:13+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "3aba17c940bca5c79a31d2a1163deaedd71fa371636dc63227c23ffb1290ce33"
+  },
+  {
+    "id": "reddit_1uoh0n9",
+    "redditId": "1uoh0n9",
+    "title": "Proof of goldbach's conjecture - from my grandpa",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>My grandpa (now deceased) was a mathematician from China who spent around a decade working on a proof for the goldbach conjecture. He believes that he proved it, and a succinct version of his proof was published at his local university in Tianjin &amp; also can be found on the UBC archive. However, the people who reviewed his work didn't really understand what he was doing (I think he spent quite a few days working them through it, this was in the 80s by the way).</p> <p>His original draft and everything is very very long (around 600 pages). I have a version of it I'm translating to English which is much shorter. I'm the only one in my family interested in what he did, and I want someone else in the area to read his work and see if it has any merit. I think he definitely would have made a few contributions, but given that he did this decades ago and my limited understanding of the conjecture itself, it would be best if someone could help me with this.</p> <p>I have no idea who to ask or where to find the resources to help. I'm also in high school and have been doing this as a fun summer project, but I think it's worth asking on here anyway if anyone has any suggestions for this kind of stuff. Any help is appreciated!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No_Contract_4278\"> /u/No_Contract_4278 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uoh0n9/proof_of_goldbachs_conjecture_from_my_grandpa/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uoh0n9/proof_of_goldbachs_conjecture_from_my_grandpa/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uoh0n9/proof_of_goldbachs_conjecture_from_my_grandpa/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/No_Contract_4278",
+    "publishedAt": "2026-07-05T23:33:36+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "9ecdc645bbaf904c3d159e518f806076d2a41c50a034b2b7dfc7ea7c8b914fea"
+  },
+  {
+    "id": "reddit_1uodj5l",
+    "redditId": "1uodj5l",
+    "title": "Looking for advice from physician-scientists: What's the right path after Medical ??",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>I'm a final year Medical student from Pakistan, and recently I started working on my first systematic review/meta-analysis. To my surprise, I realized that I genuinely enjoy research much more than I expected. It has made me seriously consider pursuing a career as a physician-scientist rather than focusing solely on clinical practice.</p> <p>The problem is that I don't really know what the pathway looks like.</p> <p>In Pakistan, there isn't much structured guidance for students who want to build a research focused career, especially in fields like precision oncology, cancer genomics, and regenerative medicine. Most advice is centered around residency, and it's really difficult to find mentors who have taken this route.</p> <p>One of my biggest goals is to study and conduct research abroad through a scholarship or research grant. It's not just about the degree I want the experience of working in international labs, collaborating with researchers from different backgrounds, building a strong professional network, and learning how high quality research is conducted. Eventually, I'd like to return to Pakistan and contribute to improving research here.</p> <p>I'm currently at a crossroads and would really appreciate advice from people who've gone through a similar journey.</p> <p>Some of the questions I have are:</p> <ul> <li>What is the most sensible pathway after MBBS if my goal is research?</li> </ul> <p>- Should I complete my house job first?</p> <p>- Is it better to work as a research assistant before applying for graduate school?</p> <p>- Should I aim for a Master's first or apply directly for a PhD?</p> <p>- Are there funded scholarships or research grants specifically for international medical graduates interested in biomedical research?</p> <p>- Which countries would you recommend for someone interested in precision oncology, cancer genomics, regenerative medicine, and translational research? I'm open to Asia and Europe as well, not just the US or UK.</p> <p>- What skills should I start building now (bioinformatics, molecular biology, statistics, programming, publications, etc.) to become a competitive applicant over the next few years?</p> <p>I'd really appreciate hearing from anyone who has gone from medicine into research, especially international students or researchers who started from countries with limited research opportunities.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Fancy-Judgment-4923\"> /u/Fancy-Judgment-4923 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uodj5l/looking_for_advice_from_physicianscientists_whats/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uodj5l/looking_for_advice_from_physicianscientists_whats/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uodj5l/looking_for_advice_from_physicianscientists_whats/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Fancy-Judgment-4923",
+    "publishedAt": "2026-07-05T21:06:48+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "bfae8002423fcd591be503d712ad8319f74be4ec800fad5c3cb1d5d7a065c291"
+  },
+  {
+    "id": "reddit_1uo58tz",
+    "redditId": "1uo58tz",
+    "title": "Starfish",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Does anyone know how Starfish notes/flags work in college or professional programs?</p> <p>I’m a student with strong grades, mostly A’s and B’s, and I put a lot of effort into my coursework. Recently, I became concerned that some faculty may be documenting negative comments about me in Starfish that do not seem reflected in my academic performance or the work I’ve submitted.</p> <p>I’m trying to understand who can see these notes. Are they only visible to advisors/student support staff, or can multiple professors and program faculty see them too? Could these notes affect things like recommendations, progression in the program, clinical/experiential placements, or applications to another program within the same school?</p> <p>I’m also wondering what options students have if they believe something written in Starfish is inaccurate or unfair. Is there usually a way to request clarification, respond to the note, or have the record reviewed?</p> <p>I’m not trying to escalate unnecessarily, but I am concerned about how this could affect me long-term, especially if the comments are subjective and not backed up by grades or formal disciplinary findings.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No_Locksmith_9796\"> /u/No_Locksmith_9796 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uo58tz/starfish/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uo58tz/starfish/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1uo58tz/starfish/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/No_Locksmith_9796",
+    "publishedAt": "2026-07-05T15:36:58+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "c558ce8715bd9e4af6090925b8fdf8c9e22ba400567450ac0e695c9c9077fc29"
+  },
+  {
+    "id": "reddit_1um5jmx",
+    "redditId": "1um5jmx",
+    "title": "My lit review workflow is basically a Ctrl+F simulator",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I noticed something weird while writing my lit review.</p> <p>I wasn't struggling to find papers.</p> <p>I was struggling to remember which paragraph inside a paper I wanted.</p> <p>Every writing session turned into Word/Overleaf -> Zotero -> PDF -> Ctrl+F -> back to the draft -> repeat.</p> <p>Maybe my notes are just bad, but this feels like a different problem from citation management.</p> <p>How do other people handle this? Quote bank? Zotero notes? Obsidian? Just suffer?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Roseguo111\"> /u/Roseguo111 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1um5jmx/my_lit_review_workflow_is_basically_a_ctrlf/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1um5jmx/my_lit_review_workflow_is_basically_a_ctrlf/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1um5jmx/my_lit_review_workflow_is_basically_a_ctrlf/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Roseguo111",
+    "publishedAt": "2026-07-03T05:30:29+00:00",
+    "fetchedAt": "2026-07-07T17:00:04.602Z",
+    "sourceId": "askacademia-reviewer",
+    "sourceKeyword": "reviewer",
+    "sourceType": "subreddit_search",
+    "contentHash": "107b47b3483d56af377d75408b88cdba5db54502f87d78b2c67a035c1820bf98"
   }
 ]
