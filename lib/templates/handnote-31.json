@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-31","styleFamily":"handnote","name":"暖杏纸+珊瑚橙字+箭头涂鸦+温暖笔记",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#FFF8F2","overlay":{"type":"lines","spacing":25,"color":"rgba(200,120,80,0.05)","lineWidth":0.5}},
+  "titleBox":{"x":100,"y":440,"w":1042,"h":520},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":150,"max":290,"weight":900,"color":"#D4603A","letterSpacing":-0.03},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":76,"weight":400,"color":"rgba(212,96,58,0.50)"},
+  "decorations":[
+    {"id":"hn31-tape","type":"tape","layer":"above","box":{"x":430,"y":235,"w":290,"h":34},"rotation":-3,"color":"rgba(220,160,120,0.45)"},
+    {"id":"hn31-highlighter","type":"highlighter","layer":"behind","box":{"x":140,"y":710,"w":960,"h":46},"color":"rgba(255,180,120,0.30)"},
+    {"id":"hn31-arrow","type":"arrow","layer":"above","box":{"x":850,"y":1080,"w":180,"h":60},"color":"#D4603A","lineWidth":2.5,"direction":"bottomRight"},
+    {"id":"hn31-emoji","type":"emoji","layer":"above","box":{"x":100,"y":1380,"w":110,"h":110},"emoji":"🍊","fontSize":100}
+  ]
+}

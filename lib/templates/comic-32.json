@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-32","styleFamily":"comic","name":"烈火红pop+白字+火焰特效+热血风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#D32F2F"},
+  "backgroundOverlay":{"type":"halftone","dotSize":4,"spacing":9,"color":"rgba(0,0,0,0.12)"},
+  "burstLines":{"count":24,"from":{"x":621,"y":580},"color":"rgba(255,255,255,0.22)","lineWidth":2.5,"innerR":70,"outerR":960},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":160,"max":310,"weight":900,"color":"#FFFFFF","stroke":{"color":"#B71C1C","width":5},"letterSpacing":-0.05},
+  "subTitleBox":{"x":160,"y":950,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":82,"weight":700,"color":"#FFCDD2"},
+  "decorations":[
+    {"id":"cm32-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"🔥","fontSize":140},
+    {"id":"cm32-sfx","type":"sfx","layer":"above","box":{"x":870,"y":1340,"w":210,"h":100},"text":"BURN!","fontSize":72,"color":"#FFEB3B","rotation":5,"strokeColor":"#B71C1C","strokeWidth":3},
+    {"id":"cm32-star","type":"starBurst","layer":"above","box":{"x":140,"y":200,"w":85,"h":85},"color":"#FFEB3B","strokeColor":"#B71C1C","strokeWidth":2}
+  ]
+}

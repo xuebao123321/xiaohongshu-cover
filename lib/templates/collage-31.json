@@ -1,0 +1,17 @@
+{
+  "templateId":"collage-31","styleFamily":"collage","name":"薰衣紫底+透明便签+水晶印章+梦幻拼贴",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F3F0F8"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#3A2060","stroke":{"color":"#F3F0F8","width":3},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(58,32,96,0.50)"},
+  "decorations":[
+    {"id":"cl31-n1","type":"tornNote","layer":"behind","box":{"x":240,"y":310,"w":700,"h":500},"color":"rgba(180,160,220,0.45)","rotation":-3,"shadow":true},
+    {"id":"cl31-n2","type":"tornNote","layer":"behind","box":{"x":90,"y":400,"w":490,"h":440},"color":"rgba(200,190,235,0.40)","rotation":-12,"shadow":true},
+    {"id":"cl31-n3","type":"tornNote","layer":"behind","box":{"x":530,"y":450,"w":510,"h":430},"color":"rgba(220,210,245,0.42)","rotation":9,"shadow":true},
+    {"id":"cl31-stamp","type":"stamp","layer":"above","box":{"x":980,"y":195,"w":130,"h":130},"color":"#7B5EA0","rotation":-9,"label":"DREAM"},
+    {"id":"cl31-tape","type":"tape","layer":"above","box":{"x":390,"y":275,"w":270,"h":33},"rotation":3,"color":"rgba(150,130,190,0.50)"},
+    {"id":"cl31-emoji","type":"emoji","layer":"above","box":{"x":75,"y":1400,"w":110,"h":110},"emoji":"💎","fontSize":100}
+  ]
+}

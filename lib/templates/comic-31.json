@@ -1,0 +1,16 @@
+{
+  "templateId":"comic-31","styleFamily":"comic","name":"紫pop+黄字粗体+星星emoji+魔法风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#7B1FA2"},
+  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":10,"color":"rgba(255,255,255,0.15)"},
+  "burstLines":{"count":22,"from":{"x":621,"y":580},"color":"rgba(255,235,59,0.25)","lineWidth":2,"innerR":90,"outerR":920},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":300,"weight":900,"color":"#FFEB3B","stroke":{"color":"#4A148C","width":5},"letterSpacing":-0.045},
+  "subTitleBox":{"x":160,"y":940,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#E1BEE7"},
+  "decorations":[
+    {"id":"cm31-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"🌟","fontSize":140},
+    {"id":"cm31-sfx","type":"sfx","layer":"above","box":{"x":870,"y":1340,"w":210,"h":100},"text":"MAGIC!","fontSize":64,"color":"#FFEB3B","rotation":-5,"strokeColor":"#4A148C","strokeWidth":3},
+    {"id":"cm31-star","type":"starBurst","layer":"above","box":{"x":140,"y":190,"w":85,"h":85},"color":"#FFEB3B","strokeColor":"#4A148C","strokeWidth":2}
+  ]
+}
