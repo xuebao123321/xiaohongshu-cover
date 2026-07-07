@@ -1,0 +1,12 @@
+{
+  "templateId":"minimal-11","styleFamily":"minimal","name":"极淡灰+偏左大字+右侧留白+细竖线",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F9F9F9"},
+  "titleBox":{"x":60,"y":380,"w":900,"h":720},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":190,"max":460,"weight":900,"color":"#1A1A1A","letterSpacing":-0.05},
+  "subTitleBox":{"x":100,"y":1140,"w":860,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":34,"max":58,"weight":300,"color":"rgba(0,0,0,0.38)"},
+  "decorations":[
+    {"id":"mn11-vline","type":"thickLine","layer":"above","box":{"x":980,"y":400,"w":1,"h":400},"color":"rgba(0,0,0,0.12)","lineWidth":1.5}
+  ]
+}

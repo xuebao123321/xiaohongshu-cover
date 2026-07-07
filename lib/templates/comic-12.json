@@ -1,0 +1,17 @@
+{
+  "templateId":"comic-12","styleFamily":"comic","name":"深红底+金色大字+奖杯emoji+冠军pop",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#B00020"},
+  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":10,"color":"rgba(0,0,0,0.28)"},
+  "burstLines":{"count":22,"from":{"x":621,"y":580},"color":"rgba(255,236,71,0.25)","lineWidth":2,"innerR":100,"outerR":920},
+  "titleBox":{"x":70,"y":400,"w":1102,"h":520},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":310,"weight":900,"color":"#FFEC47","stroke":{"color":"#000000","width":6},"letterSpacing":-0.05},
+  "subTitleBox":{"x":150,"y":960,"w":940,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":42,"max":82,"weight":700,"color":"#FFFFFF"},
+  "decorations":[
+    {"id":"cm12-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1280,"w":160,"h":160},"emoji":"🏆","fontSize":145},
+    {"id":"cm12-sfx","type":"sfx","layer":"above","box":{"x":900,"y":1340,"w":200,"h":100},"text":"CHAMP","fontSize":70,"color":"#FFFFFF","rotation":-6,"strokeColor":"#000000","strokeWidth":3},
+    {"id":"cm12-star1","type":"starBurst","layer":"above","box":{"x":130,"y":190,"w":85,"h":85},"color":"#FFEC47","strokeColor":"#000000","strokeWidth":2},
+    {"id":"cm12-star2","type":"starBurst","layer":"above","box":{"x":1000,"y":1150,"w":70,"h":70},"color":"#FFFFFF","strokeColor":"#000000","strokeWidth":2}
+  ]
+}

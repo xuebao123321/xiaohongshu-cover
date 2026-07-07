@@ -1,0 +1,17 @@
+{
+  "templateId":"comic-11","styleFamily":"comic","name":"天蓝pop+白云+太阳emoji+清爽夏日",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#4ECDC4"},
+  "backgroundOverlay":{"type":"halftone","dotSize":3,"spacing":12,"color":"rgba(255,255,255,0.22)"},
+  "burstLines":{"count":18,"from":{"x":621,"y":580},"color":"rgba(255,255,255,0.30)","lineWidth":2,"innerR":120,"outerR":900},
+  "titleBox":{"x":80,"y":400,"w":1082,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":300,"weight":900,"color":"#FFFFFF","stroke":{"color":"#1A5C5A","width":5},"letterSpacing":-0.045},
+  "subTitleBox":{"x":160,"y":940,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":80,"weight":700,"color":"#FFEC47"},
+  "decorations":[
+    {"id":"cm11-bubble","type":"speechBubble","layer":"above","box":{"x":880,"y":160,"w":180,"h":105},"color":"#FFFFFF","strokeColor":"#1A5C5A","strokeWidth":3,"text":"夏!","textSize":38},
+    {"id":"cm11-emoji","type":"emoji","layer":"above","box":{"x":70,"y":1300,"w":150,"h":150},"emoji":"☀️","fontSize":135},
+    {"id":"cm11-sfx","type":"sfx","layer":"above","box":{"x":900,"y":1340,"w":180,"h":100},"text":"SUMMER","fontSize":60,"color":"#FFEC47","rotation":5,"strokeColor":"#1A5C5A","strokeWidth":2},
+    {"id":"cm11-star","type":"starBurst","layer":"above","box":{"x":130,"y":190,"w":80,"h":80},"color":"#FFEC47","strokeColor":"#1A5C5A","strokeWidth":2}
+  ]
+}

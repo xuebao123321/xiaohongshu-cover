@@ -1,0 +1,15 @@
+{
+  "templateId":"handnote-11","styleFamily":"handnote","name":"绿白横线+植物贴纸+马克笔绿圈",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F2FFF7","overlay":{"type":"lines","spacing":28,"color":"rgba(0,0,0,0.04)","lineWidth":0.6}},
+  "titleBox":{"x":100,"y":460,"w":1042,"h":500},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":155,"max":295,"weight":900,"color":"#1A3A28","letterSpacing":-0.035},
+  "subTitleBox":{"x":160,"y":1000,"w":920,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":40,"max":78,"weight":400,"color":"rgba(26,58,40,0.60)"},
+  "decorations":[
+    {"id":"hn11-tape","type":"tape","layer":"above","box":{"x":420,"y":240,"w":300,"h":34},"rotation":-3,"color":"rgba(168,216,144,0.45)"},
+    {"id":"hn11-circle","type":"handCircle","layer":"behind","box":{"x":430,"y":440,"w":340,"h":110},"color":"#22B26B","lineWidth":2.5,"dashed":true},
+    {"id":"hn11-highlighter","type":"highlighter","layer":"behind","box":{"x":150,"y":710,"w":940,"h":46},"color":"rgba(168,216,144,0.30)"},
+    {"id":"hn11-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1380,"w":110,"h":110},"emoji":"🌿","fontSize":100}
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "templateId":"collage-12","styleFamily":"collage","name":"薄荷清凉+白绿便签+叶子印章+清新风",
+  "canvas":[1242,1656],
+  "background":{"type":"solid","color":"#F0FFF4"},
+  "titleBox":{"x":120,"y":380,"w":1000,"h":460},
+  "titleFont":{"family":"\"Noto Sans SC\",sans-serif","min":140,"max":260,"weight":900,"color":"#1A3A28","stroke":{"color":"#FFFFFF","width":4},"letterSpacing":-0.035},
+  "subTitleBox":{"x":180,"y":900,"w":880,"h":80},
+  "subTitleFont":{"family":"\"Noto Sans SC\",sans-serif","min":38,"max":72,"weight":400,"color":"rgba(26,58,40,0.55)"},
+  "decorations":[
+    {"id":"cl12-note1","type":"tornNote","layer":"behind","box":{"x":280,"y":310,"w":680,"h":510},"color":"#E6FFF0","rotation":-3,"shadow":true},
+    {"id":"cl12-note2","type":"tornNote","layer":"behind","box":{"x":100,"y":400,"w":480,"h":440},"color":"#D0F5E0","rotation":-11,"shadow":true},
+    {"id":"cl12-note3","type":"tornNote","layer":"behind","box":{"x":540,"y":470,"w":500,"h":420},"color":"#C0E8D0","rotation":8,"shadow":true},
+    {"id":"cl12-block","type":"colorBlock","layer":"behind","box":{"x":70,"y":140,"w":90,"h":90},"color":"rgba(34,178,107,0.20)","shape":"circle"},
+    {"id":"cl12-stamp","type":"stamp","layer":"above","box":{"x":1000,"y":210,"w":125,"h":125},"color":"#22B26B","rotation":-10,"label":"FRESH"},
+    {"id":"cl12-arrow","type":"arrow","layer":"above","box":{"x":200,"y":1080,"w":140,"h":45},"color":"#22B26B","lineWidth":2.5,"direction":"topLeft"},
+    {"id":"cl12-emoji","type":"emoji","layer":"above","box":{"x":80,"y":1420,"w":100,"h":100},"emoji":"🍃","fontSize":90}
+  ]
+}
