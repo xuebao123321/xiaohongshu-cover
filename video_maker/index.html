@@ -2007,35 +2007,13 @@ async function exportWithMediaRecorder() {
   canvas.height = STATE.settings.outputSize.h;
   const ctx = canvas.getContext('2d');
 
-  const stream = canvas.captureStream(STATE.settings.fps);
-  // 优先 mp4(Safari),其次 webm vp9,最后 webm vp8
-  const codecOrder = [
-    'video/mp4;codecs=avc1.42E01E',  // Safari mp4
-    'video/mp4;codecs=h264',          // Safari mp4 alt
-    'video/webm;codecs=vp9',          // Chrome/Firefox
-    'video/webm;codecs=vp8',          // Universal fallback
-    'video/webm',                     // Last resort
-  ];
-  let mimeType = 'video/webm';
-  for (const codec of codecOrder) {
-    if (MediaRecorder.isTypeSupported(codec)) { mimeType = codec; break; }
-  }
-  const isMp4 = mimeType.startsWith('video/mp4');
-  console.log('[video_maker] MediaRecorder 编码:', mimeType, isMp4 ? '(MP4 ✅)' : '(WebM)');
+  const canvasStream = canvas.captureStream(STATE.settings.fps);
+  let recorderStream = canvasStream;
 
-  const recorder = new MediaRecorder(stream, {
-    mimeType: mimeType,
-    videoBitsPerSecond: 8000000,
-  });
-
-  const chunks = [];
-  recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-
-  const recorderDone = new Promise(resolve => { recorder.onstop = resolve; });
-
-  // 如果有无音乐模式之外的音乐,用 AudioContext 混合
-  let audioCtx = null, audioSource = null, audioDest = null;
-  if (!STATE.noMusic && STATE.audio) {
+  // BGM: AudioContext 解码 + 混入(输出到 MediaStreamDestination 而非扬声器)
+  let audioCtx = null, audioSource = null;
+  const hasAudio = !STATE.noMusic && STATE.audio;
+  if (hasAudio) {
     try {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       const audioBuf = await STATE.audio.file.arrayBuffer();
@@ -2055,13 +2033,45 @@ async function exportWithMediaRecorder() {
       gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + totalDur);
 
       audioSource.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
+      // 输出到 MediaStreamDestination(捕获到录制流)而非 destination(扬声器)
+      const audioDest = audioCtx.createMediaStreamDestination();
+      gainNode.connect(audioDest);
+      const audioTracks = audioDest.stream.getAudioTracks();
+      if (audioTracks.length > 0) {
+        const videoTrack = canvasStream.getVideoTracks()[0];
+        recorderStream = new MediaStream([videoTrack, audioTracks[0]]);
+      }
       const offset = STATE.audio.startAt || 0;
       audioSource.start(audioCtx.currentTime, offset, totalDur - offset);
     } catch (err) {
       console.warn('[video_maker] 音频加载失败,导出无声音频:', err);
     }
   }
+
+  // ══════ MediaRecorder 编码 ══════
+  // 有音频时强制 WebM(MP4 容器不支持 MediaRecorder 音频轨道)
+  let mimeType, isMp4;
+  if (hasAudio) {
+    const webmCodecs = ['video/webm;codecs=vp8,opus', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8', 'video/webm'];
+    mimeType = 'video/webm';
+    for (const c of webmCodecs) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+    isMp4 = false;
+  } else {
+    const mp4Codecs = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+    mimeType = 'video/webm';
+    for (const c of mp4Codecs) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+    isMp4 = mimeType.startsWith('video/mp4');
+  }
+  console.log('[video_maker] MediaRecorder:', mimeType, '容器:', isMp4 ? 'MP4' : 'WebM', '音频:', hasAudio ? '有' : '无');
+
+  const recorder = new MediaRecorder(recorderStream, {
+    mimeType: mimeType,
+    videoBitsPerSecond: 8000000,
+  });
+
+  const chunks = [];
+  recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+  const recorderDone = new Promise(resolve => { recorder.onstop = resolve; });
 
   recorder.start();
   const totalFrames = calculateTotalFrames();
@@ -4043,13 +4053,30 @@ async function exportVideoOnly() {
       console.log('[video_maker] ✅ 混合流:', tracks.length, '条轨道(视频' + (videoAudioTrack ? '+原声' : '') + (bgmAudioTrack ? '+BGM' : '') + ')');
     }
 
-    // ══════ MediaRecorder ══════
-    const codecOrder = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp9', 'video/webm'];
-    let mimeType = 'video/webm';
-    for (const c of codecOrder) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-    const isVideoMp4 = mimeType.startsWith('video/mp4');
-    const bitrate = 8000000; // 8 Mbps
-    console.log('[video_maker] MediaRecorder:', mimeType, '码率:', (bitrate / 1000000).toFixed(0), 'Mbps');
+    // ══════ MediaRecorder 编码器选择 ══════
+    // 关键: MediaRecorder 的 MP4 容器不支持音频轨道! 有音频时必须用 WebM。
+    const hasAudioTrack = !!(videoAudioTrack || bgmAudioTrack);
+    let mimeType, isVideoMp4;
+    if (hasAudioTrack) {
+      // 有音频 → 强制 WebM (VP8/VP9 视频 + Opus 音频,浏览器/VLC 均可播放)
+      const webmCodecs = [
+        'video/webm;codecs=vp8,opus',
+        'video/webm;codecs=vp9,opus',
+        'video/webm;codecs=vp8',
+        'video/webm',
+      ];
+      mimeType = 'video/webm';
+      for (const c of webmCodecs) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+      isVideoMp4 = false;
+    } else {
+      // 无音频 → 优先 MP4 (H.264 兼容性更好)
+      const mp4Codecs = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp8', 'video/webm'];
+      mimeType = 'video/webm';
+      for (const c of mp4Codecs) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+      isVideoMp4 = mimeType.startsWith('video/mp4');
+    }
+    const bitrate = 8000000;
+    console.log('[video_maker] MediaRecorder:', mimeType, '容器:', isVideoMp4 ? 'MP4' : 'WebM', '音频:', hasAudioTrack ? '有' : '无');
 
     const chunks = [];
     const recorder = new MediaRecorder(recorderStream, { mimeType, videoBitsPerSecond: bitrate });
@@ -4129,10 +4156,9 @@ async function exportVideoOnly() {
     const ext = isVideoMp4 ? 'mp4' : 'webm';
     const blob = new Blob(chunks, { type: mimeType });
     const wallTime = (performance.now() - startWall) / 1000;
-    console.log('[video_maker] 完成 | 大小:', formatSize(blob.size),
-                '| 输入:', exportDuration.toFixed(1), 's',
-                '| 耗时:', wallTime.toFixed(1), 's',
-                '| 帧数:', totalFrames);
+    console.log('[video_maker] 完成 | 容器:', ext, '| 大小:', formatSize(blob.size),
+                '| 时长:', exportDuration.toFixed(1), 's', '| 耗时:', wallTime.toFixed(1), 's',
+                '| 帧数:', totalFrames, '| 编码:', mimeType);
 
     if (blob.size < 1000) {
       throw new Error('导出文件过小,可能视频处理异常');
