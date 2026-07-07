@@ -1372,6 +1372,7 @@ function handleAudioUpload(file) {
     document.getElementById('toggleNoMusic').classList.remove('active');
     document.getElementById('audioStatus').textContent = file.name.length > 18 ? file.name.slice(0, 16) + '...' : file.name;
     renderAudioPlayer();
+    renderTrimTimeline();
     document.getElementById('audioVolume').value = 80;
     document.getElementById('audioVolumeVal').textContent = '80%';
     showToast('✅ 音乐已加载: ' + file.name);
@@ -1978,69 +1979,124 @@ function updateSlideshowTrimEstimate() {
 // ─── 可视化时间轴渲染 ───
 function renderTrimTimeline() {
   const canvas = document.getElementById('trimTimelineCanvas');
-  if (!canvas || CURRENT_MODE.value !== 'slideshow') return;
+  const container = document.getElementById('trimTimeline');
+  if (!canvas || !container || CURRENT_MODE.value !== 'slideshow') return;
+
+  // 自适应 canvas 分辨率(避免 CSS 拉伸导致模糊/错位)
+  const rect = container.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  const W = rect.width;
+  const H = 80;
+  if (canvas.width !== W * dpr || canvas.height !== H * dpr) {
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+  }
   const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);  // HiDPI 缩放
+
   const fullDur = calculateFullDuration();
-  if (fullDur <= 0) { ctx.clearRect(0, 0, W, H); return; }
+  if (fullDur <= 0 || STATE.images.length === 0) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = '#e8e4df'; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#a8a098'; ctx.font = '12px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('📁 请先上传图片素材', W/2, H/2);
+    return;
+  }
 
   const start = STATE.settings.trimStart || 0;
   const end = STATE.settings.trimEnd || fullDur;
   const startX = (start / fullDur) * W;
   const endX = (end / fullDur) * W;
 
-  // 背景
-  ctx.fillStyle = '#e8e4df'; ctx.fillRect(0, 0, W, H);
-  // 网格刻度
-  ctx.strokeStyle = '#d4d0ca'; ctx.lineWidth = 0.5;
-  for (let i = 0; i <= 10; i++) {
-    const x = (i / 10) * W;
-    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-    ctx.fillStyle = '#a8a098'; ctx.font = '9px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText(formatTime((i / 10) * fullDur), x, H - 4);
+  // ── 背景 ──
+  ctx.fillStyle = '#f0ede8'; ctx.fillRect(0, 0, W, H);
+
+  // ── 封面/结尾停留区(深灰底) ──
+  if (STATE.settings.coverHold > 0) {
+    ctx.fillStyle = 'rgba(0,0,0,0.10)';
+    ctx.fillRect(0, 0, (STATE.settings.coverHold / fullDur) * W, H);
+    ctx.fillStyle = '#888'; ctx.font = '9px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('封面', (STATE.settings.coverHold / fullDur) * W / 2, H/2 + 3);
+  }
+  if (STATE.settings.endHold > 0) {
+    const ex = W - (STATE.settings.endHold / fullDur) * W;
+    ctx.fillStyle = 'rgba(0,0,0,0.10)';
+    ctx.fillRect(ex, 0, W - ex, H);
+    ctx.fillStyle = '#888'; ctx.font = '9px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('结尾', ex + (W - ex)/2, H/2 + 3);
   }
 
-  // 图片标记(小竖条)
-  const totalImgDur = fullDur - STATE.settings.coverHold - STATE.settings.endHold;
-  let imgX = 0;
+  // ── 图片标记(彩色横条,带编号) ──
+  const imgSectionW = W * (1 - (STATE.settings.coverHold + STATE.settings.endHold) / fullDur);
+  const imgStartX = (STATE.settings.coverHold / fullDur) * W;
+  let imgTime = 0;
   for (let i = 0; i < STATE.images.length; i++) {
     const dur = (STATE.images[i].mediaType === 'video' ? STATE.images[i].duration : STATE.settings.secondsPerImage);
-    const x = STATE.settings.coverHold + imgX;
-    const w = dur;
-    const px = (x / fullDur) * W;
-    const pw = Math.max(2, (w / fullDur) * W);
-    ctx.fillStyle = STATE.images[i].mediaType === 'video' ? '#ED0108' : '#5a8cb8';
-    ctx.fillRect(px, 8, pw, 16);
-    ctx.fillStyle = '#fff'; ctx.font = '7px sans-serif'; ctx.textAlign = 'center';
-    ctx.fillText(String(i + 1), px + pw / 2, 20);
-    imgX += dur;
-  }
-
-  // 封面/结尾标记
-  ctx.fillStyle = 'rgba(0,0,0,0.08)';
-  if (STATE.settings.coverHold > 0) ctx.fillRect(0, 40, (STATE.settings.coverHold / fullDur) * W, H - 40);
-  if (STATE.settings.endHold > 0) ctx.fillRect(W - (STATE.settings.endHold / fullDur) * W, 40, (STATE.settings.endHold / fullDur) * W, H - 40);
-
-  // 音频波形(简化)
-  if (!STATE.noMusic && STATE.audio) {
-    ctx.fillStyle = '#52a87a';
-    for (let i = 0; i < 100; i++) {
-      const h = 6 + Math.random() * 14;
-      ctx.fillRect((i / 100) * W, H - h, W / 100 - 1, h);
+    const totalImgDur = fullDur - STATE.settings.coverHold - STATE.settings.endHold;
+    const px = imgStartX + (imgTime / totalImgDur) * imgSectionW;
+    const pw = Math.max(3, (dur / totalImgDur) * imgSectionW);
+    const isVideo = STATE.images[i].mediaType === 'video';
+    // 色块
+    ctx.fillStyle = isVideo ? '#ED0108' : '#5a8cb8';
+    ctx.fillRect(px, 6, pw - 1, 20);
+    // 编号
+    if (pw > 14) {
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 8px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText(String(i + 1), px + pw/2, 21);
     }
-    ctx.fillStyle = '#52a87a'; ctx.font = '8px sans-serif'; ctx.textAlign = 'right';
-    ctx.fillText('🎵 ' + (STATE.audio.duration || 0).toFixed(0) + 's', W - 6, 12);
+    imgTime += dur;
   }
 
-  // 选中区域高亮
-  ctx.fillStyle = 'rgba(237,1,8,0.12)'; ctx.fillRect(startX, 0, endX - startX, H);
-  ctx.strokeStyle = '#ED0108'; ctx.lineWidth = 2;
-  ctx.strokeRect(startX, 0, endX - startX, H);
+  // ── 音频波形(绿色,如果有BGM) ──
+  const hasAudio = !STATE.noMusic && STATE.audio;
+  if (hasAudio) {
+    const audioDur = STATE.audio.duration || 0;
+    const audioW = Math.min(W, (audioDur / fullDur) * W);
+    ctx.fillStyle = 'rgba(82,168,122,0.20)';
+    ctx.fillRect(0, H - 30, audioW, 30);
+    // 简化波形
+    ctx.fillStyle = '#52a87a';
+    const barCount = Math.floor(audioW / 3);
+    for (let i = 0; i < barCount; i++) {
+      const bh = 4 + Math.sin(i * 0.7 + 2) * 8 + Math.sin(i * 1.3) * 6;
+      ctx.fillRect(i * 3, H - bh - 2, 2, bh);
+    }
+    // 音频时长标签
+    ctx.fillStyle = '#3a7a5a'; ctx.font = 'bold 9px "Noto Sans SC",sans-serif'; ctx.textAlign = 'left';
+    ctx.fillText('🎵 ' + formatTime(audioDur), 6, H - 34);
+    // 如果音频超过视频,红色警告
+    if (audioDur > fullDur) {
+      ctx.fillStyle = 'rgba(237,1,8,0.30)';
+      ctx.fillRect((fullDur / audioDur) * audioW, H - 30, audioW - (fullDur / audioDur) * audioW, 30);
+      ctx.fillStyle = '#ED0108'; ctx.font = 'bold 8px "Noto Sans SC",sans-serif'; ctx.textAlign = 'right';
+      ctx.fillText('超出→', W - 4, H - 34);
+    }
+  }
 
-  // 更新拖拽手柄位置
+  // ── 时间刻度(底部) ──
+  ctx.fillStyle = '#a8a098'; ctx.font = '9px "Noto Sans SC",sans-serif'; ctx.textAlign = 'center';
+  const tickCount = Math.min(10, Math.floor(fullDur));
+  for (let i = 0; i <= tickCount; i++) {
+    const x = (i / tickCount) * W;
+    ctx.strokeStyle = '#d4d0ca'; ctx.lineWidth = 0.5;
+    ctx.beginPath(); ctx.moveTo(x, H - 18); ctx.lineTo(x, H); ctx.stroke();
+    ctx.fillText(formatTime((i / tickCount) * fullDur), x, H - 2);
+  }
+
+  // ── 选中区域高亮 + 红色边框 ──
+  ctx.fillStyle = 'rgba(237,1,8,0.10)'; ctx.fillRect(startX, 0, endX - startX, H);
+  ctx.strokeStyle = '#ED0108'; ctx.lineWidth = 2.5;
+  ctx.strokeRect(startX, 1, endX - startX, H - 2);
+
+  // ── 拖拽手柄位置同步 ──
   document.getElementById('trimHandleStart').style.left = ((start / fullDur) * 100) + '%';
   document.getElementById('trimHandleEnd').style.left = ((end / fullDur) * 100) + '%';
 }
+
+// ─── 响应式重绘 ───
+window.addEventListener('resize', () => { if (CURRENT_MODE.value === 'slideshow') renderTrimTimeline(); });
 
 // ─── 时间轴拖拽交互 ───
 (function initTrimDrag() {
