@@ -6312,101 +6312,6 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-function generateCandidatesForText(text, textIndex, globalSeed) {
-  var candidates = [];
-  var textSeed = window.getTextSeed(text, textIndex, globalSeed);
-  var selectedFamilies = selectFamiliesForCandidates(text, textSeed);
-
-  // ══════ #2: 强制 5族 × 6张 = 30 ══════
-  // 每个真实风格族生成6张候选（5个标准vi + 1个jitter版）
-  var candidateIndex = 0;
-  for (var fi = 0; fi < selectedFamilies.length; fi++) {
-    var family = selectedFamilies[fi];
-    // 标准5个变体
-    for (var vi = 0; vi < 5; vi++) {
-      candidates.push({
-        textIndex: textIndex,
-        candidateIndex: candidateIndex,
-        family: family,
-        vi: vi,
-        seed: window.getTextSeed(text, textIndex, globalSeed) + candidateIndex * 7919,
-        _text: text,
-      });
-      candidateIndex++;
-    }
-    // 第6张: vi=2 + 不同seed（换centerShape/decoration），确保30张不重样
-    candidates.push({
-      textIndex: textIndex,
-      candidateIndex: candidateIndex,
-      family: family,
-      vi: 2,
-      seed: window.getTextSeed(text, textIndex, globalSeed) + candidateIndex * 7919 + 99999,
-      _text: text,
-    });
-    candidateIndex++;
-  }
-  // 同文案内去重
-  const deduped = window.deduplicateCandidatesForText
-    ? window.deduplicateCandidatesForText(candidates)
-    : candidates;
-  return deduped;
-}
-
-function selectFamiliesForCandidates(text, textSeed) {
-  var rng = window.seededRandom(textSeed);
-
-  // ══════ P2 修复: 强制5族各取1个入口，确保30张覆盖全部真实风格族 ══════
-  // 用户指定了特定风格时仍使用用户选择
-  var userFamilies = Array.from(STATE.families);
-  if (userFamilies.length > 0 && userFamilies.length < 20) {
-    // 用户选的风格属于哪些 realFamily？
-    var userRealFamilies = new Set();
-    userFamilies.forEach(function(f) {
-      var m = window.REAL_STYLE_MAP[f];
-      if (m) userRealFamilies.add(m.realFamily);
-    });
-    // 如果用户只选了1-2个族内的风格，扩展覆盖全部5族各1个
-    if (userRealFamilies.size < 3) {
-      var allPicks = [
-        ['A', 'J', 'L'], ['F', 'I', 'M', 'T'], ['B', 'C', 'G', 'H', 'N', 'P'],
-        ['D', 'K', 'O', 'R'], ['E', 'Q', 'S'],
-      ];
-      var result = [];
-      allPicks.forEach(function(pool) {
-        var shuffled = pool.slice().sort(function() { return rng() - 0.5; });
-        result.push(shuffled[0]);
-      });
-      return result.slice(0, 6);
-    }
-    // 否则使用用户选择 + 补足6个
-    var needed = [];
-    for (var i = 0; i < 6; i++) {
-      needed.push(userFamilies[i % userFamilies.length]);
-    }
-    return needed.slice(0, 6);
-  }
-
-  // 默认：每个真实风格族随机取1个入口 → 5个入口
-  var handnoteFams = ['A', 'J', 'L'];
-  var collageFams = ['F', 'I', 'M', 'T'];
-  var comicFams = ['B', 'C', 'G', 'H', 'N', 'P'];
-  var newspaperFams = ['D', 'K', 'O', 'R'];
-  var minimalFams = ['E', 'Q', 'S'];
-
-  var pickOne = function(arr) {
-    return arr[Math.floor(rng() * arr.length)];
-  };
-
-  // ══════ #2: 恰好5族各1个入口，每族生成6张 = 30 ══════
-  return [
-    pickOne(handnoteFams),
-    pickOne(collageFams),
-    pickOne(comicFams),
-    pickOne(newspaperFams),
-    pickOne(minimalFams),
-  ];
-}
-
 function renderCandidateBatch(group, startIndex, count) {
   const scrollContainer = group.querySelector('.candidate-scroll');
   const candidates = group._candidates;
@@ -6438,12 +6343,20 @@ function renderCandidateBatch(group, startIndex, count) {
     cardWrap.appendChild(checkbox);
     fragment.appendChild(cardWrap);
 
-    // 渲染封面
+    // ══════ 模板直接渲染 ══════
     try {
-      const ctx = canvas.getContext('2d');
-      const palette = pickPalette(candidate.family, candidate.vi);
-      const options = { vi: candidate.vi, seed: candidate.seed, font: STATE.font || 'black' };
-      window.drawRealStyleCover(ctx, candidate._text || '', palette, options, candidate.family);
+      var ctx = canvas.getContext('2d');
+      var content = window.parseCoverContent ? window.parseCoverContent(candidate._text || '') : { mainTitle: candidate._text || '' };
+      var options = { vi: 0, seed: candidate.seed, font: STATE.font || 'black', templateId: candidate.templateId };
+      if (window.renderTemplate) {
+        var result = window.renderTemplate(ctx, candidate.templateId, content, options);
+        if (!result || !result.success) {
+          // 回退规则引擎
+          window.drawRealStyleCover(ctx, candidate._text || '', {}, options, candidate.family);
+        }
+      } else {
+        window.drawRealStyleCover(ctx, candidate._text || '', {}, options, candidate.family);
+      }
     } catch (err) {
       console.error('候选 ' + i + ' 渲染失败:', err);
       const ctx = canvas.getContext('2d');
@@ -6659,80 +6572,92 @@ function familiesForBatchCards() {
   return out;
 }
 
-function generateBatchCovers() {
-  const items = selectedBatchItems();
-  if (!items.length) {
-    showToast('请至少选择 1 条有效文案');
-    return;
+// ══════ 模板池驱动的候选生成（随机打乱） ══════
+function getShuffledTemplateIds(seed) {
+  var allIds = (window.TEMPLATE_REGISTRY || []).slice();
+  if (allIds.length === 0) return [];
+  // Fisher-Yates 随机打乱
+  var rng = window.seededRandom ? window.seededRandom(seed) : Math.random;
+  for (var i = allIds.length - 1; i > 0; i--) {
+    var j = Math.floor(rng() * (i + 1));
+    var tmp = allIds[i]; allIds[i] = allIds[j]; allIds[j] = tmp;
   }
-  STATE.text = items.map((item) => item.text).join('\n888\n');
-  const btn = document.getElementById('btnGenerateBatch');
-  btn.disabled = true;
-  btn.textContent = '生成中...';
-  const c = document.getElementById('container');
-  c.innerHTML = '<div class="loading">批量生成中 (' + items.length + ' 条文案 × 30 张候选)...</div>';
-  setTimeout(function () {
+  return allIds;
+}
+
+function generateCandidatesForText(text, textIndex, globalSeed) {
+  var tplIds = getShuffledTemplateIds(window.getTextSeed(text, textIndex, globalSeed));
+  return tplIds.map(function(tid, i){
+    return {
+      textIndex: textIndex, candidateIndex: i,
+      templateId: tid, family: tid.split('-')[0],
+      vi: 0, seed: window.getTextSeed(text, textIndex, globalSeed) + i * 7919,
+      _text: text,
+    };
+  });
+}
+
+// 去掉旧的 selectFamiliesForCandidates（不再需要）
+
+function generateBatchCovers() {
+  var items = selectedBatchItems();
+  if (!items.length) { showToast('请至少选择 1 条有效文案'); return; }
+  STATE.text = items.map(function(item){ return item.text; }).join('\n888\n');
+  var btn = document.getElementById('btnGenerateBatch');
+  btn.disabled = true; btn.textContent = '生成中...';
+  var c = document.getElementById('container');
+  var totalTemplates = (window.TEMPLATE_REGISTRY || []).length;
+  c.innerHTML = '<div class=\"loading\">批量生成中 (' + items.length + ' 条 × ' + totalTemplates + ' 模板)...</div>';
+  setTimeout(function(){
     try {
       c.innerHTML = '';
-      // 顶部工具栏
-      const isFreeUser = !AUTH_STATE.authenticated || (AUTH_STATE.user && AUTH_STATE.user.role !== 'vip');
-      const lockAttr = isFreeUser ? ' data-locked="1"' : '';
-      const lockClass = isFreeUser ? ' btn-locked' : '';
-      const lockIcon = isFreeUser ? ' 🔒' : '';
-      const toolbar = document.createElement('div');
+      var isFreeUser = !AUTH_STATE.authenticated || (AUTH_STATE.user && AUTH_STATE.user.role !== 'vip');
+      var lockAttr = isFreeUser ? ' data-locked=\"1\"' : '';
+      var lockClass = isFreeUser ? ' btn-locked' : '';
+      var lockIcon = isFreeUser ? ' 🔒' : '';
+      var toolbar = document.createElement('div');
       toolbar.className = 'batch-group';
       toolbar.innerHTML =
-        '<div class="batch-header-row">' +
+        '<div class=\"batch-header-row\">' +
         '<div><strong>ALL</strong> 批量下载</div>' +
-        '<div style="font-size:13px;color:#6B7280">支持单张、多选和全部下载' + (isFreeUser ? ' · <span style="color:#ED0108;font-weight:700">升级VIP解锁批量下载</span>' : '') + '</div>' +
-        '<div class="batch-actions-row">' +
-        '<button class="btn small ghost' + lockClass + '" data-batch-download="selected"' + lockAttr + '>下载选中' + lockIcon + '</button>' +
-        '<button class="btn small outline' + lockClass + '" data-batch-download="all"' + lockAttr + '>下载全部' + lockIcon + '</button>' +
-        '<button class="btn small primary" data-send-to-video-maker style="background:#ED0108">🎥 发送到短视频</button>' +
+        '<div style=\"font-size:13px;color:#6B7280\">每条文案 × ' + totalTemplates + ' 模板' + (isFreeUser ? ' · <span style=\"color:#ED0108;font-weight:700\">升级VIP解锁批量下载</span>' : '') + '</div>' +
+        '<div class=\"batch-actions-row\">' +
+        '<button class=\"btn small ghost' + lockClass + '\" data-batch-download=\"selected\"' + lockAttr + '>下载选中' + lockIcon + '</button>' +
+        '<button class=\"btn small outline' + lockClass + '\" data-batch-download=\"all\"' + lockAttr + '>下载全部' + lockIcon + '</button>' +
+        '<button class=\"btn small primary\" data-send-to-video-maker style=\"background:#ED0108\">🎥 发送到短视频</button>' +
         '</div></div>';
       c.appendChild(toolbar);
 
       var globalSeed = Date.now();
 
-      // 先为每条文案生成候选 → 再跨文案去重
-      var allCandidates = items.map(function (item, i) {
-        return generateCandidatesForText(item.text, i, globalSeed);
-      });
-      var dedupedAll = window.deduplicateAcrossTexts
-        ? window.deduplicateAcrossTexts(allCandidates)
-        : allCandidates;
-
-      items.forEach(function (item, groupIndex) {
-        var candidates = dedupedAll[groupIndex] || [];
+      items.forEach(function(item, groupIndex){
+        var candidates = generateCandidatesForText(item.text, groupIndex, globalSeed);
         var group = document.createElement('section');
         group.className = 'batch-group';
         group.dataset.textIndex = String(groupIndex);
-        var preview = item.text.replace(/\s+/g, ' ').slice(0, 46);
         group.innerHTML =
-          '<header class="batch-header-row">' +
+          '<header class=\"batch-header-row\">' +
           '<h3>文案 ' + (groupIndex + 1) + '</h3>' +
-          '<span class="batch-text-preview">' + escapeHtml(item.text.substring(0, 30)) + (item.text.length > 30 ? '...' : '') + '</span>' +
-          '<div class="batch-actions-row">' +
-          '<button class="btn small ghost btn-download-selected" data-text-index="' + groupIndex + '">下载选中</button>' +
-          '<button class="btn small outline btn-download-all" data-text-index="' + groupIndex + '">下载本组(' + candidates.length + '张)</button>' +
+          '<span class=\"batch-text-preview\">' + escapeHtml(item.text.substring(0, 30)) + (item.text.length > 30 ? '...' : '') + '</span>' +
+          '<div class=\"batch-actions-row\">' +
+          '<button class=\"btn small ghost btn-download-selected\" data-text-index=\"' + groupIndex + '\">下载选中</button>' +
+          '<button class=\"btn small outline btn-download-all\" data-text-index=\"' + groupIndex + '\">下载本组(' + candidates.length + '张)</button>' +
           '</div></header>' +
-          '<div class="candidate-scroll" data-text-index="' + groupIndex + '"></div>';
+          '<div class=\"candidate-scroll\" data-text-index=\"' + groupIndex + '\"></div>';
         c.appendChild(group);
 
         group._candidates = candidates;
         group._text = item.text;
         group._renderedCount = 0;
 
-        // 首屏渲染前6张
         renderCandidateBatch(group, 0, CANDIDATE_CONFIG.initialRenderCount);
-        // 设置懒加载
         setupLazyLoading(group);
       });
 
       BATCH_STATE.generated = true;
       bindBatchDownloadEvents();
-      showToast('已生成 ' + items.length + ' 组 · 共 ' + (items.length * 30) + ' 张候选');
-    } catch (e) {
+      showToast('已生成 ' + items.length + ' 组 · 共 ' + (items.length * totalTemplates) + ' 张');
+    } catch(e){
       console.error(e);
       showToast('❌ 批量生成失败: ' + e.message);
     } finally {
