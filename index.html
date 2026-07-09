@@ -7133,8 +7133,8 @@ registerFallbackFn('drawCatPhotoCardSticker', drawCatPhotoCardSticker);
 registerFallbackFn('drawDogFrameSticker', drawDogFrameSticker);
 registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 
-// 预加载默认风格族贴纸(后台异步,不影响当前使用)
-preloadStickersForFamily('A').catch(() => {});
+// 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
+// preloadStickersForFamily('A').catch(() => {});
 
 // 加载云端自定义贴纸(public/stickers/custom/manifest.json)
 let cloudStickers = [];
