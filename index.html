@@ -7137,19 +7137,24 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // preloadStickersForFamily('A').catch(() => {});
 
 // 加载云端自定义贴纸(public/stickers/custom/manifest.json)
+// 文件暂未部署时静默跳过,不阻塞页面
 let cloudStickers = [];
-fetch('./public/stickers/custom/manifest.json')
-  .then(r => r.json())
-  .then(manifest => {
-    cloudStickers = (manifest.stickers || []).map(s => ({
-      name: s.name || 'cloud-sticker',
-      dataUrl: './public/stickers/custom/' + (s.file || (s.name + '.png')),
-      fromCloud: true,
-    }));
-    updateCustomStickerUI();
-    console.log('☁️ 云端贴纸:', cloudStickers.length, '张');
-  })
-  .catch(() => { /* manifest 不存在,跳过 */ });
+try {
+  fetch('./public/stickers/custom/manifest.json', { cache: 'no-cache' })
+    .then(r => { if (!r.ok) throw new Error('manifest not deployed yet'); return r.json(); })
+    .then(manifest => {
+      cloudStickers = (manifest.stickers || []).map(s => ({
+        name: s.name || 'cloud-sticker',
+        dataUrl: './public/stickers/custom/' + (s.file || (s.name + '.png')),
+        fromCloud: true,
+      }));
+      if (cloudStickers.length > 0) {
+        updateCustomStickerUI();
+        console.log('☁️ 云端贴纸:', cloudStickers.length, '张');
+      }
+    })
+    .catch(() => { /* manifest 404 → 还没有云端贴纸,正常 */ });
+} catch(e) { /* fetch 不支持,跳过 */ }
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
 
