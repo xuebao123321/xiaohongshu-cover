@@ -850,6 +850,26 @@ button{font-family:inherit}
 </div>
 <div class="counter" id="counter">0 字</div>
 
+<!-- ═══════════ 自定义贴纸上传 ═══════════ -->
+<div class="batch-panel" id="stickerUploadPanel" style="margin-bottom:10px">
+  <div class="batch-head">
+    <div>
+      <div class="batch-title">📎 自定义贴纸 <span style="font-weight:400;color:#a8a098;font-size:11px" id="customStickerCount">0 张</span></div>
+      <div class="batch-meta">上传透明 PNG 贴纸,生成封面时自动随机使用</div>
+    </div>
+    <div class="batch-tools">
+      <button class="btn small ghost" id="btnClearCustomStickers">清空</button>
+    </div>
+  </div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;min-height:40px;align-items:center" id="customStickerList">
+    <label class="btn small outline" id="btnUploadSticker" style="cursor:pointer;margin:0">
+      ➕ 上传贴纸(PNG)
+      <input type="file" id="stickerFileInput" accept="image/png" multiple hidden style="display:none">
+    </label>
+    <span style="font-size:11px;color:#a8a098">拖拽 PNG 到此处也可上传</span>
+  </div>
+</div>
+
 <!-- ═══════════ 批量文案识别 ═══════════ -->
 <div class="batch-panel" id="batchPanel">
   <div class="batch-head">
@@ -7115,6 +7135,84 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // 预加载默认风格族贴纸(后台异步,不影响当前使用)
 preloadStickersForFamily('A').catch(() => {});
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
+
+// ═══════════ 自定义贴纸上传统计 ═══════════
+const CUSTOM_STICKER_KEY = 'cover_maker_custom_stickers';
+let customStickers = [];
+try {
+  const saved = localStorage.getItem(CUSTOM_STICKER_KEY);
+  customStickers = saved ? JSON.parse(saved) : [];
+} catch(e) { customStickers = []; }
+
+function saveCustomStickers() {
+  try { localStorage.setItem(CUSTOM_STICKER_KEY, JSON.stringify(customStickers)); } catch(e) {}
+}
+function updateCustomStickerUI() {
+  const list = document.getElementById('customStickerList');
+  const count = document.getElementById('customStickerCount');
+  if (count) count.textContent = customStickers.length + ' 张';
+  if (!list) return;
+  // 保留上传按钮
+  const uploadBtn = list.querySelector('#btnUploadSticker');
+  const hint = list.querySelector('span');
+  // 清除非按钮元素
+  list.querySelectorAll('.custom-sticker-thumb').forEach(el => el.remove());
+  customStickers.forEach((s, i) => {
+    const thumb = document.createElement('div');
+    thumb.className = 'custom-sticker-thumb';
+    thumb.style.cssText = 'width:44px;height:44px;border-radius:8px;background:#f0ede8;background-image:url(' + s.dataUrl + ');background-size:contain;background-repeat:no-repeat;background-position:center;position:relative;border:1px solid #e8e4df;flex-shrink:0';
+    thumb.title = s.name;
+    const del = document.createElement('button');
+    del.textContent = '×';
+    del.style.cssText = 'position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;border:none;background:#ED0108;color:#fff;font-size:11px;cursor:pointer;line-height:1';
+    del.onclick = (e) => { e.stopPropagation(); e.preventDefault(); customStickers.splice(i, 1); saveCustomStickers(); updateCustomStickerUI(); };
+    thumb.appendChild(del);
+    list.insertBefore(thumb, hint);
+  });
+}
+
+function addCustomSticker(file) {
+  if (!file || !file.type.startsWith('image/png')) { showToast('⚠️ 仅支持透明 PNG 贴纸'); return; }
+  if (file.size > 2 * 1024 * 1024) { showToast('⚠️ 贴纸文件不能超过 2MB'); return; }
+  const reader = new FileReader();
+  reader.onload = () => {
+    customStickers.push({ name: file.name.replace(/\.png$/i, ''), dataUrl: reader.result, addedAt: Date.now() });
+    saveCustomStickers();
+    updateCustomStickerUI();
+    showToast('✅ 贴纸已添加: ' + file.name);
+  };
+  reader.readAsDataURL(file);
+}
+
+// 上传按钮
+document.getElementById('stickerFileInput').addEventListener('change', function() {
+  Array.from(this.files).forEach(addCustomSticker);
+  this.value = '';
+});
+document.getElementById('btnUploadSticker').addEventListener('click', () => {
+  document.getElementById('stickerFileInput').click();
+});
+// 清空按钮
+document.getElementById('btnClearCustomStickers').addEventListener('click', () => {
+  if (!customStickers.length) return;
+  if (!confirm('确定清空全部 ' + customStickers.length + ' 张自定义贴纸?')) return;
+  customStickers = [];
+  saveCustomStickers();
+  updateCustomStickerUI();
+  showToast('已清空自定义贴纸');
+});
+// 拖拽上传
+const stickerPanel = document.getElementById('stickerUploadPanel');
+stickerPanel.addEventListener('dragover', e => { e.preventDefault(); stickerPanel.style.background = '#f0f5fa'; });
+stickerPanel.addEventListener('dragleave', () => { stickerPanel.style.background = ''; });
+stickerPanel.addEventListener('drop', e => {
+  e.preventDefault(); stickerPanel.style.background = '';
+  Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/png')).forEach(addCustomSticker);
+});
+
+// 将自定义贴纸注入到 sticker 渲染系统
+window.getCustomStickers = () => customStickers;
+updateCustomStickerUI();
 
 // ═══════════ 并发渲染 + 错误兜底 ═══════════
 
