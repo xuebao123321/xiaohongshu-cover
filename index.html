@@ -858,6 +858,7 @@ button{font-family:inherit}
       <div class="batch-meta">上传透明 PNG 贴纸,生成封面时自动随机使用</div>
     </div>
     <div class="batch-tools">
+      <button class="btn small ghost" id="btnExportStickers">⬇ 下载贴纸包</button>
       <button class="btn small ghost" id="btnClearCustomStickers">清空</button>
     </div>
   </div>
@@ -7134,6 +7135,22 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 
 // 预加载默认风格族贴纸(后台异步,不影响当前使用)
 preloadStickersForFamily('A').catch(() => {});
+
+// 加载云端自定义贴纸(public/stickers/custom/manifest.json)
+let cloudStickers = [];
+fetch('./public/stickers/custom/manifest.json')
+  .then(r => r.json())
+  .then(manifest => {
+    cloudStickers = (manifest.stickers || []).map(s => ({
+      name: s.name || 'cloud-sticker',
+      dataUrl: './public/stickers/custom/' + (s.file || (s.name + '.png')),
+      fromCloud: true,
+    }));
+    updateCustomStickerUI();
+    console.log('☁️ 云端贴纸:', cloudStickers.length, '张');
+  })
+  .catch(() => { /* manifest 不存在,跳过 */ });
+
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
 
 // ═══════════ 自定义贴纸上传统计 ═══════════
@@ -7150,7 +7167,7 @@ function saveCustomStickers() {
 function updateCustomStickerUI() {
   const list = document.getElementById('customStickerList');
   const count = document.getElementById('customStickerCount');
-  if (count) count.textContent = customStickers.length + ' 张';
+  if (count) count.textContent = (customStickers.length + cloudStickers.length) + ' 张';
   if (!list) return;
   // 保留上传按钮
   const uploadBtn = list.querySelector('#btnUploadSticker');
@@ -7210,8 +7227,25 @@ stickerPanel.addEventListener('drop', e => {
   Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/png')).forEach(addCustomSticker);
 });
 
-// 将自定义贴纸注入到 sticker 渲染系统
-window.getCustomStickers = () => customStickers;
+// 导出贴纸包(下载所有自定义贴纸为PNG文件)
+document.getElementById('btnExportStickers').addEventListener('click', async () => {
+  if (!customStickers.length) { showToast('⚠️ 没有可导出的贴纸,请先上传'); return; }
+  showToast('⬇ 正在下载 ' + customStickers.length + ' 张贴纸...');
+  for (let i = 0; i < customStickers.length; i++) {
+    const s = customStickers[i];
+    const a = document.createElement('a');
+    a.href = s.dataUrl;
+    a.download = (s.name || ('sticker-' + (i + 1))) + '.png';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    await new Promise(r => setTimeout(r, 300)); // 浏览器需要间隔
+  }
+  showToast('✅ ' + customStickers.length + ' 张贴纸已下载,请放入 public/stickers/custom/ 后 git commit && git push');
+});
+
+// 将自定义贴纸注入到 sticker 渲染系统(合并本地+云端)
+window.getCustomStickers = () => [...customStickers, ...cloudStickers];
 updateCustomStickerUI();
 
 // ═══════════ 并发渲染 + 错误兜底 ═══════════
