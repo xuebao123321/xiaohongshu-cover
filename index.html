@@ -989,6 +989,14 @@ import {
   drawAngryFaceSticker,
   drawShockedFaceSticker,
   drawLoveEyesSticker,
+  drawFullBodyCatSticker,
+  drawFullBodyDogSticker,
+  drawBoyCharacterSticker,
+  drawGirlCharacterSticker,
+  drawCoffeeCupSticker,
+  drawFlowerSticker,
+  drawCloverSticker,
+  renderAsSticker,
 } from './lib/stickers-canvas.js';
 import {
   STICKER_REGISTRY,
@@ -7072,6 +7080,13 @@ registerFallbackFn('drawSparkleEyesSticker', drawSparkleEyesSticker);
 registerFallbackFn('drawAngryFaceSticker', drawAngryFaceSticker);
 registerFallbackFn('drawShockedFaceSticker', drawShockedFaceSticker);
 registerFallbackFn('drawLoveEyesSticker', drawLoveEyesSticker);
+registerFallbackFn('drawFullBodyCatSticker', drawFullBodyCatSticker);
+registerFallbackFn('drawFullBodyDogSticker', drawFullBodyDogSticker);
+registerFallbackFn('drawBoyCharacterSticker', drawBoyCharacterSticker);
+registerFallbackFn('drawGirlCharacterSticker', drawGirlCharacterSticker);
+registerFallbackFn('drawCoffeeCupSticker', drawCoffeeCupSticker);
+registerFallbackFn('drawFlowerSticker', drawFlowerSticker);
+registerFallbackFn('drawCloverSticker', drawCloverSticker);
 // 注册旧的9个贴纸回退
 registerFallbackFn('drawThumb3DSticker', drawThumb3DSticker);
 registerFallbackFn('drawEmojiAngry3DSticker', drawEmojiAngry3DSticker);
