@@ -7094,6 +7094,20 @@ registerFallbackFn('drawComicFistSticker', drawComicFistSticker);
 registerFallbackFn('drawBigEyesSticker', drawBigEyesSticker);
 registerFallbackFn('drawPaintRollerRealSticker', drawPaintRollerRealSticker);
 registerFallbackFn('drawPlumpCatSticker', drawPlumpCatSticker);
+
+// 暴露贴纸绘制函数到window,供real-style-decorations.js的贴纸渲染使用
+window.renderAsSticker = renderAsSticker;
+window._drawStickerFns = {
+  drawCuteCatFaceSticker, drawCuteDogFaceSticker,
+  drawFullBodyCatSticker, drawFullBodyDogSticker,
+  drawBoyCharacterSticker, drawGirlCharacterSticker,
+  drawCoffeeCupSticker, drawFlowerSticker, drawCloverSticker,
+  drawSparkleEyesSticker, drawAngryFaceSticker, drawShockedFaceSticker, drawLoveEyesSticker,
+  drawStar3DSticker, drawHeart3DSticker, drawFire3DSticker, drawCrown3DSticker,
+  drawDiamond3DSticker, drawTrophy3DSticker, drawBalloon3DSticker, drawGiftbox3DSticker,
+  drawThumb3Dv2Sticker, drawMegaphone3DSticker,
+  drawDoodleStarSticker, drawScribbleCloudSticker, drawHandDrawnArrowSticker,
+};
 registerFallbackFn('drawCatPhotoCardSticker', drawCatPhotoCardSticker);
 registerFallbackFn('drawDogFrameSticker', drawDogFrameSticker);
 registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
