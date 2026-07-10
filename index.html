@@ -7137,44 +7137,9 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
 // preloadStickersForFamily('A').catch(() => {});
 
-// 加载云端贴纸(嵌入JS, 多路径尝试)
+// 云端贴纸PNG暂不可用,回退到Canvas手绘(已优化)
 var cloudStickers = [];
 var cloudStickerImages = {};
-(function initCloudStickers() {
-  var list = window._CLOUD_STICKERS || [];
-  if (list.length === 0) return;
-  // 尝试多个基础路径
-  var bases = ['./stickers/', './stickers/custom/', './public/stickers/custom/'];
-  // 快速探测哪个路径可用: 尝试加载第一张图, 成功后记录
-  var testFile = list[0].file;
-  var foundBase = null;
-  var pending = bases.length;
-
-  function onBaseFound(base) {
-    if (foundBase) return;
-    foundBase = base;
-    cloudStickers = list.map(function(s) {
-      var url = base + (s.file || (s.name + '.png'));
-      var img = new Image(); img.src = url;
-      cloudStickerImages[s.file || s.name] = img;
-      return { name: s.name || 'cloud', file: s.file, dataUrl: url, fromCloud: true };
-    });
-    updateCustomStickerUI();
-    console.log('☁️ 云端贴纸:', cloudStickers.length, '张 (base:', base, ')');
-  }
-
-  bases.forEach(function(base) {
-    var probe = new Image();
-    probe.onload = function() { onBaseFound(base); };
-    probe.onerror = function() {
-      pending--;
-      if (pending === 0 && !foundBase) {
-        console.log('☁️ 贴纸PNG未部署,使用Canvas兜底');
-      }
-    };
-    probe.src = base + testFile;
-  });
-})();
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
 
