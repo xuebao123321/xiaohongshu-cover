@@ -7150,20 +7150,11 @@ var customStickers = [];
     cloudStickerImages[s.file] = img;
     cloudStickers.push({ name: s.name, file: s.file, dataUrl: img.src, fromCloud: true });
   });
-  // 补充: 文件路径贴纸(尝试加载)
-  var list = window._CLOUD_STICKERS || [];
-  var base = 'https://xiaohongshu-cover.514993415.workers.dev/stickers/custom/';
-  list.forEach(function(s) {
-    if (cloudStickerImages[s.file]) return; // 已有base64版本
-    var url = base + (s.file || (s.name + '.png'));
-    var img = new Image(); img.src = url;
-    cloudStickerImages[s.file || s.name] = img;
-    cloudStickers.push({ name: s.name, file: s.file, dataUrl: url, fromCloud: true });
-  });
+  // (PNG文件贴纸暂不跨域加载, 使用base64嵌入 + Canvas兜底)
   window._cloudStickerImages = cloudStickerImages;
   window._cloudStickers = cloudStickers;
   updateCustomStickerUI();
-  console.log('☁️ 贴纸:', cloudStickers.length, '张(base64:' + embedded.length + ' + 文件:' + (list.length) + ')');
+  console.log('☁️ 贴纸:', cloudStickers.length, '张(base64嵌入, 零跨域)');
 })();
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
@@ -7318,7 +7309,7 @@ function renderCard(canvas, family, vi, text, seedOffset, meta) {
   }
 }
 
-function assertTemplateSafeBounds(ctx, safePad, family, vi) {
+function assertTemplateSafeBoundsSafe(ctx, safePad, family, vi) {
   const W = CANVAS_W, H = CANVAS_H;
   const data = ctx.getImageData(0, 0, W, H);
   const pixels = data.data;
