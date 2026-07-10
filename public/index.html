@@ -5687,48 +5687,6 @@ console.log('已加载调色板风格族:', Object.keys(PALETTES).join(', '));
  * @param {string} text
  * @param {number} seedOffset
  */
-function renderCard(canvas, family, vi, text, seedOffset) {
-  try {
-    const ctx = canvas.getContext('2d');
-    canvas.width = CANVAS_W;
-    canvas.height = CANVAS_H;
-    const palette = pickPalette(family, vi, seedOffset);
-    const fn = STYLE_FUNCS[family];
-    if (!fn) throw new Error('Style family ' + family + ' undefined');
-    // 性能监控(单张 < 50ms 目标)
-    const t0 = performance.now();
-    fn(ctx, text, palette, { seed: vi + seedOffset, vi });
-    assertTemplateSafeBounds(ctx, 54, family, vi);
-    const t1 = performance.now();
-    if (t1 - t0 > 80) {
-      console.warn('[v4.0] 卡片渲染耗时偏长:', (t1 - t0).toFixed(1), 'ms ·', family, vi);
-    }
-  } catch (e) {
-    console.error('[v4.0] renderCard error:', family, vi, e);
-    // 错误占位
-    try {
-      const ctx = canvas.getContext('2d');
-      canvas.width = CANVAS_W;
-      canvas.height = CANVAS_H;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      ctx.strokeStyle = '#E6213D';
-      ctx.lineWidth = 24;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(CANVAS_W / 2 - 90, CANVAS_H / 2 - 90);
-      ctx.lineTo(CANVAS_W / 2 + 90, CANVAS_H / 2 + 90);
-      ctx.moveTo(CANVAS_W / 2 + 90, CANVAS_H / 2 - 90);
-      ctx.lineTo(CANVAS_W / 2 - 90, CANVAS_H / 2 + 90);
-      ctx.stroke();
-    } catch (_) {
-      // 双重兜底
-      canvas.width = 100;
-      canvas.height = 100;
-    }
-  }
-}
-
 function assertTemplateSafeBounds(ctx, safePad, family, vi) {
   const W = CANVAS_W, H = CANVAS_H;
   const data = ctx.getImageData(0, 0, W, H);
@@ -5792,6 +5750,49 @@ async function buildAllCardsAsync(text) {
  * 下载失败兜底(批次 5 新增)
  * 当 canvas.toBlob 失败或浏览器拦截下载时,提示用户右键另存为
  */
+
+function renderCard(canvas, family, vi, text, seedOffset) {
+  try {
+    const ctx = canvas.getContext('2d');
+    canvas.width = CANVAS_W;
+    canvas.height = CANVAS_H;
+    const palette = pickPalette(family, vi, seedOffset);
+    const fn = STYLE_FUNCS[family];
+    if (!fn) throw new Error('Style family ' + family + ' undefined');
+    // 性能监控(单张 < 50ms 目标)
+    const t0 = performance.now();
+    fn(ctx, text, palette, { seed: vi + seedOffset, vi });
+    assertTemplateSafeBounds(ctx, 54, family, vi);
+    const t1 = performance.now();
+    if (t1 - t0 > 80) {
+      console.warn('[v4.0] 卡片渲染耗时偏长:', (t1 - t0).toFixed(1), 'ms ·', family, vi);
+    }
+  } catch (e) {
+    console.error('[v4.0] renderCard error:', family, vi, e);
+    // 错误占位
+    try {
+      const ctx = canvas.getContext('2d');
+      canvas.width = CANVAS_W;
+      canvas.height = CANVAS_H;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+      ctx.strokeStyle = '#E6213D';
+      ctx.lineWidth = 24;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(CANVAS_W / 2 - 90, CANVAS_H / 2 - 90);
+      ctx.lineTo(CANVAS_W / 2 + 90, CANVAS_H / 2 + 90);
+      ctx.moveTo(CANVAS_W / 2 + 90, CANVAS_H / 2 - 90);
+      ctx.lineTo(CANVAS_W / 2 - 90, CANVAS_H / 2 + 90);
+      ctx.stroke();
+    } catch (_) {
+      // 双重兜底
+      canvas.width = 100;
+      canvas.height = 100;
+    }
+  }
+}
+
 function performCanvasDownload(canvas, fallbackName) {
   try {
     canvas.toBlob((blob) => {
