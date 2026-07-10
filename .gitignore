@@ -9,8 +9,6 @@
 
 # Node / Cloudflare 构建产物
 node_modules/
-public/
-!public/stickers/
 
 # Claude Code 本地设置
 .claude/settings.local.json
