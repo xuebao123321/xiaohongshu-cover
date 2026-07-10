@@ -7136,19 +7136,18 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
 // preloadStickersForFamily('A').catch(() => {});
 
-// 加载云端自定义贴纸(public/stickers/custom/) — 预加载图片,所有用户自动可见
+// 加载云端自定义贴纸 — 预加载图片,所有用户自动可见
 let cloudStickers = [];
 let cloudStickerImages = {};
-try {
-  fetch('./public/stickers/custom/manifest.json', { cache: 'no-cache' })
-    .then(r => { if (!r.ok) throw new Error('no manifest'); return r.json(); })
-    .then(manifest => {
+(function loadCloudStickers() {
+  var baseUrl = './stickers/';
+  fetch(baseUrl + 'manifest.json', { cache: 'no-cache' })
+    .then(function(r) { if (!r.ok) throw new Error('no manifest'); return r.json(); })
+    .then(function(manifest) {
       var list = manifest.stickers || [];
       cloudStickers = list.map(function(s) {
-        var url = './public/stickers/custom/' + (s.file || (s.name + '.png'));
-        // 预加载到缓存
-        var img = new Image();
-        img.src = url;
+        var url = baseUrl + (s.file || (s.name + '.png'));
+        var img = new Image(); img.src = url;
         cloudStickerImages[s.file || s.name] = img;
         return { name: s.name || 'cloud', file: s.file, dataUrl: url, fromCloud: true };
       });
@@ -7157,8 +7156,8 @@ try {
         console.log('☁️ 云端贴纸:', cloudStickers.length, '张(所有用户自动可用)');
       }
     })
-    .catch(function() { /* 未部署,正常 */ });
-} catch(e) { /* skip */ }
+    .catch(function() { console.log('☁️ 云端贴纸未部署'); });
+})();
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
 
