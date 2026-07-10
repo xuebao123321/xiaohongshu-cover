@@ -7138,9 +7138,10 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
 // preloadStickersForFamily('A').catch(() => {});
 
-// 云端贴纸: base64嵌入(零网络请求,无404)+ PNG文件(备用)
+// 云端贴纸: base64嵌入 + PNG文件
 var cloudStickers = [];
 var cloudStickerImages = {};
+var customStickers = [];
 (function initCloudStickers() {
   // 优先: base64嵌入贴纸(直接可用)
   var embedded = window._CLOUD_STICKERS_BASE64 || [];
@@ -7169,7 +7170,6 @@ console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
 
 // ═══════════ 自定义贴纸上传统计 ═══════════
 const CUSTOM_STICKER_KEY = 'cover_maker_custom_stickers';
-let customStickers = [];
 try {
   const saved = localStorage.getItem(CUSTOM_STICKER_KEY);
   customStickers = saved ? JSON.parse(saved) : [];
