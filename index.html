@@ -1041,6 +1041,7 @@ import './lib/real-style-renderer.js';
 import './lib/real-style-random.js';
 import './lib/real-style-stickers.js';
 import './lib/template-loader.js';
+import './lib/cloud-stickers.js';
 import './lib/template-renderer.js';
 
 // ═══════════ 全局配置 ═══════════
@@ -7136,27 +7137,22 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
 // preloadStickersForFamily('A').catch(() => {});
 
-// 加载云端自定义贴纸 — 预加载图片,所有用户自动可见
-let cloudStickers = [];
-let cloudStickerImages = {};
-(function loadCloudStickers() {
+// 加载云端贴纸(从嵌入JS直接读取,无网络请求,无404)
+var cloudStickers = [];
+var cloudStickerImages = {};
+(function initCloudStickers() {
+  var list = window._CLOUD_STICKERS || [];
   var baseUrl = './stickers/';
-  fetch(baseUrl + 'manifest.json', { cache: 'no-cache' })
-    .then(function(r) { if (!r.ok) throw new Error('no manifest'); return r.json(); })
-    .then(function(manifest) {
-      var list = manifest.stickers || [];
-      cloudStickers = list.map(function(s) {
-        var url = baseUrl + (s.file || (s.name + '.png'));
-        var img = new Image(); img.src = url;
-        cloudStickerImages[s.file || s.name] = img;
-        return { name: s.name || 'cloud', file: s.file, dataUrl: url, fromCloud: true };
-      });
-      if (cloudStickers.length > 0) {
-        updateCustomStickerUI();
-        console.log('☁️ 云端贴纸:', cloudStickers.length, '张(所有用户自动可用)');
-      }
-    })
-    .catch(function() { console.log('☁️ 云端贴纸未部署'); });
+  cloudStickers = list.map(function(s) {
+    var url = baseUrl + (s.file || (s.name + '.png'));
+    var img = new Image(); img.src = url;
+    cloudStickerImages[s.file || s.name] = img;
+    return { name: s.name || 'cloud', file: s.file, dataUrl: url, fromCloud: true };
+  });
+  if (cloudStickers.length > 0) {
+    updateCustomStickerUI();
+    console.log('☁️ 云端贴纸:', cloudStickers.length, '张(所有用户自动可用)');
+  }
 })();
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
