@@ -7152,7 +7152,7 @@ var customStickers = [];
   });
   // 补充: 文件路径贴纸(尝试加载)
   var list = window._CLOUD_STICKERS || [];
-  var base = './stickers/custom/';
+  var base = 'https://xiaohongshu-cover.514993415.workers.dev/stickers/custom/';
   list.forEach(function(s) {
     if (cloudStickerImages[s.file]) return; // 已有base64版本
     var url = base + (s.file || (s.name + '.png'));
