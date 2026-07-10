@@ -7136,25 +7136,29 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
 // preloadStickersForFamily('A').catch(() => {});
 
-// 加载云端自定义贴纸(public/stickers/custom/manifest.json)
-// 文件暂未部署时静默跳过,不阻塞页面
+// 加载云端自定义贴纸(public/stickers/custom/) — 预加载图片,所有用户自动可见
 let cloudStickers = [];
+let cloudStickerImages = {};
 try {
   fetch('./public/stickers/custom/manifest.json', { cache: 'no-cache' })
-    .then(r => { if (!r.ok) throw new Error('manifest not deployed yet'); return r.json(); })
+    .then(r => { if (!r.ok) throw new Error('no manifest'); return r.json(); })
     .then(manifest => {
-      cloudStickers = (manifest.stickers || []).map(s => ({
-        name: s.name || 'cloud-sticker',
-        dataUrl: './public/stickers/custom/' + (s.file || (s.name + '.png')),
-        fromCloud: true,
-      }));
+      var list = manifest.stickers || [];
+      cloudStickers = list.map(function(s) {
+        var url = './public/stickers/custom/' + (s.file || (s.name + '.png'));
+        // 预加载到缓存
+        var img = new Image();
+        img.src = url;
+        cloudStickerImages[s.file || s.name] = img;
+        return { name: s.name || 'cloud', file: s.file, dataUrl: url, fromCloud: true };
+      });
       if (cloudStickers.length > 0) {
         updateCustomStickerUI();
-        console.log('☁️ 云端贴纸:', cloudStickers.length, '张');
+        console.log('☁️ 云端贴纸:', cloudStickers.length, '张(所有用户自动可用)');
       }
     })
-    .catch(() => { /* manifest 404 → 还没有云端贴纸,正常 */ });
-} catch(e) { /* fetch 不支持,跳过 */ }
+    .catch(function() { /* 未部署,正常 */ });
+} catch(e) { /* skip */ }
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
 
@@ -7249,8 +7253,9 @@ document.getElementById('btnExportStickers').addEventListener('click', async () 
   showToast('✅ ' + customStickers.length + ' 张贴纸已下载,请放入 public/stickers/custom/ 后 git commit && git push');
 });
 
-// 将自定义贴纸注入到 sticker 渲染系统(合并本地+云端)
-window.getCustomStickers = () => [...customStickers, ...cloudStickers];
+// 将自定义贴纸注入到 sticker 渲染系统(云端优先 → 本地兜底)
+window.getCustomStickers = () => [...cloudStickers, ...customStickers];
+window._cloudStickerImages = cloudStickerImages;
 updateCustomStickerUI();
 
 // ═══════════ 并发渲染 + 错误兜底 ═══════════
