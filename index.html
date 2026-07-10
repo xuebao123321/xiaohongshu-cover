@@ -7309,8 +7309,9 @@ function renderCard(canvas, family, vi, text, seedOffset, meta) {
   }
 }
 
-function assertTemplateSafeBoundsSafe(ctx, safePad, family, vi) {
+function assertTemplateSafeBounds(ctx, safePad, family, vi) {
   const W = CANVAS_W, H = CANVAS_H;
+  try { ctx.getImageData(0,0,1,1); } catch(e) { return; }
   const data = ctx.getImageData(0, 0, W, H);
   const pixels = data.data;
   const sample = (x, y) => {
