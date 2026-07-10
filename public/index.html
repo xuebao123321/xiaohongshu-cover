@@ -309,9 +309,6 @@ button{font-family:inherit}
   font-size:12px;color:#a8a098;font-weight:400;font-style:normal;
   letter-spacing:.5px;font-family:"Noto Sans SC","PingFang SC",sans-serif;
 }
-.fam-emoji{font-size:16px;flex-shrink:0;}
-.fam-count{font-size:10px;color:#9CA3AF;font-weight:400;background:#F3F4F6;padding:1px 6px;border-radius:8px;margin-left:2px;}
-.tab[data-real-family]{gap:2px;padding:9px 16px;font-size:13px;font-weight:600;}
 .s-tag{
   display:inline-block;padding:3px 9px;border-radius:4px;
   font-size:11px;font-weight:500;background:#f0ebe5;color:#7a7a7a;
@@ -350,25 +347,6 @@ button{font-family:inherit}
   z-index:9;opacity:0;transition:opacity .2s;
 }
 .card-wrap:hover .actions{opacity:1}
-/* ── 贴纸滑动导航(v5.0) ── */
-.sticker-nav{
-  position:absolute;bottom:44px;left:50%;transform:translateX(-50%);
-  display:flex;align-items:center;gap:6px;z-index:10;opacity:0;
-  transition:opacity .2s;background:rgba(0,0,0,.55);border-radius:20px;
-  padding:3px 8px;pointer-events:none;
-}
-.card-wrap:hover .sticker-nav{opacity:1;pointer-events:auto}
-.sticker-nav button{
-  background:none;border:none;color:#fff;font-size:14px;cursor:pointer;
-  padding:4px 6px;min-width:30px;min-height:30px;line-height:1;
-  border-radius:50%;transition:background .15s;
-}
-.sticker-nav button:hover{background:rgba(255,255,255,.15)}
-.sticker-nav button:active{background:rgba(255,255,255,.25)}
-.sticker-nav .sticker-indicator{
-  color:#fff;font-size:10px;white-space:nowrap;min-width:40px;text-align:center;
-  font-family:"Noto Sans SC","PingFang SC",sans-serif;letter-spacing:.5px;
-}
 .act-btn{
   background:rgba(0,0,0,.4);color:#fff;border:none;
   padding:6px 9px;border-radius:6px;font-size:13px;cursor:pointer;
@@ -489,153 +467,6 @@ button{font-family:inherit}
   .input-row{max-width:760px}
   .grid{grid-template-columns:repeat(5,1fr);gap:16px}
 }
-
-/* ===== 批量候选横向滚动 ===== */
-.batch-group {
-  margin-bottom: 32px;
-  border: 1px solid #E5E7EB;
-  border-radius: 12px;
-  padding: 16px;
-  background: #FAFAFA;
-}
-.batch-header-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.batch-header-row h3 {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
-  white-space: nowrap;
-}
-.batch-text-preview {
-  color: #6B7280;
-  font-size: 13px;
-  flex: 1;
-  min-width: 150px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.batch-actions-row {
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-.candidate-scroll {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(200px, 260px);
-  gap: 14px;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  padding-bottom: 12px;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-}
-.candidate-scroll::-webkit-scrollbar {
-  height: 6px;
-}
-.candidate-scroll::-webkit-scrollbar-track {
-  background: #F3F4F6;
-  border-radius: 3px;
-}
-.candidate-scroll::-webkit-scrollbar-thumb {
-  background: #D1D5DB;
-  border-radius: 3px;
-}
-.candidate-card {
-  scroll-snap-align: start;
-  position: relative;
-  flex-shrink: 0;
-}
-.candidate-card .cover-canvas {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 4;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: box-shadow 0.2s, transform 0.2s;
-}
-.candidate-card:hover .cover-canvas {
-  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-  transform: translateY(-2px);
-}
-.candidate-checkbox {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-  z-index: 2;
-  accent-color: #4F46E5;
-}
-.candidate-card.selected .cover-canvas {
-  outline: 3px solid #4F46E5;
-  outline-offset: -2px;
-  border-radius: 10px;
-}
-@media (max-width: 768px) {
-  .candidate-scroll {
-    grid-auto-columns: minmax(180px, 78vw);
-    gap: 10px;
-  }
-  .batch-header-row {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .batch-actions-row {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  .batch-actions-row button,
-  .batch-actions button {
-    min-height: 44px;
-    min-width: 44px;
-    padding: 8px 14px;
-    font-size: 14px;
-  }
-}
-
-/* ===== 模板管理面板 ===== */
-.template-manager-toggle {
-  position: fixed; bottom: 20px; right: 20px; z-index: 999;
-  width: 48px; height: 48px; border-radius: 50%;
-  background: #4F46E5; color: #fff; border: none; font-size: 20px;
-  cursor: pointer; box-shadow: 0 4px 12px rgba(79,70,229,0.35);
-  display: flex; align-items: center; justify-content: center;
-}
-.template-manager-panel {
-  position: fixed; top: 0; right: 0; width: 380px; max-width: 90vw; height: 100vh;
-  background: #fff; z-index: 1000; box-shadow: -4px 0 24px rgba(0,0,0,0.12);
-  overflow-y: auto; padding: 20px; display: none;
-}
-.template-manager-panel.show { display: block; }
-.tm-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.tm-header h2 { font-size: 18px; margin: 0; }
-.tm-close { background: none; border: none; font-size: 24px; cursor: pointer; color: #6B7280; }
-.tm-family-group { margin-bottom: 16px; }
-.tm-family-title { font-size: 13px; font-weight: 700; color: #6B7280; text-transform: uppercase; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #F3F4F6; }
-.tm-template-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; margin-bottom: 4px; cursor: pointer; transition: background 0.15s; }
-.tm-template-item:hover { background: #F9FAFB; }
-.tm-template-item.active { background: #EEF2FF; border: 1px solid #C7D2FE; }
-.tm-thumb { width: 48px; height: 64px; border-radius: 4px; background: #F3F4F6; flex-shrink: 0; overflow: hidden; }
-.tm-thumb canvas { width: 100%; height: 100%; object-fit: cover; }
-.tm-info { flex: 1; min-width: 0; }
-.tm-name { font-size: 13px; font-weight: 600; color: #111827; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.tm-meta { font-size: 11px; color: #9CA3AF; }
-.tm-del { background: none; border: 1px solid #FCA5A5; color: #EF4444; border-radius: 4px; padding: 2px 8px; font-size: 11px; cursor: pointer; flex-shrink: 0; }
-.tm-del:hover { background: #FEF2F2; }
-.tm-upload-area { border: 2px dashed #D1D5DB; border-radius: 8px; padding: 16px; text-align: center; margin-top: 12px; cursor: pointer; }
-.tm-upload-area:hover { border-color: #4F46E5; background: #F9FAFB; }
-.tm-upload-area p { font-size: 12px; color: #9CA3AF; margin: 4px 0 0 0; }
-.tm-stats { font-size: 11px; color: #9CA3AF; margin-top: 8px; text-align: center; }
 </style>
 </head>
 <body>
@@ -729,7 +560,7 @@ button{font-family:inherit}
 <div class="header">
   <h1>Notes Cover Studio</h1>
   <p>小 红 书 大 字 封 面 生 成 器 · 多 风 格 大 字 模 板</p>
-  <div class="badge">v5.0 · 20 种风格 · 每种 5 张 · 39 贴纸可选 · AI 色彩推荐</div>
+  <div class="badge">20 种风格 · 每种 5 张 · 可按需勾选</div>
 </div>
 
 <!-- ═══════════ 账号状态 ═══════════ -->
@@ -801,23 +632,28 @@ button{font-family:inherit}
 
 <!-- ═══════════ 风格族勾选 ═══════════ -->
 <div class="tab-group">
-  <div class="label">风 格 族(默认全选,每族含多个模板)</div>
+  <div class="label">风 格 模 板(默认全选,每种展示 5 张)</div>
   <div class="tabs" id="familyTabs">
-    <button class="tab active" data-real-family="handnote">
-      <span class="fam-emoji">📝</span> 手绘便签 <span class="fam-count" id="count-handnote">37</span> 模板
-    </button>
-    <button class="tab active" data-real-family="collage">
-      <span class="fam-emoji">✂️</span> 拼贴 <span class="fam-count" id="count-collage">37</span> 模板
-    </button>
-    <button class="tab active" data-real-family="comic">
-      <span class="fam-emoji">💥</span> 漫画pop <span class="fam-count" id="count-comic">37</span> 模板
-    </button>
-    <button class="tab active" data-real-family="newspaper">
-      <span class="fam-emoji">📰</span> 报纸大字 <span class="fam-count" id="count-newspaper">37</span> 模板
-    </button>
-    <button class="tab active" data-real-family="minimal">
-      <span class="fam-emoji">◼️</span> 极简大字 <span class="fam-count" id="count-minimal">37</span> 模板
-    </button>
+    <button class="tab active" data-family="A">手账白底</button>
+    <button class="tab active" data-family="B">黄底提醒</button>
+    <button class="tab active" data-family="C">红色事件</button>
+    <button class="tab active" data-family="D">蓝绿信息</button>
+    <button class="tab active" data-family="E">极简金句</button>
+    <button class="tab active" data-family="F">复古胶片</button>
+    <button class="tab active" data-family="G">多巴胺</button>
+    <button class="tab active" data-family="H">酸性设计</button>
+    <button class="tab active" data-family="I">孟菲斯</button>
+    <button class="tab active" data-family="J">国风</button>
+    <button class="tab active" data-family="K">赛博朋克</button>
+    <button class="tab active" data-family="L">日系清新</button>
+    <button class="tab active" data-family="M">3D 渲染</button>
+    <button class="tab active" data-family="N">蒸汽波</button>
+    <button class="tab active" data-family="O">暗黑系</button>
+    <button class="tab active" data-family="P">像素风</button>
+    <button class="tab active" data-family="Q">极光渐变</button>
+    <button class="tab active" data-family="R">复古海报</button>
+    <button class="tab active" data-family="S">玻璃拟态</button>
+    <button class="tab active" data-family="T">卡通插画</button>
   </div>
 </div>
 
@@ -843,33 +679,12 @@ button{font-family:inherit}
     placeholder="输入文案,字数不限&#10;批量模式请用 888 分隔每条文案"
     aria-label="封面文案输入"></textarea>
   <div class="btn-wrap">
-    <button class="btn primary" id="btnGenerate">🤖 自动生图</button>
+    <button class="btn primary" id="btnGenerate">生成 100 张</button>
     <button class="btn ghost" id="btnAnalyzeBatch">识别批量文案</button>
     <button class="btn outline" id="btnRerollAll">全部换一换</button>
   </div>
 </div>
 <div class="counter" id="counter">0 字</div>
-
-<!-- ═══════════ 自定义贴纸上传 ═══════════ -->
-<div class="batch-panel show" id="stickerUploadPanel" style="margin-bottom:10px;display:block">
-  <div class="batch-head">
-    <div>
-      <div class="batch-title">📎 自定义贴纸 <span style="font-weight:400;color:#a8a098;font-size:11px" id="customStickerCount">0 张</span></div>
-      <div class="batch-meta">上传透明 PNG 贴纸,生成封面时自动随机使用</div>
-    </div>
-    <div class="batch-tools">
-      <button class="btn small ghost" id="btnExportStickers">⬇ 下载贴纸包</button>
-      <button class="btn small ghost" id="btnClearCustomStickers">清空</button>
-    </div>
-  </div>
-  <div style="display:flex;gap:6px;flex-wrap:wrap;min-height:40px;align-items:center" id="customStickerList">
-    <label class="btn small outline" id="btnUploadSticker" style="cursor:pointer;margin:0">
-      ➕ 上传贴纸(PNG)
-      <input type="file" id="stickerFileInput" accept="image/png" multiple hidden style="display:none">
-    </label>
-    <span style="font-size:11px;color:#a8a098">拖拽 PNG 到此处也可上传</span>
-  </div>
-</div>
 
 <!-- ═══════════ 批量文案识别 ═══════════ -->
 <div class="batch-panel" id="batchPanel">
@@ -931,118 +746,6 @@ import {
   withAlpha,
   pickBlock,
 } from './lib/colors.js';
-import {
-  drawNotebookGrid,
-  drawNotebookLined,
-  drawDotGrid,
-  drawKraftPaper,
-  drawRicePaper,
-  drawWashiPaper,
-  drawCardboardTexture,
-  drawVintagePaper,
-  drawFilmGrain,
-  drawHalftoneDots,
-  drawWatercolorWash,
-  drawInkSplatter,
-  drawNoiseTexture,
-  drawScanlines,
-  drawCrosshatch,
-  drawPolkaDots,
-  drawZigzagStripes,
-  drawCheckerboard,
-  drawConcentricRings,
-  drawDiagonalStripes,
-} from './lib/textures.js';
-import {
-  drawSoftDropShadow,
-  drawHardDropShadow,
-  drawColoredGlow,
-  drawInnerShadow,
-  drawText3DShadow,
-  drawLongShadow,
-  drawLayeredShadow,
-  drawFloatingShadow,
-  drawStickerShadow,
-  drawAmbientOcclusion,
-} from './lib/shadows.js';
-import {
-  createSunsetGradient,
-  createAuroraGradient,
-  createNeonGlowGradient,
-  createMetallicGradient,
-  createChromeGradient,
-  createGlassGradient,
-  createPastelWash,
-  createDuotoneGradient,
-  createRadialSphere,
-  createMeshGradient,
-  createVignetteGradient,
-  createLightLeak,
-} from './lib/gradients.js';
-import {
-  drawThumb3Dv2Sticker,
-  drawMegaphone3DSticker,
-  drawStar3DSticker,
-  drawHeart3DSticker,
-  drawFire3DSticker,
-  drawDiamond3DSticker,
-  drawCrown3DSticker,
-  drawTrophy3DSticker,
-  drawBalloon3DSticker,
-  drawGiftbox3DSticker,
-  drawWashiTapeSticker,
-  drawStickyNoteSticker,
-  drawPaperClipSticker,
-  drawPushpinSticker,
-  drawRealisticStampSticker,
-  drawPolaroidFrameSticker,
-  drawIndexTabSticker,
-  drawBinderClipSticker,
-  drawHandDrawnArrowSticker,
-  drawHandDrawnUnderlineSticker,
-  drawHandDrawnCirclev2Sticker,
-  drawDoodleStarSticker,
-  drawScribbleCloudSticker,
-  drawMarkerStrikeSticker,
-  drawCuteCatFaceSticker,
-  drawCuteDogFaceSticker,
-  drawSparkleEyesSticker,
-  drawAngryFaceSticker,
-  drawShockedFaceSticker,
-  drawLoveEyesSticker,
-  drawFullBodyCatSticker,
-  drawFullBodyDogSticker,
-  drawBoyCharacterSticker,
-  drawGirlCharacterSticker,
-  drawCoffeeCupSticker,
-  drawFlowerSticker,
-  drawCloverSticker,
-  renderAsSticker,
-} from './lib/stickers-canvas.js';
-import {
-  STICKER_REGISTRY,
-  FAMILY_STICKER_POOL,
-  preloadStickersForFamily,
-  getRandomStickers,
-  drawStickerImage,
-  isStickerLoaded,
-  getStickerFallbackRef,
-  registerFallbackFn,
-  getLoadedCount,
-  getTotalCount,
-} from './lib/stickers.js';
-import { analyzeTextAndRoute, matchEmojiForText, analyzeTextTone } from './lib/color-ai.js';
-import './lib/real-style-map.js';
-import './lib/real-style-typography.js';
-import './lib/real-style-center-shapes.js';
-import './lib/real-style-layouts.js';
-import './lib/real-style-decorations.js';
-import './lib/real-style-renderer.js';
-import './lib/real-style-random.js';
-import './lib/real-style-stickers.js';
-import './lib/template-loader.js';
-import './lib/cloud-stickers.js';
-import './lib/template-renderer.js';
 
 // ═══════════ 全局配置 ═══════════
 const CANVAS_W = 1242;   // 3:4 标准小红书尺寸
@@ -1097,24 +800,14 @@ const FAMILY_TO_PALETTE = {
 const STATE = {
   text: '',
   font: 'black',
-  families: new Set(['handnote','collage','comic','newspaper','minimal']),
+  families: new Set(Object.keys(FAMILY_LABELS)),
   seed: 0,
   activeCount: 0,
-  currentLayoutMode: '',  // v5.0: 当前排版模式(headline/standard/subhead/newspaper)
-  textAnalysis: null,      // v5.0: 文案分析结果(色调/Emoji/推荐风格族)
-  realStyleMode: true,     // 真实风格模式开关（?mode=legacy 可关闭）
 };
 
 const BATCH_STATE = {
   items: [],
   generated: false,
-};
-
-const CANDIDATE_CONFIG = {
-  candidatesPerText: 0,   // 0 = 动态：全部模板数
-  initialRenderCount: 8,
-  lazyLoadBatchSize: 12,   // 每批加载12张，60张分5批
-  familiesPerText: 5,
 };
 
 const AUTH_STATE = {
@@ -1128,19 +821,6 @@ const AUTH_STATE = {
     canBatchDownload: false,
   },
 };
-
-// URL 参数工具
-function getUrlParam(name) {
-  try {
-    const url = new URL(window.location.href);
-    return url.searchParams.get(name);
-  } catch (e) { return null; }
-}
-
-// 真实风格模式：URL 参数 ?mode=legacy 可回退旧版
-if (getUrlParam('mode') === 'legacy') {
-  STATE.realStyleMode = false;
-}
 
 // 暴露给调试
 window.STATE = STATE;
@@ -1830,31 +1510,12 @@ function styleA_legacyHandDrawn(ctx, text, palette, options) {
 }
 
 // 文字宽度估算(用于居中定位)
-// ═══════════ v5.0 文字测量缓存(性能优化) ═══════════
-const _measureCache = new Map();
-const _MAX_CACHE_SIZE = 2000;
-
-function cachedMeasureText(ctx, text, fontSize, family, weight) {
-  const key = `${text}|${fontSize}|${family}|${weight}`;
-  if (_measureCache.has(key)) return _measureCache.get(key);
+function measureTextWidth(ctx, text, fontSize, family, weight) {
+  ctx.save();
   ctx.font = `${weight} ${fontSize}px ${family}`;
   const w = ctx.measureText(text).width;
-  // 限制缓存大小
-  if (_measureCache.size >= _MAX_CACHE_SIZE) {
-    const keys = [..._measureCache.keys()];
-    for (let i = 0; i < Math.floor(_MAX_CACHE_SIZE / 2); i++) _measureCache.delete(keys[i]);
-  }
-  _measureCache.set(key, w);
+  ctx.restore();
   return w;
-}
-
-/** 清空测量缓存(切换字体或新生成时调用) */
-function clearMeasureCache() {
-  _measureCache.clear();
-}
-
-function measureTextWidth(ctx, text, fontSize, family, weight) {
-  return cachedMeasureText(ctx, text, fontSize, family, weight);
 }
 
 // ════════════════════════════════════════════════════════════════
@@ -3216,81 +2877,29 @@ function gdTextBlock(ctx, text, x, y, maxW, maxH, fill, opts) {
   ctx.beginPath();
   ctx.rect(clipX, clipY, Math.min(maxW, CANVAS_W - clipX), Math.min(maxH + pad * 2, CANVAS_H - clipY));
   ctx.clip();
+  ctx.font = `${fontConf.weight} ${size}px ${fontConf.family}`;
   ctx.textBaseline = 'top';
   ctx.textAlign = 'left';
   ctx.lineJoin = 'round';
-
-  const useFontMixing = opts.fontMixing && text && String(text).replace(/\s/g, '').length < 20;
-
   for (let i = 0; i < layoutLines.length; i++) {
     const ln = layoutLines[i];
     if (ln === '') continue;
-
-    if (useFontMixing) {
-      // 逐字符绘制,支持 ASCII 字体切换 + 标点缩放
-      drawMixedFontLine(ctx, ln, x, top + i * size * lineHeight, size, fill, fontConf, align, stroke, pad, CANVAS_W);
-    } else {
-      // 原有逻辑:整行绘制
-      ctx.font = `${fontConf.weight} ${size}px ${fontConf.family}`;
-      const w = ctx.measureText(ln).width;
-      let tx = x;
-      if (align === 'center') tx = x - w / 2;
-      if (align === 'right') tx = x - w;
-      tx = Math.max(pad, Math.min(tx, CANVAS_W - w - pad));
-      const ty = top + i * size * lineHeight;
-      if (stroke) {
-        ctx.lineWidth = stroke.width || 10;
-        ctx.strokeStyle = stroke.color || '#FFFFFF';
-        ctx.strokeText(ln, tx, ty);
-      }
-      ctx.fillStyle = fill;
-      ctx.fillText(ln, tx, ty);
-    }
-  }
-  ctx.restore();
-  return { size, lines: layoutLines, height: totalH };
-}
-
-/**
- * 逐字符绘制一行文字,ASCII 字符自动切换字体,标点缩放。
- * 仅在文本较短(<20字)且 opts.fontMixing=true 时使用。
- */
-function drawMixedFontLine(ctx, line, x, y, size, fill, fontConf, align, stroke, pad, canvasW) {
-  const mixedFont = '"DM Serif Display","Noto Serif SC",serif';
-  const chars = [...line];
-  // 计算总宽度
-  let totalW = 0;
-  const charWidths = [];
-  for (const ch of chars) {
-    const isASCII = /[a-zA-Z0-9]/.test(ch);
-    const isPunct = /[，。！？、；：""''（）《》【】…—·,.\!\?;:()\[\]{}'\"&@#%^*+=<>/~`|\\-]/.test(ch);
-    ctx.font = isASCII ? `900 ${size}px ${mixedFont}` : `${fontConf.weight} ${size}px ${fontConf.family}`;
-    const cw = ctx.measureText(ch).width * (isPunct ? 0.8 : 1.0);
-    charWidths.push({ w: cw, isASCII, isPunct });
-    totalW += cw;
-  }
-  // 起始X
-  let tx = x;
-  if (align === 'center') tx = x - totalW / 2;
-  if (align === 'right') tx = x - totalW;
-  tx = Math.max(pad, Math.min(tx, canvasW - totalW - pad));
-  // 逐字符绘制
-  let cx = tx;
-  for (let i = 0; i < chars.length; i++) {
-    const ch = chars[i];
-    const cw = charWidths[i];
-    const chSize = cw.isPunct ? size * 0.8 : size;
-    const chY = cw.isPunct ? y + size * 0.1 : y;
-    ctx.font = cw.isASCII ? `900 ${chSize}px ${mixedFont}` : `${fontConf.weight} ${chSize}px ${fontConf.family}`;
+    const w = ctx.measureText(ln).width;
+    let tx = x;
+    if (align === 'center') tx = x - w / 2;
+    if (align === 'right') tx = x - w;
+    tx = Math.max(pad, Math.min(tx, CANVAS_W - w - pad));
+    const ty = top + i * size * lineHeight;
     if (stroke) {
       ctx.lineWidth = stroke.width || 10;
       ctx.strokeStyle = stroke.color || '#FFFFFF';
-      ctx.strokeText(ch, cx, chY);
+      ctx.strokeText(ln, tx, ty);
     }
     ctx.fillStyle = fill;
-    ctx.fillText(ch, cx, chY);
-    cx += cw.w;
+    ctx.fillText(ln, tx, ty);
   }
+  ctx.restore();
+  return { size, lines: layoutLines, height: totalH };
 }
 
 function gdWrapLines(ctx, lines, maxW) {
@@ -3652,105 +3261,27 @@ const TEMPLATE_VARIANTS = Object.freeze([
 ]);
 
 const LOCKED_TEMPLATE_STYLES = Object.freeze({
-  A: { template: 'notebook', name: '手账白底', bg: ['#FBFAF4', '#FFFFFF', '#FFF8DC', '#F4FAFF', '#FCF7EF'], text: '#111111', accent: '#E6213D', second: '#FFEC47',
-    stickers: ['catCard','paintRollerReal','eyesBig','paperCat','thumb3d','washiTape','stickyNote','paperClip','pushpin','realisticStamp','polaroidFrame','indexTab','handDrawnArrow','handDrawnUnderline','handDrawnCirclev2','doodleStar','scribbleCloud','markerStrike','cuteCatFace','cuteDogFace','sparkleEyes','loveEyes','thumb3d_v2','star3d','heart3d','balloon3d','giftbox3d','fire3d','diamond3d','megaphone3d','crown3d','trophy3d','angryFace','shockedFace','binderClip','megaphonePlush','emojiAngry3d','fistComic','dogFrame'] },
-  B: { template: 'warning', name: '黄底提醒', bg: ['#FFE45C', '#FFD84D', '#FFF1A8', '#F7D000', '#FFFFFF'], text: '#111111', accent: '#E6213D', second: '#2677DE',
-    stickers: ['megaphonePlush','thumb3d','emojiAngry3d','paintRollerReal','dogFrame','megaphone3d','realisticStamp','pushpin','binderClip','handDrawnArrow','markerStrike','fire3d','star3d','crown3d','trophy3d','diamond3d','giftbox3d','thumb3d_v2','balloon3d','handDrawnUnderline','handDrawnCirclev2','doodleStar','scribbleCloud','angryFace','shockedFace','sparkleEyes','loveEyes','cuteCatFace','cuteDogFace','paperCat','washiTape','stickyNote','polaroidFrame','indexTab','paperClip','catCard','eyesBig','fistComic','heart3d'] },
-  C: { template: 'event', name: '红色事件', bg: ['#ED0108', '#C90012', '#B00020', '#E6213D', '#1A1A1A'], text: '#FFFFFF', accent: '#FFEC47', second: '#FFFFFF',
-    stickers: ['fistComic','megaphonePlush','thumb3d','emojiAngry3d','paintRollerReal','fire3d','star3d','crown3d','trophy3d','diamond3d','megaphone3d','thumb3d_v2','heart3d','balloon3d','giftbox3d','realisticStamp','pushpin','binderClip','handDrawnArrow','markerStrike','doodleStar','handDrawnCirclev2','angryFace','shockedFace','sparkleEyes','loveEyes','dogFrame','catCard','paperCat','eyesBig','scribbleCloud','handDrawnUnderline','washiTape','stickyNote','polaroidFrame','indexTab','paperClip','cuteCatFace','cuteDogFace'] },
-  D: { template: 'info', name: '蓝绿信息', bg: ['#DDF7F3', '#E9F3FF', '#F4F7FF', '#E6FFF4', '#FFFFFF'], text: '#111111', accent: '#2677DE', second: '#22B26B',
-    stickers: ['paperCat','dogFrame','eyesBig','paintRollerReal','thumb3d','stickyNote','indexTab','paperClip','pushpin','polaroidFrame','washiTape','realisticStamp','handDrawnUnderline','handDrawnCirclev2','handDrawnArrow','scribbleCloud','markerStrike','doodleStar','cuteCatFace','cuteDogFace','sparkleEyes','loveEyes','thumb3d_v2','star3d','diamond3d','heart3d','balloon3d','giftbox3d','fire3d','megaphone3d','crown3d','trophy3d','catCard','angryFace','shockedFace','binderClip','megaphonePlush','emojiAngry3d','fistComic'] },
-  E: { template: 'quote', name: '极简金句', bg: ['#FFFFFF', '#FBFAF4', '#F6FFF9', '#FFFDF1', '#F7FAFF'], text: '#111111', accent: '#2AB673', second: '#FFEC47',
-    stickers: ['eyesBig','paperCat','catCard','thumb3d','paintRollerReal','handDrawnCirclev2','handDrawnUnderline','handDrawnArrow','doodleStar','scribbleCloud','markerStrike','washiTape','stickyNote','paperClip','pushpin','realisticStamp','loveEyes','sparkleEyes','cuteCatFace','cuteDogFace','thumb3d_v2','star3d','heart3d','diamond3d','balloon3d','polaroidFrame','indexTab','dogFrame','megaphonePlush','emojiAngry3d','fistComic','fire3d','crown3d','trophy3d','megaphone3d','giftbox3d','angryFace','shockedFace','binderClip'] },
-  F: { template: 'poster', name: '复古胶片', bg: ['#3A2A1A', '#1A2B3A', '#2A3A28', '#4A2A38', '#1A1A1A'], text: '#F8F1E8', accent: '#D4A574', second: '#FFE0A8',
-    stickers: ['catCard','dogFrame','paintRollerReal','thumb3d','eyesBig','polaroidFrame','realisticStamp','washiTape','paperClip','binderClip','handDrawnCirclev2','handDrawnUnderline','scribbleCloud','doodleStar','cuteCatFace','cuteDogFace','loveEyes','sparkleEyes','thumb3d_v2','star3d','heart3d','diamond3d','crown3d','trophy3d','balloon3d','giftbox3d','fire3d','megaphone3d','stickyNote','indexTab','pushpin','handDrawnArrow','markerStrike','paperCat','angryFace','shockedFace','megaphonePlush','emojiAngry3d','fistComic'] },
-  G: { template: 'dopamine', name: '多巴胺', bg: ['#FF6B9D', '#4ECDC4', '#7FCD91', '#9B5DE5', '#FFE066'], text: '#111111', accent: '#FFFFFF', second: '#FFEC47',
-    stickers: ['megaphonePlush','paperCat','emojiAngry3d','thumb3d','fistComic','balloon3d','star3d','heart3d','fire3d','giftbox3d','crown3d','trophy3d','diamond3d','megaphone3d','thumb3d_v2','sparkleEyes','loveEyes','cuteCatFace','cuteDogFace','doodleStar','scribbleCloud','handDrawnArrow','markerStrike','handDrawnCirclev2','handDrawnUnderline','washiTape','stickyNote','pushpin','realisticStamp','polaroidFrame','indexTab','paperClip','angryFace','shockedFace','catCard','dogFrame','eyesBig','paintRollerReal','binderClip'] },
-  H: { template: 'darkPop', name: '酸性设计', bg: ['#0A0A0A', '#101014', '#0B1220', '#170A24', '#111111'], text: '#FFFFFF', accent: '#00FF88', second: '#FF4FD8',
-    stickers: ['emojiAngry3d','fistComic','thumb3d','eyesBig','megaphonePlush','diamond3d','fire3d','star3d','crown3d','megaphone3d','thumb3d_v2','heart3d','trophy3d','balloon3d','giftbox3d','angryFace','shockedFace','sparkleEyes','loveEyes','handDrawnArrow','markerStrike','doodleStar','handDrawnCirclev2','scribbleCloud','pushpin','binderClip','realisticStamp','polaroidFrame','paperClip','cuteCatFace','cuteDogFace','dogFrame','catCard','paperCat','paintRollerReal','washiTape','stickyNote','indexTab','handDrawnUnderline'] },
-  I: { template: 'memphis', name: '孟菲斯', bg: ['#FFE5EC', '#D4F1F4', '#FFF8DC', '#E6E6FA', '#FFDAB9'], text: '#111111', accent: '#FF6B6B', second: '#2677DE',
-    stickers: ['fistComic','paperCat','thumb3d','eyesBig','paintRollerReal','doodleStar','scribbleCloud','handDrawnArrow','handDrawnCirclev2','markerStrike','handDrawnUnderline','washiTape','stickyNote','pushpin','indexTab','star3d','heart3d','diamond3d','balloon3d','giftbox3d','thumb3d_v2','sparkleEyes','loveEyes','cuteCatFace','cuteDogFace','angryFace','shockedFace','megaphone3d','fire3d','crown3d','trophy3d','realisticStamp','polaroidFrame','paperClip','binderClip','catCard','dogFrame','megaphonePlush','emojiAngry3d'] },
-  J: { template: 'classic', name: '国风', bg: ['#F5EBD8', '#F2EAD3', '#F8E8D0', '#E8E4D8', '#E8F0E8'], text: '#2D2520', accent: '#C8252C', second: '#B0823B',
-    stickers: ['dogFrame','catCard','paintRollerReal','thumb3d','paperCat','realisticStamp','washiTape','polaroidFrame','indexTab','paperClip','handDrawnCirclev2','handDrawnUnderline','handDrawnArrow','scribbleCloud','doodleStar','cuteCatFace','cuteDogFace','loveEyes','sparkleEyes','thumb3d_v2','star3d','heart3d','diamond3d','crown3d','fire3d','balloon3d','giftbox3d','megaphone3d','trophy3d','stickyNote','pushpin','binderClip','markerStrike','angryFace','shockedFace','eyesBig','megaphonePlush','emojiAngry3d','fistComic'] },
-  K: { template: 'darkPop', name: '赛博朋克', bg: ['#1A0A2E', '#0A0A1F', '#0A1A0A', '#160A24', '#111111'], text: '#FFFFFF', accent: '#00F5FF', second: '#FF4FD8',
-    stickers: ['fistComic','thumb3d','emojiAngry3d','megaphonePlush','eyesBig','diamond3d','fire3d','star3d','megaphone3d','crown3d','thumb3d_v2','heart3d','trophy3d','balloon3d','giftbox3d','angryFace','shockedFace','sparkleEyes','handDrawnArrow','markerStrike','doodleStar','handDrawnCirclev2','scribbleCloud','pushpin','binderClip','realisticStamp','loveEyes','cuteCatFace','cuteDogFace','dogFrame','catCard','paperCat','paintRollerReal','washiTape','stickyNote','indexTab','polaroidFrame','paperClip','handDrawnUnderline'] },
-  L: { template: 'soft', name: '日系清新', bg: ['#FFF2F6', '#EEF7FF', '#FFF8E8', '#F2FFF7', '#F8F3FF'], text: '#222222', accent: '#FFB8C8', second: '#A8D890',
-    stickers: ['catCard','paperCat','paintRollerReal','eyesBig','thumb3d','washiTape','stickyNote','polaroidFrame','indexTab','paperClip','pushpin','cuteCatFace','cuteDogFace','sparkleEyes','loveEyes','scribbleCloud','doodleStar','handDrawnArrow','handDrawnCirclev2','handDrawnUnderline','markerStrike','heart3d','star3d','balloon3d','giftbox3d','thumb3d_v2','diamond3d','fire3d','crown3d','trophy3d','megaphone3d','realisticStamp','binderClip','dogFrame','angryFace','shockedFace','megaphonePlush','emojiAngry3d','fistComic'] },
-  M: { template: 'soft', name: '3D 渲染', bg: ['#EAF2FF', '#FFF1FA', '#F1FFF4', '#F6F0FF', '#FFF7E8'], text: '#111111', accent: '#8BB8FF', second: '#FFB8C8',
-    stickers: ['thumb3d','emojiAngry3d','megaphonePlush','paintRollerReal','fistComic','thumb3d_v2','star3d','heart3d','balloon3d','diamond3d','megaphone3d','fire3d','crown3d','trophy3d','giftbox3d','sparkleEyes','loveEyes','cuteCatFace','cuteDogFace','angryFace','shockedFace','doodleStar','handDrawnCirclev2','scribbleCloud','handDrawnArrow','markerStrike','handDrawnUnderline','pushpin','binderClip','realisticStamp','polaroidFrame','washiTape','stickyNote','indexTab','paperClip','paperCat','dogFrame','catCard','eyesBig'] },
-  N: { template: 'darkPop', name: '蒸汽波', bg: ['#2B1055', '#3B1D7A', '#53278D', '#1D2671', '#261447'], text: '#FFFFFF', accent: '#FF8BD1', second: '#00F5FF',
-    stickers: ['megaphonePlush','emojiAngry3d','thumb3d','catCard','eyesBig','diamond3d','fire3d','star3d','heart3d','megaphone3d','crown3d','thumb3d_v2','trophy3d','balloon3d','giftbox3d','angryFace','shockedFace','sparkleEyes','loveEyes','handDrawnArrow','markerStrike','doodleStar','handDrawnCirclev2','scribbleCloud','pushpin','binderClip','realisticStamp','polaroidFrame','fistComic','cuteCatFace','cuteDogFace','dogFrame','paperCat','paintRollerReal','washiTape','stickyNote','indexTab','paperClip','handDrawnUnderline'] },
-  O: { template: 'poster', name: '暗黑系', bg: ['#050505', '#111111', '#1A1410', '#10151A', '#180D14'], text: '#F5F0E8', accent: '#C9A45C', second: '#FFFFFF',
-    stickers: ['dogFrame','catCard','thumb3d','fistComic','paintRollerReal','realisticStamp','polaroidFrame','binderClip','paperClip','pushpin','crown3d','trophy3d','diamond3d','star3d','heart3d','thumb3d_v2','fire3d','megaphone3d','balloon3d','giftbox3d','handDrawnCirclev2','handDrawnUnderline','handDrawnArrow','scribbleCloud','doodleStar','markerStrike','washiTape','stickyNote','indexTab','angryFace','shockedFace','sparkleEyes','loveEyes','cuteCatFace','cuteDogFace','eyesBig','paperCat','megaphonePlush','emojiAngry3d'] },
-  P: { template: 'info', name: '像素风', bg: ['#D8F3FF', '#FFF2C6', '#F2FFD8', '#FFE0F0', '#E8E8FF'], text: '#111111', accent: '#111111', second: '#E6213D',
-    stickers: ['eyesBig','paperCat','thumb3d','fistComic','dogFrame','doodleStar','scribbleCloud','handDrawnArrow','markerStrike','handDrawnCirclev2','handDrawnUnderline','thumb3d_v2','star3d','heart3d','diamond3d','fire3d','balloon3d','giftbox3d','crown3d','trophy3d','megaphone3d','pushpin','binderClip','realisticStamp','paperClip','washiTape','stickyNote','indexTab','polaroidFrame','cuteCatFace','cuteDogFace','sparkleEyes','loveEyes','angryFace','shockedFace','catCard','paintRollerReal','megaphonePlush','emojiAngry3d'] },
-  Q: { template: 'soft', name: '极光渐变', bg: ['#DFF6FF', '#FCE7FF', '#E6FFF2', '#FFF4D6', '#EDE7FF'], text: '#111111', accent: '#6B7CFF', second: '#FF8BD1',
-    stickers: ['megaphonePlush','paperCat','thumb3d','emojiAngry3d','eyesBig','star3d','diamond3d','heart3d','balloon3d','megaphone3d','fire3d','crown3d','trophy3d','thumb3d_v2','giftbox3d','sparkleEyes','loveEyes','cuteCatFace','cuteDogFace','scribbleCloud','doodleStar','handDrawnCirclev2','handDrawnArrow','handDrawnUnderline','markerStrike','washiTape','stickyNote','pushpin','realisticStamp','polaroidFrame','indexTab','paperClip','angryFace','shockedFace','dogFrame','catCard','paintRollerReal','fistComic','binderClip'] },
-  R: { template: 'poster', name: '复古海报', bg: ['#F5E6CF', '#F8ECD8', '#EFE1C7', '#F7EAD5', '#F4E2C5'], text: '#21170F', accent: '#B0823B', second: '#C8252C',
-    stickers: ['paintRollerReal','thumb3d','dogFrame','catCard','megaphonePlush','realisticStamp','polaroidFrame','indexTab','washiTape','paperClip','pushpin','binderClip','crown3d','trophy3d','star3d','diamond3d','heart3d','thumb3d_v2','fire3d','megaphone3d','balloon3d','giftbox3d','handDrawnCirclev2','handDrawnUnderline','handDrawnArrow','scribbleCloud','doodleStar','markerStrike','stickyNote','cuteCatFace','cuteDogFace','sparkleEyes','loveEyes','angryFace','shockedFace','eyesBig','paperCat','emojiAngry3d','fistComic'] },
-  S: { template: 'info', name: '玻璃拟态', bg: ['#EAF4FF', '#F7EDFF', '#EFFFF6', '#FFF3EC', '#EEF0FF'], text: '#111111', accent: '#FFFFFF', second: '#2677DE',
-    stickers: ['thumb3d','emojiAngry3d','paperCat','megaphonePlush','catCard','diamond3d','star3d','heart3d','balloon3d','thumb3d_v2','megaphone3d','fire3d','crown3d','trophy3d','giftbox3d','pushpin','paperClip','binderClip','realisticStamp','polaroidFrame','indexTab','washiTape','stickyNote','handDrawnCirclev2','handDrawnUnderline','handDrawnArrow','scribbleCloud','doodleStar','markerStrike','cuteCatFace','cuteDogFace','sparkleEyes','loveEyes','angryFace','shockedFace','dogFrame','eyesBig','paintRollerReal','fistComic'] },
-  T: { template: 'dopamine', name: '卡通插画', bg: ['#FFE7F0', '#FFF1B8', '#E7F8FF', '#F0FFE7', '#F5E7FF'], text: '#111111', accent: '#FF6B9D', second: '#4ECDC4',
-    stickers: ['paperCat','dogFrame','megaphonePlush','catCard','eyesBig','cuteCatFace','cuteDogFace','sparkleEyes','loveEyes','angryFace','shockedFace','scribbleCloud','doodleStar','handDrawnArrow','markerStrike','handDrawnCirclev2','handDrawnUnderline','washiTape','stickyNote','heart3d','star3d','balloon3d','giftbox3d','thumb3d_v2','fire3d','diamond3d','crown3d','trophy3d','megaphone3d','pushpin','realisticStamp','polaroidFrame','indexTab','paperClip','binderClip','thumb3d','paintRollerReal','emojiAngry3d','fistComic'] },
+  A: { template: 'notebook', name: '手账白底', bg: ['#FBFAF4', '#FFFFFF', '#FFF8DC', '#F4FAFF', '#FCF7EF'], text: '#111111', accent: '#E6213D', second: '#FFEC47', stickers: ['catCard', 'paintRollerReal', 'eyesBig', 'paperCat', 'thumb3d'] },
+  B: { template: 'warning', name: '黄底提醒', bg: ['#FFE45C', '#FFD84D', '#FFF1A8', '#F7D000', '#FFFFFF'], text: '#111111', accent: '#E6213D', second: '#2677DE', stickers: ['megaphonePlush', 'thumb3d', 'emojiAngry3d', 'paintRollerReal', 'dogFrame'] },
+  C: { template: 'event', name: '红色事件', bg: ['#ED0108', '#C90012', '#B00020', '#E6213D', '#1A1A1A'], text: '#FFFFFF', accent: '#FFEC47', second: '#FFFFFF', stickers: ['fistComic', 'megaphonePlush', 'thumb3d', 'emojiAngry3d', 'paintRollerReal'] },
+  D: { template: 'info', name: '蓝绿信息', bg: ['#DDF7F3', '#E9F3FF', '#F4F7FF', '#E6FFF4', '#FFFFFF'], text: '#111111', accent: '#2677DE', second: '#22B26B', stickers: ['paperCat', 'dogFrame', 'eyesBig', 'paintRollerReal', 'thumb3d'] },
+  E: { template: 'quote', name: '极简金句', bg: ['#FFFFFF', '#FBFAF4', '#F6FFF9', '#FFFDF1', '#F7FAFF'], text: '#111111', accent: '#2AB673', second: '#FFEC47', stickers: ['eyesBig', 'paperCat', 'catCard', 'thumb3d', 'paintRollerReal'] },
+  F: { template: 'poster', name: '复古胶片', bg: ['#3A2A1A', '#1A2B3A', '#2A3A28', '#4A2A38', '#1A1A1A'], text: '#F8F1E8', accent: '#D4A574', second: '#FFE0A8', stickers: ['catCard', 'dogFrame', 'paintRollerReal', 'thumb3d', 'eyesBig'] },
+  G: { template: 'dopamine', name: '多巴胺', bg: ['#FF6B9D', '#4ECDC4', '#7FCD91', '#9B5DE5', '#FFE066'], text: '#111111', accent: '#FFFFFF', second: '#FFEC47', stickers: ['megaphonePlush', 'paperCat', 'emojiAngry3d', 'thumb3d', 'fistComic'] },
+  H: { template: 'darkPop', name: '酸性设计', bg: ['#0A0A0A', '#101014', '#0B1220', '#170A24', '#111111'], text: '#FFFFFF', accent: '#00FF88', second: '#FF4FD8', stickers: ['emojiAngry3d', 'fistComic', 'thumb3d', 'eyesBig', 'megaphonePlush'] },
+  I: { template: 'memphis', name: '孟菲斯', bg: ['#FFE5EC', '#D4F1F4', '#FFF8DC', '#E6E6FA', '#FFDAB9'], text: '#111111', accent: '#FF6B6B', second: '#2677DE', stickers: ['fistComic', 'paperCat', 'thumb3d', 'eyesBig', 'paintRollerReal'] },
+  J: { template: 'classic', name: '国风', bg: ['#F5EBD8', '#F2EAD3', '#F8E8D0', '#E8E4D8', '#E8F0E8'], text: '#2D2520', accent: '#C8252C', second: '#B0823B', stickers: ['dogFrame', 'catCard', 'paintRollerReal', 'thumb3d', 'paperCat'] },
+  K: { template: 'darkPop', name: '赛博朋克', bg: ['#1A0A2E', '#0A0A1F', '#0A1A0A', '#160A24', '#111111'], text: '#FFFFFF', accent: '#00F5FF', second: '#FF4FD8', stickers: ['fistComic', 'thumb3d', 'emojiAngry3d', 'megaphonePlush', 'eyesBig'] },
+  L: { template: 'soft', name: '日系清新', bg: ['#FFF2F6', '#EEF7FF', '#FFF8E8', '#F2FFF7', '#F8F3FF'], text: '#222222', accent: '#FFB8C8', second: '#A8D890', stickers: ['catCard', 'paperCat', 'paintRollerReal', 'eyesBig', 'thumb3d'] },
+  M: { template: 'soft', name: '3D 渲染', bg: ['#EAF2FF', '#FFF1FA', '#F1FFF4', '#F6F0FF', '#FFF7E8'], text: '#111111', accent: '#8BB8FF', second: '#FFB8C8', stickers: ['thumb3d', 'emojiAngry3d', 'megaphonePlush', 'paintRollerReal', 'fistComic'] },
+  N: { template: 'darkPop', name: '蒸汽波', bg: ['#2B1055', '#3B1D7A', '#53278D', '#1D2671', '#261447'], text: '#FFFFFF', accent: '#FF8BD1', second: '#00F5FF', stickers: ['megaphonePlush', 'emojiAngry3d', 'thumb3d', 'catCard', 'eyesBig'] },
+  O: { template: 'poster', name: '暗黑系', bg: ['#050505', '#111111', '#1A1410', '#10151A', '#180D14'], text: '#F5F0E8', accent: '#C9A45C', second: '#FFFFFF', stickers: ['dogFrame', 'catCard', 'thumb3d', 'fistComic', 'paintRollerReal'] },
+  P: { template: 'info', name: '像素风', bg: ['#D8F3FF', '#FFF2C6', '#F2FFD8', '#FFE0F0', '#E8E8FF'], text: '#111111', accent: '#111111', second: '#E6213D', stickers: ['eyesBig', 'paperCat', 'thumb3d', 'fistComic', 'dogFrame'] },
+  Q: { template: 'soft', name: '极光渐变', bg: ['#DFF6FF', '#FCE7FF', '#E6FFF2', '#FFF4D6', '#EDE7FF'], text: '#111111', accent: '#6B7CFF', second: '#FF8BD1', stickers: ['megaphonePlush', 'paperCat', 'thumb3d', 'emojiAngry3d', 'eyesBig'] },
+  R: { template: 'poster', name: '复古海报', bg: ['#F5E6CF', '#F8ECD8', '#EFE1C7', '#F7EAD5', '#F4E2C5'], text: '#21170F', accent: '#B0823B', second: '#C8252C', stickers: ['paintRollerReal', 'thumb3d', 'dogFrame', 'catCard', 'megaphonePlush'] },
+  S: { template: 'info', name: '玻璃拟态', bg: ['#EAF4FF', '#F7EDFF', '#EFFFF6', '#FFF3EC', '#EEF0FF'], text: '#111111', accent: '#FFFFFF', second: '#2677DE', stickers: ['thumb3d', 'emojiAngry3d', 'paperCat', 'megaphonePlush', 'catCard'] },
+  T: { template: 'dopamine', name: '卡通插画', bg: ['#FFE7F0', '#FFF1B8', '#E7F8FF', '#F0FFE7', '#F5E7FF'], text: '#111111', accent: '#FF6B9D', second: '#4ECDC4', stickers: ['paperCat', 'dogFrame', 'megaphonePlush', 'catCard', 'eyesBig'] },
 });
-
-/**
- * v5.0 增强渲染入口。
- * 在 v4.0 模板体系基础上整合了所有 v5.0 升级:
- *   - 纹理(textures.js) / 阴影(shadows.js) / 渐变(gradients.js)
- *   - 1-3 随机贴纸槽位 + 30 个新 Canvas 贴纸
- *   - 4 种排版模式 + 多字体混排
- *   - AI 色彩/Emoji 辅助(color-ai.js)
- *
- * 与 drawLockedTemplateCover 接口完全一致,可直接替换。
- */
-function drawTemplateEnhancedCover(ctx, text, palette, options, family) {
-  // ══════ 模板驱动模式（优先）══════
-  if (STATE.realStyleMode && window.TEMPLATE_LIBRARY && window.renderTemplate) {
-    if (options && options.templateId) {
-      var content = window.parseCoverContent ? window.parseCoverContent(text || '') : { mainTitle: text || '', subTitle: '', keyword: '', badgeText: '', footerText: '' };
-      // ══════ 变体差异化：不同 variantMode 用不同文字层级 ══════
-      var vm = (options.variantMode !== undefined) ? options.variantMode : 0;
-      if (vm === 1) { content.subTitle = ''; content.keyword = ''; content.badgeText = ''; }
-      else if (vm === 2) { content.subTitle = ''; }
-      var dirResult = window.renderTemplate(ctx, options.templateId, content, options);
-      if (dirResult && dirResult.success) return;
-    }
-    try {
-      // 解析内容
-      var content = window.parseCoverContent ? window.parseCoverContent(text || '') : { mainTitle: text || '', subTitle: '', keyword: '', badgeText: '', footerText: '' };
-      // 映射 family → 模板ID
-      var map = window.REAL_STYLE_MAP ? window.REAL_STYLE_MAP[family] : null;
-      var realFamily = map ? map.realFamily : 'handnote';
-      // 从该族所有模板中按种子抽取（每族最多12个模板全部参与）
-      var vi = (options && options.vi) || 0;
-      var seed = (options && options.seed) || 42;
-      var totalTemplates = window.TEMPLATE_REGISTRY
-        ? window.TEMPLATE_REGISTRY.filter(function(id){ return id.indexOf(realFamily) === 0; }).length
-        : 12;
-      var tplIndex = ((seed + vi * 7919) % totalTemplates) + 1;
-      var tplNum = tplIndex < 10 ? '0' + tplIndex : String(tplIndex);
-      var templateId = realFamily + '-' + tplNum;
-      var result = window.renderTemplate(ctx, templateId, content, options);
-      if (result && result.success) return;
-      // 模板失败 → 尝试 -01 兜底
-      var fbResult = window.renderTemplate(ctx, realFamily + '-01', content, options);
-      if (fbResult && fbResult.success) return;
-      console.warn('Template render failed for ' + templateId + ', falling back to rule-based');
-    } catch (err) {
-      console.warn('模板驱动失败，回退到规则生成:', err.message || err);
-    }
-  }
-  // ── 规则生成模式（回退）──
-  if (STATE.realStyleMode && window.drawRealStyleCover) {
-    try {
-      return window.drawRealStyleCover(ctx, text, palette, options, family);
-    } catch (err) {
-      console.warn('真实风格渲染失败，回退到旧版:', err.message || err);
-    }
-  }
-  return drawLockedTemplateCover(ctx, text, palette, options, family);
-}
 
 function drawLockedTemplateCover(ctx, text, palette, options, family) {
   if (!TEMPLATE_CONTRACT.textFirst || !TEMPLATE_CONTRACT.fixedSkeletonsOnly) {
@@ -3765,16 +3296,13 @@ function drawLockedTemplateCover(ctx, text, palette, options, family) {
   const fontConf = FONT_MAP[STATE.font] || FONT_MAP.black;
   const bg = style.bg[variant % style.bg.length];
   const ink = style.text;
-  const accent = (STATE.textAnalysis && STATE.textAnalysis.accentColor) ? STATE.textAnalysis.accentColor : style.accent;
+  const accent = style.accent;
   const second = style.second || accent;
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
-  applyFamilyGradients(ctx, style, family, W, H, variant);
   drawTemplateBackground(ctx, style, tpl, variant, load);
-  applyFamilyTextures(ctx, family, variant, load);
   drawTemplatePanel(ctx, style, tpl, variant, load);
-  drawTemplatePanelShadows(ctx, style, tpl, variant, load);
-  drawMultiStickerSlots(ctx, style, tpl, family, variant, load);
+  drawTemplateStickerSlot(ctx, style, tpl, variant, load);
   drawTemplateUserText(ctx, t, fontConf, style, tpl, variant, load);
   drawTemplateEmphasis(ctx, t, fontConf, { ink, accent, second }, tpl, variant, load);
 }
@@ -3820,193 +3348,6 @@ function drawTemplateBackground(ctx, style, tpl, variant, load) {
   }
   if (tpl.id === 'burst') drawTemplateBurst(ctx, W * 0.50, H * 0.44, W * 0.68, H * 0.30, accent, second, load);
   if (tpl.id === 'frame') drawTemplateCornerMarks(ctx, accent, style.text);
-}
-
-/**
- * 根据风格族 family 应用对应纹理组合。
- * 纹理叠加在背景图案之上、面板之下。
- * 映射规则来自 DEV_PLAN_v5.0 §2.1 纹理组合规则表。
- */
-function applyFamilyTextures(ctx, family, variant, load) {
-  const W = CANVAS_W, H = CANVAS_H;
-  const seed = variant + (load === 'short' ? 0 : load === 'medium' ? 10 : 20);
-  const light = load === 'long' || load === 'xl';
-  const opts = { seed };
-
-  switch (family) {
-    case 'A': // 手账白底: 方格纸 + 胶片颗粒(轻)
-      drawNotebookGrid(ctx, W, H, { spacing: 24, color: 'rgba(0,0,0,0.05)' });
-      if (!light) drawFilmGrain(ctx, W, H, { density: 0.4, color: 'rgba(0,0,0,0.03)', seed: seed + 1 });
-      break;
-    case 'B': // 黄底提醒: 胶片颗粒(极轻)
-      drawFilmGrain(ctx, W, H, { density: 0.3, color: 'rgba(0,0,0,0.04)', seed });
-      break;
-    case 'C': // 红色事件: 半色调网点
-      drawHalftoneDots(ctx, W, H, { diameter: 3, spacing: 10, color: '#000000', opacity: light ? 0.15 : 0.3, seed });
-      break;
-    case 'D': // 蓝绿信息: 方格纸 + 点阵纸
-      drawNotebookGrid(ctx, W, H, { spacing: 24, color: 'rgba(0,0,0,0.05)' });
-      if (!light) drawDotGrid(ctx, W, H, { spacing: 18, color: 'rgba(0,0,0,0.08)', radius: 1 });
-      break;
-    case 'E': // 极简金句: 噪点(极轻) 或纯色
-      if (!light) drawNoiseTexture(ctx, W, H, { density: 0.2, opacity: 0.02, seed });
-      break;
-    case 'F': // 复古胶片: 胶片颗粒 + 旧纸张
-      drawFilmGrain(ctx, W, H, { density: 0.8, color: 'rgba(0,0,0,0.07)', seed });
-      drawVintagePaper(ctx, W, H, { age: light ? 0.2 : 0.45, seed: seed + 2 });
-      break;
-    case 'G': // 多巴胺: 波尔卡圆点
-      drawPolkaDots(ctx, W, H, { spacing: 28, radius: light ? 4 : 8, color: 'rgba(255,255,255,0.15)', gradientSize: !light });
-      break;
-    case 'H': // 酸性设计: 同心圆环 + 噪点
-      drawConcentricRings(ctx, W, H, { spacing: 35, color: 'rgba(255,255,255,0.06)', lineWidth: 1.5, centerX: 0.5, centerY: 0.5 });
-      if (!light) drawNoiseTexture(ctx, W, H, { density: 0.3, opacity: 0.03, seed });
-      break;
-    case 'I': // 孟菲斯: Z字条纹 + 波尔卡圆点
-      drawZigzagStripes(ctx, W, H, { amplitude: 12, frequency: 35, color: 'rgba(0,0,0,0.06)', lineWidth: 1.5 });
-      if (!light) drawPolkaDots(ctx, W, H, { spacing: 40, radius: 5, color: 'rgba(0,0,0,0.06)' });
-      break;
-    case 'J': // 国风: 宣纸 + 墨点(轻)
-      drawRicePaper(ctx, W, H, { fiberCount: 180, stainCount: 2, seed });
-      if (!light) drawInkSplatter(ctx, W, H, { count: 15, color: 'rgba(0,0,0,0.04)', spread: 0.3, seed: seed + 1 });
-      break;
-    case 'K': // 赛博朋克: 扫描线 + 噪点
-      drawScanlines(ctx, W, H, { spacing: 4, color: 'rgba(0,255,255,0.04)', gapColor: 'rgba(0,0,0,0.02)' });
-      drawNoiseTexture(ctx, W, H, { density: 0.4, opacity: 0.03, seed });
-      break;
-    case 'L': // 日系清新: 和纸
-      drawWashiPaper(ctx, W, H, { opacity: light ? 0.06 : 0.12, seed });
-      break;
-    case 'M': // 3D 渲染: 噪点(轻)
-      if (!light) drawNoiseTexture(ctx, W, H, { density: 0.25, opacity: 0.02, seed });
-      break;
-    case 'N': // 蒸汽波: 扫描线 + 斜条纹
-      drawScanlines(ctx, W, H, { spacing: 5, color: 'rgba(255,255,255,0.04)', gapColor: 'rgba(0,0,0,0.02)' });
-      drawDiagonalStripes(ctx, W, H, { angle: 30, spacing: 24, color: 'rgba(255,255,255,0.04)', lineWidth: 1 });
-      break;
-    case 'O': // 暗黑系: 胶片颗粒 + 交叉排线(轻)
-      drawFilmGrain(ctx, W, H, { density: 0.6, color: 'rgba(255,255,255,0.04)', seed });
-      if (!light) drawCrosshatch(ctx, W, H, { spacing: 10, color: 'rgba(255,255,255,0.03)', lineWidth: 1 });
-      break;
-    case 'P': // 像素风: 棋盘格
-      drawCheckerboard(ctx, W, H, { cellSize: light ? 60 : 40, color1: 'rgba(0,0,0,0.05)', color2: 'rgba(255,255,255,0.03)' });
-      break;
-    case 'Q': // 极光渐变: 噪点(极轻) + 渐变底色(渐变由gradients.js处理,此处只加纹理)
-      if (!light) drawNoiseTexture(ctx, W, H, { density: 0.2, opacity: 0.02, seed });
-      break;
-    case 'R': // 复古海报: 旧纸张 + 胶片颗粒
-      drawVintagePaper(ctx, W, H, { age: light ? 0.2 : 0.4, seed });
-      drawFilmGrain(ctx, W, H, { density: 0.5, color: 'rgba(0,0,0,0.05)', seed: seed + 3 });
-      break;
-    case 'S': // 玻璃拟态: 噪点(极轻)
-      drawNoiseTexture(ctx, W, H, { density: 0.15, opacity: 0.015, seed });
-      break;
-    case 'T': // 卡通插画: 波尔卡圆点 + 水彩晕染(轻)
-      drawPolkaDots(ctx, W, H, { spacing: 35, radius: 6, color: 'rgba(0,0,0,0.06)' });
-      if (!light) drawWatercolorWash(ctx, W, H, { count: 2, colors: ['rgba(255,200,220,0.05)', 'rgba(200,230,255,0.04)'], seed });
-      break;
-    default:
-      // 未知风格族不加纹理
-      break;
-  }
-}
-
-/**
- * 根据风格族 family 应用对应渐变效果。
- * 渐变层放在背景色之上、纹理/图案之下。
- * 某些模板(如 darkPop)直接用渐变替代纯色背景,
- * 其他模板用 globalAlpha 控制在 0.08-0.25 叠加。
- */
-function applyFamilyGradients(ctx, style, family, W, H, variant) {
-  const seed = variant + 1;
-
-  switch (style.template) {
-    case 'darkPop': {
-      // K(赛博朋克) / N(蒸汽波) / H(酸性): 霓虹发光渐变替代纯色背景
-      const neon = createNeonGlowGradient(ctx, W, H);
-      ctx.fillStyle = neon;
-      ctx.fillRect(0, 0, W, H);
-
-      // 叠加漏光效果
-      const leaks = createLightLeak(ctx, W, H, seed);
-      ctx.globalAlpha = 0.35;
-      for (const item of leaks) {
-        ctx.fillStyle = item.grad;
-        ctx.fillRect(item.x, item.y, item.w, item.h);
-      }
-      ctx.globalAlpha = 1;
-      break;
-    }
-
-    case 'poster': {
-      // F(复古胶片) / O(暗黑系) / R(复古海报): 暗角渐变叠加
-      const vigIntensity = style.template === 'poster' && family === 'O' ? 0.55 : 0.30;
-      const vig = createVignetteGradient(ctx, W, H, vigIntensity);
-      ctx.fillStyle = vig;
-      ctx.fillRect(0, 0, W, H);
-
-      // F/R 叠加漏光
-      if (family === 'F' || family === 'R') {
-        const leaks = createLightLeak(ctx, W, H, seed);
-        ctx.globalAlpha = 0.2;
-        for (const item of leaks) {
-          ctx.fillStyle = item.grad;
-          ctx.fillRect(item.x, item.y, item.w, item.h);
-        }
-        ctx.globalAlpha = 1;
-      }
-      break;
-    }
-
-    case 'dopamine': {
-      // G(多巴胺) / T(卡通插画): 网格渐变叠加
-      const mesh = createMeshGradient(ctx, W, H, seed);
-      ctx.globalAlpha = family === 'G' ? 0.25 : 0.14;
-      for (const item of mesh) {
-        ctx.fillStyle = item.grad;
-        ctx.fillRect(item.x, item.y, item.w, item.h);
-      }
-      ctx.globalAlpha = 1;
-      break;
-    }
-
-    case 'soft': {
-      // L(日系清新) / M(3D渲染) / Q(极光渐变): 粉彩晕染叠加
-      const wash = createPastelWash(ctx, W, H, seed);
-      ctx.globalAlpha = family === 'Q' ? 0.30 : 0.16;
-      for (const item of wash) {
-        ctx.fillStyle = item.grad;
-        ctx.fillRect(item.x, item.y, item.w, item.h);
-      }
-      ctx.globalAlpha = 1;
-
-      // Q(极光渐变) 额外加极光效果
-      if (family === 'Q') {
-        const aurora = createAuroraGradient(ctx, W, H, seed);
-        ctx.globalAlpha = 0.22;
-        ctx.fillStyle = aurora;
-        ctx.fillRect(0, 0, W, H);
-        ctx.globalAlpha = 1;
-      }
-      break;
-    }
-
-    case 'event': {
-      // C(红色事件): 双色调叠加(仅部分 variant)
-      if (variant % 2 === 0) {
-        const duo = createDuotoneGradient(ctx, W, H, 'red-blue');
-        ctx.globalAlpha = 0.12;
-        ctx.fillStyle = duo;
-        ctx.fillRect(0, 0, W, H);
-        ctx.globalAlpha = 1;
-      }
-      break;
-    }
-
-    default:
-      // 其他风格族不加渐变
-      break;
-  }
 }
 
 function drawTemplatePanel(ctx, style, tpl, variant, load) {
@@ -4062,255 +3403,19 @@ function drawTemplatePanel(ctx, style, tpl, variant, load) {
   }
 }
 
-/**
- * 在面板绘制完成后叠加阴影效果。
- * 根据面板类型和风格应用不同阴影组合。
- */
-function drawTemplatePanelShadows(ctx, style, tpl, variant, load) {
-  const W = CANVAS_W, H = CANVAS_H;
-  const isDark = style.template === 'event' || style.template === 'darkPop' || style.text === '#FFFFFF';
-
-  if (tpl.id === 'card') {
-    // 白卡面板: 层叠阴影(模拟纸张厚度) + 悬浮感
-    const cards = [
-      [0.12, 0.18, 0.76, 0.58, 18],
-      [0.08, 0.22, 0.82, 0.54, 34],
-      [0.18, 0.18, 0.68, 0.54, 8],
-      [0.10, 0.16, 0.80, 0.62, 44],
-      [0.15, 0.22, 0.70, 0.54, 16],
-    ][variant];
-    const cx = W * (cards[0] + cards[2] / 2);
-    const cy = H * (cards[1] + cards[3] / 2);
-    const cw = W * cards[2];
-    const ch = H * cards[3];
-    const cr = cards[4];
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.rotate(cards[5] != null ? cards[5] * Math.PI / 180 : 0);
-    const halfW = -cw / 2;
-    const halfH = -ch / 2;
-    drawLayeredShadow(ctx, halfW, halfH, cw, ch, {
-      r: cr,
-      layers: isDark
-        ? [
-            { offsetX: 2, offsetY: 2, blur: 4, alpha: 0.12 },
-            { offsetX: 6, offsetY: 8, blur: 14, alpha: 0.08 },
-            { offsetX: 14, offsetY: 18, blur: 28, alpha: 0.05 },
-          ]
-        : [
-            { offsetX: 2, offsetY: 2, blur: 4, alpha: 0.08 },
-            { offsetX: 6, offsetY: 8, blur: 12, alpha: 0.06 },
-            { offsetX: 12, offsetY: 16, blur: 24, alpha: 0.04 },
-          ],
-    });
-    ctx.restore();
-  }
-
-  if (tpl.id === 'bubble') {
-    // 气泡面板: 软投影 + 贴纸阴影
-    const bw = W * 0.72;
-    const bh = H * 0.44;
-    const bx = W * 0.48 - bw / 2;
-    const by = H * 0.46 - bh / 2;
-    drawSoftDropShadow(ctx, bx, by, bw, bh, {
-      r: 48, offsetX: 3, offsetY: 4, blur: 6, alpha: 0.10, color: '#000000',
-    });
-    drawStickerShadow(ctx, bx, by, bw, bh, {
-      r: 48, alpha: isDark ? 0.15 : 0.08, blur: 3, seed: variant,
-    });
-  }
-
-  if (tpl.id === 'paper') {
-    // 撕纸面板: 硬投影(微偏移,模拟撕边抬起)
-    const layers = [
-      [0.18, 0.18, 0.64, 0.60],
-      [0.12, 0.24, 0.76, 0.54],
-      [0.15, 0.20, 0.70, 0.56],
-    ];
-    layers.forEach((l, i) => {
-      const pw = W * l[2];
-      const ph = H * l[3];
-      const px = W * (l[0] + l[2] / 2) - pw / 2;
-      const py = H * (l[1] + l[3] / 2) - ph / 2;
-      if (i === 0) {
-        drawHardDropShadow(ctx, px, py, pw, ph, {
-          r: 8, offsetX: 2, offsetY: 3, alpha: isDark ? 0.18 : 0.10, color: '#000000',
-        });
-      }
-    });
-  }
-
-  if (tpl.id === 'frame') {
-    // 边框底: 轻微悬浮阴影
-    drawFloatingShadow(ctx, W * 0.08, H * 0.14, W * 0.84, H * 0.68, {
-      r: variant % 2 ? 36 : 8,
-      elevation: isDark ? 16 : 12,
-      alpha: isDark ? 0.18 : 0.08,
-    });
-  }
-
-  // 深色底风格: 文字区域彩色发光
-  if (isDark && load !== 'xl') {
-    const box = templateTextBox(tpl, load);
-    drawColoredGlow(ctx, W * box.x - W * box.w / 2, H * box.y - H * box.h / 2, W * box.w, H * box.h, {
-      r: 12,
-      color: style.accent,
-      spread: load === 'long' ? 10 : 18,
-      intensity: load === 'long' ? 0.5 : 0.7,
-    });
-  }
-}
-
 function drawTemplateUserText(ctx, text, fontConf, style, tpl, variant, load) {
   const W = CANVAS_W, H = CANVAS_H;
-  const layout = analyzeTextLayout(text);
   const box = templateTextBox(tpl, load);
   const stroke = style.text === '#FFFFFF' ? { color: 'rgba(0,0,0,.28)', width: 10 } : null;
-  const effectiveMaxSize = Math.round(Math.min(box.max, layout.maxSize) * (fontConf.scale || 1));
-
-  // 存入全局状态供调试
-  if (typeof STATE !== 'undefined') STATE.currentLayoutMode = layout.mode;
-
-  switch (layout.mode) {
-    case 'headline':
-      drawHeadlineText(ctx, text, W, H, fontConf, style, layout, box, effectiveMaxSize);
-      break;
-    case 'standard':
-      drawStandardText(ctx, text, W, H, fontConf, style, layout, box, effectiveMaxSize);
-      break;
-    case 'subhead':
-      drawSubheadText(ctx, text, W, H, fontConf, style, layout, box, effectiveMaxSize);
-      break;
-    case 'newspaper':
-      drawNewspaperText(ctx, text, W, H, fontConf, style, layout, box, effectiveMaxSize);
-      break;
-    default:
-      // fallback to original behavior
-      gdTextBlock(ctx, text, W * box.x, H * box.y, W * box.w, H * box.h, style.text, {
-        fontConf, maxSize: effectiveMaxSize, minSize: 24, absoluteMinSize: 10,
-        lineHeight: box.lh, pad: box.pad, stroke,
-      });
-  }
-}
-
-/** headline 模式: ≤4字,超大字居中,3D投影 */
-function drawHeadlineText(ctx, text, W, H, fontConf, style, layout, box, maxSize) {
-  // 4层偏移投影模拟3D厚度
-  const cx = W * 0.50;
-  const cy = H * 0.48;
-  const result = gdTextBlock(ctx, text, cx, cy, W * 0.88, H * 0.60, style.text, {
-    fontConf, maxSize, minSize: 48, absoluteMinSize: 18,
-    lineHeight: layout.lineHeight, pad: 40, vAlign: 'middle',
-    fontMixing: true,  // 启用字体混合
+  gdTextBlock(ctx, text, W * box.x, H * box.y, W * box.w, H * box.h, style.text, {
+    fontConf,
+    maxSize: Math.round(box.max * (fontConf.scale || 1)),
+    minSize: 24,
+    absoluteMinSize: 10,
+    lineHeight: box.lh,
+    pad: box.pad,
+    stroke,
   });
-}
-
-/** standard 模式: 5-10字,主标题 + 关键词放大 */
-function drawStandardText(ctx, text, W, H, fontConf, style, layout, box, maxSize) {
-  const cx = W * box.x;
-  const cy = H * (box.y - 0.06);
-  // 主标题
-  const result = gdTextBlock(ctx, text, cx, cy, W * box.w, H * box.h * 0.65, style.text, {
-    fontConf, maxSize, minSize: 28, absoluteMinSize: 14,
-    lineHeight: layout.lineHeight, pad: box.pad, vAlign: 'middle',
-    fontMixing: true,
-  });
-
-  // 关键词(最后2字)放大,用accent颜色,切换字体
-  const accentWord = gdAccentWord(text);
-  if (accentWord && accentWord.length <= 3) {
-    const accentFont = getContrastFont(fontConf);
-    const accentSize = Math.round(result.size * layout.accentSize);
-    const accentY = cy + result.height / 2 + accentSize * 0.65;
-    ctx.save();
-    ctx.font = `${accentFont.weight} ${accentSize}px ${accentFont.family}`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'top';
-    ctx.lineJoin = 'round';
-    // 描边
-    ctx.lineWidth = 8;
-    ctx.strokeStyle = style.text === '#FFFFFF' ? 'rgba(0,0,0,.25)' : 'rgba(255,255,255,.7)';
-    ctx.strokeText(accentWord, cx, accentY);
-    ctx.fillStyle = style.accent;
-    ctx.fillText(accentWord, cx, accentY);
-    ctx.restore();
-  }
-}
-
-/** subhead 模式: 11-20字,双行,主标题+副标题 */
-function drawSubheadText(ctx, text, W, H, fontConf, style, layout, box, maxSize) {
-  const lines = gdLines(text);
-  const mainText = lines[0] || text;
-  const subText = lines.length > 1 ? lines.slice(1).join('') : '';
-
-  const cx = W * box.x;
-  const mainCy = H * (box.y - 0.04);
-  // 主标题(100%)
-  const mainResult = gdTextBlock(ctx, mainText, cx, mainCy, W * box.w, H * box.h * 0.48, style.text, {
-    fontConf, maxSize, minSize: 32, absoluteMinSize: 14,
-    lineHeight: layout.lineHeight, pad: box.pad, vAlign: 'middle',
-  });
-
-  // 副标题(70%字号,second颜色)
-  if (subText) {
-    const subSize = Math.round(mainResult.size * layout.subRatio);
-    const subCy = mainCy + mainResult.height / 2 + subSize * 0.9;
-    const subColor = style.second || style.accent;
-    gdTextBlock(ctx, subText, cx, subCy, W * box.w * 0.9, H * box.h * 0.35, subColor, {
-      fontConf, maxSize: subSize, minSize: 18, absoluteMinSize: 10,
-      lineHeight: 1.15, pad: box.pad, vAlign: 'top',
-    });
-  }
-}
-
-/** newspaper 模式: >20字,小字多行,首字下沉 */
-function drawNewspaperText(ctx, text, W, H, fontConf, style, layout, box, maxSize) {
-  const cx = W * box.x;
-  const cy = H * (box.y - 0.02);
-  // 正常小字排版
-  const result = gdTextBlock(ctx, text, cx, cy, W * box.w, H * box.h, style.text, {
-    fontConf, maxSize, minSize: 22, absoluteMinSize: 10,
-    lineHeight: layout.lineHeight, pad: box.pad, vAlign: 'middle',
-  });
-
-  // 首字下沉(drop cap)
-  if (layout.dropCap > 1 && result.size > 30) {
-    const firstChar = String(text || '').trim().charAt(0);
-    if (firstChar) {
-      const dropSize = Math.round(result.size * layout.dropCap);
-      const dropX = cx - W * box.w / 2 + dropSize * 0.7;
-      const dropY = cy - result.height / 2 + dropSize * 0.3;
-      const accentFont = getContrastFont(fontConf);
-      ctx.save();
-      ctx.font = `${accentFont.weight} ${dropSize}px ${accentFont.family}`;
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'top';
-      ctx.fillStyle = style.accent;
-      ctx.fillText(firstChar, dropX, dropY);
-      ctx.restore();
-    }
-  }
-
-  // 底部细横线分隔
-  ctx.strokeStyle = style.text === '#FFFFFF' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(W * 0.15, cy + result.height / 2 + 18);
-  ctx.lineTo(W * 0.85, cy + result.height / 2 + 18);
-  ctx.stroke();
-}
-
-/**
- * 获取与当前字体形成对比的相邻字体(用于关键词)
- */
-function getContrastFont(fontConf) {
-  const keys = Object.keys(FONT_MAP);
-  const currentIdx = keys.findIndex(k => FONT_MAP[k].family === fontConf.family);
-  if (currentIdx >= 0) {
-    const nextIdx = (currentIdx + 2) % keys.length;
-    return FONT_MAP[keys[nextIdx]];
-  }
-  return FONT_MAP.qingke || fontConf;
 }
 
 function templateTextBox(tpl, load) {
@@ -4357,158 +3462,12 @@ function drawTemplateEmphasis(ctx, text, fontConf, colors, tpl, variant, load) {
   ctx.restore();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 多槽位贴纸系统 (v5.0)
-// ═══════════════════════════════════════════════════════════════
-
-/**
- * 确定性伪随机(基于seed)
- */
-function stickerRand(seed) {
-  const x = Math.sin(seed * 9999 + 137) * 10000;
-  return x - Math.floor(x);
-}
-
-/**
- * 获取贴纸槽位数量(1-3个,概率分配)
- */
-function getStickerSlotCount(seed) {
-  const r = Math.abs(seed * 7919) % 100;
-  if (r < 30) return 1;
-  if (r < 70) return 2;
-  return 3;
-}
-
-/**
- * 主视觉槽位(右下/左下随机)
- */
-function getPrimarySlot(seed, load) {
-  const side = Math.abs(seed * 3) % 2 ? 'right' : 'left';
-  const x = side === 'right' ? 0.78 : 0.22;
-  const y = 0.78;
-  const size = load === 'short' ? 0.24 : load === 'medium' ? 0.18 : 0.13;
-  return { x, y, size, side };
-}
-
-/**
- * 边角槽位(与主槽对角)
- */
-function getCornerSlot(primarySide, load) {
-  const side = primarySide === 'right' ? 'left' : 'right';
-  const x = side === 'right' ? 0.82 : 0.18;
-  const y = 0.22;
-  const size = load === 'short' ? 0.16 : load === 'medium' ? 0.12 : 0.09;
-  return { x, y, size, side };
-}
-
-/**
- * 浮动槽位(文字边缘,与主槽位置互补)
- */
-function getFloatSlot(load) {
-  const x = 0.50;
-  const y = 0.13;
-  const size = load === 'short' ? 0.12 : load === 'medium' ? 0.10 : 0.07;
-  return { x, y, size };
-}
-
-/**
- * 多槽位贴纸绘制函数。
- * 替代旧的单次 drawTemplateStickerSlot,支持 1-3 个随机槽位。
- */
-function drawMultiStickerSlots(ctx, style, tpl, family, variant, load) {
-  const W = CANVAS_W, H = CANVAS_H;
-  const seed = variant + (family.charCodeAt(0) || 65) * 7;
-  let count = getStickerSlotCount(seed);
-
-  // 超长文案强制减少贴纸
-  if (load === 'xl') {
-    count = 1;
-  }
-
-  // 获取可用贴纸列表
-  const pool = style.stickers || [];
-  if (pool.length === 0) return;
-
-  // 随机选取 count 个不重复贴纸
-  const used = new Set();
-  const slots = [];
-
-  // 主槽
-  const primary = getPrimarySlot(seed, load);
-  const primaryType = pickStickerFromPool(pool, used, seed);
-  if (primaryType) {
-    slots.push({ type: primaryType, slot: primary, sizeMul: load === 'xl' ? 0.40 : 1.0, rotation: [-8, 6, -4, 8, -6][variant] });
-    used.add(primaryType);
-  }
-
-  // 边角槽(N≥2)
-  if (count >= 2 && slots.length >= 1) {
-    const corner = getCornerSlot(primary.side, load);
-    const cornerType = pickStickerFromPool(pool, used, seed + 100);
-    if (cornerType) {
-      slots.push({ type: cornerType, slot: corner, sizeMul: load === 'xl' ? 0.35 : 1.0, rotation: [4, -5, 7, -3, 5][variant] });
-      used.add(cornerType);
-    }
-  }
-
-  // 浮动槽(N≥3)
-  if (count >= 3 && slots.length >= 2) {
-    const float = getFloatSlot(load);
-    const floatType = pickStickerFromPool(pool, used, seed + 200);
-    if (floatType) {
-      slots.push({ type: floatType, slot: float, sizeMul: load === 'xl' ? 0.30 : 1.0, rotation: [-3, 4, -2, 5, -4][variant] });
-      used.add(floatType);
-    }
-  }
-
-  // 绘制每个槽位
-  for (const s of slots) {
-    const sx = W * s.slot.x;
-    const sy = H * s.slot.y;
-    const ss = W * s.slot.size * s.sizeMul;
-    if (ss <= 0.05 * W) continue;
-
-    // 贴纸阴影
-    drawStickerShadow(ctx, sx - ss / 2, sy - ss / 2, ss, ss, {
-      r: 12, alpha: style.text === '#FFFFFF' ? 0.18 : 0.10, blur: 5, seed: variant + slots.indexOf(s),
-    });
-    drawAmbientOcclusion(ctx, sx, sy + ss * 0.35, ss * 0.7, {
-      alpha: style.text === '#FFFFFF' ? 0.06 : 0.04, spread: 1.2,
-    });
-
-    // 绘制贴纸本体
-    drawTemplateSticker(ctx, s.type, sx, sy, ss, style.accent, s.rotation);
-  }
-}
-
-/**
- * 从贴纸池中随机选取一个未使用的贴纸
- */
-function pickStickerFromPool(pool, used, seed) {
-  const available = pool.filter(id => !used.has(id));
-  if (available.length === 0) {
-    // 如果全部用过,从整个池随机选
-    return pool[Math.floor(stickerRand(seed) * pool.length)];
-  }
-  return available[Math.floor(stickerRand(seed) * available.length)];
-}
-
 function drawTemplateStickerSlot(ctx, style, tpl, variant, load) {
   const W = CANVAS_W, H = CANVAS_H;
   const slot = templateStickerSlot(tpl, load, variant);
   if (slot.size <= 0.06) return;
   const type = style.stickers[variant % style.stickers.length];
-  const sx = W * slot.x;
-  const sy = H * slot.y;
-  const ss = W * slot.size;
-  // 贴纸阴影: 微偏移 + 环境光遮蔽
-  drawStickerShadow(ctx, sx - ss / 2, sy - ss / 2, ss, ss, {
-    r: 12, alpha: style.text === '#FFFFFF' ? 0.18 : 0.10, blur: 5, seed: variant,
-  });
-  drawAmbientOcclusion(ctx, sx, sy + ss * 0.35, ss * 0.7, {
-    alpha: style.text === '#FFFFFF' ? 0.06 : 0.04, spread: 1.2,
-  });
-  drawTemplateSticker(ctx, type, sx, sy, ss, style.accent, [-8, 6, -4, 8, -6][variant]);
+  drawTemplateSticker(ctx, type, W * slot.x, H * slot.y, W * slot.size, style.accent, [-8, 6, -4, 8, -6][variant]);
 }
 
 function templateStickerSlot(tpl, load, variant) {
@@ -4537,37 +3496,6 @@ function drawTemplateSticker(ctx, type, x, y, s, accent, deg) {
   else if (type === 'catCard') drawCatPhotoCardSticker(ctx, 0, 0, s * 1.06);
   else if (type === 'dogFrame') drawDogFrameSticker(ctx, 0, 0, s * 1.16);
   else if (type === 'megaphonePlush') drawPlushMegaphoneSticker(ctx, 0, 0, s * 1.10);
-  // v5.0 新增 30 个贴纸
-  else if (type === 'thumb3d_v2') drawThumb3Dv2Sticker(ctx, 0, 0, s * 1.02, accent);
-  else if (type === 'megaphone3d') drawMegaphone3DSticker(ctx, 0, 0, s * 0.98, accent);
-  else if (type === 'star3d') drawStar3DSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'heart3d') drawHeart3DSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'fire3d') drawFire3DSticker(ctx, 0, 0, s * 1.04, accent);
-  else if (type === 'diamond3d') drawDiamond3DSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'crown3d') drawCrown3DSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'trophy3d') drawTrophy3DSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'balloon3d') drawBalloon3DSticker(ctx, 0, 0, s * 1.02, accent);
-  else if (type === 'giftbox3d') drawGiftbox3DSticker(ctx, 0, 0, s * 1.02, accent);
-  else if (type === 'washiTape') drawWashiTapeSticker(ctx, 0, 0, s * 1.04, accent);
-  else if (type === 'stickyNote') drawStickyNoteSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'paperClip') drawPaperClipSticker(ctx, 0, 0, s * 1.08, accent);
-  else if (type === 'pushpin') drawPushpinSticker(ctx, 0, 0, s * 1.06, accent);
-  else if (type === 'realisticStamp') drawRealisticStampSticker(ctx, 0, 0, s * 1.04, accent);
-  else if (type === 'polaroidFrame') drawPolaroidFrameSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'indexTab') drawIndexTabSticker(ctx, 0, 0, s * 1.02, accent);
-  else if (type === 'binderClip') drawBinderClipSticker(ctx, 0, 0, s * 1.06, accent);
-  else if (type === 'handDrawnArrow') drawHandDrawnArrowSticker(ctx, 0, 0, s * 1.10, accent);
-  else if (type === 'handDrawnUnderline') drawHandDrawnUnderlineSticker(ctx, 0, 0, s * 1.08, accent);
-  else if (type === 'handDrawnCirclev2') drawHandDrawnCirclev2Sticker(ctx, 0, 0, s * 1.06, accent);
-  else if (type === 'doodleStar') drawDoodleStarSticker(ctx, 0, 0, s * 1.04, accent);
-  else if (type === 'scribbleCloud') drawScribbleCloudSticker(ctx, 0, 0, s * 1.00, accent);
-  else if (type === 'markerStrike') drawMarkerStrikeSticker(ctx, 0, 0, s * 1.10, accent);
-  else if (type === 'cuteCatFace') drawCuteCatFaceSticker(ctx, 0, 0, s * 1.06, accent);
-  else if (type === 'cuteDogFace') drawCuteDogFaceSticker(ctx, 0, 0, s * 1.06, accent);
-  else if (type === 'sparkleEyes') drawSparkleEyesSticker(ctx, 0, 0, s * 1.04, accent);
-  else if (type === 'angryFace') drawAngryFaceSticker(ctx, 0, 0, s * 1.04, accent);
-  else if (type === 'shockedFace') drawShockedFaceSticker(ctx, 0, 0, s * 1.04, accent);
-  else if (type === 'loveEyes') drawLoveEyesSticker(ctx, 0, 0, s * 1.04, accent);
   ctx.restore();
 }
 
@@ -4679,24 +3607,6 @@ function getTextLoad(text) {
   if (score >= 38) return 'long';
   if (score >= 24) return 'medium';
   return 'short';
-}
-
-/**
- * 分析文案长度,返回最佳排版模式。
- * 用于 drawTemplateUserText 的模式选择。
- */
-function analyzeTextLayout(text) {
-  const cleaned = String(text || '').trim();
-  const visibleChars = cleaned.replace(/\s/g, '').length;
-  const lines = splitInputLines(cleaned);
-
-  if (visibleChars <= 4)
-    return { mode: 'headline', maxSize: 260, lineHeight: 1.02, align: 'center', accentSize: 0, dropCap: 0 };
-  if (visibleChars <= 10)
-    return { mode: 'standard', maxSize: 190, lineHeight: 1.08, align: 'center', accentSize: 0.70, dropCap: 0 };
-  if (visibleChars <= 20)
-    return { mode: 'subhead', maxSize: 156, lineHeight: 1.12, align: 'center', accentSize: 0, subRatio: 0.70, dropCap: 0 };
-  return { mode: 'newspaper', maxSize: 114, lineHeight: 1.18, align: 'center', accentSize: 0, dropCap: 2.5 };
 }
 
 function stickerZone(mode, variant, spice) {
@@ -5030,7 +3940,7 @@ function drawReferenceMarkupAccents(ctx, mode, variant, spice, accent) {
   ctx.restore();
 }
 
-function drawStickerEllipseShadow(ctx, x, y, w, h, blurColor) {
+function drawStickerShadow(ctx, x, y, w, h, blurColor) {
   ctx.save();
   ctx.fillStyle = blurColor || 'rgba(0,0,0,.14)';
   ctx.beginPath();
@@ -5064,7 +3974,7 @@ function drawThumb3DSticker(ctx, x, y, s, accent) {
   ctx.save();
   ctx.translate(x, y);
   drawBrushStrokeBlob(ctx, -s * 0.05, -s * 0.10, s * 1.18, s * 0.48, '#FFE08A');
-  drawStickerEllipseShadow(ctx, s * 0.03, s * 0.30, s * 0.33, s * 0.09, 'rgba(0,0,0,.16)');
+  drawStickerShadow(ctx, s * 0.03, s * 0.30, s * 0.33, s * 0.09, 'rgba(0,0,0,.16)');
   const skin = ctx.createLinearGradient(-s * 0.30, -s * 0.35, s * 0.34, s * 0.25);
   skin.addColorStop(0, '#FFE1D4');
   skin.addColorStop(0.45, '#FFB9A0');
@@ -5104,7 +4014,7 @@ function drawThumb3DSticker(ctx, x, y, s, accent) {
 function drawEmojiAngry3DSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerEllipseShadow(ctx, 0, s * 0.30, s * 0.34, s * 0.08, 'rgba(0,0,0,.18)');
+  drawStickerShadow(ctx, 0, s * 0.30, s * 0.34, s * 0.08, 'rgba(0,0,0,.18)');
   const face = ctx.createRadialGradient(-s * 0.14, -s * 0.15, s * 0.03, 0, 0, s * 0.44);
   face.addColorStop(0, '#FFE777');
   face.addColorStop(0.58, '#FFC233');
@@ -5204,7 +4114,7 @@ function drawComicFistSticker(ctx, x, y, s) {
 function drawBigEyesSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerEllipseShadow(ctx, 0, s * 0.24, s * 0.46, s * 0.07, 'rgba(0,0,0,.10)');
+  drawStickerShadow(ctx, 0, s * 0.24, s * 0.46, s * 0.07, 'rgba(0,0,0,.10)');
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#050505';
   ctx.lineWidth = Math.max(9, s * 0.060);
@@ -5238,7 +4148,7 @@ function drawPaintRollerRealSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
   drawBrushStrokeBlob(ctx, -s * 0.12, -s * 0.12, s * 1.05, s * 0.36, '#FFE16D');
-  drawStickerEllipseShadow(ctx, s * 0.08, s * 0.38, s * 0.34, s * 0.07, 'rgba(0,0,0,.15)');
+  drawStickerShadow(ctx, s * 0.08, s * 0.38, s * 0.34, s * 0.07, 'rgba(0,0,0,.15)');
   ctx.save();
   ctx.rotate(-0.22);
   const roller = ctx.createLinearGradient(-s * 0.34, -s * 0.18, s * 0.26, s * 0.10);
@@ -5282,7 +4192,7 @@ function drawPaintRollerRealSticker(ctx, x, y, s) {
 function drawPlumpCatSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerEllipseShadow(ctx, 0, s * 0.34, s * 0.34, s * 0.06, 'rgba(0,0,0,.18)');
+  drawStickerShadow(ctx, 0, s * 0.34, s * 0.34, s * 0.06, 'rgba(0,0,0,.18)');
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#111111';
   ctx.lineWidth = Math.max(4, s * 0.024);
@@ -5357,7 +4267,7 @@ function drawCatPhotoCardSticker(ctx, x, y, s) {
 function drawDogFrameSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerEllipseShadow(ctx, 0, s * 0.36, s * 0.36, s * 0.07, 'rgba(0,0,0,.12)');
+  drawStickerShadow(ctx, 0, s * 0.36, s * 0.36, s * 0.07, 'rgba(0,0,0,.12)');
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#111111';
   ctx.lineWidth = Math.max(5, s * 0.026);
@@ -5405,7 +4315,7 @@ function drawDogFrameSticker(ctx, x, y, s) {
 function drawPlushMegaphoneSticker(ctx, x, y, s) {
   ctx.save();
   ctx.translate(x, y);
-  drawStickerEllipseShadow(ctx, 0, s * 0.35, s * 0.36, s * 0.08, 'rgba(0,0,0,.15)');
+  drawStickerShadow(ctx, 0, s * 0.35, s * 0.36, s * 0.08, 'rgba(0,0,0,.15)');
   drawBurstBlob(ctx, -s * 0.22, -s * 0.10, s * 0.58, '#C9F36A', '#FFFFFF');
   const plush = ctx.createRadialGradient(-s * 0.06, -s * 0.05, s * 0.02, 0, 0, s * 0.42);
   plush.addColorStop(0, '#FFF36F');
@@ -5987,30 +4897,27 @@ function drawPersonIcon(ctx, x, y, s, color) {
 // ═══════════ 渲染主流程 ═══════════
 // ════════════════════════════════════════════════════════════════
 
-// ═══════════ v5.0 版本共存 ═══════════
-const USE_V5 = !location.search.includes('v=4');
-
 const STYLE_FUNCS = {
-  A: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'A') : drawLockedTemplateCover(ctx, text, palette, options, 'A'),
-  B: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'B') : drawLockedTemplateCover(ctx, text, palette, options, 'B'),
-  C: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'C') : drawLockedTemplateCover(ctx, text, palette, options, 'C'),
-  D: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'D') : drawLockedTemplateCover(ctx, text, palette, options, 'D'),
-  E: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'E') : drawLockedTemplateCover(ctx, text, palette, options, 'E'),
-  F: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'F') : drawLockedTemplateCover(ctx, text, palette, options, 'F'),
-  G: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'G') : drawLockedTemplateCover(ctx, text, palette, options, 'G'),
-  H: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'H') : drawLockedTemplateCover(ctx, text, palette, options, 'H'),
-  I: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'I') : drawLockedTemplateCover(ctx, text, palette, options, 'I'),
-  J: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'J') : drawLockedTemplateCover(ctx, text, palette, options, 'J'),
-  K: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'K') : drawLockedTemplateCover(ctx, text, palette, options, 'K'),
-  L: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'L') : drawLockedTemplateCover(ctx, text, palette, options, 'L'),
-  M: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'M') : drawLockedTemplateCover(ctx, text, palette, options, 'M'),
-  N: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'N') : drawLockedTemplateCover(ctx, text, palette, options, 'N'),
-  O: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'O') : drawLockedTemplateCover(ctx, text, palette, options, 'O'),
-  P: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'P') : drawLockedTemplateCover(ctx, text, palette, options, 'P'),
-  Q: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'Q') : drawLockedTemplateCover(ctx, text, palette, options, 'Q'),
-  R: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'R') : drawLockedTemplateCover(ctx, text, palette, options, 'R'),
-  S: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'S') : drawLockedTemplateCover(ctx, text, palette, options, 'S'),
-  T: (ctx, text, palette, options) => USE_V5 ? drawTemplateEnhancedCover(ctx, text, palette, options, 'T') : drawLockedTemplateCover(ctx, text, palette, options, 'T'),
+  A: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'A'),
+  B: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'B'),
+  C: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'C'),
+  D: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'D'),
+  E: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'E'),
+  F: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'F'),
+  G: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'G'),
+  H: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'H'),
+  I: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'I'),
+  J: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'J'),
+  K: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'K'),
+  L: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'L'),
+  M: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'M'),
+  N: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'N'),
+  O: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'O'),
+  P: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'P'),
+  Q: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'Q'),
+  R: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'R'),
+  S: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'S'),
+  T: (ctx, text, palette, options) => drawLockedTemplateCover(ctx, text, palette, options, 'T'),
 };
 
 // 按风格族 + vi + seedOffset 选配色
@@ -6040,9 +4947,8 @@ function buildOneCard(family, vi, text, seedOffset, meta) {
   if (meta.text) wrap.dataset.sourceText = meta.text;
 
   const canvas = document.createElement('canvas');
-  var labelName = (FAMILY_LABELS[family] || {}).name || family || '封面';
-  canvas.setAttribute('aria-label', labelName + ' 第 ' + (vi + 1) + ' 张');
-  renderCard(canvas, family, vi, text, seedOffset, meta);
+  canvas.setAttribute('aria-label', FAMILY_LABELS[family].name + ' 第 ' + (vi + 1) + ' 张');
+  renderCard(canvas, family, vi, text, seedOffset);
 
   // actions:下载 / 复制 / 换一换
   const actions = document.createElement('div');
@@ -6060,34 +4966,6 @@ function buildOneCard(family, vi, text, seedOffset, meta) {
     else if (act === 'cp') copyCanvas(canvas);
     else if (act === 'rr') rerollOne(wrap);
   });
-
-  // ── v5.0 贴纸滑动导航 ──
-  const stickerCount = getStickerSlotCount(seedOffset + family.charCodeAt(0));
-  const stickerNav = document.createElement('div');
-  stickerNav.className = 'sticker-nav';
-  stickerNav.innerHTML =
-    '<button class="sticker-prev" title="换贴纸">◀</button>' +
-    '<span class="sticker-indicator">贴纸 ' + stickerCount + '个</span>' +
-    '<button class="sticker-next" title="换贴纸">▶</button>';
-  stickerNav.addEventListener('click', (ev) => {
-    ev.stopPropagation();
-    const btn = ev.target.closest('button');
-    if (!btn) return;
-    const dir = btn.classList.contains('sticker-prev') ? -1 : 1;
-    rerollStickersOnly(wrap, canvas, dir);
-  });
-
-  // 触摸滑动支持
-  let touchStartX = 0;
-  stickerNav.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; });
-  stickerNav.addEventListener('touchend', (e) => {
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 30) {
-      e.stopPropagation();
-      e.preventDefault();
-      rerollStickersOnly(wrap, canvas, dx > 0 ? 1 : -1);
-    }
-  });
   if (meta.selectable) {
     const pick = document.createElement('div');
     pick.className = 'select-pick';
@@ -6103,7 +4981,6 @@ function buildOneCard(family, vi, text, seedOffset, meta) {
   }
   wrap.appendChild(canvas);
   wrap.appendChild(actions);
-  wrap.appendChild(stickerNav);
   return wrap;
 }
 
@@ -6134,17 +5011,6 @@ function generate() {
     showToast('请输入文案');
     return;
   }
-  // v5.0: 清空测量缓存 + AI辅助分析
-  clearMeasureCache();
-  STATE.textAnalysis = analyzeTextAndRoute(text);
-  if (STATE.textAnalysis.accentColor) {
-    console.log('🎨 检测到文案调性:', STATE.textAnalysis.tone,
-      '| 推荐色:', STATE.textAnalysis.accentColor,
-      '| 推荐风格族:', STATE.textAnalysis.recommendedFamilies.join(', '),
-      '| Emoji:', STATE.textAnalysis.emojis.join(' '));
-  }
-  highlightRecommendedFamilies(STATE.textAnalysis.recommendedFamilies);
-
   // v3.1 取消字数上限:字号自适应算法会根据实际字数自动缩放
   const btn = document.getElementById('btnGenerate');
   btn.disabled = true;
@@ -6154,44 +5020,31 @@ function generate() {
   c.innerHTML = '<div class="loading">生成中</div>';
 
   // 用 setTimeout 让 UI 先更新
-  setTimeout(function(){
+  setTimeout(() => {
     try {
       c.innerHTML = '';
-      var familyNames = {handnote:'📝 手绘便签',collage:'✂️ 拼贴collage',comic:'💥 漫画pop',newspaper:'📰 报纸大字',minimal:'◼️ 极简大字'};
-      var variantsPerTemplate = 1;
-      var totalCards = 0;
-      var activeFamilies = Array.from(STATE.families).sort();
-
-      activeFamilies.forEach(function(rf){
-        // 获取该族所有符合筛选的模板
-        var filteredAll = window.getFilteredTemplateIds ? window.getFilteredTemplateIds() : Object.keys(window.TEMPLATE_LIBRARY || {});
-        var tplIds = filteredAll.filter(function(id){ return id.indexOf(rf) === 0; });
-        if (tplIds.length === 0) return;
-
-        var lb = document.createElement('div');
+      const families = Array.from(STATE.families).sort();
+      for (const fam of families) {
+        // section 标签
+        const lb = document.createElement('div');
         lb.className = 'section-label';
-        lb.innerHTML = '<span class=\"section-num\">' + tplIds.length + '</span>' +
-          '<span>' + familyNames[rf] + '</span>' +
-          '<span class=\"s-tag\">' + tplIds.length + ' 模板 × ' + variantsPerTemplate + ' 张</span>';
+        lb.innerHTML =
+          '<span class="section-num">' + fam + '</span>' +
+          '<span>' + FAMILY_LABELS[fam].name + '</span>' +
+          '<span class="s-tag">' + FAMILY_LABELS[fam].tag + '</span>' +
+          '<span class="section-desc">' + FAMILY_LABELS[fam].desc + '</span>';
         c.appendChild(lb);
-        var g = document.createElement('div');
+        const g = document.createElement('div');
         g.className = 'grid';
         c.appendChild(g);
-
-        tplIds.forEach(function(tid, ti){
-          for (var v = 0; v < variantsPerTemplate; v++) {
-            // ══════ 3张变体 = 不同种子 + 不同文字层级 ══════
-            var meta = { templateId: tid, variantMode: v };
-            var card = buildOneCard(rf, v, text, STATE.seed + ti * 13 + v * 7919, meta);
-            g.appendChild(card);
-            totalCards++;
-          }
-        });
-      });
-
-      STATE.activeCount = totalCards;
-      var fontName = (FONT_MAP[STATE.font] || FONT_MAP.black).name;
-      showToast('✅ ' + activeFamilies.length + ' 族 · ' + totalCards + ' 张 · ' + fontName);
+        for (let vi = 0; vi < CARDS_PER_FAMILY; vi++) {
+          const card = buildOneCard(fam, vi, text, STATE.seed);
+          g.appendChild(card);
+        }
+      }
+      STATE.activeCount = families.length * CARDS_PER_FAMILY;
+      const fontName = (FONT_MAP[STATE.font] || FONT_MAP.black).name;
+      showToast('✅ ' + families.length + ' 族 × ' + CARDS_PER_FAMILY + ' 张 · ' + fontName + ' · ' + text.length + ' 字');
     } catch (e) {
       console.error(e);
       showToast('❌ 生成失败: ' + e.message);
@@ -6236,21 +5089,18 @@ function allocDecorPositions(seed) {
  * @param {HTMLElement} wrap - 卡片容器元素
  */
 function rerollOne(wrap) {
-  var fam = wrap.dataset.family;
-  var vi = parseInt(wrap.dataset.vi, 10);
-  var newVi = (vi + 1) % 3;
-  var baseSeed = parseInt(wrap.dataset.seed || STATE.seed, 10) || STATE.seed;
-  var newSeed = baseSeed + 97;
-  var text = wrap.dataset.sourceText || STATE.text;
-  var meta = {
+  const fam = wrap.dataset.family;
+  const vi = parseInt(wrap.dataset.vi, 10);
+  const newVi = (vi + 1) % TEMPLATE_CONTRACT.variantsPerStyle;
+  const baseSeed = parseInt(wrap.dataset.seed || STATE.seed, 10) || STATE.seed;
+  const newSeed = baseSeed + TEMPLATE_CONTRACT.variantsPerStyle;
+  const text = wrap.dataset.sourceText || STATE.text;
+  const newCard = buildOneCard(fam, newVi, text, newSeed, {
     selectable: wrap.classList.contains('selectable-card'),
     batchIndex: wrap.dataset.batchIndex,
     cardIndex: wrap.dataset.cardIndex,
-    text: text,
-  };
-  // 保留 templateId（如果存在）
-  if (wrap.dataset.templateId) meta.templateId = wrap.dataset.templateId;
-  var newCard = buildOneCard(fam, newVi, text, newSeed, meta);
+    text,
+  });
 
   // 0.3s 淡入淡出过渡(批次 5 要求)
   newCard.style.opacity = '0';
@@ -6273,36 +5123,6 @@ function rerollOne(wrap) {
   setTimeout(() => {
     if (wrap.parentNode) wrap.style.opacity = oldOpacity;
   }, 350);
-}
-
-/**
- * 仅更换贴纸组合(v5.0)。
- * 保持模板骨架、文字、颜色不变,仅从贴纸池中重新随机选取。
- * @param {HTMLElement} wrap - 卡片容器
- * @param {HTMLCanvasElement} canvas - 卡片画布
- * @param {number} direction - 切换方向(-1左/1右,用于种子偏移)
- */
-function rerollStickersOnly(wrap, canvas, direction) {
-  const family = wrap.dataset.family;
-  const vi = parseInt(wrap.dataset.vi, 10);
-  const text = wrap.dataset.sourceText || STATE.text;
-  const baseSeed = parseInt(wrap.dataset.seed || STATE.seed, 10) || STATE.seed;
-  // 用 direction 偏移种子,保证左右切换产生不同贴纸
-  const newSeed = baseSeed + direction * 7 + Date.now() % 100;
-
-  // 闪烁反馈
-  canvas.style.transition = 'opacity .15s ease';
-  canvas.style.opacity = '0.6';
-
-  setTimeout(() => {
-    renderCard(canvas, family, vi, text, newSeed);
-    // 更新 sticker-nav 指示器
-    const newCount = getStickerSlotCount(newSeed + family.charCodeAt(0));
-    const indicator = wrap.querySelector('.sticker-indicator');
-    if (indicator) indicator.textContent = '贴纸 ' + newCount + '个';
-
-    canvas.style.opacity = '1';
-  }, 150);
 }
 
 /**
@@ -6345,147 +5165,6 @@ window.copyCanvas = copyCanvas;
 
 // ═══════════ 批量文案识别 + 生成 ═══════════
 
-function escapeHtml(str) {
-  const div = document.createElement('div');
-  div.textContent = str || '';
-  return div.innerHTML;
-}
-
-function renderCandidateBatch(group, startIndex, count) {
-  const scrollContainer = group.querySelector('.candidate-scroll');
-  const candidates = group._candidates;
-  if (!candidates || !scrollContainer) return;
-  const endIndex = Math.min(startIndex + count, candidates.length);
-
-  const fragment = document.createDocumentFragment();
-  for (let i = startIndex; i < endIndex; i++) {
-    const candidate = candidates[i];
-    const cardWrap = document.createElement('article');
-    cardWrap.className = 'card-wrap candidate-card';
-    cardWrap.dataset.candidateIndex = i;
-    cardWrap.dataset.family = candidate.family;
-
-    const canvas = document.createElement('canvas');
-    canvas.width = 1242;
-    canvas.height = 1656;
-    canvas.className = 'cover-canvas';
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'candidate-checkbox';
-    checkbox.dataset.candidateIndex = i;
-    checkbox.addEventListener('change', function () {
-      cardWrap.classList.toggle('selected', this.checked);
-    });
-
-    cardWrap.appendChild(canvas);
-    cardWrap.appendChild(checkbox);
-    fragment.appendChild(cardWrap);
-
-    // ══════ 模板直接渲染 ══════
-    try {
-      var ctx = canvas.getContext('2d');
-      var content = window.parseCoverContent ? window.parseCoverContent(candidate._text || '') : { mainTitle: candidate._text || '' };
-      var options = { vi: 0, seed: candidate.seed, font: STATE.font || 'black', templateId: candidate.templateId };
-      // 模板优先 → 规则引擎 → 旧版
-      drawTemplateEnhancedCover(ctx, candidate._text || '', {}, options, candidate.family);
-    } catch (err) {
-      console.error('候选 ' + i + ' 渲染失败:', err);
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, 1242, 1656);
-      ctx.fillStyle = '#FF4444';
-      ctx.font = 'bold 48px "Noto Sans SC", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('✕ 渲染失败', 621, 800);
-    }
-  }
-  scrollContainer.appendChild(fragment);
-  group._renderedCount = endIndex;
-}
-
-function setupLazyLoading(group) {
-  var scrollContainer = group.querySelector('.candidate-scroll');
-  if (!scrollContainer) return;
-  var sentinel = document.createElement('div');
-  sentinel.className = 'lazy-sentinel';
-  sentinel.style.cssText = 'min-width:1px;min-height:1px;flex-shrink:0;';
-  scrollContainer.appendChild(sentinel);
-
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(entry){
-      if (entry.isIntersecting) {
-        var current = group._renderedCount || 0;
-        var total = (group._candidates || []).length;
-        if (current < total) {
-          renderCandidateBatch(group, current, CANDIDATE_CONFIG.lazyLoadBatchSize);
-          // 重新把 sentinel 放最后
-          scrollContainer.appendChild(sentinel);
-        }
-        if (group._renderedCount >= total) {
-          observer.disconnect();
-          if (sentinel.parentNode) sentinel.parentNode.removeChild(sentinel);
-        }
-      }
-    });
-  }, { root: scrollContainer, rootMargin: '600px' });
-
-  observer.observe(sentinel);
-}
-
-function downloadSelectedCandidates(textIndex) {
-  const group = document.querySelector('.batch-group[data-text-index="' + textIndex + '"]');
-  if (!group) return;
-  const checkboxes = group.querySelectorAll('.candidate-checkbox:checked');
-  if (checkboxes.length === 0) { showToast('请至少选中一张候选图'); return; }
-  const canvases = [];
-  checkboxes.forEach(function (cb) {
-    const card = cb.closest('.candidate-card');
-    if (card) { const c = card.querySelector('canvas'); if (c) canvases.push(c); }
-  });
-  downloadCanvasesFromList(canvases, 'cover_batch_' + (textIndex + 1));
-}
-
-function downloadAllCandidates(textIndex) {
-  const group = document.querySelector('.batch-group[data-text-index="' + textIndex + '"]');
-  if (!group) return;
-  const total = group._candidates ? group._candidates.length : 0;
-  if (total > 30) {
-    if (!confirm('将下载 ' + total + ' 张图片，可能需要一些时间。确定继续？')) return;
-  }
-  const canvases = Array.from(group.querySelectorAll('.candidate-card canvas'));
-  downloadCanvasesFromList(canvases, 'cover_batch_' + (textIndex + 1) + '_all');
-}
-
-function downloadCanvasesFromList(canvases, baseName) {
-  if (!canvases || canvases.length === 0) { showToast('没有可下载的封面'); return; }
-  canvases.forEach(function (canvas, i) {
-    try {
-      const link = document.createElement('a');
-      link.download = baseName + '_' + String(i + 1).padStart(2, '0') + '.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    } catch (e) {
-      console.error('下载失败:', i, e);
-    }
-  });
-}
-
-function bindBatchDownloadEvents() {
-  document.querySelectorAll('.btn-download-selected').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var ti = parseInt(btn.dataset.textIndex);
-      if (!isNaN(ti)) downloadSelectedCandidates(ti);
-    });
-  });
-  document.querySelectorAll('.btn-download-all').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var ti = parseInt(btn.dataset.textIndex);
-      if (!isNaN(ti)) downloadAllCandidates(ti);
-    });
-  });
-}
-
 function parseBatchTexts(raw) {
   return String(raw || '')
     .split(/\n?\s*888\s*\n?/g)
@@ -6520,7 +5199,7 @@ function renderBatchPanel() {
   panel.classList.toggle('show', items.length > 0);
   meta.textContent = items.length ? '共识别出 ' + items.length + ' 条文案' : '使用 888 分隔每条文案';
   const selectedCount = items.filter((item) => item.selected && hasVisibleText(item.text)).length;
-  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成 30 张候选。';
+  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成精选 5 张。';
   list.innerHTML = '';
   items.forEach((item, index) => {
     const row = document.createElement('div');
@@ -6574,7 +5253,7 @@ function updateBatchMetaOnly() {
   const hint = document.getElementById('batchHint');
   if (!hint) return;
   const selectedCount = BATCH_STATE.items.filter((item) => item.selected && hasVisibleText(item.text)).length;
-  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成 30 张候选。';
+  hint.textContent = '已选择 ' + selectedCount + ' 条,每条生成精选 5 张。';
   document.querySelectorAll('.batch-item').forEach((row, index) => {
     const count = row.querySelector('.batch-count');
     if (count && BATCH_STATE.items[index]) {
@@ -6606,96 +5285,70 @@ function familiesForBatchCards() {
   return out;
 }
 
-// ══════ 模板池驱动的候选生成（受筛选器影响） ══════
-function getShuffledTemplateIds(seed) {
-  // 优先使用筛选后的模板
-  var allIds = window.getFilteredTemplateIds ? window.getFilteredTemplateIds() : [];
-  if (allIds.length === 0) {
-    var lib = window.TEMPLATE_LIBRARY || {};
-    allIds = Object.keys(lib).filter(function(id){ return lib[id]; });
-  }
-  if (allIds.length === 0) allIds = (window.TEMPLATE_REGISTRY || []).slice();
-  var rng = window.seededRandom ? window.seededRandom(seed) : Math.random;
-  for (var i = allIds.length - 1; i > 0; i--) {
-    var j = Math.floor(rng() * (i + 1));
-    var tmp = allIds[i]; allIds[i] = allIds[j]; allIds[j] = tmp;
-  }
-  return allIds;
-}
-
-function generateCandidatesForText(text, textIndex, globalSeed) {
-  var tplIds = getShuffledTemplateIds(window.getTextSeed(text, textIndex, globalSeed));
-  return tplIds.map(function(tid, i){
-    return {
-      textIndex: textIndex, candidateIndex: i,
-      templateId: tid, family: tid.split('-')[0],
-      vi: 0, seed: window.getTextSeed(text, textIndex, globalSeed) + i * 7919,
-      _text: text,
-    };
-  });
-}
-
-// 去掉旧的 selectFamiliesForCandidates（不再需要）
-
 function generateBatchCovers() {
-  var items = selectedBatchItems();
-  if (!items.length) { showToast('请至少选择 1 条有效文案'); return; }
-  STATE.text = items.map(function(item){ return item.text; }).join('\n888\n');
-  var btn = document.getElementById('btnGenerateBatch');
-  btn.disabled = true; btn.textContent = '生成中...';
-  var c = document.getElementById('container');
-  var totalTemplates = (window.TEMPLATE_REGISTRY || []).length;
-  c.innerHTML = '<div class=\"loading\">批量生成中 (' + items.length + ' 条 × ' + totalTemplates + ' 模板)...</div>';
-  setTimeout(function(){
+  const items = selectedBatchItems();
+  if (!items.length) {
+    showToast('请至少选择 1 条有效文案');
+    return;
+  }
+  STATE.text = items.map((item) => item.text).join('\n888\n');
+  const btn = document.getElementById('btnGenerateBatch');
+  btn.disabled = true;
+  btn.textContent = '生成中...';
+  const c = document.getElementById('container');
+  c.innerHTML = '<div class="loading">批量生成中</div>';
+  setTimeout(() => {
     try {
       c.innerHTML = '';
-      var isFreeUser = !AUTH_STATE.authenticated || (AUTH_STATE.user && AUTH_STATE.user.role !== 'vip');
-      var lockAttr = isFreeUser ? ' data-locked=\"1\"' : '';
-      var lockClass = isFreeUser ? ' btn-locked' : '';
-      var lockIcon = isFreeUser ? ' 🔒' : '';
-      var toolbar = document.createElement('div');
-      toolbar.className = 'batch-group';
-      toolbar.innerHTML =
-        '<div class=\"batch-header-row\">' +
-        '<div><strong>ALL</strong> 批量下载</div>' +
-        '<div style=\"font-size:13px;color:#6B7280\">每条文案 × ' + totalTemplates + ' 模板' + (isFreeUser ? ' · <span style=\"color:#ED0108;font-weight:700\">升级VIP解锁批量下载</span>' : '') + '</div>' +
-        '<div class=\"batch-actions-row\">' +
-        '<button class=\"btn small ghost' + lockClass + '\" data-batch-download=\"selected\"' + lockAttr + '>下载选中' + lockIcon + '</button>' +
-        '<button class=\"btn small outline' + lockClass + '\" data-batch-download=\"all\"' + lockAttr + '>下载全部' + lockIcon + '</button>' +
-        '<button class=\"btn small primary\" data-send-to-video-maker style=\"background:#ED0108\">🎥 发送到短视频</button>' +
+      const batchDownloads = document.createElement('div');
+      batchDownloads.className = 'batch-group';
+      const isFreeUser = !AUTH_STATE.authenticated || (AUTH_STATE.user && AUTH_STATE.user.role !== 'vip');
+      const lockAttr = isFreeUser ? ' data-locked="1"' : '';
+      const lockClass = isFreeUser ? ' btn-locked' : '';
+      const lockIcon = isFreeUser ? ' 🔒' : '';
+      batchDownloads.innerHTML =
+        '<div class="batch-group-head">' +
+        '<div class="batch-group-title"><strong>ALL</strong><div><div class="batch-group-preview">批量下载</div><div class="batch-group-sub">支持单张、多选和全部下载' + (isFreeUser ? ' · <span style="color:#ED0108;font-weight:700">升级VIP解锁批量下载</span>' : '') + '</div></div></div>' +
+        '<div class="batch-group-tools">' +
+        '<button class="btn small ghost' + lockClass + '" data-batch-download="selected"' + lockAttr + '>下载选中' + lockIcon + '</button>' +
+        '<button class="btn small outline' + lockClass + '" data-batch-download="all"' + lockAttr + '>下载全部' + lockIcon + '</button>' +
+        '<button class="btn small primary" data-send-to-video-maker style="background:#ED0108">🎥 发送到短视频</button>' +
         '</div></div>';
-      c.appendChild(toolbar);
-
-      var globalSeed = Date.now();
-
-      items.forEach(function(item, groupIndex){
-        var candidates = generateCandidatesForText(item.text, groupIndex, globalSeed);
-        var group = document.createElement('section');
+      c.appendChild(batchDownloads);
+      const fams = familiesForBatchCards();
+      items.forEach((item, groupIndex) => {
+        const group = document.createElement('section');
         group.className = 'batch-group';
-        group.dataset.textIndex = String(groupIndex);
+        group.dataset.batchGroup = String(groupIndex + 1);
+        const preview = item.text.replace(/\s+/g, ' ').slice(0, 46);
         group.innerHTML =
-          '<header class=\"batch-header-row\">' +
-          '<h3>文案 ' + (groupIndex + 1) + '</h3>' +
-          '<span class=\"batch-text-preview\">' + escapeHtml(item.text.substring(0, 30)) + (item.text.length > 30 ? '...' : '') + '</span>' +
-          '<div class=\"batch-actions-row\">' +
-          '<button class=\"btn small ghost btn-download-selected\" data-text-index=\"' + groupIndex + '\">下载选中</button>' +
-          '<button class=\"btn small outline btn-download-all\" data-text-index=\"' + groupIndex + '\">下载本组(' + candidates.length + '张)</button>' +
-          '</div></header>' +
-          '<div class=\"candidate-scroll\" data-text-index=\"' + groupIndex + '\"></div>';
+          '<div class="batch-group-head">' +
+          '<div class="batch-group-title"><strong>' + String(groupIndex + 1).padStart(2, '0') + '</strong>' +
+          '<div><div class="batch-group-preview"></div><div class="batch-group-sub">精选 5 张封面</div></div></div>' +
+          '<div class="batch-group-tools">' +
+          '<button class="btn small ghost" data-group-select>全选本组</button>' +
+          '<button class="btn small ghost' + lockClass + '" data-group-download-selected' + lockAttr + '>下载本组选中' + lockIcon + '</button>' +
+          '<button class="btn small outline' + lockClass + '" data-group-download-all' + lockAttr + '>下载本组全部' + lockIcon + '</button>' +
+          '</div></div>';
+        group.querySelector('.batch-group-preview').textContent = preview || '未命名文案';
+        const grid = document.createElement('div');
+        grid.className = 'grid';
+        fams.forEach((fam, cardIndex) => {
+          const vi = cardIndex % TEMPLATE_CONTRACT.variantsPerStyle;
+          const card = buildOneCard(fam, vi, item.text, STATE.seed + groupIndex * 17 + cardIndex, {
+            selectable: true,
+            batchIndex: groupIndex + 1,
+            cardIndex: cardIndex + 1,
+            text: item.text,
+          });
+          grid.appendChild(card);
+        });
+        group.appendChild(grid);
         c.appendChild(group);
-
-        group._candidates = candidates;
-        group._text = item.text;
-        group._renderedCount = 0;
-
-        renderCandidateBatch(group, 0, CANDIDATE_CONFIG.initialRenderCount);
-        setupLazyLoading(group);
       });
-
       BATCH_STATE.generated = true;
-      bindBatchDownloadEvents();
-      showToast('已生成 ' + items.length + ' 组 · 共 ' + (items.length * totalTemplates) + ' 张');
-    } catch(e){
+      showToast('已生成 ' + items.length + ' 组 · 共 ' + (items.length * 5) + ' 张');
+    } catch (e) {
       console.error(e);
       showToast('❌ 批量生成失败: ' + e.message);
     } finally {
@@ -6760,7 +5413,7 @@ window.sendToVideoMaker = sendToVideoMaker;
 
 function cardsInScope(scope, onlySelected) {
   const root = scope || document;
-  let cards = Array.from(root.querySelectorAll('.card-wrap[data-batch-index], .card-wrap[data-candidate-index]'));
+  let cards = Array.from(root.querySelectorAll('.card-wrap[data-batch-index]'));
   if (onlySelected) cards = cards.filter((card) => card.classList.contains('selected'));
   return cards;
 }
@@ -6875,75 +5528,31 @@ document.getElementById('textInput').addEventListener('input', () => {
   }
 });
 
-/**
- * v5.0: 高亮AI推荐的风格族(在tab上添加"推荐"标记)
- * @param {string[]} families - 推荐的风格族字母列表
- */
-function highlightRecommendedFamilies(families) {
-  // 清除旧标记
-  document.querySelectorAll('#familyTabs .tab .rec-badge').forEach(b => b.remove());
-  if (!families || families.length === 0) return;
-  const tabs = document.querySelectorAll('#familyTabs .tab');
-  tabs.forEach(tab => {
-    const fam = tab.dataset.family;
-    if (fam && families.includes(fam)) {
-      const badge = document.createElement('span');
-      badge.className = 'rec-badge';
-      badge.textContent = '荐';
-      badge.style.cssText = 'display:inline-block;margin-left:4px;padding:1px 5px;background:#ED0108;color:#fff;font-size:9px;font-weight:800;border-radius:999px;letter-spacing:.5px;vertical-align:middle;';
-      tab.appendChild(badge);
-    }
-  });
-}
-
 function updateGenerateButton() {
-  var btn = document.getElementById('btnGenerate');
+  const btn = document.getElementById('btnGenerate');
   if (!btn || btn.disabled) return;
-  var raw = document.getElementById('textInput').value || '';
-  var batchCount = raw.includes('888') ? parseBatchTexts(raw).length : 0;
-  var tplCount = (window.TEMPLATE_REGISTRY || []).length;
-  btn.textContent = batchCount > 1 ? '🤖 自动生图' : ('🤖 自动生图 (' + tplCount + ' 模板)');
+  const raw = document.getElementById('textInput').value || '';
+  const batchCount = raw.includes('888') ? parseBatchTexts(raw).length : 0;
+  btn.textContent = batchCount > 1 ? '生成当前输入' : ('生成 ' + (STATE.families.size * CARDS_PER_FAMILY) + ' 张');
 }
 
 // ═══════════ Tab 事件绑定 ═══════════
 
-// ══════ 5族按钮 — STATE.families 直接存族名 ══════
-document.querySelectorAll('#familyTabs .tab[data-real-family]').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    var rf = btn.dataset.realFamily;
-    if (STATE.families.has(rf)) {
-      STATE.families.delete(rf);
-      btn.classList.remove('active');
-    } else {
-      STATE.families.add(rf);
-      btn.classList.add('active');
-    }
+document.querySelectorAll('#familyTabs .tab').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    btn.classList.toggle('active');
+    const fam = btn.dataset.family;
+    if (STATE.families.has(fam)) STATE.families.delete(fam);
+    else STATE.families.add(fam);
     if (STATE.families.size === 0) {
-      STATE.families.add(rf);
+      // 至少保留 1 个
+      STATE.families.add(fam);
       btn.classList.add('active');
       showToast('至少启用 1 个风格族');
     }
-    updateTemplateCounts();
     updateGenerateButton();
   });
 });
-
-function updateTemplateCounts() {
-  var reg = window.TEMPLATE_REGISTRY || [];
-  ['handnote','collage','comic','newspaper','minimal'].forEach(function(rf){
-    var el = document.getElementById('count-' + rf);
-    if (el) {
-      var count = reg.filter(function(id){ return id.indexOf(rf) === 0; }).length;
-      el.textContent = count || '?';
-    }
-  });
-}
-window._origOnTemplatesLoaded = window.onTemplatesLoaded;
-window.onTemplatesLoaded = function(){
-  updateTemplateCounts();
-  if (window._origOnTemplatesLoaded) window._origOnTemplatesLoaded();
-};
-updateTemplateCounts();
 
 document.querySelectorAll('#fontTabs .tab').forEach((btn) => {
   btn.addEventListener('click', () => {
@@ -7060,208 +5669,15 @@ renderAccountBar();
 refreshAuthState();
 
 // 启动日志
-console.log('%c小红书大字封面生成器 v5.0',
+console.log('%c小红书大字封面生成器 v4.0',
   'font-size:18px;font-weight:bold;color:#ED0108;background:#FFEC47;padding:6px 12px;border-radius:6px;');
-console.log('%c20 种风格 · 每种 5 张 · 39 贴纸可选 · AI 色彩推荐 · v5.0',
+console.log('%c20 种风格 · 每种 5 张 · 动态生成数量',
   'color:#666;font-size:11px;');
-console.log('%c纹理·阴影·渐变·多贴纸·智能排版·AI分析',
-  'color:#888;font-size:10px;');
 console.log('已加载 features:', Object.keys(window.STYLE_FUNCS || {}).join(', '));
 console.log('已加载字体:', Object.keys(FONT_MAP).join(', '));
 console.log('已加载调色板风格族:', Object.keys(PALETTES).join(', '));
 
-// ═══════════ v5.0 贴纸加载器初始化 ═══════════
-// 注册所有 Canvas 回退函数映射(字符串名→实际函数)
-registerFallbackFn('drawThumb3Dv2Sticker', drawThumb3Dv2Sticker);
-registerFallbackFn('drawMegaphone3DSticker', drawMegaphone3DSticker);
-registerFallbackFn('drawStar3DSticker', drawStar3DSticker);
-registerFallbackFn('drawHeart3DSticker', drawHeart3DSticker);
-registerFallbackFn('drawFire3DSticker', drawFire3DSticker);
-registerFallbackFn('drawDiamond3DSticker', drawDiamond3DSticker);
-registerFallbackFn('drawCrown3DSticker', drawCrown3DSticker);
-registerFallbackFn('drawTrophy3DSticker', drawTrophy3DSticker);
-registerFallbackFn('drawBalloon3DSticker', drawBalloon3DSticker);
-registerFallbackFn('drawGiftbox3DSticker', drawGiftbox3DSticker);
-registerFallbackFn('drawWashiTapeSticker', drawWashiTapeSticker);
-registerFallbackFn('drawStickyNoteSticker', drawStickyNoteSticker);
-registerFallbackFn('drawPaperClipSticker', drawPaperClipSticker);
-registerFallbackFn('drawPushpinSticker', drawPushpinSticker);
-registerFallbackFn('drawRealisticStampSticker', drawRealisticStampSticker);
-registerFallbackFn('drawPolaroidFrameSticker', drawPolaroidFrameSticker);
-registerFallbackFn('drawIndexTabSticker', drawIndexTabSticker);
-registerFallbackFn('drawBinderClipSticker', drawBinderClipSticker);
-registerFallbackFn('drawHandDrawnArrowSticker', drawHandDrawnArrowSticker);
-registerFallbackFn('drawHandDrawnUnderlineSticker', drawHandDrawnUnderlineSticker);
-registerFallbackFn('drawHandDrawnCirclev2Sticker', drawHandDrawnCirclev2Sticker);
-registerFallbackFn('drawDoodleStarSticker', drawDoodleStarSticker);
-registerFallbackFn('drawScribbleCloudSticker', drawScribbleCloudSticker);
-registerFallbackFn('drawMarkerStrikeSticker', drawMarkerStrikeSticker);
-registerFallbackFn('drawCuteCatFaceSticker', drawCuteCatFaceSticker);
-registerFallbackFn('drawCuteDogFaceSticker', drawCuteDogFaceSticker);
-registerFallbackFn('drawSparkleEyesSticker', drawSparkleEyesSticker);
-registerFallbackFn('drawAngryFaceSticker', drawAngryFaceSticker);
-registerFallbackFn('drawShockedFaceSticker', drawShockedFaceSticker);
-registerFallbackFn('drawLoveEyesSticker', drawLoveEyesSticker);
-registerFallbackFn('drawFullBodyCatSticker', drawFullBodyCatSticker);
-registerFallbackFn('drawFullBodyDogSticker', drawFullBodyDogSticker);
-registerFallbackFn('drawBoyCharacterSticker', drawBoyCharacterSticker);
-registerFallbackFn('drawGirlCharacterSticker', drawGirlCharacterSticker);
-registerFallbackFn('drawCoffeeCupSticker', drawCoffeeCupSticker);
-registerFallbackFn('drawFlowerSticker', drawFlowerSticker);
-registerFallbackFn('drawCloverSticker', drawCloverSticker);
-// 注册旧的9个贴纸回退
-registerFallbackFn('drawThumb3DSticker', drawThumb3DSticker);
-registerFallbackFn('drawEmojiAngry3DSticker', drawEmojiAngry3DSticker);
-registerFallbackFn('drawComicFistSticker', drawComicFistSticker);
-registerFallbackFn('drawBigEyesSticker', drawBigEyesSticker);
-registerFallbackFn('drawPaintRollerRealSticker', drawPaintRollerRealSticker);
-registerFallbackFn('drawPlumpCatSticker', drawPlumpCatSticker);
-
-// 暴露贴纸绘制函数到window,供real-style-decorations.js的贴纸渲染使用
-window.renderAsSticker = renderAsSticker;
-window._drawStickerFns = {
-  drawCuteCatFaceSticker, drawCuteDogFaceSticker,
-  drawFullBodyCatSticker, drawFullBodyDogSticker,
-  drawBoyCharacterSticker, drawGirlCharacterSticker,
-  drawCoffeeCupSticker, drawFlowerSticker, drawCloverSticker,
-  drawSparkleEyesSticker, drawAngryFaceSticker, drawShockedFaceSticker, drawLoveEyesSticker,
-  drawStar3DSticker, drawHeart3DSticker, drawFire3DSticker, drawCrown3DSticker,
-  drawDiamond3DSticker, drawTrophy3DSticker, drawBalloon3DSticker, drawGiftbox3DSticker,
-  drawThumb3Dv2Sticker, drawMegaphone3DSticker,
-  drawDoodleStarSticker, drawScribbleCloudSticker, drawHandDrawnArrowSticker,
-};
-registerFallbackFn('drawCatPhotoCardSticker', drawCatPhotoCardSticker);
-registerFallbackFn('drawDogFrameSticker', drawDogFrameSticker);
-registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
-
-// 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
-// preloadStickersForFamily('A').catch(() => {});
-
-// 加载云端贴纸(从嵌入JS读取, 路径: public/stickers/custom/ → Cloudflare根/stickers/custom/)
-var cloudStickers = [];
-var cloudStickerImages = {};
-(function initCloudStickers() {
-  var list = window._CLOUD_STICKERS || [];
-  if (list.length === 0) return;
-  var base = './stickers/custom/';
-  var loaded = 0;
-  list.forEach(function(s) {
-    var url = base + (s.file || (s.name + '.png'));
-    var img = new Image();
-    img.onload = function() {
-      loaded++;
-      if (loaded === list.length) {
-        updateCustomStickerUI();
-        console.log('☁️ 云端贴纸:', cloudStickers.length, '张已就绪');
-      }
-    };
-    img.src = url;
-    cloudStickerImages[s.file || s.name] = img;
-    cloudStickers.push({ name: s.name, file: s.file, dataUrl: url, fromCloud: true });
-  });
-  window._cloudStickerImages = cloudStickerImages;
-  window._cloudStickers = cloudStickers;
-})();
-
-console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
-
-// ═══════════ 自定义贴纸上传统计 ═══════════
-const CUSTOM_STICKER_KEY = 'cover_maker_custom_stickers';
-let customStickers = [];
-try {
-  const saved = localStorage.getItem(CUSTOM_STICKER_KEY);
-  customStickers = saved ? JSON.parse(saved) : [];
-} catch(e) { customStickers = []; }
-
-function saveCustomStickers() {
-  try { localStorage.setItem(CUSTOM_STICKER_KEY, JSON.stringify(customStickers)); } catch(e) {}
-}
-function updateCustomStickerUI() {
-  const list = document.getElementById('customStickerList');
-  const count = document.getElementById('customStickerCount');
-  if (count) count.textContent = (customStickers.length + cloudStickers.length) + ' 张';
-  if (!list) return;
-  // 保留上传按钮
-  const uploadBtn = list.querySelector('#btnUploadSticker');
-  const hint = list.querySelector('span');
-  // 清除非按钮元素
-  list.querySelectorAll('.custom-sticker-thumb').forEach(el => el.remove());
-  customStickers.forEach((s, i) => {
-    const thumb = document.createElement('div');
-    thumb.className = 'custom-sticker-thumb';
-    thumb.style.cssText = 'width:44px;height:44px;border-radius:8px;background:#f0ede8;background-image:url(' + s.dataUrl + ');background-size:contain;background-repeat:no-repeat;background-position:center;position:relative;border:1px solid #e8e4df;flex-shrink:0';
-    thumb.title = s.name;
-    const del = document.createElement('button');
-    del.textContent = '×';
-    del.style.cssText = 'position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;border:none;background:#ED0108;color:#fff;font-size:11px;cursor:pointer;line-height:1';
-    del.onclick = (e) => { e.stopPropagation(); e.preventDefault(); customStickers.splice(i, 1); saveCustomStickers(); updateCustomStickerUI(); };
-    thumb.appendChild(del);
-    list.insertBefore(thumb, hint);
-  });
-}
-
-function addCustomSticker(file) {
-  if (!file || !file.type.startsWith('image/png')) { showToast('⚠️ 仅支持透明 PNG 贴纸'); return; }
-  if (file.size > 2 * 1024 * 1024) { showToast('⚠️ 贴纸文件不能超过 2MB'); return; }
-  const reader = new FileReader();
-  reader.onload = () => {
-    customStickers.push({ name: file.name.replace(/\.png$/i, ''), dataUrl: reader.result, addedAt: Date.now() });
-    saveCustomStickers();
-    updateCustomStickerUI();
-    showToast('✅ 贴纸已添加: ' + file.name);
-  };
-  reader.readAsDataURL(file);
-}
-
-// 上传按钮
-document.getElementById('stickerFileInput').addEventListener('change', function() {
-  Array.from(this.files).forEach(addCustomSticker);
-  this.value = '';
-});
-document.getElementById('btnUploadSticker').addEventListener('click', () => {
-  document.getElementById('stickerFileInput').click();
-});
-// 清空按钮
-document.getElementById('btnClearCustomStickers').addEventListener('click', () => {
-  if (!customStickers.length) return;
-  if (!confirm('确定清空全部 ' + customStickers.length + ' 张自定义贴纸?')) return;
-  customStickers = [];
-  saveCustomStickers();
-  updateCustomStickerUI();
-  showToast('已清空自定义贴纸');
-});
-// 拖拽上传
-const stickerPanel = document.getElementById('stickerUploadPanel');
-stickerPanel.addEventListener('dragover', e => { e.preventDefault(); stickerPanel.style.background = '#f0f5fa'; });
-stickerPanel.addEventListener('dragleave', () => { stickerPanel.style.background = ''; });
-stickerPanel.addEventListener('drop', e => {
-  e.preventDefault(); stickerPanel.style.background = '';
-  Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/png')).forEach(addCustomSticker);
-});
-
-// 导出贴纸包(下载所有自定义贴纸为PNG文件)
-document.getElementById('btnExportStickers').addEventListener('click', async () => {
-  if (!customStickers.length) { showToast('⚠️ 没有可导出的贴纸,请先上传'); return; }
-  showToast('⬇ 正在下载 ' + customStickers.length + ' 张贴纸...');
-  for (let i = 0; i < customStickers.length; i++) {
-    const s = customStickers[i];
-    const a = document.createElement('a');
-    a.href = s.dataUrl;
-    a.download = (s.name || ('sticker-' + (i + 1))) + '.png';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    await new Promise(r => setTimeout(r, 300)); // 浏览器需要间隔
-  }
-  showToast('✅ ' + customStickers.length + ' 张贴纸已下载,请放入 public/stickers/custom/ 后 git commit && git push');
-});
-
-// 将自定义贴纸注入到 sticker 渲染系统(云端优先 → 本地兜底)
-window.getCustomStickers = () => [...cloudStickers, ...customStickers];
-window._cloudStickerImages = cloudStickerImages;
-updateCustomStickerUI();
-
-// ═══════════ 并发渲染 + 错误兜底 ═══════════
+// ═══════════ 并发渲染 + 错误兜底(批次 5 新增)═══════════
 
 /**
  * 渲染单张卡片到 canvas(批次 5:增加超时与错误兜底)
@@ -7271,20 +5687,17 @@ updateCustomStickerUI();
  * @param {string} text
  * @param {number} seedOffset
  */
-function renderCard(canvas, family, vi, text, seedOffset, meta) {
+function renderCard(canvas, family, vi, text, seedOffset) {
   try {
     const ctx = canvas.getContext('2d');
     canvas.width = CANVAS_W;
     canvas.height = CANVAS_H;
-    var options = { seed: vi + seedOffset, vi: vi };
-    // 模板直传 — templateId + variantMode
-    if (meta && meta.templateId) { options.templateId = meta.templateId; }
-    if (meta && meta.variantMode !== undefined) { options.variantMode = meta.variantMode; }
     const palette = pickPalette(family, vi, seedOffset);
-    const fn = STYLE_FUNCS[family] || STYLE_FUNCS.A || drawTemplateEnhancedCover;
-    if (!fn) throw new Error('Style function undefined');
+    const fn = STYLE_FUNCS[family];
+    if (!fn) throw new Error('Style family ' + family + ' undefined');
+    // 性能监控(单张 < 50ms 目标)
     const t0 = performance.now();
-    fn(ctx, text, palette, options);
+    fn(ctx, text, palette, { seed: vi + seedOffset, vi });
     assertTemplateSafeBounds(ctx, 54, family, vi);
     const t1 = performance.now();
     if (t1 - t0 > 80) {
@@ -7341,10 +5754,7 @@ function assertTemplateSafeBounds(ctx, safePad, family, vi) {
   }
   if (minX >= maxX || minY >= maxY) return;
   if (minX >= safePad && minY >= safePad && maxX <= W - safePad && maxY <= H - safePad) return;
-  // 模板模式下静默（模板自带 titleSafeRect，边界由模板定义）
-  if (!STATE.realStyleMode) {
-    console.warn('[v4.0] 模板内容接近边界,请调整模板槽位:', family, vi, { minX, minY, maxX, maxY, safePad });
-  }
+  console.warn('[v4.0] 模板内容接近边界,请调整模板槽位:', family, vi, { minX, minY, maxX, maxY, safePad });
 }
 
 /**
@@ -7528,203 +5938,8 @@ function setupTabOrder() {
     }
   });
 }
-
-// ═══════════════════════════════════════════════════════════════
-// 真实风格族诊断工具
-// ═══════════════════════════════════════════════════════════════
-window.diagnose = {
-  checkModules() {
-    var modules = [
-      'REAL_STYLE_MAP', 'REAL_STYLE_CONFIGS', 'REAL_SUBSTYLE_CONFIGS',
-      'REAL_STYLE_LAYOUTS', 'CENTER_SHAPE_LIBRARY',
-      'parseCoverContent', 'computeTypographyPlan',
-      'selectLayout', 'selectCenterShape',
-      'buildDecorationPlan', 'allocateDecorationSlots',
-      'drawRealStyleCover', 'drawRealBackground',
-      'drawStructuredTypography', 'drawTextWithSpacing',
-      'filterStickersByFamily', 'pickStickersForCard',
-      'getTextSeed', 'createDeduplicationContext',
-      'FAMILY_RANDOMIZATION_BOUNDS',
-    ];
-    var results = {};
-    modules.forEach(function (name) {
-      results[name] = {
-        loaded: typeof window[name] !== 'undefined',
-        type: typeof window[name],
-      };
-    });
-    console.table(results);
-    return results;
-  },
-
-  testAllFamilies() {
-    var results = {};
-    for (var f = 0; f < 20; f++) {
-      var family = 'ABCDEFGHIJKLMNOPQRST'[f];
-      var canvas = document.createElement('canvas');
-      canvas.width = 1242;
-      canvas.height = 1656;
-      var ctx = canvas.getContext('2d');
-      var start = performance.now();
-      try {
-        window.drawRealStyleCover(ctx, '测试标题文字',
-          { bg: ['#FBFAF4'], text: '#111111', accent: '#E6213D', second: '#FFEC47' },
-          { vi: 0, seed: 42, font: 'black' }, family);
-        results[family] = { success: true, time: Math.round(performance.now() - start) + 'ms' };
-      } catch (e) {
-        results[family] = { success: false, error: (e.message || '').slice(0, 60) };
-      }
-    }
-    console.table(results);
-    return results;
-  },
-
-  stats() {
-    var centerShapes = {};
-    if (window.CENTER_SHAPE_LIBRARY) {
-      Object.keys(window.CENTER_SHAPE_LIBRARY).forEach(function (f) {
-        centerShapes[f] = window.CENTER_SHAPE_LIBRARY[f].length;
-      });
-    }
-    var layouts = {};
-    if (window.REAL_STYLE_LAYOUTS) {
-      Object.keys(window.REAL_STYLE_LAYOUTS).forEach(function (f) {
-        layouts[f] = window.REAL_STYLE_LAYOUTS[f].length;
-      });
-    }
-    console.log('中央图形统计:', centerShapes, '(total: ' + Object.values(centerShapes).reduce(function(a,b){return a+b;},0) + ')');
-    console.log('Layout 统计:', layouts, '(total: ' + Object.values(layouts).reduce(function(a,b){return a+b;},0) + ')');
-    console.log('真实风格模式:', STATE.realStyleMode ? '✅ 开启' : '❌ 关闭 (legacy)');
-    console.log('Lib 模块: map/typography/center-shapes/layouts/decorations/renderer/random/stickers = 8 files');
-  },
-};
-
-console.log('🔧 真实风格族诊断工具: window.diagnose.checkModules() / testAllFamilies() / stats()');
-
-// ═══════════ 模板管理面板 ═══════════
-(function () {
-  var panel = document.getElementById('tmPanel');
-  var toggle = document.getElementById('tmToggle');
-  var close = document.getElementById('tmClose');
-  var list = document.getElementById('tmTemplateList');
-  var stats = document.getElementById('tmStats');
-  var fileInput = document.getElementById('tmFileInput');
-  var uploadArea = document.getElementById('tmUpload');
-  var pendingDiv = document.getElementById('tmPendingUploads');
-  var pendingFiles = [];
-
-  toggle.addEventListener('click', function () { panel.classList.toggle('show'); renderTemplateList(); });
-  close.addEventListener('click', function () { panel.classList.remove('show'); });
-  uploadArea.addEventListener('click', function () { fileInput.click(); });
-  fileInput.addEventListener('change', function () {
-    for (var i = 0; i < fileInput.files.length; i++) pendingFiles.push(fileInput.files[i]);
-    renderPendingUploads();
-    fileInput.value = '';
-  });
-
-  function renderPendingUploads() {
-    if (pendingFiles.length === 0) { pendingDiv.innerHTML = ''; return; }
-    var html = '<div style=\"font-size:12px;color:#6B7280;margin-bottom:4px\">📤 待提炼 (' + pendingFiles.length + ' 张):</div>';
-    pendingFiles.forEach(function (f, i) {
-      html += '<span style=\"display:inline-block;background:#EEF2FF;padding:2px 8px;border-radius:4px;font-size:11px;margin:2px\">' + f.name + ' <button onclick=\"this.parentElement.remove();pendingFiles.splice(' + i + ',1);renderPendingUploads()\" style=\"border:none;background:none;cursor:pointer;color:#EF4444\">✕</button></span>';
-    });
-    pendingDiv.innerHTML = html;
-  }
-
-  function renderTemplateList() {
-    var lib = window.TEMPLATE_LIBRARY || {};
-    var registry = window.TEMPLATE_REGISTRY || [];
-    var families = { handnote: '手绘便签', collage: '拼贴', comic: '漫画pop', newspaper: '报纸大字', minimal: '极简大字' };
-    var html = '';
-    var totalLoaded = 0;
-    Object.keys(families).forEach(function (fam) {
-      var famTemplates = registry.filter(function (id) { return id.indexOf(fam) === 0; });
-      if (famTemplates.length === 0) return;
-      html += '<div class=\"tm-family-group\"><div class=\"tm-family-title\">' + families[fam] + ' (' + famTemplates.length + ')</div>';
-      famTemplates.forEach(function (id) {
-        var tpl = lib[id];
-        var loaded = !!tpl;
-        if (loaded) totalLoaded++;
-        html += '<div class=\"tm-template-item' + (loaded ? '' : '') + '\">';
-        html += '<div class=\"tm-thumb\"><div style=\"width:48px;height:64px;display:flex;align-items:center;justify-content:center;font-size:18px\">' + (loaded ? '✅' : '⏳') + '</div></div>';
-        html += '<div class=\"tm-info\"><div class=\"tm-name\">' + (tpl ? tpl.name : id) + '</div><div class=\"tm-meta\">' + id + (loaded ? '' : ' (加载中...)') + '</div></div>';
-        html += '<button class=\"tm-del\" data-tpl-id=\"' + id + '\">移除</button>';
-        html += '</div>';
-      });
-      html += '</div>';
-    });
-    list.innerHTML = html || '<p style=\"color:#9CA3AF;font-size:13px\">暂无模板</p>';
-    stats.textContent = '已加载: ' + totalLoaded + ' / ' + registry.length + ' 个模板 | 5 个风格族';
-
-    // 绑定删除事件
-    list.querySelectorAll('.tm-del').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var id = btn.dataset.tplId;
-        if (confirm('确定要移除模板 ' + id + ' 吗？\n\n模板将从本地删除，下次生成不再出现。')) {
-          delete window.TEMPLATE_LIBRARY[id];
-          window.TEMPLATE_REGISTRY = window.TEMPLATE_REGISTRY.filter(function (x) { return x !== id; });
-          renderTemplateList();
-          showToast('已移除: ' + id + '（刷新后恢复，永久删除需提交代码）');
-        }
-      });
-    });
-  }
-
-  // ══════ 返回全部已加载模板（筛选器已移除）══════
-  window.getFilteredTemplateIds = function(){
-    var lib = window.TEMPLATE_LIBRARY || {};
-    return Object.keys(lib);
-  };
-
-  // 模板加载完成后自动刷新面板
-  window.onTemplatesLoaded = function () { if (panel.classList.contains('show')) renderTemplateList(); };
-  window.renderTemplateList = renderTemplateList;
-  window.TM_PENDING_FILES = function () { return pendingFiles; };
-})();
-
 setupTabOrder();
 </script>
 
-<!-- ═══════════ 模板管理面板 ═══════════ -->
-<button class="template-manager-toggle" id="tmToggle" title="模板管理">📁</button>
-<div class="template-manager-panel" id="tmPanel">
-  <div class="tm-header">
-    <h2>📁 模板管理</h2>
-    <button class="tm-close" id="tmClose">✕</button>
-  </div>
-  <div class="tm-upload-area" id="tmUpload">
-    <span style="font-size:24px">📤</span>
-    <p>上传参考图（暂存）</p>
-    <input type="file" id="tmFileInput" accept="image/*" multiple style="display:none">
-  </div>
-  <div id="tmPendingUploads" style="margin:8px 0"></div>
-  <details style="margin-bottom:8px;font-size:11px;color:#6B7280;background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:8px">
-    <summary style="cursor:pointer;font-weight:600;color:#92400E">📋 当前生图规则（点击展开）</summary>
-    <div style="margin-top:6px;line-height:1.6">
-      <b>文字规则</b><br>
-      ① <b>零丢字</b>：用户输入的每一个字都必须出现在图上，不截断<br>
-      ② <b>统一字号</b>：换行时所有行同一字号，不区分主副标题<br>
-      ③ <b>不超边框</b>：文字自动缩小到画布内，不裁切不溢出<br>
-      ④ <b>禁止重复</b>：标题和关键词相同→只保留一个<br>
-      ⑤ <b>75-85%占比</b>：字多时文字面积扩展到画布84%<br>
-      ⑥ <b>禁止自动加字</b>：系统不添加额外文案<br><br>
-      <b>自动识别</b><br>
-      ⑦ <b>Badge标签</b>：检测学术词(论文/SCI/审稿)→自动REVISION等英文标签<br>
-      ⑧ <b>英文短句保护</b>：≤20字符的英文整句不拆分<br><br>
-      <b>分隔符</b><br>
-      ⑨ 换行(\n)→全部行合并为统一字号<br>
-      ⑩ 分隔符(｜/—/-/：/:)→拆主副标题<br>
-      ⑪ 无分隔符→全文为主标题<br><br>
-      <b>生成规则</b><br>
-      ⑫ 每模板×1张（60模板=60张）<br>
-      ⑬ 模板按seed随机打乱，不按固定顺序<br>
-      ⑭ 5个风格族按钮自由勾选<br>
-      ⑮ 仅comic/minimal特定模板允许5%出血(bleed)<br>
-    </div>
-  </details>
-  <div id="tmTemplateList">加载中...</div>
-  <div class="tm-stats" id="tmStats"></div>
-</div>
 </body>
 </html>

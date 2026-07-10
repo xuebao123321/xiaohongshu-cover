@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reddit 独立发帖 · 封面生成器</title>
+<style>
+/* ═══════════ 重置 ═══════════ */
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+  background:#f7f5f2;color:#2d2a26;line-height:1.5;min-height:100vh;
+}
+button{font-family:inherit;cursor:pointer}
+a{color:#1f4b73;text-decoration:none}
+a:hover{text-decoration:underline}
+input,select,textarea{font-family:inherit}
+
+/* ═══════════ 顶部导航 ═══════════ */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:12px 20px;background:#fff;border-bottom:1.5px solid #e8e4df;
+  flex-wrap:wrap;
+}
+.topbar h1{font-size:18px;font-weight:900;color:#1a1a1a;white-space:nowrap}
+.topbar nav{display:flex;gap:14px;font-size:13px;font-weight:500;flex-wrap:wrap}
+.topbar nav a{white-space:nowrap}
+
+/* ═══════════ 三列布局 ═══════════ */
+.main-grid{
+  display:grid;grid-template-columns:280px 1fr 260px;gap:0;
+  height:calc(100vh - 52px);overflow:hidden;
+}
+
+/* ═══════════ 左侧面板 ═══════════ */
+.left-panel{
+  background:#fff;border-right:1.5px solid #e8e4df;padding:16px;
+  overflow-y:auto;display:flex;flex-direction:column;gap:14px;
+}
+.panel-section h3{font-size:12px;font-weight:800;color:#8a8a8a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.sub-list{display:flex;flex-direction:column;gap:2px;max-height:240px;overflow-y:auto}
+.sub-item{
+  display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:6px;
+  cursor:pointer;transition:background .12s;border:1.5px solid transparent;font-size:12px;
+}
+.sub-item:hover{background:#f8f7f4}
+.sub-item.selected{background:#eef4f8;border-color:#b8d4e8}
+.sub-item input[type="checkbox"]{margin-top:2px;accent-color:#1f4b73}
+.sub-item .sub-name{font-weight:700;color:#2d2a26}
+.sub-item .sub-desc{font-size:10px;color:#8a8a8a;line-height:1.4}
+.sub-count{font-size:10px;color:#8a8a8a}
+
+.left-panel textarea,.left-panel input[type="text"]{
+  width:100%;padding:8px 10px;border:1.5px solid #e0dcd6;border-radius:6px;
+  font-size:12px;outline:none;background:#faf9f7;resize:vertical;
+}
+.left-panel textarea:focus,.left-panel input:focus{border-color:#5a8cb8;background:#fff}
+.left-panel textarea{min-height:140px}
+.left-panel select{
+  width:100%;padding:6px 10px;border:1.5px solid #e0dcd6;border-radius:6px;
+  font-size:12px;outline:none;background:#faf9f7;
+}
+
+.btn-generate{
+  width:100%;padding:12px;border-radius:8px;font-size:15px;font-weight:800;
+  background:#ED0108;color:#fff;border:none;transition:background .15s;
+}
+.btn-generate:hover{background:#c70106}
+.btn-generate:disabled{opacity:.5;pointer-events:none}
+.btn-secondary{
+  padding:8px 14px;border-radius:6px;font-size:12px;font-weight:700;
+  border:1.5px solid #e0dcd6;background:#fff;color:#5a5a5a;transition:all .15s;
+}
+.btn-secondary:hover{background:#f5f3ef;border-color:#c8c4be}
+
+/* ═══════════ 中间预览区 ═══════════ */
+.center-panel{
+  background:#faf9f7;overflow-y:auto;display:flex;flex-direction:column;
+}
+.preview-tabs{
+  display:flex;background:#fff;border-bottom:1.5px solid #e8e4df;
+  padding:0 16px;gap:0;overflow-x:auto;
+}
+.preview-tab{
+  padding:10px 16px;font-size:12px;font-weight:700;color:#8a8a8a;
+  border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;
+  transition:all .15s;
+}
+.preview-tab:hover{color:#2d2a26}
+.preview-tab.active{color:#1f4b73;border-bottom-color:#1f4b73}
+.preview-tab .tab-status{font-size:10px;margin-left:4px}
+.preview-content{padding:20px 24px;flex:1;overflow-y:auto}
+.preview-empty{text-align:center;padding:60px 20px;color:#b0a89e}
+.preview-empty .empty-icon{font-size:48px;margin-bottom:12px}
+.preview-post{font-size:14px;line-height:1.8;color:#2d2a26;white-space:pre-wrap;word-break:break-word}
+.preview-post .diff-highlight{background:#fff3cd;padding:1px 3px;border-radius:2px}
+.preview-placeholder{
+  text-align:center;padding:40px 20px;color:#c8c4be;font-size:13px;
+}
+.preview-meta{font-size:11px;color:#8a8a8a;margin-top:16px;padding-top:12px;border-top:1px solid #e8e4df}
+.spinner-sm{display:inline-block;width:16px;height:16px;border:2px solid #e0dcd6;border-top-color:#5a8cb8;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ═══════════ 右侧面板 ═══════════ */
+.right-panel{
+  background:#fff;border-left:1.5px solid #e8e4df;padding:16px;
+  overflow-y:auto;display:flex;flex-direction:column;gap:14px;font-size:12px;
+}
+.right-panel input[type="range"]{width:100%;accent-color:#1f4b73}
+.right-panel select{
+  width:100%;padding:6px 10px;border:1.5px solid #e0dcd6;border-radius:6px;
+  font-size:12px;outline:none;background:#faf9f7;
+}
+.compare-card{
+  background:#faf9f7;border:1.5px solid #e8e4df;border-radius:6px;
+  padding:10px 12px;font-size:11px;
+}
+.compare-card .comp-sub{font-weight:800;color:#1a1a1a;margin-bottom:4px}
+.compare-card .comp-row{display:flex;justify-content:space-between;margin-top:2px;color:#5a5a5a}
+.api-key-row{display:flex;gap:4px}
+.api-key-row input{flex:1;padding:6px 8px;border:1.5px solid #e0dcd6;border-radius:5px;font-size:11px;outline:none;background:#faf9f7}
+.api-key-row input:focus{border-color:#5a8cb8}
+.api-key-row button{padding:6px 10px;font-size:11px;white-space:nowrap}
+
+/* ═══════════ Toast ═══════════ */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
+  background:#1a1a1a;color:#fff;padding:10px 24px;border-radius:999px;
+  font-size:13px;font-weight:700;z-index:9999;opacity:0;transition:opacity .25s;pointer-events:none;
+}
+.toast.show{opacity:1}
+
+/* ═══════════ 响应式 ═══════════ */
+@media(max-width:768px){
+  .main-grid{grid-template-columns:1fr;height:auto}
+  .left-panel,.right-panel{border-right:none;border-left:none;max-height:none}
+  .right-panel{border-top:1.5px solid #e8e4df}
+  .topbar{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ 顶部导航 ═══════════ -->
+<div class="topbar">
+  <h1>✍️ Reddit 独立发帖</h1>
+  <nav>
+    <a href="../index.html">← 封面生成器</a>
+    <a href="../reddit-reply-assistant/">🧠 回复助手</a>
+    <a href="../reddit-radar/">🔭 线索雷达</a>
+  </nav>
+</div>
+
+<!-- ═══════════ 三列主布局 ═══════════ -->
+<div class="main-grid">
+
+  <!-- ═══ 左侧面板 ═══ -->
+  <div class="left-panel">
+    <div class="panel-section">
+      <h3>📋 目标 Subreddit（最多3个）</h3>
+      <div class="sub-count" id="subCount">已选 0 / 3</div>
+      <div class="sub-list" id="subList">加载中...</div>
+    </div>
+
+    <div class="panel-section">
+      <h3>📝 中文内容</h3>
+      <input type="text" id="postTitle" placeholder="文章标题">
+      <textarea id="postContent" rows="10" placeholder="输入中文版本的文章内容。可以是你想推广的产品故事、经验分享、或学术观点。"></textarea>
+    </div>
+
+    <div class="panel-section">
+      <h3>📐 文章框架</h3>
+      <select id="framework">
+        <option value="problem_solution_feedback">发现问题 → 解决 → 求反馈（默认）</option>
+        <option value="research_evidence_discuss">研究 → 证据 → 讨论（学术版）</option>
+        <option value="struggle_lesson_ask">经历 → 教训 → 提问（轻量版）</option>
+        <option value="technique_example_compare">技巧 → 前后对比 → 讨论</option>
+        <option value="custom">自定义（AI 自由发挥）</option>
+      </select>
+    </div>
+
+    <button class="btn-generate" onclick="generateAll()" id="btnGenerate">🚀 重写为英文</button>
+    <div style="display:flex;gap:6px">
+      <button class="btn-secondary" onclick="copyCurrent()" style="flex:1">📋 复制当前</button>
+      <button class="btn-secondary" onclick="saveDraft()" style="flex:1">💾 保存草稿</button>
+    </div>
+  </div>
+
+  <!-- ═══ 中间预览区 ═══ -->
+  <div class="center-panel">
+    <div class="preview-tabs" id="previewTabs">
+      <div class="preview-tab active">选择 Subreddit 后开始</div>
+    </div>
+    <div class="preview-content" id="previewContent">
+      <div class="preview-empty">
+        <div class="empty-icon">📄</div>
+        <p>选择目标版块，输入中文内容，点击"重写为英文"</p>
+        <p style="font-size:12px;color:#c8c4be;margin-top:4px">AI 会针对每个版块生成独特的文章</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ 右侧面板 ═══ -->
+  <div class="right-panel">
+    <div class="panel-section">
+      <h3>⚙️ AI 参数</h3>
+      <div style="margin-bottom:8px">
+        <label style="font-size:11px;color:#8a8a8a;font-weight:700">DeepSeek API Key</label>
+        <div class="api-key-row">
+          <input type="password" id="apiKey" placeholder="sk-xxx" autocomplete="off">
+          <button class="btn-secondary" onclick="saveApiKey()" style="padding:6px 8px">保存</button>
+        </div>
+      </div>
+      <div style="margin-bottom:6px">
+        <label style="font-size:11px;color:#8a8a8a;font-weight:700">模型</label>
+        <select id="aiModel">
+          <option value="deepseek-chat">deepseek-chat (快速)</option>
+          <option value="deepseek-reasoner">deepseek-reasoner (深度)</option>
+        </select>
+      </div>
+      <div>
+        <label style="font-size:11px;color:#8a8a8a;font-weight:700">温度: <span id="tempVal">0.7</span></label>
+        <input type="range" id="temperature" min="0.3" max="1.0" step="0.1" value="0.7" oninput="document.getElementById('tempVal').textContent=this.value">
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>📊 版块对比</h3>
+      <div id="compareCards"></div>
+    </div>
+
+    <div class="panel-section">
+      <h3>💡 当前版块提示</h3>
+      <div id="profileTip" style="font-size:11px;color:#8a8a8a">选择 Tab 后显示对应版块的发帖指导</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════ 常量 ═══════════ */
+var FRAMEWORK_LABELS = {
+  problem_solution_feedback: '发现问题 → 解决 → 求反馈',
+  research_evidence_discuss: '研究 → 证据 → 讨论',
+  struggle_lesson_ask: '经历 → 教训 → 提问',
+  technique_example_compare: '技巧 → 前后对比 → 讨论',
+  custom: 'AI 自由发挥'
+};
+
+var STATE = {
+  profiles: [],
+  selectedSubs: [],
+  title: '',
+  content: '',
+  framework: 'problem_solution_feedback',
+  posts: {},       // { 'PhD': 'generated text', 'GradSchool': '...' }
+  activeTab: null,
+  generating: false
+};
+
+/* ═══════════ DOM 引用 ═══════════ */
+function $(id) { return document.getElementById(id); }
+var toastEl = $('toast');
+var toastTimer;
+
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { toastEl.classList.remove('show'); }, 2500);
+}
+
+/* ═══════════ 加载画像 ═══════════ */
+function loadProfiles() {
+  fetch('../data/reddit/subreddit_profiles.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      STATE.profiles = data;
+      renderSubList();
+      loadApiKey();
+      loadDrafts();
+    })
+    .catch(function() {
+      $('subList').innerHTML = '<p style="font-size:11px;color:#ED0108">加载画像失败</p>';
+    });
+}
+
+function renderSubList() {
+  var html = '';
+  STATE.profiles.forEach(function(p) {
+    var sel = STATE.selectedSubs.indexOf(p.subreddit) !== -1;
+    html += '<div class="sub-item' + (sel ? ' selected' : '') + '" onclick="toggleSub(\'' + p.subreddit + '\')" id="subItem_' + p.subreddit + '">' +
+      '<input type="checkbox" ' + (sel ? 'checked' : '') + ' tabindex="-1">' +
+      '<div><div class="sub-name">' + escapeHtml(p.displayName || p.subreddit) + '</div>' +
+      '<div class="sub-desc">' + escapeHtml((p.audienceMood || '').slice(0, 40)) + '</div></div>' +
+    '</div>';
+  });
+  $('subList').innerHTML = html;
+  updateSubCount();
+}
+
+function toggleSub(subreddit) {
+  var idx = STATE.selectedSubs.indexOf(subreddit);
+  if (idx !== -1) {
+    STATE.selectedSubs.splice(idx, 1);
+  } else {
+    if (STATE.selectedSubs.length >= 3) { showToast('最多选择 3 个版块'); return; }
+    STATE.selectedSubs.push(subreddit);
+    if (!STATE.posts[subreddit]) STATE.posts[subreddit] = null;
+  }
+  renderSubList();
+  updateTabs();
+  updateCompareCards();
+}
+
+function updateSubCount() {
+  $('subCount').textContent = '已选 ' + STATE.selectedSubs.length + ' / 3';
+}
+
+/* ═══════════ Tab 切换 ═══════════ */
+function updateTabs() {
+  var tabsEl = $('previewTabs');
+  if (STATE.selectedSubs.length === 0) {
+    tabsEl.innerHTML = '<div class="preview-tab active">选择 Subreddit 后开始</div>';
+    $('previewContent').innerHTML = '<div class="preview-empty"><div class="empty-icon">📄</div><p>选择目标版块，输入中文内容，点击"重写为英文"</p></div>';
+    STATE.activeTab = null;
+    return;
+  }
+
+  var profile = getProfile(STATE.activeTab);
+  if (!profile) STATE.activeTab = STATE.selectedSubs[0];
+
+  tabsEl.innerHTML = STATE.selectedSubs.map(function(sub) {
+    var p = getProfile(sub);
+    var name = p ? p.displayName : ('r/' + sub);
+    var status = STATE.posts[sub] ? '✅' : (STATE.generating && STATE.generating[sub] ? '⏳' : '○');
+    return '<div class="preview-tab' + (STATE.activeTab === sub ? ' active' : '') + '" onclick="switchTab(\'' + sub + '\')">' +
+      escapeHtml(name) + ' <span class="tab-status">' + status + '</span>' +
+    '</div>';
+  }).join('');
+
+  renderPreview();
+  updateProfileTip();
+}
+
+function switchTab(sub) {
+  STATE.activeTab = sub;
+  updateTabs();
+}
+
+/* ═══════════ 预览渲染 ═══════════ */
+function renderPreview() {
+  var contentEl = $('previewContent');
+  var sub = STATE.activeTab;
+  if (!sub) {
+    contentEl.innerHTML = '<div class="preview-empty"><div class="empty-icon">📄</div><p>请先选择目标版块</p></div>';
+    return;
+  }
+
+  var post = STATE.posts[sub];
+  if (!post) {
+    contentEl.innerHTML = '<div class="preview-placeholder">尚未生成 r/' + sub + ' 的文章</div>';
+    return;
+  }
+
+  if (typeof post === 'string') {
+    contentEl.innerHTML = '<div class="preview-post">' + escapeHtml(post) + '</div>';
+  }
+
+  // Meta info
+  var profile = getProfile(sub);
+  var metaHtml = '<div class="preview-meta">';
+  metaHtml += '目标版块: ' + escapeHtml(profile ? profile.displayName : ('r/' + sub));
+  metaHtml += ' · 字数: ~' + post.split(/\s+/).length;
+  metaHtml += ' · 预估阅读: ' + Math.max(1, Math.round(post.split(/\s+/).length / 200)) + ' 分钟';
+  if (profile && profile.postProfile) {
+    metaHtml += '<br>热门帖参考: ' + escapeHtml(profile.postProfile.hotPostPattern || '');
+  }
+  metaHtml += '</div>';
+  contentEl.innerHTML += metaHtml;
+}
+
+/* ═══════════ 版块对比 ═══════════ */
+function updateCompareCards() {
+  var el = $('compareCards');
+  if (STATE.selectedSubs.length <= 1) {
+    el.innerHTML = '<p style="font-size:11px;color:#8a8a8a">选择 2-3 个版块后可对比</p>';
+    return;
+  }
+
+  el.innerHTML = STATE.selectedSubs.map(function(sub) {
+    var p = getProfile(sub);
+    if (!p) return '';
+    var rp = p.replyProfile || {};
+    var pp = p.postProfile || {};
+    return '<div class="compare-card">' +
+      '<div class="comp-sub">' + escapeHtml(p.displayName) + '</div>' +
+      '<div class="comp-row"><span>框架</span><span>' + escapeHtml(pp.storyFramework || '') + '</span></div>' +
+      '<div class="comp-row"><span>语气</span><span>' + escapeHtml(pp.toneNotes || '') + '</span></div>' +
+      '<div class="comp-row"><span>CTA</span><span>' + escapeHtml(rp.defaultCtaLevel || '') + '</span></div>' +
+    '</div>';
+  }).join('');
+}
+
+function updateProfileTip() {
+  var el = $('profileTip');
+  var sub = STATE.activeTab;
+  if (!sub) { el.innerHTML = '选择 Tab 后显示对应版块的发帖指导'; return; }
+  var p = getProfile(sub);
+  if (!p) { el.innerHTML = '暂无该版块画像'; return; }
+  var pp = p.postProfile || {};
+  var rp = p.replyProfile || {};
+  el.innerHTML = '<strong>' + escapeHtml(p.displayName) + '</strong><br>' +
+    '受众: ' + escapeHtml(p.audienceMood || '') + '<br>' +
+    '推荐框架: ' + escapeHtml(pp.storyFramework || '') + '<br>' +
+    '语气: ' + escapeHtml(pp.toneNotes || '') + '<br>' +
+    '避免: ' + escapeHtml(rp.avoidPatterns || '') + '<br>' +
+    '热门结构: ' + escapeHtml(pp.hotPostPattern || '');
+}
+
+/* ═══════════ 辅助 ═══════════ */
+function getProfile(sub) {
+  for (var i = 0; i < STATE.profiles.length; i++) {
+    if (STATE.profiles[i].subreddit === sub) return STATE.profiles[i];
+  }
+  return null;
+}
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.textContent = str || '';
+  return div.innerHTML;
+}
+
+/* ═══════════ API Key ═══════════ */
+function getApiKey() {
+  return localStorage.getItem('pw_deepseek_key') || '';
+}
+
+function saveApiKey() {
+  var key = $('apiKey').value.trim();
+  if (!key) { showToast('请输入 API Key'); return; }
+  localStorage.setItem('pw_deepseek_key', key);
+  showToast('✅ API Key 已保存');
+}
+
+function loadApiKey() {
+  var key = getApiKey();
+  if (key) $('apiKey').value = key;
+}
+
+/* ═══════════ AI 生成 ═══════════ */
+async function generateAll() {
+  if (STATE.selectedSubs.length === 0) { showToast('请先选择目标 Subreddit'); return; }
+  var title = ($('postTitle').value || '').trim();
+  var content = ($('postContent').value || '').trim();
+  if (!title && !content) { showToast('请输入中文标题或正文'); return; }
+
+  var apiKey = getApiKey();
+  if (!apiKey) { showToast('请在右侧面板输入 DeepSeek API Key'); return; }
+
+  STATE.title = title;
+  STATE.content = content;
+  STATE.framework = $('framework').value;
+  STATE.generating = {};
+
+  var btn = $('btnGenerate');
+  btn.disabled = true;
+  btn.textContent = '⏳ 生成中...';
+
+  for (var i = 0; i < STATE.selectedSubs.length; i++) {
+    var sub = STATE.selectedSubs[i];
+    STATE.generating[sub] = true;
+    updateTabs();
+
+    try {
+      var result = await generateForSub(sub);
+      STATE.posts[sub] = result;
+    } catch(e) {
+      console.error('生成失败: ' + sub, e);
+      STATE.posts[sub] = '❌ 生成失败: ' + (e.message || '未知错误') + '\n\n请检查 API Key 和网络后重试。';
+    }
+
+    STATE.generating[sub] = false;
+    if (STATE.activeTab === sub) { updateTabs(); renderPreview(); }
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🚀 重写为英文';
+  updateTabs();
+  updateCompareCards();
+  showToast('✅ 全部生成完成！');
+}
+
+async function generateForSub(subreddit) {
+  var profile = getProfile(subreddit);
+  var pp = (profile && profile.postProfile) ? profile.postProfile : {};
+  var rp = (profile && profile.replyProfile) ? profile.replyProfile : {};
+
+  var frameworkDesc = FRAMEWORK_LABELS[STATE.framework] || STATE.framework;
+
+  var userPrompt = [
+    '目标版块：' + (profile ? profile.displayName : ('r/' + subreddit)),
+    '版块介绍：' + (profile ? profile.description : ''),
+    '版块受众心态：' + (profile ? profile.audienceMood : ''),
+    '',
+    '本次发帖要求：',
+    '- 使用框架：' + frameworkDesc,
+    '- 语气指导：' + (pp.toneNotes || '自然、真诚'),
+    '- 热门帖结构参考：' + (pp.hotPostPattern || '个人经历 + 总结教训 + 邀请讨论'),
+    '- 应避免的模式：' + (rp.avoidPatterns || 'hard_sell'),
+    '- 字数：' + (pp.preferredLength === 'long' ? '400-600' : (pp.preferredLength === 'medium_long' ? '350-500' : '250-400')) + ' 词',
+    '',
+    '待改写的中文内容：',
+    '标题：' + STATE.title,
+    '正文：' + STATE.content,
+    '',
+    '请直接输出改写后的英文文章，不要输出任何解释或标注。用空行分段，保持 Reddit 自然的发帖风格。结尾包含自然的互动邀请。',
+    '',
+    '[随机标识: ' + Math.random().toString(36).slice(2, 10) + ']'
+  ].join('\n');
+
+  var model = $('aiModel').value || 'deepseek-chat';
+  var temp = parseFloat($('temperature').value) || 0.7;
+
+  var res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + getApiKey(),
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      model: model,
+      messages: [
+        {
+          role: 'system',
+          content: '你是一位精通 Reddit 文化和学术写作的英文改写助手。你的任务是将用户的中文内容改写为一篇适合在 Reddit 特定版块发布的英文文章。改写规则：1. 必须保持原文的核心信息和价值主张 2. 语气、结构、开头方式必须适配目标版块的文化 3. 绝不要添加原文中没有的事实或数据 4. 使用自然的 Reddit 发帖格式（无 markdown 标题，用空行分段）5. 结尾必须包含自然的互动邀请（非硬广 CTA）'
+        },
+        { role: 'user', content: userPrompt }
+      ],
+      temperature: temp,
+      max_tokens: 1200
+    })
+  });
+
+  if (!res.ok) {
+    var body = await res.text().catch(function() { return ''; });
+    throw new Error('AI API HTTP ' + res.status + ': ' + body.slice(0, 150));
+  }
+
+  var json = await res.json();
+  var result = json && json.choices && json.choices[0] && json.choices[0].message && json.choices[0].message.content;
+  if (!result) throw new Error('AI 返回为空');
+  return result.trim();
+}
+
+/* ═══════════ 复制 & 草稿 ═══════════ */
+function copyCurrent() {
+  var sub = STATE.activeTab;
+  if (!sub || !STATE.posts[sub]) { showToast('请先生成文章'); return; }
+  navigator.clipboard.writeText(STATE.posts[sub]).then(function() {
+    showToast('✅ 已复制到剪贴板');
+  }).catch(function() {
+    showToast('复制失败，请手动选择文字');
+  });
+}
+
+function saveDraft() {
+  var sub = STATE.activeTab;
+  if (!sub || !STATE.posts[sub]) { showToast('请先生成文章'); return; }
+  var drafts = [];
+  try { drafts = JSON.parse(localStorage.getItem('pw_drafts') || '[]'); } catch(e) {}
+  drafts.push({
+    id: Date.now(),
+    title: STATE.title,
+    content: STATE.content,
+    framework: STATE.framework,
+    subreddit: sub,
+    post: STATE.posts[sub],
+    savedAt: new Date().toISOString()
+  });
+  if (drafts.length > 20) drafts = drafts.slice(-20);
+  localStorage.setItem('pw_drafts', JSON.stringify(drafts));
+  showToast('✅ 草稿已保存（共 ' + drafts.length + ' 篇）');
+}
+
+function loadDrafts() {
+  // silently load, no UI needed for now
+}
+
+/* ═══════════ 启动 ═══════════ */
+loadProfiles();
+</script>
+</body>
+</html>

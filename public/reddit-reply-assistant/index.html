@@ -1,0 +1,2846 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reddit 评论回复助手 - 学术运营工具台</title>
+  <style>
+    /* ===== CSS Custom Properties ===== */
+    :root {
+      --ink: #182033;
+      --muted: #667085;
+      --paper: #fbfaf7;
+      --line: #d9d6ce;
+      --blue: #1f4b73;
+      --red: #c94538;
+      --green: #2f735c;
+      --gold: #b47d25;
+      --gray: #f0eee8;
+      --control-bg: #f9f9f9;
+      --panel-border: #e5e5e5;
+      --card-hover-shadow: 0 4px 16px rgba(24, 32, 51, 0.12);
+      --card-selected-border: #1f4b73;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", sans-serif;
+      color: var(--ink);
+      background: #fff;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ===== App Layout ===== */
+    .app {
+      display: grid;
+      grid-template-rows: 56px 1fr 48px;
+      grid-template-columns: 400px 1fr;
+      height: 100vh;
+    }
+
+    /* ===== Top Nav ===== */
+    .topbar {
+      grid-column: 1 / -1;
+      grid-row: 1 / 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      z-index: 10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .topbar-left .icon {
+      font-size: 20px;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .topbar-right a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      white-space: nowrap;
+    }
+
+    .topbar-right a:hover {
+      color: var(--blue);
+    }
+
+    /* ===== Left Panel ===== */
+    .left-panel {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+      background: #fafaf9;
+      border-right: 1px solid var(--line);
+      padding: 24px;
+      overflow-y: auto;
+      max-height: calc(100vh - 56px);
+    }
+
+    .left-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .left-panel::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 3px;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .control-group textarea,
+    .control-group input[type="text"],
+    .control-group select {
+      width: 100%;
+      height: 40px;
+      padding: 0 12px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--ink);
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .control-group textarea {
+      height: 160px;
+      padding: 12px;
+      resize: vertical;
+      line-height: 1.6;
+    }
+
+    .control-group textarea:focus,
+    .control-group input[type="text"]:focus,
+    .control-group select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31, 75, 115, 0.1);
+    }
+
+    .control-group .help-text {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ===== Tone Cards ===== */
+    .tone-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .tone-card {
+      padding: 10px 12px;
+      background: #fff;
+      border: 1.5px solid var(--line);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      user-select: none;
+    }
+
+    .tone-card:hover {
+      box-shadow: var(--card-hover-shadow);
+      border-color: #c0c0c0;
+    }
+
+    .tone-card.selected {
+      border-color: var(--card-selected-border);
+      background: rgba(31, 75, 115, 0.04);
+      box-shadow: 0 0 0 1px var(--card-selected-border);
+    }
+
+    .tone-card .tone-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 2px;
+    }
+
+    .tone-card .tone-desc {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ===== CTA Strength Segments ===== */
+    .cta-segments {
+      display: flex;
+      gap: 4px;
+    }
+
+    .cta-seg {
+      flex: 1;
+      padding: 8px 4px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      background: #f0eee8;
+      border: 1.5px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+      color: var(--muted);
+    }
+
+    .cta-seg:hover {
+      background: #e5e2da;
+    }
+
+    .cta-seg.selected {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+
+    .cta-seg .seg-label {
+      font-size: 11px;
+      opacity: 0.8;
+      margin-top: 2px;
+      display: block;
+      font-weight: 400;
+    }
+
+    .cta-seg.selected .seg-label {
+      opacity: 1;
+    }
+
+    /* ===== Generate Button ===== */
+    .btn-generate {
+      width: 100%;
+      height: 44px;
+      background: var(--blue);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-generate:hover {
+      background: #183d5a;
+      box-shadow: 0 2px 8px rgba(31, 75, 115, 0.25);
+    }
+
+    .btn-generate:active {
+      transform: scale(0.98);
+    }
+
+    .btn-generate:disabled {
+      background: #a0b8c8;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .generate-hint {
+      text-align: center;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .error-msg {
+      color: var(--red);
+      font-size: 12px;
+      margin-top: 8px;
+      text-align: center;
+      min-height: 18px;
+    }
+
+    /* ===== Right Panel ===== */
+    .right-panel {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      background: #fff;
+      padding: 32px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-panel::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .right-panel::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 3px;
+    }
+
+    /* ===== Version Tabs ===== */
+    .version-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 2px solid var(--line);
+      margin-bottom: 24px;
+    }
+
+    .version-tab {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      position: relative;
+    }
+
+    .version-tab:hover {
+      color: var(--ink);
+    }
+
+    .version-tab.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+      font-weight: 600;
+    }
+
+    .version-tab .word-range {
+      display: block;
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 1px;
+    }
+
+    .version-tab.active .word-range {
+      color: var(--blue);
+      opacity: 0.7;
+    }
+
+    /* ===== Reply Card ===== */
+    .reply-card {
+      flex: 1;
+      background: #fff;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 24px;
+      min-height: 200px;
+      position: relative;
+    }
+
+    .reply-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 180px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .reply-content {
+      display: none;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+      white-space: pre-wrap;
+    }
+
+    .reply-content.visible {
+      display: block;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink);
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .reply-placeholder.hidden {
+      display: none;
+    }
+
+    /* ===== Action Buttons ===== */
+    .action-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      height: 36px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #183d5a;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .btn-secondary:hover {
+      background: var(--gray);
+      border-color: #c0c0c0;
+    }
+
+    .btn-small {
+      height: 30px;
+      padding: 0 12px;
+      font-size: 12px;
+    }
+
+    /* ===== Risk & CTA Panels ===== */
+    .info-panel {
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-top: 12px;
+    }
+
+    .risk-panel {
+      background: #fffdf5;
+      border: 1px solid #f0e8c0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .risk-panel.risk-low {
+      background: #f5fdf7;
+      border-color: #d0ead5;
+    }
+    .risk-panel.risk-medium {
+      background: #fffdf5;
+      border-color: #f0e8c0;
+    }
+    .risk-panel.risk-high {
+      background: #fff5f5;
+      border-color: #fcd5d5;
+    }
+    .risk-suggestion {
+      font-size: 12px;
+      line-height: 1.5;
+      margin-bottom: 4px;
+      padding: 4px 0;
+    }
+    .risk-suggestion.severity-high { color: var(--red); }
+    .risk-suggestion.severity-medium { color: #b47d25; }
+    .risk-suggestion.severity-low { color: var(--green); }
+    .risk-body {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+
+    .cta-suggest-panel {
+      background: #f5fdf7;
+      border: 1px solid #d0ead5;
+    }
+
+    .info-panel .panel-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    /* ===== Bottom Toolbar ===== */
+    .bottom-bar {
+      grid-column: 1 / -1;
+      grid-row: 3 / 4;
+      background: #f5f5f4;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 16px;
+      z-index: 5;
+    }
+
+    .bottom-bar-btn {
+      height: 30px;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 500;
+      font-family: inherit;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--muted);
+    }
+
+    .bottom-bar-btn:hover {
+      background: #fff;
+      color: var(--ink);
+      border-color: #b0b0b0;
+    }
+
+    /* ===== Expandable Panels ===== */
+    .expand-panel {
+      display: none;
+      position: absolute;
+      bottom: 48px;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid var(--line);
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+      padding: 16px 24px;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 4;
+    }
+
+    .expand-panel.open {
+      display: block;
+    }
+
+    /* ===== Loading / Generating State ===== */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .generating .reply-card {
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+
+    /* ===== CTA Library Items ===== */
+    .cta-category {
+      margin-bottom: 4px;
+    }
+    .cta-category-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--line);
+    }
+    .cta-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--ink);
+      border-bottom: 1px dotted var(--line);
+    }
+    .cta-item:last-child {
+      border-bottom: none;
+    }
+    .cta-copy-btn {
+      flex-shrink: 0;
+      height: 24px;
+      padding: 0 8px;
+      font-size: 11px;
+      font-family: inherit;
+      background: var(--gray);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .cta-copy-btn:hover {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+    .cta-copy-btn.copied {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+
+    /* ===== Risk Word Tags ===== */
+    .risk-tag {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      background: #fff5f5;
+      color: var(--red);
+      border: 1px solid #fcd5d5;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    /* ===== History Items ===== */
+    .history-item {
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+    .history-item:hover {
+      border-color: var(--blue);
+      box-shadow: 0 1px 4px rgba(31,75,115,0.1);
+    }
+    .history-item .hist-time {
+      font-size: 10px;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+    .history-item .hist-tag {
+      display: inline-block;
+      padding: 1px 6px;
+      font-size: 10px;
+      font-weight: 500;
+      background: #eef4f8;
+      color: var(--blue);
+      border-radius: 3px;
+      margin-right: 4px;
+      margin-bottom: 3px;
+    }
+    .history-item .hist-preview {
+      font-size: 11px;
+      color: var(--ink);
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .history-item .hist-delete {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      width: 20px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: var(--muted);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-radius: 50%;
+      transition: all 0.15s;
+    }
+    .history-item .hist-delete:hover {
+      color: var(--red);
+      background: #fff5f5;
+    }
+
+    /* ===== Offline Banner ===== */
+    .offline-banner {
+      display: none;
+      grid-column: 1 / -1;
+      background: #fff8e1;
+      color: #8d6e00;
+      text-align: center;
+      padding: 6px 16px;
+      font-size: 12px;
+      border-bottom: 1px solid #ffe082;
+      z-index: 11;
+    }
+    .offline-banner.show {
+      display: block;
+    }
+
+    /* ===== Hamburger Menu ===== */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--ink);
+      padding: 4px 8px;
+    }
+    .mobile-nav-dropdown {
+      display: none;
+      position: absolute;
+      top: 56px;
+      right: 16px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      padding: 8px 0;
+      z-index: 20;
+      min-width: 180px;
+    }
+    .mobile-nav-dropdown.open {
+      display: block;
+    }
+    .mobile-nav-dropdown a {
+      display: block;
+      padding: 10px 20px;
+      font-size: 13px;
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .mobile-nav-dropdown a:hover {
+      background: var(--gray);
+    }
+
+    /* ===== Load Animations ===== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .left-panel  { animation: fadeInUp 0.3s 0.00s both; }
+    .right-panel { animation: fadeInUp 0.3s 0.05s both; }
+    .bottom-bar  { animation: fadeInUp 0.3s 0.10s both; }
+
+    /* ===== Responsive: Tablet (≤900px) ===== */
+    @media (max-width: 900px) {
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: 56px auto auto 48px;
+      }
+      .left-panel {
+        grid-column: 1 / -1;
+        grid-row: 2 / 3;
+        width: 100%;
+        max-height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+      .right-panel {
+        grid-column: 1 / -1;
+        grid-row: 3 / 4;
+        min-height: 40vh;
+      }
+      .topbar-right a { display: none; }
+      .hamburger { display: block; }
+    }
+
+    /* ===== Responsive: Phone (≤640px) ===== */
+    @media (max-width: 640px) {
+      body { font-size: 14px; }
+      .topbar { padding: 0 12px; }
+      .topbar-left { font-size: 14px; }
+      .left-panel { padding: 16px; max-height: 45vh; }
+      .right-panel { padding: 16px; }
+
+      .tone-cards { grid-template-columns: 1fr 1fr; gap: 6px; }
+      .tone-card { padding: 8px 6px; }
+      .tone-card .tone-name { font-size: 12px; }
+      .tone-card .tone-desc { font-size: 10px; }
+
+      .cta-segments { flex-direction: column; gap: 4px; }
+      .cta-seg { padding: 6px 8px; font-size: 11px; }
+      .cta-seg .seg-label { font-size: 10px; }
+
+      .action-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+      .action-row .btn { font-size: 11px; padding: 0 8px; height: 32px; }
+
+      .reply-card { padding: 16px; }
+      .version-tab { padding: 8px 12px; font-size: 12px; }
+      .version-tab .word-range { font-size: 9px; }
+
+      .bottom-bar { padding: 0 8px; gap: 6px; }
+      .bottom-bar-btn { font-size: 10px; padding: 0 8px; }
+
+      .expand-panel { max-height: 160px; padding: 12px; }
+      #ctaLibraryContent { grid-template-columns: 1fr !important; }
+
+      .btn-generate { height: 40px; font-size: 14px; }
+      .history-item { padding: 6px 8px; }
+    }
+
+    /* ===== Tooltip ===== */
+    [data-tooltip] {
+      position: relative;
+    }
+
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 10px;
+      background: var(--ink);
+      color: #fff;
+      font-size: 11px;
+      border-radius: 4px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 20;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Offline Banner -->
+<div class="offline-banner" id="offlineBanner">⚠️ 当前处于离线状态，工具仍可正常使用，但复制到剪贴板的功能可能受限。</div>
+
+<div class="app">
+  <!-- ===== Top Bar ===== -->
+  <header class="topbar" style="position:relative;">
+    <div class="topbar-left">
+      <span class="icon">🧠</span>
+      <span>Reddit 评论回复助手</span>
+    </div>
+    <nav class="topbar-right" id="desktopNav">
+      <a href="../index.html">← 封面生成器</a>
+      <a href="../ins_reviewer_carousel/">📱 Instagram 图</a>
+      <a href="../index.html">运营工具台</a>
+    </nav>
+    <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="打开导航菜单">☰</button>
+    <div class="mobile-nav-dropdown" id="mobileNavDropdown">
+      <a href="../index.html">← 封面生成器</a>
+      <a href="../ins_reviewer_carousel/">📱 Instagram 图</a>
+      <a href="../index.html">运营工具台</a>
+    </div>
+  </header>
+
+  <!-- ===== Left Panel ===== -->
+  <aside class="left-panel" id="leftPanel">
+    <!-- a) Source Text -->
+    <div class="control-group">
+      <label for="sourceText">Reddit 原评论或帖子内容 <span style="color:var(--red)">*</span></label>
+      <textarea id="sourceText" placeholder="My paper was rejected because the reviewer said it lacks novelty. I don't know how to fix that."></textarea>
+    </div>
+
+    <!-- b) Post Title -->
+    <div class="control-group">
+      <label for="postTitle">帖子标题</label>
+      <input type="text" id="postTitle" placeholder="Paper rejected for lack of novelty">
+      <span class="help-text">选填，用于生成更精准的回复</span>
+    </div>
+
+    <!-- c) Subreddit -->
+    <div class="control-group">
+      <label for="subreddit">Subreddit</label>
+      <input type="text" id="subreddit" placeholder="r/PhD">
+      <span class="help-text">选填，用于判断社区规则和语气</span>
+    </div>
+
+    <!-- d) Problem Type -->
+    <div class="control-group">
+      <label for="problemType">
+        问题类型
+        <span class="info-icon" id="templateInfoIcon" style="cursor:help;font-size:13px;" title="选择问题类型后，系统将使用预设的回复逻辑">ℹ️</span>
+      </label>
+      <select id="problemType">
+        <option value="lack_of_novelty" selected>Rejected for Lack of Novelty</option>
+        <option value="harsh_reviewer">Harsh Reviewer Response</option>
+        <option value="writing_unclear">Advisor Says Writing Is Unclear</option>
+        <option value="english_editing">English Editing Recommendation</option>
+        <option value="journal_selection">Journal Selection</option>
+        <option value="revise_resubmit_anxiety">Revise and Resubmit Anxiety</option>
+        <option value="ai_writing_concern">AI Writing / AI Polishing Concern</option>
+        <option value="thesis_structure">Dissertation / Thesis Structure Confusion</option>
+      </select>
+    </div>
+
+    <!-- e) User Type -->
+    <div class="control-group">
+      <label for="userType">用户身份</label>
+      <select id="userType">
+        <option value="Unknown" selected>Unknown</option>
+        <option value="Master">Master</option>
+        <option value="PhD">PhD</option>
+        <option value="Postdoc">Postdoc</option>
+        <option value="Faculty">Faculty</option>
+      </select>
+    </div>
+
+    <!-- f) Field -->
+    <div class="control-group">
+      <label for="field">学科领域</label>
+      <select id="field">
+        <option value="General" selected>General</option>
+        <option value="CS">CS</option>
+        <option value="Medical">Medical</option>
+        <option value="Engineering">Engineering</option>
+        <option value="Social Science">Social Science</option>
+        <option value="Business">Business</option>
+      </select>
+    </div>
+
+    <!-- g) Tone -->
+    <div class="control-group">
+      <label>回复语气</label>
+      <div class="tone-cards" id="toneCards">
+        <div class="tone-card selected" data-tone="warm">
+          <div class="tone-name">🤗 Warm</div>
+          <div class="tone-desc">更共情，适合焦虑型用户</div>
+        </div>
+        <div class="tone-card" data-tone="direct">
+          <div class="tone-name">⚡ Direct</div>
+          <div class="tone-desc">简洁清楚，适合技术类问题</div>
+        </div>
+        <div class="tone-card" data-tone="expert">
+          <div class="tone-name">🎓 Expert</div>
+          <div class="tone-desc">专业结构化，适合学术社区</div>
+        </div>
+        <div class="tone-card" data-tone="casual">
+          <div class="tone-name">💬 Casual</div>
+          <div class="tone-desc">像普通 Reddit 用户，不太正式</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- h) Reply Goal -->
+    <div class="control-group">
+      <label for="replyGoal">回复目标</label>
+      <select id="replyGoal">
+        <option value="build_trust" selected>建立专业度</option>
+        <option value="help">帮忙</option>
+        <option value="lead_dm">引导私信</option>
+        <option value="collect_pain_points">收集痛点</option>
+      </select>
+    </div>
+
+    <!-- i) CTA Strength -->
+    <div class="control-group">
+      <label>CTA 强度</label>
+      <div class="cta-segments" id="ctaSegments">
+        <div class="cta-seg" data-cta="none">
+          None
+          <span class="seg-label">纯帮助，无钩子</span>
+        </div>
+        <div class="cta-seg selected" data-cta="soft">
+          Soft
+          <span class="seg-label">轻钩子，低压邀请</span>
+        </div>
+        <div class="cta-seg" data-cta="medium">
+          Medium
+          <span class="seg-label">引导私信关键词</span>
+        </div>
+        <div class="cta-seg" data-cta="direct">
+          Direct
+          <span class="seg-label">明确邀请咨询</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- j) Generate Button -->
+    <div class="control-group">
+      <button class="btn-generate" id="btnGenerate" onclick="handleGenerate()">
+        ✨ 生成回复草稿
+      </button>
+      <div class="generate-hint">工具生成草稿后，请人工审核再发布到 Reddit。</div>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+
+    <!-- History Section -->
+    <div class="control-group" id="historySection">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <label style="margin-bottom:0;">📜 最近生成记录</label>
+        <a href="javascript:void(0)" onclick="clearAllHistory()" style="font-size:11px;color:var(--muted);text-decoration:none;">清空全部</a>
+      </div>
+      <div id="historyList" style="max-height:300px;overflow-y:auto;">
+        <div style="font-size:12px;color:var(--muted);text-align:center;padding:16px 0;">尚未生成任何回复</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===== Right Panel ===== -->
+  <main class="right-panel" id="rightPanel">
+    <!-- Version Tabs -->
+    <div class="version-tabs" id="versionTabs">
+      <button class="version-tab" data-version="short" onclick="switchVersion('short')">
+        Short
+        <span class="word-range">80-120 words</span>
+      </button>
+      <button class="version-tab active" data-version="helpful" onclick="switchVersion('helpful')">
+        Helpful
+        <span class="word-range">150-220 words</span>
+      </button>
+      <button class="version-tab" data-version="deep" onclick="switchVersion('deep')">
+        Deep
+        <span class="word-range">250-400 words</span>
+      </button>
+    </div>
+
+    <!-- Reply Card -->
+    <div class="reply-card" id="replyCard">
+      <div class="reply-placeholder" id="replyPlaceholder">
+        在左侧粘贴 Reddit 评论，选择问题类型和语气，<br>然后点击"生成回复草稿"。<br><br>生成的回复将显示在这里。
+      </div>
+      <div class="reply-content" id="replyContent"></div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-row">
+      <button class="btn btn-primary" data-tooltip="复制当前回复到剪贴板" onclick="copyReply()" aria-label="复制当前回复到剪贴板">📋 复制回复</button>
+      <button class="btn btn-secondary" data-tooltip="重新生成三个版本的回复" onclick="regenerate()" aria-label="重新生成三个版本的回复">🔄 重新生成</button>
+      <button class="btn btn-secondary" data-tooltip="缩短当前回复约 30%" onclick="shortenReply()" aria-label="缩短回复">📏 缩短</button>
+      <button class="btn btn-secondary" data-tooltip="展开当前回复约 40%" onclick="expandReply()" aria-label="展开回复">📝 展开</button>
+      <button class="btn btn-secondary" data-tooltip="降低回复的营销感" onclick="reduceMarketing()" aria-label="降低营销感">🧹 降低营销感</button>
+      <button class="btn btn-secondary" data-tooltip="临时增强 CTA 强度" onclick="enhanceCTA()" aria-label="增强CTA强度">📢 增强 CTA</button>
+      <button class="btn btn-secondary" data-tooltip="移除回复中的 CTA 钩子" onclick="removeCTA()" aria-label="移除CTA钩子">🚫 移除 CTA</button>
+    </div>
+
+    <!-- Rewrite Section Buttons -->
+    <div class="action-row" style="margin-top:4px;padding-top:12px;border-top:1px dashed var(--line);">
+      <span style="font-size:11px;color:var(--muted);margin-right:4px;display:flex;align-items:center;">✏️ 局部重写：</span>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('empathy')" aria-label="重写共情开头部分">重写开头</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('diagnosis')" aria-label="重写问题诊断部分">重写诊断</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('example')" aria-label="重写示例句部分">重写示例</button>
+      <button class="btn btn-secondary btn-small" onclick="rewriteSection('cta')" aria-label="重写结尾CTA部分">重写结尾</button>
+    </div>
+
+    <!-- Risk Panel -->
+    <div class="info-panel risk-panel" id="riskPanel">
+      <div class="panel-title">⚠️ 风险提示</div>
+      <div>生成回复后，这里会显示营销风险、合规风险和社区风险提示。</div>
+    </div>
+
+    <!-- CTA Suggestion Panel -->
+    <div class="info-panel cta-suggest-panel" id="ctaPanel">
+      <div class="panel-title">💡 CTA 建议</div>
+      <div>当前建议的钩子策略和替代方案。</div>
+    </div>
+  </main>
+
+  <!-- ===== Bottom Section Container ===== -->
+  <div class="bottom-section" style="grid-column:1/-1;grid-row:3/4;position:relative;z-index:5;">
+    <!-- Expandable Bottom Panels -->
+    <div class="expand-panel" id="panelCtaLibrary">
+      <div class="panel-title" style="margin-bottom:8px;">📚 CTA 钩子库 — 点击条目右侧按钮复制</div>
+      <div id="ctaLibraryContent" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;"></div>
+    </div>
+    <div class="expand-panel" id="panelRiskWords">
+      <div class="panel-title" style="margin-bottom:8px;">⚠️ 风险词提示 — 以下表述严禁出现在回复中</div>
+      <div id="riskWordsContent" style="display:flex;flex-wrap:wrap;gap:6px;"></div>
+    </div>
+    <div class="expand-panel" id="panelUsageGuide" style="max-height:320px;">
+      <div class="panel-title" style="margin-bottom:8px;">📖 使用说明</div>
+      <div style="font-size:12px;line-height:1.8;color:var(--ink);">
+        <p><b>1.</b> 在 Reddit 上看到相关讨论时，复制评论或帖子原文</p>
+        <p><b>2.</b> 粘贴到左侧输入框（必填），可选填写帖子标题和 subreddit</p>
+        <p><b>3.</b> 选择问题类型 — 系统会自动匹配最佳回复逻辑</p>
+        <p><b>4.</b> 选择合适的语气：<b>Warm</b>（焦虑/情感类）、<b>Direct</b>（技术类）、<b>Expert</b>（学术类）、<b>Casual</b>（轻松类）</p>
+        <p><b>5.</b> 选择 CTA 强度：默认 <b>Soft</b>（轻钩子），根据场景调整</p>
+        <p><b>6.</b> 点击生成 → 在 <b>Short / Helpful / Deep</b> 三个版本中切换</p>
+        <p><b>7.</b> 检查风险提示 → 必要时使用编辑工具调整</p>
+        <p><b>8.</b> 人工审核 → 复制 → 手动粘贴到 Reddit 发布</p>
+        <div style="margin-top:10px;padding:8px 12px;background:#fffdf5;border-radius:4px;border:1px solid #f0e8c0;">
+          <div style="font-weight:600;color:#b47d25;margin-bottom:4px;">⚠️ 重要提醒：</div>
+          <div style="color:var(--muted);">• 本工具生成的是回复草稿，仅供人工参考<br>• 请在发布前仔细审核每条回复<br>• 务必遵守各 subreddit 的社区规则<br>• 不要使用自动发帖或批量评论工具<br>• 建议每条回复根据实际情况进行个性化调整</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="bottom-bar" id="bottomBar">
+      <button class="bottom-bar-btn" onclick="togglePanel('ctaLibrary')">📚 CTA 钩子库</button>
+      <button class="bottom-bar-btn" onclick="togglePanel('riskWords')">⚠️ 风险词提示</button>
+      <button class="bottom-bar-btn" onclick="togglePanel('usageGuide')">📖 使用说明</button>
+      <span style="flex:1"></span>
+      <span style="font-size:11px;color:var(--muted);">⌨️ 快捷键: Ctrl+Enter 生成 | Ctrl+1/2/3 切换版本</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+//  DATA: Problem Type Templates (8 types)
+// ============================================================
+const PROBLEM_TEMPLATES = {
+  lack_of_novelty: {
+    id: 'lack_of_novelty',
+    name: 'Rejected for Lack of Novelty',
+    keywords: ['lack of novelty', 'not novel', 'contribution', 'limited novelty', 'incremental'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "That's a really common but frustrating reviewer comment, because 'lack of novelty' often sounds vague and unfair.",
+      diagnosis: "I wouldn't start by just adding sentences like 'this study is novel.' Usually the issue is that the paper hasn't positioned itself clearly enough against prior work. This is a positioning problem, not a quality problem.",
+      framework: [
+        "What have previous studies already done?",
+        "What specific gap remains?",
+        "What does your study add that changes or extends that work?",
+      ],
+      example: "Instead of writing 'This study is novel and important,' you could write: 'Unlike prior studies that focus on X, this study examines Y under Z conditions.' Then in the response letter, cite exactly where you revised the manuscript, such as the final paragraph of the Introduction.",
+      action: "Revise your Introduction's final paragraph and the Discussion section to make the gap and contribution more explicit. Then quote those exact revisions in your response letter.",
+      cta: 'Happy to share a reviewer-response checklist if useful.',
+    },
+  },
+
+  harsh_reviewer: {
+    id: 'harsh_reviewer',
+    name: 'Harsh Reviewer Response',
+    keywords: ['harsh', 'rude', 'aggressive', 'mean', 'unfair', 'personal'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "I know this can feel personal, but try to remember that harsh reviewer comments often say more about the reviewer's communication style than about your work.",
+      diagnosis: "The key is to separate tone from substance. Even a rude comment usually contains a technical concern underneath. Your job is to extract the actionable point and ignore the delivery.",
+      framework: [
+        "What is the actual technical concern behind the harsh wording?",
+        "Is this a real methodological issue, or just presentation?",
+        "Can you address it with a concrete revision?",
+      ],
+      example: "If the reviewer wrote 'This analysis is completely wrong,' don't defend yourself emotionally. Instead: 'We thank the reviewer for pointing this out. We have re-examined the analysis and made the following revisions: [specific changes]. We believe these revisions strengthen the paper.'",
+      action: "Create a response matrix: each reviewer comment in the left column, your calm, evidence-based response in the right column. Never match their tone.",
+      cta: 'Happy to share a reviewer-response checklist if useful.',
+    },
+  },
+
+  writing_unclear: {
+    id: 'writing_unclear',
+    name: 'Advisor Says Writing Is Unclear',
+    keywords: ['unclear', 'writing', 'advisor', 'supervisor', 'rewrite', 'vague'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "'Unclear' is one of the most frustrating feedback to receive because it's so vague. You're not alone in this.",
+      diagnosis: "Usually 'unclear' means the reader can't follow the logical thread: why this sentence connects to the next, why this paragraph exists, what point it's making. It's typically a structure and flow problem, not a grammar problem.",
+      framework: [
+        "Does each paragraph have a clear topic sentence that states its argument?",
+        "Does each sentence logically connect to the one before it?",
+        "Is the contribution of each paragraph obvious to a reader?",
+      ],
+      example: "Instead of 'The results show that X affects Y,' try: 'This paragraph argues that X is the primary driver of Y, because [evidence].' This tells the reader WHY this information matters.",
+      action: "Try this: next time you meet your advisor, ask 'At what level is it unclear — the sentence, the paragraph, or the overall argument?' This gives you something concrete to work with.",
+      cta: 'I can share a paragraph-level checklist if useful.',
+    },
+  },
+
+  english_editing: {
+    id: 'english_editing',
+    name: 'English Editing Recommendation',
+    keywords: ['editing', 'English', 'native speaker', 'ESL', 'language editing', 'proofread'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'medium',
+    logic: {
+      empathy: "ESL academic writing is genuinely hard — you're not only managing complex ideas but also expressing them in a language that isn't your first. Respect for putting yourself out there.",
+      diagnosis: "First, figure out what kind of help you actually need: surface-level grammar editing, or deeper logic and structure work. A pure language edit won't fix an unclear argument. A structure coach won't fix your grammar. Most papers need both at different stages.",
+      framework: [
+        "Stage 1: Is your argument structure solid? If not, fix that first.",
+        "Stage 2: Is the logic clear at the paragraph level?",
+        "Stage 3: Now polish the English at the sentence level.",
+      ],
+      example: "When you do hire an editor, ask them to comment on structure and clarity, not just wording. A good editor should be able to tell you 'this paragraph's argument is unclear' — that's more valuable than just fixing grammar.",
+      action: "Choose editing support based on your manuscript's stage: early draft → focus on argument structure; near-final draft → focus on language polish.",
+      cta: "I work with ESL researchers on manuscript clarity and reviewer responses, but I'd start with the diagnosis above before considering paid editing.",
+    },
+  },
+
+  journal_selection: {
+    id: 'journal_selection',
+    name: 'Journal Selection',
+    keywords: ['journal', 'submit', 'impact factor', 'scope', 'where to publish'],
+    defaultTone: 'direct',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "Journal selection is confusing because everyone talks about impact factor, but that's only one piece of the puzzle.",
+      diagnosis: "Don't choose a journal by impact factor alone. Start with scope: does this journal actually publish papers like yours? Read 5-10 recent articles from your shortlisted journals to check.",
+      framework: [
+        "Scope: Do they publish your type of research?",
+        "Article type: Do they accept your article category?",
+        "Recent papers: What have they published in the last 1-2 years?",
+        "Review speed: Check average turnaround times.",
+        "Red flags: Predatory practices, excessive APCs, fake editorial boards.",
+      ],
+      example: "Make a spreadsheet with 5 candidate journals. For each, list: scope match (yes/no), average review time, APC cost, 3 recent similar papers. This makes the decision data-driven, not emotional.",
+      action: "Create a shortlist of 3 journals ranked by fit, not by prestige. Submit to the best-fit journal first.",
+      cta: 'Happy to share a journal selection checklist if useful.',
+    },
+  },
+
+  revise_resubmit_anxiety: {
+    id: 'revise_resubmit_anxiety',
+    name: 'Revise and Resubmit Anxiety',
+    keywords: ['revise and resubmit', 'R&R', 'major revision', 'anxiety', 'overwhelmed', 'stress'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "Getting a major revision can feel overwhelming — it's like being told 'your paper is not good enough, but try again.' Take a breath. A revise-and-resubmit is actually good news: they didn't reject it.",
+      diagnosis: "Not all reviewer comments have equal weight. Some are must-fix, some are negotiable, some are simple clarifications. Your first step is to categorize them so you don't treat every comment as equally urgent.",
+      framework: [
+        "Must-fix: Major methodological or logical issues. These are non-negotiable.",
+        "Negotiate: Points you disagree with. You can politely explain why, with evidence.",
+        "Clarify: Misunderstandings. Fix the wording so future readers don't have the same confusion.",
+      ],
+      example: "Don't respond to 30 comments in random order. Group them by theme first: all comments about the method go together, all comments about the literature review go together. Respond to each theme as a block, not comment-by-comment.",
+      action: "Make a revision matrix: columns for reviewer comment, your response, manuscript changes, and page/line numbers. This keeps you organized and makes writing the response letter much easier.",
+      cta: 'Happy to share a revision planning checklist if useful.',
+    },
+  },
+
+  ai_writing_concern: {
+    id: 'ai_writing_concern',
+    name: 'AI Writing / AI Polishing Concern',
+    keywords: ['AI', 'ChatGPT', 'polish', 'generic', 'sounds like AI', 'AI writing'],
+    defaultTone: 'expert',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "AI polishing tools can improve surface-level clarity, but they often make academic writing sound generic — like every other paper. You're right to be concerned.",
+      diagnosis: "The problem isn't AI itself; it's that AI defaults to safe, generic academic phrases. It strips away specificity: your unique claims, your specific evidence, your nuanced limitations. Readers (and reviewers) can tell when writing has been homogenized.",
+      framework: [
+        "Claim: What exactly are you arguing? Be specific to your study.",
+        "Evidence: What data or reasoning supports this claim?",
+        "Limitation: What's the boundary of this claim?",
+        "Contribution: How does this advance the conversation beyond prior work?",
+      ],
+      example: "Instead of 'This study contributes to the literature on X,' write: 'Unlike [Author 2022], who found X increases Y, this study shows X only increases Y when Z is present — suggesting the relationship is conditional, not universal.' AI won't write that. Only you can.",
+      action: "Use AI for sentence-level options ('give me 5 ways to say this'), not for full-paragraph generation. YOU make the argument decisions. AI just gives you wording choices.",
+      cta: 'Happy to share an AI polishing checklist if useful.',
+    },
+  },
+
+  thesis_structure: {
+    id: 'thesis_structure',
+    name: 'Dissertation / Thesis Structure Confusion',
+    keywords: ['thesis', 'dissertation', 'structure', 'chapter', 'messy', 'organization'],
+    defaultTone: 'warm',
+    defaultCtaLevel: 'soft',
+    logic: {
+      empathy: "Large writing projects become messy quickly. A dissertation isn't one big paper — it's several chapters that need to work together as a coherent argument. That's genuinely hard.",
+      diagnosis: "A structure problem is usually an architecture problem: your chapters might individually be fine, but they don't form a single, progressive argument from question to answer.",
+      framework: [
+        "What is the ONE research question your whole dissertation answers?",
+        "What is the job of each chapter in answering that question?",
+        "How does each chapter's conclusion set up the next chapter?",
+      ],
+      example: "For each chapter, write a one-sentence job description: 'This chapter establishes that existing methods for measuring X are unreliable under condition Y.' If you can't write that sentence, the chapter's purpose isn't clear.",
+      action: "Write a one-page 'dissertation map': research question at the top, then for each chapter: its job, its key finding, and how it transitions to the next chapter. Share this with your advisor before sending full chapters.",
+      cta: 'Happy to share a thesis structure worksheet if useful.',
+    },
+  },
+};
+
+// ============================================================
+//  DATA: CTA Library
+// ============================================================
+const CTA_LIBRARY = {
+  checklist: [
+    "Happy to share a reviewer-response checklist if useful.",
+    "I have a short checklist for this kind of revision if you want it.",
+    "Happy to share the checklist I use for sorting reviewer comments.",
+    "I can share a paragraph-level checklist if useful.",
+    "Happy to share a revision planning checklist if useful.",
+    "Happy to share a journal selection checklist if useful.",
+    "Happy to share an AI polishing checklist if useful.",
+  ],
+  template: [
+    "I can share a simple response-letter structure if that helps.",
+    "Happy to share a template for organizing the response letter.",
+    "I can share the structure I use for response letters if that helps.",
+    "Happy to share a thesis structure worksheet if useful.",
+  ],
+  light_diagnosis: [
+    "If you want, paste the reviewer comment here and I can help classify what it's really asking for.",
+    "If you want another pair of eyes on the reviewer wording, feel free to DM me.",
+    "I'm happy to share a response-letter template by DM.",
+    "Feel free to DM me 'REVIEWER' and I can send the checklist.",
+  ],
+  service_aware: [
+    "I work with ESL researchers on manuscript clarity and reviewer responses, but I'd start with the diagnosis above before considering paid editing.",
+    "If you want another pair of eyes on the reviewer comments, feel free to DM me.",
+    "I work with ESL researchers on manuscript revision and reviewer responses. Happy to point you in the right direction if useful.",
+  ],
+};
+
+// ============================================================
+//  DATA: Risk Patterns & Replacements
+// ============================================================
+const RISK_PATTERNS = {
+  banned: [
+    { pattern: /guaranteed?\\s*acceptance/i, label: '禁止承诺发表' },
+    { pattern: /we\\s*(can|will)\\s*publish/i, label: '禁止代投承诺' },
+    { pattern: /we\\s*(can|will)\\s*write\\s*(your\\s*)?paper/i, label: '禁止代写暗示' },
+    { pattern: /ghostwriting/i, label: '禁止提及代写' },
+    { pattern: /contract\\s*cheating/i, label: '禁止提及合同作弊' },
+    { pattern: /submit\\s*on\\s*your\\s*behalf/i, label: '禁止代投' },
+    { pattern: /write\\s*my\\s*essay/i, label: '禁止代写' },
+  ],
+  highRisk: [
+    { pattern: /paid\\s*manuscript/i, label: '高风险：付费手稿' },
+    { pattern: /guaranteed?\\s*(grade|score|pass)/i, label: '高风险：承诺分数' },
+  ],
+  marketing: [
+    { pattern: /\\bDM\\s+me\\b.*\\bDM\\s+me\\b/i, label: 'DM me 出现多次' },
+    { pattern: /\\b(service|paid|client|company)\\b.*\\b(service|paid|client|company)\\b/i, label: '营销词汇过多' },
+  ],
+};
+
+const RISK_REPLACEMENTS = {
+  'guaranteed acceptance': 'improve manuscript competitiveness',
+  'we publish it for you': 'journal submission strategy',
+  'we write your paper': 'academic writing coaching',
+  'ghostwriting': 'research communication support',
+  'contract cheating': 'manuscript diagnosis',
+  'submit on your behalf': 'journal submission guidance',
+  'write my essay': 'language editing',
+};
+
+// ===== State Management =====
+const state = {
+  // Input
+  sourceText: '',
+  postTitle: '',
+  subreddit: '',
+  problemType: 'lack_of_novelty',
+  userType: 'Unknown',
+  field: 'General',
+  tone: 'warm',
+  replyGoal: 'build_trust',
+  ctaLevel: 'soft',
+
+  // Output
+  replies: {
+    short: { text: '', wordCount: 0 },
+    helpful: { text: '', wordCount: 0 },
+    deep: { text: '', wordCount: 0 },
+  },
+  activeVersion: 'helpful',
+
+  // Risk
+  risks: {
+    marketing: 'low',
+    compliance: 'low',
+    redditCommunity: 'low',
+    suggestions: [],
+  },
+
+  // Status
+  isGenerating: false,
+  generationError: null,
+};
+
+// ===== DOM References =====
+const $ = (id) => document.getElementById(id);
+
+const els = {
+  sourceText: $('sourceText'),
+  postTitle: $('postTitle'),
+  subreddit: $('subreddit'),
+  problemType: $('problemType'),
+  userType: $('userType'),
+  field: $('field'),
+  replyGoal: $('replyGoal'),
+  btnGenerate: $('btnGenerate'),
+  errorMsg: $('errorMsg'),
+  replyPlaceholder: $('replyPlaceholder'),
+  replyContent: $('replyContent'),
+  replyCard: $('replyCard'),
+  riskPanel: $('riskPanel'),
+  ctaPanel: $('ctaPanel'),
+};
+
+// ===== Update Preview =====
+function updatePreview() {
+  console.log('State updated:', JSON.parse(JSON.stringify(state)));
+}
+
+// ===== Problem Type Change: Auto-set Tone & CTA from Template =====
+function onProblemTypeChange(problemType) {
+  state.problemType = problemType;
+  var template = PROBLEM_TEMPLATES[problemType];
+  if (!template) {
+    updatePreview();
+    return;
+  }
+
+  // Auto-set tone from template default
+  var newTone = template.defaultTone;
+  state.tone = newTone;
+  var toneCards = document.querySelectorAll('.tone-card');
+  toneCards.forEach(function(c) {
+    c.classList.toggle('selected', c.getAttribute('data-tone') === newTone);
+  });
+
+  // Auto-set CTA level from template default
+  var newCta = template.defaultCtaLevel;
+  state.ctaLevel = newCta;
+  var ctaSegs = document.querySelectorAll('.cta-seg');
+  ctaSegs.forEach(function(s) {
+    s.classList.toggle('selected', s.getAttribute('data-cta') === newCta);
+  });
+
+  // Log template info
+  console.log('Template matched:', template.name);
+  console.log('  Auto tone →', newTone);
+  console.log('  Auto CTA →', newCta);
+  console.log('  Empathy:', template.logic.empathy.substring(0, 50) + '...');
+  console.log('  Diagnosis:', template.logic.diagnosis.substring(0, 50) + '...');
+  console.log('  Default CTA:', template.logic.cta);
+
+  updatePreview();
+}
+
+// Update the tooltip on hover for the ℹ️ icon
+var templateInfoIcon = document.getElementById('templateInfoIcon');
+if (templateInfoIcon) {
+  templateInfoIcon.addEventListener('mouseenter', function() {
+    var template = PROBLEM_TEMPLATES[state.problemType];
+    if (template) {
+      this.title = [
+        '模板：' + template.name,
+        '默认语气：' + template.defaultTone,
+        '默认CTA：' + template.defaultCtaLevel,
+        '共情：' + template.logic.empathy.substring(0, 60) + '…',
+        '诊断：' + template.logic.diagnosis.substring(0, 60) + '…',
+        '默认钩子：' + template.logic.cta,
+      ].join('\n');
+    }
+  });
+}
+
+// ===== Sync state from DOM =====
+function syncState() {
+  state.sourceText = els.sourceText.value;
+  state.postTitle = els.postTitle.value;
+  state.subreddit = els.subreddit.value;
+  state.problemType = els.problemType.value;
+  state.userType = els.userType.value;
+  state.field = els.field.value;
+  state.replyGoal = els.replyGoal.value;
+  updatePreview();
+}
+
+// ===== Event Bindings: Text inputs =====
+['sourceText', 'postTitle', 'subreddit'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('input', function() {
+      state[id] = el.value;
+      updatePreview();
+    });
+  }
+});
+
+// ===== Event Bindings: Selects (non-problemType) =====
+['userType', 'field', 'replyGoal'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('change', function() {
+      state[id] = el.value;
+      updatePreview();
+    });
+  }
+});
+
+// ===== Event Binding: Problem Type (special — triggers auto-fill) =====
+var problemTypeEl = document.getElementById('problemType');
+if (problemTypeEl) {
+  problemTypeEl.addEventListener('change', function() {
+    onProblemTypeChange(this.value);
+  });
+}
+
+// ===== Event Bindings: Tone Cards =====
+var toneCards = document.querySelectorAll('.tone-card');
+toneCards.forEach(function(card) {
+  card.addEventListener('click', function() {
+    toneCards.forEach(function(c) { c.classList.remove('selected'); });
+    card.classList.add('selected');
+    state.tone = card.getAttribute('data-tone');
+    updatePreview();
+  });
+});
+
+// ===== Event Bindings: CTA Segments =====
+var ctaSegs = document.querySelectorAll('.cta-seg');
+ctaSegs.forEach(function(seg) {
+  seg.addEventListener('click', function() {
+    ctaSegs.forEach(function(s) { s.classList.remove('selected'); });
+    seg.classList.add('selected');
+    state.ctaLevel = seg.getAttribute('data-cta');
+    updatePreview();
+  });
+});
+
+// ===== Version Switching =====
+function switchVersion(version) {
+  state.activeVersion = version;
+  var tabs = document.querySelectorAll('.version-tab');
+  tabs.forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-version') === version);
+  });
+  renderReply();
+}
+
+// ============================================================
+//  CORE: Reply Generation Engine
+// ============================================================
+
+// -- applyTone: Adjust text based on tone selection --
+function applyTone(text, tone) {
+  switch (tone) {
+    case 'warm':
+      return text;
+    case 'direct':
+      return text
+        .replace(/That's a really common but frustrating/i, 'This is a common')
+        .replace(/genuinely /gi, '')
+        .replace(/Take a breath\. /gi, '')
+        .replace(/You're not alone in this\. /gi, '');
+    case 'expert':
+      return text
+        .replace(/I know this can feel/i, 'From a methodological perspective, this')
+        .replace(/I wouldn't start by/i, 'The recommended approach is to');
+    case 'casual':
+      return text
+        .replace(/I wouldn't start by/i, "Don't just")
+        .replace(/A useful way to think about this/i, 'One way to think about it')
+        .replace(/I recommend/i, "I'd say");
+    default:
+      return text;
+  }
+}
+
+// -- selectCTA: Pick CTA based on level, version, and context --
+function selectCTA(template, ctaLevel, version) {
+  // Short version: no CTA unless Direct
+  if (version === 'short' && ctaLevel !== 'direct') return null;
+
+  // Deep version: boost soft → medium for stronger engagement
+  var effectiveLevel = ctaLevel;
+  if (version === 'deep' && ctaLevel === 'soft') {
+    effectiveLevel = 'medium';
+  }
+
+  // Context-aware weakening: emotional-support problem types keep CTA soft
+  var weakCtaTypes = ['revise_resubmit_anxiety', 'thesis_structure', 'harsh_reviewer'];
+  if (weakCtaTypes.indexOf(state.problemType) !== -1 && effectiveLevel === 'medium') {
+    effectiveLevel = 'soft';
+  }
+
+  // Context-aware strengthening: english_editing can go stronger
+  if (state.problemType === 'english_editing' && effectiveLevel === 'soft') {
+    effectiveLevel = 'medium';
+  }
+
+  switch (effectiveLevel) {
+    case 'none':
+      return 'Hope that helps.';
+    case 'soft':
+      return template.logic.cta || CTA_LIBRARY.checklist[0];
+    case 'medium':
+      return CTA_LIBRARY.light_diagnosis[Math.floor(Math.random() * CTA_LIBRARY.light_diagnosis.length)];
+    case 'direct':
+      return CTA_LIBRARY.service_aware[Math.floor(Math.random() * CTA_LIBRARY.service_aware.length)];
+    default:
+      return template.logic.cta || 'Hope that helps.';
+  }
+}
+
+// -- truncateToWordLimit: Cut text at word limit, ending on sentence boundary --
+function truncateToWordLimit(text, maxWords) {
+  var words = text.split(/\s+/);
+  if (words.length <= maxWords) return text;
+  var truncated = words.slice(0, maxWords).join(' ');
+  var lastPeriod = truncated.lastIndexOf('.');
+  if (lastPeriod > maxWords * 0.7) {
+    return truncated.substring(0, lastPeriod + 1);
+  }
+  return truncated + '...';
+}
+
+// -- generateReply: Core generation for one version --
+function generateReply(version) {
+  var template = PROBLEM_TEMPLATES[state.problemType];
+  if (!template) {
+    return { text: '(No template selected)', wordCount: 0 };
+  }
+  var logic = template.logic;
+  var tone = state.tone;
+  var ctaLevel = state.ctaLevel;
+
+  var config = {
+    short:   { empathy: true, diagnosis: true, framework: false, example: false, action: false, cta: false, maxWords: 120 },
+    helpful: { empathy: true, diagnosis: true, framework: true,  example: true,  action: true,  cta: true,  maxWords: 220 },
+    deep:    { empathy: true, diagnosis: true, framework: true,  example: true,  action: true,  cta: true,  maxWords: 400 },
+  }[version];
+
+  if (!config) {
+    return { text: '(Invalid version: ' + version + ')', wordCount: 0 };
+  }
+
+  var paragraphs = [];
+
+  // 1. Empathy
+  if (config.empathy && logic.empathy) {
+    paragraphs.push(applyTone(logic.empathy, tone));
+  }
+
+  // 2. Diagnosis
+  if (config.diagnosis && logic.diagnosis) {
+    paragraphs.push(applyTone(logic.diagnosis, tone));
+  }
+
+  // 3. Framework
+  if (config.framework && logic.framework && logic.framework.length) {
+    var items = logic.framework;
+    if (version === 'helpful') {
+      paragraphs.push('A useful way to think about this: ' + items.join(' '));
+    } else if (version === 'deep') {
+      paragraphs.push('Here is how I would approach this step by step:');
+      items.forEach(function(item, i) {
+        paragraphs.push((i + 1) + '. ' + item);
+      });
+    }
+    // Short: framework is false, skipped
+  }
+
+  // 4. Example
+  if (config.example && logic.example) {
+    paragraphs.push(applyTone('For example, ' + logic.example, tone));
+  }
+
+  // 5. Action
+  if (config.action && logic.action) {
+    paragraphs.push(applyTone(logic.action, tone));
+  }
+
+  // 6. CTA
+  if (config.cta && ctaLevel !== 'none') {
+    var cta = selectCTA(template, ctaLevel, version);
+    if (cta) paragraphs.push(cta);
+  }
+
+  var fullText = paragraphs.join('\n\n');
+  var wordCount = fullText.split(/\s+/).filter(Boolean).length;
+
+  // Truncate if significantly over
+  if (wordCount > config.maxWords * 1.3) {
+    fullText = truncateToWordLimit(fullText, config.maxWords);
+    wordCount = fullText.split(/\s+/).filter(Boolean).length;
+  }
+
+  return { text: fullText, wordCount: wordCount };
+}
+
+// ============================================================
+//  RENDER: Display reply in right panel
+// ============================================================
+
+function renderReply() {
+  var reply = state.replies[state.activeVersion];
+  var tabs = document.querySelectorAll('.version-tab');
+
+  // Update tab states (disabled if no content generated)
+  tabs.forEach(function(t) {
+    var v = t.getAttribute('data-version');
+    var r = state.replies[v];
+    var hasContent = r && r.text;
+    t.style.opacity = hasContent ? '1' : '0.5';
+    t.style.pointerEvents = hasContent ? 'auto' : 'auto'; // still clickable, just looks dim
+    var rangeEl = t.querySelector('.word-range');
+    if (rangeEl && r && r.wordCount > 0) {
+      rangeEl.textContent = r.wordCount + ' words';
+    } else if (rangeEl && !hasContent) {
+      // Reset to default range label
+      var defaults = { short: '80-120 words', helpful: '150-220 words', deep: '250-400 words' };
+      rangeEl.textContent = defaults[v] || '';
+    }
+  });
+
+  if (reply && reply.text) {
+    els.replyPlaceholder.classList.add('hidden');
+    els.replyContent.classList.add('visible');
+    els.replyContent.textContent = reply.text;
+
+    // Update risks for this version
+    state.risks = detectRisks(reply.text);
+    renderRisks(state.risks);
+  } else {
+    els.replyPlaceholder.classList.remove('hidden');
+    els.replyContent.classList.remove('visible');
+    els.replyContent.textContent = '';
+  }
+}
+
+// ============================================================
+//  HANDLE GENERATE: Full implementation
+// ============================================================
+
+function handleGenerate(skipShortCheck) {
+  if (state.isGenerating) return;
+
+  // a) Input validation
+  var text = (els.sourceText.value || '').trim();
+  if (!text) {
+    els.errorMsg.textContent = '请先粘贴 Reddit 评论或帖子内容。';
+    els.errorMsg.style.color = 'var(--red)';
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+    return;
+  }
+
+  // Short input warning with continue/cancel
+  if (text.length < 20 && !skipShortCheck) {
+    els.errorMsg.innerHTML = '⚠️ 输入内容较短（' + text.length + ' 字符），生成结果可能不够精准。' +
+      ' <a href="javascript:void(0)" onclick="handleGenerate(true)" style="color:var(--blue);text-decoration:underline;font-weight:600;">继续</a>' +
+      ' <a href="javascript:void(0)" onclick="document.getElementById(\'errorMsg\').innerHTML=\'\'" style="color:var(--muted);text-decoration:underline;">取消</a>';
+    els.errorMsg.style.color = '#b47d25';
+    return;
+  }
+
+  els.errorMsg.textContent = '';
+  els.errorMsg.style.color = 'var(--red)';
+
+  // b) Long input truncation
+  var MAX_INPUT = 2000;
+  var originalLength = text.length;
+  if (text.length > MAX_INPUT) {
+    text = text.substring(0, MAX_INPUT);
+    els.sourceText.value = text;
+    state.sourceText = text;
+    els.errorMsg.textContent = '输入内容较长（' + originalLength + ' 字符），已自动截取前 ' + MAX_INPUT + ' 字符进行处理。';
+    els.errorMsg.style.color = '#b47d25';
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 4000);
+  }
+
+  // c) HTML escape for XSS prevention (applied in rendering)
+  state.sourceText = text;
+
+  // d) Set generating state
+  state.isGenerating = true;
+  var btn = els.btnGenerate;
+  var originalText = btn.textContent;
+  btn.textContent = '⏳ 生成中...';
+  btn.disabled = true;
+  els.replyCard.classList.add('generating');
+
+  // c) Generate with slight delay for UX feedback
+  setTimeout(function() {
+    try {
+      // Generate all three versions
+      state.replies.short   = generateReply('short');
+      state.replies.helpful = generateReply('helpful');
+      state.replies.deep    = generateReply('deep');
+
+      // Default to Helpful tab
+      state.activeVersion = 'helpful';
+      var tabs = document.querySelectorAll('.version-tab');
+      tabs.forEach(function(t) {
+        t.classList.toggle('active', t.getAttribute('data-version') === 'helpful');
+      });
+
+      // Render
+      renderReply();
+
+      // Run risk detection on the default (helpful) version
+      state.risks = detectRisks(state.replies.helpful.text);
+      renderRisks(state.risks);
+
+      // Save to history
+      saveHistory();
+
+      // Log for debugging
+      console.log('Generated replies:');
+      console.log('  Short:', state.replies.short.wordCount, 'words');
+      console.log('  Helpful:', state.replies.helpful.wordCount, 'words');
+      console.log('  Deep:', state.replies.deep.wordCount, 'words');
+      console.log('  Tone:', state.tone, '| CTA:', state.ctaLevel);
+
+      state.generationError = null;
+    } catch (err) {
+      console.error('Generation error:', err);
+      state.generationError = err.message || 'Unknown error';
+      els.errorMsg.textContent = '生成失败，请稍后重试。如果问题持续出现，请刷新页面。';
+      els.errorMsg.style.color = 'var(--red)';
+      setTimeout(function() { els.errorMsg.textContent = ''; }, 5000);
+    }
+
+    // e) Restore button state
+    state.isGenerating = false;
+    btn.textContent = originalText;
+    btn.disabled = false;
+    els.replyCard.classList.remove('generating');
+  }, 600);
+}
+
+function showError(msg) {
+  els.errorMsg.textContent = msg;
+  els.errorMsg.style.color = 'var(--red)';
+}
+
+// ============================================================
+//  ACTION BUTTONS
+// ============================================================
+
+// -- Copy Reply --
+function copyReply() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可复制。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  copyToClipboard(reply.text).then(function() {
+    var copyBtns = document.querySelectorAll('.btn-primary');
+    copyBtns.forEach(function(b) {
+      if (b.textContent.indexOf('复制回复') !== -1 || b.textContent.indexOf('已复制') !== -1) {
+        b.textContent = '✅ 已复制';
+        b.style.background = 'var(--green)';
+        setTimeout(function() {
+          b.textContent = '📋 复制回复';
+          b.style.background = '';
+        }, 1500);
+      }
+    });
+  }).catch(function() {
+    showError('复制失败，请手动选中文本后 Ctrl+C 复制。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+  });
+}
+
+// -- Regenerate --
+function regenerate() {
+  if (state.isGenerating) return;
+
+  var text = (els.sourceText.value || '').trim();
+  if (!text) {
+    showError('请先粘贴 Reddit 评论或帖子内容。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  // Quick regenerate without full loading state
+  try {
+    state.replies.short   = generateReply('short');
+    state.replies.helpful = generateReply('helpful');
+    state.replies.deep    = generateReply('deep');
+    state.risks = detectRisks(state.replies[state.activeVersion].text);
+    renderRisks(state.risks);
+    renderReply();
+    console.log('Regenerated all versions.');
+  } catch (err) {
+    console.error('Regenerate error:', err);
+    showError('重新生成失败，请稍后重试。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+  }
+}
+
+// ============================================================
+//  RISK DETECTION ENGINE
+// ============================================================
+
+function detectRisks(replyText) {
+  var risks = {
+    marketing: 'low',
+    compliance: 'low',
+    redditCommunity: 'low',
+    suggestions: [],
+  };
+
+  if (!replyText) return risks;
+
+  // 1. Compliance: banned words
+  if (RISK_PATTERNS && RISK_PATTERNS.banned) {
+    RISK_PATTERNS.banned.forEach(function(item) {
+      if (item.pattern.test(replyText)) {
+        risks.compliance = 'high';
+        risks.suggestions.push({ text: '🚫 ' + item.label + '：请立即删除相关表述。', severity: 'high' });
+      }
+    });
+  }
+
+  // 2. Compliance: high-risk words
+  if (RISK_PATTERNS && RISK_PATTERNS.highRisk) {
+    RISK_PATTERNS.highRisk.forEach(function(item) {
+      if (item.pattern.test(replyText)) {
+        if (risks.compliance !== 'high') risks.compliance = 'medium';
+        risks.suggestions.push({ text: '⚠️ ' + item.label + '：建议替换为合规表述。', severity: 'medium' });
+      }
+    });
+  }
+
+  // 3. Marketing detection
+  var dmCount = (replyText.match(/\bDM\b/gi) || []).length;
+  var mktWords = (replyText.match(/\b(service|paid|client|company|guarantee|discount|offer)\b/gi) || []).length;
+
+  if (mktWords >= 3 || dmCount >= 2) {
+    risks.marketing = 'high';
+    risks.suggestions.push({ text: '📢 营销感偏强：建议删除服务描述，只保留轻量钩子。', severity: 'high' });
+  } else if (mktWords >= 1 || dmCount >= 1) {
+    risks.marketing = 'medium';
+    risks.suggestions.push({ text: '💡 营销感适中：发布前请人工确认语气是否合适。', severity: 'medium' });
+  }
+
+  // 4. Reddit community risk
+  if (state.ctaLevel === 'medium' || state.ctaLevel === 'direct') {
+    risks.redditCommunity = 'medium';
+    risks.suggestions.push({
+      text: '📋 发布前建议检查 r/' + (state.subreddit || '该subreddit') + ' 是否允许 self-promotion 或 DM 引导。',
+      severity: 'medium'
+    });
+  }
+  if (state.ctaLevel === 'direct') {
+    risks.redditCommunity = 'high';
+    risks.suggestions.push({
+      text: '🔴 CTA 强度为 Direct，请确保用户明确在找服务，且 subreddit 规则允许。',
+      severity: 'high'
+    });
+  }
+
+  // 5. Structure check: reply must not start with CTA
+  var firstLine = replyText.split('\n')[0] || '';
+  if (/^\s*(DM me|Contact|Feel free to DM|I work with)/i.test(firstLine)) {
+    risks.marketing = 'high';
+    risks.suggestions.push({ text: '📢 回复不能以 CTA 或自我介绍开头。请确保先提供实质帮助。', severity: 'high' });
+  }
+
+  // 6. Compliance replacement suggestions
+  if (risks.compliance === 'high' || risks.compliance === 'medium') {
+    var foundReplacements = [];
+    Object.keys(RISK_REPLACEMENTS).forEach(function(key) {
+      if (replyText.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+        foundReplacements.push('"' + key + '" → "' + RISK_REPLACEMENTS[key] + '"');
+      }
+    });
+    if (foundReplacements.length > 0) {
+      risks.suggestions.push({
+        text: '💡 建议替换：' + foundReplacements.join('；'),
+        severity: 'medium'
+      });
+    }
+  }
+
+  return risks;
+}
+
+// ============================================================
+//  RENDER RISK PANEL
+// ============================================================
+
+function renderRisks(risks) {
+  var panel = els.riskPanel;
+  if (!panel) return;
+
+  // Determine overall risk level
+  var overall = 'low';
+  if (risks.compliance === 'high' || risks.marketing === 'high' || risks.redditCommunity === 'high') {
+    overall = 'high';
+  } else if (risks.compliance === 'medium' || risks.marketing === 'medium' || risks.redditCommunity === 'medium') {
+    overall = 'medium';
+  }
+
+  // Update panel style
+  panel.classList.remove('risk-low', 'risk-medium', 'risk-high');
+  panel.classList.add('risk-' + overall);
+
+  // Build header
+  var icons = { low: '✅', medium: '⚠️', high: '🔴' };
+  var labels = { low: '风险检测通过', medium: '有中度风险提示', high: '有高风险项需处理' };
+
+  var html = '<div class="panel-title">' + icons[overall] + ' 风险提示：' + labels[overall] + '</div>';
+
+  // Build suggestion list
+  if (risks.suggestions && risks.suggestions.length > 0) {
+    html += '<div class="risk-body">';
+    risks.suggestions.forEach(function(s) {
+      html += '<div class="risk-suggestion severity-' + (s.severity || 'low') + '">' + escapeHtml(s.text) + '</div>';
+    });
+    html += '</div>';
+  } else {
+    html += '<div class="risk-body" style="color:var(--green);">未检测到明显风险，回复可以正常使用。</div>';
+  }
+
+  // Compliance replacement hints
+  if (risks.compliance === 'high') {
+    html += '<div class="risk-body" style="margin-top:8px;font-size:12px;color:var(--muted);">' +
+      '合规替代表达：manuscript diagnosis / academic writing coaching / language editing / journal submission strategy</div>';
+  }
+
+  panel.innerHTML = html;
+
+  // Also update CTA panel with current strategy info
+  renderCtaSuggestion();
+}
+
+function renderCtaSuggestion() {
+  var panel = els.ctaPanel;
+  if (!panel) return;
+
+  var info = {
+    none:   { label: '无 CTA',     desc: '回复仅提供帮助，不包含任何钩子。适合严肃学术讨论和规则严格社区。' },
+    soft:   { label: '轻钩子',     desc: '使用低压力的 checklist/template 邀请。默认策略，适合大多数场景。' },
+    medium: { label: '中度钩子',   desc: '引导用户私信关键词索要资源。仅在用户明确想获取资料时使用。' },
+    direct: { label: '直接钩子',   desc: '明确邀请咨询。⚠️ 仅适合用户明确在找服务的高意向场景。' },
+  }[state.ctaLevel] || { label: '未设置', desc: '' };
+
+  var template = PROBLEM_TEMPLATES[state.problemType];
+  var defaultCta = template ? template.logic.cta : '';
+
+  var html = '<div class="panel-title">💡 CTA 建议：当前 — ' + info.label + '</div>';
+  html += '<div class="risk-body" style="font-size:12px;">' + info.desc + '</div>';
+  if (defaultCta && state.ctaLevel !== 'none') {
+    html += '<div class="risk-body" style="margin-top:4px;font-size:11px;color:var(--muted);">默认钩子示例：' + escapeHtml(defaultCta.substring(0, 80)) + '</div>';
+  }
+
+  // Alternative CTA suggestions (clickable)
+  var altCtas = getAlternativeCtas(state.ctaLevel);
+  if (altCtas.length > 0) {
+    html += '<div class="risk-body" style="margin-top:8px;font-size:11px;font-weight:600;color:var(--ink);">🔄 替代钩子（点击复制）：</div>';
+    altCtas.forEach(function(item, i) {
+      var altId = 'alt-cta-' + i;
+      html += '<div class="cta-item" style="font-size:11px;padding:3px 0;">';
+      html += '<span style="flex:1;margin-right:8px;">' + escapeHtml(item) + '</span>';
+      html += '<button class="cta-copy-btn" onclick="copyAltCta(\'' + altId + '\')" id="' + altId + '" style="font-size:10px;height:22px;">复制</button>';
+      html += '</div>';
+      // Store for lookup
+      window._altCtas = window._altCtas || {};
+      window._altCtas[altId] = item;
+    });
+  }
+
+  html += '<div class="risk-body" style="margin-top:8px;font-size:11px;color:var(--muted);">💡 同一账号最近10条评论中，带CTA的评论建议不超过2-3条。</div>';
+
+  panel.innerHTML = html;
+}
+
+// Get alternative CTAs for a given level
+function getAlternativeCtas(level) {
+  if (level === 'none') {
+    return CTA_LIBRARY.checklist.slice(0, 2);
+  }
+  var map = {
+    soft: 'checklist',
+    medium: 'light_diagnosis',
+    direct: 'service_aware',
+  };
+  var key = map[level] || 'checklist';
+  return (CTA_LIBRARY[key] || []).slice(0, 3);
+}
+
+// Copy alternative CTA
+function copyAltCta(btnId) {
+  var text = window._altCtas && window._altCtas[btnId] ? window._altCtas[btnId] : '';
+  if (!text) return;
+  copyToClipboard(text).then(function() {
+    var btn = document.getElementById(btnId);
+    if (btn) {
+      btn.textContent = '✅';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = '复制';
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+  });
+}
+
+// ============================================================
+//  EDITING TOOLS
+// ============================================================
+
+// -- refreshCurrentReply: Helper to update reply + risks + render --
+function refreshCurrentReply(newText) {
+  var version = state.activeVersion;
+  state.replies[version].text = newText;
+  state.replies[version].wordCount = newText.split(/\s+/).filter(Boolean).length;
+  state.risks = detectRisks(newText);
+  renderRisks(state.risks);
+  renderReply();
+}
+
+// -- Shorten: reduce by ~30%, keep core structure --
+function shortenReply() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可缩短。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var paragraphs = reply.text.split('\n\n').filter(Boolean);
+  // Keep first 2 (empathy + diagnosis), keep last if it looks like CTA
+  var core = paragraphs.slice(0, 2);
+  var last = paragraphs[paragraphs.length - 1];
+  var isCta = /DM|checklist|template|hope that helps|happy to share/i.test(last);
+
+  var kept = core.slice();
+  if (paragraphs.length > 3) {
+    // Compress middle paragraphs
+    var middle = paragraphs.slice(2, isCta ? -1 : paragraphs.length);
+    if (middle.length > 0) {
+      kept.push(middle[0].split('. ').slice(0, 2).join('. ') + '.');
+    }
+  }
+  if (isCta && last !== core[core.length - 1]) {
+    kept.push(last);
+  }
+
+  var shortened = kept.join('\n\n');
+  refreshCurrentReply(shortened);
+  console.log('Shortened: ' + reply.wordCount + ' → ' + state.replies[state.activeVersion].wordCount + ' words');
+}
+
+// -- Expand: add more detail, don't exceed version max --
+function expandReply() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可展开。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var version = state.activeVersion;
+  var maxWords = { short: 120, helpful: 220, deep: 400 }[version] || 220;
+  if (reply.wordCount >= maxWords) {
+    showError('当前版本已达到字数上限，无法继续展开。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  // Regenerate one level deeper
+  var deeperVersion = version === 'short' ? 'helpful' : 'deep';
+  var expanded = generateReply(deeperVersion);
+  // Truncate to current max
+  if (expanded.wordCount > maxWords) {
+    expanded.text = truncateToWordLimit(expanded.text, maxWords);
+    expanded.wordCount = expanded.text.split(/\s+/).filter(Boolean).length;
+  }
+  refreshCurrentReply(expanded.text);
+  console.log('Expanded: ' + reply.wordCount + ' → ' + state.replies[state.activeVersion].wordCount + ' words');
+}
+
+// -- Reduce Marketing: weaken or remove marketing language --
+function reduceMarketing() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可修改。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var text = reply.text;
+  // Replace DM me patterns
+  text = text.replace(/Feel free to DM me[^.]*\./gi, 'Happy to share more if useful.');
+  text = text.replace(/DM me[^.]*\./gi, 'Happy to share more if useful.');
+  text = text.replace(/\bDM\b/gi, 'share');
+  // Weaken service language
+  text = text.replace(/\bservice\b/gi, 'support');
+  text = text.replace(/\bpaid\b/gi, '');
+  text = text.replace(/\bclient\b/gi, 'researcher');
+  text = text.replace(/\bcompany\b/gi, 'team');
+  // Trim self-intro (keep only 1 sentence)
+  text = text.replace(/I work with[^.]*\.\s*I work with[^.]*\./gi, function(m) {
+    return m.split('. ')[0] + '.';
+  });
+  // Clean up double spaces
+  text = text.replace(/  +/g, ' ').replace(/\n\n\n+/g, '\n\n');
+
+  refreshCurrentReply(text);
+  console.log('Marketing reduced.');
+}
+
+// -- Enhance CTA: boost CTA level temporarily --
+function enhanceCTA() {
+  if (state.ctaLevel === 'direct') {
+    showError('CTA 强度已为 Direct，无法继续增强。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可修改。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  // Temporarily boost CTA for regeneration
+  var originalLevel = state.ctaLevel;
+  var boostMap = { none: 'soft', soft: 'medium', medium: 'direct' };
+  state.ctaLevel = boostMap[originalLevel] || originalLevel;
+
+  // Update UI
+  var ctaSegs = document.querySelectorAll('.cta-seg');
+  ctaSegs.forEach(function(s) {
+    s.classList.toggle('selected', s.getAttribute('data-cta') === state.ctaLevel);
+  });
+
+  // Regenerate current version
+  var newReply = generateReply(state.activeVersion);
+  refreshCurrentReply(newReply.text);
+
+  // Restore original CTA level in state but keep new text
+  state.ctaLevel = originalLevel;
+  ctaSegs.forEach(function(s) {
+    s.classList.toggle('selected', s.getAttribute('data-cta') === state.ctaLevel);
+  });
+
+  console.log('CTA enhanced to ' + boostMap[originalLevel] + ' for this reply.');
+}
+
+// -- Remove CTA: strip CTA from reply --
+function removeCTA() {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可修改。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var text = reply.text;
+  // Remove last paragraph if it's a CTA
+  var paragraphs = text.split('\n\n');
+  if (paragraphs.length > 1) {
+    var last = paragraphs[paragraphs.length - 1];
+    if (/DM|checklist|template|hope that helps|happy to share|feel free/i.test(last)) {
+      paragraphs.pop();
+      paragraphs.push('Hope that helps.');
+    }
+  }
+  var cleaned = paragraphs.join('\n\n');
+
+  refreshCurrentReply(cleaned);
+  console.log('CTA removed.');
+}
+
+// -- Rewrite specific sections --
+function rewriteSection(section) {
+  var reply = state.replies[state.activeVersion];
+  if (!reply || !reply.text) {
+    showError('暂无回复内容可重写。');
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
+    return;
+  }
+
+  var template = PROBLEM_TEMPLATES[state.problemType];
+  if (!template || !template.logic) return;
+
+  var paragraphs = reply.text.split('\n\n');
+  var logic = template.logic;
+  var tone = state.tone;
+
+  switch (section) {
+    case 'empathy':
+      if (logic.empathy && paragraphs.length > 0) {
+        paragraphs[0] = applyTone(logic.empathy, tone);
+      }
+      break;
+    case 'diagnosis':
+      if (logic.diagnosis && paragraphs.length > 1) {
+        paragraphs[1] = applyTone(logic.diagnosis, tone);
+      }
+      break;
+    case 'example':
+      // Find and replace the "For example" paragraph
+      for (var i = 0; i < paragraphs.length; i++) {
+        if (/^For example/i.test(paragraphs[i])) {
+          paragraphs[i] = applyTone('For example, ' + logic.example, tone);
+          break;
+        }
+      }
+      break;
+    case 'cta':
+      // Replace last paragraph if it's CTA-like
+      var last = paragraphs[paragraphs.length - 1];
+      if (/DM|checklist|template|hope that helps|happy to share|feel free/i.test(last) && logic.cta) {
+        paragraphs[paragraphs.length - 1] = logic.cta;
+      }
+      break;
+  }
+
+  var newText = paragraphs.join('\n\n');
+  refreshCurrentReply(newText);
+  console.log('Rewrote section:', section);
+}
+
+// ============================================================
+//  REPLY HISTORY (localStorage)
+// ============================================================
+
+var HISTORY_KEY = 'reddit-reply-history';
+var MAX_HISTORY = 20;
+
+function getHistory() {
+  try {
+    var raw = localStorage.getItem(HISTORY_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveHistory() {
+  // Only save if we have generated replies
+  if (!state.replies.helpful.text) return;
+
+  var entry = {
+    id: Date.now(),
+    timestamp: new Date().toISOString(),
+    input: {
+      sourceText: state.sourceText.substring(0, 100) + (state.sourceText.length > 100 ? '...' : ''),
+      problemType: state.problemType,
+      tone: state.tone,
+      ctaLevel: state.ctaLevel,
+      subreddit: state.subreddit,
+      postTitle: state.postTitle,
+      // Store full text for restore
+      _fullSourceText: state.sourceText,
+    },
+    output: {
+      version: 'helpful',
+      text: state.replies.helpful.text,
+      // Store all versions for restore
+      _short: state.replies.short,
+      _helpful: state.replies.helpful,
+      _deep: state.replies.deep,
+    },
+  };
+
+  var history = getHistory();
+  history.unshift(entry);
+  if (history.length > MAX_HISTORY) {
+    history = history.slice(0, MAX_HISTORY);
+  }
+
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  } catch (e) {
+    console.warn('localStorage quota full, clearing old history');
+    history = history.slice(0, 10);
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)); } catch (e2) {}
+  }
+
+  renderHistory();
+}
+
+function renderHistory() {
+  var container = document.getElementById('historyList');
+  if (!container) return;
+
+  var history = getHistory();
+
+  if (history.length === 0) {
+    container.innerHTML = '<div style="font-size:12px;color:var(--muted);text-align:center;padding:16px 0;">尚未生成任何回复</div>';
+    return;
+  }
+
+  var problemNames = {};
+  Object.keys(PROBLEM_TEMPLATES).forEach(function(k) {
+    problemNames[k] = PROBLEM_TEMPLATES[k].name;
+  });
+
+  var html = '';
+  history.forEach(function(entry) {
+    var time = '';
+    try {
+      var d = new Date(entry.timestamp);
+      var now = new Date();
+      var diffMin = Math.floor((now - d) / 60000);
+      if (diffMin < 1) time = '刚刚';
+      else if (diffMin < 60) time = diffMin + ' 分钟前';
+      else if (diffMin < 1440) time = Math.floor(diffMin / 60) + ' 小时前';
+      else time = d.toLocaleDateString('zh-CN');
+    } catch (e) {
+      time = '';
+    }
+
+    var problemLabel = problemNames[entry.input.problemType] || entry.input.problemType;
+
+    html += '<div class="history-item" onclick="restoreHistory(' + entry.id + ')">';
+    html += '<button class="hist-delete" onclick="event.stopPropagation();deleteHistory(' + entry.id + ')" title="删除">&times;</button>';
+    html += '<div class="hist-time">' + time + '</div>';
+    html += '<span class="hist-tag">' + escapeHtml(problemLabel) + '</span>';
+    html += '<span class="hist-tag" style="background:#f5f0f8;color:#6b4d8a;">' + escapeHtml(entry.input.tone) + '</span>';
+    html += '<span class="hist-tag" style="background:#f0f8f5;color:#2f735c;">CTA:' + escapeHtml(entry.input.ctaLevel) + '</span>';
+    html += '<div class="hist-preview">' + escapeHtml((entry.input.sourceText || '').substring(0, 60)) + '</div>';
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+}
+
+function restoreHistory(id) {
+  var history = getHistory();
+  var entry = null;
+  for (var i = 0; i < history.length; i++) {
+    if (history[i].id === id) { entry = history[i]; break; }
+  }
+  if (!entry) return;
+
+  // Restore input
+  var inp = entry.input;
+  state.sourceText = inp._fullSourceText || inp.sourceText || '';
+  els.sourceText.value = state.sourceText;
+  state.postTitle = inp.postTitle || '';
+  els.postTitle.value = state.postTitle;
+  state.subreddit = inp.subreddit || '';
+  els.subreddit.value = state.subreddit;
+  state.problemType = inp.problemType;
+  els.problemType.value = state.problemType;
+  state.tone = inp.tone;
+  state.ctaLevel = inp.ctaLevel;
+
+  // Update tone cards UI
+  var toneCards = document.querySelectorAll('.tone-card');
+  toneCards.forEach(function(c) {
+    c.classList.toggle('selected', c.getAttribute('data-tone') === state.tone);
+  });
+
+  // Update CTA segments UI
+  var ctaSegs = document.querySelectorAll('.cta-seg');
+  ctaSegs.forEach(function(s) {
+    s.classList.toggle('selected', s.getAttribute('data-cta') === state.ctaLevel);
+  });
+
+  // Update problem type dropdown
+  onProblemTypeChange(state.problemType);
+
+  // Restore output
+  var out = entry.output;
+  state.replies.short   = out._short   || { text: '', wordCount: 0 };
+  state.replies.helpful = out._helpful || { text: out.text || '', wordCount: 0 };
+  state.replies.deep    = out._deep    || { text: '', wordCount: 0 };
+  state.activeVersion = out.version || 'helpful';
+
+  // Update version tabs
+  var tabs = document.querySelectorAll('.version-tab');
+  tabs.forEach(function(t) {
+    t.classList.toggle('active', t.getAttribute('data-version') === state.activeVersion);
+  });
+
+  // Render
+  state.risks = detectRisks(state.replies[state.activeVersion].text);
+  renderRisks(state.risks);
+  renderReply();
+
+  // Scroll right panel into view
+  var rightPanel = document.getElementById('rightPanel');
+  if (rightPanel) rightPanel.scrollTop = 0;
+
+  console.log('Restored history entry:', id);
+}
+
+function deleteHistory(id) {
+  var history = getHistory();
+  history = history.filter(function(e) { return e.id !== id; });
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  } catch (e) {}
+  renderHistory();
+}
+
+function clearAllHistory() {
+  if (confirm('确定要清空所有历史记录吗？此操作不可恢复。')) {
+    try {
+      localStorage.removeItem(HISTORY_KEY);
+    } catch (e) {}
+    renderHistory();
+  }
+}
+
+// ===== Bottom Panel Toggle =====
+var openPanel = null;
+function togglePanel(name) {
+  var capName = name.charAt(0).toUpperCase() + name.slice(1);
+  var panelId = 'panel' + capName;
+  var panel = document.getElementById(panelId);
+  if (!panel) return;
+
+  if (openPanel && openPanel !== panel) {
+    openPanel.classList.remove('open');
+  }
+
+  var isOpening = !panel.classList.contains('open');
+  panel.classList.toggle('open');
+  openPanel = panel.classList.contains('open') ? panel : null;
+
+  // Populate content when opening
+  if (isOpening) {
+    if (name === 'ctaLibrary') renderCtaLibrary();
+    if (name === 'riskWords') renderRiskWords();
+  }
+}
+
+// ===== Render CTA Library Panel =====
+function renderCtaLibrary() {
+  var container = document.getElementById('ctaLibraryContent');
+  if (!container || container.hasAttribute('data-rendered')) return;
+  container.setAttribute('data-rendered', 'true');
+
+  var categories = [
+    { key: 'checklist', title: '📋 Checklist 型' },
+    { key: 'template', title: '📄 Template 型' },
+    { key: 'light_diagnosis', title: '🔍 轻诊断型' },
+    { key: 'service_aware', title: '🤝 服务边界型' },
+  ];
+
+  var html = '';
+  categories.forEach(function(cat) {
+    var items = CTA_LIBRARY[cat.key];
+    if (!items || items.length === 0) return;
+    html += '<div class="cta-category">';
+    html += '<div class="cta-category-title">' + cat.title + '</div>';
+    items.forEach(function(item, idx) {
+      var itemId = 'cta-' + cat.key + '-' + idx;
+      html += '<div class="cta-item">';
+      html += '<span>' + escapeHtml(item) + '</span>';
+      html += '<button class="cta-copy-btn" onclick="copyCtaItem(\'' + itemId + '\')" id="' + itemId + '">复制</button>';
+      html += '</div>';
+    });
+    html += '</div>';
+  });
+
+  container.innerHTML = html;
+
+  // Store original items for copy
+  window._ctaItems = {};
+  categories.forEach(function(cat) {
+    var items = CTA_LIBRARY[cat.key];
+    if (!items) return;
+    items.forEach(function(item, idx) {
+      window._ctaItems['cta-' + cat.key + '-' + idx] = item;
+    });
+  });
+}
+
+// ===== Copy CTA Item =====
+function copyCtaItem(btnId) {
+  var text = window._ctaItems && window._ctaItems[btnId] ? window._ctaItems[btnId] : '';
+  if (!text) return;
+  copyToClipboard(text).then(function() {
+    var btn = document.getElementById(btnId);
+    if (btn) {
+      btn.textContent = '✅';
+      btn.classList.add('copied');
+      setTimeout(function() {
+        btn.textContent = '复制';
+        btn.classList.remove('copied');
+      }, 1500);
+    }
+  });
+}
+
+// ===== Render Risk Words Panel =====
+function renderRiskWords() {
+  var container = document.getElementById('riskWordsContent');
+  if (!container || container.hasAttribute('data-rendered')) return;
+  container.setAttribute('data-rendered', 'true');
+
+  var words = [];
+  if (RISK_PATTERNS && RISK_PATTERNS.banned) {
+    RISK_PATTERNS.banned.forEach(function(item) {
+      words.push(item.label);
+    });
+  }
+
+  var html = '';
+  words.forEach(function(w) {
+    html += '<span class="risk-tag">🚫 ' + escapeHtml(w) + '</span>';
+  });
+
+  // Also add high-risk items
+  if (RISK_PATTERNS && RISK_PATTERNS.highRisk) {
+    RISK_PATTERNS.highRisk.forEach(function(item) {
+      html += '<span class="risk-tag" style="background:#fff8f0;color:#b47d25;border-color:#fce4c8;">⚠️ ' + escapeHtml(item.label) + '</span>';
+    });
+  }
+
+  container.innerHTML = html || '<span style="color:var(--muted);font-size:12px;">风险词数据加载中...</span>';
+}
+
+// ===== Clipboard Helper =====
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text).catch(function() {
+      return fallbackCopy(text);
+    });
+  }
+  return fallbackCopy(text);
+}
+
+function fallbackCopy(text) {
+  return new Promise(function(resolve, reject) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      ta.style.top = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var success = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (success) resolve();
+      else reject(new Error('execCommand copy failed'));
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
+// ===== HTML Escape =====
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ============================================================
+//  OFFLINE DETECTION & MOBILE NAV
+// ============================================================
+
+function checkOnlineStatus() {
+  var banner = document.getElementById('offlineBanner');
+  if (!banner) return;
+  if (!navigator.onLine) {
+    banner.classList.add('show');
+  } else {
+    banner.classList.remove('show');
+  }
+}
+
+window.addEventListener('online', checkOnlineStatus);
+window.addEventListener('offline', checkOnlineStatus);
+
+function toggleMobileNav() {
+  var dropdown = document.getElementById('mobileNavDropdown');
+  if (dropdown) {
+    dropdown.classList.toggle('open');
+  }
+}
+
+// Close mobile nav when clicking outside
+document.addEventListener('click', function(e) {
+  var dropdown = document.getElementById('mobileNavDropdown');
+  var hamburger = document.getElementById('hamburgerBtn');
+  if (dropdown && dropdown.classList.contains('open') &&
+      !dropdown.contains(e.target) &&
+      hamburger && !hamburger.contains(e.target)) {
+    dropdown.classList.remove('open');
+  }
+});
+
+// ============================================================
+//  LOCALSTORAGE AVAILABILITY CHECK
+// ============================================================
+
+var localStorageAvailable = (function() {
+  try {
+    var test = '__ls_test__';
+    localStorage.setItem(test, test);
+    localStorage.removeItem(test);
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
+
+// Patch saveHistory to check availability
+var _originalSaveHistory = saveHistory;
+saveHistory = function() {
+  if (!localStorageAvailable) return;
+  _originalSaveHistory();
+};
+
+var _originalRenderHistory = renderHistory;
+renderHistory = function() {
+  if (!localStorageAvailable) {
+    var container = document.getElementById('historyList');
+    if (container) {
+      container.innerHTML = '<div style="font-size:11px;color:var(--muted);text-align:center;padding:12px 0;">历史记录不可用（localStorage 未启用）</div>';
+    }
+    return;
+  }
+  _originalRenderHistory();
+};
+
+var _originalGetHistory = getHistory;
+getHistory = function() {
+  if (!localStorageAvailable) return [];
+  return _originalGetHistory();
+};
+
+// ===== Keyboard Shortcuts =====
+document.addEventListener('keydown', function(e) {
+  // Ctrl/Cmd + Enter: Generate
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+    e.preventDefault();
+    handleGenerate();
+  }
+  // Ctrl/Cmd + 1/2/3: Switch version
+  if ((e.ctrlKey || e.metaKey) && e.key === '1') { e.preventDefault(); switchVersion('short'); }
+  if ((e.ctrlKey || e.metaKey) && e.key === '2') { e.preventDefault(); switchVersion('helpful'); }
+  if ((e.ctrlKey || e.metaKey) && e.key === '3') { e.preventDefault(); switchVersion('deep'); }
+  // Esc: Close panels
+  if (e.key === 'Escape') {
+    if (openPanel) {
+      openPanel.classList.remove('open');
+      openPanel = null;
+    }
+  }
+});
+
+// ===== Initialize =====
+checkOnlineStatus();
+syncState();
+renderCtaSuggestion();
+renderHistory();
+console.log('Reddit Reply Assistant v1.0 — All 6 batches complete.');
+console.log('Features: reply generation | 8 templates | risk detection | 6 editing tools | history');
+console.log('Accessibility: aria-labels | keyboard shortcuts | responsive layout');
+console.log('State:', state);
+
+// ── Reddit Radar 预填集成 ──
+(function checkRadarPrefill() {
+  try {
+    var prefillRaw = localStorage.getItem('reddit_reply_prefill');
+    if (!prefillRaw) return;
+    var prefill = JSON.parse(prefillRaw);
+    localStorage.removeItem('reddit_reply_prefill');
+
+    // 预填原帖内容
+    var sourceTextEl = document.getElementById('sourceText');
+    if (sourceTextEl && prefill.content) {
+      sourceTextEl.value = prefill.content;
+      sourceTextEl.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    // 预填帖子标题
+    if (prefill.title) {
+      var postTitleEl = document.getElementById('postTitle');
+      if (postTitleEl) postTitleEl.value = prefill.title;
+    }
+
+    // 预填 Subreddit
+    if (prefill.subreddit) {
+      var subredditEl = document.getElementById('subreddit');
+      if (subredditEl) subredditEl.value = prefill.subreddit;
+    }
+
+    // 预填问题类型
+    if (prefill.problemType) {
+      var problemEl = document.getElementById('problemType');
+      if (problemEl) {
+        problemEl.value = prefill.problemType;
+        problemEl.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+
+    // 预填用户身份
+    if (prefill.userType) {
+      var userTypeEl = document.getElementById('userType');
+      if (userTypeEl) userTypeEl.value = prefill.userType;
+    }
+
+    // 预填学科领域
+    if (prefill.field) {
+      var fieldEl = document.getElementById('field');
+      if (fieldEl) fieldEl.value = prefill.field;
+    }
+
+    // 预填回复语气
+    if (prefill.tone) {
+      var toneBtns = document.querySelectorAll('.tone-card');
+      toneBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-tone') === prefill.tone) {
+          btn.click();
+        }
+      });
+    }
+
+    // 预填回复目标
+    if (prefill.replyGoal) {
+      var replyGoalEl = document.getElementById('replyGoal');
+      if (replyGoalEl) replyGoalEl.value = prefill.replyGoal;
+    }
+
+    // 预填 CTA 强度
+    if (prefill.ctaLevel) {
+      var ctaBtns = document.querySelectorAll('.cta-seg');
+      ctaBtns.forEach(function(btn) {
+        if (btn.getAttribute('data-cta') === prefill.ctaLevel) {
+          btn.click();
+        }
+      });
+    }
+
+    // 预填 Subreddit 画像提供的开头模板
+    if (prefill.openingTemplate) {
+      var stEl = document.getElementById('sourceText');
+      if (stEl) {
+        var currentVal = stEl.value || '';
+        if (currentVal.indexOf(prefill.openingTemplate) === -1) {
+          stEl.value = prefill.openingTemplate + '\n\n' + currentVal;
+          stEl.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    }
+
+    console.log('[Reddit Radar] 已自动预填线索数据，来源：' + (prefill.sourceUrl || 'Radar'));
+  } catch (e) {
+    console.warn('[Reddit Radar] 预填失败：', e);
+  }
+})();
+</script>
+
+</body>
+</html>

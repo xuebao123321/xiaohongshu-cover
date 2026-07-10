@@ -1,0 +1,2774 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Instagram 学术内容图生成器</title>
+  <style>
+    /* ===== CSS Custom Properties (复用 carousel.html 命名风格) ===== */
+    :root {
+      --ink: #182033;
+      --muted: #667085;
+      --paper: #fbfaf7;
+      --line: #d9d6ce;
+      --blue: #1f4b73;
+      --red: #c94538;
+      --green: #2f735c;
+      --gold: #b47d25;
+      --gray: #f0eee8;
+      --control-bg: #f9f9f9;
+      --panel-border: #e5e5e5;
+      --preview-bg: #e0e0e0;
+      --card-hover-shadow: 0 4px 16px rgba(24, 32, 51, 0.12);
+      --card-selected-border: #1f4b73;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      color: var(--ink);
+      font-family: Inter, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #fff;
+    }
+
+    /* ===== 整体布局：CSS Grid ===== */
+    .app {
+      display: grid;
+      grid-template-rows: 60px 1fr;
+      grid-template-columns: 400px 1fr;
+      height: 100vh;
+    }
+
+    /* ===== 顶部导航栏 ===== */
+    .topbar {
+      grid-column: 1 / -1;
+      grid-row: 1 / 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      background: #fff;
+      border-bottom: 1px solid var(--panel-border);
+      z-index: 10;
+    }
+
+    .topbar-title {
+      font-size: 20px;
+      font-weight: 780;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .topbar-subtitle {
+      font-size: 14px;
+      font-weight: 520;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== 左侧控制区 ===== */
+    .sidebar {
+      grid-column: 1 / 2;
+      grid-row: 2 / 3;
+      background: var(--control-bg);
+      border-right: 1px solid var(--panel-border);
+      overflow-y: auto;
+      padding: 20px 20px 100px;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 3px;
+    }
+
+    /* ===== 控件组 ===== */
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .control-group select,
+    .control-group input[type="text"],
+    .control-group textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--ink);
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .control-group select:focus,
+    .control-group input[type="text"]:focus,
+    .control-group textarea:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(31, 75, 115, 0.08);
+    }
+
+    .control-group textarea {
+      resize: vertical;
+      min-height: 180px;
+      font-size: 13px;
+      line-height: 1.55;
+      font-family: "SF Mono", "Menlo", "Consolas", monospace;
+    }
+
+    .control-group select:disabled {
+      color: #aaa;
+      background: #f5f5f5;
+      cursor: not-allowed;
+    }
+
+    .control-group .hint {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ===== 视觉风格卡片选择 ===== */
+    .style-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .style-card {
+      padding: 14px 12px;
+      background: #fff;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .style-card:hover {
+      box-shadow: var(--card-hover-shadow);
+      border-color: #c0c0c0;
+    }
+
+    .style-card.selected {
+      border-color: var(--card-selected-border);
+      background: rgba(31, 75, 115, 0.04);
+      box-shadow: 0 0 0 3px rgba(31, 75, 115, 0.08);
+    }
+
+    .style-card-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .style-card-swatches {
+      display: flex;
+      gap: 6px;
+    }
+
+    .style-card-swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      flex-shrink: 0;
+    }
+
+    /* ===== 品牌设置紧凑行 ===== */
+    .brand-row {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 10px;
+    }
+
+    /* ===== 批量识别开关 ===== */
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkbox-row:hover {
+      border-color: #c0c0c0;
+    }
+
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .checkbox-row span {
+      font-size: 13px;
+      font-weight: 580;
+      color: #444;
+    }
+
+    /* ===== 按钮 ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 11px 22px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #163a5c;
+      box-shadow: 0 2px 12px rgba(31, 75, 115, 0.3);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--blue);
+      border: 2px solid var(--blue);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: rgba(31, 75, 115, 0.06);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-row .btn {
+      flex: 1;
+    }
+
+    /* ===== 右侧预览区 ===== */
+    .preview-area {
+      grid-column: 2 / 3;
+      grid-row: 2 / 3;
+      background: var(--preview-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .preview-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+    }
+
+    .preview-wrapper {
+      position: relative;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+      border-radius: 4px;
+      overflow: hidden;
+      background: #fff;
+      transform-origin: center center;
+      transition: transform 0.3s ease;
+    }
+
+    .slide-container {
+      width: 1080px;
+      height: 1350px;
+      position: relative;
+      overflow: hidden;
+      background: var(--paper);
+      isolation: isolate;
+    }
+
+    .slide-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 28px;
+      font-weight: 520;
+      text-align: center;
+      padding: 60px;
+      line-height: 1.5;
+    }
+
+    /* ===== 预览区底部导航 ===== */
+    .preview-nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 10px 20px 20px;
+      flex-shrink: 0;
+    }
+
+    .preview-nav .nav-btn {
+      padding: 8px 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 13px;
+      font-weight: 650;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--ink);
+    }
+
+    .preview-nav .nav-btn:hover:not(:disabled) {
+      background: #f0f0f0;
+      border-color: #aaa;
+    }
+
+    .preview-nav .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
+    .page-indicator {
+      font-size: 14px;
+      font-weight: 700;
+      color: #555;
+      min-width: 90px;
+      text-align: center;
+      user-select: none;
+    }
+
+    /* ===== 模板信息提示 ===== */
+    .template-info {
+      display: inline-block;
+      width: 18px; height: 18px;
+      line-height: 18px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      background: #e8e8e8;
+      border-radius: 50%;
+      cursor: help;
+      margin-left: 4px;
+      vertical-align: middle;
+      transition: all 0.2s;
+    }
+
+    .template-info:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* ===== CTA 快捷选择器 ===== */
+    .cta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .cta-chip {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 650;
+      color: var(--blue);
+      background: rgba(31, 75, 115, 0.06);
+      border: 1px solid rgba(31, 75, 115, 0.15);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .cta-chip:hover {
+      background: rgba(31, 75, 115, 0.14);
+      border-color: var(--blue);
+      color: #153552;
+    }
+
+    .cta-chip:active {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    /* ===== 合规警告 ===== */
+    .compliance-warning {
+      margin-top: 10px;
+      padding: 10px 14px;
+      background: #fff8e1;
+      border: 1px solid #ffc107;
+      border-left: 4px solid #ff9800;
+      border-radius: 4px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #795548;
+      font-weight: 560;
+    }
+
+    .compliance-warning strong {
+      color: #e65100;
+    }
+
+    /* ===== 批量提示 ===== */
+    .batch-hint {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #e8f0fe;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--blue);
+      font-weight: 580;
+    }
+
+    .batch-hint code {
+      background: rgba(31, 75, 115, 0.12);
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* ===== 字符计数 ===== */
+    .char-counter {
+      margin-top: 6px;
+      text-align: right;
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 520;
+    }
+
+    /* ===== 组选择器 ===== */
+    .group-selector {
+      font-size: 13px;
+      font-weight: 650;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .group-selector select {
+      padding: 4px 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: inherit;
+      font-weight: 650;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    /* ===== 导出进度提示 ===== */
+    .export-toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 12px 28px;
+      background: #182033;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 650;
+      border-radius: 10px;
+      z-index: 999;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.25);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .export-toast.show {
+      opacity: 1;
+    }
+
+    .export-toast.error {
+      background: #c94538;
+    }
+
+    .export-toast.success {
+      background: #2f735c;
+    }
+
+    /* ===== 侧边栏折叠按钮（移动端） ===== */
+    .sidebar-toggle {
+      display: none;
+      padding: 6px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      background: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--ink);
+      transition: all 0.2s;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-toggle:hover {
+      background: #f0f0f0;
+    }
+
+    /* ===== 验证提示 ===== */
+    .validation-hint {
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: #fff3e0;
+      border-left: 3px solid #ff9800;
+      border-radius: 3px;
+      font-size: 12px;
+      color: #e65100;
+      font-weight: 540;
+      line-height: 1.4;
+    }
+
+    /* ===== 快捷键提示 ===== */
+    .shortcut-hint {
+      font-size: 18px;
+      cursor: help;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      user-select: none;
+      margin-left: 8px;
+    }
+
+    .shortcut-hint:hover {
+      opacity: 1;
+    }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 1200px) {
+      .app {
+        grid-template-columns: 340px 1fr;
+      }
+
+      .sidebar {
+        padding: 16px 14px 80px;
+      }
+
+      .style-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar-toggle {
+        display: inline-flex;
+      }
+
+      .app {
+        grid-template-columns: 1fr;
+        grid-template-rows: 52px auto 1fr;
+      }
+
+      .sidebar {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        max-height: 45vh;
+        overflow-y: auto;
+        transition: max-height 0.3s ease, padding 0.3s ease, opacity 0.3s ease;
+      }
+
+      .sidebar.collapsed {
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        opacity: 0;
+        overflow: hidden;
+        border-bottom: none;
+      }
+
+      .preview-area {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .style-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      .style-card {
+        padding: 10px 8px;
+      }
+
+      .btn-row {
+        flex-direction: column;
+      }
+
+      .brand-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- ===== 顶部导航栏 ===== -->
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" title="折叠/展开控制面板">☰</button>
+      <span class="topbar-title">📱 Instagram 学术内容图生成器</span>
+      <span class="topbar-subtitle">Academic Carousel Generator</span>
+    </header>
+
+    <!-- ===== 左侧控制区 ===== -->
+    <aside class="sidebar" id="sidebar">
+      <!-- a) 内容模板 -->
+      <div class="control-group">
+        <label for="templateSelect">📋 内容模板
+          <span class="template-info" id="templateInfo" title="讲解审稿意见如何拆解和回应">ℹ️</span>
+        </label>
+        <select id="templateSelect">
+          <option value="reviewer-response">Reviewer Response</option>
+          <option value="before-after-rewrite">Before / After Rewrite</option>
+          <option value="chinese-phd-mistakes">Chinese PhD Mistakes</option>
+          <option value="sci-writing-framework">SCI Writing Framework</option>
+          <option value="checklist">Checklist</option>
+        </select>
+      </div>
+
+      <!-- b) 图片尺寸 -->
+      <div class="control-group">
+        <label for="sizeSelect">📐 图片尺寸</label>
+        <select id="sizeSelect">
+          <option value="1080x1350" selected>Instagram Carousel 1080 × 1350</option>
+          <option value="1080x1920" disabled>Reel Cover 1080 × 1920</option>
+          <option value="1080x1080" disabled>Square Post 1080 × 1080</option>
+          <option value="1080x1920b" disabled>Story 1080 × 1920</option>
+        </select>
+        <span class="hint">MVP 仅支持 Carousel 尺寸</span>
+      </div>
+
+      <!-- c) 视觉风格（卡片选择） -->
+      <div class="control-group">
+        <label>🎨 视觉风格</label>
+        <div class="style-cards" id="styleCards">
+          <div class="style-card selected" data-style="academic-paper">
+            <div class="style-card-name">Academic Paper</div>
+            <div class="style-card-swatches">
+              <div class="style-card-swatch" style="background:#fbfaf7"></div>
+              <div class="style-card-swatch" style="background:#1f4b73"></div>
+              <div class="style-card-swatch" style="background:#c94538"></div>
+            </div>
+          </div>
+          <div class="style-card" data-style="editorial-research">
+            <div class="style-card-name">Editorial Research</div>
+            <div class="style-card-swatches">
+              <div class="style-card-swatch" style="background:#faf8f2"></div>
+              <div class="style-card-swatch" style="background:#2d2d2d"></div>
+              <div class="style-card-swatch" style="background:#8b2e2e"></div>
+            </div>
+          </div>
+          <div class="style-card" data-style="dark-lecture">
+            <div class="style-card-name">Dark Lecture</div>
+            <div class="style-card-swatches">
+              <div class="style-card-swatch" style="background:#1a1d23"></div>
+              <div class="style-card-swatch" style="background:#ffffff"></div>
+              <div class="style-card-swatch" style="background:#00ff88"></div>
+            </div>
+          </div>
+          <div class="style-card" data-style="minimal-checklist">
+            <div class="style-card-name">Minimal Checklist</div>
+            <div class="style-card-swatches">
+              <div class="style-card-swatch" style="background:#ffffff"></div>
+              <div class="style-card-swatch" style="background:#111111"></div>
+              <div class="style-card-swatch" style="background:#2563eb"></div>
+            </div>
+          </div>
+          <div class="style-card" data-style="blue-lab">
+            <div class="style-card-name">Blue Lab</div>
+            <div class="style-card-swatches">
+              <div class="style-card-swatch" style="background:#f0f4f8"></div>
+              <div class="style-card-swatch" style="background:#0d47a1"></div>
+              <div class="style-card-swatch" style="background:#00acc1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- d) 字体选择 -->
+      <div class="control-group">
+        <label for="fontSelect">🔤 字体</label>
+        <select id="fontSelect">
+          <option value="Inter" selected>Inter</option>
+          <option value="Helvetica">Helvetica</option>
+          <option value="Arial">Arial</option>
+          <option value="PingFang SC">PingFang SC</option>
+          <option value="Noto Sans SC">Noto Sans SC</option>
+          <option value="Source Han Sans">Source Han Sans</option>
+        </select>
+      </div>
+
+      <!-- e) 品牌设置 -->
+      <div class="control-group">
+        <label>🏷️ 品牌设置</label>
+        <div class="brand-row">
+          <input type="text" id="accountName" value="@yourhandle" placeholder="账号名">
+          <input type="text" id="brandPhrase" value="SCI / CCF writing coaching" placeholder="品牌短语">
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label for="ctaInput">💬 CTA 文案</label>
+        <input type="text" id="ctaInput" value='DM "REVIEWER" for the checklist.' placeholder="行动号召文案">
+        <div class="cta-chips" id="ctaChips">
+          <span class="cta-chip" data-cta="Save this before your next revision." title="Save this before your next revision.">💾 Save</span>
+          <span class="cta-chip" data-cta='DM "REVIEWER" for the checklist.' title='DM "REVIEWER" for the checklist.'>📩 REVIEWER</span>
+          <span class="cta-chip" data-cta='Comment "TEMPLATE" for the structure.' title='Comment "TEMPLATE" for the structure.'>💬 TEMPLATE</span>
+          <span class="cta-chip" data-cta="Follow for SCI writing tips." title="Follow for SCI writing tips.">📌 Follow</span>
+          <span class="cta-chip" data-cta="Send this to a friend preparing revision." title="Send this to a friend preparing revision.">📤 Share</span>
+          <span class="cta-chip" data-cta="Book a 20-min manuscript diagnosis." title="Book a 20-min manuscript diagnosis.">📅 Book</span>
+          <span class="cta-chip" data-cta='DM "INTRO" for the Introduction checklist.' title='DM "INTRO" for the Introduction checklist.'>📝 INTRO</span>
+          <span class="cta-chip" data-cta='DM "SUBMIT" for the submission checklist.' title='DM "SUBMIT" for the submission checklist.'>✅ SUBMIT</span>
+        </div>
+      </div>
+
+      <!-- f) 文案输入区 -->
+      <div class="control-group">
+        <label for="textInput">✏️ 文案输入</label>
+        <textarea id="textInput" placeholder="在此粘贴文案...">标题：Reviewer says "lack of novelty"
+副标题：This is not solved by polishing English.
+页面1：Many students think the problem is their English.
+页面2：But reviewers are often questioning your logic, not your language.
+页面3：Diagnose first: is the problem novelty, method, data, or writing?
+页面4：Weak reply example: "Thank you. We emphasized novelty."
+页面5：Stronger reply example: "We clarified how our work differs from X, Y, Z..."
+页面6：Revise the manuscript itself, not just the response letter.
+CTA：DM "REVIEWER" for the checklist.</textarea>
+        <div class="compliance-warning" id="complianceWarning" style="display:none;"></div>
+        <div class="batch-hint" id="batchHint" style="display:none;">💡 每组文案用 <code>888</code> 分隔（独占一行）</div>
+        <div class="char-counter" id="charCounter">已输入 0 字符</div>
+        <div class="validation-hint" id="validationHint" style="display:none;"></div>
+      </div>
+
+      <!-- g) 批量识别开关 -->
+      <div class="control-group">
+        <label class="checkbox-row" id="batchCheckboxRow">
+          <input type="checkbox" id="batchModeCheckbox">
+          <span>启用批量文案识别（以 888 分隔多组文案）</span>
+        </label>
+      </div>
+
+      <!-- 下载按钮区 -->
+      <div class="btn-row">
+        <button class="btn btn-primary" id="btnDownloadSingle" disabled>⬇ 下载当前页 PNG</button>
+        <button class="btn btn-secondary" id="btnDownloadAll" disabled>📦 下载整套 Carousel (ZIP)</button>
+      </div>
+    </aside>
+
+    <!-- ===== 右侧预览区 ===== -->
+    <main class="preview-area" id="previewArea">
+      <div class="preview-stage" id="previewStage">
+        <div class="preview-wrapper" id="previewWrapper">
+          <div class="slide-container" id="slideContainer">
+            <div class="slide-placeholder" id="slidePlaceholder">
+              选择模板并输入文案后，<br>预览将显示在这里
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 页码导航 -->
+      <div class="preview-nav">
+        <button class="nav-btn" id="btnPrev" disabled>← 上一页</button>
+        <span class="page-indicator" id="pageIndicator">第 1 / 7 页</span>
+        <button class="nav-btn" id="btnNext" disabled>下一页 →</button>
+        <span class="group-selector" id="groupSelector" style="display:none;">
+          组 <select id="groupSelect"></select>
+        </span>
+        <span class="shortcut-hint" id="shortcutHint" title="快捷键：← → 翻页 · Ctrl+S 下载当前页 · Ctrl+Shift+S 下载整套">⌨️</span>
+      </div>
+    </main>
+  </div>
+
+  <!-- 导出进度提示 -->
+  <div class="export-toast" id="exportToast"></div>
+
+  <script>
+  (function () {
+    /* ===== 用户编辑标记 ===== */
+    let userEditedText = false;   // 用户是否手动编辑过 textarea
+    let userEditedCta = false;    // 用户是否手动编辑过 CTA 输入框
+    let complianceTimer = null;   // debounce 定时器
+
+    /* ===== 5 个内容模板定义 ===== */
+    const TEMPLATES = {
+      'reviewer-response': {
+        id: 'reviewer-response',
+        name: 'Reviewer Response',
+        desc: '讲解审稿意见如何拆解和回应',
+        defaultSlides: 7,
+        fields: ['reviewer_comment', 'misinterpretation', 'real_issue', 'weak_reply', 'stronger_reply', 'revision_action', 'checklist_items', 'cta'],
+        slideStructure: [
+          { slideIndex: 1, type: 'cover',     titleField: 'reviewer_comment', subtitleField: 'misinterpretation' },
+          { slideIndex: 2, type: 'content',   title: 'This may not mean...', bodyField: 'misinterpretation' },
+          { slideIndex: 3, type: 'diagnosis', title: 'Diagnose the issue', bodyField: 'real_issue' },
+          { slideIndex: 4, type: 'compare',   title: 'Weak reply vs Stronger reply', weakField: 'weak_reply', strongField: 'stronger_reply' },
+          { slideIndex: 5, type: 'content',   title: 'What to revise in manuscript', bodyField: 'revision_action' },
+          { slideIndex: 6, type: 'content',   title: 'Key takeaway', bodyField: 'revision_action' },
+          { slideIndex: 7, type: 'checklist', title: 'Before you revise...', itemsField: 'checklist_items' },
+        ]
+      },
+      'before-after-rewrite': {
+        id: 'before-after-rewrite',
+        name: 'Before / After Rewrite',
+        desc: '展示论文句子改写能力，建立专业信任',
+        defaultSlides: 7,
+        fields: ['topic', 'weak_sentence', 'weak_reason', 'better_sentence', 'better_reason', 'rewrite_formula', 'cta'],
+        slideStructure: [
+          { slideIndex: 1, type: 'cover',    titleField: 'topic' },
+          { slideIndex: 2, type: 'content',  title: 'Stop writing this', bodyField: 'weak_sentence' },
+          { slideIndex: 3, type: 'content',  title: 'Why it sounds weak', bodyField: 'weak_reason' },
+          { slideIndex: 4, type: 'content',  title: 'Better version', bodyField: 'better_sentence' },
+          { slideIndex: 5, type: 'content',  title: 'Why this version works', bodyField: 'better_reason' },
+          { slideIndex: 6, type: 'content',  title: 'Rewrite formula', bodyField: 'rewrite_formula' },
+          { slideIndex: 7, type: 'cta',      bodyField: 'cta' },
+        ]
+      },
+      'chinese-phd-mistakes': {
+        id: 'chinese-phd-mistakes',
+        name: 'Chinese PhD Mistakes',
+        desc: '面向中国留学生，常见论文写作错误',
+        defaultSlides: 7,
+        fields: ['topic', 'mistake_1', 'mistake_2', 'mistake_3', 'mistake_4', 'mistake_5', 'cta'],
+        slideStructure: [
+          { slideIndex: 1, type: 'cover',    titleField: 'topic' },
+          { slideIndex: 2, type: 'numbered', title: 'Mistake 1', bodyField: 'mistake_1', number: 1 },
+          { slideIndex: 3, type: 'numbered', title: 'Mistake 2', bodyField: 'mistake_2', number: 2 },
+          { slideIndex: 4, type: 'numbered', title: 'Mistake 3', bodyField: 'mistake_3', number: 3 },
+          { slideIndex: 5, type: 'numbered', title: 'Mistake 4', bodyField: 'mistake_4', number: 4 },
+          { slideIndex: 6, type: 'numbered', title: 'Mistake 5', bodyField: 'mistake_5', number: 5 },
+          { slideIndex: 7, type: 'cta',      bodyField: 'cta' },
+        ]
+      },
+      'sci-writing-framework': {
+        id: 'sci-writing-framework',
+        name: 'SCI Writing Framework',
+        desc: '论文写作框架，收藏型内容',
+        defaultSlides: 7,
+        fields: ['framework_title', 'step_1', 'step_2', 'step_3', 'example', 'common_mistake', 'checklist_items', 'cta'],
+        slideStructure: [
+          { slideIndex: 1, type: 'cover',    titleField: 'framework_title' },
+          { slideIndex: 2, type: 'numbered', title: 'Step 1', bodyField: 'step_1', number: 1 },
+          { slideIndex: 3, type: 'numbered', title: 'Step 2', bodyField: 'step_2', number: 2 },
+          { slideIndex: 4, type: 'numbered', title: 'Step 3', bodyField: 'step_3', number: 3 },
+          { slideIndex: 5, type: 'content',  title: 'Example', bodyField: 'example' },
+          { slideIndex: 6, type: 'content',  title: 'Common mistake', bodyField: 'common_mistake' },
+          { slideIndex: 7, type: 'checklist', title: 'Quick checklist', itemsField: 'checklist_items' },
+        ]
+      },
+      'checklist': {
+        id: 'checklist',
+        name: 'Checklist',
+        desc: '高收藏高转发，资料包引流',
+        defaultSlides: 7,
+        fields: ['checklist_title', 'checklist_items', 'warning', 'cta'],
+        slideStructure: [
+          { slideIndex: 1, type: 'cover',    titleField: 'checklist_title' },
+          { slideIndex: 2, type: 'checklist', title: 'Part 1', itemsField: 'checklist_items', groupIndex: 0 },
+          { slideIndex: 3, type: 'checklist', title: 'Part 2', itemsField: 'checklist_items', groupIndex: 1 },
+          { slideIndex: 4, type: 'checklist', title: 'Part 3', itemsField: 'checklist_items', groupIndex: 2 },
+          { slideIndex: 5, type: 'checklist', title: 'Part 4', itemsField: 'checklist_items', groupIndex: 3 },
+          { slideIndex: 6, type: 'content',  title: '⚠️ Warning', bodyField: 'warning' },
+          { slideIndex: 7, type: 'cta',      bodyField: 'cta' },
+        ]
+      },
+    };
+
+    /* ===== 各模板默认示例文案 ===== */
+    const DEFAULT_TEXTS = {
+      'reviewer-response': [
+        '标题：Reviewer says "lack of novelty"',
+        '副标题：This is not solved by polishing English.',
+        '页面1：When a reviewer says your contribution is unclear, many students rush to edit language. But the real issue is often deeper.',
+        '页面2：Classify the reviewer comment first — is it about novelty, method, data, or writing? One comment can hide different problems.',
+        '页面3：Novelty means: what is new compared with prior work? Method means: can readers understand and trust how you did it? Data means: is the evidence sufficient? Writing means: is the argument easy to follow?',
+        '页面4：[弱回复] Thank you. We have emphasized the novelty of our study.',
+        '页面5：[强回复] We clarified how our study differs from prior work by adding a comparison with X, Y, and Z in the final paragraph of the Introduction.',
+        '页面6：Revise the manuscript itself — add specific section, paragraph, and line references. Show exactly what changed and why it solves the concern.',
+        '页面7（清单）：① Is this comment about novelty, method, data, or writing? ② Did I revise the manuscript, not just the response letter? ③ Did I mention exact section and line? ④ Did I explain why this revision solves the concern?',
+        'CTA：DM "REVIEWER" for the response checklist.',
+      ].join('\n'),
+      'before-after-rewrite': [
+        '标题：Stop writing this in SCI papers',
+        '副标题："This study is very important" — why it sounds weak',
+        '页面1：Weak sentence: "This study is very important." It appears in thousands of papers and says nothing specific.',
+        '页面2：Why it sounds weak: too generic, does not show contribution, makes no comparison with prior work, and uses a vague intensifier.',
+        '页面3：Better version: "This study contributes to X by showing Y under Z conditions." This names the exact contribution, method, and scope.',
+        '页面4：Why this works: it positions the work in a specific gap, names the contribution, and gives conditions that define generalizability.',
+        '页面5：Rewrite formula: [Contribution verb] + [specific finding] + [method/condition] + [difference from prior work]. Example verbs: demonstrate, reveal, establish, challenge, extend.',
+        '页面6：Key principle — do not claim importance; demonstrate it. Replace "important," "novel," and "significant" with specific comparisons.',
+        'CTA：Save this before your next submission.',
+      ].join('\n'),
+      'chinese-phd-mistakes': [
+        '标题：5 Introduction mistakes Chinese PhD students make',
+        '副标题：Are you making these in your paper?',
+        '页面1（错误1）：Starting too broad. "With the development of science and technology..." → Start with the specific research gap your paper addresses.',
+        '页面2（错误2）：No clear research question. Readers should find your exact research question by the end of paragraph 2, not page 5.',
+        '页面3（错误3）：Literature review as a list. "A did X. B did Y. C did Z." → Group studies by theme and identify the gap they collectively leave.',
+        '页面4（错误4）：Contribution not stated explicitly. Write "This paper contributes to X by..." — do not assume readers will infer your contribution.',
+        '页面5（错误5）：Overclaiming or underclaiming. Avoid "This study solves all problems" AND "This study might possibly have some value." State exactly what you did and its limits.',
+        '页面6：Fix these five mistakes and your Introduction will be 10x stronger. Good writing starts with good structure, not good vocabulary.',
+        'CTA：DM "INTRO" for the Introduction checklist.',
+      ].join('\n'),
+      'sci-writing-framework': [
+        '标题：How to write a stronger contribution paragraph',
+        '副标题：A simple 3-step framework',
+        '页面1（Step 1）：Identify the gap. What do we know? What do we NOT know? Be specific — name authors, findings, and what is missing. Avoid "few studies have examined..."',
+        '页面2（Step 2）：State your contribution. "This study [verb] X by [method] under [conditions]." Use strong, precise verbs: demonstrate, reveal, establish, challenge, extend, refine.',
+        '页面3（Step 3）：Explain the significance. Who benefits from knowing this? What changes? Be concrete — "These findings enable engineers to..." not "This has important implications."',
+        '页面4（Example）："While prior work has shown that X affects Y (Smith 2020; Jones 2021), no study has tested whether this holds under Z conditions. This study demonstrates that the X-Y relationship reverses under Z, using a controlled experiment with N=200. This finding challenges the universal application of X-Y models in policy design."',
+        '页面5（Common mistake）：Writing "This study is important because..." followed by vague claims. Instead, write "If these findings hold, they imply that current policy on X should be revised to account for Z."',
+        '页面6（Quick checklist）：□ Is the gap specific and cited? □ Is the contribution stated in one sentence? □ Is the method clear? □ Is the significance concrete, not generic? □ Are limitations acknowledged?',
+        'CTA：Save this framework for your next paper.',
+      ].join('\n'),
+      'checklist': [
+        '标题：Before you submit your SCI paper, check these 7 things',
+        '副标题：A submission-day checklist',
+        '页面1（格式检查）：□ All figures are at least 300 dpi. □ References are formatted to journal style. □ Page numbers and line numbers are present. □ Supplementary materials are complete.',
+        '页面2（内容检查）：□ The abstract matches the manuscript claims. □ Contribution is stated in the Introduction AND Discussion. □ All abbreviations are defined on first use. □ Figures and tables are cited in order.',
+        '页面3（逻辑检查）：□ Each paragraph has one clear topic sentence. □ The transition between sections is logical. □ The Discussion does not simply repeat Results. □ Limitations are acknowledged without undermining contribution.',
+        '页面4（投稿检查）：□ Cover letter is customized to the journal. □ Suggested reviewers are from different institutions. □ The manuscript fits the journal scope and article type. □ Conflict of interest and funding statements are included.',
+        '页面5（⚠️ Warning）：Do not submit on Friday afternoon. Reviewers and editors are human — a Monday submission gets more attention. Also: double-check that author names and affiliations are correct.',
+        '页面6（Final check）：Ask a colleague outside your subfield to read your abstract. If they cannot explain your contribution in their own words, rewrite the abstract.',
+        'CTA：DM "SUBMIT" for the submission checklist PDF.',
+      ].join('\n'),
+    };
+
+    /* ===== 5 个视觉风格配置 ===== */
+    var STYLES = {
+      'academic-paper': {
+        name: 'Academic Paper',
+        colors: { background: '#fbfaf7', text: '#182033', primary: '#1f4b73', accent: '#c94538', muted: '#667085', surface: '#ffffff', border: '#d9d6ce', tagBg: 'rgba(255,255,255,0.56)', tagBorder: 'rgba(31,75,115,0.22)', green: '#2f735c', gold: '#b47d25' },
+        fonts: { latin: 'Inter', cjk: 'PingFang SC' },
+        features: { gridBg: true, frameBorder: true, darkMode: false },
+      },
+      'editorial-research': {
+        name: 'Editorial Research',
+        colors: { background: '#faf8f2', text: '#1a1a1a', primary: '#2d2d2d', accent: '#8b2e2e', muted: '#6b6b6b', surface: '#ffffff', border: '#d4cfc4', tagBg: 'rgba(255,255,255,0.7)', tagBorder: 'rgba(45,45,45,0.2)', green: '#3d6b4f', gold: '#9b7b3c' },
+        fonts: { latin: 'Helvetica', cjk: 'PingFang SC' },
+        features: { gridBg: false, frameBorder: true, darkMode: false, thinLines: true },
+      },
+      'dark-lecture': {
+        name: 'Dark Lecture',
+        colors: { background: '#1a1d23', text: '#e8e8e8', primary: '#ffffff', accent: '#00ff88', muted: '#999999', surface: '#252830', border: '#3a3d44', tagBg: 'rgba(0,255,136,0.1)', tagBorder: 'rgba(0,255,136,0.3)', green: '#00cc6a', gold: '#ffb347' },
+        fonts: { latin: 'Inter', cjk: 'PingFang SC' },
+        features: { gridBg: false, frameBorder: true, darkMode: true, glowAccent: true },
+      },
+      'minimal-checklist': {
+        name: 'Minimal Checklist',
+        colors: { background: '#ffffff', text: '#111111', primary: '#000000', accent: '#2563eb', muted: '#737373', surface: '#fafafa', border: '#e5e5e5', tagBg: 'rgba(37,99,235,0.06)', tagBorder: 'rgba(37,99,235,0.2)', green: '#16a34a', gold: '#d97706' },
+        fonts: { latin: 'Inter', cjk: 'Noto Sans SC' },
+        features: { gridBg: false, frameBorder: false, darkMode: false, cleanBorderless: true },
+      },
+      'blue-lab': {
+        name: 'Blue Lab',
+        colors: { background: '#f0f4f8', text: '#1a2a3a', primary: '#0d47a1', accent: '#00acc1', muted: '#607d8b', surface: '#ffffff', border: '#cfd8e3', tagBg: 'rgba(13,71,161,0.08)', tagBorder: 'rgba(13,71,161,0.25)', green: '#00897b', gold: '#f57c00' },
+        fonts: { latin: 'Arial', cjk: 'Source Han Sans' },
+        features: { gridBg: true, frameBorder: true, darkMode: false, techGrid: true },
+      },
+    };
+
+    /* ===== 文案解析引擎 ===== */
+    function parseRawText(rawText, templateId) {
+      const template = TEMPLATES[templateId];
+      if (!template) return { groups: [] };
+
+      const text = (rawText || '').trim();
+      if (!text) return { groups: [] };
+
+      /* --- 检测批量模式: 888 分隔 --- */
+      const batchParts = splitBy888(text);
+      const isBatch = batchParts.length > 1;
+
+      const groups = batchParts.map(function (part) {
+        return parseGroup(part, template);
+      }).filter(function (g) { return g.length > 0; });
+
+      return { groups: groups };
+    }
+
+    /* 按 888 分隔符拆分 */
+    function splitBy888(text) {
+      // 支持 \n888\n, \n888, 888\n, 独立一行的 888
+      const parts = text.split(/(?:^|\n)888(?:\n|$)/m);
+      return parts.map(function (p) { return p.trim(); }).filter(Boolean);
+    }
+
+    /* 解析单组文案 */
+    function parseGroup(text, template) {
+      var fields = {}; // fieldName -> value
+      var slides = [];
+      var ctaOverride = null;
+      var titleOverride = null;
+      var subtitleOverride = null;
+
+      /* --- 优先级 1: [fieldName] value 高级字段标记 --- */
+      var hasAdvancedFields = /\[(\w+)\]\s*/i.test(text);
+
+      if (hasAdvancedFields) {
+        var advPattern = /\[(\w+)\]\s*([^\[]*)/gi;
+        var advMatch;
+        while ((advMatch = advPattern.exec(text)) !== null) {
+          var key = advMatch[1].toLowerCase().trim();
+          var val = advMatch[2].trim();
+          if (key === 'cta') ctaOverride = val;
+          else if (key === 'title') titleOverride = val;
+          else fields[key] = val;
+        }
+        return buildSlidesFromFields(template, fields, titleOverride, subtitleOverride, ctaOverride);
+      }
+
+      /* --- 优先级 2: 中文标签 标题：/ 副标题：/ 页面N：/ CTA： --- */
+      var hasChineseLabels = /(?:标题|副标题|页面\d+|CTA)[：:]/i.test(text);
+
+      if (hasChineseLabels) {
+        // 提取 标题：
+        var titleM = text.match(/(?:^|\n)标题[：:]\s*(.+?)(?:\n|$)/i);
+        if (titleM) titleOverride = titleM[1].trim();
+
+        // 提取 副标题：
+        var subM = text.match(/(?:^|\n)副标题[：:]\s*(.+?)(?:\n|$)/i);
+        if (subM) subtitleOverride = subM[1].trim();
+
+        // 提取 CTA：
+        var ctaM = text.match(/(?:^|\n)CTA[：:]\s*(.+?)(?:\n|$)/i);
+        if (ctaM) ctaOverride = ctaM[1].trim();
+
+        // 提取 页面N：
+        var pagePattern = /(?:^|\n)页面(\d+)(?:（.*?）)?[：:]\s*(.+?)(?=\n页面\d|\nCTA|\n*$)/gi;
+        var pageMatch;
+        var pageContents = [];
+        while ((pageMatch = pagePattern.exec(text)) !== null) {
+          var pageNum = parseInt(pageMatch[1], 10);
+          var pageContent = pageMatch[2].trim();
+          pageContents.push({ num: pageNum, content: pageContent });
+        }
+
+        if (pageContents.length > 0) {
+          // 将页面内容按模板结构分配
+          return buildSlidesFromPages(template, pageContents, titleOverride, subtitleOverride, ctaOverride);
+        }
+
+        // 如果没有 页面N 但有标题和字段，尝试按字段解析
+        var fieldPattern = /(?:^|\n)([a-z_]+)[：:]\s*(.+?)(?=\n[a-z_]+[：:]|\n*$)/gi;
+        var fm;
+        while ((fm = fieldPattern.exec(text)) !== null) {
+          var fkey = fm[1].toLowerCase().trim();
+          if (['标题','副标题','页面','cta','title','subtitle'].indexOf(fkey) === -1) {
+            fields[fkey] = fm[2].trim();
+          }
+        }
+        if (Object.keys(fields).length > 0) {
+          return buildSlidesFromFields(template, fields, titleOverride, subtitleOverride, ctaOverride);
+        }
+
+        // 最后尝试当做纯文本分配
+        return buildSlidesFromFallback(template, text, titleOverride, subtitleOverride, ctaOverride);
+      }
+
+      /* --- 优先级 3: 英文 Slide N: 标记 --- */
+      var hasSlideLabels = /slide\s*\d+\s*:/i.test(text);
+      if (hasSlideLabels) {
+        var slidePattern = /slide\s*(\d+)\s*:\s*(.+?)(?=\nslide\s*\d+\s*:|\n*$)/gi;
+        var sm;
+        var slideContents = [];
+        while ((sm = slidePattern.exec(text)) !== null) {
+          slideContents.push({ num: parseInt(sm[1], 10), content: sm[2].trim() });
+        }
+        // 也尝试提取 title
+        var titleSlide = slideContents.find(function(s) { return s.num === 1; });
+        if (titleSlide && !titleOverride) titleOverride = titleSlide.content;
+        return buildSlidesFromPages(template, slideContents, titleOverride, subtitleOverride, ctaOverride);
+      }
+
+      /* --- 优先级 5 (兜底): 按空行分隔段落 --- */
+      return buildSlidesFromFallback(template, text, titleOverride, subtitleOverride, ctaOverride);
+    }
+
+    /* 从 fields 构建 slides */
+    function buildSlidesFromFields(template, fields, titleOverride, subtitleOverride, ctaOverride) {
+      return template.slideStructure.map(function (struct) {
+        var slide = {
+          slideIndex: struct.slideIndex,
+          type: struct.type,
+          title: '',
+          subtitle: '',
+          body: '',
+          cta: '',
+          items: [],
+          number: struct.number || null,
+        };
+
+        // 标题
+        if (struct.titleField && fields[struct.titleField]) {
+          slide.title = fields[struct.titleField];
+        } else if (struct.title) {
+          slide.title = struct.title;
+        }
+
+        // 封面用 titleOverride
+        if (struct.type === 'cover' && titleOverride) {
+          slide.title = titleOverride;
+        }
+
+        if (struct.type === 'cover' && subtitleOverride) {
+          slide.subtitle = subtitleOverride;
+        }
+
+        // 副标题
+        if (struct.subtitleField && fields[struct.subtitleField]) {
+          slide.subtitle = fields[struct.subtitleField];
+        }
+
+        // 正文
+        if (struct.bodyField && fields[struct.bodyField]) {
+          slide.body = fields[struct.bodyField];
+        }
+
+        // 对比
+        if (struct.weakField && fields[struct.weakField]) {
+          slide.weakText = fields[struct.weakField];
+        }
+        if (struct.strongField && fields[struct.strongField]) {
+          slide.strongText = fields[struct.strongField];
+        }
+
+        // 清单
+        if (struct.itemsField && fields[struct.itemsField]) {
+          var rawItems = fields[struct.itemsField];
+          // 按 ① ② ③ ④ 或换行或逗号分拆
+          var splitItems = rawItems.split(/[①②③④⑤⑥⑦⑧⑨⑩]\s*/).filter(Boolean);
+          if (splitItems.length <= 1) {
+            splitItems = rawItems.split(/\n/).filter(Boolean);
+          }
+          if (splitItems.length <= 1) {
+            splitItems = rawItems.split(/[,;；;，]/).filter(Boolean);
+          }
+          slide.items = splitItems.map(function (s) { return s.trim(); });
+
+          // groupIndex 用于 checklist 模板分组
+          if (struct.groupIndex !== undefined && Array.isArray(slide.items)) {
+            var perGroup = Math.ceil(slide.items.length / 4);
+            var start = struct.groupIndex * perGroup;
+            slide.items = slide.items.slice(start, start + perGroup);
+          }
+        }
+
+        // CTA
+        if (ctaOverride) {
+          slide.cta = ctaOverride;
+        } else if (struct.bodyField === 'cta' && fields['cta']) {
+          slide.cta = fields['cta'];
+        } else if (fields['cta']) {
+          slide.cta = fields['cta'];
+        }
+
+        return slide;
+      });
+    }
+
+    /* 从页面内容列表构建 slides */
+    function buildSlidesFromPages(template, pageContents, titleOverride, subtitleOverride, ctaOverride) {
+      var structs = template.slideStructure;
+      var result = [];
+
+      for (var i = 0; i < structs.length; i++) {
+        var struct = structs[i];
+        var pageContent = pageContents[i] ? pageContents[i].content : '';
+
+        var slide = {
+          slideIndex: struct.slideIndex,
+          type: struct.type,
+          title: struct.title || '',
+          subtitle: '',
+          body: '',
+          cta: '',
+          items: [],
+          number: struct.number || null,
+        };
+
+        if (struct.type === 'cover') {
+          slide.title = titleOverride || (pageContents[0] ? pageContents[0].content : struct.title || '');
+          slide.subtitle = subtitleOverride || (pageContents[1] ? pageContents[1].content : '');
+          slide.body = pageContents.length > 1 ? pageContents.slice(1).map(function (p) { return p.content; }).join('\n') : '';
+        } else if (struct.type === 'cta') {
+          slide.body = ctaOverride || pageContent || '';
+          slide.cta = ctaOverride || pageContent || '';
+          slide.title = struct.title || 'Before you go...';
+        } else {
+          slide.body = pageContent || '';
+        }
+
+        // 清单项
+        if (struct.itemsField && pageContent) {
+          var lines = pageContent.split(/\n/).filter(Boolean);
+          if (lines.length <= 1) lines = pageContent.split(/[①②③④⑤⑥⑦⑧⑨⑩]/).filter(Boolean);
+          slide.items = lines.map(function (s) { return s.trim(); });
+        }
+
+        if (ctaOverride && struct.slideIndex === structs.length) {
+          slide.cta = ctaOverride;
+        }
+
+        result.push(slide);
+      }
+
+      return result;
+    }
+
+    /* 兜底：按空行分组分配到模板字段 */
+    function buildSlidesFromFallback(template, text, titleOverride, subtitleOverride, ctaOverride) {
+      var parts = text.split(/\n\n+/).filter(Boolean);
+      var structs = template.slideStructure;
+      var fields = {};
+
+      // 将段落按顺序映射到模板字段
+      template.fields.forEach(function (field, idx) {
+        if (parts[idx]) {
+          fields[field] = parts[idx].trim();
+        }
+      });
+
+      // 检查第一段是不是标题
+      if (parts.length > 0 && titleOverride === null) {
+        titleOverride = parts[0].trim().split('\n')[0];
+      }
+
+      // 检查最后一段是不是 CTA
+      if (parts.length > 0 && ctaOverride === null) {
+        var last = parts[parts.length - 1].trim();
+        if (last.length < 120 && /^(DM|Follow|Comment|Save|Book|Send)/i.test(last)) {
+          ctaOverride = last;
+        }
+      }
+
+      return buildSlidesFromFields(template, fields, titleOverride, subtitleOverride, ctaOverride);
+    }
+
+    /* ===== 全局状态对象 ===== */
+    const state = {
+      template: 'reviewer-response',
+      size: { width: 1080, height: 1350 },
+      style: 'academic-paper',
+      font: 'Inter',
+      accountName: '@yourhandle',
+      brandPhrase: 'SCI / CCF writing coaching',
+      cta: 'DM "REVIEWER" for the checklist.',
+      rawText: '',
+      slideGroups: [],     // 解析后的幻灯片组: [[slidesGroup1], [slidesGroup2], ...]
+      slides: [],          // 当前组的幻灯片数组（兼容）
+      currentGroup: 0,     // 当前组索引（批量模式用）
+      currentSlide: 0,     // 当前预览页码（0-based）
+      batchMode: false,
+    };
+
+    /* ===== DOM 引用缓存 ===== */
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+
+    const dom = {
+      templateSelect: $('#templateSelect'),
+      templateInfo: $('#templateInfo'),
+      sizeSelect: $('#sizeSelect'),
+      fontSelect: $('#fontSelect'),
+      accountName: $('#accountName'),
+      brandPhrase: $('#brandPhrase'),
+      ctaInput: $('#ctaInput'),
+      ctaChips: $('#ctaChips'),
+      textInput: $('#textInput'),
+      batchModeCheckbox: $('#batchModeCheckbox'),
+      batchHint: $('#batchHint'),
+      charCounter: $('#charCounter'),
+      complianceWarning: $('#complianceWarning'),
+      styleCards: $('#styleCards'),
+      slideContainer: $('#slideContainer'),
+      slidePlaceholder: $('#slidePlaceholder'),
+      previewWrapper: $('#previewWrapper'),
+      previewStage: $('#previewStage'),
+      pageIndicator: $('#pageIndicator'),
+      btnPrev: $('#btnPrev'),
+      btnNext: $('#btnNext'),
+      btnDownloadSingle: $('#btnDownloadSingle'),
+      btnDownloadAll: $('#btnDownloadAll'),
+      groupSelector: $('#groupSelector'),
+      groupSelect: $('#groupSelect'),
+      exportToast: $('#exportToast'),
+      validationHint: $('#validationHint'),
+      sidebarToggle: $('#sidebarToggle'),
+      sidebar: $('#sidebar'),
+    };
+
+    /* ===== 工具函数 ===== */
+    function scalePreview() {
+      // 计算可用空间并缩放预览卡片
+      var stage = dom.previewStage;
+      var stageW = stage.clientWidth - 40;
+      var stageH = stage.clientHeight - 40;
+      var slideW = state.size.width;
+      var slideH = state.size.height;
+      var scaleX = stageW / slideW;
+      var scaleY = stageH / slideH;
+      var maxScale = slideW === 1080 ? 0.52 : Math.min(0.6, stageH / slideH);
+      var scale = Math.min(scaleX, scaleY, maxScale);
+      dom.previewWrapper.style.transform = `scale(${scale})`;
+      // 设置 wrapper 的原始尺寸，使其在 transform 后居中
+      dom.previewWrapper.style.width = slideW + 'px';
+      dom.previewWrapper.style.height = slideH + 'px';
+      // 用负 margin 补偿 transform 占位
+      const offsetX = (slideW * (1 - scale)) / 2;
+      const offsetY = (slideH * (1 - scale)) / 2;
+      dom.previewWrapper.style.marginLeft = -offsetX + 'px';
+      dom.previewWrapper.style.marginTop = -offsetY + 'px';
+    }
+
+    /* ===== 动态布局计算（支持多尺寸扩展） ===== */
+    function getLayout() {
+      var W = state.size.width;
+      var H = state.size.height;
+      // 基于 1080×1350 的比例缩放
+      var scaleW = W / 1080;
+      var scaleH = H / 1350;
+      var scale = Math.min(scaleW, scaleH);
+      return {
+        width: W,
+        height: H,
+        padding: Math.round(82 * scale),
+        topLineY: Math.round(82 * scale),
+        contentInsetTop: Math.round(170 * scale),
+        contentInsetRight: Math.round(82 * scale),
+        contentInsetBottom: Math.round(94 * scale),
+        contentInsetLeft: Math.round(82 * scale),
+        footerY: Math.round(54 * scale),
+        titleSize: Math.round(88 * scale),
+        subtitleSize: Math.round(42 * scale),
+        bodySize: Math.round(38 * scale),
+        h2Size: Math.round(70 * scale),
+        frameInset: Math.round(54 * scale),
+        maxWidth: W - Math.round(164 * scale),
+        scale: scale,
+      };
+    }
+
+    /* ===== 文字溢出保护 ===== */
+    function fitText(el, maxWidth, maxHeight) {
+      if (!el) return;
+      var origFontSize = parseFloat(el.style.fontSize) || parseFloat(window.getComputedStyle(el).fontSize) || 38;
+      var minFontSize = origFontSize * 0.6;
+      var currentSize = origFontSize;
+
+      // 检查溢出
+      while (currentSize > minFontSize) {
+        var overflowsWidth = el.scrollWidth > el.clientWidth + 2;
+        var overflowsHeight = maxHeight ? el.scrollHeight > maxHeight + 2 : false;
+        if (!overflowsWidth && !overflowsHeight) break;
+        currentSize -= 2;
+        el.style.fontSize = currentSize + 'px';
+      }
+
+      // 仍在溢出 → 强制换行 + 省略
+      if (currentSize <= minFontSize && (el.scrollWidth > el.clientWidth + 2)) {
+        el.style.wordBreak = 'break-word';
+        el.style.overflow = 'hidden';
+        el.style.textOverflow = 'ellipsis';
+        // 限制最大行数
+        if (maxHeight) {
+          var lineHeight = parseFloat(window.getComputedStyle(el).lineHeight) || currentSize * 1.4;
+          var maxLines = Math.floor(maxHeight / lineHeight);
+          el.style.display = '-webkit-box';
+          el.style.webkitLineClamp = String(maxLines);
+          el.style.webkitBoxOrient = 'vertical';
+        }
+      }
+    }
+
+    function applyFitTextToSlide(slideEl, layout) {
+      // 检查标题
+      var h1Els = slideEl.querySelectorAll('h1');
+      h1Els.forEach(function (h) {
+        fitText(h, layout.maxWidth || 860, 220);
+      });
+
+      // 检查 h2
+      var h2Els = slideEl.querySelectorAll('h2');
+      h2Els.forEach(function (h) {
+        fitText(h, layout.maxWidth || 850, 180);
+      });
+
+      // 检查副标题
+      var subEls = slideEl.querySelectorAll('.slide-subtitle');
+      subEls.forEach(function (s) {
+        fitText(s, layout.maxWidth || 850, 130);
+      });
+
+      // 检查正文
+      var bodyEls = slideEl.querySelectorAll('.slide-body');
+      bodyEls.forEach(function (b) {
+        fitText(b, layout.maxWidth || 850, 320);
+      });
+
+      // 检查 CTA
+      var ctaEls = slideEl.querySelectorAll('.slide-cta');
+      ctaEls.forEach(function (c) {
+        fitText(c, layout.maxWidth || 850, 80);
+      });
+    }
+
+    /* ===== 中英文混排优化 ===== */
+    function addCJKSpacing(el) {
+      if (!el || !el.textContent) return;
+      // 在中文字符与英文/数字之间插入薄空格 (U+2009)
+      var text = el.textContent;
+      var spaced = text
+        .replace(/([一-鿿㐀-䶿])([a-zA-Z0-9])/g, '$1 $2')
+        .replace(/([a-zA-Z0-9])([一-鿿㐀-䶿])/g, '$1 $2');
+      if (spaced !== text) {
+        el.textContent = spaced;
+      }
+    }
+
+    function applyCJKToSlide(slideEl) {
+      var texts = slideEl.querySelectorAll('h1, h2, h3, p, .slide-subtitle, .slide-body, .slide-cta, .slide-tag');
+      texts.forEach(function (el) {
+        el.style.textRendering = 'optimizeLegibility';
+        addCJKSpacing(el);
+      });
+    }
+
+    /* ===== 文字长度校验 ===== */
+    function runLengthValidation(rawText) {
+      var hints = [];
+      // 提取标题行
+      var titleM = rawText.match(/(?:^|\n)(?:标题|title)[：:]\s*(.+?)(?:\n|$)/i);
+      var titleText = titleM ? titleM[1].trim() : '';
+
+      if (titleText) {
+        var cnChars = (titleText.match(/[一-鿿]/g) || []).length;
+        var enChars = titleText.length - cnChars;
+        if (cnChars > 28 || enChars > 70) {
+          hints.push('⚠️ 标题过长（中 ' + cnChars + '/28，英 ' + enChars + '/70），建议精简');
+        }
+      }
+
+      // 提取 CTA
+      var ctaM = rawText.match(/(?:^|\n)CTA[：:]\s*(.+?)(?:\n|$)/i);
+      var ctaText = ctaM ? ctaM[1].trim() : '';
+      if (ctaText) {
+        var ctaCn = (ctaText.match(/[一-鿿]/g) || []).length;
+        var ctaEn = ctaText.length - ctaCn;
+        if (ctaCn > 32 || ctaEn > 80) {
+          hints.push('⚠️ CTA 过长（中 ' + ctaCn + '/32，英 ' + ctaEn + '/80），建议精简');
+        }
+      }
+
+      // 检查每页内容长度
+      var pagePattern = /页面(\d+)[：:]\s*(.+?)(?=\n页面\d|\nCTA|\n*$)/gi;
+      var pm;
+      while ((pm = pagePattern.exec(rawText)) !== null) {
+        var content = pm[2].trim();
+        var lines = content.split(/\n/).filter(Boolean);
+        if (lines.length > 5) {
+          hints.push('⚠️ 页面' + pm[1] + ' 内容约 ' + lines.length + ' 行，可能溢出');
+          break; // 只提示一次
+        }
+      }
+
+      var hintEl = dom.validationHint;
+      if (hints.length > 0) {
+        hintEl.innerHTML = hints.join('<br>');
+        hintEl.style.display = 'block';
+      } else {
+        hintEl.style.display = 'none';
+      }
+    }
+
+    /* ===== 合规词检测 ===== */
+    var COMPLIANCE_RISK = [
+      { word: 'ghostwriting', suggest: 'manuscript editing support' },
+      { word: 'guaranteed acceptance', suggest: 'publication strategy consultation' },
+      { word: 'we write your paper', suggest: 'academic writing coaching' },
+      { word: 'write my essay', suggest: 'manuscript editing' },
+      { word: 'submit on your behalf', suggest: 'submission strategy support' },
+      { word: 'contract cheating', suggest: 'academic integrity coaching' },
+      { word: '代写', suggest: '写作辅导' },
+      { word: '包中', suggest: '投稿策略辅导' },
+      { word: '包发表', suggest: '投稿策略辅导或返修方案支持' },
+      { word: '保录用', suggest: '返修方案支持' },
+      { word: '保过', suggest: '学术写作辅导' },
+      { word: '代投', suggest: '投稿流程指导' },
+      { word: '代发', suggest: '发表策略咨询' },
+      { word: '枪手', suggest: '学术写作辅导' },
+      { word: '论文代笔', suggest: '论文写作辅导' },
+    ];
+
+    function checkCompliance(text) {
+      var found = [];
+      COMPLIANCE_RISK.forEach(function (entry) {
+        if (text.toLowerCase().indexOf(entry.word.toLowerCase()) !== -1) {
+          found.push(entry);
+        }
+      });
+      return found;
+    }
+
+    function showComplianceWarning(found) {
+      var warnEl = dom.complianceWarning;
+      if (found.length === 0) {
+        warnEl.style.display = 'none';
+        warnEl.innerHTML = '';
+        return;
+      }
+      var lines = found.map(function (f) {
+        return '⚠️ 检测到 "<strong>' + f.word + '</strong>"。建议替换为 "' + f.suggest + '"。';
+      });
+      warnEl.innerHTML = lines.join('<br>');
+      warnEl.style.display = 'block';
+    }
+
+    function runComplianceCheck(rawText) {
+      clearTimeout(complianceTimer);
+      complianceTimer = setTimeout(function () {
+        var found = checkCompliance(rawText);
+        showComplianceWarning(found);
+      }, 500);
+    }
+
+    /* ===== 批量示例文案 ===== */
+    var BATCH_EXAMPLE_TEXT = [
+      '标题：Reviewer says "lack of novelty"',
+      '副标题：Diagnose before you revise',
+      '页面1：Reviewers question more than language',
+      '页面2：Classify: Novelty, Method, Data, or Writing?',
+      '页面3：Weak reply example',
+      '页面4：Stronger reply example',
+      '页面5：Revise the manuscript',
+      'CTA：DM "REVIEWER"',
+      '888',
+      '标题：Reviewer says "method is unclear"',
+      '副标题：Don\'t just add more details',
+      '页面1：What "unclear method" really means',
+      '页面2：Missing steps or missing rationale?',
+      '页面3：Add implementation details',
+      '页面4：Add evaluation metrics',
+      '页面5：Revise Section 2',
+      'CTA：DM "METHOD"',
+    ].join('\n');
+
+    /* ===== 状态更新函数 ===== */
+    function updateState(changes) {
+      Object.assign(state, changes);
+      updatePreview();
+    }
+
+    /* ===== 获取当前风格配置 ===== */
+    function getStyleConfig() {
+      return STYLES[state.style] || STYLES['academic-paper'];
+    }
+
+    /* ===== 创建 DOM 元素工具 ===== */
+    function el(tag, className, attrs, children) {
+      var e = document.createElement(tag);
+      if (className) e.className = className;
+      if (attrs) {
+        Object.keys(attrs).forEach(function (k) {
+          if (k === 'style' && typeof attrs[k] === 'object') {
+            Object.keys(attrs[k]).forEach(function (pk) { e.style[pk] = attrs[k][pk]; });
+          } else if (k === 'textContent') {
+            e.textContent = attrs[k];
+          } else if (k === 'innerHTML') {
+            e.innerHTML = attrs[k];
+          } else {
+            e.setAttribute(k, attrs[k]);
+          }
+        });
+      }
+      if (children) {
+        children.forEach(function (c) { if (c) e.appendChild(c); });
+      }
+      return e;
+    }
+
+    /* ===== 风格应用到幻灯片容器 ===== */
+    function applyStyle(slideEl, sc) {
+      var c = sc.colors;
+      slideEl.style.backgroundColor = c.background;
+
+      // 清除旧装饰
+      var oldBefore = slideEl.querySelector('.slide-bg-grid');
+      var oldAfter = slideEl.querySelector('.slide-frame');
+      if (oldBefore) oldBefore.remove();
+      if (oldAfter) oldAfter.remove();
+
+      // 网格/科技网格背景
+      if (sc.features.gridBg || sc.features.techGrid) {
+        var grid = el('div', 'slide-bg-grid', { style: {
+          position: 'absolute', inset: '0', zIndex: '-2', pointerEvents: 'none',
+        }});
+        if (sc.features.techGrid) {
+          grid.style.background = 'linear-gradient(' + c.primary + '08 1px, transparent 1px), linear-gradient(90deg, ' + c.primary + '06 1px, transparent 1px)';
+          grid.style.backgroundSize = '36px 36px';
+        } else {
+          grid.style.background = 'linear-gradient(' + c.text + '08 1px, transparent 1px), linear-gradient(90deg, ' + c.text + '06 1px, transparent 1px)';
+          grid.style.backgroundSize = '54px 54px';
+        }
+        slideEl.appendChild(grid);
+      }
+
+      // 内边框
+      if (sc.features.frameBorder) {
+        var layoutForFrame = getLayout();
+        var fi = layoutForFrame.frameInset;
+        var frame = el('div', 'slide-frame', { style: {
+          position: 'absolute', inset: fi + 'px', zIndex: '-1', pointerEvents: 'none',
+          border: sc.features.thinLines ? '1px solid ' + c.border : '1px solid ' + c.border,
+        }});
+        slideEl.appendChild(frame);
+      }
+
+      // darkMode 文字颜色
+      var allText = slideEl.querySelectorAll('h1, h2, h3, p, .slide-body, .slide-subtitle');
+      allText.forEach(function (t) {
+        t.style.color = sc.features.darkMode ? c.text : '';
+      });
+    }
+
+    /* ===== 主渲染函数：构建完整幻灯片 DOM ===== */
+    function renderSlide(slideData, styleId, templateId, st) {
+      var sc = getStyleConfig();
+      var c = sc.colors;
+      var tpl = TEMPLATES[templateId] || TEMPLATES['reviewer-response'];
+      var totalSlides = st.slides.length || 7;
+      var slideIdx = slideData.slideIndex || 1;
+      var L = getLayout();
+
+      // CTA 优先级：用户手动输入 > 解析出的 CTA > 模板默认
+      var effectiveSlide = {
+        slideIndex: slideData.slideIndex,
+        type: slideData.type,
+        title: slideData.title,
+        subtitle: slideData.subtitle,
+        body: slideData.body,
+        items: slideData.items,
+        number: slideData.number,
+        weakText: slideData.weakText,
+        strongText: slideData.strongText,
+        quote: slideData.quote,
+        cta: userEditedCta ? (st.cta || slideData.cta || '') : (slideData.cta || ''),
+      };
+
+      // 幻灯片根容器（动态尺寸）
+      var slide = el('div', 'rendered-slide', { style: {
+        position: 'relative', width: L.width + 'px', height: L.height + 'px', overflow: 'hidden',
+        backgroundColor: c.background, isolation: 'isolate',
+        fontFamily: state.font + ', "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", sans-serif',
+        color: c.text,
+      }});
+
+      // 应用风格装饰
+      applyStyle(slide, sc);
+
+      // ===== 顶部标签行 =====
+      var P = L.padding;
+      var topLine = el('div', 'slide-topline', { style: {
+        position: 'absolute', top: P + 'px', left: P + 'px', right: P + 'px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        color: c.muted, fontSize: Math.round(28 * L.scale) + 'px', letterSpacing: '0',
+      }});
+
+      var tag = el('span', 'slide-tag', { style: {
+        display: 'inline-flex', alignItems: 'center', minHeight: '46px',
+        padding: '0 18px', border: '1px solid ' + c.tagBorder,
+        color: c.primary, background: c.tagBg,
+        fontSize: '24px', fontWeight: '700', textTransform: 'uppercase',
+      }, textContent: tpl.name });
+
+      var pageNum = el('span', 'slide-page', { style: {
+        fontWeight: '700', color: sc.features.darkMode ? 'rgba(255,255,255,0.4)' : 'rgba(24,32,51,0.42)',
+      }, textContent: String(slideIdx).padStart(2, '0') + ' / ' + String(totalSlides).padStart(2, '0') });
+
+      topLine.appendChild(tag);
+      topLine.appendChild(pageNum);
+      slide.appendChild(topLine);
+
+      // ===== 内容区域 =====
+      var content = el('div', 'slide-content', { style: {
+        position: 'absolute',
+        top: L.contentInsetTop + 'px',
+        right: L.contentInsetRight + 'px',
+        bottom: L.contentInsetBottom + 'px',
+        left: L.contentInsetLeft + 'px',
+        display: 'flex', flexDirection: 'column',
+      }});
+
+      // 根据 slide type 分发
+      var type = effectiveSlide.type || 'content';
+      switch (type) {
+        case 'cover':     renderCover(content, effectiveSlide, sc, c); break;
+        case 'content':   renderContent(content, effectiveSlide, sc, c); break;
+        case 'diagnosis': renderDiagnosis(content, effectiveSlide, sc, c); break;
+        case 'compare':   renderCompare(content, effectiveSlide, sc, c); break;
+        case 'numbered':  renderNumbered(content, effectiveSlide, sc, c); break;
+        case 'checklist': renderChecklist(content, effectiveSlide, sc, c); break;
+        case 'cta':       renderCtaSlide(content, effectiveSlide, sc, c); break;
+        default:          renderContent(content, effectiveSlide, sc, c); break;
+      }
+
+      slide.appendChild(content);
+
+      // ===== 底部信息行 =====
+      var footer = el('div', 'slide-footer', { style: {
+        position: 'absolute', left: P + 'px', right: P + 'px', bottom: L.footerY + 'px',
+        display: 'flex', justifyContent: 'space-between',
+        color: sc.features.darkMode ? 'rgba(255,255,255,0.35)' : 'rgba(24,32,51,0.48)',
+        fontSize: Math.round(24 * L.scale) + 'px', fontWeight: '650',
+      }});
+      footer.appendChild(el('span', null, { textContent: st.brandPhrase || 'SCI / CCF writing coaching' }));
+      footer.appendChild(el('span', null, { textContent: st.accountName || '@yourhandle' }));
+      slide.appendChild(footer);
+
+      return slide;
+    }
+
+    /* ---- 封面页 (cover) ---- */
+    function renderCover(content, d, sc, c) {
+      // 装饰性色块
+      var deco = el('div', null, { style: {
+        position: 'absolute', right: '-120px', bottom: '100px',
+        width: '640px', height: '600px', transform: 'rotate(-8deg)', opacity: '0.42',
+        background: 'linear-gradient(' + c.surface + ', ' + c.surface + ') padding-box, linear-gradient(135deg, ' + c.primary + '4d, ' + c.accent + '4d) border-box',
+        border: '2px solid transparent',
+        boxShadow: '0 20px 80px rgba(0,0,0,0.12)',
+      }});
+      // 装饰线
+      for (var i = 0; i < 4; i++) {
+        var line = el('div', null, { style: {
+          height: '18px', margin: '42px 54px',
+          background: i === 3 ? c.accent + '59' : (sc.features.darkMode ? 'rgba(255,255,255,0.12)' : 'rgba(24,32,51,0.13)'),
+          width: i === 1 ? '72%' : i === 2 ? '88%' : i === 3 ? '52%' : '64%',
+        }});
+        deco.appendChild(line);
+      }
+      content.appendChild(deco);
+
+      // 大标题
+      var h1 = el('h1', null, { style: {
+        maxWidth: '860px', fontSize: '88px', lineHeight: '1.06', fontWeight: '850',
+        color: c.text, letterSpacing: '0', margin: '0',
+      }, textContent: d.title || 'Untitled' });
+      content.appendChild(h1);
+
+      // 强调线
+      var accentLine = el('div', null, { style: {
+        width: '150px', height: '8px', margin: '40px 0 0', background: c.accent,
+      }});
+      content.appendChild(accentLine);
+
+      // 副标题
+      if (d.subtitle) {
+        var sub = el('p', 'slide-subtitle', { style: {
+          marginTop: '28px', color: c.primary, fontSize: '42px',
+          lineHeight: '1.35', fontWeight: '760', letterSpacing: '0',
+        }, textContent: d.subtitle });
+        content.appendChild(sub);
+      }
+
+      // 正文预览
+      if (d.body) {
+        var bodyEl = el('p', 'slide-body', { style: {
+          marginTop: '28px', maxWidth: '850px', fontSize: '36px',
+          lineHeight: '1.38', fontWeight: '520',
+          color: sc.features.darkMode ? c.muted : '#303849',
+        }, textContent: d.body.length > 200 ? d.body.substring(0, 200) + '...' : d.body });
+        content.appendChild(bodyEl);
+      }
+
+      // CTA
+      var ctaText = d.cta || '';
+      if (ctaText) {
+        var ctaEl = el('p', 'slide-cta', { style: {
+          marginTop: 'auto', paddingTop: '34px', color: c.accent,
+          fontSize: '34px', lineHeight: '1.22', fontWeight: '850',
+        }, textContent: ctaText });
+        content.appendChild(ctaEl);
+      }
+    }
+
+    /* ---- 内容页 (content) ---- */
+    function renderContent(content, d, sc, c) {
+      var h2 = el('h2', null, { style: {
+        maxWidth: '850px', fontSize: '70px', lineHeight: '1.08', fontWeight: '850',
+        letterSpacing: '0', margin: '0', color: c.text,
+      }, textContent: d.title || '' });
+      content.appendChild(h2);
+
+      if (d.subtitle) {
+        var sub = el('p', 'slide-subtitle', { style: {
+          marginTop: '20px', color: c.primary, fontSize: '38px',
+          lineHeight: '1.3', fontWeight: '700',
+        }, textContent: d.subtitle });
+        content.appendChild(sub);
+      }
+
+      if (d.body) {
+        var bodyEl = el('p', 'slide-body', { style: {
+          marginTop: '34px', maxWidth: '850px', fontSize: '38px',
+          lineHeight: '1.38', fontWeight: '520',
+          color: sc.features.darkMode ? c.text : '#303849',
+        }, textContent: d.body });
+        content.appendChild(bodyEl);
+      }
+
+      // 引用框
+      if (d.quote) {
+        var quoteBox = el('div', null, { style: {
+          marginTop: '34px', padding: '26px 30px', background: c.surface,
+          borderLeft: '8px solid ' + c.accent,
+          fontFamily: 'Georgia, "Times New Roman", serif',
+          fontSize: '31px', lineHeight: '1.38', color: c.text,
+          boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
+        }, textContent: d.quote });
+        content.appendChild(quoteBox);
+      }
+
+      if (d.cta) {
+        var ctaEl = el('p', 'slide-cta', { style: {
+          marginTop: 'auto', paddingTop: '30px', color: c.accent,
+          fontSize: '34px', lineHeight: '1.22', fontWeight: '850',
+        }, textContent: d.cta });
+        content.appendChild(ctaEl);
+      }
+    }
+
+    /* ---- 诊断页 (diagnosis) - 2x2 卡片 ---- */
+    function renderDiagnosis(content, d, sc, c) {
+      var h2 = el('h2', null, { style: {
+        maxWidth: '850px', fontSize: '70px', lineHeight: '1.08', fontWeight: '850',
+        letterSpacing: '0', margin: '0', color: c.text,
+      }, textContent: d.title || 'Diagnose the issue' });
+      content.appendChild(h2);
+
+      if (d.subtitle) {
+        var sub = el('p', 'slide-subtitle', { style: {
+          marginTop: '16px', color: c.primary, fontSize: '38px',
+          lineHeight: '1.3', fontWeight: '700',
+        }, textContent: d.subtitle });
+        content.appendChild(sub);
+      }
+
+      var grid = el('div', null, { style: {
+        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px',
+        marginTop: '54px', flex: '1',
+      }});
+
+      var quadrants = [
+        { title: 'Novelty', desc: 'What is new compared with prior work?' },
+        { title: 'Method', desc: 'Can readers understand and trust how you did it?' },
+        { title: 'Data', desc: 'Is the evidence sufficient for your claim?' },
+        { title: 'Writing', desc: 'Is the argument easy to follow sentence by sentence?' },
+      ];
+
+      // 如果 body 包含换行，按象限分配
+      var bodyParts = d.body ? d.body.split(/\n/).filter(Boolean) : [];
+      if (bodyParts.length >= 4) {
+        quadrants[0].desc = bodyParts[0];
+        quadrants[1].desc = bodyParts[1];
+        quadrants[2].desc = bodyParts[2];
+        quadrants[3].desc = bodyParts[3];
+      }
+
+      quadrants.forEach(function (q) {
+        var box = el('div', null, { style: {
+          minHeight: '206px', padding: '30px 30px 28px',
+          background: sc.features.darkMode ? c.surface : 'rgba(255,255,255,0.72)',
+          border: '1px solid ' + c.border,
+        }});
+        var boxTitle = el('div', null, { style: {
+          display: 'flex', alignItems: 'center', gap: '12px',
+          marginBottom: '16px', color: c.primary,
+          fontSize: '32px', fontWeight: '850',
+        }});
+        var dot = el('span', null, { style: {
+          width: '16px', height: '16px', borderRadius: '50%',
+          background: c.primary, flexShrink: '0',
+        }});
+        boxTitle.appendChild(dot);
+        boxTitle.appendChild(document.createTextNode(q.title));
+        box.appendChild(boxTitle);
+        box.appendChild(el('p', null, { style: {
+          color: sc.features.darkMode ? c.muted : '#344054',
+          fontSize: '29px', lineHeight: '1.32', fontWeight: '580', margin: '0',
+        }, textContent: q.desc }));
+        grid.appendChild(box);
+      });
+
+      content.appendChild(grid);
+
+      if (d.cta) {
+        var ctaEl = el('p', 'slide-cta', { style: {
+          marginTop: '28px', color: c.accent,
+          fontSize: '34px', lineHeight: '1.22', fontWeight: '850',
+        }, textContent: d.cta });
+        content.appendChild(ctaEl);
+      }
+    }
+
+    /* ---- 对比页 (compare) - Weak vs Strong ---- */
+    function renderCompare(content, d, sc, c) {
+      var h2 = el('h2', null, { style: {
+        maxWidth: '850px', fontSize: '66px', lineHeight: '1.08', fontWeight: '850',
+        letterSpacing: '0', margin: '0', color: c.text,
+      }, textContent: d.title || 'Weak vs Stronger' });
+      content.appendChild(h2);
+
+      if (d.subtitle) {
+        var sub = el('p', 'slide-subtitle', { style: {
+          marginTop: '14px', color: c.primary, fontSize: '36px',
+          lineHeight: '1.3', fontWeight: '700',
+        }, textContent: d.subtitle });
+        content.appendChild(sub);
+      }
+
+      var compareGrid = el('div', null, { style: {
+        display: 'grid', gap: '28px', marginTop: '44px', flex: '1',
+      }});
+
+      // Weak side
+      var badBox = el('div', null, { style: { display: 'flex', flexDirection: 'column' }});
+      var badLabel = el('span', null, { style: {
+        display: 'inline-block', marginBottom: '14px', padding: '8px 14px',
+        color: '#fff', fontSize: '24px', fontWeight: '850', textTransform: 'uppercase',
+        background: c.accent, alignSelf: 'flex-start',
+      }, textContent: 'Weak ✘' });
+      badBox.appendChild(badLabel);
+      badBox.appendChild(el('div', null, { style: {
+        padding: '26px 30px', background: c.surface, border: '1px solid ' + c.border,
+        fontFamily: 'Georgia, "Times New Roman", serif',
+        fontSize: '31px', lineHeight: '1.38', color: c.text,
+      }, textContent: d.weakText || 'No weak example provided.' }));
+      compareGrid.appendChild(badBox);
+
+      // Strong side
+      var goodBox = el('div', null, { style: { display: 'flex', flexDirection: 'column' }});
+      var goodLabel = el('span', null, { style: {
+        display: 'inline-block', marginBottom: '14px', padding: '8px 14px',
+        color: '#fff', fontSize: '24px', fontWeight: '850', textTransform: 'uppercase',
+        background: c.green, alignSelf: 'flex-start',
+      }, textContent: 'Stronger ✔' });
+      goodBox.appendChild(goodLabel);
+      goodBox.appendChild(el('div', null, { style: {
+        padding: '26px 30px', background: c.surface, border: '1px solid ' + c.border,
+        fontFamily: 'Georgia, "Times New Roman", serif',
+        fontSize: '31px', lineHeight: '1.38', color: c.text,
+      }, textContent: d.strongText || 'No stronger example provided.' }));
+      compareGrid.appendChild(goodBox);
+
+      content.appendChild(compareGrid);
+
+      // 解释文字
+      if (d.body) {
+        var explain = el('div', null, { style: {
+          marginTop: '24px', padding: '28px 32px',
+          background: c.primary + '17', borderLeft: '8px solid ' + c.primary,
+          color: sc.features.darkMode ? c.text : '#26344a',
+          fontSize: '32px', lineHeight: '1.36', fontWeight: '680',
+        }, textContent: d.body });
+        content.appendChild(explain);
+      }
+
+      if (d.cta) {
+        var ctaEl = el('p', 'slide-cta', { style: {
+          marginTop: '20px', color: c.accent,
+          fontSize: '34px', lineHeight: '1.22', fontWeight: '850',
+        }, textContent: d.cta });
+        content.appendChild(ctaEl);
+      }
+    }
+
+    /* ---- 编号页 (numbered) ---- */
+    function renderNumbered(content, d, sc, c) {
+      // 大号数字
+      var bigNum = el('div', null, { style: {
+        fontSize: '140px', fontWeight: '900', lineHeight: '1',
+        color: c.accent, opacity: '0.85',
+      }, textContent: String(d.number || '') });
+      content.appendChild(bigNum);
+
+      var h2 = el('h2', null, { style: {
+        maxWidth: '850px', fontSize: '64px', lineHeight: '1.08', fontWeight: '850',
+        letterSpacing: '0', margin: '12px 0 0', color: c.text,
+      }, textContent: (d.title || '') });
+      content.appendChild(h2);
+
+      if (d.body) {
+        var bodyEl = el('p', 'slide-body', { style: {
+          marginTop: '28px', maxWidth: '850px', fontSize: '38px',
+          lineHeight: '1.4', fontWeight: '520',
+          color: sc.features.darkMode ? c.text : '#303849',
+        }, textContent: d.body });
+        content.appendChild(bodyEl);
+      }
+
+      if (d.cta) {
+        var ctaEl = el('p', 'slide-cta', { style: {
+          marginTop: 'auto', paddingTop: '30px', color: c.accent,
+          fontSize: '34px', lineHeight: '1.22', fontWeight: '850',
+        }, textContent: d.cta });
+        content.appendChild(ctaEl);
+      }
+    }
+
+    /* ---- 清单页 (checklist) ---- */
+    function renderChecklist(content, d, sc, c) {
+      var h2 = el('h2', null, { style: {
+        maxWidth: '850px', fontSize: '62px', lineHeight: '1.08', fontWeight: '850',
+        letterSpacing: '0', margin: '0', color: c.text,
+      }, textContent: d.title || 'Checklist' });
+      content.appendChild(h2);
+
+      if (d.subtitle) {
+        var sub = el('p', 'slide-subtitle', { style: {
+          marginTop: '16px', color: c.primary, fontSize: '36px',
+          lineHeight: '1.3', fontWeight: '700',
+        }, textContent: d.subtitle });
+        content.appendChild(sub);
+      }
+
+      var list = el('div', null, { style: {
+        display: 'grid', gap: '22px', marginTop: '44px',
+      }});
+
+      var items = d.items || [];
+      if (items.length === 0 && d.body) {
+        items = d.body.split(/\n/).filter(Boolean);
+      }
+
+      items.forEach(function (item) {
+        var check = el('div', null, { style: {
+          display: 'grid', gridTemplateColumns: '48px 1fr', gap: '18px',
+          alignItems: 'start', padding: '24px 28px',
+          background: sc.features.darkMode ? c.surface : 'rgba(255,255,255,0.78)',
+          border: '1px solid ' + c.border,
+          color: sc.features.darkMode ? c.text : '#303849',
+          fontSize: '32px', lineHeight: '1.3', fontWeight: '650',
+        }});
+        var checkbox = el('span', null, { style: {
+          width: '38px', height: '38px', border: '3px solid ' + c.primary,
+          marginTop: '2px', background: c.primary + '0d', flexShrink: '0',
+        }});
+        check.appendChild(checkbox);
+        check.appendChild(el('span', null, { textContent: item }));
+        list.appendChild(check);
+      });
+
+      content.appendChild(list);
+
+      if (d.cta) {
+        var ctaEl = el('p', 'slide-cta', { style: {
+          marginTop: '28px', color: c.accent,
+          fontSize: '34px', lineHeight: '1.22', fontWeight: '850',
+        }, textContent: d.cta });
+        content.appendChild(ctaEl);
+      }
+    }
+
+    /* ---- CTA 页 ---- */
+    function renderCtaSlide(content, d, sc, c) {
+      // 大标题
+      var h1 = el('h1', null, { style: {
+        maxWidth: '860px', fontSize: '82px', lineHeight: '1.06', fontWeight: '850',
+        color: c.text, letterSpacing: '0', margin: '0',
+        marginTop: '120px',
+      }, textContent: d.title || 'Ready to improve your paper?' });
+      content.appendChild(h1);
+
+      if (d.body) {
+        var bodyEl = el('p', 'slide-body', { style: {
+          marginTop: '34px', maxWidth: '850px', fontSize: '38px',
+          lineHeight: '1.38', fontWeight: '520',
+          color: sc.features.darkMode ? c.text : '#303849',
+        }, textContent: d.body });
+        content.appendChild(bodyEl);
+      }
+
+      // 大号 CTA
+      var ctaText = d.cta || '';
+      if (ctaText) {
+        var ctaBig = el('div', null, { style: {
+          marginTop: '60px', padding: '36px 44px',
+          background: c.primary, color: c.surface,
+          fontSize: '40px', fontWeight: '850', textAlign: 'center',
+          borderRadius: '8px',
+          boxShadow: sc.features.glowAccent ? '0 0 30px ' + c.accent + '66' : '0 8px 32px rgba(0,0,0,0.15)',
+          letterSpacing: '0.02em',
+        }, textContent: ctaText });
+        content.appendChild(ctaBig);
+      }
+    }
+
+    /* ===== 更新预览区（重写） ===== */
+    function updatePreview() {
+      var slideData = null;
+      if (state.slides.length > 0 && state.currentSlide < state.slides.length) {
+        slideData = state.slides[state.currentSlide];
+      }
+
+      // 清空旧内容
+      dom.slideContainer.innerHTML = '';
+
+      if (slideData) {
+        // 渲染完整的幻灯片 DOM
+        var slideEl = renderSlide(slideData, state.style, state.template, state);
+        dom.slideContainer.appendChild(slideEl);
+
+        // 在 DOM 中应用溢出保护和 CJK 间距
+        var layout = getLayout();
+        applyFitTextToSlide(slideEl, layout);
+        applyCJKToSlide(slideEl);
+
+        // 移除占位样式
+        dom.slideContainer.style.background = 'transparent';
+
+        // 启用导航
+        dom.btnPrev.disabled = state.currentSlide === 0;
+        dom.btnNext.disabled = state.currentSlide >= state.slides.length - 1;
+        dom.pageIndicator.textContent = '第 ' + (state.currentSlide + 1) + ' / ' + state.slides.length + ' 页';
+        dom.btnDownloadSingle.disabled = false;
+        dom.btnDownloadAll.disabled = false;
+      } else {
+        // 占位状态 — 区分"未输入"和"解析失败"
+        dom.slideContainer.style.background = 'var(--paper)';
+        var placeholderMsg;
+        if (state.rawText && state.rawText.trim().length > 0) {
+          placeholderMsg = '⚠️ 无法解析文案，请检查格式。<br><small style="font-size:20px;color:#999">提示：可用 "标题：" "页面1：" 等标签标记内容</small>';
+        } else {
+          placeholderMsg = '选择模板并输入文案后，<br>预览将显示在这里';
+        }
+        var placeholder = el('div', 'slide-placeholder', { style: {
+          position: 'absolute', inset: '0', display: 'flex',
+          flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          color: 'var(--muted)', fontSize: '28px', fontWeight: '520',
+          textAlign: 'center', padding: '60px', lineHeight: '1.5',
+        }, innerHTML: placeholderMsg });
+        dom.slideContainer.appendChild(placeholder);
+
+        dom.btnPrev.disabled = true;
+        dom.btnNext.disabled = true;
+        dom.pageIndicator.textContent = '第 1 / 7 页';
+        dom.btnDownloadSingle.disabled = true;
+        dom.btnDownloadAll.disabled = true;
+      }
+    }
+
+    /* ===== 控件事件绑定 ===== */
+    // a) 模板选择 → 自动填入默认文案 + 解析 + 更新 tooltip
+    dom.templateSelect.addEventListener('change', function () {
+      var newTemplate = this.value;
+      // 更新模板信息 tooltip
+      var tpl = TEMPLATES[newTemplate];
+      if (tpl && dom.templateInfo) {
+        dom.templateInfo.title = tpl.desc || '';
+      }
+      // 如果用户没有手动编辑过 textarea，自动填入默认文案
+      if (!userEditedText && DEFAULT_TEXTS[newTemplate]) {
+        dom.textInput.value = DEFAULT_TEXTS[newTemplate];
+        state.rawText = dom.textInput.value;
+      }
+      var parsed = parseRawText(state.rawText || dom.textInput.value, newTemplate);
+      var groups = parsed.groups;
+      var slides = (groups.length > 0) ? groups[0] : [];
+      if (state.batchMode) {
+        updateGroupSelect(groups.length, 0);
+      }
+      // 合规检查 + 长度校验
+      runComplianceCheck(state.rawText);
+      runLengthValidation(state.rawText);
+      updateState({ template: newTemplate, slideGroups: groups, slides: slides, currentGroup: 0, currentSlide: 0 });
+    });
+
+    // b) 图片尺寸选择
+    dom.sizeSelect.addEventListener('change', function () {
+      const [w, h] = this.value.split('x').map(Number);
+      updateState({ size: { width: w, height: h } });
+      scalePreview();
+    });
+
+    // c) 视觉风格卡片
+    dom.styleCards.addEventListener('click', function (e) {
+      const card = e.target.closest('.style-card');
+      if (!card) return;
+      // 取消所有选中
+      dom.styleCards.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected'));
+      // 选中当前
+      card.classList.add('selected');
+      updateState({ style: card.dataset.style });
+    });
+
+    // d) 字体选择
+    dom.fontSelect.addEventListener('change', function () {
+      updateState({ font: this.value });
+    });
+
+    // e) 品牌设置
+    dom.accountName.addEventListener('input', function () {
+      updateState({ accountName: this.value });
+    });
+
+    dom.brandPhrase.addEventListener('input', function () {
+      updateState({ brandPhrase: this.value });
+    });
+
+    dom.ctaInput.addEventListener('input', function () {
+      userEditedCta = true;
+      updateState({ cta: this.value });
+    });
+
+    // CTA 快捷选择器
+    dom.ctaChips.addEventListener('click', function (e) {
+      var chip = e.target.closest('.cta-chip');
+      if (!chip) return;
+      var ctaText = chip.dataset.cta;
+      dom.ctaInput.value = ctaText;
+      userEditedCta = true;
+      updateState({ cta: ctaText });
+    });
+
+    // f) 文案输入 → 标记已编辑 + 解析 + 合规 + 字符计数
+    dom.textInput.addEventListener('input', function () {
+      userEditedText = true;
+      var val = this.value;
+      var parsed = parseRawText(val, state.template);
+      var groups = parsed.groups;
+      var curGroup = Math.min(state.currentGroup, Math.max(0, groups.length - 1));
+      var slides = (groups.length > curGroup) ? groups[curGroup] : ((groups.length > 0) ? groups[0] : []);
+      // 字符计数
+      dom.charCounter.textContent = '已输入 ' + val.length + ' 字符';
+      // 合规检测 (debounced)
+      runComplianceCheck(val);
+      // 文字长度校验
+      runLengthValidation(val);
+      updateState({ rawText: val, slideGroups: groups, slides: slides, currentGroup: curGroup, currentSlide: 0 });
+    });
+
+    // g) 批量识别开关 → 重新解析 + 显示/隐藏 UI
+    dom.batchModeCheckbox.addEventListener('change', function () {
+      var checked = this.checked;
+      dom.batchHint.style.display = checked ? 'block' : 'none';
+      dom.groupSelector.style.display = checked ? 'flex' : 'none';
+
+      // 首次勾选且用户未编辑过文案时，填入批量示例
+      if (checked && !userEditedText) {
+        dom.textInput.value = BATCH_EXAMPLE_TEXT;
+        state.rawText = BATCH_EXAMPLE_TEXT;
+        userEditedText = false; // 保持 false，让示例可被模板覆盖
+      }
+
+      var parsed = parseRawText(state.rawText || dom.textInput.value, state.template);
+      var groups = parsed.groups;
+      var slides = (groups.length > 0) ? groups[0] : [];
+      updateGroupSelect(groups.length, 0);
+      updateState({ batchMode: checked, slideGroups: groups, slides: slides, currentGroup: 0, currentSlide: 0 });
+    });
+
+    // 页面导航（支持跨组）
+    dom.btnPrev.addEventListener('click', function () {
+      if (state.currentSlide > 0) {
+        updateState({ currentSlide: state.currentSlide - 1 });
+      } else if (state.batchMode && state.currentGroup > 0) {
+        // 跨组：跳到上一组的最后一页
+        var prevGroup = state.currentGroup - 1;
+        var prevSlides = state.slideGroups[prevGroup] || [];
+        updateState({ currentGroup: prevGroup, slides: prevSlides, currentSlide: Math.max(0, prevSlides.length - 1) });
+        dom.groupSelect.value = prevGroup;
+      }
+    });
+
+    dom.btnNext.addEventListener('click', function () {
+      if (state.currentSlide < state.slides.length - 1) {
+        updateState({ currentSlide: state.currentSlide + 1 });
+      } else if (state.batchMode && state.currentGroup < state.slideGroups.length - 1) {
+        // 跨组：跳到下一组的第一页
+        var nextGroup = state.currentGroup + 1;
+        var nextSlides = state.slideGroups[nextGroup] || [];
+        updateState({ currentGroup: nextGroup, slides: nextSlides, currentSlide: 0 });
+        dom.groupSelect.value = nextGroup;
+      }
+    });
+
+    // 组选择器
+    dom.groupSelect.addEventListener('change', function () {
+      var gi = parseInt(this.value, 10);
+      if (isNaN(gi)) return;
+      var groupSlides = state.slideGroups[gi] || [];
+      updateState({ currentGroup: gi, slides: groupSlides, currentSlide: 0 });
+    });
+
+    /* ===== 更新组选择器下拉框 ===== */
+    function updateGroupSelect(totalGroups, activeIndex) {
+      dom.groupSelect.innerHTML = '';
+      for (var i = 0; i < totalGroups; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = '第 ' + (i + 1) + ' 组';
+        if (i === activeIndex) opt.selected = true;
+        dom.groupSelect.appendChild(opt);
+      }
+    }
+
+    /* ===== JSZip 动态加载 ===== */
+    function loadJSZip() {
+      return new Promise(function (resolve, reject) {
+        if (window.JSZip) return resolve(window.JSZip);
+        var script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';
+        script.onload = function () { resolve(window.JSZip); };
+        script.onerror = function () { reject(new Error('JSZip CDN 加载失败')); };
+        document.head.appendChild(script);
+      });
+    }
+
+    /* ===== 导出 Toast 提示 ===== */
+    function showToast(msg, type, duration) {
+      var toast = dom.exportToast;
+      toast.textContent = msg;
+      toast.className = 'export-toast ' + (type || '');
+      toast.classList.add('show');
+      clearTimeout(toast._timeout);
+      toast._timeout = setTimeout(function () {
+        toast.classList.remove('show');
+      }, duration || 2500);
+    }
+
+    /* ===== 设置按钮加载状态 ===== */
+    function setExportButtons(disabled, singleLabel, allLabel) {
+      dom.btnDownloadSingle.disabled = disabled;
+      dom.btnDownloadAll.disabled = disabled;
+      dom.btnDownloadSingle.textContent = singleLabel || (disabled ? '⬇ 下载当前页 PNG' : '⬇ 下载当前页 PNG');
+      dom.btnDownloadAll.textContent = allLabel || (disabled ? '📦 下载整套 Carousel (ZIP)' : '📦 下载整套 Carousel (ZIP)');
+    }
+
+    /* ===== 收集内联样式表（用于 SVG 嵌入） ===== */
+    function getInlineStyles() {
+      // 提取文档中所有相关 CSS 规则的精华
+      return [
+        '* { box-sizing: border-box; margin: 0; padding: 0; }',
+        'body { font-family: ' + state.font + ', "PingFang SC", "Noto Sans SC", "Hiragino Sans GB", sans-serif; }',
+        '.rendered-slide { position: relative; width: 1080px; height: 1350px; overflow: hidden; isolation: isolate; }',
+      ].join('\n');
+    }
+
+    /* ===== SVG foreignObject → Canvas → PNG 核心管线 ===== */
+    function slideToCanvasBlob(slideData, styleId, templateId) {
+      return new Promise(function (resolve, reject) {
+        // 1. 确保字体就绪
+        document.fonts.ready.then(function () {
+          try {
+            // 2. 在内存中渲染幻灯片
+            var slideEl = renderSlide(slideData, styleId, templateId, state);
+
+            // 3. 构建 SVG（使用当前尺寸）
+            var W = state.size.width;
+            var H = state.size.height;
+            var inlineStyles = getInlineStyles();
+            var svgString = [
+              '<svg xmlns="http://www.w3.org/2000/svg" width="' + W + '" height="' + H + '">',
+              '  <foreignObject width="' + W + '" height="' + H + '">',
+              '    <div xmlns="http://www.w3.org/1999/xhtml" style="width:' + W + 'px;height:' + H + 'px;">',
+              '      <style>' + inlineStyles + '</style>',
+              '      ' + slideEl.outerHTML,
+              '    </div>',
+              '  </foreignObject>',
+              '</svg>',
+            ].join('\n');
+
+            // 4. SVG → Blob → Object URL → Image
+            var svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+            var url = URL.createObjectURL(svgBlob);
+            var img = new Image();
+
+            img.onload = function () {
+              // 5. 绘制到 Canvas（使用当前尺寸）
+              var W = state.size.width;
+              var H = state.size.height;
+              var canvas = document.createElement('canvas');
+              canvas.width = W;
+              canvas.height = H;
+              var ctx = canvas.getContext('2d');
+              // 白底确保无透明区域
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, W, H);
+              ctx.drawImage(img, 0, 0, W, H);
+
+              // 6. Canvas → Blob (PNG)
+              canvas.toBlob(function (blob) {
+                URL.revokeObjectURL(url);
+                if (blob) {
+                  resolve(blob);
+                } else {
+                  reject(new Error('Canvas toBlob 返回空'));
+                }
+              }, 'image/png', 1.0);
+            };
+
+            img.onerror = function () {
+              URL.revokeObjectURL(url);
+              clearTimeout(timeout);
+              reject(new Error('SVG 图片加载失败，请尝试使用 Chrome 或 Edge 浏览器'));
+            };
+
+            img.src = url;
+
+            // 10 秒超时
+            var timeout = setTimeout(function () {
+              URL.revokeObjectURL(url);
+              reject(new Error('图片生成超时（10秒），请重试'));
+            }, 10000);
+          } catch (err) {
+            reject(err);
+          }
+        }).catch(function (err) {
+          reject(new Error('字体加载失败: ' + err.message));
+        });
+      });
+    }
+
+    /* ===== 触发下载 ===== */
+    function triggerDownload(blob, filename) {
+      var a = document.createElement('a');
+      var url = URL.createObjectURL(blob);
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      // 延迟释放 URL
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }
+
+    /* ===== 生成文件名 ===== */
+    function getFileName(groupIndex, slideIndex, extension) {
+      var tplId = state.template;
+      var today = new Date();
+      var dateStr = today.getFullYear() + '-' +
+        String(today.getMonth() + 1).padStart(2, '0') + '-' +
+        String(today.getDate()).padStart(2, '0');
+      var ext = extension || 'png';
+      var hasMultipleGroups = state.slideGroups.length > 1;
+
+      if (hasMultipleGroups) {
+        // 批量模式: YYYY-MM-DD-templateId-groupNN-slideNN.png
+        return dateStr + '-' + tplId + '-' +
+          String(groupIndex + 1).padStart(3, '0') + '-slide-' +
+          String(slideIndex).padStart(2, '0') + '.' + ext;
+      }
+      // 单组: templateId-slide-NN.png
+      return tplId + '-slide-' + String(slideIndex).padStart(2, '0') + '.' + ext;
+    }
+
+    /* ===== 导出当前页 PNG ===== */
+    function exportCurrentSlide() {
+      if (state.slides.length === 0 || !state.slides[state.currentSlide]) {
+        showToast('⚠️ 没有可导出的幻灯片', 'error');
+        return;
+      }
+
+      var slideData = state.slides[state.currentSlide];
+      setExportButtons(true, '⏳ 导出中...', '📦 下载整套 Carousel (ZIP)');
+      showToast('正在生成图片...', '', 10000);
+
+      slideToCanvasBlob(slideData, state.style, state.template)
+        .then(function (blob) {
+          var fileName = getFileName(state.currentGroup, state.currentSlide + 1);
+          triggerDownload(blob, fileName);
+          showToast('✅ 已下载: ' + fileName, 'success');
+          setExportButtons(false);
+        })
+        .catch(function (err) {
+          console.error('导出失败:', err);
+          showToast('❌ 导出失败: ' + err.message, 'error', 4000);
+          setExportButtons(false);
+        });
+    }
+
+    /* ===== 导出整套 Carousel (ZIP) ===== */
+    function exportAllSlides() {
+      var allGroups = state.slideGroups;
+      if (allGroups.length === 0) {
+        showToast('⚠️ 没有可导出的幻灯片', 'error');
+        return;
+      }
+
+      // 计算总 slides 数
+      var totalSlides = 0;
+      allGroups.forEach(function (g) { totalSlides += g.length; });
+
+      setExportButtons(true, '⬇ 下载当前页 PNG', '⏳ 打包中...');
+
+      // 尝试 ZIP 打包
+      loadJSZip()
+        .then(function (JSZip) {
+          return exportAsZip(JSZip, allGroups, totalSlides);
+        })
+        .catch(function (zipErr) {
+          // ZIP 不可用时降级为逐个下载
+          console.warn('ZIP 打包失败，降级为逐个下载:', zipErr.message);
+          showToast('⚠️ ZIP 不可用，改为逐个下载...', '', 3000);
+          return exportSequential(allGroups, totalSlides);
+        })
+        .then(function () {
+          setExportButtons(false);
+        })
+        .catch(function (err) {
+          console.error('批量导出失败:', err);
+          showToast('❌ 导出失败: ' + err.message, 'error', 4000);
+          setExportButtons(false);
+        });
+    }
+
+    /* ===== ZIP 打包导出 ===== */
+    function exportAsZip(JSZip, allGroups, totalSlides) {
+      var zip = new JSZip();
+      var promises = [];
+      var completed = 0;
+
+      allGroups.forEach(function (group, gi) {
+        group.forEach(function (slideData, si) {
+          var promise = slideToCanvasBlob(slideData, state.style, state.template)
+            .then(function (blob) {
+              var fileName = getFileName(gi, si + 1);
+              zip.file(fileName, blob);
+              completed++;
+              showToast('正在打包 ' + completed + '/' + totalSlides + '...', '', 60000);
+            });
+          promises.push(promise);
+        });
+      });
+
+      return Promise.all(promises).then(function () {
+        return zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } });
+      }).then(function (zipBlob) {
+        var tplId = state.template;
+        var today = new Date();
+        var dateStr = today.getFullYear() + '-' +
+          String(today.getMonth() + 1).padStart(2, '0') + '-' +
+          String(today.getDate()).padStart(2, '0');
+        var zipName = tplId + '-carousel-' + dateStr + '.zip';
+        triggerDownload(zipBlob, zipName);
+        showToast('✅ 已导出 ' + totalSlides + ' 张图片到 ZIP', 'success');
+        setExportButtons(false);
+      });
+    }
+
+    /* ===== 降级方案：逐个下载 ===== */
+    function exportSequential(allGroups, totalSlides) {
+      var completed = 0;
+      var DELAY = 300; // ms between downloads
+
+      function downloadNext(gi, si) {
+        if (gi >= allGroups.length) {
+          // 全部完成
+          showToast('✅ 已下载 ' + completed + ' 张图片', 'success');
+          setExportButtons(false);
+          return;
+        }
+
+        var group = allGroups[gi];
+        if (si >= group.length) {
+          // 下一组
+          return downloadNext(gi + 1, 0);
+        }
+
+        var slideData = group[si];
+        return slideToCanvasBlob(slideData, state.style, state.template)
+          .then(function (blob) {
+            var fileName = getFileName(gi, si + 1);
+            triggerDownload(blob, fileName);
+            completed++;
+            showToast('正在下载 ' + completed + '/' + totalSlides + '...', '', 60000);
+
+            return new Promise(function (resolve) {
+              setTimeout(function () { resolve(); }, DELAY);
+            });
+          })
+          .then(function () {
+            return downloadNext(gi, si + 1);
+          })
+          .catch(function (err) {
+            console.error('下载第 ' + (si + 1) + ' 页失败:', err);
+            return downloadNext(gi, si + 1);
+          });
+      }
+
+      return downloadNext(0, 0);
+    }
+
+    /* ===== 下载按钮绑定 ===== */
+    dom.btnDownloadSingle.addEventListener('click', exportCurrentSlide);
+    dom.btnDownloadAll.addEventListener('click', exportAllSlides);
+
+    // 键盘快捷键（扩展导出）
+    document.addEventListener('keydown', function (e) {
+      if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') {
+        // 允许 Ctrl+S 在 textarea 中触发导出
+        if ((e.metaKey || e.ctrlKey) && e.key === 's' && !e.shiftKey) {
+          e.preventDefault();
+          exportCurrentSlide();
+          return;
+        }
+        if ((e.metaKey || e.ctrlKey) && e.key === 's' && e.shiftKey) {
+          e.preventDefault();
+          exportAllSlides();
+          return;
+        }
+        return;
+      }
+
+      if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        dom.btnPrev.click();
+      } else if ((e.metaKey || e.ctrlKey) && e.key === 'ArrowRight') {
+        e.preventDefault();
+        dom.btnNext.click();
+      } else if ((e.metaKey || e.ctrlKey) && e.key === 's' && !e.shiftKey) {
+        e.preventDefault();
+        exportCurrentSlide();
+      } else if ((e.metaKey || e.ctrlKey) && e.key === 's' && e.shiftKey) {
+        e.preventDefault();
+        exportAllSlides();
+      }
+    });
+
+    // 窗口大小改变时重新计算缩放
+    window.addEventListener('resize', function () {
+      scalePreview();
+    });
+
+    // 移动端侧边栏折叠
+    dom.sidebarToggle.addEventListener('click', function () {
+      dom.sidebar.classList.toggle('collapsed');
+      this.textContent = dom.sidebar.classList.contains('collapsed') ? '☰' : '✕';
+      // 折叠后重新计算预览缩放
+      setTimeout(function () { scalePreview(); }, 350);
+    });
+
+    /* ===== 初始化 ===== */
+    function checkInstagramContentPrefill() {
+      try {
+        var prefillStr = localStorage.getItem('instagram_carousel_prefill');
+        if (!prefillStr) return;
+        var data = JSON.parse(prefillStr);
+        localStorage.removeItem('instagram_carousel_prefill');
+        // Build text from slides
+        if (data.slides && data.slides.length > 0) {
+          var textParts = [];
+          data.slides.forEach(function(s) {
+            textParts.push((s.title || '') + '\n' + (s.body || ''));
+          });
+          var fullText = textParts.join('\n---\n');
+          if (dom.textInput) dom.textInput.value = fullText;
+          state.rawText = fullText;
+        }
+        // Apply template if available
+        if (data.template && TEMPLATES[data.template]) {
+          state.template = data.template;
+        }
+        console.log('Instagram content prefill loaded:', data.slides ? data.slides.length + ' slides' : 'no slides');
+      } catch (e) {
+        console.warn('Failed to load Instagram content prefill:', e);
+      }
+    }
+
+    function init() {
+      // 检查 Instagram 内容策划助手预填数据
+      checkInstagramContentPrefill();
+      // 设置初始 rawText
+      state.rawText = dom.textInput.value;
+      // 初始字符计数
+      dom.charCounter.textContent = '已输入 ' + state.rawText.length + ' 字符';
+      // 初始模板 tooltip
+      var initTpl = TEMPLATES[state.template];
+      if (initTpl && dom.templateInfo) {
+        dom.templateInfo.title = initTpl.desc || '';
+      }
+      // 解析初始文案
+      var parsed = parseRawText(state.rawText, state.template);
+      state.slideGroups = parsed.groups;
+      state.slides = (parsed.groups.length > 0) ? parsed.groups[0] : [];
+      // 合规检查 + 长度校验
+      runComplianceCheck(state.rawText);
+      runLengthValidation(state.rawText);
+      // 初始 console 输出
+      console.debug('[init] 初始 state:', {
+        template: state.template,
+        style: state.style,
+        groupsCount: state.slideGroups.length,
+        slidesCount: state.slides.length,
+        slides: state.slides.map(function (s) {
+          return { slideIndex: s.slideIndex, type: s.type, title: (s.title || '').substring(0, 60), body: (s.body || '').substring(0, 60) };
+        }),
+      });
+      // 初始缩放
+      scalePreview();
+      // 初始预览
+      updatePreview();
+    }
+
+    // 页面加载完成后初始化
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+  </script>
+</body>
+</html>
