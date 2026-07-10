@@ -1041,8 +1041,6 @@ import './lib/real-style-renderer.js';
 import './lib/real-style-random.js';
 import './lib/real-style-stickers.js';
 import './lib/template-loader.js';
-import './lib/cloud-stickers.js';
-import './lib/cloud-stickers-base64.js';
 import './lib/template-renderer.js';
 
 // ═══════════ 全局配置 ═══════════
@@ -7138,29 +7136,31 @@ registerFallbackFn('drawPlushMegaphoneSticker', drawPlushMegaphoneSticker);
 // 贴纸图库文件暂未上传,跳过图片预加载直接使用Canvas手绘(避免404)
 // preloadStickersForFamily('A').catch(() => {});
 
-// 云端贴纸: base64嵌入 + PNG文件
-var cloudStickers = [];
-var cloudStickerImages = {};
-var customStickers = [];
-(function initCloudStickers() {
-  // 优先: base64嵌入贴纸(直接可用)
-  var embedded = window._CLOUD_STICKERS_BASE64 || [];
-  embedded.forEach(function(s) {
-    var img = new Image(); img.src = 'data:image/png;base64,' + s.b64;
-    cloudStickerImages[s.file] = img;
-    cloudStickers.push({ name: s.name, file: s.file, dataUrl: img.src, fromCloud: true });
-  });
-  // (PNG文件贴纸暂不跨域加载, 使用base64嵌入 + Canvas兜底)
-  window._cloudStickerImages = cloudStickerImages;
-  window._cloudStickers = cloudStickers;
-  updateCustomStickerUI();
-  console.log('☁️ 贴纸:', cloudStickers.length, '张(base64嵌入, 零跨域)');
-})();
+// 加载云端自定义贴纸(public/stickers/custom/manifest.json)
+// 文件暂未部署时静默跳过,不阻塞页面
+let cloudStickers = [];
+try {
+  fetch('./public/stickers/custom/manifest.json', { cache: 'no-cache' })
+    .then(r => { if (!r.ok) throw new Error('manifest not deployed yet'); return r.json(); })
+    .then(manifest => {
+      cloudStickers = (manifest.stickers || []).map(s => ({
+        name: s.name || 'cloud-sticker',
+        dataUrl: './public/stickers/custom/' + (s.file || (s.name + '.png')),
+        fromCloud: true,
+      }));
+      if (cloudStickers.length > 0) {
+        updateCustomStickerUI();
+        console.log('☁️ 云端贴纸:', cloudStickers.length, '张');
+      }
+    })
+    .catch(() => { /* manifest 404 → 还没有云端贴纸,正常 */ });
+} catch(e) { /* fetch 不支持,跳过 */ }
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
 
 // ═══════════ 自定义贴纸上传统计 ═══════════
 const CUSTOM_STICKER_KEY = 'cover_maker_custom_stickers';
+let customStickers = [];
 try {
   const saved = localStorage.getItem(CUSTOM_STICKER_KEY);
   customStickers = saved ? JSON.parse(saved) : [];
@@ -7249,9 +7249,8 @@ document.getElementById('btnExportStickers').addEventListener('click', async () 
   showToast('✅ ' + customStickers.length + ' 张贴纸已下载,请放入 public/stickers/custom/ 后 git commit && git push');
 });
 
-// 将自定义贴纸注入到 sticker 渲染系统(云端优先 → 本地兜底)
-window.getCustomStickers = () => [...cloudStickers, ...customStickers];
-window._cloudStickerImages = cloudStickerImages;
+// 将自定义贴纸注入到 sticker 渲染系统(合并本地+云端)
+window.getCustomStickers = () => [...customStickers, ...cloudStickers];
 updateCustomStickerUI();
 
 // ═══════════ 并发渲染 + 错误兜底 ═══════════
@@ -7264,10 +7263,53 @@ updateCustomStickerUI();
  * @param {string} text
  * @param {number} seedOffset
  */
+function renderCard(canvas, family, vi, text, seedOffset, meta) {
+  try {
+    const ctx = canvas.getContext('2d');
+    canvas.width = CANVAS_W;
+    canvas.height = CANVAS_H;
+    var options = { seed: vi + seedOffset, vi: vi };
+    // 模板直传 — templateId + variantMode
+    if (meta && meta.templateId) { options.templateId = meta.templateId; }
+    if (meta && meta.variantMode !== undefined) { options.variantMode = meta.variantMode; }
+    const palette = pickPalette(family, vi, seedOffset);
+    const fn = STYLE_FUNCS[family] || STYLE_FUNCS.A || drawTemplateEnhancedCover;
+    if (!fn) throw new Error('Style function undefined');
+    const t0 = performance.now();
+    fn(ctx, text, palette, options);
+    assertTemplateSafeBounds(ctx, 54, family, vi);
+    const t1 = performance.now();
+    if (t1 - t0 > 80) {
+      console.warn('[v4.0] 卡片渲染耗时偏长:', (t1 - t0).toFixed(1), 'ms ·', family, vi);
+    }
+  } catch (e) {
+    console.error('[v4.0] renderCard error:', family, vi, e);
+    // 错误占位
+    try {
+      const ctx = canvas.getContext('2d');
+      canvas.width = CANVAS_W;
+      canvas.height = CANVAS_H;
+      ctx.fillStyle = '#FFFFFF';
+      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
+      ctx.strokeStyle = '#E6213D';
+      ctx.lineWidth = 24;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(CANVAS_W / 2 - 90, CANVAS_H / 2 - 90);
+      ctx.lineTo(CANVAS_W / 2 + 90, CANVAS_H / 2 + 90);
+      ctx.moveTo(CANVAS_W / 2 + 90, CANVAS_H / 2 - 90);
+      ctx.lineTo(CANVAS_W / 2 - 90, CANVAS_H / 2 + 90);
+      ctx.stroke();
+    } catch (_) {
+      // 双重兜底
+      canvas.width = 100;
+      canvas.height = 100;
+    }
+  }
+}
+
 function assertTemplateSafeBounds(ctx, safePad, family, vi) {
   const W = CANVAS_W, H = CANVAS_H;
-  try { ctx.getImageData(0,0,1,1); } catch(e) { return; }
-  window._assertTemplateSafeBounds = assertTemplateSafeBounds;
   const data = ctx.getImageData(0, 0, W, H);
   const pixels = data.data;
   const sample = (x, y) => {
@@ -7332,52 +7374,6 @@ async function buildAllCardsAsync(text) {
  * 下载失败兜底(批次 5 新增)
  * 当 canvas.toBlob 失败或浏览器拦截下载时,提示用户右键另存为
  */
-
-function renderCard(canvas, family, vi, text, seedOffset, meta) {
-  try {
-    const ctx = canvas.getContext('2d');
-    canvas.width = CANVAS_W;
-    canvas.height = CANVAS_H;
-    var options = { seed: vi + seedOffset, vi: vi };
-    // 模板直传 — templateId + variantMode
-    if (meta && meta.templateId) { options.templateId = meta.templateId; }
-    if (meta && meta.variantMode !== undefined) { options.variantMode = meta.variantMode; }
-    const palette = pickPalette(family, vi, seedOffset);
-    const fn = STYLE_FUNCS[family] || STYLE_FUNCS.A || drawTemplateEnhancedCover;
-    if (!fn) throw new Error('Style function undefined');
-    const t0 = performance.now();
-    fn(ctx, text, palette, options);
-    assertTemplateSafeBounds(ctx, 54, family, vi);
-    const t1 = performance.now();
-    if (t1 - t0 > 80) {
-      console.warn('[v4.0] 卡片渲染耗时偏长:', (t1 - t0).toFixed(1), 'ms ·', family, vi);
-    }
-  } catch (e) {
-    console.error('[v4.0] renderCard error:', family, vi, e);
-    // 错误占位
-    try {
-      const ctx = canvas.getContext('2d');
-      canvas.width = CANVAS_W;
-      canvas.height = CANVAS_H;
-      ctx.fillStyle = '#FFFFFF';
-      ctx.fillRect(0, 0, CANVAS_W, CANVAS_H);
-      ctx.strokeStyle = '#E6213D';
-      ctx.lineWidth = 24;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      ctx.moveTo(CANVAS_W / 2 - 90, CANVAS_H / 2 - 90);
-      ctx.lineTo(CANVAS_W / 2 + 90, CANVAS_H / 2 + 90);
-      ctx.moveTo(CANVAS_W / 2 + 90, CANVAS_H / 2 - 90);
-      ctx.lineTo(CANVAS_W / 2 - 90, CANVAS_H / 2 + 90);
-      ctx.stroke();
-    } catch (_) {
-      // 双重兜底
-      canvas.width = 100;
-      canvas.height = 100;
-    }
-  }
-}
-
 function performCanvasDownload(canvas, fallbackName) {
   try {
     canvas.toBlob((blob) => {
