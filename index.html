@@ -1041,6 +1041,7 @@ import './lib/real-style-renderer.js';
 import './lib/real-style-random.js';
 import './lib/real-style-stickers.js';
 import './lib/template-loader.js';
+import './lib/cloud-stickers-base64.js';
 import './lib/template-renderer.js';
 
 // ═══════════ 全局配置 ═══════════
@@ -7157,6 +7158,20 @@ try {
 } catch(e) { /* fetch 不支持,跳过 */ }
 
 console.log('贴纸注册表:', getTotalCount(), '个贴纸元数据');
+
+// 加载base64云端贴纸
+(function(){
+  var list = window._CLOUD_STICKERS_BASE64 || [];
+  if (!list.length) return;
+  var imgs = {};
+  list.forEach(function(s){
+    var img = new Image(); img.src = 'data:image/png;base64,' + s.b64;
+    imgs[s.file] = img;
+  });
+  window._cloudStickerImages = imgs;
+  window._cloudStickerList = list;
+  console.log('☁️ PNG贴纸:', list.length, '张已就绪');
+})();
 
 // ═══════════ 自定义贴纸上传统计 ═══════════
 const CUSTOM_STICKER_KEY = 'cover_maker_custom_stickers';
