@@ -18,5 +18,6 @@ await cp(join(root, 'reddit-post-writer'), join(publicDir, 'reddit-post-writer')
 await cp(join(root, 'content_assistant'), join(publicDir, 'instagram-content-assistant'), { recursive: true });
 await cp(join(root, 'video_maker'), join(publicDir, 'video_maker'), { recursive: true });
 await cp(join(root, 'data'), join(publicDir, 'data'), { recursive: true });
+await cp(join(root, 'youtube-transcript'), join(publicDir, 'youtube-transcript'), { recursive: true });
 
-console.log('Synced static assets to public/ (incl. video_maker)');
+console.log('Synced static assets to public/ (incl. video_maker & youtube-transcript)');
