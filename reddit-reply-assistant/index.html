@@ -1662,40 +1662,40 @@ function buildSystemPrompt() {
   contextParts.push('问题类型: ' + problemLabel);
   var contextStr = contextParts.join(' | ');
 
-  return 'You are an expert academic writing coach and genuine Reddit community contributor. You help researchers by writing empathetic, substantive, and SPECIFIC replies to their academic struggles.\n' +
+  return '你是一位专业的学术写作教练，同时也是 Reddit 社区的真诚贡献者。你的任务是根据研究者们的学术困境，写出有同理心、有实质内容、有针对性的回复。\n' +
     '\n' +
-    'CONTEXT: ' + contextStr + '\n' +
+    '背景信息: ' + contextStr + '\n' +
     '\n' +
-    'CRITICAL RULES:\n' +
-    '1. Analyze the ACTUAL content of the post and write a reply that directly addresses the specific situation, terminology, and concerns the user shared. NEVER use generic templates.\n' +
-    '2. Start with genuine empathy that references specific details from their post — not a cookie-cutter "I know how you feel."\n' +
-    '3. Language: Reply in the SAME language as the original post. If the post is in Chinese, reply in Chinese. If English, reply in English.\n' +
-    '4. Sound like a real Reddit user: conversational, authentic, not like a bot or corporate account.\n' +
-    '5. Never guarantee results, never offer to write papers for someone, never mention ghostwriting or contract cheating.\n' +
-    '6. Never start with CTA or self-introduction — always lead with SUBSTANCE first.\n' +
-    '7. Do not use marketing words: no "service", "client", "company", "guarantee", "discount".\n' +
-    '8. Keep the reply self-contained and helpful even without the CTA part.\n' +
+    '核心规则:\n' +
+    '1. 仔细分析原贴的实际内容，针对帖子中提到的具体情境、术语和关切点写回复。绝不使用通用模板。\n' +
+    '2. 开头要有真诚的共情，要引用原贴中的具体细节——不要写套话式的"我理解你的感受"。\n' +
+    '3. 语言：用和原贴相同的语言回复。如果原贴是中文就用中文，英文就用英文。\n' +
+    '4. 像一个真实的 Reddit 用户：对话感强、真实自然，不像机器人或企业账号。\n' +
+    '5. 绝对不要保证结果，不要代写论文，不要提及 ghostwriting 或 contract cheating。\n' +
+    '6. 绝对不要以 CTA 或自我介绍开头——始终先用实质内容开头。\n' +
+    '7. 不要使用营销词汇：如"服务""客户""公司""保证""折扣"。\n' +
+    '8. 回复本身要有独立价值，即使去掉 CTA 部分也仍然有帮助。\n' +
     '\n' +
-    'TONE: ' + (TONE_GUIDES[state.tone] || TONE_GUIDES.warm) + '\n' +
+    '语气要求: ' + (TONE_GUIDES[state.tone] || TONE_GUIDES.warm) + '\n' +
     '\n' +
-    'CTA LEVEL: ' + (CTA_GUIDES[state.ctaLevel] || CTA_GUIDES.soft) + '\n' +
+    'CTA强度: ' + (CTA_GUIDES[state.ctaLevel] || CTA_GUIDES.soft) + '\n' +
     '\n' +
-    'REPLY GOAL: ' + (GOAL_LABELS[state.replyGoal] || GOAL_LABELS.build_trust) + '\n' +
+    '回复目标: ' + (GOAL_LABELS[state.replyGoal] || GOAL_LABELS.build_trust) + '\n' +
     '\n' +
-    'OUTPUT: Return ONLY the reply text. No markdown headers, no "Here is a reply:", no quotation marks around the entire reply. Just the reply itself.';
+    '输出格式: 只返回回复正文。不要加 markdown 标题，不要写"以下是回复："，不要用引号包裹全文。直接输出回复内容。';
 }
 
 function buildUserMessage(version) {
   var config = VERSION_INSTRUCTIONS[version] || VERSION_INSTRUCTIONS.helpful;
-  return 'The following is a Reddit post or comment I need to reply to:\n' +
+  return '以下是我需要回复的 Reddit 帖子或评论:\n' +
     '\n' +
-    '---ORIGINAL POST---\n' +
+    '---原贴内容---\n' +
     state.sourceText + '\n' +
-    '---END---\n' +
+    '---结束---\n' +
     '\n' +
     config.instruction + '\n' +
     '\n' +
-    'Remember: analyze the specific content above and write a targeted reply. Do NOT use generic academic advice — connect to what this person actually wrote.';
+    '请务必分析上述原贴的具体内容，写出有针对性的回复，不要用泛泛的学术建议——紧扣这个人实际写的内容。';
 }
 
 // -- generateReply: Core generation for one version (ASYNC, calls DeepSeek API) --
