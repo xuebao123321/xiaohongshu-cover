@@ -887,8 +887,8 @@
     <!-- d) Problem Type -->
     <div class="control-group">
       <label for="problemType">
-        问题类型
-        <span class="info-icon" id="templateInfoIcon" style="cursor:help;font-size:13px;" title="选择问题类型后，系统将使用预设的回复逻辑">ℹ️</span>
+        问题类型 (上下文提示)
+        <span class="info-icon" id="templateInfoIcon" style="cursor:help;font-size:13px;" title="AI 会将此作为参考背景来理解问题类型，但不会使用预设模板。">ℹ️</span>
       </label>
       <select id="problemType">
         <option value="lack_of_novelty" selected>Rejected for Lack of Novelty</option>
@@ -1079,16 +1079,15 @@
       <div class="panel-title" style="margin-bottom:8px;">📖 使用说明</div>
       <div style="font-size:12px;line-height:1.8;color:var(--ink);">
         <p><b>1.</b> 在 Reddit 上看到相关讨论时，复制评论或帖子原文</p>
-        <p><b>2.</b> 粘贴到左侧输入框（必填），可选填写帖子标题和 subreddit</p>
-        <p><b>3.</b> 选择问题类型 — 系统会自动匹配最佳回复逻辑</p>
+        <p><b>2.</b> 粘贴到左侧输入框（必填），可选填写帖子标题、subreddit、用户身份等</p>
+        <p><b>3.</b> 选择问题类型作为 <b>上下文提示</b> — AI 会根据原贴内容针对性生成回复</p>
         <p><b>4.</b> 选择合适的语气：<b>Warm</b>（焦虑/情感类）、<b>Direct</b>（技术类）、<b>Expert</b>（学术类）、<b>Casual</b>（轻松类）</p>
         <p><b>5.</b> 选择 CTA 强度：默认 <b>Soft</b>（轻钩子），根据场景调整</p>
-        <p><b>6.</b> 点击生成 → 在 <b>Short / Helpful / Deep</b> 三个版本中切换</p>
-        <p><b>7.</b> 检查风险提示 → 必要时使用编辑工具调整</p>
-        <p><b>8.</b> 人工审核 → 复制 → 手动粘贴到 Reddit 发布</p>
+        <p><b>6.</b> 点击生成 → AI 分析原贴内容，生成 <b>Short / Helpful / Deep</b> 三个版本</p>
+        <p><b>7.</b> 检查风险提示 → 使用编辑工具（缩短/展开/重写）微调 → 人工审核 → 复制发布</p>
         <div style="margin-top:10px;padding:8px 12px;background:#fffdf5;border-radius:4px;border:1px solid #f0e8c0;">
           <div style="font-weight:600;color:#b47d25;margin-bottom:4px;">⚠️ 重要提醒：</div>
-          <div style="color:var(--muted);">• 本工具生成的是回复草稿，仅供人工参考<br>• 请在发布前仔细审核每条回复<br>• 务必遵守各 subreddit 的社区规则<br>• 不要使用自动发帖或批量评论工具<br>• 建议每条回复根据实际情况进行个性化调整</div>
+          <div style="color:var(--muted);">• 回复由 DeepSeek AI 生成，仅供人工参考<br>• 请在发布前仔细审核每条回复<br>• 务必遵守各 subreddit 的社区规则<br>• 不要使用自动发帖或批量评论工具</div>
         </div>
       </div>
     </div>
@@ -1367,6 +1366,10 @@ const state = {
     suggestions: [],
   },
 
+  // API (key is hardcoded — page access is gated by server.py membership check)
+  apiKey: 'sk-d5c2ebbb6c8b4b50a9ce4ce38e476bea',
+  generationAbortController: null,
+
   // Status
   isGenerating: false,
   generationError: null,
@@ -1400,56 +1403,26 @@ function updatePreview() {
 // ===== Problem Type Change: Auto-set Tone & CTA from Template =====
 function onProblemTypeChange(problemType) {
   state.problemType = problemType;
-  var template = PROBLEM_TEMPLATES[problemType];
-  if (!template) {
-    updatePreview();
-    return;
-  }
-
-  // Auto-set tone from template default
-  var newTone = template.defaultTone;
-  state.tone = newTone;
-  var toneCards = document.querySelectorAll('.tone-card');
-  toneCards.forEach(function(c) {
-    c.classList.toggle('selected', c.getAttribute('data-tone') === newTone);
-  });
-
-  // Auto-set CTA level from template default
-  var newCta = template.defaultCtaLevel;
-  state.ctaLevel = newCta;
-  var ctaSegs = document.querySelectorAll('.cta-seg');
-  ctaSegs.forEach(function(s) {
-    s.classList.toggle('selected', s.getAttribute('data-cta') === newCta);
-  });
-
-  // Log template info
-  console.log('Template matched:', template.name);
-  console.log('  Auto tone →', newTone);
-  console.log('  Auto CTA →', newCta);
-  console.log('  Empathy:', template.logic.empathy.substring(0, 50) + '...');
-  console.log('  Diagnosis:', template.logic.diagnosis.substring(0, 50) + '...');
-  console.log('  Default CTA:', template.logic.cta);
-
   updatePreview();
+  // Update tooltip
+  updateProblemTypeTooltip();
 }
 
-// Update the tooltip on hover for the ℹ️ icon
-var templateInfoIcon = document.getElementById('templateInfoIcon');
-if (templateInfoIcon) {
-  templateInfoIcon.addEventListener('mouseenter', function() {
-    var template = PROBLEM_TEMPLATES[state.problemType];
-    if (template) {
-      this.title = [
-        '模板：' + template.name,
-        '默认语气：' + template.defaultTone,
-        '默认CTA：' + template.defaultCtaLevel,
-        '共情：' + template.logic.empathy.substring(0, 60) + '…',
-        '诊断：' + template.logic.diagnosis.substring(0, 60) + '…',
-        '默认钩子：' + template.logic.cta,
-      ].join('\n');
-    }
-  });
+function updateProblemTypeTooltip() {
+  var icon = document.getElementById('templateInfoIcon');
+  if (!icon) return;
+  var template = PROBLEM_TEMPLATES[state.problemType];
+  if (template) {
+    icon.title = '上下文提示：' + template.name + '\nAI 会将此作为参考背景来理解问题类型，但不会使用预设模板。';
+  }
 }
+
+// Update the tooltip on load
+(function() {
+  if (document.getElementById('templateInfoIcon')) {
+    updateProblemTypeTooltip();
+  }
+})();
 
 // ===== Sync state from DOM =====
 function syncState() {
@@ -1529,66 +1502,9 @@ function switchVersion(version) {
 //  CORE: Reply Generation Engine
 // ============================================================
 
-// -- applyTone: Adjust text based on tone selection --
-function applyTone(text, tone) {
-  switch (tone) {
-    case 'warm':
-      return text;
-    case 'direct':
-      return text
-        .replace(/That's a really common but frustrating/i, 'This is a common')
-        .replace(/genuinely /gi, '')
-        .replace(/Take a breath\. /gi, '')
-        .replace(/You're not alone in this\. /gi, '');
-    case 'expert':
-      return text
-        .replace(/I know this can feel/i, 'From a methodological perspective, this')
-        .replace(/I wouldn't start by/i, 'The recommended approach is to');
-    case 'casual':
-      return text
-        .replace(/I wouldn't start by/i, "Don't just")
-        .replace(/A useful way to think about this/i, 'One way to think about it')
-        .replace(/I recommend/i, "I'd say");
-    default:
-      return text;
-  }
-}
-
-// -- selectCTA: Pick CTA based on level, version, and context --
-function selectCTA(template, ctaLevel, version) {
-  // Short version: no CTA unless Direct
-  if (version === 'short' && ctaLevel !== 'direct') return null;
-
-  // Deep version: boost soft → medium for stronger engagement
-  var effectiveLevel = ctaLevel;
-  if (version === 'deep' && ctaLevel === 'soft') {
-    effectiveLevel = 'medium';
-  }
-
-  // Context-aware weakening: emotional-support problem types keep CTA soft
-  var weakCtaTypes = ['revise_resubmit_anxiety', 'thesis_structure', 'harsh_reviewer'];
-  if (weakCtaTypes.indexOf(state.problemType) !== -1 && effectiveLevel === 'medium') {
-    effectiveLevel = 'soft';
-  }
-
-  // Context-aware strengthening: english_editing can go stronger
-  if (state.problemType === 'english_editing' && effectiveLevel === 'soft') {
-    effectiveLevel = 'medium';
-  }
-
-  switch (effectiveLevel) {
-    case 'none':
-      return 'Hope that helps.';
-    case 'soft':
-      return template.logic.cta || CTA_LIBRARY.checklist[0];
-    case 'medium':
-      return CTA_LIBRARY.light_diagnosis[Math.floor(Math.random() * CTA_LIBRARY.light_diagnosis.length)];
-    case 'direct':
-      return CTA_LIBRARY.service_aware[Math.floor(Math.random() * CTA_LIBRARY.service_aware.length)];
-    default:
-      return template.logic.cta || 'Hope that helps.';
-  }
-}
+// applyTone() and selectCTA() have been REMOVED.
+// The AI now handles tone and CTA natively via the system prompt.
+// See buildSystemPrompt() for the tone/CTA guide definitions.
 
 // -- truncateToWordLimit: Cut text at word limit, ending on sentence boundary --
 function truncateToWordLimit(text, maxWords) {
@@ -1602,78 +1518,216 @@ function truncateToWordLimit(text, maxWords) {
   return truncated + '...';
 }
 
-// -- generateReply: Core generation for one version --
-function generateReply(version) {
-  var template = PROBLEM_TEMPLATES[state.problemType];
-  if (!template) {
-    return { text: '(No template selected)', wordCount: 0 };
+// ============================================================
+//  DEEPSEEK API: Core API call function
+// ============================================================
+
+function countWords(text) {
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
+async function callDeepSeekAPI(systemPrompt, userMessage, options) {
+  options = options || {};
+  var maxTokens = options.maxTokens || 500;
+  var temperature = options.temperature != null ? options.temperature : 0.7;
+
+  if (!state.apiKey) {
+    throw new Error('API Key 未配置，请联系管理员。');
   }
-  var logic = template.logic;
-  var tone = state.tone;
-  var ctaLevel = state.ctaLevel;
 
-  var config = {
-    short:   { empathy: true, diagnosis: true, framework: false, example: false, action: false, cta: false, maxWords: 120 },
-    helpful: { empathy: true, diagnosis: true, framework: true,  example: true,  action: true,  cta: true,  maxWords: 220 },
-    deep:    { empathy: true, diagnosis: true, framework: true,  example: true,  action: true,  cta: true,  maxWords: 400 },
-  }[version];
+  // Cancel any previous in-flight request
+  if (state.generationAbortController) {
+    state.generationAbortController.abort();
+  }
+  state.generationAbortController = new AbortController();
 
+  // 30-second timeout
+  var timeoutId = setTimeout(function() {
+    state.generationAbortController.abort();
+  }, 30000);
+
+  try {
+    var response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + state.apiKey,
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userMessage },
+        ],
+        max_tokens: maxTokens,
+        temperature: temperature,
+        stream: false,
+      }),
+      signal: state.generationAbortController.signal,
+    });
+
+    if (!response.ok) {
+      var errorBody = {};
+      try { errorBody = await response.json(); } catch (e) {}
+      var msg = errorBody.error ? errorBody.error.message : '';
+      if (response.status === 401) {
+        throw new Error('API Key 无效，请检查后重新设置。');
+      } else if (response.status === 402) {
+        throw new Error('DeepSeek 账户余额不足，请充值后重试。');
+      } else if (response.status === 429) {
+        throw new Error('请求过于频繁，请等待几秒后重试。');
+      } else if (response.status >= 500) {
+        throw new Error('DeepSeek 服务暂时不可用，请稍后重试。');
+      } else {
+        throw new Error('API 错误 (' + response.status + '): ' + (msg || '未知错误'));
+      }
+    }
+
+    var data = await response.json();
+    var content = (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) || '';
+    var trimmed = content.trim();
+
+    if (!trimmed) {
+      throw new Error('API 返回了空内容，请重试。');
+    }
+
+    return trimmed;
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      // Distinguish timeout from user cancellation
+      throw new Error('请求超时或已取消，请稍后重试。');
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+// ============================================================
+//  PROMPT ENGINEERING: System & User message builders
+// ============================================================
+
+var GOAL_LABELS = {
+  build_trust: '建立专业信任度，展现学术写作方面的专业见解',
+  help: '纯粹提供帮助，不推销任何服务',
+  lead_dm: '温和引导对方私信获取更多资源',
+  collect_pain_points: '了解对方痛点，收集学术写作中的常见困扰',
+};
+
+var TONE_GUIDES = {
+  warm: '温暖共情、支持性语气。像经历过类似困境的同行，给予情感上的认可。使用"I know this can feel..."类表达。',
+  direct: '直接简洁、就事论事。像一次高效的咨询，去掉客套和情绪化表达，直击问题核心和解决方案。',
+  expert: '专业结构化、方法论驱动。像学术导师，引用框架和系统性方法。使用"From a methodological perspective..."类表达。',
+  casual: '随意自然、像普通 Reddit 用户。用日常语言，不过于正式，让人感觉真实不做作。',
+};
+
+var CTA_GUIDES = {
+  none: '回复结尾不需要任何 call-to-action。简单地以"希望有帮助"或类似的自然结尾结束。',
+  soft: '在回复结尾可以有一个低压力的资源邀请，如"如果需要可以分享一个清单"。只提一次，不主动推销。',
+  medium: '可以引导对方私信关键词获取具体资源（如"可以私信我'清单'获取"）。但保持低调，不超过一句。',
+  direct: '可以明确邀请对方了解咨询服务。但仍然以提供价值为主，不要像广告。适合对方明确在寻找服务的高意向场景。',
+};
+
+var VERSION_INSTRUCTIONS = {
+  short: {
+    label: '短版',
+    maxWords: 120,
+    instruction: '写一个简短精炼的回复（约100词）。结构：1句共情 + 2-3句针对性的诊断和建议。不要展开框架、不要举例。只在CTA为direct时保留钩子。保持紧凑有力。',
+  },
+  helpful: {
+    label: '标准版',
+    maxWords: 220,
+    instruction: '写一个平衡实用的回复（约180词）。结构：共情开头 → 分析问题本质 → 一个具体的、与ta情况相关的例子 → 可操作的下一步建议 → 根据CTA级别结尾。既有温度又有干货。',
+  },
+  deep: {
+    label: '深度版',
+    maxWords: 400,
+    instruction: '写一个全面深入的回复（约300词）。结构：共情 → 深入诊断 → 3-5步编号框架 → 具体案例 → 多条可操作建议 → 根据CTA级别结尾。内容要丰富但不啰嗦，保持对话感。',
+  },
+};
+
+function buildSystemPrompt() {
+  var problemLabel = '';
+  if (PROBLEM_TEMPLATES[state.problemType]) {
+    problemLabel = PROBLEM_TEMPLATES[state.problemType].name;
+  } else {
+    problemLabel = state.problemType;
+  }
+
+  var contextParts = [];
+  if (state.subreddit) contextParts.push('来源 subreddit: r/' + state.subreddit.replace(/^r\//, ''));
+  if (state.postTitle) contextParts.push('帖子标题: ' + state.postTitle);
+  if (state.userType && state.userType !== 'Unknown') contextParts.push('发帖人身份: ' + state.userType);
+  if (state.field && state.field !== 'General') contextParts.push('学科领域: ' + state.field);
+  contextParts.push('问题类型: ' + problemLabel);
+  var contextStr = contextParts.join(' | ');
+
+  return 'You are an expert academic writing coach and genuine Reddit community contributor. You help researchers by writing empathetic, substantive, and SPECIFIC replies to their academic struggles.\n' +
+    '\n' +
+    'CONTEXT: ' + contextStr + '\n' +
+    '\n' +
+    'CRITICAL RULES:\n' +
+    '1. Analyze the ACTUAL content of the post and write a reply that directly addresses the specific situation, terminology, and concerns the user shared. NEVER use generic templates.\n' +
+    '2. Start with genuine empathy that references specific details from their post — not a cookie-cutter "I know how you feel."\n' +
+    '3. Language: Reply in the SAME language as the original post. If the post is in Chinese, reply in Chinese. If English, reply in English.\n' +
+    '4. Sound like a real Reddit user: conversational, authentic, not like a bot or corporate account.\n' +
+    '5. Never guarantee results, never offer to write papers for someone, never mention ghostwriting or contract cheating.\n' +
+    '6. Never start with CTA or self-introduction — always lead with SUBSTANCE first.\n' +
+    '7. Do not use marketing words: no "service", "client", "company", "guarantee", "discount".\n' +
+    '8. Keep the reply self-contained and helpful even without the CTA part.\n' +
+    '\n' +
+    'TONE: ' + (TONE_GUIDES[state.tone] || TONE_GUIDES.warm) + '\n' +
+    '\n' +
+    'CTA LEVEL: ' + (CTA_GUIDES[state.ctaLevel] || CTA_GUIDES.soft) + '\n' +
+    '\n' +
+    'REPLY GOAL: ' + (GOAL_LABELS[state.replyGoal] || GOAL_LABELS.build_trust) + '\n' +
+    '\n' +
+    'OUTPUT: Return ONLY the reply text. No markdown headers, no "Here is a reply:", no quotation marks around the entire reply. Just the reply itself.';
+}
+
+function buildUserMessage(version) {
+  var config = VERSION_INSTRUCTIONS[version] || VERSION_INSTRUCTIONS.helpful;
+  return 'The following is a Reddit post or comment I need to reply to:\n' +
+    '\n' +
+    '---ORIGINAL POST---\n' +
+    state.sourceText + '\n' +
+    '---END---\n' +
+    '\n' +
+    config.instruction + '\n' +
+    '\n' +
+    'Remember: analyze the specific content above and write a targeted reply. Do NOT use generic academic advice — connect to what this person actually wrote.';
+}
+
+// -- generateReply: Core generation for one version (ASYNC, calls DeepSeek API) --
+async function generateReply(version) {
+  var config = VERSION_INSTRUCTIONS[version];
   if (!config) {
     return { text: '(Invalid version: ' + version + ')', wordCount: 0 };
   }
 
-  var paragraphs = [];
-
-  // 1. Empathy
-  if (config.empathy && logic.empathy) {
-    paragraphs.push(applyTone(logic.empathy, tone));
+  if (!state.sourceText || !state.sourceText.trim()) {
+    return { text: '(No source text provided)', wordCount: 0 };
   }
 
-  // 2. Diagnosis
-  if (config.diagnosis && logic.diagnosis) {
-    paragraphs.push(applyTone(logic.diagnosis, tone));
-  }
+  var sysPrompt = buildSystemPrompt();
+  var userMsg = buildUserMessage(version);
+  var maxTokens = version === 'short' ? 400 : version === 'helpful' ? 700 : 1200;
 
-  // 3. Framework
-  if (config.framework && logic.framework && logic.framework.length) {
-    var items = logic.framework;
-    if (version === 'helpful') {
-      paragraphs.push('A useful way to think about this: ' + items.join(' '));
-    } else if (version === 'deep') {
-      paragraphs.push('Here is how I would approach this step by step:');
-      items.forEach(function(item, i) {
-        paragraphs.push((i + 1) + '. ' + item);
-      });
+  try {
+    var text = await callDeepSeekAPI(sysPrompt, userMsg, { maxTokens: maxTokens, temperature: 0.7 });
+    var wc = countWords(text);
+
+    // Truncate if significantly over limit
+    if (wc > config.maxWords * 1.4) {
+      text = truncateToWordLimit(text, config.maxWords);
+      wc = countWords(text);
     }
-    // Short: framework is false, skipped
+
+    return { text: text, wordCount: wc };
+  } catch (err) {
+    console.error('generateReply error (' + version + '):', err);
+    throw err;
   }
-
-  // 4. Example
-  if (config.example && logic.example) {
-    paragraphs.push(applyTone('For example, ' + logic.example, tone));
-  }
-
-  // 5. Action
-  if (config.action && logic.action) {
-    paragraphs.push(applyTone(logic.action, tone));
-  }
-
-  // 6. CTA
-  if (config.cta && ctaLevel !== 'none') {
-    var cta = selectCTA(template, ctaLevel, version);
-    if (cta) paragraphs.push(cta);
-  }
-
-  var fullText = paragraphs.join('\n\n');
-  var wordCount = fullText.split(/\s+/).filter(Boolean).length;
-
-  // Truncate if significantly over
-  if (wordCount > config.maxWords * 1.3) {
-    fullText = truncateToWordLimit(fullText, config.maxWords);
-    wordCount = fullText.split(/\s+/).filter(Boolean).length;
-  }
-
-  return { text: fullText, wordCount: wordCount };
 }
 
 // ============================================================
@@ -1717,10 +1771,10 @@ function renderReply() {
 }
 
 // ============================================================
-//  HANDLE GENERATE: Full implementation
+//  HANDLE GENERATE: Full implementation (ASYNC — calls DeepSeek API)
 // ============================================================
 
-function handleGenerate(skipShortCheck) {
+async function handleGenerate(skipShortCheck) {
   if (state.isGenerating) return;
 
   // a) Input validation
@@ -1745,7 +1799,7 @@ function handleGenerate(skipShortCheck) {
   els.errorMsg.style.color = 'var(--red)';
 
   // b) Long input truncation
-  var MAX_INPUT = 2000;
+  var MAX_INPUT = 3000;
   var originalLength = text.length;
   if (text.length > MAX_INPUT) {
     text = text.substring(0, MAX_INPUT);
@@ -1756,64 +1810,99 @@ function handleGenerate(skipShortCheck) {
     setTimeout(function() { els.errorMsg.textContent = ''; }, 4000);
   }
 
-  // c) HTML escape for XSS prevention (applied in rendering)
+  // d) Save source text to state
   state.sourceText = text;
 
-  // d) Set generating state
+  // e) Set generating state
   state.isGenerating = true;
+  state.generationError = null;
   var btn = els.btnGenerate;
-  var originalText = btn.textContent;
-  btn.textContent = '⏳ 生成中...';
+  var originalHTML = btn.innerHTML;
+  btn.textContent = '⏳ 正在分析内容...';
   btn.disabled = true;
   els.replyCard.classList.add('generating');
 
-  // c) Generate with slight delay for UX feedback
-  setTimeout(function() {
-    try {
-      // Generate all three versions
-      state.replies.short   = generateReply('short');
-      state.replies.helpful = generateReply('helpful');
-      state.replies.deep    = generateReply('deep');
-
-      // Default to Helpful tab
-      state.activeVersion = 'helpful';
-      var tabs = document.querySelectorAll('.version-tab');
-      tabs.forEach(function(t) {
-        t.classList.toggle('active', t.getAttribute('data-version') === 'helpful');
-      });
-
-      // Render
-      renderReply();
-
-      // Run risk detection on the default (helpful) version
-      state.risks = detectRisks(state.replies.helpful.text);
-      renderRisks(state.risks);
-
-      // Save to history
-      saveHistory();
-
-      // Log for debugging
-      console.log('Generated replies:');
-      console.log('  Short:', state.replies.short.wordCount, 'words');
-      console.log('  Helpful:', state.replies.helpful.wordCount, 'words');
-      console.log('  Deep:', state.replies.deep.wordCount, 'words');
-      console.log('  Tone:', state.tone, '| CTA:', state.ctaLevel);
-
-      state.generationError = null;
-    } catch (err) {
-      console.error('Generation error:', err);
-      state.generationError = err.message || 'Unknown error';
-      els.errorMsg.textContent = '生成失败，请稍后重试。如果问题持续出现，请刷新页面。';
-      els.errorMsg.style.color = 'var(--red)';
-      setTimeout(function() { els.errorMsg.textContent = ''; }, 5000);
+  try {
+    // Cancel any previous in-flight request
+    if (state.generationAbortController) {
+      state.generationAbortController.abort();
     }
 
-    // e) Restore button state
+    // Generate sequentially with progress indicators
+    btn.textContent = '⏳ 生成短版 (1/3)...';
+    var shortText;
+    try {
+      shortText = await generateReply('short');
+      state.replies.short = shortText;
+    } catch (err) {
+      // If short version fails, still try the others
+      console.error('Short version failed:', err);
+      state.replies.short = { text: '(生成失败: ' + (err.message || '未知错误') + ')', wordCount: 0 };
+    }
+
+    btn.textContent = '⏳ 生成标准版 (2/3)...';
+    var helpfulText;
+    try {
+      helpfulText = await generateReply('helpful');
+      state.replies.helpful = helpfulText;
+    } catch (err) {
+      console.error('Helpful version failed:', err);
+      state.replies.helpful = { text: '(生成失败: ' + (err.message || '未知错误') + ')', wordCount: 0 };
+    }
+
+    btn.textContent = '⏳ 生成深度版 (3/3)...';
+    var deepText;
+    try {
+      deepText = await generateReply('deep');
+      state.replies.deep = deepText;
+    } catch (err) {
+      console.error('Deep version failed:', err);
+      state.replies.deep = { text: '(生成失败: ' + (err.message || '未知错误') + ')', wordCount: 0 };
+    }
+
+    // Default to Helpful tab
+    state.activeVersion = 'helpful';
+    var tabs = document.querySelectorAll('.version-tab');
+    tabs.forEach(function(t) {
+      t.classList.toggle('active', t.getAttribute('data-version') === 'helpful');
+    });
+
+    // Render
+    renderReply();
+
+    // Run risk detection on the default (helpful) version
+    if (state.replies.helpful.text) {
+      state.risks = detectRisks(state.replies.helpful.text);
+      renderRisks(state.risks);
+    }
+
+    // Save to history
+    if (state.replies.helpful.text && !state.replies.helpful.text.startsWith('(生成失败')) {
+      saveHistory();
+    }
+
+    // Log for debugging
+    console.log('AI-Generated replies:');
+    console.log('  Short:', state.replies.short.wordCount, 'words');
+    console.log('  Helpful:', state.replies.helpful.wordCount, 'words');
+    console.log('  Deep:', state.replies.deep.wordCount, 'words');
+    console.log('  Tone:', state.tone, '| CTA:', state.ctaLevel);
+
+    state.generationError = null;
+  } catch (err) {
+    console.error('Generation error:', err);
+    state.generationError = err.message || 'Unknown error';
+    els.errorMsg.textContent = '生成失败：' + (err.message || '未知错误');
+    els.errorMsg.style.color = 'var(--red)';
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 6000);
+  } finally {
+    // f) Restore button state
     state.isGenerating = false;
-    btn.textContent = originalText;
+    btn.textContent = '✨ 生成回复草稿';
     btn.disabled = false;
     els.replyCard.classList.remove('generating');
-  }, 600);
+    state.generationAbortController = null;
+  }
 }
 
 function showError(msg) {
@@ -1852,8 +1941,8 @@ function copyReply() {
   });
 }
 
-// -- Regenerate --
-function regenerate() {
+// -- Regenerate (ASYNC — re-calls DeepSeek API) --
+async function regenerate() {
   if (state.isGenerating) return;
 
   var text = (els.sourceText.value || '').trim();
@@ -1863,19 +1952,39 @@ function regenerate() {
     return;
   }
 
-  // Quick regenerate without full loading state
+  state.sourceText = text;
+  state.isGenerating = true;
+  var btn = els.btnGenerate;
+  var originalText = btn.textContent;
+  btn.textContent = '⏳ 重新生成中...';
+  btn.disabled = true;
+  els.replyCard.classList.add('generating');
+
+  if (state.generationAbortController) {
+    state.generationAbortController.abort();
+  }
+
   try {
-    state.replies.short   = generateReply('short');
-    state.replies.helpful = generateReply('helpful');
-    state.replies.deep    = generateReply('deep');
+    state.replies.short   = await generateReply('short');
+    state.replies.helpful = await generateReply('helpful');
+    state.replies.deep    = await generateReply('deep');
     state.risks = detectRisks(state.replies[state.activeVersion].text);
     renderRisks(state.risks);
     renderReply();
-    console.log('Regenerated all versions.');
+    if (state.replies.helpful.text && !state.replies.helpful.text.startsWith('(生成失败')) {
+      saveHistory();
+    }
+    console.log('Regenerated all versions via DeepSeek API.');
   } catch (err) {
     console.error('Regenerate error:', err);
-    showError('重新生成失败，请稍后重试。');
-    setTimeout(function() { els.errorMsg.textContent = ''; }, 3000);
+    showError('重新生成失败：' + (err.message || '未知错误'));
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 5000);
+  } finally {
+    state.isGenerating = false;
+    btn.textContent = originalText;
+    btn.disabled = false;
+    els.replyCard.classList.remove('generating');
+    state.generationAbortController = null;
   }
 }
 
@@ -2027,14 +2136,9 @@ function renderCtaSuggestion() {
     direct: { label: '直接钩子',   desc: '明确邀请咨询。⚠️ 仅适合用户明确在找服务的高意向场景。' },
   }[state.ctaLevel] || { label: '未设置', desc: '' };
 
-  var template = PROBLEM_TEMPLATES[state.problemType];
-  var defaultCta = template ? template.logic.cta : '';
-
   var html = '<div class="panel-title">💡 CTA 建议：当前 — ' + info.label + '</div>';
   html += '<div class="risk-body" style="font-size:12px;">' + info.desc + '</div>';
-  if (defaultCta && state.ctaLevel !== 'none') {
-    html += '<div class="risk-body" style="margin-top:4px;font-size:11px;color:var(--muted);">默认钩子示例：' + escapeHtml(defaultCta.substring(0, 80)) + '</div>';
-  }
+  html += '<div class="risk-body" style="margin-top:4px;font-size:11px;color:var(--muted);">AI 会根据 CTA 级别在回复中自动生成合适的钩子。</div>';
 
   // Alternative CTA suggestions (clickable)
   var altCtas = getAlternativeCtas(state.ctaLevel);
@@ -2102,8 +2206,8 @@ function refreshCurrentReply(newText) {
   renderReply();
 }
 
-// -- Shorten: reduce by ~30%, keep core structure --
-function shortenReply() {
+// -- Shorten: AI-powered condensation (~30% reduction) --
+async function shortenReply() {
   var reply = state.replies[state.activeVersion];
   if (!reply || !reply.text) {
     showError('暂无回复内容可缩短。');
@@ -2111,31 +2215,22 @@ function shortenReply() {
     return;
   }
 
-  var paragraphs = reply.text.split('\n\n').filter(Boolean);
-  // Keep first 2 (empathy + diagnosis), keep last if it looks like CTA
-  var core = paragraphs.slice(0, 2);
-  var last = paragraphs[paragraphs.length - 1];
-  var isCta = /DM|checklist|template|hope that helps|happy to share/i.test(last);
-
-  var kept = core.slice();
-  if (paragraphs.length > 3) {
-    // Compress middle paragraphs
-    var middle = paragraphs.slice(2, isCta ? -1 : paragraphs.length);
-    if (middle.length > 0) {
-      kept.push(middle[0].split('. ').slice(0, 2).join('. ') + '.');
-    }
+  setEditingState(true);
+  try {
+    var userMsg = 'Here is a reply. Please shorten it by about 30% while keeping the core message, empathy, and key advice. Remove redundant sentences. Keep the CTA if present.\n\nCurrent reply:\n---\n' + reply.text + '\n---\n\nReturn ONLY the shortened reply text, no explanations.';
+    var shortened = await callDeepSeekAPI(buildSystemPrompt(), userMsg, { maxTokens: 500, temperature: 0.5 });
+    refreshCurrentReply(shortened);
+    console.log('AI shortened:', reply.wordCount, '→', countWords(shortened), 'words');
+  } catch (err) {
+    showError('缩短失败：' + (err.message || '未知错误'));
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 4000);
+  } finally {
+    setEditingState(false);
   }
-  if (isCta && last !== core[core.length - 1]) {
-    kept.push(last);
-  }
-
-  var shortened = kept.join('\n\n');
-  refreshCurrentReply(shortened);
-  console.log('Shortened: ' + reply.wordCount + ' → ' + state.replies[state.activeVersion].wordCount + ' words');
 }
 
-// -- Expand: add more detail, don't exceed version max --
-function expandReply() {
+// -- Expand: AI-powered elaboration --
+async function expandReply() {
   var reply = state.replies[state.activeVersion];
   if (!reply || !reply.text) {
     showError('暂无回复内容可展开。');
@@ -2151,16 +2246,18 @@ function expandReply() {
     return;
   }
 
-  // Regenerate one level deeper
-  var deeperVersion = version === 'short' ? 'helpful' : 'deep';
-  var expanded = generateReply(deeperVersion);
-  // Truncate to current max
-  if (expanded.wordCount > maxWords) {
-    expanded.text = truncateToWordLimit(expanded.text, maxWords);
-    expanded.wordCount = expanded.text.split(/\s+/).filter(Boolean).length;
+  setEditingState(true);
+  try {
+    var userMsg = 'Here is a reply. Please expand it with more detail, add a concrete example if missing, and elaborate on the advice. Target about ' + maxWords + ' words.\n\nCurrent reply:\n---\n' + reply.text + '\n---\n\nReturn ONLY the expanded reply text, no explanations.';
+    var expanded = await callDeepSeekAPI(buildSystemPrompt(), userMsg, { maxTokens: 800, temperature: 0.6 });
+    refreshCurrentReply(expanded);
+    console.log('AI expanded:', reply.wordCount, '→', countWords(expanded), 'words');
+  } catch (err) {
+    showError('展开失败：' + (err.message || '未知错误'));
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 4000);
+  } finally {
+    setEditingState(false);
   }
-  refreshCurrentReply(expanded.text);
-  console.log('Expanded: ' + reply.wordCount + ' → ' + state.replies[state.activeVersion].wordCount + ' words');
 }
 
 // -- Reduce Marketing: weaken or remove marketing language --
@@ -2193,8 +2290,8 @@ function reduceMarketing() {
   console.log('Marketing reduced.');
 }
 
-// -- Enhance CTA: boost CTA level temporarily --
-function enhanceCTA() {
+// -- Enhance CTA: AI-powered CTA boost --
+async function enhanceCTA() {
   if (state.ctaLevel === 'direct') {
     showError('CTA 强度已为 Direct，无法继续增强。');
     setTimeout(function() { els.errorMsg.textContent = ''; }, 2000);
@@ -2208,28 +2305,22 @@ function enhanceCTA() {
     return;
   }
 
-  // Temporarily boost CTA for regeneration
-  var originalLevel = state.ctaLevel;
   var boostMap = { none: 'soft', soft: 'medium', medium: 'direct' };
-  state.ctaLevel = boostMap[originalLevel] || originalLevel;
+  var targetLevel = boostMap[state.ctaLevel] || 'medium';
+  var levelLabel = { soft: '轻钩子', medium: '中度钩子', direct: '直接钩子' }[targetLevel] || targetLevel;
 
-  // Update UI
-  var ctaSegs = document.querySelectorAll('.cta-seg');
-  ctaSegs.forEach(function(s) {
-    s.classList.toggle('selected', s.getAttribute('data-cta') === state.ctaLevel);
-  });
-
-  // Regenerate current version
-  var newReply = generateReply(state.activeVersion);
-  refreshCurrentReply(newReply.text);
-
-  // Restore original CTA level in state but keep new text
-  state.ctaLevel = originalLevel;
-  ctaSegs.forEach(function(s) {
-    s.classList.toggle('selected', s.getAttribute('data-cta') === state.ctaLevel);
-  });
-
-  console.log('CTA enhanced to ' + boostMap[originalLevel] + ' for this reply.');
+  setEditingState(true);
+  try {
+    var userMsg = 'Here is a reply. Please enhance the call-to-action to "' + levelLabel + '" level. Keep the substantive help content unchanged; only adjust the closing CTA sentence(s) to be slightly more inviting.\n\nCurrent reply:\n---\n' + reply.text + '\n---\n\nReturn the FULL reply with enhanced CTA. No explanations.';
+    var enhanced = await callDeepSeekAPI(buildSystemPrompt(), userMsg, { maxTokens: 800, temperature: 0.5 });
+    refreshCurrentReply(enhanced);
+    console.log('AI enhanced CTA to:', targetLevel);
+  } catch (err) {
+    showError('增强 CTA 失败：' + (err.message || '未知错误'));
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 4000);
+  } finally {
+    setEditingState(false);
+  }
 }
 
 // -- Remove CTA: strip CTA from reply --
@@ -2257,8 +2348,8 @@ function removeCTA() {
   console.log('CTA removed.');
 }
 
-// -- Rewrite specific sections --
-function rewriteSection(section) {
+// -- Rewrite specific sections (AI-powered) --
+async function rewriteSection(section) {
   var reply = state.replies[state.activeVersion];
   if (!reply || !reply.text) {
     showError('暂无回复内容可重写。');
@@ -2266,45 +2357,36 @@ function rewriteSection(section) {
     return;
   }
 
-  var template = PROBLEM_TEMPLATES[state.problemType];
-  if (!template || !template.logic) return;
+  var instructions = {
+    empathy: 'Rewrite ONLY the opening empathy/sympathy part to be more genuine and connected to the specific situation. Keep the rest unchanged.',
+    diagnosis: 'Rewrite ONLY the diagnosis/analysis portion to be more specific and actionable. Keep the rest unchanged.',
+    example: 'Rewrite ONLY the example/concrete illustration portion to be more vivid and relevant. Keep the rest unchanged.',
+    cta: 'Rewrite ONLY the closing call-to-action or invitation to be more natural. Keep the rest unchanged.',
+  };
 
-  var paragraphs = reply.text.split('\n\n');
-  var logic = template.logic;
-  var tone = state.tone;
-
-  switch (section) {
-    case 'empathy':
-      if (logic.empathy && paragraphs.length > 0) {
-        paragraphs[0] = applyTone(logic.empathy, tone);
-      }
-      break;
-    case 'diagnosis':
-      if (logic.diagnosis && paragraphs.length > 1) {
-        paragraphs[1] = applyTone(logic.diagnosis, tone);
-      }
-      break;
-    case 'example':
-      // Find and replace the "For example" paragraph
-      for (var i = 0; i < paragraphs.length; i++) {
-        if (/^For example/i.test(paragraphs[i])) {
-          paragraphs[i] = applyTone('For example, ' + logic.example, tone);
-          break;
-        }
-      }
-      break;
-    case 'cta':
-      // Replace last paragraph if it's CTA-like
-      var last = paragraphs[paragraphs.length - 1];
-      if (/DM|checklist|template|hope that helps|happy to share|feel free/i.test(last) && logic.cta) {
-        paragraphs[paragraphs.length - 1] = logic.cta;
-      }
-      break;
+  setEditingState(true);
+  try {
+    var userMsg = (instructions[section] || instructions.empathy) + '\n\nCurrent reply:\n---\n' + reply.text + '\n---\n\nReturn the FULL reply with only that section rewritten. No explanations.';
+    var rewritten = await callDeepSeekAPI(buildSystemPrompt(), userMsg, { maxTokens: 800, temperature: 0.7 });
+    refreshCurrentReply(rewritten);
+    console.log('AI rewrote section:', section);
+  } catch (err) {
+    showError('重写失败：' + (err.message || '未知错误'));
+    setTimeout(function() { els.errorMsg.textContent = ''; }, 4000);
+  } finally {
+    setEditingState(false);
   }
+}
 
-  var newText = paragraphs.join('\n\n');
-  refreshCurrentReply(newText);
-  console.log('Rewrote section:', section);
+// -- setEditingState: Manage button states during async editing --
+function setEditingState(editing) {
+  var buttons = document.querySelectorAll('.action-row .btn');
+  buttons.forEach(function(b) { b.disabled = editing; });
+  if (editing) {
+    els.replyCard.classList.add('generating');
+  } else {
+    els.replyCard.classList.remove('generating');
+  }
 }
 
 // ============================================================
@@ -2653,8 +2735,17 @@ function checkOnlineStatus() {
   if (!banner) return;
   if (!navigator.onLine) {
     banner.classList.add('show');
+    // Disable generate button when offline
+    if (els.btnGenerate) {
+      els.btnGenerate.title = '离线状态下无法使用 AI 生成';
+      els.btnGenerate.style.opacity = '0.6';
+    }
   } else {
     banner.classList.remove('show');
+    if (els.btnGenerate) {
+      els.btnGenerate.title = '';
+      els.btnGenerate.style.opacity = '';
+    }
   }
 }
 
@@ -2744,8 +2835,8 @@ checkOnlineStatus();
 syncState();
 renderCtaSuggestion();
 renderHistory();
-console.log('Reddit Reply Assistant v1.0 — All 6 batches complete.');
-console.log('Features: reply generation | 8 templates | risk detection | 6 editing tools | history');
+console.log('Reddit Reply Assistant v2.0 — DeepSeek AI powered');
+console.log('Features: AI reply generation | content-aware prompts | risk detection | 6 editing tools | history');
 console.log('Accessibility: aria-labels | keyboard shortcuts | responsive layout');
 console.log('State:', state);
 
