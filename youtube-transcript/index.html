@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube 逐字稿采集器</title>
+  <link rel="stylesheet" href="style.css">
+  <!--
+    API 地址配置：
+    本地开发 → http://localhost:8000
+    Render 部署后 → 替换为 https://xxx.onrender.com
+    页面在 github.io 域名下会自动使用 Render 地址
+  -->
+  <script>
+    const API_BASE = (function() {
+      if (window.location.hostname.includes("github.io")) {
+        return "https://youtube-transcript-api-2nbr.onrender.com";
+      }
+      return "http://localhost:8001";
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Toast 提示 -->
+  <div id="toast" class="toast hidden"></div>
+
+  <div class="container">
+
+    <!-- 头部 -->
+    <header class="header">
+      <a href="../" class="back-link">← 返回主站</a>
+      <h1>YouTube 逐字稿采集器</h1>
+      <p class="subtitle">输入 YouTube 频道、播放列表或视频链接，批量提取字幕和逐字稿，生成可下载的素材资料包。</p>
+    </header>
+
+    <!-- 输入配置区 -->
+    <section id="config-section" class="card">
+      <h2>采集配置</h2>
+
+      <div class="form-group">
+        <label for="source-url">YouTube 链接</label>
+        <input type="url" id="source-url" placeholder="https://www.youtube.com/watch?v=..." autofocus>
+        <span class="help-text">支持频道、播放列表、单视频链接</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="max-videos">最大视频数</label>
+          <select id="max-videos">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="30" selected>30</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="languages">字幕语言</label>
+          <select id="languages">
+            <option value="en" selected>仅英文</option>
+            <option value="zh">仅中文</option>
+            <option value="all">所有语言</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="subtitle-mode">字幕类型</label>
+          <select id="subtitle-mode">
+            <option value="manual_and_auto" selected>人工 + 自动</option>
+            <option value="manual">仅人工字幕</option>
+            <option value="auto">仅自动字幕</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group muted">
+        <label>无字幕处理</label>
+        <p class="muted-text">当前版本：跳过并标记（后续版本将支持音频转写）</p>
+      </div>
+
+      <button id="start-btn" class="btn-primary">
+        <span class="btn-text">开始采集</span>
+        <span class="spinner hidden"></span>
+      </button>
+    </section>
+
+    <!-- 任务进度区 -->
+    <section id="progress-section" class="card hidden">
+      <h2>采集进度</h2>
+
+      <div class="status-row">
+        <span id="status-label" class="status-badge status-pending">等待中</span>
+        <span id="status-message" class="status-message"></span>
+      </div>
+
+      <div class="progress-bar-wrapper">
+        <div id="progress-bar" class="progress-bar" style="width: 0%"></div>
+      </div>
+      <p id="progress-percent" class="progress-text">0%</p>
+
+      <div class="stats-row">
+        <div class="stat"><span class="stat-label">总视频</span><span id="stat-total" class="stat-value">0</span></div>
+        <div class="stat"><span class="stat-label">已处理</span><span id="stat-processed" class="stat-value">0</span></div>
+        <div class="stat"><span class="stat-label">成功</span><span id="stat-success" class="stat-value stat-green">0</span></div>
+        <div class="stat"><span class="stat-label">无字幕</span><span id="stat-nosub" class="stat-value stat-yellow">0</span></div>
+        <div class="stat"><span class="stat-label">失败</span><span id="stat-failed" class="stat-value stat-red">0</span></div>
+      </div>
+    </section>
+
+    <!-- 视频结果区 -->
+    <section id="results-section" class="card hidden">
+      <h2>采集结果</h2>
+
+      <div class="filter-row">
+        <button class="filter-btn active" data-filter="">全部</button>
+        <button class="filter-btn" data-filter="completed">已完成</button>
+        <button class="filter-btn" data-filter="no_subtitle">无字幕</button>
+        <button class="filter-btn" data-filter="failed">失败</button>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="video-table">
+          <thead>
+            <tr>
+              <th>标题</th>
+              <th>日期</th>
+              <th>时长</th>
+              <th>字幕状态</th>
+              <th>语言</th>
+              <th>来源</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="video-tbody">
+            <tr><td colspan="7" class="empty-state">暂无视频数据</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 导出下载区 -->
+    <section id="download-section" class="card hidden">
+      <h2>导出资料包</h2>
+      <p class="success-message">🎉 采集完成！</p>
+      <p class="help-text">资料包包含：metadata.csv、metadata.json、index.md、transcripts/（逐字稿 TXT + VTT）</p>
+      <button id="download-btn" class="btn-primary btn-download">下载完整资料包 (ZIP)</button>
+    </section>
+
+    <!-- 合规提示 -->
+    <footer id="compliance-section">
+      <p>本工具仅用于学习研究、内容整理和已授权素材管理。请勿下载、传播或商业化使用未获授权的视频、音频或字幕内容。使用本工具生成公开资料或商业产品时，请进行原创整理、综合分析和适当引用，不要大段复制原始字幕内容。</p>
+    </footer>
+  </div>
+
+  <!-- 逐字稿模态窗口 -->
+  <div id="transcript-modal" class="modal-overlay hidden">
+    <div class="modal-content" role="dialog" aria-modal="true" aria-label="逐字稿查看器">
+      <div class="modal-header">
+        <h3 id="modal-title">逐字稿</h3>
+        <button id="modal-close" class="modal-close" aria-label="关闭">&times;</button>
+      </div>
+      <div class="modal-meta">
+        <span id="modal-lang"></span>
+        <span class="meta-sep">|</span>
+        <span id="modal-source"></span>
+      </div>
+      <div id="modal-body" class="modal-body">
+        <p class="loading-text">加载中...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
