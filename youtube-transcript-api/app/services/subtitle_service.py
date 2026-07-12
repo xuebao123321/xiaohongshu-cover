@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import logging
+import os
 
 from youtube_transcript_api import YouTubeTranscriptApi
 from youtube_transcript_api._errors import NoTranscriptFound, TranscriptsDisabled
+from youtube_transcript_api.proxies import ProxyConfig
 
 logger = logging.getLogger(__name__)
 
@@ -29,12 +31,28 @@ def _make_http_client():
         return None
 
 
+def _make_proxy_config():
+    """Build ProxyConfig from TRANSCRIPT_PROXY env var.
+    Format: http://user:pass@host:port or just http://host:port"""
+    proxy_url = os.environ.get("TRANSCRIPT_PROXY", "")
+    if not proxy_url:
+        return None
+    return ProxyConfig(http=proxy_url, https=proxy_url)
+
+
 class SubtitleService:
-    """Fetch subtitles for a YouTube video via youtube-transcript-api (v1.2.x)."""
+    """Fetch subtitles for a YouTube video via youtube-transcript-api (v1.2.x).
+
+    Proxy support: set TRANSCRIPT_PROXY env var before starting the server.
+      TRANSCRIPT_PROXY=http://user:pass@proxy.example:8080
+    """
 
     def __init__(self, storage_dir: str):
         self._storage_dir = storage_dir  # kept for interface compatibility
         self._http_client = _make_http_client()
+        self._proxy_config = _make_proxy_config()
+        if self._proxy_config:
+            logger.info("Transcript API using proxy")
 
     # ------------------------------------------------------------------
     async def fetch_subtitles(
@@ -73,7 +91,10 @@ class SubtitleService:
     ) -> dict:
         """Single attempt via youtube-transcript-api v1.2.x."""
         try:
-            api = YouTubeTranscriptApi(http_client=self._http_client)
+            api = YouTubeTranscriptApi(
+                http_client=self._http_client,
+                proxy_config=self._proxy_config,
+            )
             transcript_list = api.list(video_id)
         except (NoTranscriptFound, TranscriptsDisabled) as exc:
             logger.debug("No transcripts for %s: %s", video_id, exc)

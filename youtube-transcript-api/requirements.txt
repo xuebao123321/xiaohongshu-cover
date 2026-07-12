@@ -3,6 +3,7 @@ uvicorn[standard]==0.30.6
 yt-dlp==2025.10.14
 youtube-transcript-api==1.2.4
 browser-cookie3==0.20.1
+faster-whisper==1.2.1
 pydantic==2.9.2
 pydantic-settings==2.5.2
 python-multipart==0.0.12

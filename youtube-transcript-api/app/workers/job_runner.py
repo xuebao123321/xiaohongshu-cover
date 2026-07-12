@@ -16,6 +16,7 @@ from app.models.job import Job
 from app.models.video import Video
 from app.services.youtube_extractor import YouTubeExtractor, ExtractionError
 from app.services.subtitle_service import SubtitleService
+from app.services.whisper_service import WhisperService
 from app.services.transcript_converter import TranscriptConverter
 from app.services.export_service import ExportService
 from app.utils.filenames import generate_transcript_filename
@@ -41,6 +42,7 @@ class JobRunner:
         self._session_factory = session_factory
         self._extractor = YouTubeExtractor()
         self._subtitle_service = SubtitleService(settings.STORAGE_DIR)
+        self._whisper = WhisperService(storage_dir=settings.STORAGE_DIR)
         self._converter = TranscriptConverter()
         self._exporter = ExportService()
 
@@ -127,6 +129,17 @@ class JobRunner:
             except Exception as exc:
                 logger.warning("Subtitle fetch error for %s: %s", v_obj.video_id, exc)
                 sub_result = {"status": "none", "languages": [], "transcripts": []}
+
+            if sub_result["status"] == "none":
+                # Whisper fallback: download audio + transcribe locally
+                logger.info("No subtitles for %s, falling back to Whisper", v_obj.video_id)
+                try:
+                    sub_result = await asyncio.to_thread(
+                        self._whisper.transcribe_video, v_obj.url
+                    )
+                except Exception as exc:
+                    logger.warning("Whisper fallback failed for %s: %s", v_obj.video_id, exc)
+                    sub_result = {"status": "none", "languages": [], "transcripts": []}
 
             if sub_result["status"] == "none":
                 await self._update_video(
