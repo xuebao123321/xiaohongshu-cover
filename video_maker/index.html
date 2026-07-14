@@ -2511,6 +2511,54 @@ function triggerDownload(blob, filename) {
   showToast('✅ 视频已开始下载');
 }
 
+// ─── 共享 ffmpeg.wasm 加载器(单例,两种模式复用) ───
+let _ffmpegLoader = null;
+
+async function loadFFmpeg() {
+  if (_ffmpegLoader) return _ffmpegLoader;
+  _ffmpegLoader = (async () => {
+    showToast('📦 正在加载 ffmpeg.wasm (~31MB)...');
+    const mod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js');
+    const ffmpeg = new mod.FFmpeg();
+    await ffmpeg.load();
+    console.log('[video_maker] ffmpeg.wasm 加载完毕');
+    return ffmpeg;
+  })();
+  _ffmpegLoader.catch(() => { _ffmpegLoader = null; }); // 失败后允许重试
+  return _ffmpegLoader;
+}
+
+// ─── WebM → MP4 转码(ffmpeg.wasm,用于视频处理模式含音频时) ───
+async function convertWebMToMP4(webmBlob) {
+  showToast('🔄 正在将 WebM 转换为 MP4 (H.264+AAC)...');
+  const ffmpeg = await loadFFmpeg();
+
+  const webmData = new Uint8Array(await webmBlob.arrayBuffer());
+  await ffmpeg.writeFile('input_vp.webm', webmData);
+
+  await ffmpeg.exec([
+    '-i', 'input_vp.webm',
+    '-c:v', 'libx264',
+    '-pix_fmt', 'yuv420p',
+    '-preset', 'fast',
+    '-crf', '23',
+    '-c:a', 'aac',
+    '-b:a', '128k',
+    '-movflags', '+faststart',
+    'output_vp.mp4'
+  ]);
+
+  const mp4Data = await ffmpeg.readFile('output_vp.mp4');
+  const mp4Blob = new Blob([mp4Data.buffer], { type: 'video/mp4' });
+
+  // 清理虚拟文件
+  await ffmpeg.deleteFile('input_vp.webm').catch(() => {});
+  await ffmpeg.deleteFile('output_vp.mp4').catch(() => {});
+
+  console.log('[video_maker] WebM→MP4 转码完成, 大小:', formatSize(mp4Blob.size));
+  return mp4Blob;
+}
+
 // ─── 方案 B: Canvas + MediaRecorder 导出(fallback,优先尝试 mp4 编码) ───
 async function exportWithMediaRecorder() {
   const canvas = document.createElement('canvas');
@@ -2649,17 +2697,7 @@ async function exportWithMediaRecorder() {
 
 // ─── 方案 B: ffmpeg.wasm 导出(高级方案,需 CDN 加载) ───
 async function exportWithFFmpeg() {
-  // 动态加载 ffmpeg.wasm
-  let FFmpegClass;
-  try {
-    const mod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js');
-    FFmpegClass = mod.FFmpeg;
-  } catch (e) {
-    throw new Error('ffmpeg.wasm 加载失败: ' + e.message);
-  }
-
-  const ffmpeg = new FFmpegClass();
-  await ffmpeg.load();
+  const ffmpeg = await loadFFmpeg();
 
   const totalFrames = calculateTotalFrames();
 
@@ -4665,16 +4703,32 @@ async function exportVideoOnly() {
     const recorderStream = outTracks.length > 1 ? new MediaStream(outTracks) : canvasStream;
 
     const hasAudio = !!(videoAudioTrack || bgmAudioTrack);
-    let mimeType, isMp4;
-    if (hasAudio) {
+    const targetFormat = VIDEO_STATE.outputFormat || 'mp4';
+    let mimeType, actualExt, needsFFmpegConversion;
+
+    if (targetFormat === 'mp4' && hasAudio) {
+      // MP4 + 音频: MediaRecorder 不支持,先用 WebM 录制再 ffmpeg 转码
       const wc = ['video/webm;codecs=vp8,opus', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8', 'video/webm'];
       mimeType = 'video/webm'; for (const c of wc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-      isMp4 = false;
-    } else {
+      actualExt = 'mp4';
+      needsFFmpegConversion = true;
+    } else if (targetFormat === 'mp4' && !hasAudio) {
+      // MP4 + 无音频: MediaRecorder 直接支持
       const mc = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp8', 'video/webm'];
       mimeType = 'video/webm'; for (const c of mc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-      isMp4 = mimeType.startsWith('video/mp4');
+      actualExt = mimeType.startsWith('video/mp4') ? 'mp4' : 'webm';
+      needsFFmpegConversion = false;
+    } else {
+      // WebM: 直接录制
+      const wc = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm;codecs=vp8', 'video/webm'];
+      mimeType = 'video/webm'; for (const c of wc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
+      actualExt = 'webm';
+      needsFFmpegConversion = false;
     }
+
+    console.log('[video_maker] 编码策略 | 目标:', targetFormat,
+                '| 录制MIME:', mimeType, '| 最终格式:', actualExt,
+                '| 需转码:', needsFFmpegConversion, '| 音频:', hasAudio ? '有' : '无');
 
     const chunks = [];
     const recorder = new MediaRecorder(recorderStream, { mimeType, videoBitsPerSecond: 8000000 });
@@ -4769,10 +4823,10 @@ async function exportVideoOnly() {
     videoElAudio.removeAttribute('src'); videoElAudio.load();
     videoElFrame.removeAttribute('src'); videoElFrame.load();
 
-    const ext = isMp4 ? 'mp4' : 'webm';
-    const blob = new Blob(chunks, { type: mimeType });
+    let blob = new Blob(chunks, { type: mimeType });
     const wallTime = (performance.now() - startWall) / 1000;
-    console.log('[video_maker] 完成 |', ext, '|', formatSize(blob.size),
+    const recordedSize = blob.size;
+    console.log('[video_maker] 录制完成 |', mimeType, '|', formatSize(blob.size),
                 '| 输入:', exportDuration.toFixed(1), 's',
                 '| 帧数:', frameCount, '| 耗时:', wallTime.toFixed(1), 's');
 
@@ -4780,10 +4834,28 @@ async function exportVideoOnly() {
       throw new Error('导出文件过小,可能视频处理异常');
     }
 
+    // ══════ ffmpeg.wasm 转码: WebM → MP4 ══════
+    if (needsFFmpegConversion) {
+      STATE.exportProgress = 0.92;
+      updateExportUI();
+      try {
+        blob = await convertWebMToMP4(blob);
+        STATE.exportProgress = 0.98;
+        updateExportUI();
+      } catch (ffmpegErr) {
+        console.warn('[video_maker] WebM→MP4 转码失败,降级为 WebM:', ffmpegErr.message);
+        showToast('⚠️ MP4 转码失败,已导出为 WebM 格式');
+        actualExt = 'webm';
+        // blob 保持为 MediaRecorder 录制的原始 WebM
+      }
+    }
+
     const ts = new Date().toISOString().slice(0,10).replace(/-/g,'') + '-' +
                new Date().toTimeString().slice(0,5).replace(':','');
-    triggerDownload(blob, `processed-video-${ts}.${ext}`);
-    showToast('✅ 导出完成! ' + formatSize(blob.size) + ' · ' + exportDuration.toFixed(1) + 's');
+    triggerDownload(blob, `processed-video-${ts}.${actualExt}`);
+
+    const finalFormat = actualExt.toUpperCase();
+    showToast(`✅ 导出完成! ${finalFormat} · ${formatSize(blob.size)} · ${exportDuration.toFixed(1)}s`);
 
   } catch (err) {
     console.error('[video_maker] 导出失败:', err);
