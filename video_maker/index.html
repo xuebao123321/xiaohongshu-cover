@@ -4854,12 +4854,19 @@ async function exportVideoOnly() {
       STATE.exportProgress = 0.92;
       updateExportUI();
       try {
+        // 预检 SharedArrayBuffer(ffmpeg.wasm 必需)
+        if (typeof SharedArrayBuffer === 'undefined') {
+          throw new Error('SharedArrayBuffer 不可用,请刷新页面后重试(coi-serviceworker 可能尚未激活)');
+        }
         blob = await convertWebMToMP4(blob);
         STATE.exportProgress = 0.98;
         updateExportUI();
       } catch (ffmpegErr) {
         console.warn('[video_maker] WebM→MP4 转码失败,降级为 WebM:', ffmpegErr.message);
-        showToast('⚠️ MP4 转码失败,已导出为 WebM 格式');
+        const hint = typeof SharedArrayBuffer === 'undefined'
+          ? '💡 请刷新页面后重试'
+          : '💡 可尝试刷新页面或更换浏览器';
+        showToast('⚠️ MP4 转码失败,已导出为 WebM | ' + hint);
         actualExt = 'webm';
         // blob 保持为 MediaRecorder 录制的原始 WebM
       }
