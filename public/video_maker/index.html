@@ -2529,7 +2529,9 @@ async function loadFFmpeg() {
       document.head.appendChild(script);
     });
 
-    const { createFFmpeg } = window.FFmpegWASM || window;
+    // v0.11.6 全局变量是 FFmpeg,不是 FFmpegWASM
+    const FFmpegNS = window.FFmpeg || window.FFmpegWASM || window;
+    const { createFFmpeg } = FFmpegNS;
     if (!createFFmpeg) throw new Error('无法解析 createFFmpeg');
     const ffmpeg = createFFmpeg({
       log: false,
