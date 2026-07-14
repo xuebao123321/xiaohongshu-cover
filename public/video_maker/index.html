@@ -2518,8 +2518,23 @@ async function loadFFmpeg() {
   if (_ffmpegLoader) return _ffmpegLoader;
   _ffmpegLoader = (async () => {
     showToast('📦 正在加载 ffmpeg.wasm (~31MB)...');
-    const mod = await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js');
-    const ffmpeg = new mod.FFmpeg();
+
+    // 通过 <script> 标签加载 UMD 构建(最可靠的浏览器加载方式)
+    const url = 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js';
+    await new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = url;
+      script.onload = resolve;
+      script.onerror = () => reject(new Error('ffmpeg.wasm CDN 加载失败'));
+      document.head.appendChild(script);
+    });
+
+    // UMD 构建将 FFmpeg 暴露在 FFmpegWASM 命名空间下
+    const FFmpegClass = (window.FFmpegWASM && window.FFmpegWASM.FFmpeg)
+                     || window.FFmpeg
+                     || (window.FFmpegWASM && window.FFmpegWASM.default);
+    if (!FFmpegClass) throw new Error('无法解析 FFmpeg 构造函数');
+    const ffmpeg = new FFmpegClass();
     await ffmpeg.load();
     console.log('[video_maker] ffmpeg.wasm 加载完毕');
     return ffmpeg;
