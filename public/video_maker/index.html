@@ -2519,8 +2519,8 @@ async function loadFFmpeg() {
   _ffmpegLoader = (async () => {
     showToast('📦 正在加载 ffmpeg.wasm (~31MB)...');
 
-    // 通过 <script> 标签加载 UMD 构建(最可靠的浏览器加载方式)
-    const url = 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js';
+    // v0.11.6: 通过 <script> 加载 UMD,内部用 Blob URL 创建 Worker(绕过跨域限制)
+    const url = 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js';
     await new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = url;
@@ -2529,12 +2529,12 @@ async function loadFFmpeg() {
       document.head.appendChild(script);
     });
 
-    // UMD 构建将 FFmpeg 暴露在 FFmpegWASM 命名空间下
-    const FFmpegClass = (window.FFmpegWASM && window.FFmpegWASM.FFmpeg)
-                     || window.FFmpeg
-                     || (window.FFmpegWASM && window.FFmpegWASM.default);
-    if (!FFmpegClass) throw new Error('无法解析 FFmpeg 构造函数');
-    const ffmpeg = new FFmpegClass();
+    const { createFFmpeg } = window.FFmpegWASM || window;
+    if (!createFFmpeg) throw new Error('无法解析 createFFmpeg');
+    const ffmpeg = createFFmpeg({
+      log: false,
+      corePath: 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js',
+    });
     await ffmpeg.load();
     console.log('[video_maker] ffmpeg.wasm 加载完毕');
     return ffmpeg;
@@ -2543,15 +2543,15 @@ async function loadFFmpeg() {
   return _ffmpegLoader;
 }
 
-// ─── WebM → MP4 转码(ffmpeg.wasm,用于视频处理模式含音频时) ───
+// ─── WebM → MP4 转码(ffmpeg.wasm v0.11 API,用于视频处理模式含音频时) ───
 async function convertWebMToMP4(webmBlob) {
   showToast('🔄 正在将 WebM 转换为 MP4 (H.264+AAC)...');
   const ffmpeg = await loadFFmpeg();
 
   const webmData = new Uint8Array(await webmBlob.arrayBuffer());
-  await ffmpeg.writeFile('input_vp.webm', webmData);
+  ffmpeg.FS('writeFile', 'input_vp.webm', webmData);
 
-  await ffmpeg.exec([
+  await ffmpeg.run(
     '-i', 'input_vp.webm',
     '-c:v', 'libx264',
     '-pix_fmt', 'yuv420p',
@@ -2561,14 +2561,14 @@ async function convertWebMToMP4(webmBlob) {
     '-b:a', '128k',
     '-movflags', '+faststart',
     'output_vp.mp4'
-  ]);
+  );
 
-  const mp4Data = await ffmpeg.readFile('output_vp.mp4');
+  const mp4Data = ffmpeg.FS('readFile', 'output_vp.mp4');
   const mp4Blob = new Blob([mp4Data.buffer], { type: 'video/mp4' });
 
   // 清理虚拟文件
-  await ffmpeg.deleteFile('input_vp.webm').catch(() => {});
-  await ffmpeg.deleteFile('output_vp.mp4').catch(() => {});
+  try { ffmpeg.FS('unlink', 'input_vp.webm'); } catch (e) {}
+  try { ffmpeg.FS('unlink', 'output_vp.mp4'); } catch (e) {}
 
   console.log('[video_maker] WebM→MP4 转码完成, 大小:', formatSize(mp4Blob.size));
   return mp4Blob;
@@ -2716,17 +2716,17 @@ async function exportWithFFmpeg() {
 
   const totalFrames = calculateTotalFrames();
 
-  // 预处理每张图片,写入虚拟文件系统
+  // 预处理每张图片,写入虚拟文件系统 (v0.11: FS API 是同步的)
   for (let i = 0; i < STATE.images.length; i++) {
     const frameCanvas = await preprocessFrame(STATE.images[i], STATE.settings);
     const blob = await new Promise(resolve => frameCanvas.toBlob(resolve, 'image/png'));
     const data = new Uint8Array(await blob.arrayBuffer());
-    await ffmpeg.writeFile(`frame_${String(i).padStart(3, '0')}.png`, data);
+    ffmpeg.FS('writeFile', `frame_${String(i).padStart(3, '0')}.png`, data);
     STATE.exportProgress = ((i + 1) / STATE.images.length) * 0.5;
     updateExportUI();
   }
 
-  // 构建 FFmpeg 命令
+  // 构建 FFmpeg 命令 (v0.11: run() 传多个字符串参数,不用数组)
   const durationPerFrame = STATE.settings.secondsPerImage;
   let cmd = [
     '-framerate', `1/${durationPerFrame}`,
@@ -2741,7 +2741,7 @@ async function exportWithFFmpeg() {
   // 音乐处理
   if (!STATE.noMusic && STATE.audio) {
     const audioData = new Uint8Array(await STATE.audio.file.arrayBuffer());
-    await ffmpeg.writeFile('audio_input', audioData);
+    ffmpeg.FS('writeFile', 'audio_input', audioData);
     const totalDur = calculateTotalDuration();
     const startAt = STATE.audio.startAt || 0;
 
@@ -2760,20 +2760,20 @@ async function exportWithFFmpeg() {
 
   STATE.exportProgress = 0.55;
   updateExportUI();
-  await ffmpeg.exec(cmd);
+  await ffmpeg.run(...cmd);
 
   STATE.exportProgress = 0.9;
   updateExportUI();
-  const data = await ffmpeg.readFile('output.mp4');
+  const data = ffmpeg.FS('readFile', 'output.mp4');
   const blob = new Blob([data.buffer], { type: 'video/mp4' });
 
-  // 清理虚拟文件
+  // 清理虚拟文件 (v0.11: FS('unlink') 同步)
   for (let i = 0; i < STATE.images.length; i++) {
-    await ffmpeg.deleteFile(`frame_${String(i).padStart(3, '0')}.png`).catch(() => {});
+    try { ffmpeg.FS('unlink', `frame_${String(i).padStart(3, '0')}.png`); } catch (e) {}
   }
-  await ffmpeg.deleteFile('output.mp4').catch(() => {});
+  try { ffmpeg.FS('unlink', 'output.mp4'); } catch (e) {}
   if (!STATE.noMusic && STATE.audio) {
-    await ffmpeg.deleteFile('audio_input').catch(() => {});
+    try { ffmpeg.FS('unlink', 'audio_input'); } catch (e) {}
   }
 
   return { blob, ext: 'mp4' };
