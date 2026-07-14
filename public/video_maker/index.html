@@ -4706,20 +4706,16 @@ async function exportVideoOnly() {
     const targetFormat = VIDEO_STATE.outputFormat || 'mp4';
     let mimeType, actualExt, needsFFmpegConversion;
 
-    if (targetFormat === 'mp4' && hasAudio) {
-      // MP4 + 音频: MediaRecorder 不支持,先用 WebM 录制再 ffmpeg 转码
-      const wc = ['video/webm;codecs=vp8,opus', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8', 'video/webm'];
-      mimeType = 'video/webm'; for (const c of wc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-      actualExt = 'mp4';
-      needsFFmpegConversion = true;
-    } else if (targetFormat === 'mp4' && !hasAudio) {
-      // MP4 + 无音频: MediaRecorder 直接支持
-      const mc = ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp8', 'video/webm'];
+    if (targetFormat === 'mp4') {
+      // 目标 MP4: 优先尝试 MediaRecorder 原生 MP4,不支持则 WebM 录制后 ffmpeg 转码
+      const mc = hasAudio
+        ? ['video/webm;codecs=vp8,opus', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8', 'video/webm']
+        : ['video/mp4;codecs=avc1.42E01E', 'video/mp4;codecs=h264', 'video/webm;codecs=vp8,opus', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8', 'video/webm'];
       mimeType = 'video/webm'; for (const c of mc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
-      actualExt = mimeType.startsWith('video/mp4') ? 'mp4' : 'webm';
-      needsFFmpegConversion = false;
+      actualExt = 'mp4';
+      needsFFmpegConversion = !mimeType.startsWith('video/mp4'); // 如果浏览器不支持 MP4 录制,录完用 ffmpeg 转
     } else {
-      // WebM: 直接录制
+      // 目标 WebM: 直接录制
       const wc = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm;codecs=vp8', 'video/webm'];
       mimeType = 'video/webm'; for (const c of wc) { if (MediaRecorder.isTypeSupported(c)) { mimeType = c; break; } }
       actualExt = 'webm';
