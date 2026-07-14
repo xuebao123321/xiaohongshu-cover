@@ -392,6 +392,8 @@ button{font-family:inherit;cursor:pointer}
   .vm-phone-screen{width:340px}
 }
 </style>
+<!-- coi-serviceworker: 绕过 GitHub Pages 的 SharedArrayBuffer 跨域隔离限制 -->
+<script src="coi-serviceworker.js"></script>
 </head>
 <body>
 
@@ -2557,7 +2559,7 @@ async function convertWebMToMP4(webmBlob) {
     '-i', 'input_vp.webm',
     '-c:v', 'libx264',
     '-pix_fmt', 'yuv420p',
-    '-preset', 'fast',
+    '-preset', 'ultrafast',
     '-crf', '23',
     '-c:a', 'aac',
     '-b:a', '128k',
@@ -2735,7 +2737,7 @@ async function exportWithFFmpeg() {
     '-i', 'frame_%03d.png',
     '-c:v', 'libx264',
     '-pix_fmt', 'yuv420p',
-    '-preset', 'fast',
+    '-preset', 'ultrafast',
     '-crf', '23',
     '-r', String(STATE.settings.fps),
   ];
