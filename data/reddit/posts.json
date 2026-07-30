@@ -1,353 +1,5 @@
 [
   {
-    "id": "reddit_1uy6za8",
-    "redditId": "1uy6za8",
-    "title": "Part 2 of Supervisors suddenly want papers before viva: The easiest paper formats to write and to be accepted into a journal",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I negotiated with them, and was given 2 months post thesis writing to finish 2 papers and just have them in review! Thank you to everyone who helped me, I am very very grateful. </p> <p><strong>Current situation:</strong></p> <p>I've been given 2 months, to write 2 papers and have them in review. What are the easiest paper formats to write and get accepted? I know review articles are one of them.</p> <p>My own study has:</p> <ol> <li><p>3 surveys (quant and qual)(quant is quite weak and small/qual is quite robust) (stand alone data)</p></li> <li><p>1 participatory workshop (qual data)(qual is robust) (stand alone data)</p></li> </ol> <p>I really need help, I want to reduce my writing workload and also reduce the workload that would come with revisions. I also have a non academic job to start, so need this to be over asap. Will be leaving academia, so don't care about how well the papers do etc.</p> <p>My entire thesis will be done before i start writing.</p> <p>Which gives me some time to think strategically how to get this done, easily and fast.</p> <p>I want to write them quickly within the 2 months given and also not have too many revisions later. Still devastated over the whole situation, but trying to make it work for me.</p> <p>Field is: Social science, based in the UK. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Best_Neat6984\"> /u/Best_Neat6984 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy6za8/part_2_of_supervisors_suddenly_want_papers_before/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy6za8/part_2_of_supervisors_suddenly_want_papers_before/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy6za8/part_2_of_supervisors_suddenly_want_papers_before/",
-    "subreddit": "r/PhD",
-    "author": "/u/Best_Neat6984",
-    "publishedAt": "2026-07-16T16:00:40+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.765Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "journal, ESL academic writing, writing help",
-    "sourceType": "subreddit_new",
-    "contentHash": "141a22cf786637618d0ccb964dfd63be79e6e40d83097c53bfd0113608cdbafa",
-    "sourceKeywords": [
-      "journal",
-      "ESL academic writing",
-      "writing help"
-    ],
-    "sourceIds": [
-      "phd-new",
-      "phd-journal",
-      "phd-esl-writing",
-      "phd-writing-help"
-    ]
-  },
-  {
-    "id": "reddit_1uy4tbc",
-    "redditId": "1uy4tbc",
-    "title": "Do AI/ML research labs actually use agent frameworks (LangGraph, OpenAI Agents SDK, CrewAI, etc.), or do they build everything from scratch?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm trying to understand what the workflow looks like in research labs (especially PhD labs and university groups) that work on LLMs, AI agents, or applied AI. I'm planning to study in graduate school in Computer Science.</p> <p>There are now a lot of agent frameworks and tools available, such as:</p> <ul> <li>OpenAI Agents SDK</li> <li>LangChain / LangGraph</li> <li>CrewAI</li> <li>Google ADK</li> <li>AutoGen</li> <li>Semantic Kernel</li> <li>MCP</li> <li>PydanticAI</li> <li>Agno</li> <li>Mastra</li> </ul> <p>Do research groups actually use these frameworks in their projects, or do they mostly implement their own orchestration, tool calling, memory, and agent loops directly in Python? Or maybe it's a mixture of both ?</p> <p>I can understand why companies might use frameworks to ship products faster, but I'm curious about academia, where reproducibility and experimental control matter more.</p> <p>Some specific questions:</p> <ul> <li>If you're a PhD student or researcher, what does your codebase typically look like?</li> <li>Are frameworks common, or are they considered too opinionated?</li> <li>Which parts do you usually implement yourself (agent loop, planning, memory, RAG, evaluation, tracing, etc.)?</li> <li>Are there any frameworks that have become standard in research labs?</li> <li>If you're publishing papers, do reviewers or collaborators prefer minimal dependencies?</li> </ul> <p>I'd especially love to hear from PhD students, professors, or research engineers working on LLMs or AI agents.</p> <p>Thanks!</p> <p><strong>Edit with an Example :</strong> </p> <p>Prof X is a researcher/project lecturer closely affiliated with Y University, he works explicitly on multi-agent consensus-building and negotiation infrastructures designed to co-exist with humans. His work bridges traditional multi-agent path planning with LLM-based personal agents.</p> <p>Would he expect Lang graph from me or all the boilerplates written in code (which I know I will be using LLMs anyway)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/One_Fix5763\"> /u/One_Fix5763 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy4tbc/do_aiml_research_labs_actually_use_agent/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy4tbc/do_aiml_research_labs_actually_use_agent/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy4tbc/do_aiml_research_labs_actually_use_agent/",
-    "subreddit": "r/PhD",
-    "author": "/u/One_Fix5763",
-    "publishedAt": "2026-07-16T14:41:56+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.765Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "c5ced240eb48be7e60a4e0c64a4496f562e8b0e387bc52ad06ce2a8d41c80f33"
-  },
-  {
-    "id": "reddit_1uy47zm",
-    "redditId": "1uy47zm",
-    "title": "How to address this reviewers comment",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>So I've written a paper where I developed a three stage methodology to extract requirements for my domain. the first stage involved extracting them from the individual studies and keeping them as it were in those studies . After that, I developed some rules to unify them, such as if an attribute appeared in more than 50% of studies, then it was modelled as attribute and in the end, I combined all the unified models for different requirements.</p> <p>Now this is my own novel rules which I developed by using my experiencing of working in the field. Now the reviewer has commented the following</p> <p>\"It's not really developed -it is presented in a complete state without any real discussion. Where is the 'development'? What are you building on? What is guiding this part of work?\"</p> <p>now I'm not sure what this comment means. The way I understand it, he wants a citation for my methodology. But I developed this from my own experience, I didn't follow anyone And frankly speaking I couldn't find a citation that did all these 3 steps before.</p> <p>so how can I address this comment? perhaps I'm understanding it wrong.</p> <p>thanks in advance.</p> <p>Edit: Thanks everyone, I pretty much got the idea of what to do. It's amazing how sometimes you loose the ability to think when you're working on a thing for several months. An outside perspective surely helps.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/helomithrandir\"> /u/helomithrandir </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy47zm/how_to_address_this_reviewers_comment/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy47zm/how_to_address_this_reviewers_comment/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy47zm/how_to_address_this_reviewers_comment/",
-    "subreddit": "r/PhD",
-    "author": "/u/helomithrandir",
-    "publishedAt": "2026-07-16T14:19:19+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.765Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "reviewer comments",
-    "sourceType": "subreddit_new",
-    "contentHash": "e1246f3b767dcc829f7f12a51d62639ccec5fa48fa4b90d640e517767bbdd761",
-    "sourceKeywords": [
-      "reviewer comments"
-    ],
-    "sourceIds": [
-      "phd-new",
-      "phd-reviewer-comments"
-    ]
-  },
-  {
-    "id": "reddit_1uy4084",
-    "redditId": "1uy4084",
-    "title": "Foreign Students’ Time in US Restricted Under Finalized DHS Rule",
-    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1uy4084/foreign_students_time_in_us_restricted_under/\"> <img src=\"https://external-preview.redd.it/-IUFWIhioJ8MKJvT9xp1mgAZ1KU95dXkoQ3nZfJnJeo.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=a2be115067f64ff6d5f8c4e6d1cd03f752717519\" alt=\"Foreign Students’ Time in US Restricted Under Finalized DHS Rule\" title=\"Foreign Students’ Time in US Restricted Under Finalized DHS Rule\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>Foreign students on F-1 visas will be limited to four-year stays in the US under new regulations finalized by the Department of Homeland Security.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/AdRemarkable3043\"> /u/AdRemarkable3043 </a> <br/> <span><a href=\"https://news.bloomberglaw.com/tech-and-telecom-law/foreign-students-time-in-us-restricted-under-finalized-dhs-rule\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy4084/foreign_students_time_in_us_restricted_under/\">[comments]</a></span> </td></tr></table>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy4084/foreign_students_time_in_us_restricted_under/",
-    "subreddit": "r/PhD",
-    "author": "/u/AdRemarkable3043",
-    "publishedAt": "2026-07-16T14:10:58+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.765Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "1452de4e8209f81c36986a1a42e4100404acede5740edc9d5fe5ee380dc94649"
-  },
-  {
-    "id": "reddit_1uy2whm",
-    "redditId": "1uy2whm",
-    "title": "What is your research elevator pitch?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>This is an oldie but goodie. For those new to it, the premise is that you're in an elevator and you have to explain your research to someone before the elevator reaches the next floor. So it has to be short, sweet, and compelling enough that they might consider getting off with you to ask a follow up question.</p> <p>Mine is always a work in progress but right now it goes something like this:</p> <p>I am interested in how we imagine reality through our interactions with objects</p> <p>What's yours?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/unseemlycandour\"> /u/unseemlycandour </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2whm/what_is_your_research_elevator_pitch/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2whm/what_is_your_research_elevator_pitch/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy2whm/what_is_your_research_elevator_pitch/",
-    "subreddit": "r/PhD",
-    "author": "/u/unseemlycandour",
-    "publishedAt": "2026-07-16T13:28:01+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "335cd0f574241d5430d2e132278a969355d5679e515f722fd24f9d4ba161f0a2"
-  },
-  {
-    "id": "reddit_1uy2u9v",
-    "redditId": "1uy2u9v",
-    "title": "Research proposal defence",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>My research proposal defense is in two days my program is a PhD in law. Any tips on how to be well prepared what to expect?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Alarmed_Listen4228\"> /u/Alarmed_Listen4228 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2u9v/research_proposal_defence/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2u9v/research_proposal_defence/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy2u9v/research_proposal_defence/",
-    "subreddit": "r/PhD",
-    "author": "/u/Alarmed_Listen4228",
-    "publishedAt": "2026-07-16T13:25:30+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "96e02aba0f0445d942edeb7f92f521bb29791546b5ae02a1e16677cfe5190a51"
-  },
-  {
-    "id": "reddit_1uy2tun",
-    "redditId": "1uy2tun",
-    "title": "VIVA countdown",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>My VIVA is NEXT WEEK! (I’m a social scientist)</p> <p>I’ve had a mock viva with my supervisory team which they said I did brilliantly with.<br/> My head of department has said she is very confident I’ll do great. </p> <p>But I do not feel prepared, AT ALL! </p> <p>Was there anything in your viva that caught you by surprise? </p> <p>Any tips? I’m panicking, a lot. It’s taken a long time to get here (as it does for anybody getting to this stage of a PhD) and I just don’t want to mess it up. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/artificiallyfed\"> /u/artificiallyfed </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2tun/viva_countdown/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2tun/viva_countdown/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy2tun/viva_countdown/",
-    "subreddit": "r/PhD",
-    "author": "/u/artificiallyfed",
-    "publishedAt": "2026-07-16T13:24:59+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "02535b0fe67b9420c4119b9ced938eabc1d2848377285cba2506f49accb97bec"
-  },
-  {
-    "id": "reddit_1uy2bw8",
-    "redditId": "1uy2bw8",
-    "title": "Am I overreacting or if this is as concerning as it feels.",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>A while ago, I worked as a pre-doc under a supervisor. I'm now in a PhD program at a different institution.</p> <p>We both have submissions to a major conference coming up. Yesterday, he contacted me and demanded that I withdraw my work, accusing me of stealing his work. He also threatened to report me to both the conference committee and my institution if I didn't withdraw.</p> <p>The topic of my work is related to a general area I was introduced to while working with him. Back then, he asked me to write a literature review on that topic and told me that if the work was eventually published, I would receive authorship.</p> <p>After starting my PhD, I continued working on this topic, but my project took a completely different direction. For example, if his work is about generational differences among Reddit users, mine is about the extent to which Reddit users also use Instagram. They're in the same topic but ask entirely different research questions.</p> <p>I'm confident my current work is independent, and I've kept emails, drafts, and other documentation showing how it developed. I replied that I disagreed with his accusation and was happy to discuss the issue further.</p> <p>He then asked me to send him my full manuscript.</p> <p>I declined. Since it's only a poster presentation, I told him I'd be happy to send him my completed poster instead.</p> <p>He never responded.</p> <p>Afterward, I remembered the literature review I had written for him. I looked up his conference abstract, and it gave me the strong impression that he had incorporated parts of that literature review into his own work, even though I wasn't credited. Otherwise I don't understand why he was so worried and even tried to threat me.</p> <p>One more thing makes this even stranger: I'm fairly sure he never actually read my abstract before accusing me. If he had, he would have seen that my project is fundamentally different from his.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/NeedleworkerFit4556\"> /u/NeedleworkerFit4556 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2bw8/am_i_overreacting_or_if_this_is_as_concerning_as/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy2bw8/am_i_overreacting_or_if_this_is_as_concerning_as/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy2bw8/am_i_overreacting_or_if_this_is_as_concerning_as/",
-    "subreddit": "r/PhD",
-    "author": "/u/NeedleworkerFit4556",
-    "publishedAt": "2026-07-16T13:04:49+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "4a641275f7df1fa439fcbb566411819d1ed8451519e13a03069915c185f8e8dc"
-  },
-  {
-    "id": "reddit_1uy053s",
-    "redditId": "1uy053s",
-    "title": "What's your writing system?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm not a PhD student, but I'm about to start writing my fist thesis. I know I'll have to read A LOT and juggle between citations, and I know that this is often a struggle for everyone. For this reasons, I'm asking you for advice. Who could give advices about this better than a PhD student?</p> <p>I'd like to know what is your writing system: for example, how do you organize and handle all of the paper and sources/bibliography/citations...? Where do you write your thesis (a google document? Do you use latex? Do you commit everything on github to have the history of every changes you have done to your thesis?)</p> <p>Do you have any genenal advice for someone writing their first thesis?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Middle_Finger7765\"> /u/Middle_Finger7765 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy053s/whats_your_writing_system/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy053s/whats_your_writing_system/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy053s/whats_your_writing_system/",
-    "subreddit": "r/PhD",
-    "author": "/u/Middle_Finger7765",
-    "publishedAt": "2026-07-16T11:28:30+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "196bc63ec8bbeac6ab12b2c01bceeb8fe00d9308655db78d43d71f2479e3b88f"
-  },
-  {
-    "id": "reddit_1uy00wu",
-    "redditId": "1uy00wu",
-    "title": "Research proposal for phd",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am planning to do phd via university route instead of embassy route of mext. So i read recent works of professors and now ready to write 1 or 2 page proposal along with an email. But dont know how to write such proposal ( done in masters but uncertain about phd. Can anyone tell me do and don't while writing it</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/PopApprehensive1623\"> /u/PopApprehensive1623 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy00wu/research_proposal_for_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy00wu/research_proposal_for_phd/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy00wu/research_proposal_for_phd/",
-    "subreddit": "r/PhD",
-    "author": "/u/PopApprehensive1623",
-    "publishedAt": "2026-07-16T11:22:52+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "1f94b6f5cfb1aaf053e6172c325cda6085d760cbced1071eefc55268d85c24ca"
-  },
-  {
-    "id": "reddit_1uxzrns",
-    "redditId": "1uxzrns",
-    "title": "Anyone else feeling this way with a qualitative project?",
-    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1uxzrns/anyone_else_feeling_this_way_with_a_qualitative/\"> <img src=\"https://preview.redd.it/e1h4t629rkdh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=9fa6973dc0a1e916ebf6f40c0a0b5db0ef2542c0\" alt=\"Anyone else feeling this way with a qualitative project? \" title=\"Anyone else feeling this way with a qualitative project? \" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>The iterative process challenges me in many ways, but the never ending feeling of not being done is the hardest one…</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Practical-Hope-3200\"> /u/Practical-Hope-3200 </a> <br/> <span><a href=\"https://i.redd.it/e1h4t629rkdh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxzrns/anyone_else_feeling_this_way_with_a_qualitative/\">[comments]</a></span> </td></tr></table>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxzrns/anyone_else_feeling_this_way_with_a_qualitative/",
-    "subreddit": "r/PhD",
-    "author": "/u/Practical-Hope-3200",
-    "publishedAt": "2026-07-16T11:10:08+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "72c7cb6a85d5ff448f1f6110ab6215d36c0a0b511e5bccfd3374395a2623d3ff"
-  },
-  {
-    "id": "reddit_1uxzi9s",
-    "redditId": "1uxzi9s",
-    "title": "How are we supposed to fund fieldwork?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>A bit of a rhetorical question, but I'm just having a reality shock right now and need to vent. </p> <p>I'm in the sociology/communications area. I'm doing my PhD in London, UK, under a studentship. It doesn't pay much, roughly £1800 monthly. I'm finishing my first year. </p> <p>So... I'm currently planning my fieldwork for the next academic year. It's an ethnography. My initial idea was to do it with an organisation located in a rural town in my home country, where my grandmother lives. I'd stay at hers, wouldn't spend any money on rent (though of course I would help her with bills and groceries). But now my supervisor told me it would be better to do my fieldwork with another organisation, which is based in the most populous city of my country. I don't have family there, like none, so I would have to pay rent. From my search, the average rent would cost me £1,000. Not to mention the travel costs. No matter which place I go, the flights are usually around £1,000 for a round trip. </p> <p>In London, I live with my husband, who works in corporate and has a decent income. We own the flat we live in. In theory, I would definitely be able to afford this fieldwork, considering our joint income. But what if I didn't have his help? It's a bit scary just to think about it. My family doesn't come from money and is like middle-middle class. I've been living in the UK for ten years and my mother has only been able to save to visit me here once, for example. I asked my supervisors if the university could help me with travel costs, and they said no. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/alivingstereo\"> /u/alivingstereo </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxzi9s/how_are_we_supposed_to_fund_fieldwork/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxzi9s/how_are_we_supposed_to_fund_fieldwork/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxzi9s/how_are_we_supposed_to_fund_fieldwork/",
-    "subreddit": "r/PhD",
-    "author": "/u/alivingstereo",
-    "publishedAt": "2026-07-16T10:57:09+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "c03a834ea968f8b14839042d900d77145d81f4a92cece6cba1d3ddb7ff9ffcec"
-  },
-  {
-    "id": "reddit_1uxxm36",
-    "redditId": "1uxxm36",
-    "title": "Urgent help needed regarding research topic",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone. I am currently pursuing research in the field of ML/AI.</p> <p>I have been offered some research topics and they’re biomedical related and machine learning based. Three of these projects are:</p> <ol> <li>Biomarker detection for Inflammatory bowel disease</li> <li>Brain disease analysis using few shot learning</li> <li>Walking/gait analysis for bone weakening disease</li> </ol> <p>All of these are within my research interests. However, I am confused about which one to choose. My main concerns are, which topic may be more recent with low saturation and whether the acquisition of datasets for these topics will be easy or difficult.</p> <p>If anyone of you have done anything similar to this, please share some insights. Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Suspicious-Sub\"> /u/Suspicious-Sub </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxxm36/urgent_help_needed_regarding_research_topic/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxxm36/urgent_help_needed_regarding_research_topic/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxxm36/urgent_help_needed_regarding_research_topic/",
-    "subreddit": "r/PhD",
-    "author": "/u/Suspicious-Sub",
-    "publishedAt": "2026-07-16T09:12:32+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "da539d4c63113c90705c2304299fb8bf9fc8429a712011d448d3642b9c09805b"
-  },
-  {
-    "id": "reddit_1uxxd93",
-    "redditId": "1uxxd93",
-    "title": "Dedication or Acknowledgement to deceased prof",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>The day I was supposed to defend my proposal, one of my committee members had to cancel- went into the hospital where he died 2 weeks later. Professionally, I missed him greatly as he was fantastic at quantitative analysis, but also I just really liked the guy. He was so enthusiastic, so supportive. I've never met anyone who explores every rabbit hole as thoroughly as I do- he was that guy. We drove my chair nuts. The department replaced him with someone who signed on to help me finish- I'm scheduled for final defense- but last time I talked to him was 3 years ago in his class. Hes just there to check the box, hasn't been at all involved with the project. </p> <p>Of course, the replacement will be included in acknowledgements, but I want to mention my former committee member and how much I appreciated him. Should that go in dedication or acknowledgements? In my head I can make the argument either way- </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/AdCritical4667\"> /u/AdCritical4667 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxxd93/dedication_or_acknowledgement_to_deceased_prof/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxxd93/dedication_or_acknowledgement_to_deceased_prof/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxxd93/dedication_or_acknowledgement_to_deceased_prof/",
-    "subreddit": "r/PhD",
-    "author": "/u/AdCritical4667",
-    "publishedAt": "2026-07-16T08:58:47+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "61ec103f2a422fc58100144b0c0276c9d2c4e5ceaa47f33e98bbd845d2762f50"
-  },
-  {
-    "id": "reddit_1uxx3rf",
-    "redditId": "1uxx3rf",
-    "title": "pHd in EU, Sweden and Germany?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi guys, </p> <p>I would really appreciate if you can help me. I live in Bosnia and Herzegovina and I really want to enrol a pHd studies in the EU, mainly I am interested in Germany and Sweden. </p> <p>I did my masters degree in English Language Teaching in Bosnia. Therefore, I would need a pHd related to teaching, linguistics or something similar. </p> <p>I need fully funded/paid positions. My grades were pretty high and I plan to publish one research paper this year. I have 2 recommendation letters from my professors here. I would like to start my pHd next year after July. </p> <p>Is it difficult to get accepted as a non-EU? </p> <p>Where should I look for, I can’t find website or something where they publish calls for pHd studies? </p> <p>What is the overall process? </p> <p>How can I increase my chances? </p> <p>Thanks a lot!!! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/LazyChildhood5581\"> /u/LazyChildhood5581 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxx3rf/phd_in_eu_sweden_and_germany/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxx3rf/phd_in_eu_sweden_and_germany/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxx3rf/phd_in_eu_sweden_and_germany/",
-    "subreddit": "r/PhD",
-    "author": "/u/LazyChildhood5581",
-    "publishedAt": "2026-07-16T08:43:37+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.766Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "0412acff32ada66a94b510441a9f5376daaeb36a3fa8413b25e7595581b5e764"
-  },
-  {
-    "id": "reddit_1uxwv8u",
-    "redditId": "1uxwv8u",
-    "title": "Viva complete!! But, weird void?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>So first, hooray! I passed my viva and an delighted to have reached the goal! I'm honoured to be able to call myself Doctor. I also wish to extend congrats to those of you in the same boat - it's a momentous achievement! </p> <p>But, now I'm done, whilst I know I have post-docs to apply for and jobs at universities, I feel this immediate sense of loss? Like, I should be bouncing off the walls happy, but the looming realisation dawns that the safety of my research is gone and now I have to face the horrid state of the local humanities scene (I am limited to UK and EU because of my partners job). </p> <p>Esteemed researcher friends, have you experienced this? What do you suggest? </p> <p>It feels as if my family and partner are happier than I am! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Diligent_Apple_3351\"> /u/Diligent_Apple_3351 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxwv8u/viva_complete_but_weird_void/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxwv8u/viva_complete_but_weird_void/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxwv8u/viva_complete_but_weird_void/",
-    "subreddit": "r/PhD",
-    "author": "/u/Diligent_Apple_3351",
-    "publishedAt": "2026-07-16T08:29:40+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.767Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "c9db6fc4b25938d9a5342eb355dd52d98ebb63f8fef3b023cf93a530f260033f"
-  },
-  {
-    "id": "reddit_1uxwdxg",
-    "redditId": "1uxwdxg",
-    "title": "Every phd starts with confidence",
-    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1uxwdxg/every_phd_starts_with_confidence/\"> <img src=\"https://preview.redd.it/srf0m0hktjdh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=6c25ffb28328099f2119d82629204901e5f9bb49\" alt=\"Every phd starts with confidence\" title=\"Every phd starts with confidence\" /> </a> </td><td>   submitted by   <a href=\"https://www.reddit.com/user/phdassist\"> /u/phdassist </a> <br/> <span><a href=\"https://i.redd.it/srf0m0hktjdh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxwdxg/every_phd_starts_with_confidence/\">[comments]</a></span> </td></tr></table>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxwdxg/every_phd_starts_with_confidence/",
-    "subreddit": "r/PhD",
-    "author": "/u/phdassist",
-    "publishedAt": "2026-07-16T08:01:21+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.767Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "d466f544174fa6edd6443ae137f54a0ddb52ad8f65cfc468f25d243d5dda59e7"
-  },
-  {
-    "id": "reddit_1uxv0y9",
-    "redditId": "1uxv0y9",
-    "title": "How do you explain your research area to family/friends?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>The title is pretty self-explanatory. </p> <p>I am a researcher in the sustainable catalysis field, and it might take some time to explain to non-STEM people what my area is. My grandparents still think I am in oil&amp;gas and pumping oil type of thing, even tho I am working on making it more environmentally friendly.</p> <p>How do you explain your field to family/friends? And is it quite hard sometimes for them to get it?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/insarik\"> /u/insarik </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxv0y9/how_do_you_explain_your_research_area_to/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxv0y9/how_do_you_explain_your_research_area_to/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxv0y9/how_do_you_explain_your_research_area_to/",
-    "subreddit": "r/PhD",
-    "author": "/u/insarik",
-    "publishedAt": "2026-07-16T06:42:23+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.767Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "b8d28638d6a3e6dc497d00e1d2f69b02bdf5a50ec4bddd438214faf676f44f89"
-  },
-  {
-    "id": "reddit_1uxtt45",
-    "redditId": "1uxtt45",
-    "title": "AI usage",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm a PhD student, and I'm in a really stressful situation.<br/> I submitted my progress report, and my guide was extremely upset after noticing that parts of it appeared to be AI-generated. He spent almost the entire day scolding me and said this is a serious academic issue. Now he's asking me to write a letter explaining and justifying what happened.<br/> To be clear, the work itself is mine. I used AI to help improve the language and structure of some sections because I struggle with academic writing in English. I wasn't trying to fabricate results or misrepresent my research, but I understand now that using AI without discussing it first may have been the wrong decision.<br/> I'm worried because I don't know what such a letter should include. I don't want it to sound like I'm making excuses, but I also want to be honest and take responsibility.<br/> Has anyone been in a similar situation?<br/> What did you include in your explanation?</p> <p>Is it better to simply apologize and acknowledge the mistake?</p> <p>Could this have long-term consequences for my PhD if the actual research and data are genuinely my own?</p> <p>I'd really appreciate advice from supervisors or PhD students who have dealt with AI policies in academia. Thanks in advance.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Artistic890\"> /u/Artistic890 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxtt45/ai_usage/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uxtt45/ai_usage/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uxtt45/ai_usage/",
-    "subreddit": "r/PhD",
-    "author": "/u/Artistic890",
-    "publishedAt": "2026-07-16T05:36:07+00:00",
-    "fetchedAt": "2026-07-16T16:01:11.767Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "ESL academic writing, writing help",
-    "sourceType": "subreddit_new",
-    "contentHash": "2cfecc2f5a145602f55eb401bece5ee6bca9f83c93c804f1867829227df0765b",
-    "sourceKeywords": [
-      "ESL academic writing",
-      "writing help"
-    ],
-    "sourceIds": [
-      "phd-new",
-      "phd-esl-writing",
-      "phd-writing-help"
-    ]
-  },
-  {
-    "id": "reddit_1uy40bj",
-    "redditId": "1uy40bj",
-    "title": "Are we running out of genuinely new ideas in materials science, or just getting better at repackaging old ones?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>genuine question and maybe a controversial one. i've been reading papers in my field (materials science / functional materials) for a few years now and i'm starting to notice a pattern. the same fundamental concepts keep coming back with slightly different angles, different characterization techniques, a new buzzword in the title. i've seen papers in Science and Nature that, when you strip away the fancy framing, are essentially incremental updates on ideas from 20 years ago. sometimes the \"breakthrough\" is just better instrumentation or a marginally improved synthesis route presented as a paradigm shift. i'm not saying the work is bad or dishonest. incremental progress is real progress. but i wonder if the pressure to publish in high impact journals pushes people to oversell incremental findings as revolutionary ones. or maybe i'm wrong and i'm just not seeing the big picture yet. maybe what looks like recycling from the inside is actually genuine convergence of ideas that will lead somewhere new.for those further along in their careers — does this feeling go away? or does it get worse the more you read?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Alfie_-667\"> /u/Alfie_-667 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uy40bj/are_we_running_out_of_genuinely_new_ideas_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uy40bj/are_we_running_out_of_genuinely_new_ideas_in/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1uy40bj/are_we_running_out_of_genuinely_new_ideas_in/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/Alfie_-667",
-    "publishedAt": "2026-07-16T14:11:04+00:00",
-    "fetchedAt": "2026-07-16T16:03:03.412Z",
-    "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "b7c416359b0ebf50765d1bf375a497eb809802754e8d180f4b054c4a79261e0e"
-  },
-  {
-    "id": "reddit_1uxxqzs",
-    "redditId": "1uxxqzs",
-    "title": "Experiences with SciTube?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone, I just got an email from someone working for SciTube, which seems to be a platform on which research papers are presented as animated clips. While I am not opposed to the idea per se, I fear that the platform might just be another version of predatory journals and once I agree, someone hands me a receipt for a high publication fee or something. Has anyone ever heard from this platform or made experiences with them? I couldn't find anything on reddit. Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/FourHoursLater\"> /u/FourHoursLater </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uxxqzs/experiences_with_scitube/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uxxqzs/experiences_with_scitube/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1uxxqzs/experiences_with_scitube/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/FourHoursLater",
-    "publishedAt": "2026-07-16T09:20:16+00:00",
-    "fetchedAt": "2026-07-16T16:03:03.412Z",
-    "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "f855cd93b2175cb918f7869ac0ab4a2604c4cd8c2bfd8183345daa602722730a",
-    "sourceKeywords": [
-      "journal"
-    ],
-    "sourceIds": [
-      "askacademia-journal"
-    ]
-  },
-  {
     "id": "reddit_1uyplrn",
     "redditId": "1uyplrn",
     "title": "After over 300 cumulative field dives (all over Japan), my thesis has been successfully defended.",
@@ -819,42 +471,6 @@
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
     "contentHash": "93cbed396438024863cdfe9b8ceba25e158bcfe36657886e4d9f04957bafc9ac"
-  },
-  {
-    "id": "reddit_1uy0yxg",
-    "redditId": "1uy0yxg",
-    "title": "Paper being held hostage by journal",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm a postdoc planning on applying to jobs this fall. The most important paper from my PhD is in the review process at Science since May 2025, which I initially was very excited about, but has turned into a bit of an ordeal.</p> <p>First round of review was quite positive but one of the reviewers could not re-review so it was sent to a third reviewer who didn't like it at all. Editor then decided to send it out again to two other reviewers for second round of review, so we had essentially 4 reviews to respond to for second round. It was overall still okay minus that one negative review. Paper went back out for a third round of review and has listed as 'back from all reviewers' in the portal since mid-March with no status updates.</p> <p>My PhD advisor has sent two check-in emails over the past two months to the editor very politely asking about the status. We cc'd the editorial assistant and mentioned that the lead author (myself) is on the market, etc so having a decision one way or another would be helpful. No response at all. I'm surprised that he hasn't responded because he was very responsive to inquiries during the previous review rounds, which all moved quickly until this stage.</p> <p>I've talked to many other folks who have dealt with this editor and they all tell me this is pretty anomalous, even at Science. My advisor doesn't want to do too much more because he is very afraid of annoying the editor which I understand. But it does feel like the paper, and by extension important job applications for myself and co-authors are being held hostage. Contracts are expiring and with the market the way that it is, if its going to get bumped down to Advances anyway, we'd like to know sooner rather than later.</p> <p>Do we have any further recourse here or is our best bet to just wait it out? Thanks.</p> <p>P.S. I've seen some pretty snarky and mean threads online when folks ask about review processes in 'top' journals... I hope you can see from the post above that I am legitimately looking for advice. Neither myself nor my advisor has had papers out in big journals before.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/wheat_thicccc\"> /u/wheat_thicccc </a> <br/> <span><a href=\"https://www.reddit.com/r/academia/comments/1uy0yxg/paper_being_held_hostage_by_journal/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/academia/comments/1uy0yxg/paper_being_held_hostage_by_journal/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/academia/comments/1uy0yxg/paper_being_held_hostage_by_journal/",
-    "subreddit": "r/academia",
-    "author": "/u/wheat_thicccc",
-    "publishedAt": "2026-07-16T12:06:21+00:00",
-    "fetchedAt": "2026-07-17T05:29:03.749Z",
-    "sourceId": "academia-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "e3d5fffcdd2d647d2cf2c3b3532dc3b417d639f222290955ba2d2006ade7b61b"
-  },
-  {
-    "id": "reddit_1uy6s56",
-    "redditId": "1uy6s56",
-    "title": "Should I quit my PhD?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I only have two final requirements to finish my PhD:</p> <p>My final defense</p> <p>A publication in an indexed journal</p> <p>But I can't get through the final defense because my adviser is so hard to please. I've been revising my manuscript for several years now, but each time I would revise my work based on her feedback, she would change it again the next time we meet.</p> <p>I've now reached my burnout point.</p> <p>Should I now quit? I'm already near the finish line but I don't have the motivation and energy to do it anymore.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/TangledThoughts2811\"> /u/TangledThoughts2811 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy6s56/should_i_quit_my_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1uy6s56/should_i_quit_my_phd/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1uy6s56/should_i_quit_my_phd/",
-    "subreddit": "r/PhD",
-    "author": "/u/TangledThoughts2811",
-    "publishedAt": "2026-07-16T15:53:34+00:00",
-    "fetchedAt": "2026-07-17T05:30:05.279Z",
-    "sourceId": "phd-journal",
-    "sourceKeyword": "journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "f216825eb8c37b02278706bc15ad6905a698c5597ae6f75c994cf246cb0f45f1",
-    "sourceKeywords": [
-      "journal"
-    ],
-    "sourceIds": [
-      "phd-journal"
-    ]
   },
   {
     "id": "reddit_1uyqls7",
@@ -2910,66 +2526,6 @@
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
     "contentHash": "ffa8fa2f80859106b155fa00f04dda037c7de9f6f0142c810d9c1bc2f206da16"
-  },
-  {
-    "id": "reddit_1uy74no",
-    "redditId": "1uy74no",
-    "title": "Messed up and now I'm taking 17 credits in the fall",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm panicking a bit. We had a summer program start to get grandfathered into grad plus loans. We were presented with taking 3 classes. I opted for 2 so that I can work and not be too overwhelmed.</p> <p>I was a huge dumbass and didn't realize they wanted us to take all 3 classes. My academic advisor looked at me like I was an idiot.</p> <p>Now, I'm going to have to take 17 credits (this includes an internship). I've been out of school for years and even when I was in school, I never took that many classes.</p> <p>I feel busy with two!</p> <p>Tell me it's all going to be okay. I'm including the courses below.</p> <p><strong>SOWK 4020</strong>: Integrated Practice for Social Justice (4)</p> <p><strong>SOWK 4001</strong>: Clinical Social Work Skills (3)</p> <p><strong>SOWK 4006</strong>: Human Behavior &amp; the Social Environment (3)</p> <p><strong>SOWK 4007:</strong> Community/Macro Social Work theory and practice (4)</p> <p><strong>SOWK 4950</strong>: Foundation Field Internship (3) 13.5 hours per week (Mon-Weds)</p> <p>ETA: I was able to work with my advisor and was able to fix it so that I'm only taking 14 credits</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ActuaryPersonal2378\"> /u/ActuaryPersonal2378 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1uy74no/messed_up_and_now_im_taking_17_credits_in_the_fall/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1uy74no/messed_up_and_now_im_taking_17_credits_in_the_fall/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1uy74no/messed_up_and_now_im_taking_17_credits_in_the_fall/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/ActuaryPersonal2378",
-    "publishedAt": "2026-07-16T16:05:50+00:00",
-    "fetchedAt": "2026-07-18T15:34:01.343Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "24a5af106c94a64aea13f55296d29c084b208105878235be5797541647b2e576"
-  },
-  {
-    "id": "reddit_1uy2vuw",
-    "redditId": "1uy2vuw",
-    "title": "Best laptop for psychology graduate student in 2026?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I had a MSI Prestige through 4 years of undergraduate, it was great except for the battery life, which I do need a laptop to last most of the day, maybe a charge here and there. I also need something with plenty of storage and capability to run programs for data/research purposes like R Studio, CAD, etc.. Does anyone have any recommendations? There’s just so many options to choose from and so many different companies claiming the “best” for students. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/mediumrare_3\"> /u/mediumrare_3 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1uy2vuw/best_laptop_for_psychology_graduate_student_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1uy2vuw/best_laptop_for_psychology_graduate_student_in/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1uy2vuw/best_laptop_for_psychology_graduate_student_in/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/mediumrare_3",
-    "publishedAt": "2026-07-16T13:27:18+00:00",
-    "fetchedAt": "2026-07-18T15:34:01.343Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "1b90e19fe878a58181f4f13c98a6d5a672ba83bb9a78efa665878692bc7bd532"
-  },
-  {
-    "id": "reddit_1uxxw9u",
-    "redditId": "1uxxw9u",
-    "title": "confused: singapore v/s europe PhD?",
-    "content": "submitted by   <a href=\"https://www.reddit.com/user/Natural-Property3795\"> /u/Natural-Property3795 </a> <br/> <span><a href=\"/r/gradadmissions/comments/1uxxv6b/confused_singapore_vs_europe_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1uxxw9u/confused_singapore_vs_europe_phd/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1uxxw9u/confused_singapore_vs_europe_phd/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/Natural-Property3795",
-    "publishedAt": "2026-07-16T09:28:41+00:00",
-    "fetchedAt": "2026-07-18T15:34:01.343Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "eb1b0567c910a8ad3c4bd1902037e2a1498c808d0b6eab5d8f74f4a3bdbd7f3a"
-  },
-  {
-    "id": "reddit_1uxwxjd",
-    "redditId": "1uxwxjd",
-    "title": "Incoming MSEM student at NEU Boston, looking for honest advice on academics",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Incoming MSEM student at NEU Boston, looking for honest advice on academics</p> <p>I’ll be starting the MS in Engineering Management (MSEM) at Boston campus this fall, and I wanted to understand what the academics are actually like from current students or recent graduates.</p> <p>I have a few questions: </p> <p>How challenging is the coursework overall?<br/> Is grading generally strict, or is it fair as long as you consistently put in the effort?<br/> What percentage of your grade usually comes from assignments, projects, quizzes, midterms, and finals?<br/> Are assignments mostly individual or group-based?<br/> How much time do you typically spend studying each week outside of class?<br/> Do professors provide enough lecture material, or do you rely on textbooks, research papers, YouTube, or other resources?<br/> What’s the best way to stay on top of the coursework and avoid falling behind?<br/> Are there any courses in the MSEM program that students usually find particularly difficult?<br/> Looking back, is there anything you wish you had known before starting the program?</p> <p>I’d really appreciate any insights or tips. Thanks in advance!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Complex_Attempt_5161\"> /u/Complex_Attempt_5161 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1uxwxjd/incoming_msem_student_at_neu_boston_looking_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1uxwxjd/incoming_msem_student_at_neu_boston_looking_for/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1uxwxjd/incoming_msem_student_at_neu_boston_looking_for/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/Complex_Attempt_5161",
-    "publishedAt": "2026-07-16T08:33:27+00:00",
-    "fetchedAt": "2026-07-18T15:34:01.343Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "97df41af5c9efdde1a2d06af12ca0f4b3bc0e729fd4f5deb66b20630f493f1cb"
   },
   {
     "id": "reddit_1uzys9b",
@@ -8497,7 +8053,13 @@
     "sourceId": "gradschool-writing",
     "sourceKeyword": "writing",
     "sourceType": "subreddit_search",
-    "contentHash": "4ed6614f240a706eecff5b484aee56f62eb353df6a4fb1cea20c6f64bf9f2889"
+    "contentHash": "4ed6614f240a706eecff5b484aee56f62eb353df6a4fb1cea20c6f64bf9f2889",
+    "sourceKeywords": [
+      "writing"
+    ],
+    "sourceIds": [
+      "gradschool-writing"
+    ]
   },
   {
     "id": "reddit_1v3ila3",
@@ -9611,21 +9173,6 @@
     "contentHash": "14818e10b57c94ffb396f82d0116c73a248c7c9656debf9a05b1b2362e0cefc4"
   },
   {
-    "id": "reddit_1uy3gdl",
-    "redditId": "1uy3gdl",
-    "title": "Having trouble identifying tissue boundaries from Spatial Transcriptomics Data (10X Visium)",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello guys, a computational biology PhD student here. I am currently trying to develop a Generative AI based tool for identifying spatial tissue boundaries. I am using 10X Genomics Visium data only from 16 types of cancer. I am facing issues with architecture design and feature selection. I have a list of 19 biological pathways specific gene sets (EMT, T cell Exh, etc.) I am trying to score each Visium spot using the pathways and creating 19 dimensional features + library size = 20 features. But I am not sure if any architecture leveraging this features can help me identify tissue boundaries. I want to benchmark against SpNeigh and Synora but the current feature schema is failing even to detect boundaries from pathology-annotated datasets. What kind of features should I choose? Should I pool all the sections from all the datasets and run HVG and PCA for features generation or should I integrate the program scores (20 dims) and integrate them with H&amp;E images for boundary identification? I do not have any pathology-annotated dataset unless I would have used weak-supervision during training. Can anyone help me here with this situation. Which dataset should I use and what architecture would solve the problem? Stuck in a real puddle here!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/milindbose\"> /u/milindbose </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1uy3gdl/having_trouble_identifying_tissue_boundaries_from/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1uy3gdl/having_trouble_identifying_tissue_boundaries_from/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/bioinformatics/comments/1uy3gdl/having_trouble_identifying_tissue_boundaries_from/",
-    "subreddit": "r/bioinformatics",
-    "author": "/u/milindbose",
-    "publishedAt": "2026-07-16T13:50:13+00:00",
-    "fetchedAt": "2026-07-23T05:41:03.846Z",
-    "sourceId": "bioinformatics-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "bff4b7ae26bd6905619debf48ac35401e6a7de06ae3a402415bc8c9aabe4731c"
-  },
-  {
     "id": "reddit_1v3oad5",
     "redditId": "1v3oad5",
     "title": "Interested in continuing in academia but feel like I don’t understand how it actually works",
@@ -9827,21 +9374,6 @@
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
     "contentHash": "8b547f86365c0d62044dd6feeb7f793b95abcb88c87ccf5a88130732fbb535b4"
-  },
-  {
-    "id": "reddit_1uy0jy8",
-    "redditId": "1uy0jy8",
-    "title": "Is a full-time, teaching-only CS university career realistic in Canada or the Middle East? (Need advice for MSc choice)",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>I’m currently mapping out my long-term career goals in academia. My absolute dream is to teach Computer Science at the university level full-time. However, I have zero interest in research. I want my entire career to be focused on teaching, pedagogy, and student mentorship.</p> <p>If it turns out that 80%+ of full-time university teaching jobs realistically require a lifelong research component, I plan to pivot my goals toward high school teaching or the tech industry. I am currently trying to decide whether to apply for a thesis-based MSc or a course-based MSc in Canada, and the reality of the academic job market is the deciding factor for me.</p> <p>To help me decide, I would love to get your realistic, on-the-ground perspectives on two specific regions I am targeting: Canada and the Middle East (specifically the Gulf region).</p> <p>Regarding Canada, I would love to know what percentage of full-time computer science faculty positions are actually designated as \"teaching stream\" (like Lecturers or Professors of Teaching) with zero research expectations. I'm also really curious about the stability of these roles. Are they respected, permanent career tracks with tenure-equivalent security, or are they mostly precarious, short-term contract positions that offer very little peace of mind?</p> <p>Similarly, for the Middle East, and particularly the Gulf region, I've heard there are full-time lecturer and instructor roles that focus purely on teaching. I'm wondering what the actual job market looks like for these positions, how common they are compared to research roles, and if they offer stable, long-term careers, or if the region is aggressively shifting its focus toward research output for all faculty.</p> <p>Ultimately, is it a realistic and viable goal to expect a stable, full-time university teaching career in CS without ever having to publish or do research, or am I chasing an extreme exception? Hearing your personal experiences, rough percentages, or department trends would genuinely help me make my final decision. If teaching-only is a dead end, I'll go the course-based MSc route to secure industry internships, but if it's viable, I'll go the thesis-based route to keep my academic profile strong. Thank you so much for your time and guidance!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Zo-Snow\"> /u/Zo-Snow </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uy0jy8/is_a_fulltime_teachingonly_cs_university_career/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1uy0jy8/is_a_fulltime_teachingonly_cs_university_career/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1uy0jy8/is_a_fulltime_teachingonly_cs_university_career/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/Zo-Snow",
-    "publishedAt": "2026-07-16T11:48:21+00:00",
-    "fetchedAt": "2026-07-23T05:42:04.627Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
-    "sourceType": "subreddit_search",
-    "contentHash": "e22f63d53850dc6383dc9bfd09774ec347216e032c1d777c3656fe4a375d1874"
   },
   {
     "id": "reddit_1v4i1xq",
@@ -13542,9 +13074,16 @@
     "publishedAt": "2026-07-24T01:29:09+00:00",
     "fetchedAt": "2026-07-25T15:45:05.844Z",
     "sourceId": "gradschool-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "writing",
     "sourceType": "subreddit_new",
-    "contentHash": "79982c37a5f5b7cebcc13379d26c0b3917171d69f3a7aac65013aa6a0eb6914b"
+    "contentHash": "79982c37a5f5b7cebcc13379d26c0b3917171d69f3a7aac65013aa6a0eb6914b",
+    "sourceKeywords": [
+      "writing"
+    ],
+    "sourceIds": [
+      "gradschool-new",
+      "gradschool-writing"
+    ]
   },
   {
     "id": "reddit_1v4qu3t",
@@ -13617,9 +13156,16 @@
     "publishedAt": "2026-07-23T16:52:48+00:00",
     "fetchedAt": "2026-07-25T15:45:05.844Z",
     "sourceId": "gradschool-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "writing",
     "sourceType": "subreddit_new",
-    "contentHash": "3014ad7bd8c7d94310be3a380417984476050d195574133419942e4e477e9954"
+    "contentHash": "3014ad7bd8c7d94310be3a380417984476050d195574133419942e4e477e9954",
+    "sourceKeywords": [
+      "writing"
+    ],
+    "sourceIds": [
+      "gradschool-new",
+      "gradschool-writing"
+    ]
   },
   {
     "id": "reddit_1v4fgej",
@@ -18587,12 +18133,15 @@
     "publishedAt": "2026-07-28T18:51:53+00:00",
     "fetchedAt": "2026-07-29T05:38:00.607Z",
     "sourceId": "gradschool-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "writing",
     "sourceType": "subreddit_new",
     "contentHash": "e6243b8b061fcf2f2ea3c5b12e6016a90b0ef63c090d9eaaccf22b1cf75eadcd",
-    "sourceKeywords": [],
+    "sourceKeywords": [
+      "writing"
+    ],
     "sourceIds": [
-      "gradschool-new"
+      "gradschool-new",
+      "gradschool-writing"
     ]
   },
   {
@@ -18701,12 +18250,15 @@
     "publishedAt": "2026-07-28T02:14:48+00:00",
     "fetchedAt": "2026-07-29T05:38:00.607Z",
     "sourceId": "gradschool-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "writing",
     "sourceType": "subreddit_new",
     "contentHash": "575dd2eb070178a19249996ce4f1e615a71a81732b1ddcf907a2d521454860e8",
-    "sourceKeywords": [],
+    "sourceKeywords": [
+      "writing"
+    ],
     "sourceIds": [
-      "gradschool-new"
+      "gradschool-new",
+      "gradschool-writing"
     ]
   },
   {
@@ -18913,9 +18465,16 @@
     "publishedAt": "2026-07-26T09:59:36+00:00",
     "fetchedAt": "2026-07-29T05:38:00.608Z",
     "sourceId": "gradschool-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "writing",
     "sourceType": "subreddit_new",
-    "contentHash": "020e26623a77eaf6423cf5957474369781d043299dfab0247405fe9f143a5f3c"
+    "contentHash": "020e26623a77eaf6423cf5957474369781d043299dfab0247405fe9f143a5f3c",
+    "sourceKeywords": [
+      "writing"
+    ],
+    "sourceIds": [
+      "gradschool-new",
+      "gradschool-writing"
+    ]
   },
   {
     "id": "reddit_1v6rjnl",
@@ -19511,9 +19070,16 @@
     "publishedAt": "2026-07-29T11:28:31+00:00",
     "fetchedAt": "2026-07-29T16:06:03.939Z",
     "sourceId": "gradschool-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "writing",
     "sourceType": "subreddit_new",
-    "contentHash": "073e475c2f3e3e3ab4beb0c3a76e1b4b238bf427b9c53b136a4be7a620718637"
+    "contentHash": "073e475c2f3e3e3ab4beb0c3a76e1b4b238bf427b9c53b136a4be7a620718637",
+    "sourceKeywords": [
+      "writing"
+    ],
+    "sourceIds": [
+      "gradschool-new",
+      "gradschool-writing"
+    ]
   },
   {
     "id": "reddit_1v9rv40",
@@ -19843,7 +19409,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "c0b130da72d0293e19c1384a1d53f0b3d119dda73ae9356ab101bad37eeb955f"
+    "contentHash": "c0b130da72d0293e19c1384a1d53f0b3d119dda73ae9356ab101bad37eeb955f",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1vajsh5",
@@ -19873,7 +19443,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "c760f35bbe95e2669e45688bab1f792f337e3984b56e95f3b7776ed09d8472cb"
+    "contentHash": "c760f35bbe95e2669e45688bab1f792f337e3984b56e95f3b7776ed09d8472cb",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1vajhof",
@@ -19903,7 +19477,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "78dd72a33ec2ec5863c5a6363b39443b9b5ad9b0e2c745e3ca4978b8ad07b98d"
+    "contentHash": "78dd72a33ec2ec5863c5a6363b39443b9b5ad9b0e2c745e3ca4978b8ad07b98d",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1vafoes",
@@ -19918,7 +19496,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "6ea4d79136f913b3dd91e9ffca0bb4a035d4a8236164dd66ecb8f607b9aadaaa"
+    "contentHash": "6ea4d79136f913b3dd91e9ffca0bb4a035d4a8236164dd66ecb8f607b9aadaaa",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1vafcza",
@@ -19948,7 +19530,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "ecc7525222dd8beefbbf46705ca4b603c0d5a4a175b74bc324f6b98b607e0898"
+    "contentHash": "ecc7525222dd8beefbbf46705ca4b603c0d5a4a175b74bc324f6b98b607e0898",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1vad061",
@@ -19963,7 +19549,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "e3a8687f788f8a21720e8d3b7847cdce3e835602abf8693faf0e84151cd9dacb"
+    "contentHash": "e3a8687f788f8a21720e8d3b7847cdce3e835602abf8693faf0e84151cd9dacb",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1vaa56k",
@@ -19978,7 +19568,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "542325dfe3a16a0cc0672f793e72abd84d0f6ca02b9bedbebce49b1bd03a6106"
+    "contentHash": "542325dfe3a16a0cc0672f793e72abd84d0f6ca02b9bedbebce49b1bd03a6106",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1va9d4t",
@@ -20429,5 +20023,710 @@
     "sourceKeyword": "reviewer comments",
     "sourceType": "global_search",
     "contentHash": "86ba1ca1815d6e23d099ecfe37b0ff0c21ed9b498bd628bfdc5c781145ff119d"
+  },
+  {
+    "id": "reddit_1vawr6b",
+    "redditId": "1vawr6b",
+    "title": "Is CS department are mostly people working in field of AI",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am a 5th year phd student and it seems most of PHD Students around me are in field of ML/AI . I can count 5 people in the whole department who is working in atleast some intersection of core computer silence and ML </p> <p>Infact we had a collaboration with one of T10 university and I really wasn’t able to find any advisor which is currently active and working in my core architecture field . My advisor was so surprised that he had to confirm it once from his side too </p> <p>Is it the same issue everywhere mostly . Are almost all of the CS phd students are just AI students </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Sunapr1\"> /u/Sunapr1 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vawr6b/is_cs_department_are_mostly_people_working_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vawr6b/is_cs_department_are_mostly_people_working_in/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vawr6b/is_cs_department_are_mostly_people_working_in/",
+    "subreddit": "r/PhD",
+    "author": "/u/Sunapr1",
+    "publishedAt": "2026-07-30T15:25:14+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.947Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "79603cdccd0966030f614af123135238447dd47958d491a5585e42cc2da59bf4"
+  },
+  {
+    "id": "reddit_1vawhcc",
+    "redditId": "1vawhcc",
+    "title": "Fresh PhD and calling someone Dr but not someone else",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey all, I am a 4 month old PhD with a strong CV, international collabs, and experience. Lets just say the job market is hot garbage in the US. So i took a job a BS chemist could do, for more than twice grad school pay (although not hard). Small company with a huge international mother company. My boss is your typical PhD with *interesting* mentoring, management, and organization. On top of that, my deliverables are not clear so its just how it comes. Not really asking advice on that yet because its only been 2 months.</p> <p>But they are Dr. X, but no one even started by calling me Dr. Y. They bring it up like I'm a shiny smart thing when customers and executives visit. I didn't think it would bother me but now I feel weird because they get this distinction but I dont. And you can say get over it, but what is the typical for industry and with a company with an international culture as delegated by the execs. Like 1/4 of the company is not from the US and most don't speak English which is fine, its the cultural distinction, which my boss is from. Ty</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/AdPopular6722\"> /u/AdPopular6722 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vawhcc/fresh_phd_and_calling_someone_dr_but_not_someone/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vawhcc/fresh_phd_and_calling_someone_dr_but_not_someone/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vawhcc/fresh_phd_and_calling_someone_dr_but_not_someone/",
+    "subreddit": "r/PhD",
+    "author": "/u/AdPopular6722",
+    "publishedAt": "2026-07-30T15:15:13+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.947Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "7664fa0b14bc5a293e0086ab938d22ca1530c345b6d6033f390684c2ab7cbe7e"
+  },
+  {
+    "id": "reddit_1vavuzf",
+    "redditId": "1vavuzf",
+    "title": "AI is carzy these days !",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1vavuzf/ai_is_carzy_these_days/\"> <img src=\"https://preview.redd.it/5nt7a4inrdgh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=60681907088bb14e464d1ce600dfea7e203da76e\" alt=\"AI is carzy these days !\" title=\"AI is carzy these days !\" /> </a> </td><td>   submitted by   <a href=\"https://www.reddit.com/user/MohMayaMind\"> /u/MohMayaMind </a> <br/> <span><a href=\"https://i.redd.it/5nt7a4inrdgh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vavuzf/ai_is_carzy_these_days/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vavuzf/ai_is_carzy_these_days/",
+    "subreddit": "r/PhD",
+    "author": "/u/MohMayaMind",
+    "publishedAt": "2026-07-30T14:52:19+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.947Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5a13cddf8a30c9f8209da4a5d69336b57a082f51187bf665119febfbc993761d"
+  },
+  {
+    "id": "reddit_1vauskv",
+    "redditId": "1vauskv",
+    "title": "Those who switched PIs- how did you know when to call it?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm exhausted and don't really know what to do. My PI is a fairly new TT professor at my R1 university and since then, has \"lost\" I think around 5 students. I was a direct admit to his lab because I was really interested in the research topic and had no idea about his issues with other students.</p> <p>The spring semester was great, totally fine. He didn't allow me to do much experimentation and had me write a bunch of stuff for publication, though. When I had classes to attend/teach it was good, but this summer has been absolutely horrible. I've realized now that I'm doing experiments, that he is an INSANE micromanager, watching and taking over everything I do. I thought at first its just because I'm new (although I have extensive lab experience), but even when I've been trained 3+ times on something, and I know what I'm doing, he's watching me and taking things over without warning. He won't allow me to learn. There's NOBODY else in the lab. Just me, the lab manager (his wife), and him.</p> <p>Things have been more tense since I've started pushing back a little on things, trying to have these conversations with him. It really came to a head last night. He was spamming my email, requesting edit access and rewriting my qualifying exam at 11pm. It was due at midnight and had been finished.</p> <p>I don't really know what to do. If I leave, I'm essentially ruining him. His tenure will probably be sunk, and he frequently calls me the 'hope' of the lab for this reason. He's honestly a really nice guy (I know I didn't make it sound that way, but he is, he's just very neurotic). Plus, I don't want to lose the progress I've made in the last seven months by starting all over. But if this will be how it is, I don't think I can do it. I can't tell if its because of the summer, when I'm around all the time as opposed to taking/teaching classes, or because I'm now at the point of really starting my research.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No_Time_3977\"> /u/No_Time_3977 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vauskv/those_who_switched_pis_how_did_you_know_when_to/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vauskv/those_who_switched_pis_how_did_you_know_when_to/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vauskv/those_who_switched_pis_how_did_you_know_when_to/",
+    "subreddit": "r/PhD",
+    "author": "/u/No_Time_3977",
+    "publishedAt": "2026-07-30T14:12:06+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.948Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "7ea2e7305e09e93395da45158e059e059c4b4297222e83cc0a4c1e9ca8183e4e"
+  },
+  {
+    "id": "reddit_1vaunjm",
+    "redditId": "1vaunjm",
+    "title": "A first author ACS paper, is directly proportional to the dignity of a research scholar….",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>So, my supervisor asks us to publish a minimum of 5 paper, of which 3 are supposed to first author papers. So in these first author papers, at least 1 must be ACS. Both senior and junior research scholars of my lab have ACS papers but I don’t. So my professor is pushing me to work harder on my next papers but, idk my results are not cooperating. And collaboration is something he doesn’t encourage and the with no funds- it’s hard around here. But my fellow lab mates have done it. I’m trying real hard here, but my professor keeps saying, ACS is a standard journal which publishes standard research, try harder and it will make your profile wholesome. I get this but is this true? I think my writing style is bad, Or am I overanalyzing my research work and messing it up. I know all research is not the same and that I should not compare but somehow my dignity as a research scholar is tied to an ACS paper. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/AdThese2039\"> /u/AdThese2039 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaunjm/a_first_author_acs_paper_is_directly_proportional/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaunjm/a_first_author_acs_paper_is_directly_proportional/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vaunjm/a_first_author_acs_paper_is_directly_proportional/",
+    "subreddit": "r/PhD",
+    "author": "/u/AdThese2039",
+    "publishedAt": "2026-07-30T14:06:55+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.948Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "ea3b79daf185491be039bba5d063db6a9932fe433e2a8dd6a002a54fb8c1ec13"
+  },
+  {
+    "id": "reddit_1vat6ai",
+    "redditId": "1vat6ai",
+    "title": "Addressing Indian professors",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I've been in contact over email with some Indian professors for an academic exchange. I'm a PhD student who's not from India and not familiar with the culture, could someone tell me how Indian professors expect to be addressed by students? </p> <p>For example, in the US, we might start email discussions by referring to Dear Dr. XX or Prof. XX, but once we've been emailing for a bit or have met in person, we start calling professors by their first name. Is this acceptable in India? Or should I use Dr. Lastname or Firstname, or sir/ma'am? The professors have been signing their emails as Firstname only, is this an indication that I should use their first name?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/sorrymsjackson_\"> /u/sorrymsjackson_ </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vat6ai/addressing_indian_professors/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vat6ai/addressing_indian_professors/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vat6ai/addressing_indian_professors/",
+    "subreddit": "r/PhD",
+    "author": "/u/sorrymsjackson_",
+    "publishedAt": "2026-07-30T13:07:42+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.948Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5ef401755ecdccead8b1a458fbd85d8d342465ed3a06f45b3bd53e0707afee18"
+  },
+  {
+    "id": "reddit_1varz88",
+    "redditId": "1varz88",
+    "title": "PhD students in cohorts alone: any advice?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I recently spoke with a PhD student in a program I'll be applying to this fall. They began our conversation by saying that the program has very little structure and that you're largely on your own. They also mentioned that it can feel quite <em>lonely</em>.</p> <p>At the end of our conversation, I asked, \"What's one thing you wish someone had told you before starting the program?\" Their answer was essentially the same: be prepared for how isolating it can be. They mentioned they're the only person in their cohort, and the way they described the experience felt genuinely melancholic. It honestly made me a little nervous.</p> <p>For those of you who are in programs that are the only person in your cohort, what has your experience been like? How do you navigate the isolation, build community, and stay motivated? Is there anything you wish you had known before starting?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No_Pizza_2276\"> /u/No_Pizza_2276 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1varz88/phd_students_in_cohorts_alone_any_advice/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1varz88/phd_students_in_cohorts_alone_any_advice/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1varz88/phd_students_in_cohorts_alone_any_advice/",
+    "subreddit": "r/PhD",
+    "author": "/u/No_Pizza_2276",
+    "publishedAt": "2026-07-30T12:16:32+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.948Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "71229cb01ae562f44b41d686c397eea6355b193ae0d59a2c3205fb82621fbd11"
+  },
+  {
+    "id": "reddit_1varqay",
+    "redditId": "1varqay",
+    "title": "Faculty member forgot they agreed to be on my committee - is this a red flag?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am preparing to defend my dissertation proposal this fall and met with one of my committee members yesterday. The meeting was related to a separate project. During the meeting, this faculty member asked me who was on my committee. It caught me off guard because having her on my dissertation committee has been an ongoing conversation since I started my program. Not only that, she signed the paperwork to be on my committee only 2-3 months ago.</p> <p>I looked at her confused and said, well, you are, assuming you’re still willing to be? She then asked if she had signed the paperwork, which I told her she had, and she said she must have just forgot because she signs so many things (she is also the director of our grad program). She told me she was excited for my dissertation, but this entire conversation felt off to me.</p> <p>I already have trust issues with this faculty member for a few reasons, mostly related to her handling of a situation involving a student who was ultimately removed from our program. More recently, she brought me on to a research project with the promise of mentorship only to push me off onto a former student who had just graduated and moved out of state. At this point, I feel pretty jerked around by this faculty member, but as far as potential committee members go, my options are limited. Should I take this as a red flag and find someone to replace her? Or am I overthinking it?</p> <p>Social sciences, US</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/sugar_monster_\"> /u/sugar_monster_ </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1varqay/faculty_member_forgot_they_agreed_to_be_on_my/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1varqay/faculty_member_forgot_they_agreed_to_be_on_my/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1varqay/faculty_member_forgot_they_agreed_to_be_on_my/",
+    "subreddit": "r/PhD",
+    "author": "/u/sugar_monster_",
+    "publishedAt": "2026-07-30T12:05:25+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.948Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "948205905bc0d419394e1880b48133767352d349dd0662761a3fe82ffb04ef99"
+  },
+  {
+    "id": "reddit_1var9aw",
+    "redditId": "1var9aw",
+    "title": "How to explain pursuing a PhD to parents without education?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Field: Political Science and International Relations, and Linguistics</p> <p>Location: Sydney, Australia (UNSW)</p> <p>Hi everyone! </p> <p>I'm pursuing a PhD, just found two supervisors and I'm very excited (let's see how long this keeps up!). A bit of background: I have a Bachelor's in Linguistics and Psychology, a second Bachelor's in international relations and political science and a Masters in Speech Pathology. I did the Masters for a career and to keep my parents happy, then went back and did IR and am now finalising my IR/Linguistics proposal with help from the supervisors. </p> <p>Neither of my parents went to high school/secondary school as they grew up in remote villages, and since immigrating to Australia they worked blue collar jobs (demolition and fish monger). High school alone was difficult for them to understand, university even more challenging, but they are proud. </p> <p>My issue now is that I work and study, and I've been in university for much of my 20s and now 30s that they're struggling to understand why I keep wanting to pursue research. They don't understand that it's my passion, nor do they understand that I'm happiest at university and every day at work I look forward to clocking out and reading more about my field. I have kept in contact with most of my professors over the years and they're a strong social bedrock for me as I help run some of their reading groups, and they're often sending me articles over the holidays I might like. When I tell my parents this, they think this is a normal part of being a student in a university.</p> <p>I was hoping someone had a resource, example, or talking points that would help me be able to allow them to understand how big this endeavour is and how embedded in the university I am/how well supported I am there. My parents also have moderate English skills and find reading difficult, so a video would be best. Or maybe resources in Thai or Portuguese? </p> <p>Thank you </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Lemonstealing4fun\"> /u/Lemonstealing4fun </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1var9aw/how_to_explain_pursuing_a_phd_to_parents_without/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1var9aw/how_to_explain_pursuing_a_phd_to_parents_without/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1var9aw/how_to_explain_pursuing_a_phd_to_parents_without/",
+    "subreddit": "r/PhD",
+    "author": "/u/Lemonstealing4fun",
+    "publishedAt": "2026-07-30T11:43:28+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.949Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "16700191773f3bdd5fdf8f751556d65b380b200e88f97ff5aba6ec7e148e8702"
+  },
+  {
+    "id": "reddit_1var005",
+    "redditId": "1var005",
+    "title": "Usage of ai for coding",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am just wondering to what extent do you now use ai tools to help you with either modeling or generating charts? I sometimes find myself on a total time crush and the expectation to produce papers are so high that you end up having to rely on these tools for coding a lot and preparing visualizations etc. Do you face the same challenges?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Specific-Poet580\"> /u/Specific-Poet580 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1var005/usage_of_ai_for_coding/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1var005/usage_of_ai_for_coding/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1var005/usage_of_ai_for_coding/",
+    "subreddit": "r/PhD",
+    "author": "/u/Specific-Poet580",
+    "publishedAt": "2026-07-30T11:30:55+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.949Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5fadd8576e99707d1f85a3cbc4731fa9b45fcc1f67dff612705d79da516051a6"
+  },
+  {
+    "id": "reddit_1vaqfgo",
+    "redditId": "1vaqfgo",
+    "title": "Repeat research stays at the same international laboratory during PhD",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi there!</p> <p>Currently starting my PhD, or more like deciding to start, and my decision hinges on a relatively \"uncommon\" idea.</p> <p><strong>Background:</strong><br/> I'm located in Germany (also German national) and would be starting a PhD in Automatic Speech Processing (in a niche field, so a CS PhD, maybe also a computational efficiency leg) here but have the problem of being in a (very successful) long distance relationship to France (7-11h travel time). The PhD Programme would be funded 1 year initially, followed up by 3-4 year follow-on project funding.</p> <p>Now 4-5 years stuck only in Germany would probably ruin my relationship, and I've talked about this with my PI, and what we got to work out was the following:</p> <ul> <li>He supports research stays of 3 - 6 Months each year (I'd prefer closer to 6)</li> <li>Vacation / Home office and potentially industry internships</li> <li>Funding could continue from the German side for the research stays</li> </ul> <p>I have found multiple labs that research the same or complementary topics but do have some preferences of course.</p> <p>Since finding a different Lab to host me each time seems like a bit of a stretch, and isn't that great for planning, my idea was to find a research partner in France that would support recurrent stays over the course of my PhD. There's some fitting labs and my PI has a friend in France that is relatively well networked in the field over there, and is himself at a relatively good position in the niche.</p> <p><strong>Now to the actual question(s):</strong></p> <p>The idea could be to frame it either as just normal repeat research visits, or as a way of building a longer lab cooperation (with me as the initial visitor), maybe even frame it as a two lab project with multilingual parts or something similar..<br/> Worth noting: I wouldn't need any funds or so from the host lab, just a desk, occasional feedback, and a scientific fit of course</p> <p>Has anyone here ever heard of something like this or of repeat research visits in general?<br/> Any ideas what I could leverage to \"increase\" my chances?<br/> How important would you say warm introductions via my PIs Network would be?</p> <p>Thank you in advance if you take the time to answer!!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Outrageous_Seesaw_72\"> /u/Outrageous_Seesaw_72 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaqfgo/repeat_research_stays_at_the_same_international/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaqfgo/repeat_research_stays_at_the_same_international/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vaqfgo/repeat_research_stays_at_the_same_international/",
+    "subreddit": "r/PhD",
+    "author": "/u/Outrageous_Seesaw_72",
+    "publishedAt": "2026-07-30T11:02:05+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.949Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "7fc7a029386c45068d4ef147e002fef23276737a8d274f7f0208d8e98816735a"
+  },
+  {
+    "id": "reddit_1vaqesr",
+    "redditId": "1vaqesr",
+    "title": "Got rejected after R2 because reviewers weaponized peer review to pad their own citations - wild first experience with this",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Long story short: submitted my first manuscript to a Q1 journal. Round 1, two reviewers gave decent technical feedback but also asked me to cite a bunch of their own papers. I didn't clock the pattern at first (rookie mistake), added the citations thinking it'd strengthen the lit review.</p> <p>Round 2, a different reviewer flagged it outright: pointed out that two reviewers had suggested citations \"predominantly to their own publications,\" called it a textbook coercive citation pattern, and formally requested an ethics investigation into the peer review process.</p> <p>I'd already pulled all those citations before R2 even landed, for what it's worth.</p> <p>End result: manuscript rejected. Not for the science, one reviewer had called the methodology \"cutting edge\" and the contribution \"significant\" in R1. Rejected because the review process itself was compromised, and the journal apparently didn't have a clean way to salvage it.</p> <p>So now I've got a technically solid paper, a paper trail proving I acted in good faith once I understood what was happening, and a rejection that has nothing to do with the quality of the work.</p> <p>Anyone else run into this? How common is reviewer citation-padding in your field, and did you report it or just quietly resubmit elsewhere? Feels like one of those things nobody warns you about until it happens to you.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/aliswaidan903\"> /u/aliswaidan903 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaqesr/got_rejected_after_r2_because_reviewers/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaqesr/got_rejected_after_r2_because_reviewers/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vaqesr/got_rejected_after_r2_because_reviewers/",
+    "subreddit": "r/PhD",
+    "author": "/u/aliswaidan903",
+    "publishedAt": "2026-07-30T11:01:11+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.949Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "ac68f8deb349122217d7b8b0bf829ca74a518219505a0e8621bff3cde7f94c7f"
+  },
+  {
+    "id": "reddit_1vap8wz",
+    "redditId": "1vap8wz",
+    "title": "Spending grant money",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone! </p> <p>I am nearing the end of a fellowship where I have a 2k (GBP) grant to spend. The overall theme is to create impact with data, which is ideally what we are supposed to spend the money on.</p> <p>I am carrying out a PhD in geographic data science, which is quite data analysis heavy. Things that people normally suggest are already covered: I have multiple monitors, my lab already has access to a server, and I have research support money associated with my PhD that I can use anyway. I also don't have to pay to access any data.</p> <p>This means that this fellowship grant is a good chance to spend it on something I wouldn't get approved for my normal PhD funding, but I am a bit stumped by what to spend it on (having already talked about this at length with my supervisors and contacts for the fellowship).</p> <p>I'm thinking of getting an external harddrive (boring I know!) because I'm running out of space on my laptop to store all the data I've created, and we've also discussed some sort of infographic or animation to advertise the work that I've done to non-academic audiences. I'm not super convinced by the second one, so I was wondering if you had any creative ideas of what to spend it on or anything that could be useful for my PhD?</p> <p>Thanks in advance :) </p> <p>Edit: this is an additional activity not directly related to my PhD, so I'm not saying my PhD is ending </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Affectionate_Beat606\"> /u/Affectionate_Beat606 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vap8wz/spending_grant_money/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vap8wz/spending_grant_money/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vap8wz/spending_grant_money/",
+    "subreddit": "r/PhD",
+    "author": "/u/Affectionate_Beat606",
+    "publishedAt": "2026-07-30T10:00:04+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.949Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "67a6c20377ef60c207605eca8328221d2e0d7d8c25bba03572cbd446866b27d1"
+  },
+  {
+    "id": "reddit_1vaozyz",
+    "redditId": "1vaozyz",
+    "title": "Do I need to do a pilot study for my PhD?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am working on seeing the therapeutic effects of enzymes in a fish model. Do I need to do a dose optimization pilot study or not? I am doing an test tube in vitro assay which would give the activity status of the peptidase, however, I am not so sure of it. Even, my guide is telling do whatever you feel right. My guide is telling me to include oecd 203 guidelines, however, it doesn't match with my intervention. It involves tank immersion method while mine is oral feeding. What am I supposed to do?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/First-Shirt-3295\"> /u/First-Shirt-3295 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaozyz/do_i_need_to_do_a_pilot_study_for_my_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vaozyz/do_i_need_to_do_a_pilot_study_for_my_phd/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vaozyz/do_i_need_to_do_a_pilot_study_for_my_phd/",
+    "subreddit": "r/PhD",
+    "author": "/u/First-Shirt-3295",
+    "publishedAt": "2026-07-30T09:45:51+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.950Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "c834e8aa83ebca9ac2d7f46cb3b89543f934ce7c1d35a7b4cae0a79885b934cd"
+  },
+  {
+    "id": "reddit_1vao58k",
+    "redditId": "1vao58k",
+    "title": "I built a local literature search tool for CS papers",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1vao58k/i_built_a_local_literature_search_tool_for_cs/\"> <img src=\"https://preview.redd.it/ozfrh1gzwbgh1.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=a5ab71299bad85411ebcba7933edec9f4f70f2d2\" alt=\"I built a local literature search tool for CS papers\" title=\"I built a local literature search tool for CS papers\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>I’m doing a PhD in AI for cybersecurity and put together <a href=\"https://github.com/philippnormann/cs-grep\">cs-grep</a> to search papers from top computer science venues locally.</p> <p>I used <a href=\"https://github.com/Kyle-Kyle/top4grep\">top4grep</a> before, but wanted broader venue coverage and an easier way to browse and filter results. I mostly use the TUI to brainstorm related work and keep up with new publications. The JSON output also makes it easy to use the search with research agents, for example to automate parts of a structured literature review.</p> <p>It started with security conferences, but now also covers ML, NLP, computer vision and software engineering. Coverage outside security is still a bit uneven, but venues are easy to add.</p> <p>Thought this might be useful to some of you too. PRs extending venue coverage and feedback on the query language or TUI are very welcome :)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/BotInPerson\"> /u/BotInPerson </a> <br/> <span><a href=\"https://i.redd.it/ozfrh1gzwbgh1.png\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vao58k/i_built_a_local_literature_search_tool_for_cs/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vao58k/i_built_a_local_literature_search_tool_for_cs/",
+    "subreddit": "r/PhD",
+    "author": "/u/BotInPerson",
+    "publishedAt": "2026-07-30T08:56:25+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.950Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "c73157184d90c1456f83433228004dcd7986925b1ce13597dd09479dd3e9d3c5"
+  },
+  {
+    "id": "reddit_1vanupd",
+    "redditId": "1vanupd",
+    "title": "Reviewer that wants his UNRELATED papers cited in our manuscript",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>We are trying to publish in Springer Nature. Previously, I've only had constructive and meaningful reviews. Now this reviewer #2 made a comment that we should cite more related work, then gave 7 links of his own work that are very much unrelated to anything in the manuscript. I find a reviewer like this incredible stupid and unprofessional. Of course I know who he is and I know he is still doing a PhD since all of the papers he linked are written by one person.</p> <p>Since we want to publish in the journal, I picked on of his very general paper and just picked a very general point he made and cited one of his work.</p> <p>During the second round of reviews, the other reviewer (the one who gave all constructive feedback) has approved all the changes. Now this mfckr of reviewer #2 wanted more works cited again and gave a link to his work. I am going to cite more related work, but I won't add any of his work this time.</p> <p>MOST OF ALL, I AM VERY DISAPPOINTED WITH THE EDITORS IN THAT SPRINGER NATURE JOURNAL SINCE THEY LET THESE KINDS OF TOXIC REVIEWERS GIVE THESE KINDS OF COMMENTS. I would have thought a reputable journal would quality check their reviewers and the comments they give to the manuscript.</p> <p>Anyway, I still want to publish with them but if this reviewer is going to throw me all his insecurities in the next round, I am bringing the paper somewhere else.</p> <p>HAVE YOU TRIED, OR HEARD ANYONE SEND A COMPLAINT TO THE EDITOR FOR A TOXIC REVIEWER? I am seriously considering this.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/PrimaryAd8067\"> /u/PrimaryAd8067 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vanupd/reviewer_that_wants_his_unrelated_papers_cited_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vanupd/reviewer_that_wants_his_unrelated_papers_cited_in/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1vanupd/reviewer_that_wants_his_unrelated_papers_cited_in/",
+    "subreddit": "r/PhD",
+    "author": "/u/PrimaryAd8067",
+    "publishedAt": "2026-07-30T08:38:55+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.950Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "dd9d16d4ffed90effd8bd1a6b705ed31902187b4c291538f7382b5b1218e6488"
+  },
+  {
+    "id": "reddit_1valrhc",
+    "redditId": "1valrhc",
+    "title": "First Conference Acceptance: Looking for Poster &amp; Presentation Tips",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm a first-year PhD student, and I recently had my conceptual framework accepted for a conference. </p> <p>However, I've also heard from some postgraduate students that getting an abstract accepted at conferences is often \"quite easy.\" I'll admit that hearing this made me feel a little demotivated, as I wasn't sure how much I should celebrate the acceptance ( I would love to have constructive feedback )</p> <p>Since this is my first conference presentation, I'd really appreciate some advice from those with more experience:</p> <ul> <li>What software or apps do you recommend for designing an academic poster? (PowerPoint, Canva, Illustrator, Inkscape, etc.?)</li> <li>For a conceptual framework rather than completed results, how would you structure the poster so it's still engaging and informative?</li> <li>I've also been selected for a <strong>3-minute rapid oral presentation</strong>. Do you have any tips on how to make it memorable and encourage people to come over and discuss my poster afterward?</li> </ul> <p>I'd love to hear any lessons you've learned from presenting at conferences, especially what worked (or what you wish you'd done differently). Thank you!</p> <p>Location: Malaysia --> UK<br/> Field: Medicinal Chemistry</p> <p>but will be presenting infront of a molecular biology community</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/shineberry_k\"> /u/shineberry_k </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1valrhc/first_conference_acceptance_looking_for_poster/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1valrhc/first_conference_acceptance_looking_for_poster/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1valrhc/first_conference_acceptance_looking_for_poster/",
+    "subreddit": "r/PhD",
+    "author": "/u/shineberry_k",
+    "publishedAt": "2026-07-30T06:38:52+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.950Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8dfb240bca4cc89cbb0ccc7324e7d447494a94d6b6d7c3712c3462e0cde1a5de"
+  },
+  {
+    "id": "reddit_1val1na",
+    "redditId": "1val1na",
+    "title": "I absolutely hate PhD",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I was a fresh faced undergrad when i joined my grad school 4 years ago. I did summer research and took TA and RA jobs during the semester in undergrad. I had 3.8 GPA, great rapport with my professors, I genuinely enjoyed the research i did then. With this and the hope of making it in academia/industry, and getting a stable life in this country I started my grad school. I was in a microbiome lab. Loved the first two years, cleared my prelims and all my coursework. I had some days I came in at 8am and left at 11pm because of experiments. Was okay with that. But because of my then PI’s poor financial choices and loss of funding, the lab closed down and we were asked to find other labs. I joined a cardiovascular research lab- far from microbiology but this was my only option. With the whole starting from scratch, the manuscript from previous lab i was working on for so long and hard being paused and having to learn a lot of new things for this new lab, I feel so fed up. I have nothing to show for my progress because of the having to switch lab. I just have one review paper which thankfully has increased citations. But that is it. I have a vast range if skill but no evidence to prove it as a manuscript. I am in my 4th year now and 1st year in the new lab. I am fed up, I am burnt out. My partner who started PhD the same year as me in Computational engineering has one semester and he defends, meanwhile I have done nothing. I am so frustrated and demotivated. I just do my lab work as it pays me and keeps my visa status. I hope my partner gets PR with his much better career and prospects. Because I feel like I will not amount to anything. I sometimes feel like mastering out and quitting this. I am literally just following through to keep my visa. I hate going to work, I am not interested in reading papers, I have no curiosity, I feel so discouraged. Idk what to do. Maybe this is a phase, people have told me you get most of your research done in the last 2 years, but idk. Anyone feel this way?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/UnusualContext1505\"> /u/UnusualContext1505 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1val1na/i_absolutely_hate_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1val1na/i_absolutely_hate_phd/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1val1na/i_absolutely_hate_phd/",
+    "subreddit": "r/PhD",
+    "author": "/u/UnusualContext1505",
+    "publishedAt": "2026-07-30T06:00:22+00:00",
+    "fetchedAt": "2026-07-30T16:12:24.950Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "39beafbf7e5b30a36290b40d6eb3e439b69ee3314dbf86435e5eb4ee6307d1f7"
+  },
+  {
+    "id": "reddit_1vaxlte",
+    "redditId": "1vaxlte",
+    "title": "How to approach a PhD application?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey guys I’m applying for a PhD program this year. I have already identified and spoken with my advisor. We had an hour long meeting and he encouraged me to apply for the position. Is there any other steps I should be taking to solidify my application and also is there any other common steps/ approach I should follow when applying in my writing materials or while doing the application process. Please do let me know. Thank you</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Illustrious_Party833\"> /u/Illustrious_Party833 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaxlte/how_to_approach_a_phd_application/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaxlte/how_to_approach_a_phd_application/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaxlte/how_to_approach_a_phd_application/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Illustrious_Party833",
+    "publishedAt": "2026-07-30T15:56:07+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.175Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "39efdccf3ebf59d9c550f909d7f807266da5d5230a140ffd83f328e727c455b8"
+  },
+  {
+    "id": "reddit_1vaxhkk",
+    "redditId": "1vaxhkk",
+    "title": "Second meeting with prospective PI after submitting PhD application? What to expect?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>My field is AI/ML and I recently had an initial 30-minute Zoom meeting with a prospective PI after cold-emailing him. During that first meeting, we already went through quite a lot:</p> <p>- My self introduction and detailed research experience<br/> - In-depth Q&amp;A about my research<br/> - My future research interests and how they align with the lab<br/> - An overview of the PI's current research projects<br/> - And my questions at the end (lab culture, advising style, etc.)</p> <p>Right after that, I officially submitted my application to the program. Now, the professor reached out again to schedule a second meeting. Since we already covered my background and his research in the first call, I'm wondering:</p> <ol> <li>What is the main <strong>purpose</strong> of a second meeting at this stage?</li> <li>What kind of <strong>questions</strong> or materials should I prepare? I was thinking of bringing a single-slide research proposal. Is this right move?</li> <li>What smart questions should I ask him this time?</li> </ol> <p>I would love to hear about your experience and advice! Thanks in advance.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Odd_Issue_6159\"> /u/Odd_Issue_6159 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaxhkk/second_meeting_with_prospective_pi_after/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaxhkk/second_meeting_with_prospective_pi_after/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaxhkk/second_meeting_with_prospective_pi_after/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Odd_Issue_6159",
+    "publishedAt": "2026-07-30T15:51:49+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.175Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "3516fa4d2bd29150d51248e8d9943c726508143c0c1d71615e11107bb8925c9a"
+  },
+  {
+    "id": "reddit_1vaua2o",
+    "redditId": "1vaua2o",
+    "title": "Received admission to Alexander-Humboldt University of Berlin‘s MA Phil Program",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi all,</p> <p>After 5 years of undergrad in the US I received admission to my third MA program. My major during my undergraduate was philosophy from a mid-ranked school (150‘s nationally) and I graduated with a 3.9 CGPA.</p> <p>I was also accepted into:</p> <ol> <li><p>Georgia state university MA Philosophy</p></li> <li><p>Freie Universität Berlin MA Philosophy</p></li> </ol> <p>I formally accepted the offer from the Humboldt university :)!!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Aware-Fig4523\"> /u/Aware-Fig4523 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaua2o/received_admission_to_alexanderhumboldt/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaua2o/received_admission_to_alexanderhumboldt/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaua2o/received_admission_to_alexanderhumboldt/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Aware-Fig4523",
+    "publishedAt": "2026-07-30T13:52:42+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.175Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "e6323f3a8ab7469d4aa6dc8df4f84fecd6ddff61ed3f9119b28972b21b770bee"
+  },
+  {
+    "id": "reddit_1vau8ce",
+    "redditId": "1vau8ce",
+    "title": "Should I do a Master's in Luxury Management to build a fashion brand, or is it not worth it? (ESSEC vs HEC vs SDA Bocconi — money is my main worry)",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I work in consulting and have a business background. Outside my job, I'm building a luxury fashion brand. The long-term goal is to build something that can one day stand next to brands like Hermès, Loro Piana, Brunello Cucinelli, and The Row. I don't want the Master's just to have a degree — I want it to actually help me grow the brand faster. So before I spend a year+ and a lot of money on it, I want honest outside opinions.</p> <p>By the time I'd start, I'll have a few years of work experience. Here's what I'm unsure about:</p> <ul> <li><strong>Which school:</strong> My first choice is ESSEC's MSc in Luxury Management. I'm also looking at HEC Paris, ESCP, SDA Bocconi, and Politecnico di Milano. If you've done any of these, or hire people who have — how do they compare for someone trying to build their own brand, not just get a job?</li> <li><strong>Is it even worth it:</strong> Would you skip the degree completely and put that time and money straight into the brand instead? I'm open to hearing this is a bad idea.</li> <li><strong>Money:</strong> This is my biggest worry. I can only pay for less than 15% of tuition and living costs on my own, without loans. So I'm looking hard at scholarships, assistantships, work-study programs, and company sponsorship, instead of just picking the \"best\" school. Has anyone done this for a luxury or business Master's in Europe?</li> <li><strong>How much risk to take:</strong> I'm okay taking on real debt if it's clearly worth it in the long run. But where's the line between a smart bet and just overpaying for a brand name?</li> <li><strong>Timeline:</strong> I want to apply for the next intake, about a year from now. I don't speak French yet and I'm starting from zero toward a basic French certificate (DELF A2). I also haven't started studying for the GMAT. Is this realistic while working full-time?</li> </ul> <p>Would love to hear from anyone who's done a luxury or fashion business Master's, works in the luxury industry, or just has an opinion on whether a formal degree actually helps someone trying to build their own brand. Honest opinions welcome, even harsh ones.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Imaginary_Chapter819\"> /u/Imaginary_Chapter819 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vau8ce/should_i_do_a_masters_in_luxury_management_to/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vau8ce/should_i_do_a_masters_in_luxury_management_to/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vau8ce/should_i_do_a_masters_in_luxury_management_to/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Imaginary_Chapter819",
+    "publishedAt": "2026-07-30T13:50:51+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.175Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "92c5b2ba7d1b53959ddd3c7da9fcf542ca6ac8e55e0c05341b90a822ac4b71c7"
+  },
+  {
+    "id": "reddit_1vau7c3",
+    "redditId": "1vau7c3",
+    "title": "Professor was very interested initially, then went silent. Normal?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I cold emailed a very well known professor about a PhD for 2027. She replied within hours, said my work was interesting, asked for my CV, mentioned I might give a presentation to her group, and told me to apply listing her as my faculty of interest.</p> <p>I sent my CV the same day, but it’s been over 5 weeks with no response.</p> <p>Is this normal for faculty, especially over the summer, or should I assume she’s no longer interested after looking at my cv? Would you send a follow-up at this point?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/youshallknow-pain\"> /u/youshallknow-pain </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vau7c3/professor_was_very_interested_initially_then_went/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vau7c3/professor_was_very_interested_initially_then_went/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vau7c3/professor_was_very_interested_initially_then_went/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/youshallknow-pain",
+    "publishedAt": "2026-07-30T13:49:47+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.175Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "927bddfadeecc2441f1d92fb0098ed328d26aeaae6ea31111854a60604d28b0f"
+  },
+  {
+    "id": "reddit_1vau5go",
+    "redditId": "1vau5go",
+    "title": "asking for advice about my master program",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone,</p> <p>I am engineering student and I recently graduated with a Bachelor’s degree in Computer Engineering from Concordia University.</p> <p>I am reaching out to seek advice regarding an important academic decision. I am aiming to pursue a PhD and build a strong research profile in areas such as optical and photonic devices, solid-state nanodevices, and quantum technologies. My end goal is to work in the R&amp;D labs and eventually become a univeristy professor one day.</p> <p>I have been accepted into two graduate programs and am currently deciding between them. The first is a Master of Applied Science in Electrical and Computer Engineering at Concordia University under the supervision of Dr. John Xiupu Zhang, with a research focus on laser semiconductors (which is a very intresting field to me). The second is the M1 Electrical and Optical Engineering program at Télécom SudParis (Institut Polytechnique de Paris), with a planned specialization in Optical Networks and Photonic Systems for M2.</p> <p>While Télécom SudParis offers strong academic training within a highly regarded institution, I understand that the program is primarily course-based, with the possibility of transitioning into a more research-oriented internship on the second year. In contrast, the Concordia program guarantees immediate involvement in research through the thesis and</p> <p>supervised lab work.</p> <p>More over, the courses at Télécom SudParis would revolve more around telecomunication systems and networking. with few quantum computing and science subsubjects on the second year.</p> <p>Meanwhile at concordia, I will be working directly in labs about quantum resonance and only taking courses that would help me in research. [plus there is a slight tiny chance the research lab I will be working with have a co-research with London college univeristy]</p> <p>Another thing to consider is that while telecom sudparis doesn't hold a ranking on its own and it is generally regarded as the lowest institution in Institut Polytechnique de Paris, it is still a prestigious school and part of the grand ecole group and the master program would follow the ranking of 43rd place world wide on QS score because it's offered by institut polytechnique de paris. (the teaching professors r from telecom sudparis, telecom paris, graduate school of optics paris scalay)</p> <p>On the other hand, Concordia is less known world wide, with a ranking around the 150-200.</p> <p>Additionally, telecom sudparis's program would give me a professional training to work in industry, as well as the ability to maybe get into the research internship and go into phd after.</p> <p>while, I would image, it would be hard to transit into industry if I go to Concordia, and maybe someone goes wrong and I have to go into industry.</p> <p>alot of people also told me that getting into phd is about connections more than anything, and I feel that in paris I would have connections to better professors and a better chance of acceptance to a phd, than if I do the masters in concoedia.</p> <p>Given your experiences, I would greatly value your</p> <p>perspectives on which path might better support my long-term goal of</p> <p>pursuing a PhD and an academic research career. In particular, I am</p> <p>interested in understanding whether early, guaranteed research</p> <p>experience would outweigh the potential advantages of attending a more</p> <p>research-intensive track at a later stage within a highly ranked</p> <p>institution.</p> <p>I would also love to hear your opinions on both universities and programs if anyone have any insights.</p> <p>sorry for the long post and thank you all.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Mostafa_HASSAN_0\"> /u/Mostafa_HASSAN_0 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vau5go/asking_for_advice_about_my_master_program/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vau5go/asking_for_advice_about_my_master_program/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vau5go/asking_for_advice_about_my_master_program/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Mostafa_HASSAN_0",
+    "publishedAt": "2026-07-30T13:47:42+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "908c46ae1b91dd94cd17707245cef57d3503df11aaf1816cafcd7ace217ba00b"
+  },
+  {
+    "id": "reddit_1valoyr",
+    "redditId": "1valoyr",
+    "title": "Can I pursue a Master's in English Literature, History, or Philosophy with an engineering background in Switzerland",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm from Delhi, India, and currently in my third year of engineering. I realized that engineering is not what I want to do. I've always been passionate about English literature, history, and philosophy, and I want to build my career in one of these fields.</p> <p>My dream is to study abroad in University of Zurich in Switzerland The problem is that I have no academic background in the humanities since my degree is in engineering.</p> <p>Is it possible to apply for a master's in English Literature, History, or Philosophy with a different academic background in Zurich ? If not, what steps can I take to become eligible? How can I build a strong profile for admission?</p> <p>I would really appreciate any advice or guidance</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ok-Address-7352\"> /u/Ok-Address-7352 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1valoyr/can_i_pursue_a_masters_in_english_literature/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1valoyr/can_i_pursue_a_masters_in_english_literature/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1valoyr/can_i_pursue_a_masters_in_english_literature/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Ok-Address-7352",
+    "publishedAt": "2026-07-30T06:34:52+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "2d3f12140f76f8ac54dbf27b3f26ba8630c590175d127ad5b6d50bd6ea0723a1"
+  },
+  {
+    "id": "reddit_1vakt8m",
+    "redditId": "1vakt8m",
+    "title": "How can I prepare for an MIT EECS PhD during my B.Tech?",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/WeirdEstimate7082\"> /u/WeirdEstimate7082 </a> <br/> <span><a href=\"/r/MITAdmissions/comments/1vaksn9/how_can_i_prepare_for_an_mit_eecs_phd_during_my/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vakt8m/how_can_i_prepare_for_an_mit_eecs_phd_during_my/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vakt8m/how_can_i_prepare_for_an_mit_eecs_phd_during_my/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/WeirdEstimate7082",
+    "publishedAt": "2026-07-30T05:47:44+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8d55f58c1cf41402d179d261fdb40ceb8acaf16ac2cb6107bb8afa54cc9aa067"
+  },
+  {
+    "id": "reddit_1vaklm0",
+    "redditId": "1vaklm0",
+    "title": "LORs for a quiet student from 10 years ago",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi friends, hoping for a bit of advice (perhaps from professors and/or admissions staff, if y’all are in here).</p> <p>It’s been almost 10 years since my undergrad, and I was a fairly quiet student. Communicated and asked questions when needed, engaged in discussions as required, but didn’t really form any relationships with my professors beyond doing generally well in their classes. I was a good student, but the year gap, plus my lack of personal relationships/interactions would make for a very mediocre (if that) letter of recommendation.</p> <p>I asked one of the advisors of a Grad program I’m interested in if an LOR from a professor was required, and he stated a letter from an academic perspective is important to the application to get a gauge on how I perform academically. I have several solid options for LORs from mentors, supervisors (past and current), with impressive credentials, but they are all from work experience. He did state I was welcome to submit 3 letters, however, though only 2 are required.</p> <p>Any advice on reaching out to old professors who will very likely not remember me, and/or ways I can help communicate that I’ll do well in the academic setting?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Sparklepuff123\"> /u/Sparklepuff123 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaklm0/lors_for_a_quiet_student_from_10_years_ago/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaklm0/lors_for_a_quiet_student_from_10_years_ago/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaklm0/lors_for_a_quiet_student_from_10_years_ago/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Sparklepuff123",
+    "publishedAt": "2026-07-30T05:36:08+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "a24a5768bdd29d07fc36db231882dbbb31115ca4e319b47a72a1e1e93d9c57ec"
+  },
+  {
+    "id": "reddit_1vaj8qi",
+    "redditId": "1vaj8qi",
+    "title": "How realistic is PSL (Paris Dauphine/PSL) MSc Finance with a 2.94 GPA?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone, I’m trying to evaluate my chances for the MSc Finance program at PSL (Paris Dauphine–PSL).<br/> Here’s my background:</p> <p>Economics undergraduate at Nazarbayev University (Kazakhstan)<br/> Current GPA: <strong>2.94/4.0</strong><br/> Expected GPA after next semester: <strong>around 3.08/4.0</strong> (if everything goes well)<br/> IELTS: <strong>7.5</strong><br/> Three finance-related internships (budget analysis, corporate finance, cost analysis, risk-related work)<br/> Learning Python and SQL<br/> Interested in Finance, Financial Analytics and Risk</p> <p>I know PSL Finance is extremely competitive, and I’ve seen many people say admitted students usually have very high GPAs.</p> <p>My questions are:<br/> Is my GPA likely to be an automatic rejection, or do strong internships and an upward trend help?<br/> Would a high GRE score (especially Quant) make a meaningful difference?<br/> Are there any international students here who were admitted with a GPA around 3.0?<br/> If PSL is too much of a reach, which French schools would you recommend for someone with my profile?<br/> I’d really appreciate honest opinions rather than optimistic guesses.<br/> Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Mowlowkrew\"> /u/Mowlowkrew </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaj8qi/how_realistic_is_psl_paris_dauphinepsl_msc/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaj8qi/how_realistic_is_psl_paris_dauphinepsl_msc/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaj8qi/how_realistic_is_psl_paris_dauphinepsl_msc/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Mowlowkrew",
+    "publishedAt": "2026-07-30T04:25:15+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "76c9efb7f81a706e20f1fdb3e2837086e312755e48ee0a085e9898205a1b7bdd"
+  },
+  {
+    "id": "reddit_1vaihic",
+    "redditId": "1vaihic",
+    "title": "(Astrophysics Major) How good are my chances for getting in?",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/Both-Challenge-5562\"> /u/Both-Challenge-5562 </a> <br/> <span><a href=\"/r/GradSchool/comments/1vaiefu/astrophysics_major_how_good_are_my_chances_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaihic/astrophysics_major_how_good_are_my_chances_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaihic/astrophysics_major_how_good_are_my_chances_for/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Both-Challenge-5562",
+    "publishedAt": "2026-07-30T03:48:03+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "1b6d321f084daeedaf3fcc0e32ca2542e7d5d55e80a5969d57270f6c6ed64fb4"
+  },
+  {
+    "id": "reddit_1vah3f5",
+    "redditId": "1vah3f5",
+    "title": "‘IST’ Research Universities",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’m an international student planning to apply to DGIST, GIST and KAIST in Korea for masters in the Life Sciences (Biology) degrees in Spring 2027. </p> <p>For people who are already doing master’s or PhD at one of these unis could you please share your experiences..how are your supervisors, are there any issues you have faced?</p> <p>Also, what cold emailing tips would you give me for Korean professors?<br/> On the lab websites of professors from these universities, some say they’re taking graduate students and have the contact info there, but most aren’t replying. </p> <p>Thank you!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/b_folklore\"> /u/b_folklore </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vah3f5/ist_research_universities/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vah3f5/ist_research_universities/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vah3f5/ist_research_universities/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/b_folklore",
+    "publishedAt": "2026-07-30T02:42:01+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "bfa097c9cc3a265476bf2c26dbd779a3e6869eec219b275f096cfdc8328bacea"
+  },
+  {
+    "id": "reddit_1vafbjh",
+    "redditId": "1vafbjh",
+    "title": "PhD program and bioinformatics and computational biology at George Mason University",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/SuspectConsistent897\"> /u/SuspectConsistent897 </a> <br/> <span><a href=\"/r/bioinformaticscareers/comments/1vafaq3/phd_program_and_bioinformatics_and_computational/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vafbjh/phd_program_and_bioinformatics_and_computational/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vafbjh/phd_program_and_bioinformatics_and_computational/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/SuspectConsistent897",
+    "publishedAt": "2026-07-30T01:21:34+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "642465edd76495360e43774e14f967e17996d4f1a19bc667d969197c3aa41608"
+  },
+  {
+    "id": "reddit_1vaebky",
+    "redditId": "1vaebky",
+    "title": "Is it possible to get into top programs with low cgpa but good research?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi, so I am International student will apply in Fall 27 for PhD in US universities.(CSE)</p> <p>My university rank is around #700 QS and my grade is quite low(3.46)</p> <p>However, I am doing some great research in my domain with top faculty from UIUC, and it's going quite well. And expecting an exceptional LoR from him(I will say it's almost guaranteed given my relationship with him). He is also quite well known in the domain.</p> <p>So I am wondering if I should consider applying to top 30 universities(CS Rankings) or if it's too much? As their bar might be way higher.</p> <p>The problem is most of the faculty that's strongly relevant to my work is at top-30 unis.</p> <p>But I have always this fear that the admission committee will always reject my application due to cgpa specially in these top universities even before looking at my overall profile</p> <p>So if anyone can give suggestions or share insights on how the admission committee weighs CGPA vs research experience, that would be really helpful. Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Initial_Question3869\"> /u/Initial_Question3869 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaebky/is_it_possible_to_get_into_top_programs_with_low/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaebky/is_it_possible_to_get_into_top_programs_with_low/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaebky/is_it_possible_to_get_into_top_programs_with_low/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Initial_Question3869",
+    "publishedAt": "2026-07-30T00:37:01+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "b86ea204987bad522c45ce40667693dd22501199e0d11895361b93177c8636f4"
+  },
+  {
+    "id": "reddit_1vaam8i",
+    "redditId": "1vaam8i",
+    "title": "Are LORs from all prior PIs necessary/ideal?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi, I am an undergrad ee major going into my junior year (in the US). Since schools here usually require 3 LORs, I was wondering if it'd be ideal for all 3 of them to be from PIs who have supervised my research or would it be better to have a mix of Professors who also know you outside the lab. I've gotten some conflicting information on this since some say that admissions committees prefer a mix of perspectives that includes classroom instructors and work supervisors. I was wondering if any of you can give me some clarity. Much appreciated!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Top-Angle9375\"> /u/Top-Angle9375 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaam8i/are_lors_from_all_prior_pis_necessaryideal/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaam8i/are_lors_from_all_prior_pis_necessaryideal/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaam8i/are_lors_from_all_prior_pis_necessaryideal/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Top-Angle9375",
+    "publishedAt": "2026-07-29T22:04:20+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "38311150daf3c65ea54fc1436438ca8ef34dad91f28d37dd369d00960c8ac816"
+  },
+  {
+    "id": "reddit_1vaa3fg",
+    "redditId": "1vaa3fg",
+    "title": "Any other MFA applicants for UNCG?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>As the title implies I am curious if there are any other applications for the MFA program at UNCG who also applied for the fall of 2026. I haven’t gotten a reply and while normally I’d take that as a sign of a rejection or preferably some form of waitlist/deferral. I communicated with the grad department and they confirmed the decisions for fall of 2026 hasn’t been released yet for the program. So I do find myself a bit confused on what to expect. I’m a transit student so if I were to suddenly get in I’d need time to move to a new state and get housing, the staff who handles this process are apparently out for summer and the head of that department never replied to my original email in early April, so I’m getting some serious mixed signals haha. I am prepping myself either way but I just want to know if there’s anyone else, whether they already got accepted or rejected. Or really even an opinion from anyone on what you think this could possibly be. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Rinny_Mae\"> /u/Rinny_Mae </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaa3fg/any_other_mfa_applicants_for_uncg/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1vaa3fg/any_other_mfa_applicants_for_uncg/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1vaa3fg/any_other_mfa_applicants_for_uncg/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Rinny_Mae",
+    "publishedAt": "2026-07-29T21:44:40+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "0f272cf901bbd6a738b79bf3dcbef4e92de76756ed42d987979088e24f58a18e"
+  },
+  {
+    "id": "reddit_1va9nq7",
+    "redditId": "1va9nq7",
+    "title": "adult learner - bs in physics from asu online",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>36f</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Appropriate-Tea-1371\"> /u/Appropriate-Tea-1371 </a> <br/> <span><a href=\"/r/ASUOnline/comments/1va9mvd/adult_learner_bs_in_physics_from_asu_online/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va9nq7/adult_learner_bs_in_physics_from_asu_online/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va9nq7/adult_learner_bs_in_physics_from_asu_online/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Appropriate-Tea-1371",
+    "publishedAt": "2026-07-29T21:28:18+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.176Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "4561200e29bc34eac3749838c34bcd8f4e44867969d7733d28f4ad23d5981ede"
+  },
+  {
+    "id": "reddit_1va8awn",
+    "redditId": "1va8awn",
+    "title": "Which Canadian Master's in Urban Planning has the best employability for an international student in Canada?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>​</p> <p>Hi everyone! I'm an international student from Bangladesh with a Bachelor of Architecture (B.Arch) from BRAC University. I'm planning to apply for a Master's in Urban/Community &amp; Regional Planning for Fall 2027 in Canada. I'd also like to work in Canada after graduating in a relative field, preferably urban policy, climate adaptation and environmental planning etc. </p> <p>My long-term interests are: community and neighbourhood development, climate resilience and adaptation, ecological/hydro-ecological urbanism and environmental planning. </p> <p>I've shortlisted these universities: </p> <p>\\* **University of British Columbia** – both MAP (master of arts in planning) and MCRP ( master of Community and regional planning) </p> <p>\\* **University of Manitoba** – Master of City Planning (MCP)</p> <p>\\* **University of Waterloo** – MES (Planning)</p> <p>\\* **Queen's University** – Master of Planning (MPL)</p> <p>\\* **Dalhousie University** – Master of Planning (MPlan)</p> <p>\\* **University of Calgary** – Master of Planning (MPlan)</p> <p>I'd really appreciate insights from current students, alumni, or planning professionals about your experiences and any advice you might have. </p> <p>Some questions I have:</p> <p>\\*Which of these programs will be better suited for my profile and background in Architecture? </p> <p>\\* Which university has the strongest industry connections and internship/co-op opportunities?</p> <p>\\* As an international student, which program gives the best chance of finding a planning-related job after graduation?</p> <p>Additionally, are there any programs on my list that you'd avoid, or any excellent programs that I've missed?</p> <p>If funding, employability, and affordability were your priorities, how would you rank these programs?</p> <p>I'd also love to hear about your personal experiences with any of these universities—the good, the bad, and anything you wish you'd known before applying.</p> <p>Thanks in advance for your advice!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/mowly_i\"> /u/mowly_i </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va8awn/which_canadian_masters_in_urban_planning_has_the/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va8awn/which_canadian_masters_in_urban_planning_has_the/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va8awn/which_canadian_masters_in_urban_planning_has_the/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/mowly_i",
+    "publishedAt": "2026-07-29T20:37:15+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "76945fac46794edc7e94b767240b2af91814df9cf57de37a03de27c90013c411"
+  },
+  {
+    "id": "reddit_1va7xzt",
+    "redditId": "1va7xzt",
+    "title": "Could someone recommend some good school for combinatorics ( especially graph theory) to me?",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/SquirrelNeat2847\"> /u/SquirrelNeat2847 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va7xzt/could_someone_recommend_some_good_school_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va7xzt/could_someone_recommend_some_good_school_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va7xzt/could_someone_recommend_some_good_school_for/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/SquirrelNeat2847",
+    "publishedAt": "2026-07-29T20:24:06+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "854babda335e1a0da6d954b9412c50f9d1ac15264bab55e49cbb24fc971a801a"
+  },
+  {
+    "id": "reddit_1va7lha",
+    "redditId": "1va7lha",
+    "title": "MSCA PhD interview preparation",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone, I'm an MD graduate who applied for MSCA joint PhD between Universities in Belgium and South Africa.<br/> I got an interview call, they mentioned it'll be 20 minutes and gave a basis of questions they can ask, very generic ones.<br/> The thing is this is my 8th interview this year and I got rejected in all of them. I don't know what I'm doing wrong and I really want to get this PhD, since it's directly relevant to my experience and education.<br/> Can you please tell me how to perform well in this interview?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Big_Address_5047\"> /u/Big_Address_5047 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va7lha/msca_phd_interview_preparation/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va7lha/msca_phd_interview_preparation/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va7lha/msca_phd_interview_preparation/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Big_Address_5047",
+    "publishedAt": "2026-07-29T20:11:49+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "c1b57667e4b38d6604470f7c98f61c0f145676dd0143f138b11c6dee2dde6ea6"
+  },
+  {
+    "id": "reddit_1va6aft",
+    "redditId": "1va6aft",
+    "title": "Advice wanted UK MPharm Pharmacy -&gt; US PhD",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi,</p> <p>Im currently going into my fourth year in my Mpharm at the university of Manchester, and I was looking into doing a phd in the US as I just love the way of life there and want to explore research in a big pharma company. Im currently sitting at a high 2:1 (69%) lots of leadership(leading a sports club, initiative for teaching in pharmacy etc) and clinical experience in community and hospital, but no research experience. Im starting my yr 4 project and I plan for it to be lab based and the supervisor said I can get some additional lab work when we go back.</p> <p>Some questions are since im doing an Mpharm would it be beneficial to do a MRes to strengthen my application - the only issue is funding. Also are the chances really low? If so, Ill take a year out or something to try get experience. I’d be open to any US uni with a good research environment tbh! also it would be in pharmacuetical/biomedical sciences</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Unhappy_Owl_1178\"> /u/Unhappy_Owl_1178 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va6aft/advice_wanted_uk_mpharm_pharmacy_us_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va6aft/advice_wanted_uk_mpharm_pharmacy_us_phd/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va6aft/advice_wanted_uk_mpharm_pharmacy_us_phd/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Unhappy_Owl_1178",
+    "publishedAt": "2026-07-29T19:25:56+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8c4d9141c68c0f035a7ea72ad85f9bf65dfbdea37c9b10d65303b7a6f80a1bdb"
+  },
+  {
+    "id": "reddit_1va5m66",
+    "redditId": "1va5m66",
+    "title": "How important is GPA for masters?",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/Available_Street_887\"> /u/Available_Street_887 </a> <br/> <span><a href=\"/r/EngineeringStudents/comments/1v9qsz4/how_important_is_gpa_for_masters/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va5m66/how_important_is_gpa_for_masters/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va5m66/how_important_is_gpa_for_masters/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Available_Street_887",
+    "publishedAt": "2026-07-29T19:02:37+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "e66882555ab0b20b0d9de8a4f75ddb4a1479db51105186e5c76d3211ae67a956"
+  },
+  {
+    "id": "reddit_1va55wn",
+    "redditId": "1va55wn",
+    "title": "First graduate admissions cycle. 12 applications. 0 offers. What am I missing?",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/gradadmissions/comments/1va55wn/first_graduate_admissions_cycle_12_applications_0/\"> <img src=\"https://preview.redd.it/12n36ezes7gh1.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=bfb20ae9f45db99ee1603e58c235071be355cba5\" alt=\"First graduate admissions cycle. 12 applications. 0 offers. What am I missing?\" title=\"First graduate admissions cycle. 12 applications. 0 offers. What am I missing?\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>This was my first time applying to graduate programmes (MS/MSc/MEng), and if I'm being honest, I thought I had built a reasonably competitive profile:</p> <ul> <li>One year as a Research Engineer at a data-as-a-service startup, followed by my current role as an AI Software Engineer at an e-commerce company</li> <li>One IEEE conference paper published, several months of work</li> <li>IELTS: <strong>8.0/9.0</strong></li> <li>Strong letters of recommendation from both professors and industry supervisors.</li> <li>Carefully written Statements of Purpose that I tailored after researching faculty members and their research interests.</li> <li>CGPA: 7.87/10 (India), First Class with Distinction. Roughly 3.15/4.0. (Not exceptional, but above the minimum scholarship requirements for many universities)</li> </ul> <p>I applied across KSA, UAE, France, and Germany (Weird combo, I know, but reflected my goals) to programmes spanning MS in Computer Science, AI, Data Science, Machine Learning, Robotics &amp; Autonomous Systems, Software Engineering, and Cybersecurity. Most of these were scholarship applications, though I was open to self-funded offers too. These weren't reach-only applications aimed at Ivy League or ultra-selective schools. I was hoping for admission from at least one, funded or not.</p> <p>Instead: no interviews. Most universities never responded; the rest sent automated rejections months later. Breakdown attached above.</p> <p>This was particularly difficult because I had left my previous role for personal reasons during the application cycle, hoping graduate school would be the beginning of my next chapter. With the new academic year about to begin, I've accepted that this admissions cycle is over. But the goal hasn't changed: <strong>I still want to do a master's, and I need to figure out what to fix before the next one.</strong></p> <p>I've now been out of university for over a year, and my current work is less research-focused than before, so I'm struggling to identify what would actually move the needle.</p> <p>For those of you who have been in a similar position and eventually succeeded or have figured out what to do next, I would genuinely appreciate your advice.</p> <ul> <li>What weaknesses do you immediately notice in my profile?</li> <li>What should I prioritize over the next 6–12 months?</li> <li>Is another publication worthwhile?</li> <li>Should I retake courses, improve my GPA somehow, gain different work experience, or rethink my university list altogether?</li> <li>The country mix: KSA/UAE alongside France/Germany are very different systems and languages. What other regions could be a better fit for my profile and interests?</li> <li>Should I avoid applying on my own for the next cycle and approach consultancies? Would that meaningfully increase my chances? Not looking for sympathy; I'm looking for honest feedback so the next cycle looks different. Thanks in advance.</li> </ul> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/TheHeirald\"> /u/TheHeirald </a> <br/> <span><a href=\"https://i.redd.it/12n36ezes7gh1.png\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va55wn/first_graduate_admissions_cycle_12_applications_0/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va55wn/first_graduate_admissions_cycle_12_applications_0/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/TheHeirald",
+    "publishedAt": "2026-07-29T18:47:02+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "da941aadd3c6e10b5b13b3900a350ab14236a51ff514327c8ccf98b5310a907b"
+  },
+  {
+    "id": "reddit_1va4rgo",
+    "redditId": "1va4rgo",
+    "title": "Would my profile be competitive for a Computer Science PhD in Europe?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>I'm looking for some honest feedback about my chances of getting admitted to a Computer Science PhD in Europe (Germany, Denmark, Austria, or similar countries).</p> <p>Here's my background:</p> <ul> <li>9 years of experience as a Software Engineer.</li> <li>Worked at large international consulting companies such as NTT DATA, Tata Consultancy Services (TCS), Inetum, and Globant.</li> <li>Currently finishing a Master's degree in Data Science (one semester left) with strong grades.</li> <li>I'm expecting to have two research papers accepted at conferences indexed in Scopus before I apply.</li> <li>My long-term goal is to pursue a research career while leveraging my industry experience.</li> </ul> <p>My main question is:</p> <p><strong>Would this profile generally be considered competitive for a PhD in Computer Science at European universities, or would I still be missing something important?</strong></p> <p>I know PhD admissions depend on many factors (research fit, supervisor, recommendation letters, publications, etc.), but I'd really appreciate hearing from people who have been through the European admissions process.</p> <p>Also, if you were on an admissions committee, what would you see as the strongest and weakest parts of my profile?</p> <p>Before anyone asks why I want to do a PhD after spending so many years in industry: I've always enjoyed research, and pursuing a PhD has been a long-term personal goal rather than just a career move.</p> <p>Thanks in advance for any advice or experiences you can share!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/jefersonapaza\"> /u/jefersonapaza </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va4rgo/would_my_profile_be_competitive_for_a_computer/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va4rgo/would_my_profile_be_competitive_for_a_computer/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va4rgo/would_my_profile_be_competitive_for_a_computer/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/jefersonapaza",
+    "publishedAt": "2026-07-29T18:32:52+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "11d3a2bec5a27dadd9246eb15061e6614ecd4fd132c29874cb77cca6446daa24"
+  },
+  {
+    "id": "reddit_1va4jgg",
+    "redditId": "1va4jgg",
+    "title": "I got into Stanford for MS, and couldn’t attend. If I reapply will they accept me again?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Title. I applied for engineering last year and got in but couldn’t attend because of financial reasons. I got a job this year and am saving up as much as possible for a masters. If I reapply will they consider my application differently or does this make things more difficult? </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Professional_Cake741\"> /u/Professional_Cake741 </a> <br/> <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va4jgg/i_got_into_stanford_for_ms_and_couldnt_attend_if/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/gradadmissions/comments/1va4jgg/i_got_into_stanford_for_ms_and_couldnt_attend_if/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/gradadmissions/comments/1va4jgg/i_got_into_stanford_for_ms_and_couldnt_attend_if/",
+    "subreddit": "r/gradadmissions",
+    "author": "/u/Professional_Cake741",
+    "publishedAt": "2026-07-29T18:25:05+00:00",
+    "fetchedAt": "2026-07-30T16:13:01.177Z",
+    "sourceId": "gradadmissions-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "0515c2ad411cfa7c2556d09529f76914cdf31485b044b33808f1931302196b1d"
+  },
+  {
+    "id": "reddit_1vauq3x",
+    "redditId": "1vauq3x",
+    "title": "Letters of Recommendation PsyD Program",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>hey everyone!</p> <p>I will be applying to PsyD programs very soon!</p> <p>I really like the PAU Stanford PsyD Consortium program but like many other programs, they require three letters of recommendation.</p> <p>Their application opens up on late august, rolling admissions and so I want to get my application in ASAP; however, I have only just been onboarded as a BT so I cannot get a letter of recommendation from my clinical supervisor.</p> <p>I am thinking of asking my PI at uni and one other prof. For the third letter, I was thinking the crisis text line but I am unsure how that would look to an admissions officer?</p> <p>Has anyone gotten their letters of recommendation for Psyd apps before? Are they generic? Can you possibly get on a zoom call with the person writing it and talk more about yourself and give some direction?</p> <p>If a letter form them is not the best choice, who else can I ask?</p> <p>I am graduating uni in less than 3 years and so have not been able to connect meaningfully with a lot of my psych professors.</p> <p>Do past employer letter of recs hold significant weight?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/bubbleb0p\"> /u/bubbleb0p </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1vauq3x/letters_of_recommendation_psyd_program/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1vauq3x/letters_of_recommendation_psyd_program/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/GradSchool/comments/1vauq3x/letters_of_recommendation_psyd_program/",
+    "subreddit": "r/GradSchool",
+    "author": "/u/bubbleb0p",
+    "publishedAt": "2026-07-30T14:09:32+00:00",
+    "fetchedAt": "2026-07-30T16:14:05.710Z",
+    "sourceId": "gradschool-writing",
+    "sourceKeyword": "writing",
+    "sourceType": "subreddit_search",
+    "contentHash": "efee767614cf42146b0d61cf7ea57924d8d69101279e5b4513b6694d37ac7608"
+  },
+  {
+    "id": "reddit_1vaiefu",
+    "redditId": "1vaiefu",
+    "title": "(Astrophysics Major) How good are my chances for getting in?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm currently going into my fourth year at UCF. I've done a decent amount at my time here, but given the state of funding and admissions right now, I can't say that I'm not terrified.</p> <p>My team was selected for our project going aboard the ISS via the Student Spaceflight Experimental Program, and I presented it at Kennedy Space Center. Last summer I was selected for a weeklong workshop at Oregon State University doing computational astrophysics (which I think about every day of my life). I've presented my poster that was also a contestant for the project, which ended up being a finalist for the space station project. Since my idea wasn't selected, I have been writing a paper on it with the sister college. I've completed the NASA L'Space program, and been active with my research here at the university for the last year and a half. I am getting ready to take Astronomical Data Analysis, basically using Python in real world scenarios to prepare us for the field. I have a 3.51 GPA (which I know isn't amazing, it will be a 3.64 once I do a grade forgiveness for a class). I'm also currently learning Fusion360.</p> <p>Most of the people I know in this field at my school don't end up getting into places. I know that its sort of arbitrary to ask \"will I get in?\", but any sort of idea as to what I can expect would be greatly appreciated.'</p> <p>I want to go into either studying planetary atmospheres, ring studies, or meteorology. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Both-Challenge-5562\"> /u/Both-Challenge-5562 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1vaiefu/astrophysics_major_how_good_are_my_chances_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1vaiefu/astrophysics_major_how_good_are_my_chances_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/GradSchool/comments/1vaiefu/astrophysics_major_how_good_are_my_chances_for/",
+    "subreddit": "r/GradSchool",
+    "author": "/u/Both-Challenge-5562",
+    "publishedAt": "2026-07-30T03:44:01+00:00",
+    "fetchedAt": "2026-07-30T16:14:05.710Z",
+    "sourceId": "gradschool-writing",
+    "sourceKeyword": "writing",
+    "sourceType": "subreddit_search",
+    "contentHash": "eb505847850ca637ceb38202a50465470f7a3dd59964064d19ed06a809938687"
+  },
+  {
+    "id": "reddit_1vagyq5",
+    "redditId": "1vagyq5",
+    "title": "Am I making a mistake?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Entering my senior year of undergrad, I can’t think of anything I’d like more than to pursue my research and get answers to all of these questions I have. I am graduating with a bachelors of Political Science and planning on going for a PhD in Political Science as well, and here’s my question: does this sound like an inherently bad decision? If you were talking to a 20 year old who happened to be writing this reddit post, would you tell them not to do a PhD?</p> <p>I understand that there’s a HIGH likelihood I don’t get accepted from my first round of admissions, and if I don’t that’s absolutely okay, but I just can’t imagine living the rest of my life having these questions and not pursuing a career where a large part of my life is about getting answers? Am I missing something? I feel like I’m supposed to not be enjoying research as much as I am, but instead I’m writing a thesis and having the time of my life, even when it gets torn apart (in which case I am also torn apart).</p> <p>I study local politics, specifically city boundaries, and I just can’t get enough of it. I have taken a lot of international relations classes as well as history, and a few oddball classes, and I’m not a huge fan of anything else. I’m doing a more typical office job internship in the local government realm and I really enjoy it, but I find myself being the office researcher who oftentimes looks at all the city boundary requirements and tries my best to imagine how services and zoning effects offices, businesses, parks, etc.</p> <p>I know it might sound stupid that I’m coming to Reddit but I just wanted to see some thoughts before application season. I know research can be useful in many other ways, especially when it comes to boundaries/local government.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/socooljugglr3000\"> /u/socooljugglr3000 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1vagyq5/am_i_making_a_mistake/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1vagyq5/am_i_making_a_mistake/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/GradSchool/comments/1vagyq5/am_i_making_a_mistake/",
+    "subreddit": "r/GradSchool",
+    "author": "/u/socooljugglr3000",
+    "publishedAt": "2026-07-30T02:35:58+00:00",
+    "fetchedAt": "2026-07-30T16:14:05.710Z",
+    "sourceId": "gradschool-writing",
+    "sourceKeyword": "writing",
+    "sourceType": "subreddit_search",
+    "contentHash": "11b4b8cef63009dcce2b74889d02674a1df9558fe6cba83ea24c0b1a150db8fe"
+  },
+  {
+    "id": "reddit_1v39z2r",
+    "redditId": "1v39z2r",
+    "title": "Need help. Masters degree!",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey everyone,<br/> Two years ago, I completed 90 out of 120 credits for my Master’s in Strategic HR in Sweden (all taught courses done). I ended up stepping away before doing the thesis because I got offered a great full-time job.<br/> It’s been eating away at me that I never finished the degree, and I really want to wrap it up now. However, I’m working full-time, so I’ll be writing mostly on weekends. Going to campus or spending weeks doing primary field research (interviews, surveys, etc.) isn't an option for me.<br/> I’m looking to do a purely desk-based thesis, something like a systematic literature review, comparative analysis, or secondary data study that I can research remotely.<br/> For anyone who has been in a similar boat:<br/> What kind of methodology or thesis topic works best for a purely literature/desk-based study in HR/management?</p> <p>Any tips on balancing a full-time job with writing a 30 ECTS thesis on the weekends?</p> <p>Thanks in advance!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Correct_Molasses6894\"> /u/Correct_Molasses6894 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1v39z2r/need_help_masters_degree/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1v39z2r/need_help_masters_degree/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/GradSchool/comments/1v39z2r/need_help_masters_degree/",
+    "subreddit": "r/GradSchool",
+    "author": "/u/Correct_Molasses6894",
+    "publishedAt": "2026-07-22T08:24:50+00:00",
+    "fetchedAt": "2026-07-30T16:14:05.710Z",
+    "sourceId": "gradschool-writing",
+    "sourceKeyword": "writing",
+    "sourceType": "subreddit_search",
+    "contentHash": "49fc0dfb8946739d9f3dd0306906eb5bc734121dfb9814e3f657ee67f20a389d"
   }
 ]
