@@ -26398,5 +26398,245 @@
     "newPosts": 0,
     "errorMessage": "HTTP 429 Too Many Requests",
     "fetchedAt": "2026-08-22T14:57:18.988Z"
+  },
+  {
+    "sourceId": "phd-new",
+    "rssUrl": "https://www.reddit.com/r/PhD/new.rss",
+    "status": "success",
+    "newPosts": 13,
+    "errorMessage": null,
+    "fetchedAt": "2026-08-23T03:32:21.468Z"
+  },
+  {
+    "sourceId": "gradschool-new",
+    "rssUrl": "https://www.reddit.com/r/GradSchool/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:32:26.850Z"
+  },
+  {
+    "sourceId": "askacademia-new",
+    "rssUrl": "https://www.reddit.com/r/AskAcademia/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:32:31.895Z"
+  },
+  {
+    "sourceId": "academia-new",
+    "rssUrl": "https://www.reddit.com/r/academia/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:32:36.937Z"
+  },
+  {
+    "sourceId": "academicwriting-new",
+    "rssUrl": "https://www.reddit.com/r/AcademicWriting/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:32:41.970Z"
+  },
+  {
+    "sourceId": "scientificwriting-new",
+    "rssUrl": "https://www.reddit.com/r/scientificwriting/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:32:47.022Z"
+  },
+  {
+    "sourceId": "internationalstudents-new",
+    "rssUrl": "https://www.reddit.com/r/InternationalStudents/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:32:52.067Z"
+  },
+  {
+    "sourceId": "gradadmissions-new",
+    "rssUrl": "https://www.reddit.com/r/gradadmissions/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:32:57.105Z"
+  },
+  {
+    "sourceId": "machinelearning-new",
+    "rssUrl": "https://www.reddit.com/r/MachineLearning/new.rss",
+    "status": "success",
+    "newPosts": 25,
+    "errorMessage": null,
+    "fetchedAt": "2026-08-23T03:33:02.173Z"
+  },
+  {
+    "sourceId": "bioinformatics-new",
+    "rssUrl": "https://www.reddit.com/r/bioinformatics/new.rss",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:07.575Z"
+  },
+  {
+    "sourceId": "phd-lack-of-novelty",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=lack%20of%20novelty&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:12.618Z"
+  },
+  {
+    "sourceId": "phd-reviewer-comments",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=reviewer%20comments&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:17.660Z"
+  },
+  {
+    "sourceId": "phd-revise-resubmit",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=revise%20and%20resubmit&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:22.698Z"
+  },
+  {
+    "sourceId": "phd-paper-rejected",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=paper%20rejected&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:27.750Z"
+  },
+  {
+    "sourceId": "phd-writing-help",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=writing%20help&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:32.794Z"
+  },
+  {
+    "sourceId": "phd-journal",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=journal&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:37.834Z"
+  },
+  {
+    "sourceId": "phd-major-revision",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=major%20revision&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:42.874Z"
+  },
+  {
+    "sourceId": "phd-esl-writing",
+    "rssUrl": "https://www.reddit.com/r/PhD/search.rss?q=ESL%20academic%20writing&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:47.914Z"
+  },
+  {
+    "sourceId": "gradschool-rejected",
+    "rssUrl": "https://www.reddit.com/r/GradSchool/search.rss?q=rejected&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:52.952Z"
+  },
+  {
+    "sourceId": "gradschool-writing",
+    "rssUrl": "https://www.reddit.com/r/GradSchool/search.rss?q=writing&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:33:57.995Z"
+  },
+  {
+    "sourceId": "askacademia-reviewer",
+    "rssUrl": "https://www.reddit.com/r/AskAcademia/search.rss?q=reviewer&restrict_sr=1&sort=new",
+    "status": "success",
+    "newPosts": 13,
+    "errorMessage": null,
+    "fetchedAt": "2026-08-23T03:34:03.035Z"
+  },
+  {
+    "sourceId": "askacademia-publish",
+    "rssUrl": "https://www.reddit.com/r/AskAcademia/search.rss?q=publish&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:08.413Z"
+  },
+  {
+    "sourceId": "askacademia-journal",
+    "rssUrl": "https://www.reddit.com/r/AskAcademia/search.rss?q=journal&restrict_sr=1&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:13.453Z"
+  },
+  {
+    "sourceId": "global-reviewer-comments",
+    "rssUrl": "https://www.reddit.com/search.rss?q=reviewer%20comments&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:18.498Z"
+  },
+  {
+    "sourceId": "global-manuscript-rejected",
+    "rssUrl": "https://www.reddit.com/search.rss?q=manuscript%20rejected&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:23.535Z"
+  },
+  {
+    "sourceId": "global-academic-writing",
+    "rssUrl": "https://www.reddit.com/search.rss?q=academic%20writing%20unclear&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:28.571Z"
+  },
+  {
+    "sourceId": "global-english-editing",
+    "rssUrl": "https://www.reddit.com/search.rss?q=English%20editing%20service&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:33.607Z"
+  },
+  {
+    "sourceId": "global-predatory-journal",
+    "rssUrl": "https://www.reddit.com/search.rss?q=predatory%20journal&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:38.644Z"
+  },
+  {
+    "sourceId": "global-chatgpt-writing",
+    "rssUrl": "https://www.reddit.com/search.rss?q=ChatGPT%20academic%20writing&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:43.682Z"
+  },
+  {
+    "sourceId": "global-desk-reject",
+    "rssUrl": "https://www.reddit.com/search.rss?q=desk%20reject&sort=new",
+    "status": "error",
+    "newPosts": 0,
+    "errorMessage": "HTTP 429 Too Many Requests",
+    "fetchedAt": "2026-08-23T03:34:48.721Z"
   }
 ]
