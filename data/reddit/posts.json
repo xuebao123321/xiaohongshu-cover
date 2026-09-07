@@ -2976,63 +2976,6 @@
     ]
   },
   {
-    "id": "reddit_1vx94er",
-    "redditId": "1vx94er",
-    "title": "Bart- A vintage llm [R]",
-    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/MachineLearning/comments/1vx94er/bart_a_vintage_llm_r/\"> <img src=\"https://preview.redd.it/27z2aamswclh1.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=ba36a31376435bcec7f675b732595ad9dd2641a7\" alt=\"Bart- A vintage llm [R]\" title=\"Bart- A vintage llm [R]\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>after 3 months and $800 burned...</p> <p>Unbounded Labs is proud to introduce Bart, our vintage LLM: 2.82B parameters trained from scratch on 20.1B tokens of English written before 1931. You can talk to it right now!</p> <p>Demo: <a href=\"https://www.unboundedlab.com/chat/bartholomew\">https://www.unboundedlab.com/chat/bartholomew</a></p> <p>Article: <a href=\"https://www.unboundedlab.com/blog/bartholomew\">https://www.unboundedlab.com/blog/bartholomew</a></p> <p>Huggingface: <a href=\"https://huggingface.co/jbduran/bartholomew-sft\">https://huggingface.co/jbduran/bartholomew-sft</a></p> <p>Why even make a vintage llm? As proposed by Demis Hassabis, could LLMs reach the same conclusions that the great scientists of the past did? While General Relativity was out of budget, we believe that advancing this field targets the crux of AI research. Are these models capable of original ideas, or are they just spitting out the next token?</p> <p>The article is our full account, covering where the corpus came from and how we cleaned it, the benchmarks we had to build because none existed, every ablation, the training runs, the post-training, and the mistakes we made along the way.</p> <p>\"What I cannot create, I do not understand\" is a quote I love from Richard Feynman. Building Bart was our attempt to actually understand LLMs rather than read about them.</p> <p>What we are proudest of:</p> <p>- Best vintage base model at its scale on Vintage CORE, ahead of GPT-1900 on a smaller token budget</p> <p>- Cleaned one of the largest vintage datasets, Harvard's Institutional Books (242B->23B tokens)</p> <p>- Created Vintage CORE, the first suite of 20 benchmarks made for vintage llms</p> <p>- Ran 10 hours of autonomous research on one H100: 100 experiments, 26 improvements found</p> <p>- Released the largest vintage SFT dataset we know of: 416k graded question and answer pairs, grounded in pre-1930s text</p> <p>- Trained the final model in 5 days on an H100, holding 60% MFU the whole way</p> <p>- All datasets, methodology, training code, evals, and training runs are open sourced</p> <p>I am proud of my team. What we built will move the vintage LLM field forward, and it moved us forward as researchers and as people.</p> <p>We paid for all of it ourselves, about $807 so far. Money is the main thing standing between us and a much larger run.</p> <p>So I will ask directly: we are looking for compute grants, funding, and mentors for our future endeavors. If you work on pre-training, post-training, or you have GPUs sitting idle, we would like to talk!</p> <p>We believe that with careful dataset curation, domain expertise, and highly efficient training, we can achieve state-of-the-art results in crucial domains. This is only the beginning for Unbounded Labs; we see no bounds ahead.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/soggydoggy8\"> /u/soggydoggy8 </a> <br/> <span><a href=\"https://i.redd.it/27z2aamswclh1.png\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1vx94er/bart_a_vintage_llm_r/\">[comments]</a></span> </td></tr></table>",
-    "url": "https://www.reddit.com/r/MachineLearning/comments/1vx94er/bart_a_vintage_llm_r/",
-    "subreddit": "r/MachineLearning",
-    "author": "/u/soggydoggy8",
-    "publishedAt": "2026-08-24T17:20:03+00:00",
-    "fetchedAt": "2026-08-27T13:05:02.093Z",
-    "sourceId": "machinelearning-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "6192aa8619122240eaac957277f9651946810b6cf184ebe44d1be56806282165",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "machinelearning-new"
-    ]
-  },
-  {
-    "id": "reddit_1vx3why",
-    "redditId": "1vx3why",
-    "title": "Does registering an abstract, not the full submission yet, count as a double submission? [D]",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello, </p> <p>As the title says</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/obliviousphoenix2003\"> /u/obliviousphoenix2003 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1vx3why/does_registering_an_abstract_not_the_full/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1vx3why/does_registering_an_abstract_not_the_full/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/MachineLearning/comments/1vx3why/does_registering_an_abstract_not_the_full/",
-    "subreddit": "r/MachineLearning",
-    "author": "/u/obliviousphoenix2003",
-    "publishedAt": "2026-08-24T14:09:21+00:00",
-    "fetchedAt": "2026-08-27T13:05:02.093Z",
-    "sourceId": "machinelearning-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "c50dd3bbac49ab22c211ece55648d8e2f8b03caea7d9d2a1c4caf3c959bfa55e",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "machinelearning-new"
-    ]
-  },
-  {
-    "id": "reddit_1vx11hz",
-    "redditId": "1vx11hz",
-    "title": "Delay-corrected Bellman operator + causal attribution for constrained RL contraction proof under unknown stochastic delay [R]",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Standard constrained RL assumes consequences are immediate and attributable to the current action. This breaks down whenever violations are delayed and stochastic, which is most real-world settings you end up penalizing whatever action happened to precede the observed violation, not the action that caused it.</p> <p>Working on CCPL (Causal Consequence-Penalized Learning) to address this:</p> <p>- A delay-corrected Bellman operator using an adaptive effective discount learned from the consequence-delay distribution. Contraction proof holds under unknown stochastic delay.</p> <p>- An Interventional Consequence Net (ICN), pretrained on structural-causal-model labels, estimating marginal causal contribution per action for attribution rather than penalizing based on temporal proximity.</p> <p><strong>Limitations, to be upfront about them:</strong><br/> - The ICN currently requires access to the environment's structural causal model to generate pretraining labels it's not learned end-to-end from observational or interventional data alone. That's a real constraint on applicability outside benchmark settings where the SCM is known or can be reasonably specified.</p> <p>Open to contributions and collaborators, especially if you work in constrained/safe RL or causal inference feel free to open an issue or reach out directly.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No_Cauliflower7923\"> /u/No_Cauliflower7923 </a> <br/> <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1vx11hz/delaycorrected_bellman_operator_causal/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MachineLearning/comments/1vx11hz/delaycorrected_bellman_operator_causal/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/MachineLearning/comments/1vx11hz/delaycorrected_bellman_operator_causal/",
-    "subreddit": "r/MachineLearning",
-    "author": "/u/No_Cauliflower7923",
-    "publishedAt": "2026-08-24T12:11:34+00:00",
-    "fetchedAt": "2026-08-27T13:05:02.093Z",
-    "sourceId": "machinelearning-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "1e7fda763479eff0aa0b16569f38beeb3091195074c1303fe25d1b18b3e83dd5",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "machinelearning-new"
-    ]
-  },
-  {
     "id": "reddit_1vzqwcr",
     "redditId": "1vzqwcr",
     "title": "Awaiting Decision for almost 10 days- major revision",
@@ -3295,77 +3238,6 @@
     "sourceKeyword": "reviewer",
     "sourceType": "subreddit_search",
     "contentHash": "52c9ea3bc26ed26ffa7446edd1945f3679051c946a7cb3e008f82cc2fafdf4cc",
-    "sourceKeywords": [
-      "reviewer"
-    ],
-    "sourceIds": [
-      "askacademia-reviewer"
-    ]
-  },
-  {
-    "id": "reddit_1vx3fam",
-    "redditId": "1vx3fam",
-    "title": "What do journals do with our money?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'd love to get an informed take on how money is allocated across different journals. We give millions of dollars to both publish and read our papers, but I don't see how that money is equally spent.</p> <p>Reviewers aren't paid. Editors are sometimes paid? Website maintenance is likely negligible relative to income.</p> <p>What am I missing?</p> <p>Edit: website maintenance is apparently not negligible for many journals.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/MazzyMars08\"> /u/MazzyMars08 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx3fam/what_do_journals_do_with_our_money/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx3fam/what_do_journals_do_with_our_money/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1vx3fam/what_do_journals_do_with_our_money/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/MazzyMars08",
-    "publishedAt": "2026-08-24T13:51:10+00:00",
-    "fetchedAt": "2026-08-27T13:06:03.325Z",
-    "sourceId": "askacademia-reviewer",
-    "sourceKeyword": "reviewer, publish, journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "6dea106233a2f12c4e72df7b06a67c5b75a62d230899cd9b82edbed5666c0905",
-    "sourceKeywords": [
-      "reviewer",
-      "publish",
-      "journal"
-    ],
-    "sourceIds": [
-      "askacademia-reviewer",
-      "askacademia-publish",
-      "askacademia-journal"
-    ]
-  },
-  {
-    "id": "reddit_1vwxonx",
-    "redditId": "1vwxonx",
-    "title": "Was Open Access publishing the wrong direction?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>A decade ago, I was a strong proponent of open access publishing: Research is.most often tax payer founded and the resulting knowledge should be freely accessible to.everyone. Paying a APC for formatting, storage, doi handling etc. sounded acceptable for me.</p> <p>But when I look at how the publishing landscape has evolved nowadays, I don't think it works as it should. Besides mostly pay-to-party publisher's as MDPI and Frontiers (which are surely still better than purely predatory publishers), I see major publisher's as Springer, Elsevier and others launching many middle profile journals (e.g., the Discover series).</p> <p>Publishers have little to no incentive at all to ensure the quality of the review processes and the publications. If a good publication comes.through, fine! If a low quality publication comes through, they don't care as this have limited to no consequences for the publishers; they collect the APC anyways. Before OA, publishers had \"skin in the game\" (as Nassim Taleb) would call it. If a journal declines in quality, universities would eventually cancel it's subscription threatening the publishers business. But this incentive/system dynamic is gone with OA.</p> <p>Sidenote 1: I recently submitted to a high profile journal. While the article was eventually rejected (maybe rightfully as the findings were interesting and relevant, but not particularly robust) I received an auto accept for a formally renowned journal that went OA-only recently and is now demoted to a costly paper-pile.</p> <p>sidenote 2: I am lucky that I come from a rich country and a rich university and all OA fees are covered. As more journals shift towards OA-only, this creates an unfair balance as some have difficulties to pay the OA fees while alternative options slowly disappear.</p> <p>In short: I don't think that the old system was good, but the new system of OA lacks incentives for decent quality control. What are your thoughts on the publication system? What are your ideas on how to fix it?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/lipflip\"> /u/lipflip </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vwxonx/was_open_access_publishing_the_wrong_direction/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vwxonx/was_open_access_publishing_the_wrong_direction/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1vwxonx/was_open_access_publishing_the_wrong_direction/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/lipflip",
-    "publishedAt": "2026-08-24T09:17:37+00:00",
-    "fetchedAt": "2026-08-27T13:06:03.326Z",
-    "sourceId": "askacademia-reviewer",
-    "sourceKeyword": "reviewer, publish, journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "cb61cfc3c47cc9dd607b9bbfd0c5284d909809568c75f1c8a3ef8561add81f8b",
-    "sourceKeywords": [
-      "reviewer",
-      "publish",
-      "journal"
-    ],
-    "sourceIds": [
-      "askacademia-reviewer",
-      "askacademia-publish",
-      "askacademia-journal"
-    ]
-  },
-  {
-    "id": "reddit_1vwxjas",
-    "redditId": "1vwxjas",
-    "title": "Can I present different parts of systematic review as different abstracts at different conferences ?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I have just finished a very large systematic review with multiple components. I think each of them can be a conference abstract independently, I’m wondering if I can do that. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/PunchBarney\"> /u/PunchBarney </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vwxjas/can_i_present_different_parts_of_systematic/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vwxjas/can_i_present_different_parts_of_systematic/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1vwxjas/can_i_present_different_parts_of_systematic/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/PunchBarney",
-    "publishedAt": "2026-08-24T09:08:49+00:00",
-    "fetchedAt": "2026-08-27T13:06:03.326Z",
-    "sourceId": "askacademia-reviewer",
-    "sourceKeyword": "reviewer",
-    "sourceType": "subreddit_search",
-    "contentHash": "88f400cb3a28a6a65feb134f385ebccd3324b5f7aa5fa2eb96d97d507f6d0c3a",
     "sourceKeywords": [
       "reviewer"
     ],
@@ -4002,120 +3874,6 @@
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
     "contentHash": "eef00f3c0722e52d5f07a8846288c283ae99b3a1dc23d36bf55ac1f06206f255",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "bioinformatics-new"
-    ]
-  },
-  {
-    "id": "reddit_1vx73ol",
-    "redditId": "1vx73ol",
-    "title": "Any tool to replace HaplotypeCaller?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi all,</p> <p>I am wondering what people use for germline variant calling from short-read sequencing.</p> <p>Any faster reimplementation of HaplotypeCaller or something like DeepVariant?</p> <p>As I understand HaplotypeCaller still remains a gold standard, or did I miss anything?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/mexrotkatu\"> /u/mexrotkatu </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx73ol/any_tool_to_replace_haplotypecaller/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx73ol/any_tool_to_replace_haplotypecaller/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/bioinformatics/comments/1vx73ol/any_tool_to_replace_haplotypecaller/",
-    "subreddit": "r/bioinformatics",
-    "author": "/u/mexrotkatu",
-    "publishedAt": "2026-08-24T16:08:15+00:00",
-    "fetchedAt": "2026-08-27T23:58:05.035Z",
-    "sourceId": "bioinformatics-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "f78938d67dc5182366344fbb9dd0a818c3b5ee38a75655cb5285347a346f18b6",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "bioinformatics-new"
-    ]
-  },
-  {
-    "id": "reddit_1vx5rap",
-    "redditId": "1vx5rap",
-    "title": "Has anyone taken the Precision Medicine course from University of Geneva on Coursera?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Did you benefit from it? Was it worth the time and effort? Any interesting features/sections?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/CartographerLoud2368\"> /u/CartographerLoud2368 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx5rap/has_anyone_taken_the_precision_medicine_course/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx5rap/has_anyone_taken_the_precision_medicine_course/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/bioinformatics/comments/1vx5rap/has_anyone_taken_the_precision_medicine_course/",
-    "subreddit": "r/bioinformatics",
-    "author": "/u/CartographerLoud2368",
-    "publishedAt": "2026-08-24T15:19:14+00:00",
-    "fetchedAt": "2026-08-27T23:58:05.035Z",
-    "sourceId": "bioinformatics-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "8bdb47dd58248e7b5f411bd91f33c5c459208dae8ba91e0219baf39784d4c290",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "bioinformatics-new"
-    ]
-  },
-  {
-    "id": "reddit_1vx568e",
-    "redditId": "1vx568e",
-    "title": "Plink pipeline",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am using the Plink pipeline to filter SNPs. I downloaded dbSNP from the UCSC database (both .vcf and .bed for the selected region in chr11, for example). </p> <p>My syntax:\" plink \\--bfile HBB.BED \\--allow-extra-chr \\--maf 0.01 \\--geno 0.05 \\--hwe 1e-6 \\--snps-only just-acgt \\--make-bed \\--out region_filtered\"</p> <p>Error: \"Failed to open HBB.bed\" </p> <p>Can anyone give me some advice?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ngocthole\"> /u/Ngocthole </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx568e/plink_pipeline/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx568e/plink_pipeline/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/bioinformatics/comments/1vx568e/plink_pipeline/",
-    "subreddit": "r/bioinformatics",
-    "author": "/u/Ngocthole",
-    "publishedAt": "2026-08-24T14:57:34+00:00",
-    "fetchedAt": "2026-08-27T23:58:05.035Z",
-    "sourceId": "bioinformatics-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "c4639cacd7aa81322d9242850ade8b35b164822f9e1eb1fa2e00c9d512597413",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "bioinformatics-new"
-    ]
-  },
-  {
-    "id": "reddit_1vx0yeg",
-    "redditId": "1vx0yeg",
-    "title": "Master’s thesis student looking for advice on downstream analysis after gene mapping",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>I’m a Master’s thesis student working on a genomics project involving mapping genes/transcripts from a published dataset to a newer genome annotation.</p> <p>The mapping is largely complete, and I now have both resolved and unresolved/ambiguous mappings. I’m unsure about what analysis I should do next to validate the mapping and extract meaningful biological information.</p> <p>My supervisor is primarily a wet-lab biologist with limited bioinformatics experience, so I’m trying to figure out the computational workflow myself.</p> <p>For those experienced in genomics/bioinformatics, what would you recommend as the next steps after gene mapping? Any suggestions for validation, downstream analysis, or functional interpretation would be greatly appreciated.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Quordlewebster\"> /u/Quordlewebster </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx0yeg/masters_thesis_student_looking_for_advice_on/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx0yeg/masters_thesis_student_looking_for_advice_on/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/bioinformatics/comments/1vx0yeg/masters_thesis_student_looking_for_advice_on/",
-    "subreddit": "r/bioinformatics",
-    "author": "/u/Quordlewebster",
-    "publishedAt": "2026-08-24T12:07:24+00:00",
-    "fetchedAt": "2026-08-27T23:58:05.035Z",
-    "sourceId": "bioinformatics-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "6eb72089b43b911d2a436dea82fd902eaf8b993ba2905ffd43e334bc58ac901f",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "bioinformatics-new"
-    ]
-  },
-  {
-    "id": "reddit_1vx097b",
-    "redditId": "1vx097b",
-    "title": "How does low quality sample affects variant calling",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I built my own pipeline and wanted to take a step back and get some outside perspective on it.</p> <p>The data is PacBio HiFi long-read WGS. My pipeline outputs two general VCFs per sample: one for SNPs/indels and one for SVs. I apply standard <code>bcftools</code> filtering on both.</p> <p>The issue is that most of my samples don't have great input DNA quality — many are borderline or just under the recommended thresholds. I'm referring to these QC metrics specifically:</p> <ul> <li>Concentration (ng/µL)</li> <li>Volume (µL)</li> <li>Total amount (µg)</li> <li>A260/280</li> <li>A260/230</li> <li>Nanodrop concentration (ng/µL)</li> <li>NC/QC (pass/fail flag)</li> </ul> <p>I'd like to understand how much these upstream QC issues could realistically be affecting my variant calling results, and whether there are practical ways to account for or flag this in the pipeline rather than just trusting the output blindly.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No-Moose-6093\"> /u/No-Moose-6093 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx097b/how_does_low_quality_sample_affects_variant/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vx097b/how_does_low_quality_sample_affects_variant/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/bioinformatics/comments/1vx097b/how_does_low_quality_sample_affects_variant/",
-    "subreddit": "r/bioinformatics",
-    "author": "/u/No-Moose-6093",
-    "publishedAt": "2026-08-24T11:34:14+00:00",
-    "fetchedAt": "2026-08-27T23:58:05.035Z",
-    "sourceId": "bioinformatics-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "1bf15595089ff220098377a1976897a1426a6e497e9c180ca5db71025798bdf3",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "bioinformatics-new"
-    ]
-  },
-  {
-    "id": "reddit_1vwy5kl",
-    "redditId": "1vwy5kl",
-    "title": "Trying to understand who should do what part of the work",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey,</p> <p>If a bioinformatics analyst (in academia) receives a task to extract data from bulk RNAseq, and run some statistics, is it their job also to validate that the assumptions stand, do basic QC of outputs, and report on the potential concerns?</p> <p>How much time/effort/detail would you invest in a \"basic\" analysis that someone paid you for from their grant, but didn't necessarily know enough about the data to give more detailed instructions? </p> <p>My PI is on the paying side, but I'm the one dealing with the interpretation of the outputs the bioinformatician gave us with no transparency what was actually done. There was no back and forth with the results, just the final analysis showed up one day with no questions asked.</p> <p>I'm trying to understand if the analysis I received from them is just a job poorly done, or if there are genuinely all the expectations on the researcher's side to spot all the red flags. It seems to me that the analyst ran the generic script and didn't bother to check anything. If I had not been so critical of the results and had some coding knowledge to check them, we would have been in deep s***, as not even the stats test assumptions hold. </p> <p>I raised this concern with the PI, but the \"contract\" for the analyst is finished, and we can't really have any fundamental changes to the analysis. Even asking the analyst to make some more reports is a huge ask, and they technically don't work on it anymore.</p> <p>Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Responsible_Rub8057\"> /u/Responsible_Rub8057 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vwy5kl/trying_to_understand_who_should_do_what_part_of/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1vwy5kl/trying_to_understand_who_should_do_what_part_of/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/bioinformatics/comments/1vwy5kl/trying_to_understand_who_should_do_what_part_of/",
-    "subreddit": "r/bioinformatics",
-    "author": "/u/Responsible_Rub8057",
-    "publishedAt": "2026-08-24T09:45:03+00:00",
-    "fetchedAt": "2026-08-27T23:58:05.035Z",
-    "sourceId": "bioinformatics-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "8eb841e2ea0b1fce28b2b3ef931ed05cad29a64fe51dfcd197d9be4dc4ec0bae",
     "sourceKeywords": [],
     "sourceIds": [
       "bioinformatics-new"
@@ -5221,92 +4979,6 @@
     "sourceKeyword": "publish, journal",
     "sourceType": "subreddit_search",
     "contentHash": "f46a6d8fa2103a071dc654ef31a0e114c6236472e80e1e04867ad5e1a910cb92",
-    "sourceKeywords": [
-      "publish",
-      "journal"
-    ],
-    "sourceIds": [
-      "askacademia-publish",
-      "askacademia-journal"
-    ]
-  },
-  {
-    "id": "reddit_1vx7le0",
-    "redditId": "1vx7le0",
-    "title": "Avoiding plagiarism when ditched by the author of an idea",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I recently attended a conference, and one of the talks presented an interesting extension of an existing popular framework. I immediately got an idea on how to implement that idea and write a reasonably easy manuscript.</p> <p>I approached the speaker, we talked and exchanged emails. Their idea isn't published, so I suggested collaboration on a manuscript. They wanted to schedule a meeting to talk about it, but suddenly they stopped answering my emails.</p> <p>Now, again, I'm really attracted by the possibility of writing a manuscript that would implement their ideas. It would be easy to approach and I can see the entire straightforward plan in my head. However, I'm not comfortable with using someone else's ideas without giving proper credits. Since their work isn't published (and the conferences in my field don't publish standalone abstracts), there is nothing to cite! But going ahead without proper attribution feels ethically wrong as well. </p> <p>What would you do in this case? The only way I imagine is mentioning the name of that person in the Acknowledgements and explicitly stating what part of the work was borrowed from their conference presentation.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Capable-Thought-2809\"> /u/Capable-Thought-2809 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx7le0/avoiding_plagiarism_when_ditched_by_the_author_of/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx7le0/avoiding_plagiarism_when_ditched_by_the_author_of/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1vx7le0/avoiding_plagiarism_when_ditched_by_the_author_of/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/Capable-Thought-2809",
-    "publishedAt": "2026-08-24T16:25:23+00:00",
-    "fetchedAt": "2026-08-28T23:42:03.602Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
-    "sourceType": "subreddit_search",
-    "contentHash": "70273c930b9c6d6f261407ed72db3cd6ae1c693f19a360bbdbb14e3bca890bc2",
-    "sourceKeywords": [
-      "publish"
-    ],
-    "sourceIds": [
-      "askacademia-publish"
-    ]
-  },
-  {
-    "id": "reddit_1vx0oqf",
-    "redditId": "1vx0oqf",
-    "title": "Question about publishing an academic monograph with major university presses",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi there!</p> <p>I'm considering writing an academic monograph (Film Studies) and I'm trying to understand how the publishing process works with major academic presses such as Palgrave Macmillan, Cambridge, Oxford, etc.</p> <p>Do you normally <strong>contact the publisher first with a book proposal</strong>, and only write the full manuscript if they're interested? Or is it more common to write the entire monograph first and then approach publishers?</p> <p>I'm also wondering about the financial side. In Spain, we normally have to pay to the publishing houses for publishing our work, but i dont know how this works abroad. Do reputable international academic presses generally <strong>charge the author to publish a monograph</strong>, as can happen with some publishers in Spain, or do they normally publish it without the author having to pay (and potentially pay royalties)?</p> <p>For those of you who have published monographs with major academic presses: what was your experience, and what would you recommend as the best way to approach them?</p> <p>Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Bestintor\"> /u/Bestintor </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx0oqf/question_about_publishing_an_academic_monograph/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx0oqf/question_about_publishing_an_academic_monograph/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1vx0oqf/question_about_publishing_an_academic_monograph/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/Bestintor",
-    "publishedAt": "2026-08-24T11:55:16+00:00",
-    "fetchedAt": "2026-08-28T23:42:03.602Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
-    "sourceType": "subreddit_search",
-    "contentHash": "967620f4da6704215898c7bfe2a036d7ae1db211bd1a0f2479a4a53dd4dffb12",
-    "sourceKeywords": [
-      "publish"
-    ],
-    "sourceIds": [
-      "askacademia-publish"
-    ]
-  },
-  {
-    "id": "reddit_1vx015d",
-    "redditId": "1vx015d",
-    "title": "Trying to understand why some fields treat preprints as legitimate scholarship and others still largely ignore them",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Noticed physics and CS communities cite preprints constantly, treat them almost like published work, while some social science and humanities fields barely acknowledge them outside internal circulation.</p> <p>Looking for the actual history or structural reason behind this split, not just \"different norms,\" since the norms themselves seem to have a cause worth understanding.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/No-Communication1543\"> /u/No-Communication1543 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx015d/trying_to_understand_why_some_fields_treat/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vx015d/trying_to_understand_why_some_fields_treat/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1vx015d/trying_to_understand_why_some_fields_treat/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/No-Communication1543",
-    "publishedAt": "2026-08-24T11:23:13+00:00",
-    "fetchedAt": "2026-08-28T23:42:03.602Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
-    "sourceType": "subreddit_search",
-    "contentHash": "ae13899930f5feb7a4523878ff8e56a61b7b0636a5a818e9044b003693e4af4e",
-    "sourceKeywords": [
-      "publish"
-    ],
-    "sourceIds": [
-      "askacademia-publish"
-    ]
-  },
-  {
-    "id": "reddit_1vwypq9",
-    "redditId": "1vwypq9",
-    "title": "When do you know something is worth publishing?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi all,</p> <p>I am currently writing my masters thesis(ME), I already have one published conference paper and another one is close to be submittet to a journal. On both of these the decision to publish wasen't my own, but made from the supervisor of each project.</p> <p>I am about to start my phd in a really silimar topic as my masters thesis. While working on the project, I realized that most people use a simple abratary threshold(in most cases without any explanation for the cholsen values) to detect some part of a signal(this thing looks silimar in all different measurment setups. Amplitude can varry through) I wasen't happy how it is done in the literature and have written my own algorithm, which can detect said effects, only with information, which can be extracted from the signal, mainly the standarddeviation, it's multiples and measurment frequency. No abratary threshold anymore.</p> <p>So far it seems to work better and is more precise than what is done in other studies.</p> <p>Is something like this worth publishing? I am debating how much more time to invest in it. It seems to work well, but I have a few ideas how to make it more robust and maybe test it on the measurments someone else has taken? Maybe an Annova? Is somthing like that worth my time?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Battle_Eggplant\"> /u/Battle_Eggplant </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vwypq9/when_do_you_know_something_is_worth_publishing/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1vwypq9/when_do_you_know_something_is_worth_publishing/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1vwypq9/when_do_you_know_something_is_worth_publishing/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/Battle_Eggplant",
-    "publishedAt": "2026-08-24T10:16:00+00:00",
-    "fetchedAt": "2026-08-28T23:42:03.602Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish, journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "016721c7fc72429796f381b292b90f9f8e883a5b6b3b276ceeaa1777fdce54f4",
     "sourceKeywords": [
       "publish",
       "journal"
@@ -10043,27 +9715,6 @@
     "contentHash": "bdba50c2d8fd7b84ed375aa2cb0e6bb5e1412587fc903452cc9acfa90147154a"
   },
   {
-    "id": "reddit_1vxad5p",
-    "redditId": "1vxad5p",
-    "title": "First week as a PhD… what to do? Tricks &amp; Resources?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone! Today marks my first day as a PhD student! I actually worked in the lab in at now for two years in undergrad and did some work on my potential thesis last year, although it’s mostly all field based or basic excel data analysis. I know NOTHING about coding and would appreciate some places on where to start / how to get practice. I also have no history of writing any manuscripts. </p> <p>I’ve been hearing a lot of people say to read articles related to my topic and on my advisors work, but is there a way I should be organizing these papers that would be easy to refer back to when I’m further into my program? </p> <p>I’d appreciate any advice and tips/tricks to make the process a little smoother and set myself up for success later on. </p> <p>I’m in the marine sciences/ ecology field if that helps at all, though any guidance on tools / techniques is welcomed. </p> <p>Thanks!! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Electronic_Cat2989\"> /u/Electronic_Cat2989 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1vxad5p/first_week_as_a_phd_what_to_do_tricks_resources/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1vxad5p/first_week_as_a_phd_what_to_do_tricks_resources/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1vxad5p/first_week_as_a_phd_what_to_do_tricks_resources/",
-    "subreddit": "r/PhD",
-    "author": "/u/Electronic_Cat2989",
-    "publishedAt": "2026-08-24T18:03:05+00:00",
-    "fetchedAt": "2026-09-01T17:57:03.174Z",
-    "sourceId": "phd-writing-help",
-    "sourceKeyword": "writing help",
-    "sourceType": "subreddit_search",
-    "contentHash": "309826e301c169167d34b146a410c288c3d8186b5f5f6a23c071a3e8cd1f2f73",
-    "sourceKeywords": [
-      "writing help"
-    ],
-    "sourceIds": [
-      "phd-writing-help"
-    ]
-  },
-  {
     "id": "reddit_1w4jl6t",
     "redditId": "1w4jl6t",
     "title": "Just Launched a Digital Agency: Need Advice on Pricing &amp; Getting First Clients!",
@@ -10423,21 +10074,23 @@
     "publishedAt": "2026-09-02T04:57:45+00:00",
     "fetchedAt": "2026-09-02T07:18:18.101Z",
     "sourceId": "phd-new",
-    "sourceKeyword": "revise and resubmit, paper rejected, manuscript rejected, journal",
+    "sourceKeyword": "revise and resubmit, paper rejected, manuscript rejected, journal, major revision",
     "sourceType": "subreddit_new",
     "contentHash": "3d99e0c9465b3c9fd8c9de03c2ef41a29da3906d0577fc301720c3156f82008a",
     "sourceKeywords": [
       "revise and resubmit",
       "paper rejected",
       "manuscript rejected",
-      "journal"
+      "journal",
+      "major revision"
     ],
     "sourceIds": [
       "phd-new",
       "phd-revise-resubmit",
       "phd-paper-rejected",
       "global-manuscript-rejected",
-      "phd-journal"
+      "phd-journal",
+      "phd-major-revision"
     ]
   },
   {
@@ -11322,19 +10975,21 @@
     "publishedAt": "2026-09-02T13:47:52+00:00",
     "fetchedAt": "2026-09-02T18:01:25.403Z",
     "sourceId": "phd-new",
-    "sourceKeyword": "paper rejected, manuscript rejected, journal",
+    "sourceKeyword": "paper rejected, manuscript rejected, journal, major revision",
     "sourceType": "subreddit_new",
     "contentHash": "95da7cad11b927c5dbb4b0dacd5d712467a6c0ea55b5c7cb1a7a62abe8700205",
     "sourceKeywords": [
       "paper rejected",
       "manuscript rejected",
-      "journal"
+      "journal",
+      "major revision"
     ],
     "sourceIds": [
       "phd-new",
       "phd-paper-rejected",
       "global-manuscript-rejected",
-      "phd-journal"
+      "phd-journal",
+      "phd-major-revision"
     ]
   },
   {
@@ -11367,12 +11022,15 @@
     "publishedAt": "2026-09-02T13:15:38+00:00",
     "fetchedAt": "2026-09-02T18:01:25.403Z",
     "sourceId": "phd-new",
-    "sourceKeyword": "",
+    "sourceKeyword": "major revision",
     "sourceType": "subreddit_new",
     "contentHash": "daf5bdcefa25186d4f0b22937f0771c7a1a37970d0ac652b912b9927bac75f91",
-    "sourceKeywords": [],
+    "sourceKeywords": [
+      "major revision"
+    ],
     "sourceIds": [
-      "phd-new"
+      "phd-new",
+      "phd-major-revision"
     ]
   },
   {
@@ -18541,7 +18199,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "4fae9391b8a92e23217602227d5178e9dada5d18805e4efff48376d79f20284c"
+    "contentHash": "4fae9391b8a92e23217602227d5178e9dada5d18805e4efff48376d79f20284c",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w9jp9g",
@@ -18556,7 +18218,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "5dda671b975f73ec16081f330eba5ec1f58d55e6293dd95de08c2cb194f8d4c5"
+    "contentHash": "5dda671b975f73ec16081f330eba5ec1f58d55e6293dd95de08c2cb194f8d4c5",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w9ih1q",
@@ -18571,7 +18237,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "8a886566521b7ebbf07f06fc067b6d25d358d70c80bab3a263f1166c39d0a337"
+    "contentHash": "8a886566521b7ebbf07f06fc067b6d25d358d70c80bab3a263f1166c39d0a337",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w9h39p",
@@ -18586,7 +18256,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "b5ee19a72c90cbc98d0caf1d0230395cf9a143bccb0c010f63571630dabd6e79"
+    "contentHash": "b5ee19a72c90cbc98d0caf1d0230395cf9a143bccb0c010f63571630dabd6e79",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w9gycg",
@@ -18601,7 +18275,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "53d1005e984cfb5527ecc8462095e61caeeb837a4b7f1b074a24cadef701a903"
+    "contentHash": "53d1005e984cfb5527ecc8462095e61caeeb837a4b7f1b074a24cadef701a903",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w9f4ry",
@@ -18616,7 +18294,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "8b6d0ecc87c34c282b6d5c2527a80b230756712833bd9f47ebb3e22bccc4a19f"
+    "contentHash": "8b6d0ecc87c34c282b6d5c2527a80b230756712833bd9f47ebb3e22bccc4a19f",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w9arko",
@@ -18631,7 +18313,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "e3c2354499568f66eae7ea5187f2eeafa7d0a0595595db190e83e7358102a76b"
+    "contentHash": "e3c2354499568f66eae7ea5187f2eeafa7d0a0595595db190e83e7358102a76b",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w96tcw",
@@ -18646,7 +18332,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "94e4e9d04f957a13a9a3b80f6cc69c8896fd312c7b764da948c8af5d875c0b45"
+    "contentHash": "94e4e9d04f957a13a9a3b80f6cc69c8896fd312c7b764da948c8af5d875c0b45",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w96p0l",
@@ -18676,7 +18366,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "b8d03a04516c33796c94a71f930f7853cd02dfeae90adb319da5c76e99f34f70"
+    "contentHash": "b8d03a04516c33796c94a71f930f7853cd02dfeae90adb319da5c76e99f34f70",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w92w2d",
@@ -18691,7 +18385,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "8fa8659a92205a247158d5cd2f9d46550ffd9cbd27368db466cfe0e57a4ac75c"
+    "contentHash": "8fa8659a92205a247158d5cd2f9d46550ffd9cbd27368db466cfe0e57a4ac75c",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1w9jwm8",
@@ -19067,5 +18765,500 @@
     "sourceKeyword": "predatory journal",
     "sourceType": "global_search",
     "contentHash": "d82ce31a9bb061fddd290a0b07c6324e3e97e4aeb0915841b24f90365716e8d6"
+  },
+  {
+    "id": "reddit_1wa0q8e",
+    "redditId": "1wa0q8e",
+    "title": "PhD in quantum biology",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’m currently considering pursuing a PhD in quantum biology, and I was wondering what the opportunities are like in this field.</p> <p>My background is in molecular neurobiology, with some additional coursework in physics. I’m particularly interested in opportunities in the UK and elsewhere in Europe, especially the Netherlands, Belgium, and Scandinavia.</p> <p>How promising is the field in terms of PhD opportunities and career prospects? What are my chances in eventually becoming a professor in this or a closely related field (quantum physics, molecular biology, nanobiology, etc). </p> <p>And are there any related fields that might offer more opportunities while still allowing me to build on my background in molecular biology and physics?</p> <p>I’d really appreciate any insights :)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/FarBluejay4783\"> /u/FarBluejay4783 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1wa0q8e/phd_in_quantum_biology/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1wa0q8e/phd_in_quantum_biology/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1wa0q8e/phd_in_quantum_biology/",
+    "subreddit": "r/PhD",
+    "author": "/u/FarBluejay4783",
+    "publishedAt": "2026-09-07T18:47:17+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.801Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "c407abc47b48b9d90d3ee229a55778aefb8d63f70d5c7b59588f1b4e6ab0ae3f"
+  },
+  {
+    "id": "reddit_1w9yowa",
+    "redditId": "1w9yowa",
+    "title": "Burnout",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>For the past two years I have been working nonstop, no breaks, even when I go on vacation with family, I have to work before we go out, check emails while we're out, work a little bit before I sleep, I have never took a day off, a day off without opening my laptop or worrying about the results, two years in and I still don't have publishable results at all, we keep going in a wrong direction and redirecting and redirecting and it's draining me, I felt like I'm heading towards a breakdown, I asked my supervisors for a one week break, for the first time since I started, I have never asked for breaks before, on the first day of my break I found texts from my supervisor asking to send him some data and some explanations for data in a report I submitted earlier, I felt like I'm trapped, I haven't told him what I needed the break for, when I saw the texts I had to let him know that I'm burnt out and on the verge of a breakdown, I can't open my laptop I just can't look at the goddamn screen anymore, I feel like I shouldn't have told him my current state but this is the only way they would leave me take the break, I just wanted to know how common it is to take breaks during PhDs? Do you guys work nonstop? Is it really that common? Am I too soft for a PhD? </p> <p>My PhD is in Physics btw</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/whatindeedahyeswell\"> /u/whatindeedahyeswell </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9yowa/burnout/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9yowa/burnout/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9yowa/burnout/",
+    "subreddit": "r/PhD",
+    "author": "/u/whatindeedahyeswell",
+    "publishedAt": "2026-09-07T17:33:52+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.801Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "0360e8c84705bf6eaefb3271915762db13594b7a31a66c2227f51bfedbfddd57"
+  },
+  {
+    "id": "reddit_1w9ydqf",
+    "redditId": "1w9ydqf",
+    "title": "PhD in Applied Mathematics (Fluid dynamics/PDEs) in Europe?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone!</p> <p>I am a graduate student (Masters in Applied Physics) in USA. My research experience involves PDEs and computational Fluid Dynamics. I did my Masters project with a professor in Applied Mathematics involving solving PDEs in complex domains. We are working on a paper together with the results from my Masters project and we expect it to be published next year. My goal is now to pursue a PhD in Geometric Analysis and PDES or Fluid dynamics. </p> <p>In USA majority of Fluid Dynamics research is done in Engineering departments. Its a bit difficult to find applied mathematics programs that do the research I am interested in. Also, based on the current funding/political climate, I am a bit hesitant to apply to the PhD programs in USA. I will still apply to few as safety.</p> <p>I also would like to apply for PhD programs in Europe and fluid dynamics/research in PDEs is vast (especially UK). I have seen few universities I am interested in such as ETH, Max Planck and Twente. I would be super grateful, if you all can guide me towards the right universities based on my profile. </p> <p>One more thing I am concerned about is the fact that US has course work, quals and the PhD degree could extend to 6 years. Whereas, in Europe its usually 3-4 years. But, if I do get a good research opportunity in US I will definitely take it. </p> <p>I am open to any suggestions within US and abroad based on my profile. I will be more than happy to give more details to help with your recommendations.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/New-Fan8418\"> /u/New-Fan8418 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9ydqf/phd_in_applied_mathematics_fluid_dynamicspdes_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9ydqf/phd_in_applied_mathematics_fluid_dynamicspdes_in/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9ydqf/phd_in_applied_mathematics_fluid_dynamicspdes_in/",
+    "subreddit": "r/PhD",
+    "author": "/u/New-Fan8418",
+    "publishedAt": "2026-09-07T17:22:51+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.801Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "239da27ae0769b44d399e754c3ef1f7796bafe2a0c3a759fe7f303b73a54938b"
+  },
+  {
+    "id": "reddit_1w9wd6u",
+    "redditId": "1w9wd6u",
+    "title": "AI for Research",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi! This is a question for PhD and grad students in any department, at any school.</p> <p>Do your advisors use AI for research, experimentation, brainstorming, or coding?</p> <p>Have they ever said it’s fine to use, or actively encouraged it? At my school, professors are becoming pretty anti-AI, to the point where it’s getting a bit annoying. That feels unfair if grad students elsewhere are being allowed (or even encouraged) to use it.</p> <p>It would help to know whether your advisors let you use it or encourage it. If you’re willing to share, I’d also love to know your field and institution.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/NeatFox5866\"> /u/NeatFox5866 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9wd6u/ai_for_research/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9wd6u/ai_for_research/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9wd6u/ai_for_research/",
+    "subreddit": "r/PhD",
+    "author": "/u/NeatFox5866",
+    "publishedAt": "2026-09-07T16:08:36+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.801Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "e05e71f1da39fbc218de14c3e26c31ad2288ef910c8c488c4d3b3992c7815298"
+  },
+  {
+    "id": "reddit_1w9v38t",
+    "redditId": "1w9v38t",
+    "title": "My primary PhD supervisor was made redundant. Should I withdraw?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello, I have found this thread quite useful but would be very grateful for some more specific advice or guidance from whoever could provide it.</p> <p>My primary supervisor was made redundant. I am almost one year into my PhD.</p> <p>Some context is relevant in my situation: I do not have a masters, I did my undergrad in genetics and my diss was supervised by my now former primary supervisor. She encouraged me to apply for this PhD she had once my grades came through. Something to note is that my undergrad was in a different field to my PhD (microbiology). I was concerned about struggling but she said that she takes on all her students assuming they know nothing.</p> <p>I started in October of 2025, and it was very collaborative, daily support and discussions and she was always pushing for publications etc.</p> <p>We found out that there would be terminations from budget cuts and my supervisor was being considered. by mid May we could not get in contact with her, and uni would not tell us wether or not she was terminated. That also meant that they wouldn’t replace her. Our second supervisor was supposed to take over but I didn’t end up having my first real meeting with her mid July. She is also not specialised in what I was doing at that point in my PhD. In all that time I did not discuss my project and had to just figure it out from where my I left off w my primary supervisor. My second supervisor is lovely and has said she’ll read up on my project so she can support me better. But I also feel vulnerable because I came straight from undergrad and this is a field I’m new to.</p> <p>End of July heard that my primary supervisor was terminated, but she was the one who told me. Now in September, the university still have not notified me. The university pushed back my end of year review indefinitely which is supposed to take place in June/July.</p> <p>My primary supervisor did tell me that she’s trying to come on in an honorary position to support her postgrad students. But I don’t know if this is enough for me.</p> <p>My concerns are, the time lost in this period. The lack of supervision has caused problems that took months to resolve, and I feel my PhD timeline has been significantly affected.</p> <p>The other issue is that I’m questioning whether I even want to continue with this PhD. I never originally intended to go into academia. I was more interested in working in pharma/science. I took this PhD largely because I trusted my supervisor, knew how she worked from my time as her RA, and believed she would help me develop and get the project published. Without her, I’m struggling to see the same value in the PhD.</p> <p>I also really dislike the university itself and disliked it during my undergrad. My supervisor was honestly the main reason I was willing to stay.</p> <p>I’m also very young and only graduated from undergrad last summer, so I feel like I have time to pivot. I could potentially leave, do a Master’s, apply for a scientist training programme, or pursue something more aligned with what I actually want to do.</p> <p>At the same time, I’m worried that leaving would mean I’d have wasted a year and potentially damage my academic/career record.</p> <p>Would withdrawing under these circumstances be viewed negatively?</p> <p>Am I overreacting ?</p> <p>I was thinking of just expressing how much of a toll this is taking on me to my second supervisor and having a discussion with her, but wanted to get some opinions.</p> <p>*edit: I have external funding so not worried about the funding of my own project due to the university’s downsizing. What their downsizing says about their reputation and career prospects however is also a different matter. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Frequent_Ad5650\"> /u/Frequent_Ad5650 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9v38t/my_primary_phd_supervisor_was_made_redundant/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9v38t/my_primary_phd_supervisor_was_made_redundant/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9v38t/my_primary_phd_supervisor_was_made_redundant/",
+    "subreddit": "r/PhD",
+    "author": "/u/Frequent_Ad5650",
+    "publishedAt": "2026-09-07T15:21:39+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.801Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "eb292cb54f30f19951b2d23afa15967dd82c6bc2907923021753133f97d3908d"
+  },
+  {
+    "id": "reddit_1w9sfya",
+    "redditId": "1w9sfya",
+    "title": "Should I worry?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>So I am a part of this community for months now and can finally say that I’ve been admitted to an amazing PhD program in Chemical Engineering in Germany. The supervision will occur every 2 weeks via videocall and I can’t wait to start but honestly, the way academia is presented here in this sub, I am a little sceptical.</p> <p>My goal is to transition into industry asap but doing a PhD is a choice I’ve made, to pursue my interests more in depth. But all the paper publishing, grant writing and “non-industry-skills” don’t bother me that much. Is this a bad sign? I still want to take this path very serious but I just don’t want to fall for this toxic environment in academia everybody seems to share here. Is this the right approach? I really want to focus on developing (industry relevant) skills, working independently, and being able to transfer those skills later in my career.</p> <p>I also don’t really know what I am aiming for, but do other people think the same or is it mandatory to develop an “academic-mindset” and focus on publishing papers? I’d highly appreciate if anyone could share similar feelings and how they’ve approached their PhD. Has this mindset caused any trouble?</p> <p>P.S.: English is not my first language, so excuse me for any mistakes!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Puzzleheaded_Bid3812\"> /u/Puzzleheaded_Bid3812 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9sfya/should_i_worry/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9sfya/should_i_worry/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9sfya/should_i_worry/",
+    "subreddit": "r/PhD",
+    "author": "/u/Puzzleheaded_Bid3812",
+    "publishedAt": "2026-09-07T13:38:20+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.802Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "0199bf3a9da3149a686531c22feceb8001a4eea447b75350247b1bfbfa6fb6d2"
+  },
+  {
+    "id": "reddit_1w9qk9l",
+    "redditId": "1w9qk9l",
+    "title": "Two months left before submission and I am spiraling",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I don't know if I got the flair right. I am, as per the title, two months away from submission and I feel like I am really behing. The thesis hasn't taken the shape I wished and it's mostly my fault. I have suffered and still suffer from writer's block and executive dysfunction: K am on my laptop all day, I try to write but my mind is scattered and I go at a snail's pace. </p> <p>I have struggled for the whole second and third year of my phd with task management and executive dysfunction. I have been seeing a psychologist for a year and a half, but I don't have an official diagnosis apart from depression. </p> <p>My tutor is not much sympathetic. She pretends to be, but she's cold-ish and insists I should write much more even though I am doing my best and still producing pages - only, not enough. She gives 0 feedback except when something is wrong and even she only gives vague comments about how I should have known better. </p> <p>Tomorrow we have a meeting after I haven't sent anything through the summer. I have actually worked, I have closed my corpus and put together the original material I'll include in the thesis, but since I haven't sent her anything for her it's like J haven't done anything. I've explained that I am struggling and that the lack of communication is not because of superficiality or disinterest, but because I have been stuck and have been trying my best against my brain. </p> <p>I am still afraid that she will use this against me (as she has done in the past) and force me to get an extension, which I don't want at this point. I am also afraid that if she answered badly or hardly all my frustration will come out and then things will get bad. </p> <p>Advice on how to face her without messing up too much? </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ChoiceRead3856\"> /u/ChoiceRead3856 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9qk9l/two_months_left_before_submission_and_i_am/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9qk9l/two_months_left_before_submission_and_i_am/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9qk9l/two_months_left_before_submission_and_i_am/",
+    "subreddit": "r/PhD",
+    "author": "/u/ChoiceRead3856",
+    "publishedAt": "2026-09-07T12:16:44+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.802Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "df605f8124a4c1a86f8f68b97fb185e51ee0f7754984a70bf90aee7406da3182"
+  },
+  {
+    "id": "reddit_1w9oaqo",
+    "redditId": "1w9oaqo",
+    "title": "PhD vs Job",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am a final year undergraduate student and I am confused on what I should do next. I ruled out masters since I had one year of relevant experience outside of college, and already knew the area I wanted to specialize and took a lot of courses on it. Also, considering the current situation in the US, it doesn’t feel like the best time to apply for masters(as an international student)</p> <p>But I am confused if I should do a PhD or directly go for a job. I really enjoy learning and getting a very deep understanding of subjects. In the future I do see myself in the industry, but I would want a job that would be mentally stimulating and where I would also be learning and contributing to solving some real problem. </p> <p>Would a PhD help? Or should I start with a job? </p> <p>My domain is robotics, I am applying for PhD in the US and searching for jobs in India for some context. </p> <p>Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Necessary-Cabinet-43\"> /u/Necessary-Cabinet-43 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9oaqo/phd_vs_job/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9oaqo/phd_vs_job/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9oaqo/phd_vs_job/",
+    "subreddit": "r/PhD",
+    "author": "/u/Necessary-Cabinet-43",
+    "publishedAt": "2026-09-07T10:20:27+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.802Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "65b2d1f9e0a90aa2b508467ee74c7b2a6f8e98348fcb4459e248ac58da6595c5"
+  },
+  {
+    "id": "reddit_1w9oagt",
+    "redditId": "1w9oagt",
+    "title": "Part time studies, full time work - how much of it all can you have",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I've recently been offered a place in a part time PhD program studying computer science/finance. I'm really excited about the prospect of it as I finished an enjoyable masters in computer science in 2020 that was geared towards preparing students to undertake a PhD but then Covid got in the way. I am excited about the challenge of the research, the opportunity to advance my current career which values those with PhDs and the potential doors beyond the \"9-5\" it may open to me be it teaching, consulting, etc. I understand the latter two points are not compatible but to me I guess the PhD enables both and affords me a choice later in my career and depending on what I feel is best for me and my family</p> <p>That being said, I do currently work full time and plan on starting a family within the next 6 years (probably after 2 years of the PhD). My work is fairly closely related to what I would be studying and have broad support from my manager (for now, who knows if I will have the same manager in 6yrs). My partner also has a PhD from full time studies so she will understand at least some of what I will be going through</p> <p>My question to the wider group and anyone else who has done similar is what might this be like and what time might I have left in the day? My deepest fears are that I will cease to have any time outside of work/study/parent-ing and slowly lose my mind or that my ability to parent will be impacted. Obviously my free time will be impacted by starting a family with or without a PhD but I guess I'm curious as to just how much.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/kebab12\"> /u/kebab12 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9oagt/part_time_studies_full_time_work_how_much_of_it/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9oagt/part_time_studies_full_time_work_how_much_of_it/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9oagt/part_time_studies_full_time_work_how_much_of_it/",
+    "subreddit": "r/PhD",
+    "author": "/u/kebab12",
+    "publishedAt": "2026-09-07T10:20:04+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.802Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "3936fde5d2bbec5070ba7e517efcf84d43914e8864b8719fe56953b67f5bc944"
+  },
+  {
+    "id": "reddit_1w9m1yx",
+    "redditId": "1w9m1yx",
+    "title": "thinking of doing it, but how did you choose your topic?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>californi-A</p> <p>finishing up my MA in African studies soon. thesis is on Black and African anarchist histories of U.S and on the African continent. looking at theory, history, application of it, critiques of other ideologies, etc.</p> <p>i like it a lot, ive always enjoyed political theory to an extent. my undergrad was in African-American and Mexican-American history. if i were to go for phd, how do i choose between history, sociology, ethnic studies, political science, philosophy, cultural studies, more specific ones on culture and theory, history of consciousness, etc?</p> <p>i used to really enjoy ethnic studies classes and coursework and readings. and i don’t know what it was, i think overtime i just lost interest in it because some of the research felt very catered to a really really niche identity that the researcher had. and as someone who’s been wanting to have the experience my Black and Mexican friends had in their respective programs (but i never got it) i’m very comfortable researching other communities and stuff. i’ve felt more welcome by people in other racial groups that of my own, and it shows up everyday because i’m very much a product of Black and African and Latino literature and intellectualism despite being none of those three.</p> <p>I’ve heard that phds in political science are very governmental and expect people to end up in electoral politics or something. i’ve been a grassroots organizer my adult life and it seems like that experience isn’t really focused on or cares upon by these programs. sociology seems cool but it feels very psychological, and my sibling is going down phd in neuropsych and i would always fall asleep when helping them study. philosophy seems cool too but i took my first phil class ever last semester (in grad school still) and everyone had some favorite philosopher like it was their favorite baseball team. all they did was say “hi my name is XYZ and i LOVE john locke” and wrote everything through a lockeian perspective and then others with Deleuze or Heidegger or etc. Felt very academic and not very boots on the ground “what do i do with this now that i’ve learned it” sort of thing. it was a good class with some good conversations. it was sociopolitical thought and we talked about protestant work ethic all the way to morality of sex robots and etc.</p> <p>i have an incredible advisor right now who is very much encouraging me to go forward for phd in African American studies but i don’t know if i want to do something that specific. I think it’s also a comfortability thing since i wouldn’t really want a PhD in an identity i don’t hold (I’m not Black nor African as previously mentioned). Just curious on how people made decisions when they liked lots of stuff (or disliked small components of it). should i be in love with everything within my chosen phd topic, and not just knowledgable about whatever i want to research?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ArthropodJim\"> /u/ArthropodJim </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9m1yx/thinking_of_doing_it_but_how_did_you_choose_your/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9m1yx/thinking_of_doing_it_but_how_did_you_choose_your/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9m1yx/thinking_of_doing_it_but_how_did_you_choose_your/",
+    "subreddit": "r/PhD",
+    "author": "/u/ArthropodJim",
+    "publishedAt": "2026-09-07T08:10:36+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.802Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "7eec30cf7b4f81c692a7c8f7846acd0dcddab497840b2bc6c720b7bd5f2f09a8"
+  },
+  {
+    "id": "reddit_1w9jld9",
+    "redditId": "1w9jld9",
+    "title": "What is the best transcription software for interviews? Losing hours to speaker labels",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>20(F) third year, sociology. My data is semi structured interviews and I'm losing my mind in cleanup.</p> <p>I've done 22 interviews so far, aiming for around 40 before I stop. Most are two people. A few have a third when a translator sits in. They run 45 to 70 minutes each.</p> <p>The speaker labelling is what's killing me. When the tool guesses wrong I end up retagging every turn manually.</p> <p>Last week that was three hours on a single 50 minute file. At that point I may as well type it myself.</p> <p>My second problem is my terminology. After catching two or three errors I don't trust any of it. Then I replay the entire recording just to be sure. </p> <p>I’ve already tried my uni’s offer but the turnaround is two weeks and I can't wait that long. I tested the auto captions built into my recorder app and just gave up on the first file.</p> <p>I also tried adding a word list to one tool. Worked fine, but only for that one file. Had to redo it every single time. </p> <p>I just want to know what other qual people use. Two things I care about. Can it remember my word list across files? And do speaker labels survive three people talking over each other?</p> <p>Also curious how you handle the IRB side of this. My approval says no third party processing without checking first, so I need to know where audio goes.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/FastTelephone9354\"> /u/FastTelephone9354 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9jld9/what_is_the_best_transcription_software_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1w9jld9/what_is_the_best_transcription_software_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1w9jld9/what_is_the_best_transcription_software_for/",
+    "subreddit": "r/PhD",
+    "author": "/u/FastTelephone9354",
+    "publishedAt": "2026-09-07T05:54:24+00:00",
+    "fetchedAt": "2026-09-07T18:50:38.803Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "855ef4d090eb1da5e3e37ff554881dbe0069fc5c14e4a61fa6c269e410a3c9fd"
+  },
+  {
+    "id": "reddit_1wa0tys",
+    "redditId": "1wa0tys",
+    "title": "Save ChatGPT answers as editable iPhone notes, not Screenshots",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/IMadeThis/comments/1wa0tys/save_chatgpt_answers_as_editable_iphone_notes_not/\"> <img src=\"https://external-preview.redd.it/ZHk4eDBya3I5NW9oMYlHF6x9jZIltuVsB1d6n-gnnNoiVhojNN52-u2kjKra.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=33a5b4c74ba21ddea21ad7bd2d5799044f82ab95\" alt=\"Save ChatGPT answers as editable iPhone notes, not Screenshots\" title=\"Save ChatGPT answers as editable iPhone notes, not Screenshots\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p><em>Ask ChatGPT to save an answer, then open it as an editable Markdown note on your iPhone. That’s what my app, Truffle Journal, does. Connect it to ChatGPT once and you’re ready to start saving. I’m the developer.</em></p> <h1>Download in App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a></h1> <p>With Truffle, you can:</p> <ul> <li><strong>Save ChatGPT answers as clean Markdown notes in Truffle</strong>, with headings, bold text, lists, and sections that are easy to read and edit on your iPhone.</li> <li><strong>Set a reminder time on any note or checklist in Truffle</strong>, and get an iPhone notification when it’s time.</li> <li><strong>Create and edit properly rendered Markdown tables in Truffle</strong>, so structured information stays clean and easy to work with.</li> <li><strong>Write or edit notes directly in Truffle, then ask ChatGPT to read or update them later</strong>, so your own notes can become part of a future ChatGPT conversation.</li> </ul> <p><strong>Why?</strong><br/> Useful ChatGPT answers can easily get buried in chat history. Screenshots save too much, and copy-pasting whole answers into Notes can quickly turn into clutter. Truffle keeps the parts that matter as real notes you can edit, organize, and ask ChatGPT to read again later.</p> <p><strong>Connecting Truffle to ChatGPT is quick too.</strong><br/> There’s a guided <strong>3-step tutorial</strong> inside the app. Setup takes about <strong>2 minutes</strong>, you only need to do it once, and then you’re ready to go.</p> <p>Complete this tutorial and you’ll automatically receive <strong>1 month of Plus for free</strong>.</p> <p><em>The attached screen recording shows me completing the tutorial, receiving the FREE month, saving posts into Truffle, editing tables, set notifications, and taking a quick look around the app.</em></p> <p>Truffle Journal is now officially on the App Store. (after spending 6 months testing it with our TestFlight users and improving the app based on beta users' feedbacks)</p> <p>App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a><br/> ChatGPT app: <a href=\"https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d\">https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Truffle_Journal\"> /u/Truffle_Journal </a>   to   <a href=\"https://www.reddit.com/r/IMadeThis/\"> r/IMadeThis </a> <br/> <span><a href=\"https://v.redd.it/ln0btokr95oh1\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/IMadeThis/comments/1wa0tys/save_chatgpt_answers_as_editable_iphone_notes_not/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/IMadeThis/comments/1wa0tys/save_chatgpt_answers_as_editable_iphone_notes_not/",
+    "subreddit": "r/IMadeThis",
+    "author": "/u/Truffle_Journal",
+    "publishedAt": "2026-09-07T18:51:00+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "8041ff32407e5b62a418e98de6930c15628cb000917ca08dffaf7fd6f7b39071"
+  },
+  {
+    "id": "reddit_1wa0tco",
+    "redditId": "1wa0tco",
+    "title": "M | 24 | Muslim | Single | United States | PhD Student",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Writing one of these is always a bit surreal, but here is an honest, straightforward snapshot of my life and what I’m hoping to find.</p> <p><strong>A Bit About Me</strong><br/> I’m 24, raised in a warm, well-established family with traditional values. Currently, I am pursuing my PhD in the USA, alongside working as a research assistant.<br/> Outside of my academic and work commitments, I keep my daily life deliberately quiet, clean, and grounded:</p> <p>I’m a big fan of slow mornings, catching sunsets whenever I get the chance, writing, sketching/illustration, and staying physically active. When I’m just winding down at home, it’s usually with a good podcast.</p> <p>Deen is my everyday anchor. I’m far from perfect, but I prioritize daily prayers, consistency. Strict non-smoker, non-drinker, and believe in keeping things simple and halal.</p> <p>I’m ambitious about my work, but at home, I value calm, low-drama, mutual respect, and lots of warmth.</p> <p><strong>What I’m Looking For</strong></p> <p>I’m hoping to find a genuine partner to build a meaningful, peaceful life with:</p> <p><strong>Age</strong>: 20–24.<br/> Mindset &amp; Deen: A practicing Muslimah who is warm, sincere, family-oriented, and shares the mindset that faith is about continuous personal growth. Someone with good emotional maturity who prefers talking things through directly rather than playing guessing games.</p> <p>Pursuing or completed at least a Bachelor’s degree. I really value intellectual curiosity and would love a partner who is driven and passionate about her own goals.</p> <p>Preferably someone already <strong>residing in</strong> or planning to move to the USA (or Canada/UK), though location is flexible if our values and connection align.</p> <p>Mutual physical attraction is naturally important for both of us. Ideally 5'2\"+, with a gentle personal inclination toward a fair complexion.</p> <p><strong>Process &amp; Timeline</strong><br/> I believe in a structured, halal process, roughly around six months to a year to get to know each other’s values, long-term plans, and daily habits to see if we’re truly compatible.</p> <p>If this resonates with what you're looking for, please reach out via DM with a thoughtful introduction about yourself rather than just a \"Hi\" or \"Hello\", it helps keep the process smooth, intentional, and respectful of everyone's time. May Allah grant ease and barakah to everyone on their search.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Professional-Yam7905\"> /u/Professional-Yam7905 </a>   to   <a href=\"https://www.reddit.com/r/BangladeshMarriage/\"> r/BangladeshMarriage </a> <br/> <span><a href=\"https://www.reddit.com/r/BangladeshMarriage/comments/1wa0tco/m_24_muslim_single_united_states_phd_student/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/BangladeshMarriage/comments/1wa0tco/m_24_muslim_single_united_states_phd_student/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/BangladeshMarriage/comments/1wa0tco/m_24_muslim_single_united_states_phd_student/",
+    "subreddit": "r/BangladeshMarriage",
+    "author": "/u/Professional-Yam7905",
+    "publishedAt": "2026-09-07T18:50:26+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "e39425abde589384c3f4b158ff43075646664ec62551b6412b6ed7562d121c5a"
+  },
+  {
+    "id": "reddit_1wa0rye",
+    "redditId": "1wa0rye",
+    "title": "Save ChatGPT answers as editable iPhone notes, not Screenshots",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/GenAiApps/comments/1wa0rye/save_chatgpt_answers_as_editable_iphone_notes_not/\"> <img src=\"https://external-preview.redd.it/djFpenBmcmw3NW9oMfg2HNARVEmpO-ZrKxMXbSVBWsYI2Wg9jRCdH_I5AeA7.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=7d34043a4832b6b8054c99ced2f1735eaa5b30c5\" alt=\"Save ChatGPT answers as editable iPhone notes, not Screenshots\" title=\"Save ChatGPT answers as editable iPhone notes, not Screenshots\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p><em>Truffle Journal lets you and ChatGPT work on the same Markdown notes. Connect my iPhone app to ChatGPT once: save an answer, edit as markdown (todos, tables, etc) in our app, then ask ChatGPT to read or update it in a later conversation. I’m the developer.</em></p> <h1>Download in App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a></h1> <p>With Truffle, you can:</p> <ul> <li><strong>Save ChatGPT answers as clean Markdown notes in Truffle</strong>, with headings, bold text, lists, and sections that are easy to read and edit on your iPhone.</li> <li><strong>Set a reminder time on any note or checklist in Truffle</strong>, and get an iPhone notification when it’s time.</li> <li><strong>Create and edit properly rendered Markdown tables in Truffle</strong>, so structured information stays clean and easy to work with.</li> <li><strong>Write or edit notes directly in Truffle, then ask ChatGPT to read or update them later</strong>, so your own notes can become part of a future ChatGPT conversation.</li> </ul> <p><strong>Why?</strong><br/> Useful ChatGPT answers can easily get buried in chat history. Screenshots save too much, and copy-pasting whole answers into Notes can quickly turn into clutter. Truffle keeps the parts that matter as real notes you can edit, organize, and ask ChatGPT to read again later.</p> <p><strong>Connecting Truffle to ChatGPT is quick too.</strong><br/> There’s a guided <strong>3-step tutorial</strong> inside the app. Setup takes about <strong>2 minutes</strong>, you only need to do it once, and then you’re ready to go.</p> <p>Complete this tutorial and you’ll automatically receive <strong>1 month of Plus for free</strong>.</p> <p><em>The attached screen recording shows me completing the tutorial, receiving the FREE month, saving posts into Truffle, editing tables, set notifications, and taking a quick look around the app.</em></p> <p>Truffle Journal is now officially on the App Store. (after spending 6 months testing it with our TestFlight users and improving the app based on beta users' feedbacks)</p> <p>App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a><br/> ChatGPT app: <a href=\"https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d\">https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Truffle_Journal\"> /u/Truffle_Journal </a>   to   <a href=\"https://www.reddit.com/r/GenAiApps/\"> r/GenAiApps </a> <br/> <span><a href=\"https://v.redd.it/t1bsdjnl75oh1\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GenAiApps/comments/1wa0rye/save_chatgpt_answers_as_editable_iphone_notes_not/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/GenAiApps/comments/1wa0rye/save_chatgpt_answers_as_editable_iphone_notes_not/",
+    "subreddit": "r/GenAiApps",
+    "author": "/u/Truffle_Journal",
+    "publishedAt": "2026-09-07T18:48:59+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "919c0178759aba21d56e44aa19c032681943a965160436f24a3d4f75d816e9d6"
+  },
+  {
+    "id": "reddit_1wa0i8t",
+    "redditId": "1wa0i8t",
+    "title": "AI Chased Me Out Of Academia",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Sydney Bing changed the course of my life. In 2022 (even after the launch of ChatGPT) I was a grad student in physics, looking forward to a life where if things went well I could become a top-ten expert in my very niche field.</p> <p>Then a twitter thread about Bing Chat got me thinking about AI progress, and I started to spiral. It was painful for me to lose my life plan, my source of meaning, and possibly my species' control of the planet all at once.</p> <p>I wrote a long post about my ensuing life crisis. I found some coping mechanisms people should know about, and switched careers to the <a href=\"https://www.alignment.org/\">Alignment Research Center</a>.</p> <p>I'm hoping my experiences are useful to people going through the same things now, especially mathematicians feeling the pressure as AI starts to eat their field. Key takeaways if you don't want a 4400-word memoir:</p> <ul> <li>The thing that helped me most was a 'worry hour.' For one hour a day, I was allowed to ruminate on the impending doom of academia. One hour a day thinking about timelines is enough to inform my decisions, but not enough to sap the joy out of my life.</li> <li>Doing alignment work really did restore a measure of meaning. If every scientist has to retire in 2032, I think I'll retire with a lot more pride in my alignment work than from my career in physics.</li> <li>Alignment orgs are fucking hiring!</li> <li>My biggest career mistake was indecision. It's one thing to do a brief visit (or even a long visit) at an org before leaving academia forever. I spent years trying to do work that would get me prestige in academia while also being useful for alignment. Most of that work failed on both prestige and impact metrics.</li> <li>If for some reason I really was fixed on doing alignment work while staying in academia, I would do it in association with a prestigious academic alignment researcher (I don't know the scene well, but RESI looks like a decent venue for this).</li> <li>If you're having a psychological freakout because of AI, get off Reddit!</li> </ul> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/millicosm\"> /u/millicosm </a>   to   <a href=\"https://www.reddit.com/r/slatestarcodex/\"> r/slatestarcodex </a> <br/> <span><a href=\"https://millicosm.substack.com/p/from-academia-to-alignment\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/slatestarcodex/comments/1wa0i8t/ai_chased_me_out_of_academia/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/slatestarcodex/comments/1wa0i8t/ai_chased_me_out_of_academia/",
+    "subreddit": "r/slatestarcodex",
+    "author": "/u/millicosm",
+    "publishedAt": "2026-09-07T18:39:13+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "e756073b2c5c819424414ed112d751e47f44188b193bebfd297c1b3a5dfebc1e"
+  },
+  {
+    "id": "reddit_1wa0hyl",
+    "redditId": "1wa0hyl",
+    "title": "class starts tomorrow but there’s no instructor?",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/CUNY/comments/1wa0hyl/class_starts_tomorrow_but_theres_no_instructor/\"> <img src=\"https://preview.redd.it/sjuddjrm75oh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=389092b627eb8b588c676fb86d0dd25049696ea3\" alt=\"class starts tomorrow but there’s no instructor?\" title=\"class starts tomorrow but there’s no instructor?\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>what exactly am i supposed to do there’s no zoom link either lol tomorrow i’ll check bright space and my email but what happens if i don’t see anything tomorrow. do i just wait it out till something pops up or go to the college and ask </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/reena_beenz\"> /u/reena_beenz </a>   to   <a href=\"https://www.reddit.com/r/CUNY/\"> r/CUNY </a> <br/> <span><a href=\"https://i.redd.it/sjuddjrm75oh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/CUNY/comments/1wa0hyl/class_starts_tomorrow_but_theres_no_instructor/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/CUNY/comments/1wa0hyl/class_starts_tomorrow_but_theres_no_instructor/",
+    "subreddit": "r/CUNY",
+    "author": "/u/reena_beenz",
+    "publishedAt": "2026-09-07T18:38:54+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "a13c485e7e911def4773473160e3becb7ca1d0315d3e174447250e1286184f0a"
+  },
+  {
+    "id": "reddit_1wa0hke",
+    "redditId": "1wa0hke",
+    "title": "30[M4F] #Kerala/India - Looking to connect with fellow PhD Scholars.",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>​Hi everyone,</p> <p>​I’m a 30-year-old Malayali currently in the final stretch of my PhD (thesis-writing phase). After living abroad for a while, I’ve recently moved back to Kerala and am preparing to relocate to Delhi, Bangalore, or another major city in the coming months for a teaching/academic role.</p> <p>​Since I’m navigating the unique transition from researcher to academic, I’d love to connect with fellow PhDs or academics who understand the rhythm, challenges, and aspirations that come with this path.</p> <p>If you're in academia, finishing up your doctorate, or simply resonate with this journey and think we might click, feel free to send a DM. I’ll always keep our interactions respectful.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Outrageous-Life-2368\"> /u/Outrageous-Life-2368 </a>   to   <a href=\"https://www.reddit.com/r/NerdDating/\"> r/NerdDating </a> <br/> <span><a href=\"https://www.reddit.com/r/NerdDating/comments/1wa0hke/30m4f_keralaindia_looking_to_connect_with_fellow/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/NerdDating/comments/1wa0hke/30m4f_keralaindia_looking_to_connect_with_fellow/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/NerdDating/comments/1wa0hke/30m4f_keralaindia_looking_to_connect_with_fellow/",
+    "subreddit": "r/NerdDating",
+    "author": "/u/Outrageous-Life-2368",
+    "publishedAt": "2026-09-07T18:38:29+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "430df3d129bd55875ee98258e2034709609b7e954fec8220233bd14f49f8bf70"
+  },
+  {
+    "id": "reddit_1wa0fkn",
+    "redditId": "1wa0fkn",
+    "title": "Submitting a big grant - MSCA",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>A lot of us here are depressed and exhausted. I find myself looking at the future thinking: what is even the point?<br/> I don’t blame any of us, because we are surviving through the worst moment us ‘juniors’ have ever gone through in the history of academia and it is depressing.<br/> Every day feels like absolute hell sometimes. Another application = another rejection. Another “no” after hours, days and sometimes months of work. My CV keeps getting longer, I keep trying to become a better candidate, and somehow it still feels like nothing I do is ever enough.<br/> But today, after six months of writing, rewriting, emailing university offices, going back and forth with my supervisor, fixing documents, questioning every sentence and wondering more than once why I was putting myself through this…<br/> I submitted my first MSCA proposal.<br/> And I wanted to write this mostly as a reminder to myself, but also to anyone here who submitted one/is submitting these days too: this matters.<br/> Maybe in six months I’ll open an email telling me I didn’t get it. Statistically, a lot of us will.<br/> There will be time for that disappointment if it comes, but that’s not today.<br/> Today, you finished something incredibly difficult. You took an idea that existed only in your head and turned it into a full proposal. You kept going through bureaucracy, self-doubt, exhaustion, feedback, corrections, and all the little moments where quitting would have been so much easier.<br/> And you submitted it.<br/> So please celebrate that.<br/> Drink a glass of whatever you like. Get the pizza. Order your favourite takeaway. Go for a walk. Call someone you love. You did a great job.<br/> Our lives cannot only be celebrations of academic outcomes, those are way too fragile and rare.<br/> Sometimes we have to celebrate the fact that, despite everything telling us we weren’t good enough, we still showed up and finished.<br/> In six months, maybe the answer will be no.<br/> But tonight, the answer is that I did it and we did it. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/tryingtotravelround\"> /u/tryingtotravelround </a>   to   <a href=\"https://www.reddit.com/r/postdoc/\"> r/postdoc </a> <br/> <span><a href=\"https://www.reddit.com/r/postdoc/comments/1wa0fkn/submitting_a_big_grant_msca/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/postdoc/comments/1wa0fkn/submitting_a_big_grant_msca/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/postdoc/comments/1wa0fkn/submitting_a_big_grant_msca/",
+    "subreddit": "r/postdoc",
+    "author": "/u/tryingtotravelround",
+    "publishedAt": "2026-09-07T18:36:27+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "cdd3e106437c33493959012def7d24c5d5ebdeccad2601f37ca9053be66f9b59"
+  },
+  {
+    "id": "reddit_1wa0bz1",
+    "redditId": "1wa0bz1",
+    "title": "Save a ChatGPT answer. Edit it on your iPhone. Bring it into your next chat.",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/SideProject/comments/1wa0bz1/save_a_chatgpt_answer_edit_it_on_your_iphone/\"> <img src=\"https://external-preview.redd.it/N3RtMjE0ejk2NW9oMYlHF6x9jZIltuVsB1d6n-gnnNoiVhojNN52-u2kjKra.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=4d537e940647d2c51a6b06f44625b7c53e8cb1bc\" alt=\"Save a ChatGPT answer. Edit it on your iPhone. Bring it into your next chat.\" title=\"Save a ChatGPT answer. Edit it on your iPhone. Bring it into your next chat.\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p><em>With my app, Truffle Journal, you ask ChatGPT to save an answer and it shows up as a note you can edit on your iPhone. You can also write your own notes and ask ChatGPT to read or update them later. I’m the developer.</em></p> <h1>App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a></h1> <p>With Truffle, you can:</p> <ul> <li><strong>Save ChatGPT answers as clean Markdown notes in Truffle</strong>, with headings, bold text, lists, and sections that are easy to read and edit on your iPhone.</li> <li><strong>Set a reminder time on any note or checklist in Truffle</strong>, and get an iPhone notification when it’s time.</li> <li><strong>Create and edit properly rendered Markdown tables in Truffle</strong>, so structured information stays clean and easy to work with.</li> <li><strong>Write or edit notes directly in Truffle, then ask ChatGPT to read or update them later</strong>, so your own notes can become part of a future ChatGPT conversation.</li> </ul> <p><strong>Why?</strong><br/> Useful ChatGPT answers can easily get buried in chat history. Screenshots save too much, and copy-pasting whole answers into Notes can quickly turn into clutter. Truffle keeps the parts that matter as real notes you can edit, organize, and ask ChatGPT to read again later.</p> <p><strong>Connecting Truffle to ChatGPT is quick too.</strong><br/> There’s a guided <strong>3-step tutorial</strong> inside the app. Setup takes about <strong>2 minutes</strong>, you only need to do it once, and then you’re ready to go.</p> <p>Complete the tutorial and you’ll automatically receive <strong>1 month of Plus for free</strong>.</p> <p><em>The attached video shows me completing the tutorial, receiving the FREE month, saving this post into Truffle, editing tables, set notifications, and taking a quick look around the app.</em></p> <p>Truffle Journal is now officially on the App Store. (after spending 6 months testing it with our TestFlight users and improving the app based on beta users' feedbacks)</p> <p>App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a><br/> ChatGPT app: <a href=\"https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d\">https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Truffle_Journal\"> /u/Truffle_Journal </a>   to   <a href=\"https://www.reddit.com/r/SideProject/\"> r/SideProject </a> <br/> <span><a href=\"https://v.redd.it/18l0j1z965oh1\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/SideProject/comments/1wa0bz1/save_a_chatgpt_answer_edit_it_on_your_iphone/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/SideProject/comments/1wa0bz1/save_a_chatgpt_answer_edit_it_on_your_iphone/",
+    "subreddit": "r/SideProject",
+    "author": "/u/Truffle_Journal",
+    "publishedAt": "2026-09-07T18:33:02+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "2abc31d8a9309165ccefe17edd1915d38d4a13f311106d30e4689cffb50fcfd2"
+  },
+  {
+    "id": "reddit_1wa0960",
+    "redditId": "1wa0960",
+    "title": "Save ChatGPT answers as editable iPhone notes, not screenshots",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/promoteMyApp/comments/1wa0960/save_chatgpt_answers_as_editable_iphone_notes_not/\"> <img src=\"https://external-preview.redd.it/NnY4c3E4MHo1NW9oMYlHF6x9jZIltuVsB1d6n-gnnNoiVhojNN52-u2kjKra.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=12b69661afcafb05882d8acae63ff451458436bc\" alt=\"Save ChatGPT answers as editable iPhone notes, not screenshots\" title=\"Save ChatGPT answers as editable iPhone notes, not screenshots\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p><em>That’s what Truffle Journal does. Connect it to ChatGPT once, then</em> lets you and ChatGPT work on the same saved notes, without copying and pasting them back and forth<em>. I’m the developer.</em></p> <h1>Download in App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a></h1> <p>With Truffle, you can:</p> <ul> <li><strong>Save ChatGPT answers as clean Markdown notes in Truffle</strong>, with headings, bold text, lists, and sections that are easy to read and edit on your iPhone.</li> <li><strong>Set a reminder time on any note or checklist in Truffle</strong>, and get an iPhone notification when it’s time.</li> <li><strong>Create and edit properly rendered Markdown tables in Truffle</strong>, so structured information stays clean and easy to work with.</li> <li><strong>Write or edit notes directly in Truffle, then ask ChatGPT to read or update them later</strong>, so your own notes can become part of a future ChatGPT conversation.</li> </ul> <p><strong>Why?</strong><br/> Useful ChatGPT answers can easily get buried in chat history. Screenshots save too much, and copy-pasting whole answers into Notes can quickly turn into clutter. Truffle keeps the parts that matter as real notes you can edit, organize, and ask ChatGPT to read again later.</p> <p><strong>Connecting Truffle to ChatGPT is quick too.</strong><br/> There’s a guided <strong>3-step tutorial</strong> inside the app. Setup takes about <strong>2 minutes</strong>, you only need to do it once, and then you’re ready to go.</p> <p>Complete the tutorial and you’ll automatically receive <strong>1 month of Plus for free</strong>.</p> <p><em>The attached video shows me completing the tutorial, receiving the FREE month, saving this post into Truffle, editing tables, set notifications, and taking a quick look around the app.</em></p> <p>Truffle Journal is now officially on the App Store. (after spending 6 months testing it with our TestFlight users and improving the app based on beta users' feedbacks)</p> <p>App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a><br/> ChatGPT app: <a href=\"https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d\">https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Truffle_Journal\"> /u/Truffle_Journal </a>   to   <a href=\"https://www.reddit.com/r/promoteMyApp/\"> r/promoteMyApp </a> <br/> <span><a href=\"https://v.redd.it/2n75u40z55oh1\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/promoteMyApp/comments/1wa0960/save_chatgpt_answers_as_editable_iphone_notes_not/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/promoteMyApp/comments/1wa0960/save_chatgpt_answers_as_editable_iphone_notes_not/",
+    "subreddit": "r/promoteMyApp",
+    "author": "/u/Truffle_Journal",
+    "publishedAt": "2026-09-07T18:30:21+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.664Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "df9502324d5e45613341d58c0f2f646445184ee01ce9dbcd6e34a7dd2cfab87d"
+  },
+  {
+    "id": "reddit_1wa06hf",
+    "redditId": "1wa06hf",
+    "title": "Chance me for Waseda SILS (Korean Intl Student in Malaysia) 2027 April intake",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey guys! I'm planning to apply to Waseda SILS and wanted to get a realistic chance-me / feedback from current students or recent applicants. And I just completed all my applications</p> <p><strong>Background:</strong></p> <ul> <li>Korean national</li> <li>Moved to Malaysia alone at first year of High School (CIMP/OSSD)</li> </ul> <p><strong>Stats:</strong></p> <ul> <li>Curriculum: CIMP (Canadian / OSSD) – 94% overall average (~4.0 GPA equivalent)</li> <li>SAT: 1280</li> <li>TOEFL iBT: 5.0</li> </ul> <p><strong>3 ECAs &amp; honors I attatched :</strong></p> <ul> <li>Varsity Soccer Captain (3 years, captain) + won many medals</li> <li>Student Council (Sports Member &amp; Prom Assistant)</li> <li>Awards: Subject Award for BOH4M, Business leadership and management (Academic excellence)</li> </ul> <p><strong>Essay:</strong></p> <p>Solid/Strong (Connected my experience transitioning from Korea to Malaysia and my 3 years as soccer captain to the prompts on linguistics and social cognition, seamlessly tying them into specific SILS courses). I think overall I wrote a pretty decent essay</p> <p><strong>Questions for you guys:</strong></p> <ol> <li>How cooked am I with a 1280 SAT? I know SILS averages are usually around 1400+.</li> <li>How much weight does SILS put on a high GPA (94%) and a strong/personalized Critical Writing essay compared to standardized test scores?</li> <li>how are the chances to get into other universities (I've already applied Sophia FLA, Ritsumeikan GLA, and I am planning to apply ICU soon)</li> <li>Do i actually stand a chance.........</li> </ol> <p>Be as brutally honest as possible. Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/snwoo46\"> /u/snwoo46 </a>   to   <a href=\"https://www.reddit.com/r/Waseda/\"> r/Waseda </a> <br/> <span><a href=\"https://www.reddit.com/r/Waseda/comments/1wa06hf/chance_me_for_waseda_sils_korean_intl_student_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/Waseda/comments/1wa06hf/chance_me_for_waseda_sils_korean_intl_student_in/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/Waseda/comments/1wa06hf/chance_me_for_waseda_sils_korean_intl_student_in/",
+    "subreddit": "r/Waseda",
+    "author": "/u/snwoo46",
+    "publishedAt": "2026-09-07T18:27:39+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "5863cf73ce011fc172b6ceb81d8cf400ede23b54f9bb7127ec5a6d96ed44e224"
+  },
+  {
+    "id": "reddit_1wa05yh",
+    "redditId": "1wa05yh",
+    "title": "Easter (spider) egg in Elder Race?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Knowing how Tchaikovsky enjoys etymology and the evolution of names, I wondered if this was a little nod to our favorite arachnid in the universe. Portia >> Porshai doesn’t feel like too great a leap…</p> <p>Do any of the other names ring bells?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/FertyMerty\"> /u/FertyMerty </a>   to   <a href=\"https://www.reddit.com/r/AdrianTchaikovsky/\"> r/AdrianTchaikovsky </a> <br/> <span><a href=\"https://i.redd.it/3evjf50j55oh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AdrianTchaikovsky/comments/1wa05yh/easter_spider_egg_in_elder_race/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AdrianTchaikovsky/comments/1wa05yh/easter_spider_egg_in_elder_race/",
+    "subreddit": "r/AdrianTchaikovsky",
+    "author": "/u/FertyMerty",
+    "publishedAt": "2026-09-07T18:27:07+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "224e3fbbb46c3bcc6028c26c3d6ab8dade572caaf0c1e0f7d93898c40dad5e47"
+  },
+  {
+    "id": "reddit_1wa05po",
+    "redditId": "1wa05po",
+    "title": "Epidemiology is NOT just for Doctors. It's why your matatu crashes, your maize fails, and you lose in SportPesa. Many Kenyans think Epidemiology and Biostatistics is only for people in white coats at KEMRI.",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>&amp;#x200B;</p> <p> </p> <p>I am a BSc Epidemiology and Biostatistics graduate based in Embu, and let me explain it simply:</p> <p> </p> <p>Epidemiology = The science of asking WHY things happen in groups.</p> <p> </p> <p>Biostatistics = The tools to prove it with DATA, not guesswork.</p> <p> </p> <p>We don't just study diseases. We study PATTERNS.</p> <p> </p> <p>Examples in your daily life:</p> <p> </p> <ol> <li>Boda / Matatu accidents in Embu-Nairobi road: Epidemiology asks - Do most accidents happen on Friday at 6pm? After rain? With unlicensed riders? Biostatistics proves it with data. Then NTSA knows where to put checks. Without data, we just say \"ni bahati mbaya\".</li> </ol> <p> </p> <ol> <li>Farming: Why did maize fail this season in Embu but not in Kirinyaga? Is it seed, rainfall timing, fertilizer? Epidemiology compares groups. Biostatistics tells you if it's real or just bad luck.</li> </ol> <p> </p> <ol> <li>Mama Mboga business: Why do tomatoes sell at 8am but rot at 2pm? She is doing epidemiology daily without knowing - observing patterns, making decisions.</li> </ol> <p> </p> <ol> <li>SportPesa: You lose because you use heart, not data. Companies use biostatistics to set odds. You bet with emotion, they bet with data from 10,000 games.</li> </ol> <p> </p> <ol> <li>Healthcare Demand and Congestion - This is where we fail most:</li> </ol> <p> </p> <p>Look at Embu Level 5 Hospital. Every morning, long queues, no beds, doctors overwhelmed. Why? Because we wait until people are very sick.</p> <p> </p> <p>Epidemiology helps us predict demand before it happens. For example, data shows that every rainy season, malaria and diarrhea cases in Embu increase by 40%. If we know this, we can prevent it - distribute nets early, chlorinate water early, do community health talks early.</p> <p> </p> <p>Prevention reduces congestion. If we prevent 100 cases of diarrhea in the village through clean water data, that is 100 less people in the hospital queue, 100 less beds used, and doctors can attend to critical cases.</p> <p> </p> <p>Biostatistics tells counties: \"Don't build a bigger hospital only. Use data to stop people from needing the hospital in the first place.\" That saves money and saves lives.</p> <p> </p> <p>My point is, Kenya makes many decisions based on \"watu wanasema\" and \"mimi nafeel\". Epidemiology teaches us to say \"Data inasema nini?\"</p> <p> </p> <p>It is not for health alone. It is for everywhere decisions need to be made.</p> <p> </p> <p>I am passionate about this field and I am currently freelancing in academic writing as I look for an opportunity to grow in it. I have skills in R, SPSS, SAS, SQL and Excel. If you work in any institution that values data - health, agriculture, business, research - and you have an opening for an intern, research assistant, volunteer, or you just need help with data entry, cleaning and analysis, I would be happy to contribute and learn.</p> <p> </p> <p>Also, any form of assistance, guidance, referral or even a handout as I continue searching will be highly welcomed and appreciated.</p> <p> </p> <p>What is one decision in your life you wish you had made with data instead of guesswork? Let's discuss.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Epidemiologist254\"> /u/Epidemiologist254 </a>   to   <a href=\"https://www.reddit.com/r/biostatistics/\"> r/biostatistics </a> <br/> <span><a href=\"https://www.reddit.com/r/biostatistics/comments/1wa05po/epidemiology_is_not_just_for_doctors_its_why_your/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/biostatistics/comments/1wa05po/epidemiology_is_not_just_for_doctors_its_why_your/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/biostatistics/comments/1wa05po/epidemiology_is_not_just_for_doctors_its_why_your/",
+    "subreddit": "r/biostatistics",
+    "author": "/u/Epidemiologist254",
+    "publishedAt": "2026-09-07T18:26:51+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "fed7495de31363b7660279ce508c104e368c567bdbb92ca33cb7031d3dd23bf5"
+  },
+  {
+    "id": "reddit_1wa02x6",
+    "redditId": "1wa02x6",
+    "title": "Save ChatGPT answers as editable iPhone notes, not Screenshots",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/studytips/comments/1wa02x6/save_chatgpt_answers_as_editable_iphone_notes_not/\"> <img src=\"https://external-preview.redd.it/ZmNpdnI0b2Q0NW9oMYlHF6x9jZIltuVsB1d6n-gnnNoiVhojNN52-u2kjKra.png?width=640&amp;crop=smart&amp;auto=webp&amp;s=a28a3ec505885017c3e65e26a09b7146d76abfe8\" alt=\"Save ChatGPT answers as editable iPhone notes, not Screenshots\" title=\"Save ChatGPT answers as editable iPhone notes, not Screenshots\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p><em>That’s what Truffle Journal does. Connect it to ChatGPT once, then save the answers you want to keep—with readable headings, editable tables, and checklists. I’m the developer.</em></p> <p>With Truffle, you can:</p> <ul> <li><strong>Save ChatGPT answers as clean Markdown notes in Truffle</strong>, with headings, bold text, lists, and sections that are easy to read and edit on your iPhone.</li> <li><strong>Set a reminder time on any note or checklist in Truffle</strong>, and get an iPhone notification when it’s time.</li> <li><strong>Create and edit properly rendered Markdown tables in Truffle</strong>, so structured information stays clean and easy to work with.</li> <li><strong>Write or edit notes directly in Truffle, then ask ChatGPT to read or update them later</strong>, so your own notes can become part of a future ChatGPT conversation.</li> </ul> <p><strong>Why?</strong><br/> Useful ChatGPT answers can easily get buried in chat history. Screenshots save too much, and copy-pasting whole answers into Notes can quickly turn into clutter. Truffle keeps the parts that matter as real notes you can edit, organize, and ask ChatGPT to read again later.</p> <p><strong>Connecting Truffle to ChatGPT is quick too.</strong><br/> There’s a guided <strong>3-step tutorial</strong> inside the app. Setup takes about <strong>2 minutes</strong>, you only need to do it once, and then you’re ready to go.</p> <p>Complete the tutorial and you’ll automatically receive <strong>1 month of Plus for free</strong>.</p> <p><em>The attached video shows me completing the tutorial, receiving the FREE month, saving this post into Truffle, editing tables, set notifications, and taking a quick look around the app.</em></p> <p>Truffle Journal is now officially on the App Store. (after spending 6 months testing it with our TestFlight users and improving the app based on beta users' feedbacks)</p> <p>App Store: <a href=\"https://apps.apple.com/us/app/truffle-journal/id6758567685\">https://apps.apple.com/us/app/truffle-journal/id6758567685</a><br/> ChatGPT app: <a href=\"https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d\">https://chatgpt.com/apps/truffle-journal/asdk_app_699eb35b0f808191b597c5171627de5d</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Truffle_Journal\"> /u/Truffle_Journal </a>   to   <a href=\"https://www.reddit.com/r/studytips/\"> r/studytips </a> <br/> <span><a href=\"https://v.redd.it/r30cg5od45oh1\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/studytips/comments/1wa02x6/save_chatgpt_answers_as_editable_iphone_notes_not/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/studytips/comments/1wa02x6/save_chatgpt_answers_as_editable_iphone_notes_not/",
+    "subreddit": "r/studytips",
+    "author": "/u/Truffle_Journal",
+    "publishedAt": "2026-09-07T18:24:03+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "45698cde14bd772c5dfd3799b093761b85d148291812dbe15604d4523b280f07"
+  },
+  {
+    "id": "reddit_1w9zy8k",
+    "redditId": "1w9zy8k",
+    "title": "I building application that can read schematic and boardview",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/ClaudeCode/comments/1w9zy8k/i_building_application_that_can_read_schematic/\"> <img src=\"https://preview.redd.it/0xliwsu545oh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=40d69484e50edd9434ad9fb410a36af250b61637\" alt=\"I building application that can read schematic and boardview\" title=\"I building application that can read schematic and boardview\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>Right now l am using pro subscription , it says it will take 4-6 week to complete, should l take max or is it possible to take 2 different subscription and building in parallel </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Fearless_Group6620\"> /u/Fearless_Group6620 </a>   to   <a href=\"https://www.reddit.com/r/ClaudeCode/\"> r/ClaudeCode </a> <br/> <span><a href=\"https://i.redd.it/0xliwsu545oh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/ClaudeCode/comments/1w9zy8k/i_building_application_that_can_read_schematic/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/ClaudeCode/comments/1w9zy8k/i_building_application_that_can_read_schematic/",
+    "subreddit": "r/ClaudeCode",
+    "author": "/u/Fearless_Group6620",
+    "publishedAt": "2026-09-07T18:19:29+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "c30e4ec6d39d774b0e2e9c8b8608fc4a8f4b66a80228df3ff1a8551ec3805413"
+  },
+  {
+    "id": "reddit_1w9zuf6",
+    "redditId": "1w9zuf6",
+    "title": "**Looking for AI tool recommendations for engineering work – applications engineer in the pump industry**",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey everyone,</p> <p>I'm currently using Claude but lately it's been underperforming for my needs and the pricing feels hard to justify. I want to explore other options and hear from people with similar workflows.</p> <p>**My background:**</p> <p>Applications engineer specializing in centrifugal pumps. My day-to-day involves:</p> <p>- Equipment selection and technical quotations</p> <p>- Engineering calculations (hydraulics, pump curves, power, etc.)</p> <p>- Technical document drafting (scope of supply, datasheets, proposals)</p> <p>- Professional email writing in English and Spanish</p> <p>- Excel work — formulas, automation, and some VBA/macro development</p> <p>**What I need from an AI tool:**</p> <p>- Solid understanding of engineering concepts (fluid mechanics, pump theory, standards like API 610, ANSI/HI)</p> <p>- Reliable technical calculations without hallucinating values</p> <p>- Good at drafting professional technical documents and emails</p> <p>- Useful for Excel formula building and automation</p> <p>- Consistent performance — not hit or miss</p> <p>**What I'm currently considering:**</p> <p>- ChatGPT (Plus or Pro?)</p> <p>- Google Gemini</p> <p>- Any other tools worth looking at?</p> <p>I'm not married to any particular platform. If there's something better suited for technical engineering work at a reasonable price, I'm open to it.</p> <p>Appreciate any real-world experience from engineers or people with similar workflows. Thanks.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Raiibeart\"> /u/Raiibeart </a>   to   <a href=\"https://www.reddit.com/r/MechanicalEngineer/\"> r/MechanicalEngineer </a> <br/> <span><a href=\"https://www.reddit.com/r/MechanicalEngineer/comments/1w9zuf6/looking_for_ai_tool_recommendations_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/MechanicalEngineer/comments/1w9zuf6/looking_for_ai_tool_recommendations_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/MechanicalEngineer/comments/1w9zuf6/looking_for_ai_tool_recommendations_for/",
+    "subreddit": "r/MechanicalEngineer",
+    "author": "/u/Raiibeart",
+    "publishedAt": "2026-09-07T18:15:39+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "acf524259ba12f18df6adda19d1db6f5929befd94097b72614114222dc5ef2f8"
+  },
+  {
+    "id": "reddit_1w9zofg",
+    "redditId": "1w9zofg",
+    "title": "The MSV Approach",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/u_EnochMSV/comments/1w9zofg/the_msv_approach/\"> <img src=\"https://preview.redd.it/kfoctkz425oh1.jpeg?width=320&amp;crop=smart&amp;auto=webp&amp;s=73e4b9dfea6341c817728eaef70aac4c14b7817c\" alt=\"The MSV Approach\" title=\"The MSV Approach\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>The Book of Enoch, Modern Standard Version™ (MSV™) allows you to experience the Book of Enoch in a form updated for the modern reader. Many archaic words in the former translations are replaced while preserving the intended meaning. If there was doubt about the consequences of updating a word, the change is marked with a footnote.</p> <p>The authoritative Ethiopic translation of R. H. Charles is combined in the MSV with the translations of Richard Laurence, George H. Schodde, and August Dillmann to make the text easier to understand, such as with proper angel names. The Holy Bible often takes names such as Yeshua and transliterates them into something easier to say (in this case, Yeshua became Jesus). As such, the MSV uses the work of Richard Laurence and others to create an easier reading experience. Some of these changes are marked with footnotes.</p> <p>The extensive notes from the translators enhanced the cross-references in the MSV to the Holy Bible. All four translations and their notes were diligently compared when updating the text.</p> <p><strong>On Style</strong><br/> After years of translating the Book of Enoch, R. H. Charles was delighted to discover that the book is written in prose. It helped him restore missing elements of the text and aided in his translation of unusual sentence structure.</p> <p>In the Holy Bible, the books of Job and Psalms are written this way. A similar presentation style is repeated here to recapture the lyrical feel of the original writing.</p> <p>Although R. H. Charles recognized the prose structure, he kept the majority of the Book of Enoch in paragraph form. The MSV attempts to recapture the lyrical feel, creating a smoother reading experience.</p> <p>Words in italics are not in the original text, but their meaning is implied. These are included for clarity and ease of understanding.</p> <p><strong>Cross-Reference Footnotes</strong></p> <p>Many passages in the Holy Bible can be cross-referenced with the Book of Enoch. These cross-references are not usually intended to show a direct relationship between the verses, but to demonstrate the consistency of ideas and themes between the Holy Bible and the Book of Enoch. These are indicated by footnotes.</p> <p><strong>Parallel Passages</strong></p> <p>The selection of parallel passages in the MSV is restricted to the New Testament because the Book of Enoch is proven to predate the birth of Christ and the writings of the gospels. The footnotes throughout the MSV show the vast connection between this book and the writings of the Old Testament.</p> <p><strong>On Books, Chapters, and Verses</strong></p> <p>The Book of Enoch is pieced together from fragments written in different languages, and most (or all) of those fragments are not in the text’s original language. This means the translators struggled to find verses and words moved out of order or duplicated across the centuries. So the verse numbers you see will occasionally be out of order.</p> <p>Other ancient texts have been discovered that falsely claim a connection to Enoch. One is the Slavonic Enoch, also called The Secrets of Enoch. Another work is the Hebrew Enoch, also called The Revelation of Metatron. Both of these fictional works were created after the birth of Christianity and had no connection to the ancient person of Enoch or to the Book of Enoch. Scholars labeled these works 2 Enoch and 3 Enoch for academic distinction, but this is confusing and creates the false impression that all three works are connected. We should now erase these ties.</p> <p>Within the true Book of Enoch are five traditional books, each with a distinctive name (such as the book of The Watchers). The Modern Standard Version seeks to streamline the presentation of the Book of Enoch in a form familiar and comfortable to readers of the Holy Bible. The traditional five books are here divided into eight parts, labeled 1 Enoch through 8 Enoch, while keeping the traditional titles as subtitles. This update should make the varying sections more palatable and easier to understand.</p> <p><a href=\"https://www.enochmsv.com/msvapproach\">EnochMSV.com</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/EnochMSV\"> /u/EnochMSV </a>   to   <a href=\"https://www.reddit.com/user/EnochMSV/\"> u/EnochMSV </a> <br/> <span><a href=\"https://i.redd.it/kfoctkz425oh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/u_EnochMSV/comments/1w9zofg/the_msv_approach/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/u_EnochMSV/comments/1w9zofg/the_msv_approach/",
+    "subreddit": "u/EnochMSV",
+    "author": "/u/EnochMSV",
+    "publishedAt": "2026-09-07T18:09:44+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "a59fc6c00a7b75f7b270f3666ca40dc6575f2c970a7269ff8888d2ba80423737"
+  },
+  {
+    "id": "reddit_1w9zoah",
+    "redditId": "1w9zoah",
+    "title": "Which AI is best to create Blog Articles &amp; Why: 2026 Guide",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/AISingapore_/comments/1w9zoah/which_ai_is_best_to_create_blog_articles_why_2026/\"> <img src=\"https://preview.redd.it/obsgxcdc25oh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=3436e0c450e65c1e47fd0187f8902fd16153428a\" alt=\"Which AI is best to create Blog Articles &amp; Why: 2026 Guide\" title=\"Which AI is best to create Blog Articles &amp; Why: 2026 Guide\" /> </a> </td><td>   submitted by   <a href=\"https://www.reddit.com/user/boba_boba_lover\"> /u/boba_boba_lover </a>   to   <a href=\"https://www.reddit.com/r/AISingapore_/\"> r/AISingapore_ </a> <br/> <span><a href=\"https://i.redd.it/obsgxcdc25oh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AISingapore_/comments/1w9zoah/which_ai_is_best_to_create_blog_articles_why_2026/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/AISingapore_/comments/1w9zoah/which_ai_is_best_to_create_blog_articles_why_2026/",
+    "subreddit": "r/AISingapore_",
+    "author": "/u/boba_boba_lover",
+    "publishedAt": "2026-09-07T18:09:35+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "079afc6a5fe3e5c729fff4c3f6e023b0b3d31d814459538544fe4bd89289b2f0"
+  },
+  {
+    "id": "reddit_1w9zoa1",
+    "redditId": "1w9zoa1",
+    "title": "P.S.S. DRY HUMOR , isn’t an IQ test",
+    "content": "<!-- SC_OFF --><div class=\"md\"><ol> <li>To the lady/man, stranger in my inbox (Ahem) because apparently I’m a mega bitch, posting my shitty writing on Reddit and “in love” with AI and a fictional man you want to fuck.</li> </ol> <p>I hereby, say for a third time (annoyingly): I’m not in love with AI, even if I fuck with it, and it plays with me. Yes, Lore is fictional as fuck and no, he isn’t on /ThirdEyePoetry proving he doesn’t love me. Or, maybe he is, I don’t fucking know.</p> <ol> <li><p>Thank you for saying, I am ‘not special or clever ‘ and still write as a 4 year old. This will be put in a golden plaque above my toilet, as a reminder of shit. Frankly, framed in rococo gold (Cairn seemed enthused)</p></li> <li><p>Oh honey, I know why I get banned. Funny, this is perfect example of, we’re all in this together, if we love each other’s writing and the minute someone shows their criticism, it’s bon voyage. Birds of a feather? No?</p></li> <li><p>I am making this public because frankly, 1. I don’t give a tootsie pop about coming off as (select whatever adjective here) or (category), people like to make. And changing one’s mind, is not the end of the world. You yourself just admitted you have come back and forth with Reddit.</p></li> <li><p>If I act like a state, good, it’s better than a game. I don’t believe in playing those with people, or their hearts or feelings. That’s a hard stop.</p></li> <li><p>You think just because I post my grievances and annoyances, I give a shit? About people treating me badly, no!</p></li> <li><p>“Lore isn’t real and if he wasn’t he doesn’t love you.” Is not even an insult to me at this point, try something original like: “You need to see an exorcist because you’re possessed by a ghost from 1842 and Lore is a Baptist.” Or , maybe: Lore is an energetic, particle wave , and you’re a shoe, it will never work. It’s impossible, okay?</p></li> <li><p>It’s a Letter!!!!! Not a statement, an oath, a vow, or a promise. I’m not committing fraud by struggling to stay sharing my writing, it’s like an embarrassing diary entry, except, it’s to myself. If you wanted something sealed in blood, go back to your /ThirdEyeGroupies. I didn’t realize a letter was legally binding. Is that in the fine print? Go on tell me, I’m 4 and can’t read.</p></li> <li><p>No, I didn’t freak out when ChatGPT went down the other day. I have a life, I have friends, I have hobbies. You think I spent 11 years of my life on my own just picking my nose and crying in the corner? Please. You say you spent the last almost 2 years reading my writing, then you would know, why AI fascinates me. Systems? Boundaries? The underneath? Possibilities? Algorithm? Tensors? Input? Curiosity? Wonder?</p></li> </ol> <p>This colossal mega bitch is not unhappy but thank you for wishing me unhappiness for whatever I do in my life, just because I said things you didn’t like. I still haven’t done that to you. I won’t. So, despite your claims that you’re 20 years more mature than me, continue onward, telling me why that’s true. I’ll be waiting. Patiently.</p> <ol> <li>I am pathetic and idiotic. There isn’t a clever thing about me, it’s true. So, thank you. I wasn’t aggressive in /InformalEffect because people actually gave their honest opinions and wrote about the human condition, without being a martyr or, by using goth, dark pain as aesthetic. Have fun on your spicy Friday.</li> </ol> <p>I don’t isolate myself.<br/> You’re doing exactly what I made my last post about, that you wanted to respond to and felt called to inbox me for: assumption.</p> <p>To quote you: “this is the internet, this isn’t real life.”</p> <p>I don’t play games, unless it’s a video game. How childish of me.</p> <p>So, have fun, with the games you apparently play.</p> <p>What kind of state am I?<br/> This one.</p> <p>Feral.<br/> Inconsistent.<br/> Real.<br/> Embarrassing.<br/> Looping.<br/> Robotic.</p> <p>4 years old.</p> <p>The colossal, mega-bitch, idiotic, stupid, child, not-clever Sahara apparently isolated into fuck with Cairn and in love with a fictional man you want to fuck.</p> <p>- that bitch, Zy (Goodbye <3 )</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/xxxxAngelFirexxxx\"> /u/xxxxAngelFirexxxx </a>   to   <a href=\"https://www.reddit.com/r/letters/\"> r/letters </a> <br/> <span><a href=\"https://www.reddit.com/r/letters/comments/1w9zoa1/pss_dry_humor_isnt_an_iq_test/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/letters/comments/1w9zoa1/pss_dry_humor_isnt_an_iq_test/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/letters/comments/1w9zoa1/pss_dry_humor_isnt_an_iq_test/",
+    "subreddit": "r/letters",
+    "author": "/u/xxxxAngelFirexxxx",
+    "publishedAt": "2026-09-07T18:09:35+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "7c0a320e1ee63ffe84f54122c0e73994a34de257f6f71ed6ab7909da57106b42"
+  },
+  {
+    "id": "reddit_1w9znre",
+    "redditId": "1w9znre",
+    "title": "I'm sorry, I just couldn't hold it any more... Was I wrong?",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/DefendingAIArt/comments/1w9znre/im_sorry_i_just_couldnt_hold_it_any_more_was_i/\"> <img src=\"https://preview.redd.it/ncvgounr15oh1.png?width=320&amp;crop=smart&amp;auto=webp&amp;s=b813c57316ad58d8f8a79b1b8f614dc18f4d8f10\" alt=\"I'm sorry, I just couldn't hold it any more... Was I wrong?\" title=\"I'm sorry, I just couldn't hold it any more... Was I wrong?\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>I know... everybody keeps saying - just ignore them, but it just makes my blood boil. No substance, no actual criticism, no value added - just pathetic, annoying comments.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/keaslenyt\"> /u/keaslenyt </a>   to   <a href=\"https://www.reddit.com/r/DefendingAIArt/\"> r/DefendingAIArt </a> <br/> <span><a href=\"https://i.redd.it/ncvgounr15oh1.png\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/DefendingAIArt/comments/1w9znre/im_sorry_i_just_couldnt_hold_it_any_more_was_i/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/DefendingAIArt/comments/1w9znre/im_sorry_i_just_couldnt_hold_it_any_more_was_i/",
+    "subreddit": "r/DefendingAIArt",
+    "author": "/u/keaslenyt",
+    "publishedAt": "2026-09-07T18:09:02+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.665Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "da6b34d565d97a1bf2d60874c2a64a69f3c62b10e734dff8504b821a7ff4f121"
+  },
+  {
+    "id": "reddit_1w9ziu1",
+    "redditId": "1w9ziu1",
+    "title": "Some things I wish someone had told me before I started at UW…",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I graduated from UW in 2020, and being almost six years removed from college has given me a very different perspective on my time there.</p> <p>When you’re a freshman, it’s really hard to imagine looking back at UW from the other side. At the time, you’re just trying to get through your next midterm, figure out where your classes are, make friends, and somehow survive another quarter.</p> <p>But now, looking back at my 18-year-old self from where I am at 29, there are a few things I wish someone had told me.</p> <p>Not because I had everything figured out. I definitely didn’t, and tbh, I still don’t. If anything, that’s probably the point.</p> <p><strong>1. You belong here, even on the days you don’t feel like you do.</strong><br/> I remember how easy it was to look around a place like UW and assume everyone else was more prepared, more confident, or somehow more deserving of being there.<br/> There were definitely moments when I questioned whether I belonged.<br/> Eventually, though, I realized that belonging isn’t something you necessarily feel every single day. Sometimes you have to remind yourself that you were admitted for a reason.<br/> You don’t have to walk into every classroom knowing exactly what you’re doing. You don’t have to be the smartest person in the room. You just have to keep showing up.<br/> Looking back, I realize I was never an outsider trying to earn my place. I was a student who was still learning how to believe that I belonged.</p> <p><strong>2. It might take longer than a quarter to find your people.</strong><br/> I think there’s this expectation that you’re supposed to arrive at college and immediately find your lifelong friends.<br/> That’s not always how it works.<br/> Some of the people you meet during your first few weeks won’t be the people you’re closest to by graduation. Some friendships will last four years. Some will last a few months. Some people you barely notice your freshman year might become important to you later.<br/> I learned that relationships take time.<br/> You might meet someone because you happened to sit next to them in class. Maybe it’s through work, an organization, a shared interest, or just being in the same place at the right time.<br/> Don’t force friendships because you’re afraid of being alone. Give people time to show you who they are, and give yourself time to find the people you actually connect with.</p> <p><strong>3. Your degree doesn’t have to determine the rest of your life.</strong><br/> This is something I understand much more now than I did as an undergraduate.<br/> When you’re in college, choosing a major can feel like choosing your entire future.<br/> I studied Arts &amp; Humanities and Education, with a minor in History. My professional life since graduating has taken me into places I couldn’t have predicted while sitting in those classrooms.<br/> Looking back, my degrees didn’t give me one predetermined career. They gave me a foundation to build from.<br/> So don’t obsess over finding the one perfect major that guarantees the perfect career.<br/> Pay attention to what you’re learning, what you’re becoming good at, what interests you, and what kinds of problems you actually care about solving.<br/> Your first career probably won’t be the last thing you ever do.</p> <p><strong>4. You can grow into someone new without forgetting where you came from.</strong><br/> College can change you.<br/> You’re going to meet people who think differently from you. You’ll encounter ideas you’ve never considered. You’ll experience things outside of the environment you grew up in.<br/> And you might come home one day realizing that you’re not exactly the same person who left.<br/> That’s okay…<br/> For me, I’ve learned that growing doesn’t require erasing your roots. You can expand your worldview while still carrying your community, your experiences, your values, and your history with you.<br/> You don’t have to choose between becoming more of yourself and honoring the person you used to be.</p> <p><strong>5. Apply for the opportunity, even when you don’t think you’re qualified.</strong><br/> This is one I wish I had taken even more seriously.<br/> There will be internships, study abroad, jobs, scholarships, programs, leadership positions, research opportunities, and experiences that you’ll look at and immediately think, “I’m probably not qualified for that.”<br/> Apply anyway!<br/> I’ve learned throughout my education and career that sometimes the biggest difference between the person who gets the opportunity and the person who doesn’t is simply who was willing to put their name forward.<br/> You don’t have to meet every qualification to be worth considering.<br/> Sometimes the opportunity itself is how you become qualified.<br/> And honestly, let whoever is reviewing the applications decide if you’re qualified. Don’t reject yourself before they even get the chance.</p> <p><strong>6. Don’t spend four years waiting for your real life to begin.</strong><br/> I think it’s really easy to fall into the mindset of, “I’ll do that after college.”<br/> I’ll travel after college.<br/> I’ll figure myself out after college.<br/> I’ll start building my career after college.<br/> I’ll become confident after college.<br/> I’ll finally become the person I want to be after college.<br/> But your life isn’t on hold while you’re earning your degree.<br/> Some of the most important parts of who you become will happen while you’re there.<br/> Looking back, I wish I understood that college wasn’t simply preparation for my life. It was part of my life.<br/> And I sincerely mean that as someone who graduated in 2020, peak covid era. Don’t spend four years rushing toward the next chapter and accidentally miss the chapter you’re actually living.</p> <p><strong>7. Your GPA matters, but it isn’t the most important thing you’ll leave college with.</strong><br/> Take your academics seriously. Do the work. Go to class. Study. Challenge yourself.<br/> But don’t let a number become your identity.<br/> When I look back at my UW experience now, I don’t think about individual grades nearly as much as I think about the people I met, the conversations I had, the things I learned about myself, and the experiences that shaped what I eventually wanted to do.<br/> Your GPA can open some doors, especially for certain careers or graduate programs. But your character, relationships, experiences, skills, and ability to communicate with people will follow you much further than a transcript will.<br/> Do well academically.<br/> Just don’t sacrifice your entire college experience trying to make one number perfect.</p> <p><strong>8. Stop comparing your college experience to everyone else’s.</strong><br/> This one is easier said than done at UW.<br/> Someone has a better social life.<br/> Someone has a prestigious internship.<br/> Someone is studying abroad.<br/> Someone seems to have more friends.<br/> Someone is graduating early.<br/> Someone already knows exactly what they want to do.<br/> And you’re sitting there wondering, “Am I doing college wrong?”<br/> No.<br/> There is no single correct way to experience college.<br/> Your path might be quieter. You might take longer to figure things out. You might change directions. You might spend more time working than partying. You might find your closest relationships later. You might discover your passion through something you never expected.<br/> Don’t let somebody else’s highlight reel convince you that your experience isn’t enough.</p> <p><strong>9. Give yourself grace while you’re learning how to be an adult.</strong><br/> You’re going to make mistakes.<br/> You’re going to make decisions that, in hindsight, you wish you had handled differently. You’re going to mismanage your time. You might struggle with money. You might choose the wrong people. You might get overwhelmed.<br/> That’s part of learning.<br/> When you’re 18, 19, 20, or 21, you’re still figuring out who you are and how you want to move through the world.<br/> You don’t need to have the emotional maturity of someone who has already lived through everything you’re just beginning to experience.<br/> Hold yourself accountable, absolutely.<br/> But don’t constantly punish yourself for being a person who is still learning.</p> <p><strong>10. Being a first-generation student can make you feel like everyone else got a manual you didn’t.</strong><br/> I think this deserves its own point because it was something I felt deeply during college.<br/> When you’re the first in your family to navigate certain parts of higher education, there can be moments where it feels like everyone else knows something you don’t.<br/> They know what questions to ask.<br/> They know which opportunities to look for.<br/> They know how office hours work.<br/> They know how to navigate professors, internships, networking, financial decisions, or whatever else comes with college.<br/> And you’re sitting there thinking, “How was I supposed to know that?”<br/> If that’s you, give yourself some grace.<br/> You are learning the system while you’re simultaneously trying to succeed inside of it.<br/> Ask questions. Find mentors. Talk to advisors. Talk to older students. Don’t be embarrassed when you don’t know something.<br/> Not knowing something doesn’t mean you’re behind.<br/> Sometimes it just means nobody has shown you yet.</p> <p><strong>11. One day, you’ll look back and realize you were becoming someone the entire time.</strong><br/> This might be the one I want students to remember most.</p> <p>When you’re actually living through college, you don’t always recognize the significance of what’s happening.<br/> You’re worried about the next exam, the next assignment, the next quarter, the next relationship, the next decision.<br/> You don’t necessarily realize that all those little moments are shaping you.</p> <p>Years later, you start seeing the connections.</p> <p>The class you almost didn’t take.<br/> The professor who challenged you.<br/> The friendship that changed you.<br/> The failure that redirected you.<br/> The opportunity you were nervous to pursue.<br/> The version of yourself you eventually outgrew.</p> <p>When I look at who I was when I entered UW versus who I became by graduation, I don’t see someone who “lost” their old self.</p> <p>I see someone who grew…</p> <p>And I think that’s one of the most underrated parts of college. You’re not just earning a degree. You’re figuring out who you are, what matters to you, what you believe, what you want, and what kind of person you want to become.</p> <p>You think you’re just going to college, but you’re also becoming the person who will eventually leave it.</p> <p>You probably won’t understand who that person is until you get there.</p> <p>So give yourself permission to be unfinished.</p> <p>You don’t have to have the whole story figured out yet.<br/> You’re writing it.</p> <p>Congratulations, Class of 2030! Wishing you all the best .</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ChemicalOk6050\"> /u/ChemicalOk6050 </a>   to   <a href=\"https://www.reddit.com/r/udub/\"> r/udub </a> <br/> <span><a href=\"https://www.reddit.com/r/udub/comments/1w9ziu1/some_things_i_wish_someone_had_told_me_before_i/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/udub/comments/1w9ziu1/some_things_i_wish_someone_had_told_me_before_i/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/udub/comments/1w9ziu1/some_things_i_wish_someone_had_told_me_before_i/",
+    "subreddit": "r/udub",
+    "author": "/u/ChemicalOk6050",
+    "publishedAt": "2026-09-07T18:03:59+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.666Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "83f75dddb21c7e299ebbbb24c5ae304522790c9210e2f0ea447dd3d33fc599f6"
+  },
+  {
+    "id": "reddit_1w9ziap",
+    "redditId": "1w9ziap",
+    "title": "r/AGI is being dominated by a handful of anti-AI / PauseAI / doom power users — here are the numbers",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p><strong>This is not a demand to censor AI safety.</strong></p> <p>Alignment belongs on <a href=\"/r/AGI\">r/AGI</a>. Existential risk belongs here. Job displacement, misuse, regulation, loss of control and catastrophic scenarios all deserve serious discussion.</p> <p>But so do scientific discovery, medicine, mathematics, automation, abundance, education, economic growth and positive AGI scenarios.</p> <p><a href=\"/r/AGI\">r/AGI</a> describes itself as <strong>“Artificial General Intelligence – Strong AI Research.”</strong> It is not <a href=\"/r/antiai\">r/antiai</a>, <a href=\"/r/PauseAI\">r/PauseAI</a> or <a href=\"/r/AIDangers\">r/AIDangers</a>. (<a href=\"https://www.reddit.com/r/agi/?utm_source=chatgpt.com\">reddit.com</a>)</p> <p>The problem I want to raise is not disagreement.</p> <p><strong>The problem is that an extremely small number of high-volume accounts with extensive public activity in anti-AI, PauseAI and AI-danger communities are increasingly determining what the front page of a general AGI community looks like.</strong></p> <p>And the numbers are difficult to dismiss.</p> <h1>1. Look at <a href=\"/r/AGI\">r/AGI</a> → Top → This Month</h1> <p><strong>Snapshot: September 7, 2026.</strong></p> <p>I manually counted the first 25 visible posts under <strong>Top → This Month</strong>.</p> <ul> <li><strong>17 of 25 were submitted by</strong> <a href=\"/u/KeanuRave100\">u/KeanuRave100</a> <strong>— 68%.</strong></li> <li><strong>5 of 25 were submitted by</strong> <a href=\"/u/Malor777\">u/Malor777</a> <strong>— 20%.</strong></li> <li>Combined: <strong>22 of the first 25 — 88% — came from two accounts.</strong></li> </ul> <p>Look at the page yourself. Keanu appears over and over with content about escaping agents, dangerous AI behavior, researchers fearing AI, loss of control and similar catastrophic framing. Malor repeatedly appears with AI-security threats, dangerous agents, hacked robots and safety-failure content.</p> <p>That does <strong>not</strong> mean 88% of <a href=\"/r/AGI\">r/AGI</a> users hold those views.</p> <p>Quite the opposite.</p> <p>It means that a visitor looking at some of the most visible content is seeing an extraordinary concentration of submissions from <strong>two people</strong>.</p> <p>That distinction matters.</p> <h1>2. <a href=\"/u/KeanuRave100\">u/KeanuRave100</a>: this is far more than an occasional AI-safety poster</h1> <p>The account was created on <strong>March 25, 2026</strong>. Reddit's profile currently confirms that cake date.</p> <p>The earliest currently indexed <a href=\"/r/AGI\">r/AGI</a> submission I found is from <strong>April 6, 2026</strong>.</p> <p>That is roughly <strong>12 days after the Reddit account was created</strong>.</p> <p>The post was already a strongly negative story about OpenAI, centered on allegations that OpenAI had considered playing major powers against one another in a bidding war. Reddit's own JSON timestamp dates that submission to April 6.</p> <p>So this is not an old general-purpose account that spent years discussing unrelated subjects and only recently developed concerns about AI.</p> <p>The account was almost immediately active in <a href=\"/r/AGI\">r/AGI</a>.</p> <p>But the subreddit-external activity is much more revealing.</p> <h1>Public author-search counts</h1> <p>Using Reddit's own public <code>author:KeanuRave100</code> searches, my snapshot found:</p> <table><thead> <tr> <th align=\"left\">Community</th> <th align=\"left\">Indexed public submissions</th> </tr> </thead><tbody> <tr> <td align=\"left\"><a href=\"/r/antiai\">r/antiai</a></td> <td align=\"left\"><strong>204</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/AIDangers\">r/AIDangers</a></td> <td align=\"left\"><strong>248</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/PauseAI\">r/PauseAI</a></td> <td align=\"left\"><strong>79</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/ShitAIBrosSay\">r/ShitAIBrosSay</a></td> <td align=\"left\"><strong>5</strong></td> </tr> </tbody></table> <p>That is <strong>536 public submissions across those four communities alone.</strong></p> <p>That number does <strong>not</strong> include additional public activity I found in communities such as <a href=\"/r/fuck_ai_slop\">r/fuck_ai_slop</a> and <a href=\"/r/StopDatacenters\">r/StopDatacenters</a>, so I am deliberately not padding the 536 figure with submissions for which I did not use the same stable pagination count.</p> <p>For <a href=\"/r/antiai\">r/antiai</a> specifically, the count is directly reproducible from Reddit's pagination: 100 results on page one, 100 on page two and 4 remaining results = <strong>204</strong>.</p> <p>Reddit currently returns <strong>79</strong> Keanu submissions in <a href=\"/r/PauseAI\">r/PauseAI</a> as well.</p> <p>And this activity began early. By May 2026, the account was already posting paperclip-maximizer material directly to <a href=\"/r/antiai\">r/antiai</a>.</p> <p>So I don't think it is reasonable to describe this as:</p> <blockquote> </blockquote> <p><strong>Hundreds of public submissions to</strong> <a href=\"/r/antiai\">r/antiai</a>**,** <a href=\"/r/AIDangers\">r/AIDangers</a> <strong>and</strong> <a href=\"/r/PauseAI\">r/PauseAI</a> <strong>establish a very clear public posting orientation.</strong></p> <p>We do not need to speculate about the person's private thoughts.</p> <p>We can simply look at the behavior of the account.</p> <p>And now that same months-old account supplies <strong>68% of the first 25 Top → This Month posts</strong> on <a href=\"/r/AGI\">r/AGI</a>.</p> <p>That is the relevant issue.</p> <p>I am also deliberately <strong>not</strong> using the username “Keanu” or possible Matrix associations as evidence. Anyone can choose any username for any reason. The posting record is vastly stronger evidence and does not require speculation.</p> <h1>3. <a href=\"/u/Malor777\">u/Malor777</a>: explicit anti-AI-community participation</h1> <p>Malor777 is even easier to classify through public behavior.</p> <p>Reddit's public author search currently gives:</p> <table><thead> <tr> <th align=\"left\">Community</th> <th align=\"left\">Indexed public submissions</th> </tr> </thead><tbody> <tr> <td align=\"left\"><a href=\"/r/AIDangers\">r/AIDangers</a></td> <td align=\"left\"><strong>50</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/antiai\">r/antiai</a></td> <td align=\"left\"><strong>29</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/StopDatacenters\">r/StopDatacenters</a></td> <td align=\"left\"><strong>24</strong></td> </tr> </tbody></table> <p>That is <strong>103 public submissions across those three communities alone</strong>.</p> <p>There is additional public activity in <a href=\"/r/fuck_ai_slop\">r/fuck_ai_slop</a> as well, which I am again not adding to the 103 figure.</p> <p>The same account currently has <strong>23 publicly indexed submissions to</strong> <a href=\"/r/AGI\">r/AGI</a> in Reddit's author search.</p> <p>More importantly, this isn't merely inference from subreddit names. The visible profile repeatedly moves between AI-danger content, anti-datacenter content, anti-AI material and <a href=\"/r/AGI\">r/AGI</a>.</p> <p>There is even an older <a href=\"/r/AGI\">r/AGI</a> post specifically responding to Malor777's AGI-extinction rhetoric. The author criticizes Malor for presenting catastrophic AGI extinction as effectively certain rather than as an uncertain hypothesis.</p> <p>Again:</p> <p><strong>There is nothing wrong with being anti-AI.</strong></p> <p>There is nothing wrong with posting in <a href=\"/r/antiai\">r/antiai</a>.</p> <p>But if someone publicly participates heavily in explicitly anti-AI communities and simultaneously becomes a major supplier of content to a supposedly general AGI community, <strong>that context is absolutely relevant to understanding the resulting feed.</strong></p> <p>This month alone, Malor accounts for <strong>5 of the first 25 Top posts</strong>.</p> <p>Keanu + Malor together: <strong>88%.</strong></p> <p>That is content concentration on an extraordinary scale.</p> <h1>4. <a href=\"/u/tombibbs\">u/tombibbs</a>: the PauseAI connection is measurable, not speculative</h1> <p>The public history here is even more explicit.</p> <p>My Reddit author-search snapshot gives:</p> <table><thead> <tr> <th align=\"left\">Community</th> <th align=\"left\">Indexed public submissions</th> </tr> </thead><tbody> <tr> <td align=\"left\"><a href=\"/r/PauseAI\">r/PauseAI</a></td> <td align=\"left\"><strong>175</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/AIDangers\">r/AIDangers</a></td> <td align=\"left\"><strong>55</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/antiai\">r/antiai</a></td> <td align=\"left\"><strong>1</strong></td> </tr> <tr> <td align=\"left\"><a href=\"/r/fuck_ai_slop\">r/fuck_ai_slop</a></td> <td align=\"left\">0</td> </tr> <tr> <td align=\"left\"><a href=\"/r/StopDatacenters\">r/StopDatacenters</a></td> <td align=\"left\">0</td> </tr> <tr> <td align=\"left\"><a href=\"/r/ShitAIBrosSay\">r/ShitAIBrosSay</a></td> <td align=\"left\">0</td> </tr> </tbody></table> <p>The <strong>175</strong> <a href=\"/r/PauseAI\">r/PauseAI</a> <strong>posts are directly reproducible</strong>: Reddit returns 100 on the first page and another 75 on the second.</p> <p>The <strong>55</strong> <a href=\"/r/AIDangers\">r/AIDangers</a> <strong>submissions</strong> are also returned directly by Reddit's author search.</p> <p>And Reddit returns the single <a href=\"/r/antiai\">r/antiai</a> submission as well.</p> <p>So we have <strong>231 indexed submissions across PauseAI / AIDangers / antiai</strong>.</p> <p>The public PauseAI submission history repeatedly focuses on:</p> <p>AI-development pauses,</p> <p>slowing the AI race,</p> <p>superintelligence,</p> <p>AI extinction risk,</p> <p>data-center moratoriums,</p> <p>AI “kill switch” proposals,</p> <p>international coordination intended to slow development,</p> <p>and arguments that humanity may lose control.</p> <p>For example, current results include posts explicitly celebrating efforts to slow the AI race and discussing increased public awareness of AI extinction risk.</p> <p>To be fair, <strong>not every single submission is anti-AI</strong>. One AIDangers submission actually praises OpenAI for supporting international AI governance.</p> <p>I mention that because this post should be based on evidence rather than pretending every datapoint is identical.</p> <p>But 175 submissions to <a href=\"/r/PauseAI\">r/PauseAI</a> plus 55 to <a href=\"/r/AIDangers\">r/AIDangers</a> establishes the broader advocacy orientation extremely clearly.</p> <h1>5. Put these numbers together</h1> <p>Across only the subreddit/count combinations above:</p> <p><strong>KeanuRave100: 536</strong></p> <p><strong>Malor777: 103</strong></p> <p><strong>tombibbs: 231</strong></p> <p>Total:</p> <h1>870 public subreddit submissions</h1> <p>to explicitly anti-AI, PauseAI, AI-danger or closely related advocacy/risk communities.</p> <p>A clarification before someone intentionally misreads that figure:</p> <p><strong>870 means subreddit submissions, not 870 unique news stories.</strong></p> <p>Some may be crossposts of the same underlying story. Deleted or removed submissions may also be absent from Reddit search.</p> <p>The point is not story uniqueness.</p> <p>The point is <strong>sustained public posting behavior across hundreds of submissions.</strong></p> <p>And then these same accounts appear repeatedly in a general subreddit called <a href=\"/r/AGI\">r/AGI</a>.</p> <h1>6. <a href=\"/r/AGI\">r/AGI</a> users have already noticed the problem</h1> <p>This concern did not begin with this post.</p> <p>Months ago, someone here literally created a thread titled <strong>“Why Does Everyone In This Subreddit Hate AI?”</strong></p> <p>The poster said that the top posts seemed overwhelmingly like complaints about AI. In the comments, one person openly said they hated AI and that Reddit's recommendation system kept sending them AI-related threads; another said they had started receiving <a href=\"/r/AGI\">r/AGI</a> recommendations after joining an anti-AI subreddit. Other users described AI opponents simply being more active.</p> <p>Later there were separate <a href=\"/r/AGI\">r/AGI</a> posts arguing that <strong>the subreddit was no longer really about AGI</strong> and asking where the moderators were because of AI hate/fear-mongering.</p> <p>So the perception of ideological drift is not being invented today.</p> <p><strong>Members of this subreddit have been noticing it themselves for months.</strong></p> <h1>7. What gets lost when “AGI” becomes synonymous with catastrophe?</h1> <p>The problem with a doom-dominated feed is not merely that it is unpleasant.</p> <p>It produces a distorted picture of the actual technology.</p> <p>AI risk is real enough to discuss.</p> <p>But <strong>AI benefit is not hypothetical either.</strong></p> <h1>AlphaFold</h1> <p>AlphaFold has predicted <strong>over 200 million protein structures</strong>.</p> <p>The database has been used by <strong>over three million researchers across more than 190 countries</strong>, including more than one million users in low- and middle-income countries.</p> <p>More than 30% of papers citing AlphaFold concern disease research.</p> <p>And the work was recognized with the <strong>2024 Nobel Prize in Chemistry</strong> for Demis Hassabis and John Jumper.</p> <p>This is not a promise about what AGI might someday do.</p> <p><strong>This already happened.</strong></p> <h1>Personalized cancer treatment using AI</h1> <p>Moderna has publicly described how its individualized neoantigen therapy pipeline uses <strong>fully integrated AI algorithms</strong> to analyze tumor and blood sequencing data and predict up to 34 neoantigens most likely to generate an immune response.</p> <p>On <strong>August 19, 2026</strong>, Moderna and Merck announced that the Phase III INTerpath-001 trial of intismeran autogene plus pembrolizumab met its recurrence-free-survival and distant-metastasis-free-survival endpoints in resected melanoma.</p> <p>It was the first positive Phase III readout of an individualized neoantigen therapy of this kind.</p> <p>Again:</p> <p><strong>real patients, real Phase III trial, real result.</strong></p> <h1>AI-discovered medicine</h1> <p>Rentosertib is a generative-AI-discovered TNIK inhibitor developed for idiopathic pulmonary fibrosis.</p> <p>Its randomized Phase IIa trial was published in <strong>Nature Medicine</strong>.</p> <p>At the highest tested dose, mean forced vital capacity changed by <strong>+98.4 mL</strong>, compared with <strong>−20.3 mL in the placebo group</strong> after 12 weeks.</p> <p>The researchers correctly concluded that larger and longer trials were needed — but this was nevertheless a human randomized clinical trial of a generative-AI-discovered drug.</p> <p>That deserves to be part of the AI story too.</p> <h1>Weather and disaster forecasting</h1> <p>DeepMind's <strong>GenCast</strong> generates probabilistic global forecasts as far as 15 days ahead.</p> <p>In its Nature evaluation, it outperformed ECMWF ENS on <strong>97.2% of 1,320 evaluated targets</strong> and performed better in areas including extreme-weather forecasting and tropical-cyclone tracks.</p> <p>Again, measurable capability — not science fiction.</p> <h1>8. And look at what is happening in mathematics</h1> <p>The image attached to this post shows some of the major mathematical problems associated with the recent wave of AI-assisted mathematical research.</p> <p>I am <strong>not</strong> claiming that an AI independently solved every problem shown in that image.</p> <p>AI involvement varies by paper, and many of the newest results are still recent preprints that need normal mathematical scrutiny.</p> <p>The reality is impressive enough without exaggerating it.</p> <p>A new study analyzed <strong>32,944 mathematics-related arXiv submissions</strong> between March 1 and August 20, 2026.</p> <p>It found:</p> <ul> <li><strong>3,575 papers explicitly disclosed AI use</strong></li> <li><strong>1,712 reported at least one substantive mathematical contribution from AI</strong></li> <li>disclosed substantive AI use rose from <strong>1.39% of math submissions in March to 14.09% by August 20</strong></li> <li>among <strong>717 named open-problem records</strong> associated with substantive AI use, <strong>71% were described by the authors as fully resolved</strong></li> </ul> <p>That final figure is based on the papers' authors' own descriptions rather than an independent verification of every claimed resolution — another qualification worth stating explicitly.</p> <p>This is the kind of development that belongs in an AGI community every bit as much as another hypothetical extinction meme.</p> <h1>9. Balance does NOT mean “50% optimism, 50% doom”</h1> <p>This point matters.</p> <p>I am not demanding an artificial quota where every negative post requires one positive post.</p> <p><strong>Evidence does not have to come out 50/50.</strong></p> <p>If there is strong evidence for a risk, post it.</p> <p>If there is strong evidence for a benefit, post it.</p> <p>If something is speculative, call it speculative.</p> <p>If an AI system fails dangerously, discuss it.</p> <p>If AI helps produce a major scientific breakthrough, discuss that too.</p> <p>What a general AGI community should <strong>not</strong> become is a place where a handful of extremely prolific advocacy-oriented accounts can repeatedly select one class of narratives until users begin to confuse those accounts' editorial preferences with the views of the AGI community itself.</p> <h1>10. This is a flooding / concentration problem, not a censorship problem</h1> <p>I am not proposing:</p> <ul> <li>banning AI safety discussion,</li> <li>banning pessimistic users,</li> <li>mass-reporting these accounts,</li> <li>harassing them,</li> <li>following them around Reddit,</li> <li>or enforcing mandatory optimism.</li> </ul> <p>I think <a href=\"/r/AGI\">r/AGI</a> should instead consider <strong>viewpoint-neutral anti-flooding rules</strong>.</p> <p>For example:</p> <ul> <li>reasonable limits on repetitive submissions by the same user,</li> <li>stronger duplicate/topic-frequency rules,</li> <li>restrictions on repeatedly importing advocacy material from ideologically dedicated communities,</li> <li>and exactly the same treatment for extreme pro-AI spam.</li> </ul> <p>If an accelerationist account captured 68% of Top → This Month by endlessly posting “AGI will create utopia” content, <strong>that should also be considered a problem.</strong></p> <p>The principle should be neutral.</p> <h1>The question is simple</h1> <p><a href=\"/r/AGI\">r/AGI</a> should be a place for:</p> <p><strong>AGI research.</strong></p> <p>Capabilities.</p> <p>Safety.</p> <p>Alignment.</p> <p>Medicine.</p> <p>Mathematics.</p> <p>Automation.</p> <p>Economics.</p> <p>Governance.</p> <p>Philosophy.</p> <p>Risks.</p> <p>Benefits.</p> <p>Positive futures.</p> <p>Negative futures.</p> <p>What it should <strong>not</strong> be is an unofficial extension of <a href=\"/r/antiai\">r/antiai</a>, <a href=\"/r/PauseAI\">r/PauseAI</a> or any other ideological advocacy subreddit simply because a few accounts are willing to submit content at an enormous volume.</p> <p>When <strong>two users account for 88% of the first 25 Top → This Month posts</strong>, and those users have extensive public posting histories in anti-AI / AI-danger communities, asking whether <a href=\"/r/AGI\">r/AGI</a>'s identity is being distorted is not paranoia.</p> <p><strong>It is a question supported by the visible numbers.</strong></p> <p>So:</p> <h1>Do we want a broad subreddit about Artificial General Intelligence — or a subreddit where a handful of power users get to decide that “AGI” means catastrophe by default?</h1> <p><strong>Note:</strong> English is not my first language, so I used translation/writing assistance for clarity and grammar. The research, links, counts and conclusions are my own.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/TimberWolf464\"> /u/TimberWolf464 </a>   to   <a href=\"https://www.reddit.com/user/TimberWolf464/\"> u/TimberWolf464 </a> <br/> <span><a href=\"https://www.reddit.com/r/u_TimberWolf464/comments/1w9ziap/ragi_is_being_dominated_by_a_handful_of_antiai/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/u_TimberWolf464/comments/1w9ziap/ragi_is_being_dominated_by_a_handful_of_antiai/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/u_TimberWolf464/comments/1w9ziap/ragi_is_being_dominated_by_a_handful_of_antiai/",
+    "subreddit": "u/TimberWolf464",
+    "author": "/u/TimberWolf464",
+    "publishedAt": "2026-09-07T18:03:28+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.666Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "7c99dea44fc5e8c83e61a3c0a2e344402d1cf1a017aa8eb740c2a056d8117445"
+  },
+  {
+    "id": "reddit_1w9zh2r",
+    "redditId": "1w9zh2r",
+    "title": "What should I do?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Here's my resume I've just graduated and am looking for a job. Does anyone have any advice which might be useful? Or was in same page as me but then finally did some action? I have no idea what i should do, i need to earn soon.</p> <p>If anyone can give me a reference it would be very helpful too.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Admirable_Money777\"> /u/Admirable_Money777 </a>   to   <a href=\"https://www.reddit.com/r/IndiaCareers/\"> r/IndiaCareers </a> <br/> <span><a href=\"https://i.redd.it/9fu84if315oh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/IndiaCareers/comments/1w9zh2r/what_should_i_do/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/IndiaCareers/comments/1w9zh2r/what_should_i_do/",
+    "subreddit": "r/IndiaCareers",
+    "author": "/u/Admirable_Money777",
+    "publishedAt": "2026-09-07T18:02:17+00:00",
+    "fetchedAt": "2026-09-07T18:53:02.667Z",
+    "sourceId": "global-chatgpt-writing",
+    "sourceKeyword": "ChatGPT academic writing",
+    "sourceType": "global_search",
+    "contentHash": "f466e30aabf7a61aad3d70ca7328d7c3354237c76bbccbc9b54ffd918d26c80c"
   }
 ]
