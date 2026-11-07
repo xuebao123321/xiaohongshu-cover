@@ -1,182 +1,5 @@
 [
   {
-    "id": "reddit_1xedelz",
-    "redditId": "1xedelz",
-    "title": "I mapped 8.4 million researchers by who they publish with, and it can find the shortest coauthor chain between any two of them",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I built a small tool that is a zoomable map of 8.4 million researchers from OpenAlex, where everyone sits next to the people they write papers with. You can also pick any two researchers and it will find the shortest chain of coauthors between them, with the paper behind each step. It's basically an Erdős number for any pair of people. You can also start from a university instead of a person.</p> <p>The code is open source: <a href=\"https://github.com/EG-xry/mapademic\">https://github.com/EG-xry/mapademic</a>. The map itself is free, with no signup, and runs entirely in your browser: <a href=\"https://mapademic.app\">https://mapademic.app</a></p> <p>Due to my lack of storage and compute, my first iteration only fit people with 15 or more papers onto the map which is unfortunate :( Advisors are all almost certainly on the map though. You could try them against someone whose work you admire, or someone in a field that seems as far away as possible. The chains are usually shorter than you'd expect!</p> <p>A few other things to try: search for anyone to see who they work with most, or zoom into your own field and see how it's organized. Clinical medicine, for example, splits into countries, while physics doesn't.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Otherwise-Jaguar72\"> /u/Otherwise-Jaguar72 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xedelz/i_mapped_84_million_researchers_by_who_they/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xedelz/i_mapped_84_million_researchers_by_who_they/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xedelz/i_mapped_84_million_researchers_by_who_they/",
-    "subreddit": "r/PhD",
-    "author": "/u/Otherwise-Jaguar72",
-    "publishedAt": "2026-10-24T16:43:09+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.026Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "6170acb87998d1c8a52189a3642c3b66d7810a0dd1d5e5593c0028b9031f6eb6",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "phd-new"
-    ]
-  },
-  {
-    "id": "reddit_1xectvw",
-    "redditId": "1xectvw",
-    "title": "HELP FOR A SURVEY ARTICLE",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi Guys! I am currently in the 1st year of PhD program in Computer Science. Currently drafting my survey article, I need help regarding a few things.</p> <ol> <li>Aiming it to submit to ACM CSUR, how many pages are usually advised to write the survey? (30, 35, etc.)</li> <li>Is it mandatory to include PRISMA style documentation?</li> <li>How many references are advisable to have? (My draft right now kinda tells me that I will possibly be having many references)</li> <li><p>If I am deciding to include appendices</p> <p>inside the </p></li> <li><p>supplementary material, is there any particular structure that should be followed for this?</p></li> <li></li> <li><p>How long does it take for ACM CSUR to complete reviewing the paper after submission and before acceptance?</p></li> </ol> <p>Please give your valuable suggestions!!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Soyabean_002\"> /u/Soyabean_002 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xectvw/help_for_a_survey_article/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xectvw/help_for_a_survey_article/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xectvw/help_for_a_survey_article/",
-    "subreddit": "r/PhD",
-    "author": "/u/Soyabean_002",
-    "publishedAt": "2026-10-24T16:19:58+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.026Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "4c50c4f26ec1cf27f252478dd52137f6088998b15d8f2fe5992dcefc1c717d95"
-  },
-  {
-    "id": "reddit_1xebldz",
-    "redditId": "1xebldz",
-    "title": "Doing a PhD at Deakin University in Melbourne",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello all! </p> <p>I have recently been awarded a fully funded scholarship to do a PhD at Deakin's School of Humanities and Social Sciences. I really like Melbourne, I have met the professor who will be my supervisor (they are well know in the field) and the stipend is decent enough. </p> <p>The only hesitation I have - as someone who wants to pursue a career in academia - is Deakin's ranking. As per google search, Deakin is\"#218 globally in the Times Higher Education World University Rankings 2027 and in the Top 250 in the QS World University Rankings 2027. So my question is, would my academic career be slightly compromised because I will have done my PhD at a university that is not so well-ranked? My other choice is National University of Singapore which ranks #15 in the world - I am yet hear back from them though. </p> <p>I want your honest opinion - also about doing a PhD in Australia or Singapore in general. I also want to emphasise that my intention is not to demean any university, but given the world we live in where ivy leagues and Oxbridge are still held in such high regard, I just want to know what going to a relatively unknown university has in store. Thank you in advance! :)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ProfessorSlow4382\"> /u/ProfessorSlow4382 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xebldz/doing_a_phd_at_deakin_university_in_melbourne/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xebldz/doing_a_phd_at_deakin_university_in_melbourne/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xebldz/doing_a_phd_at_deakin_university_in_melbourne/",
-    "subreddit": "r/PhD",
-    "author": "/u/ProfessorSlow4382",
-    "publishedAt": "2026-10-24T15:30:08+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.026Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "fce97dde0396cbe2228e079eb6a7a287a6fa852018075da1487b280db6009495",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "phd-new"
-    ]
-  },
-  {
-    "id": "reddit_1xebajg",
-    "redditId": "1xebajg",
-    "title": "Advise",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>The use of AI for committee meetings for items such as a bullet list of steps taken in the PhD to send to the committee which contains no analysis or interpretations from the actual study. Is this allowed? </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/nursepooh\"> /u/nursepooh </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xebajg/advise/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xebajg/advise/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xebajg/advise/",
-    "subreddit": "r/PhD",
-    "author": "/u/nursepooh",
-    "publishedAt": "2026-10-24T15:17:49+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.026Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "a298a4fba74f575bf52986475c3f0345e36939ab26b25855ba3e163d6bc1e588",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "phd-new"
-    ]
-  },
-  {
-    "id": "reddit_1xeaho8",
-    "redditId": "1xeaho8",
-    "title": "Does having ChatGPT (free) VS ChatGPT Plus VS ChatGPT Pro have a material difference on your success?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Are you more likely to publish more and in better journals with a more expensive AI model?</p> <p>Conversely, are you more likely to stunt your own growth with a more expensive AI model, or is this dependent on how you actually utilize it?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/GayTwink-69\"> /u/GayTwink-69 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xeaho8/does_having_chatgpt_free_vs_chatgpt_plus_vs/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xeaho8/does_having_chatgpt_free_vs_chatgpt_plus_vs/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xeaho8/does_having_chatgpt_free_vs_chatgpt_plus_vs/",
-    "subreddit": "r/PhD",
-    "author": "/u/GayTwink-69",
-    "publishedAt": "2026-10-24T14:45:07+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.027Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "journal",
-    "sourceType": "subreddit_new",
-    "contentHash": "5608e0b6b2816934df539ed74b26dfcb45fd98238817b3e4f2f8c19ad1139d9b",
-    "sourceKeywords": [
-      "journal"
-    ],
-    "sourceIds": [
-      "phd-new",
-      "phd-journal"
-    ]
-  },
-  {
-    "id": "reddit_1xe99m1",
-    "redditId": "1xe99m1",
-    "title": "PhD in critical disability studies?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Looking for anywhere in the English speaking world honestly. I already have a bachelors in anthropology and a masters in American Studies. For my masters thesis I used mainly queer and crip theory because I want to go into crit disability studies and it was an interdisciplinary program. But all the ‘disability studies’ programs I find are broadly medical focused and it’s the social justice aspect that I’m interested in. Does anyone have ideas of what fields I could search for ? Thanks! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Legitimate_Pirate91\"> /u/Legitimate_Pirate91 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe99m1/phd_in_critical_disability_studies/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe99m1/phd_in_critical_disability_studies/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xe99m1/phd_in_critical_disability_studies/",
-    "subreddit": "r/PhD",
-    "author": "/u/Legitimate_Pirate91",
-    "publishedAt": "2026-10-24T13:53:59+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.027Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "4516a6cb0420f191586964b71122dcbc054ab9d161cf003decb500e44c45224a"
-  },
-  {
-    "id": "reddit_1xe87li",
-    "redditId": "1xe87li",
-    "title": "Six weeks to my defense and I wrote two pages all week",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>PhD in chem, defense date set, chapters 3 &amp; 4 finished, and the intro/conclusion are an empty doc with a title on top. Each day this week went the same: open it, type a sentence, delete it, back to the lab. Advisor says \"just write.\"</p> <p>On Thursday I gave the med library a shot because no one there knows who I am and came away with roughly two pages, two more than every other day this week put together. Heading back there today with my laptop (plus Anker's new laptop smart display charger, which I got yesterday so the old brick gets to stay at my bench). How'd you get thru the final stretch of writing… seriously?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Bright_Profit2273\"> /u/Bright_Profit2273 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe87li/six_weeks_to_my_defense_and_i_wrote_two_pages_all/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe87li/six_weeks_to_my_defense_and_i_wrote_two_pages_all/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xe87li/six_weeks_to_my_defense_and_i_wrote_two_pages_all/",
-    "subreddit": "r/PhD",
-    "author": "/u/Bright_Profit2273",
-    "publishedAt": "2026-10-24T13:07:38+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.027Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "f286109f824e64f30511dcb67ca102b9278290a75770ed354d055040929e479b"
-  },
-  {
-    "id": "reddit_1xe6qlc",
-    "redditId": "1xe6qlc",
-    "title": "Hundreds of members have quit this sub because the frog meme is out of control",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>This sub has so much potential.</p> <p>The frog meme is taking up too much oxygen. When 50% of posts are frogs, this sub becomes a childish joke.</p> <p>I’m leaving and I’m sure hundreds of others have too. Sorry not sorry.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/torontopeter\"> /u/torontopeter </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe6qlc/hundreds_of_members_have_quit_this_sub_because/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe6qlc/hundreds_of_members_have_quit_this_sub_because/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xe6qlc/hundreds_of_members_have_quit_this_sub_because/",
-    "subreddit": "r/PhD",
-    "author": "/u/torontopeter",
-    "publishedAt": "2026-10-24T11:56:16+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.027Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "a5b3ff9fabe70743be55072b42d61818536dc0106dacef7764c41bc6a89b7f5d",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "phd-new"
-    ]
-  },
-  {
-    "id": "reddit_1xe5bgb",
-    "redditId": "1xe5bgb",
-    "title": "Should I invest time in setting up my Notion?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I just started my 3rd year (now a PhD candidate, yayyy!), and I have 3 years left in the program (it's a 5 year program).</p> <ol> <li>My notes are digital but handwritten on my tablet.</li> </ol> <p>I use Excel sheets for my literature, but my reference manager is Zotero.</p> <ol> <li><p>supervisor meeting notes are mainly handwritten on my tablet. Two years in, I am finding it impossible to search for things without scrolling through hundreds of pages.</p></li> <li><p>My notes from brownbags, seminars, summer schools, and conferences are split between my tablet and physical notebooks. I face the same issue here. I HAVE TO SEARCH FOR EVERYTHING MANUALLY.</p></li> <li><p>My course notes and files are split - some are on my laptop, and some are physically handwritten.</p></li> <li><p>My TA materials (lectures, PPTs, Word docs) are mostly on my laptop.</p></li> <li><p>The feedback I get on my research and teaching is scattered across Google Keep and Windows sticky notes.</p></li> </ol> <p>I am going a bit crazy with all this. I want to put in the effort moving forward to get everything in one place, and I thought Notion would be a good fit, but I got a bit overwhelmed. Is setting up Notion actually worth it?</p> <p>i understand it's bit of change to go from handwriting to typing. i think i am ready for that. </p> <p>Please let me know your opinion about setting up Notion and using it long-term. Thank you for your time! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Rising-renewal\"> /u/Rising-renewal </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe5bgb/should_i_invest_time_in_setting_up_my_notion/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xe5bgb/should_i_invest_time_in_setting_up_my_notion/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xe5bgb/should_i_invest_time_in_setting_up_my_notion/",
-    "subreddit": "r/PhD",
-    "author": "/u/Rising-renewal",
-    "publishedAt": "2026-10-24T10:35:25+00:00",
-    "fetchedAt": "2026-10-24T17:33:45.027Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "8eb9cccb1442ec8b94f85b379b237ed59bcbdbdab2a2242810214e18b9c5d871",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "phd-new"
-    ]
-  },
-  {
-    "id": "reddit_1xe84cv",
-    "redditId": "1xe84cv",
-    "title": "Free alternatives to Scrivener for academic writing?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’m looking for a free writing app or studio for academic work, particularly research papers and articles.<br/> I recently tried Scrivener during its 30-day free trial and really liked it. I especially liked the idea of having separate projects, organising my writing, and keeping everything in one place rather than juggling multiple apps.<br/> My field is quite theory-heavy (law) so I don’t need anything for mathematical equations, diagrams, or technical work.</p> <p>Ideally, I’m looking for something that:<br/> 1. Lets me keep different papers and projects separate, preferably with tabs or a similar system.<br/> 2. Provides a clean, distraction-free writing environment.<br/> 3. Makes it easy to organise drafts, notes, and research.<br/> 4. Is completely free, rather than just offering a limited trial.<br/> 5. Ideally supports cloud backup or syncing.</p> <p>I know Scrivener isn’t particularly expensive, but I’d like to explore free alternatives before deciding whether to buy it.</p> <p><strong>For those who use writing software for academic research, what would you recommend?</strong> I’m interested in something that feels like a dedicated writing studio rather than an overly complicated note-taking or knowledge-management tool.</p> <p>Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Mindless-Way-8469\"> /u/Mindless-Way-8469 </a> <br/> <span><a href=\"https://www.reddit.com/r/academia/comments/1xe84cv/free_alternatives_to_scrivener_for_academic/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/academia/comments/1xe84cv/free_alternatives_to_scrivener_for_academic/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/academia/comments/1xe84cv/free_alternatives_to_scrivener_for_academic/",
-    "subreddit": "r/academia",
-    "author": "/u/Mindless-Way-8469",
-    "publishedAt": "2026-10-24T13:03:35+00:00",
-    "fetchedAt": "2026-10-24T17:34:00.347Z",
-    "sourceId": "academia-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "f14f7135df16f335f1119f1d3e1263bd0a280114da2623d6d68681088a1dec6e"
-  },
-  {
     "id": "reddit_1xeun3f",
     "redditId": "1xeun3f",
     "title": "4th-year Chemistry PhD student considering switching from computational/environmental chemistry to wet-lab research. Is it too late?",
@@ -402,44 +225,6 @@
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
     "contentHash": "ffa59c065fbfd8ad198bb55d0f4fa3efb420ce6dfba64a091fe8bd9070bc1957",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "phd-new"
-    ]
-  },
-  {
-    "id": "reddit_1xegb2y",
-    "redditId": "1xegb2y",
-    "title": "Did you ever break something during your PhD and got yelled at by your PI?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I have recently started the second year of my PhD and im feeling very overwhelmed. my sample collection is very hard and yet i am managing everything at my lab. the other students are leaving and as such it will only be me in a month. theyve had it easy because they were about 8, they could divide tasks and do everything. but this isnt so for me. to top it, 2 days ago, i broke the lid of a tabletop centrifuge because i didnt lock it properly. the postdoc immediately called my PI who came and yelled at me. i also offered to pay for the damage because it was an accident. ive used that centrifuge many times before but maybe this time i was hasty or just careless. he basically meant that i cant be trusted around lab. ive never broken anything before and im very careful. he said that since i always need tutoring we will watch result of my experiment and have a meeting. i dread this meeting. maybe they will fire me because im not autonomous yet. im trying hard to learn. in my first year my pi didnt let me do the major part of experiment saying that he doesnt want operator effect. as such i never proceeded with an experiment on my own. the postdoc also hated me for this. i even begged my pi to let me do such that i work on my consistency. but he didnt. the postdoc on the other hand has 10-11 years of experience. now we have another deadline and he expects me to be perfect within 2 experiments. ive lost all confidence. it was just a rotor cap and the device works fine. but just the lab environment feels so toxic i dont feel like continuing anymore. I am in a different country trying to manage cultural differences, learning their language and everything feels so overwhelming.</p> <p>has anyone been in a similar situation? What did you do to get past this?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Creative_Occasion569\"> /u/Creative_Occasion569 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xegb2y/did_you_ever_break_something_during_your_phd_and/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xegb2y/did_you_ever_break_something_during_your_phd_and/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xegb2y/did_you_ever_break_something_during_your_phd_and/",
-    "subreddit": "r/PhD",
-    "author": "/u/Creative_Occasion569",
-    "publishedAt": "2026-10-24T18:38:57+00:00",
-    "fetchedAt": "2026-10-25T07:47:37.763Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "58664d34c9bbb7d296177b73c83ba2b371613e65f7cc8a983675b4ad8fa7c153",
-    "sourceKeywords": [],
-    "sourceIds": [
-      "phd-new"
-    ]
-  },
-  {
-    "id": "reddit_1xeewok",
-    "redditId": "1xeewok",
-    "title": "How do you actually get from 50+ papers to a structured lit review?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm drowning in my lit review right now. I've read a lot, but turning it into sections feels impossible. My supervisor says my draft reads like a list of summaries rather than a synthesis.</p> <p>For those who've been through this: how did you go from papers to themes? Spreadsheets, sticky notes, Zotero tags, something else? What finally made it click?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Downtown_Kitchen2461\"> /u/Downtown_Kitchen2461 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xeewok/how_do_you_actually_get_from_50_papers_to_a/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xeewok/how_do_you_actually_get_from_50_papers_to_a/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/PhD/comments/1xeewok/how_do_you_actually_get_from_50_papers_to_a/",
-    "subreddit": "r/PhD",
-    "author": "/u/Downtown_Kitchen2461",
-    "publishedAt": "2026-10-24T17:43:31+00:00",
-    "fetchedAt": "2026-10-25T07:47:37.763Z",
-    "sourceId": "phd-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "f24975766d38183902b876c326aad0112697f5b64a3516f70a69c85a7f107fd6",
     "sourceKeywords": [],
     "sourceIds": [
       "phd-new"
@@ -1039,95 +824,6 @@
     "contentHash": "8ee96ddcf7b194074ac1fa8f6a9664f20516d6d738b125ddc2ef205802d88a00"
   },
   {
-    "id": "reddit_1xefog1",
-    "redditId": "1xefog1",
-    "title": "How good are my chances at getting into Grad School for Counseling?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>The actual requirements are as follows:</p> <ul> <li>Minimum 3.0 GPA; applicants with significantly higher GPAs are more competitive</li> <li>Two letters of reference that focus on academic capability and/or work ethic. We prefer that at least one letter should be from a faculty member. If you have been out of college for a while, you may substitute letters from employment supervisors. You may submit a third letter, but no more than three.</li> <li>Resume/ CV</li> <li>Letter of Intent</li> <li>In-person or phone interview with at least 1 faculty member (by invitation from the Graduate Admissions Committee)</li> </ul> <p>My credentials are as follows:</p> <ul> <li>My GPA for my overall academic portfolio is 3.79, 3.95 GPA for specifically my psychology coursework</li> <li>I have worked in a patient-facing clinical position for 6 months, 9 months by the time of the application deadline next year. In this position I have directly intervened to counsel patients, help them cope with their issues, broken up physical fights, and directly intervened to deescalate self-harm and psychotic episodes. I have on more than one occasion worked 16+ hours on unit at one time due to things like lockdowns in snow storms or natural disasters.</li> <li>Both the head nurse and my supervisor are willing to co-write one letter or both willing to write their own letters, and consider me to be proficient in my role despite a lack of prior experience.</li> <li>I have completed all pre-requisites that are needed to apply for the LMHC program, although my Bachelors was not in Psychology; mine was in Engineering.</li> <li>I have been unable to obtain significant research experience, however I have both financial market research and engineering research experience, and the program does not list that research experience is required.</li> <li>I intend to obtain 200 hours of crisis counseling (988 phone line, not CTL) by the time of application.</li> <li>I have started to work on my personal statement two months in advance.</li> <li>Other credentials: collaborating with other faculty members of the engineering department to win a $7,000 scholarship for my school and came first place, I have another professor whom I have worked very closely alongside that is willing to write an LOR for me, I have held down a well-paying job for over two years that requires me to negotiate and broker agreements between different demographics of people, and I recently received my RBT certification back in June.</li> </ul> <p>Genuinely, how do things look?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/GolemonGolemsson\"> /u/GolemonGolemsson </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xefog1/how_good_are_my_chances_at_getting_into_grad/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xefog1/how_good_are_my_chances_at_getting_into_grad/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1xefog1/how_good_are_my_chances_at_getting_into_grad/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/GolemonGolemsson",
-    "publishedAt": "2026-10-24T18:14:11+00:00",
-    "fetchedAt": "2026-10-25T17:50:03.357Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "writing",
-    "sourceType": "subreddit_new",
-    "contentHash": "4758318be5afc911a425dedc60fe3e479721f8d8237daea467dc3a3e78c90bef",
-    "sourceKeywords": [
-      "writing"
-    ],
-    "sourceIds": [
-      "gradschool-new",
-      "gradschool-writing"
-    ]
-  },
-  {
-    "id": "reddit_1xeee75",
-    "redditId": "1xeee75",
-    "title": "Advice - PhD programs, is it worth it?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Update after some advice -</p> <p>I was wondering if pursuing a PhD was worth it, comparing the option against trying to find a job. I do like research and to study effects of public health/education decision-making (rather individual or government policy) on well-being, described in a wider perspective, considering AI, budget restrictions and a myraid of complex variables.</p> <p>Aspects that could weight the decision: 1. No experience in Canada 2. 10 years of relevant experience from jr data analyst to sr and data engineer, with relevant Google certifications in LATAM. 3. Currently studying MA in Economics at University of Windsor 4. Holding a PR, willing to become a citizen when the requirements are met. 5. Having a baby ok its way. 6. Already holding a Master's in Data Science, from a not so well-known Latin American University.</p> <p>Other aspects considered: * Currently, the MA in Economics showed me that it may not be the path I want to pursue, considering Health Data Analytics, Demographics or other more applied fields, since even though they include theory, they're less abstract and have a more hands-on approach.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/CompetitiveScheme976\"> /u/CompetitiveScheme976 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xeee75/advice_phd_programs_is_it_worth_it/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xeee75/advice_phd_programs_is_it_worth_it/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1xeee75/advice_phd_programs_is_it_worth_it/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/CompetitiveScheme976",
-    "publishedAt": "2026-10-24T17:22:23+00:00",
-    "fetchedAt": "2026-10-25T17:50:03.357Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "2fc4aed185ff38f9e376bff599ed5fc2cdbe7632901ec7c790a9cb4fa0c9f3fb"
-  },
-  {
-    "id": "reddit_1xeb7dx",
-    "redditId": "1xeb7dx",
-    "title": "My advisor dismisses my research explanations and focuses only on results. Am I doing something wrong?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>About a year ago, I worked on writing a grant proposal that was eventually accepted. I have been working on the project since then, and I am currently trying to turn the work into a paper. However, my results are not yet at the state-of-the-art (SOTA) level. I did not receive any help while writing the grant, and my name is not on it, as I am a master's student working as a research assistant on the project.</p> <p>We have had several supervisory meetings, and in almost every meeting, I have had to explain the fundamentals of the research area to my supervisors. Whenever I try to explain something in more depth, they interrupt me or dismiss my explanations. They have even joked about it.</p> <p>I take their feedback seriously and implement their suggestions. However, when an approach does not produce the expected results despite my attempts, I try alternative methods. The problem is that whenever I try to explain the architecture, the reasoning behind my decisions, or why a particular approach might not work, they seem uninterested. They focus almost entirely on the results.</p> <p>About four weeks ago, I finally had somewhat reasonable results across the benchmarks I had tested. I tried explaining my findings and reasoning again, but my supervisors asked me to prepare a comprehensive presentation detailing everything I had done so far, with diagrams and justifications.</p> <p>Soon afterward, my father had a heart attack, and my family went through a very difficult time. After he was discharged from the hospital, I became ill with COVID. Despite everything, I still prepared the presentation they had requested.</p> <p>During the meeting, however, my main advisor did not even let me explain a single slide before asking why I had not submitted the paper yet. I explained that I did not consider the results good enough. He then accused me of not following his feedback, to which I replied that I had implemented his suggestions. Had I been allowed to present my work, I had specific reasons and evidence explaining why some of the suggested approaches were unlikely to work.</p> <p>He then compared our progress with another advisor's group, saying that they had published four papers in a year. From what I understand, those were primarily benchmark papers, so I do not think the comparison necessarily reflects the nature or difficulty of our work. The interaction became so hostile that another supervisor eventually intervened and suggested that I should start writing the paper and that we could understand the work better as we progressed.</p> <p>I do not understand why this interaction has affected me so deeply. I have been trying to make progress, incorporating feedback, experimenting with alternatives, and explaining the reasoning behind my decisions. I am not claiming that my approach is necessarily correct or that my results are good enough. I am willing to accept criticism and change direction when there are valid reasons to do so. What frustrates me is that I rarely feel given the opportunity to explain my reasoning before being judged.</p> <p>I also do not understand the reason for my advisor's behaviour. Is it possible that gender plays a role? I have wondered about this because he repeatedly dismisses my explanations, and there have been previous occasions when my other two supervisors had to intervene after he became hostile. Could his behaviour be related to the fact that the other supervisors have supported me in those situations, or could there be something else going on?</p> <p>I am beginning to question myself and my relationship with research because of these interactions. I would appreciate hearing from people who have experienced similar situations in academia.</p> <p>Am I approaching this situation incorrectly? How would you handle a supervisor who expects results but does not seem willing to listen to the reasoning behind the research?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Maleficent_Reply_471\"> /u/Maleficent_Reply_471 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xeb7dx/my_advisor_dismisses_my_research_explanations_and/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xeb7dx/my_advisor_dismisses_my_research_explanations_and/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1xeb7dx/my_advisor_dismisses_my_research_explanations_and/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/Maleficent_Reply_471",
-    "publishedAt": "2026-10-24T15:14:07+00:00",
-    "fetchedAt": "2026-10-25T17:50:03.357Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "writing",
-    "sourceType": "subreddit_new",
-    "contentHash": "8e2b575b6fbd2ebf955ba6869545097aa1c205e012437f45df05c01551cffa81",
-    "sourceKeywords": [
-      "writing"
-    ],
-    "sourceIds": [
-      "gradschool-new",
-      "gradschool-writing"
-    ]
-  },
-  {
-    "id": "reddit_1xeay0e",
-    "redditId": "1xeay0e",
-    "title": "Can I go to Grad School?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’ve had plans for going to grad school for a while because I wanted to finish my education by getting a Masters. For a while, I thought of getting an MBA because my associates and bachelors programs were in business, but my real passion is English lit and I think I would like to do that. I’m finishing up my undergrad right now, and unfortunately, due to some mental health circumstances and personal failures my GPA is not great (probably finish with a 2.2). I really lost my passion for learning in my last year of University I think largely because I was doing work that I didn’t care for. I’d still like to go to grad school for English in about 2 to 3 years after saving some money, but I’m just worried that because of my GPA and my undergrad being unrelated, is there any chance?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Equivalent-Bonus-594\"> /u/Equivalent-Bonus-594 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xeay0e/can_i_go_to_grad_school/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xeay0e/can_i_go_to_grad_school/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1xeay0e/can_i_go_to_grad_school/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/Equivalent-Bonus-594",
-    "publishedAt": "2026-10-24T15:03:30+00:00",
-    "fetchedAt": "2026-10-25T17:50:03.357Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "293533f1fb1064ec8b4fc8e3cbc4183a1878a06c4d932e8aaacb155310336d83"
-  },
-  {
-    "id": "reddit_1xe7mgl",
-    "redditId": "1xe7mgl",
-    "title": "Do you have a favorite paper?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>I wonder how many people have a favorite paper. Not necessarily the most important work in your field (though that is also valid), but some you enjoyed a lot, some that made you decide going to grad school or some that brings you joy everytime you read it.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Select-Coconut-1161\"> /u/Select-Coconut-1161 </a> <br/> <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xe7mgl/do_you_have_a_favorite_paper/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/GradSchool/comments/1xe7mgl/do_you_have_a_favorite_paper/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/GradSchool/comments/1xe7mgl/do_you_have_a_favorite_paper/",
-    "subreddit": "r/GradSchool",
-    "author": "/u/Select-Coconut-1161",
-    "publishedAt": "2026-10-24T12:40:20+00:00",
-    "fetchedAt": "2026-10-25T17:50:03.357Z",
-    "sourceId": "gradschool-new",
-    "sourceKeyword": "",
-    "sourceType": "subreddit_new",
-    "contentHash": "59a141629004f6c31912f1d4a278fb259e7ca4387e85a47948329bec694521bf"
-  },
-  {
     "id": "reddit_1xf3j8s",
     "redditId": "1xf3j8s",
     "title": "Porn : Comes out of Babylonian Occult Magic // The Watchers// Sumeria Artifacts",
@@ -1231,36 +927,6 @@
     "sourceKeyword": "manuscript rejected",
     "sourceType": "global_search",
     "contentHash": "4890b84ed834524f7abcd4619284e569dcc92661dd7b0af83798a0b81ed94ed6"
-  },
-  {
-    "id": "reddit_1xee86f",
-    "redditId": "1xee86f",
-    "title": "[RYDER] The Legacy of Morgana: How a 6th-century cabal evolved into modern defense giant Cross Industries",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p><strong>Project Name:</strong> <em>RYDER</em> (Grounded Action-Adventure / Contemporary Thriller Setting)</p> <p><strong>Faction:</strong> <em>Aeternum</em> (\"The Eternal\") / <em>Cross Industries</em></p> <p><strong>Overview:</strong></p> <p>Aeternum is not a mystical cult of robed sorcerers, but a 1,500-year-old power syndicate operating through calculated deception, historical manipulation, and institutional infiltration. Rejecting supernatural interpretations, the organization views ancient myths not as magic, but as lost engineering, historical leverage, and forgotten blueprints of authority.</p> <p><strong>Historical Origins (6th Century to Renaissance):</strong></p> <p>Following the collapse of post-Roman Britain and the deaths of King Arthur and Morgan le Fay, surviving acolytes bound themselves to preserve elite knowledge and strategic relics away from the masses, taking the name <em>Aeternum</em>. Over the centuries, they survived by infiltrating monastical networks, royal courts, and crusader factions (including ties within the Knights Templar), quietly gathering ancient manuscripts and charting hidden archeological sites across Europe and the Mediterranean.</p> <p><strong>The Modern Facade: Cross Industries:</strong></p> <p>Following the turbulence of the 20th century, the syndicate realized that true global dominion required financial and technological infrastructure. Rebranded as <em>Cross Industries</em>, the organization now presents itself to the public as a multinational conglomerate specializing in defense contracting, surveillance tech, and energy systems. Beneath this corporate veil, vast corporate black budgets finance ruthless private military contractors (commanded by ruthless operatives like Victor Kane) to illegally extract historical relics and silence independent researchers.</p> <p><strong>Leadership &amp; Agenda:</strong></p> <p>The modern face of the syndicate is CEO Marcus Cross. Suffering from a degenerative terminal illness, his strategic coldness has decayed into a dangerous obsession: using forgotten historical constructs to force life extension and cement his family's bloodline as the \"true successors\" of antiquity. Inside Aeternum, loyalty is maintained not by blind faith, but through corporate compartmentalization, elite mercenary discipline, and brutal operational security.</p> <p><em>(Original lore and concept by Ryan Shan)</em></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/RyanShan_\"> /u/RyanShan_ </a>   to   <a href=\"https://www.reddit.com/r/worldbuilding/\"> r/worldbuilding </a> <br/> <span><a href=\"https://www.reddit.com/r/worldbuilding/comments/1xee86f/ryder_the_legacy_of_morgana_how_a_6thcentury/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/worldbuilding/comments/1xee86f/ryder_the_legacy_of_morgana_how_a_6thcentury/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/worldbuilding/comments/1xee86f/ryder_the_legacy_of_morgana_how_a_6thcentury/",
-    "subreddit": "r/worldbuilding",
-    "author": "/u/RyanShan_",
-    "publishedAt": "2026-10-24T17:15:41+00:00",
-    "fetchedAt": "2026-10-25T17:52:02.084Z",
-    "sourceId": "global-manuscript-rejected",
-    "sourceKeyword": "manuscript rejected",
-    "sourceType": "global_search",
-    "contentHash": "4caf64d8d15c7962bb391fac1e56502c7ba484d46f3e180150b4ba44a531f90f"
-  },
-  {
-    "id": "reddit_1xea5y1",
-    "redditId": "1xea5y1",
-    "title": "The burned Central Synagogue of Aleppo after the 1947 Aleppo pogrom. Aleppo, Syria. 1947.",
-    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/HistorySnap/comments/1xea5y1/the_burned_central_synagogue_of_aleppo_after_the/\"> <img src=\"https://preview.redd.it/77uu5bezbfxh1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=0311d1e738b13256509410bfd086dd06f0aea419\" alt=\"The burned Central Synagogue of Aleppo after the 1947 Aleppo pogrom. Aleppo, Syria. 1947.\" title=\"The burned Central Synagogue of Aleppo after the 1947 Aleppo pogrom. Aleppo, Syria. 1947.\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>The <strong>1947 anti-Jewish pogrom in Aleppo</strong> was a pogrom on Syrian Jews in Aleppo, Syria in December 1947, following the United Nations vote in favor of partitioning the British Mandate of Palestine. The Jews reluctantly accepted the vote, because to them, having an imperfect state was better than no state. The Arabs vehemently rejected the vote. </p> <p>The attack was part of an anti-Jewish wave of unrest across the Middle East and North Africa at the time of the 1948 Palestine war. </p> <p>Ten synagogues, five schools, an orphanage and a youth club, along with several Jewish shops and 150 houses were set ablaze and destroyed. Damaged property was estimated to be valued at US $2.5 million at the time. During the pogrom, the Aleppo Codex, an important medieval manuscript of the Torah, was lost and feared destroyed. The book was partly salvaged and reappeared, with 40% of pages missing, in Israel in 1958.</p> <p>In the early hours of December 1st Syrian Soldiers were sent to the Central Synagogue of Aleppo ostensibly to protect but in reality they were there only for the Syrian government to keep up appearances. Later that day, the local Jewish community leaders Rahmo Nehmad and Siahu Shamah met with Aleppo's mayor in which he promised to protect the Jews, though Shamah doubted that the mayor was being honest.</p> <p>In the early afternoon a crowd of Arabs gathered in front of the Synagogue chanting \"Palestine is ours and the Jews are our animals\" with the local authorities doing nothing in response. In the late afternoon the crowd of Arabs attacked with many of the soldiers sent to guard the synagogue joining the mob. </p> <p>The mob took 40 Torah scrolls and 7 Hekhalot, tore them to pieces and then burned them in a bonfire. Nearly 2 thousand pairs of tefillin where also added to the fire. Firefighters soon arrived but instead of fighting the fire they threw kerosene and diesel onto the fire, only growing it.</p> <p>The pogrom resulted in some 75 Jews murdered and several hundred wounded. Half the city's Jewish population fled the city as a result. The Syrian government only stopped the pogrom the next morning.</p> <p>Source<br/> <a href=\"https://www.morasha.com.br/en/diaspora-communities/the-Aleppo-pogrom.html\"><code>https://www.morasha.com.br/en/diaspora-communities/the-Aleppo-pogrom.html</code></a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/podsnap40\"> /u/podsnap40 </a>   to   <a href=\"https://www.reddit.com/r/HistorySnap/\"> r/HistorySnap </a> <br/> <span><a href=\"https://i.redd.it/77uu5bezbfxh1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/HistorySnap/comments/1xea5y1/the_burned_central_synagogue_of_aleppo_after_the/\">[comments]</a></span> </td></tr></table>",
-    "url": "https://www.reddit.com/r/HistorySnap/comments/1xea5y1/the_burned_central_synagogue_of_aleppo_after_the/",
-    "subreddit": "r/HistorySnap",
-    "author": "/u/podsnap40",
-    "publishedAt": "2026-10-24T14:31:27+00:00",
-    "fetchedAt": "2026-10-25T17:52:02.084Z",
-    "sourceId": "global-manuscript-rejected",
-    "sourceKeyword": "manuscript rejected",
-    "sourceType": "global_search",
-    "contentHash": "7abb444d66d778b72df24eca966aeb2d534d938785a40b7487027fbcc6153892"
   },
   {
     "id": "reddit_1xfql1h",
@@ -4405,29 +4071,6 @@
     ]
   },
   {
-    "id": "reddit_1xe55wh",
-    "redditId": "1xe55wh",
-    "title": "Who gets first authorship, when publishing a masters thesis?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi all,</p> <p>I am a future PhD candidate and would appreciate some advice on how to handle a potential authorship dispute.</p> <p>Essentially, three of us incorporated topics from our planned PhD research into our respective master’s theses. All three projects produced results that are suitable for publication. Each of us was supervised by a different PhD student, all working under the same professor.</p> <p>The issue is that two of us were granted first authorship, while the third is listed as second author for his paper. We are now wondering how best to approach this situation and what would constitute a fair allocation of authorship.</p> <p>The student who conducted the research for their master’s thesis is also expected to present the findings at the conference. However, for the subsequent journal publication in the conference proceedings, tkhey are listed only as the second author. The supervising PhD student essentially took the master’s thesis, shortened it, and translated it. They did not contribute any substantial new content or additional literature. Would this level of involvement alone justify granting them first authorship, given that the professor is already designated as the last author?</p> <p>I would appreciate your perspectives on what constitutes a fair and academically appropriate distribution of authorship in this situation, as well as how best to address the issue constructively.</p> <p>Edit: To add because it was mentioned more than once. I won't take any actions myself. I am aware, that this is not my battle to fight, but my friends. I am just curious.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Battle_Eggplant\"> /u/Battle_Eggplant </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xe55wh/who_gets_first_authorship_when_publishing_a/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xe55wh/who_gets_first_authorship_when_publishing_a/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1xe55wh/who_gets_first_authorship_when_publishing_a/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/Battle_Eggplant",
-    "publishedAt": "2026-10-24T10:25:55+00:00",
-    "fetchedAt": "2026-10-27T19:38:04.552Z",
-    "sourceId": "askacademia-journal",
-    "sourceKeyword": "journal, publish",
-    "sourceType": "subreddit_search",
-    "contentHash": "281f9ca97e246b222700f56956ba947322ad3d13708d398ba7ca3ccce5623127",
-    "sourceKeywords": [
-      "journal",
-      "publish"
-    ],
-    "sourceIds": [
-      "askacademia-journal",
-      "askacademia-publish"
-    ]
-  },
-  {
     "id": "reddit_1xhic1z",
     "redditId": "1xhic1z",
     "title": "I am proud to announce I am officially PhDone (Pharmacology)!",
@@ -6143,65 +5786,6 @@
     "sourceIds": [
       "askacademia-publish"
     ]
-  },
-  {
-    "id": "reddit_1xedwus",
-    "redditId": "1xedwus",
-    "title": "Thoughts on (permitted) AI usage for translation purposes in archaeology (of modern publications)? Is anyone else in the same position?",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone!</p> <p>Before I start, I’ll say that this is completely allowed and encouraged by my supervisor and institution and seems pretty common. So long as it is properly acknowledged for each instance in a designated appendix, it’s perfectly OK to do (according to official university policy). There is no funding available to get works translated by a qualified human. </p> <p>I am a grad student in archaeology (Eurasian Upper Palaeolithic). My thesis will refer to materials written in: English, German, French, Polish, Romanian, Spanish, Portuguese, Czech, Italian, and Russian (there might be more, actually). This is completely unavoidable for the research I’m doing which has to account for many older works of writing and excavation reports that will never be translated into English, particularly works written in region-specific journals or volumes. </p> <p>I do not use AI as part of my workflow and ordinarily would not consider doing so, but in this case it feels like it is becoming necessary. I am only fluent in English and am learning German. My advisor supports the AI-translation approach and was the one to pitch it to me. Most of what I will read and cite from these publications are data and descriptions of archaeological material not repeated elsewhere, or if they are it’s just a brief citation linking back to the original in a table or database. Usually, larger studies that focus on interpretation or significance are published in English. </p> <p><strong>TLDR:</strong></p> <p>I am wondering if others have been in a similar situation and how they have handled it. I’m not worried about the institution-side of the problem as it is explicitly encouraged, but more curious how others feel and have navigated the issue. If you’ve had to use AI-assisted translation, how did you go about it? Did you use a tool like DeepL or did you go another route? If you refused to use AI, how did you manage to write without being able to read/translate your sources?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/oceansRising\"> /u/oceansRising </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xedwus/thoughts_on_permitted_ai_usage_for_translation/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xedwus/thoughts_on_permitted_ai_usage_for_translation/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1xedwus/thoughts_on_permitted_ai_usage_for_translation/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/oceansRising",
-    "publishedAt": "2026-10-24T17:03:14+00:00",
-    "fetchedAt": "2026-10-29T08:55:00.621Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish, journal",
-    "sourceType": "subreddit_search",
-    "contentHash": "4e48dae4ca328f99579b0f911b885c6786a3943fb9214af7f7616eb7bee19e66",
-    "sourceKeywords": [
-      "publish",
-      "journal"
-    ],
-    "sourceIds": [
-      "askacademia-publish",
-      "askacademia-journal"
-    ]
-  },
-  {
-    "id": "reddit_1xe8q1h",
-    "redditId": "1xe8q1h",
-    "title": "Teaching Only Faculty Public Speaking / Communication",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Can those with PhD in Linguistics apply for this kind of position? Can they also be tenured? I don't see them advertised often. I am still applying for my PhD, but I realize that I prefer teaching more than publishing research. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/truthieteller\"> /u/truthieteller </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xe8q1h/teaching_only_faculty_public_speaking/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xe8q1h/teaching_only_faculty_public_speaking/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1xe8q1h/teaching_only_faculty_public_speaking/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/truthieteller",
-    "publishedAt": "2026-10-24T13:30:09+00:00",
-    "fetchedAt": "2026-10-29T08:55:00.621Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
-    "sourceType": "subreddit_search",
-    "contentHash": "cb5bd5b2dd772e6287e85814d01cfdbd1e3bc91f4eceff714c96ecbb3da3b1e5",
-    "sourceKeywords": [
-      "publish"
-    ],
-    "sourceIds": [
-      "askacademia-publish"
-    ]
-  },
-  {
-    "id": "reddit_1xe7svo",
-    "redditId": "1xe7svo",
-    "title": "Teaching only faculty positions around the world",
-    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey there,</p> <p>I am a PhD student, based out of India, working on a subset of computer architecture. I am currently working in Intel and want to transition into academia. I have been looking for faculty positions, but the ones I saw have research as their main requirement. The very reason I joined PhD is because I wanted to teach. I am not a fan of publishing in A* conferences each year, writing funding proposals etc. I am kinda done with publishing papers. Have seen enough issues during my PhD.</p> <p>Now, coming to the question. How do I find teaching-only positions in the world? Not limiting myself to India, but anywhere in the world is fine as long as the teaching is English based.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/edmyn_tully\"> /u/edmyn_tully </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xe7svo/teaching_only_faculty_positions_around_the_world/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xe7svo/teaching_only_faculty_positions_around_the_world/\">[comments]</a></span>",
-    "url": "https://www.reddit.com/r/AskAcademia/comments/1xe7svo/teaching_only_faculty_positions_around_the_world/",
-    "subreddit": "r/AskAcademia",
-    "author": "/u/edmyn_tully",
-    "publishedAt": "2026-10-24T12:48:54+00:00",
-    "fetchedAt": "2026-10-29T08:55:00.621Z",
-    "sourceId": "askacademia-publish",
-    "sourceKeyword": "publish",
-    "sourceType": "subreddit_search",
-    "contentHash": "ffa2d38ec53b98dc7af46c082efa5ce9418f2e86048a444d8cb9d53fe9e16780"
   },
   {
     "id": "reddit_1xitqzo",
@@ -10618,7 +10202,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "df45caa2b18da0f06a3390cf70b3fb45f28de70d45908590a1aff107f6219ba9"
+    "contentHash": "df45caa2b18da0f06a3390cf70b3fb45f28de70d45908590a1aff107f6219ba9",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xkfexm",
@@ -10648,7 +10238,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "67a1c298c1537c174f06a5deeaa23e10074d246b601a5a86b34420882ec3bc2f"
+    "contentHash": "67a1c298c1537c174f06a5deeaa23e10074d246b601a5a86b34420882ec3bc2f",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xjp3ix",
@@ -10663,7 +10259,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "f19ff744e5451ddf05124a031da8f4f1beaaeb2d7c3648371c94be75377e7c38"
+    "contentHash": "f19ff744e5451ddf05124a031da8f4f1beaaeb2d7c3648371c94be75377e7c38",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xjipup",
@@ -10678,7 +10280,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "3460dacbeff3fca538ac7b3be5e3bb226f6c39ea2abb28f05b685b31f574654b"
+    "contentHash": "3460dacbeff3fca538ac7b3be5e3bb226f6c39ea2abb28f05b685b31f574654b",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xjgf2v",
@@ -10693,7 +10301,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "a02d6bbb52e7f2e0240f9512476aed170710cd0bb8691bf876522dc2c896e7e5"
+    "contentHash": "a02d6bbb52e7f2e0240f9512476aed170710cd0bb8691bf876522dc2c896e7e5",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xje3nv",
@@ -10708,7 +10322,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "1d5e90e14f6a671d7d86d5f2b29271a01132a02a54b1396c16ecb9abf25d2fe2"
+    "contentHash": "1d5e90e14f6a671d7d86d5f2b29271a01132a02a54b1396c16ecb9abf25d2fe2",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xjb5f6",
@@ -10723,7 +10343,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "cd929891544aa7a678949aa61b831e2dbc2c507bfe2acd1da096216d93770d71"
+    "contentHash": "cd929891544aa7a678949aa61b831e2dbc2c507bfe2acd1da096216d93770d71",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xj9rkj",
@@ -10738,7 +10364,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "66b41e948747acbf6ba3808cdad0339f6a503c8a1b2721a9dd60fa98e9475962"
+    "contentHash": "66b41e948747acbf6ba3808cdad0339f6a503c8a1b2721a9dd60fa98e9475962",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xj8foc",
@@ -10753,7 +10385,13 @@
     "sourceId": "askacademia-publish",
     "sourceKeyword": "publish",
     "sourceType": "subreddit_search",
-    "contentHash": "b1a446ee47e82e64bfbfeb7d93d22524d3fe8c742f57989f7febb8310e7e9e94"
+    "contentHash": "b1a446ee47e82e64bfbfeb7d93d22524d3fe8c742f57989f7febb8310e7e9e94",
+    "sourceKeywords": [
+      "publish"
+    ],
+    "sourceIds": [
+      "askacademia-publish"
+    ]
   },
   {
     "id": "reddit_1xix3ti",
@@ -15496,14 +15134,16 @@
     "publishedAt": "2026-11-04T16:03:55+00:00",
     "fetchedAt": "2026-11-05T21:14:00.896Z",
     "sourceId": "global-manuscript-rejected",
-    "sourceKeyword": "manuscript rejected",
+    "sourceKeyword": "manuscript rejected, publish",
     "sourceType": "global_search",
     "contentHash": "f2c072dcd7970531eb96d7e48543f40599824d0823974ef93a13cd9eaf1c9183",
     "sourceKeywords": [
-      "manuscript rejected"
+      "manuscript rejected",
+      "publish"
     ],
     "sourceIds": [
-      "global-manuscript-rejected"
+      "global-manuscript-rejected",
+      "askacademia-publish"
     ]
   },
   {
@@ -16835,14 +16475,16 @@
     "publishedAt": "2026-11-05T20:31:54+00:00",
     "fetchedAt": "2026-11-06T20:34:03.825Z",
     "sourceId": "global-predatory-journal",
-    "sourceKeyword": "predatory journal",
+    "sourceKeyword": "predatory journal, publish",
     "sourceType": "global_search",
     "contentHash": "acb7fb6fce2b6e738e1be5c137c83ff2bc41999f644a899ad5ef0c840fcd8177",
     "sourceKeywords": [
-      "predatory journal"
+      "predatory journal",
+      "publish"
     ],
     "sourceIds": [
-      "global-predatory-journal"
+      "global-predatory-journal",
+      "askacademia-publish"
     ]
   },
   {
@@ -17266,7 +16908,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "bb775c0cfc05b33e7baf59f33f8b92058a33493f6b8af3f0a1b99a62d9c5e6d8"
+    "contentHash": "bb775c0cfc05b33e7baf59f33f8b92058a33493f6b8af3f0a1b99a62d9c5e6d8",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xq07bq",
@@ -17281,7 +16927,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "a54a50494d66eb669008042f99f13db8b006eb682a85a67b11fd5938567efa1f"
+    "contentHash": "a54a50494d66eb669008042f99f13db8b006eb682a85a67b11fd5938567efa1f",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xq03yr",
@@ -17296,7 +16946,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "0af0a4ee4770e9c41c3da5f462e243c75a10b4db8f3a274581c6493d25fe39d8"
+    "contentHash": "0af0a4ee4770e9c41c3da5f462e243c75a10b4db8f3a274581c6493d25fe39d8",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpzmr2",
@@ -17311,7 +16965,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "3f79f1f4bf6509ec1b3b13d9f0ec55ac649e8c804f2f50b86735ff895fd93f2d"
+    "contentHash": "3f79f1f4bf6509ec1b3b13d9f0ec55ac649e8c804f2f50b86735ff895fd93f2d",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpz727",
@@ -17326,7 +16984,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "0021cd5ce3572f8d2c111bb29e6d1cff7b140c34273a24035319846ae59d0571"
+    "contentHash": "0021cd5ce3572f8d2c111bb29e6d1cff7b140c34273a24035319846ae59d0571",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpxh26",
@@ -17356,7 +17018,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "0f8915615dbe0f769762a8700afb02970ded05a4df5b06508d7525718d779fdd"
+    "contentHash": "0f8915615dbe0f769762a8700afb02970ded05a4df5b06508d7525718d779fdd",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpwez5",
@@ -17371,7 +17037,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "41c0f3fef05bc4193a3d9a8abd9d96970bce40793b7682431cf0bb55604a0f3f"
+    "contentHash": "41c0f3fef05bc4193a3d9a8abd9d96970bce40793b7682431cf0bb55604a0f3f",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpw0p9",
@@ -17386,7 +17056,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "ab24f99a842da70b6999566d3df45abaff0b9ddab43dde505d41eccb3dc5d31c"
+    "contentHash": "ab24f99a842da70b6999566d3df45abaff0b9ddab43dde505d41eccb3dc5d31c",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xptlkp",
@@ -17401,7 +17075,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "9f4b30066ef238e7fe444a80c7880603736216ab3f747c9ecf7fc2252ddd91cf"
+    "contentHash": "9f4b30066ef238e7fe444a80c7880603736216ab3f747c9ecf7fc2252ddd91cf",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpsweb",
@@ -17416,7 +17094,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "6b65889bcf9e0377336775b17cd995cfbb274b796b10fba04a16dda7e740cc7f"
+    "contentHash": "6b65889bcf9e0377336775b17cd995cfbb274b796b10fba04a16dda7e740cc7f",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpr3wb",
@@ -17431,7 +17113,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "089839acedfd357ecd046ccd44de180a36b4a471d9b2b39cd8ff4a913f8ec79e"
+    "contentHash": "089839acedfd357ecd046ccd44de180a36b4a471d9b2b39cd8ff4a913f8ec79e",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpqx1s",
@@ -17446,7 +17132,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "7660e23cb132081ae93dfa659a048378c37e8be1cc355c6065ffbf99e983cdb3"
+    "contentHash": "7660e23cb132081ae93dfa659a048378c37e8be1cc355c6065ffbf99e983cdb3",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpqln6",
@@ -17461,7 +17151,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "48267fdbd69cfbc15862ff9a2c0096b7eba8df58e6c2d7435ba7abae8bcfa785"
+    "contentHash": "48267fdbd69cfbc15862ff9a2c0096b7eba8df58e6c2d7435ba7abae8bcfa785",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xpppg5",
@@ -17476,7 +17170,11 @@
     "sourceId": "phd-new",
     "sourceKeyword": "",
     "sourceType": "subreddit_new",
-    "contentHash": "163f430722f0919e7a710157a33f3e122705eb6c6e53ed7c96620f75f641a872"
+    "contentHash": "163f430722f0919e7a710157a33f3e122705eb6c6e53ed7c96620f75f641a872",
+    "sourceKeywords": [],
+    "sourceIds": [
+      "phd-new"
+    ]
   },
   {
     "id": "reddit_1xppfpk",
@@ -17537,5 +17235,755 @@
     "sourceKeyword": "predatory journal",
     "sourceType": "global_search",
     "contentHash": "058ac4ff2a6309533b5b489ecc9903c644b16f4a2bc5015a6e4091208d0a9e23"
+  },
+  {
+    "id": "reddit_1xqctqy",
+    "redditId": "1xqctqy",
+    "title": "Has anyone regretted quitting their PhD?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Has anyone quit their PhD and regretted it? Or quit and then felt able to go back to it?</p> <p>I’m currently doing my Sociology PhD in the UK and am struggling with motivation and interest in it. I’ve taken two suspensions of a few months and then come back due to health issues. I would be excited to come back, but then just feel overwhelmed and behind.</p> <p>I’m trying to do reading my supervisors recommended (they are wonderful and supportive supervisors), but just can’t take anything in and don’t care about what I’m reading either. They gave me another three weeks to work on this piece and the “mini” deadline is Monday. I can’t seem to stop leaving it till late, and whilst that has previously worked out okay for my undergrad and masters, I’m not doing so well with that way of working now.</p> <p>I feel like I should quit, but then feel like it would’ve been a waste of time and money if I do and that I’d be letting people down.</p> <p>But I also know if I quit and regret it in the future and decide to try again, I know it’s unlikely I’d be accepted if I quit this one.</p> <p>Does anyone have any advice? Anyone who’s quit or quit then gone back? I don’t know what I should do.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Stitch_Parx\"> /u/Stitch_Parx </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xqctqy/has_anyone_regretted_quitting_their_phd/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xqctqy/has_anyone_regretted_quitting_their_phd/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xqctqy/has_anyone_regretted_quitting_their_phd/",
+    "subreddit": "r/PhD",
+    "author": "/u/Stitch_Parx",
+    "publishedAt": "2026-11-07T18:09:19+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.993Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "cb329538348b597ab841045d3a64791dfd5f9f3adcd117a921a6acf4ac03958b"
+  },
+  {
+    "id": "reddit_1xqaaqm",
+    "redditId": "1xqaaqm",
+    "title": "How can I get a pass from my advisor’s AI",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Ph.D student in STEM field here. I sent my manuscript via email to my advisor a few days ago. Because he is busy for this week and the next week, i did not expect him to read my manuscript right now.</p> <p>But he sent me a short reply quite quickly, saying “I haven’t read your manuscript, but AI pointed our so many things in your manuscript. So try to make it has a better flow […]”</p> <p>It literally means that (1) he hasn’t read any single word in my manuscript, (2) he fed it right into an AI, (3) he did not carefully took a look at its reply, (4) but as the AI’s reply was long, (5) he just concluded that I should revise my maniscript. I can understand he hasn’t read any single word in this period, but what is this situation?</p> <p>It was frustrating and embarrasing to receive such an email. He used to read his student’s manuscript until 2025 including my other manuscript, even in an early stage. In 2026, at some pont, he has been started to rely on AI more frequently. Giving his student AI-generated effortless feedback is an example. He didn’t give any AI reply to me this time lol.</p> <p>I use AI to check some basic writing mistakes (grammar, typos, notational change during writing), but I order it not to change many things. I want to train myself, so I write my own sentences with much efforts while AI only check my mistakes.</p> <p>He told me today, why I didn’t not check the whole manuscript with AI. I was disappointed that he uses AI for such a thing. I don’t even know what to check for this time. Should I just give the whole maniscript to an AI and critically check it?</p> <p>How can I get a pass from my advisor’s AI?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Planck_Plankton\"> /u/Planck_Plankton </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xqaaqm/how_can_i_get_a_pass_from_my_advisors_ai/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xqaaqm/how_can_i_get_a_pass_from_my_advisors_ai/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xqaaqm/how_can_i_get_a_pass_from_my_advisors_ai/",
+    "subreddit": "r/PhD",
+    "author": "/u/Planck_Plankton",
+    "publishedAt": "2026-11-07T16:22:58+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.993Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "adaa8ac7747de95c2f1d30ebcdb820e944874bd406eedeeff1eb4cb18cec33e2"
+  },
+  {
+    "id": "reddit_1xq8l40",
+    "redditId": "1xq8l40",
+    "title": "Depression blues",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi All,</p> <p>I started my PhD this year and have already defended my RP. I am working full time in corporate with the devils own sibling as a manager that is a narcissist. This year she made my life hell to put it mildly. I have been hospitalised and diagnosed with severe depression and generalised anxiety which is crippling. I am currently on temporary incapacity until January and battling to find the motivation to even read at the moment.<br/> The future looks dim from a work perspective but I really do want to continue and complete my PhD.</p> <p>I just want to know if there is anyone on here that have experienced the same illness while doing their PhD managed to complete it and how was the journey for you?<br/> Is there any advice that can be provided in how to manage my condition to enable me to continue?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ok_Kick_5829\"> /u/Ok_Kick_5829 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq8l40/depression_blues/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq8l40/depression_blues/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq8l40/depression_blues/",
+    "subreddit": "r/PhD",
+    "author": "/u/Ok_Kick_5829",
+    "publishedAt": "2026-11-07T15:10:00+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.993Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "85ad39716c001b13c4e0a1abfd0879ffe436896418c996ca4d664536eaccabd2"
+  },
+  {
+    "id": "reddit_1xq5bvt",
+    "redditId": "1xq5bvt",
+    "title": "PhD at a reputable research institute abroad vs. industrial PhD at a low-ranked university back home (+ military service)",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm in my mid-20s, finishing my MSc in a CS-related field, with previous industry experience and several research publications in AI/ML and telecommunications. I'm currently doing a 6-month internship at a reputable European research institute.</p> <p>My long-term goal is to work in industrial R&amp;D, ideally as a research scientist, rather than pursue an academic career (although I am not sure yet).</p> <p>I'm considering two paths:</p> <p><strong>Option 1: PhD abroad</strong></p> <p>Potentially continue at my current research institute or apply to other reputable European institutions. This would likely provide a stronger research environment, better networking, and more international career opportunities.</p> <p>However, it would mean spending another 4–5 years away from my partner, family, and friends. I don't necessarily want to settle abroad permanently.</p> <p><strong>Option 2: Industrial PhD back home</strong></p> <p>I have the possibility of pursuing an industrial PhD in collaboration with a large telecommunications company and a local university.</p> <p>The university isn't particularly reputable or well-ranked internationally, which concerns me. However, I personally know the professor who would supervise me, we get along very well, and our research interests align closely. The industry collaboration could also provide valuable practical experience.</p> <p>I'd be close to my partner and family, but I'm worried that the university's reputation might limit my future opportunities, especially if I eventually want to work in R&amp;D abroad or at home.</p> <p><strong>Military service issue:</strong></p> <p>I also have mandatory military service to complete in my home country. My deferment expires in 2028, potentially extendable to 2031 if I pursue a PhD.</p> <p>I could complete it before starting a PhD, interrupting my current research momentum, or postpone it until after my PhD, potentially disrupting my career at an even worse time. Service would last several months to roughly a year.</p> <p>If I choose to do the phd at home, I would first go to the army, then do the phd with the supervisor I know and would be done in 4 years max. If I choose the abroad path, I would be done in 5.5-6 years with both military service and the phd.</p> <p><strong>My dilemma</strong></p> <p>I want to build a strong research career, but I also value being close to family and friends. I'm unsure whether the career benefits of a prestigious PhD abroad justify spending several more years away.</p> <p>I'd appreciate opinions on three things:</p> <p>How much does university prestige matter for an industrial R&amp;D/research scientist career compared to publications, skills, and industry experience?</p> <p>Would an industrial PhD at a relatively unknown university be a significant disadvantage, even with a good supervisor and industry collaboration?</p> <p>How would you handle mandatory military service in this situation: get it over with before the PhD or postpone it?</p> <p>I'd especially appreciate hearing from people who have faced similar decisions.</p> <p>PS: I used AI to format and organise this post, English is not my first language and it was complicating organizing this much information on my own :)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/JerryOrig21\"> /u/JerryOrig21 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq5bvt/phd_at_a_reputable_research_institute_abroad_vs/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq5bvt/phd_at_a_reputable_research_institute_abroad_vs/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq5bvt/phd_at_a_reputable_research_institute_abroad_vs/",
+    "subreddit": "r/PhD",
+    "author": "/u/JerryOrig21",
+    "publishedAt": "2026-11-07T12:34:26+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.993Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "ce2c84eca28984c51d726029e8a1bdd1acf95df9a37c4d32421782b64bbd6104"
+  },
+  {
+    "id": "reddit_1xq4o44",
+    "redditId": "1xq4o44",
+    "title": "17F, please help me out!!",
+    "content": "<table> <tr><td> <a href=\"https://www.reddit.com/r/PhD/comments/1xq4o44/17f_please_help_me_out/\"> <img src=\"https://preview.redd.it/1zgul0ykj60i1.jpeg?width=640&amp;crop=smart&amp;auto=webp&amp;s=f43258f866c69fb3803a55a51ec3166e0e641a6e\" alt=\"17F, please help me out!!\" title=\"17F, please help me out!!\" /> </a> </td><td> <!-- SC_OFF --><div class=\"md\"><p>17F, I'm currently applying for scholarships. I'd really appreciate it if anyone could help me by requesting two Duolingo English Test vouchers for Free.</p> <p>It just requires the institutional email, and any teacher/professor/PhD student can request for it in behalf of a student from Duolingo access </p> <p>I've already taken the DET practice test and scored 120/160.</p> <p>Unfortunately I cannot apply to the scholarships without DET</p> <p>Thank you!!!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/cinnamonstvr\"> /u/cinnamonstvr </a> <br/> <span><a href=\"https://i.redd.it/1zgul0ykj60i1.jpeg\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq4o44/17f_please_help_me_out/\">[comments]</a></span> </td></tr></table>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq4o44/17f_please_help_me_out/",
+    "subreddit": "r/PhD",
+    "author": "/u/cinnamonstvr",
+    "publishedAt": "2026-11-07T11:57:17+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.993Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "05c3fa7a6cbe6dc37589e1413d14802513e37188662b3f67ea72cac0a013fe69"
+  },
+  {
+    "id": "reddit_1xq4e1j",
+    "redditId": "1xq4e1j",
+    "title": "MD to PhD -&gt; and then what?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>hi! i'm getting my MD in June 2027, still in doubts about residency...</p> <p>throughout med school i participated in a couple of research projects on pain management and found PI whom I interested in. but only kindaa(???) what advice would you give to someone who is looking into programs...</p> <p>would it be a mistake to go into phd when not completely sure if i really want it? i'm kinda cool-ish with research part and everything but idk...</p> <p>im also not sure about my future plans, med school got it covered pretty much, yet moving into academia seems terrifying.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/sheturned21andwildin\"> /u/sheturned21andwildin </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq4e1j/md_to_phd_and_then_what/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq4e1j/md_to_phd_and_then_what/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq4e1j/md_to_phd_and_then_what/",
+    "subreddit": "r/PhD",
+    "author": "/u/sheturned21andwildin",
+    "publishedAt": "2026-11-07T11:40:07+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.994Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "1c95250f0064029f578c5c7acdf417e6bf5bf1f5e5a46ffd4e99dcf60183d5eb"
+  },
+  {
+    "id": "reddit_1xq47qz",
+    "redditId": "1xq47qz",
+    "title": "How easy is it to go back to abroad if I decide to come back to India for a few years?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey everyone! </p> <p>I am currently on my final year of PhD in a European country. After finishing my defence, ideally I would like to continue working here but due to some issue, I have to go back to India for a couple of years. My idea is to come back after 4–5 years of working there. I am just not sure whether it would be a wise decision. Any kind of suggestion is appreciated.</p> <p>P.S. I am doing a PhD in a tech-related field.</p> <p>Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Cold-stoner-928\"> /u/Cold-stoner-928 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq47qz/how_easy_is_it_to_go_back_to_abroad_if_i_decide/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq47qz/how_easy_is_it_to_go_back_to_abroad_if_i_decide/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq47qz/how_easy_is_it_to_go_back_to_abroad_if_i_decide/",
+    "subreddit": "r/PhD",
+    "author": "/u/Cold-stoner-928",
+    "publishedAt": "2026-11-07T11:28:58+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.994Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "fa858e604727634f5ead5a6e3aef68a2b77882b3005b9c7afeb0816f4118bdfa"
+  },
+  {
+    "id": "reddit_1xq3y50",
+    "redditId": "1xq3y50",
+    "title": "What’s the real sustainable foundation for doing a PhD, and what are the honest reasons not to?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p><strong>What motivation did you start with, and did it last?</strong> Your <strong>head, heart and your gut</strong>. I know these might sound odd, but I was listening to a YouTube video by Dr Tara Swart and she was talking about how our heart, mind and gut need to aligned when making a big decision and acting successfully towards achieving it.</p> <p><strong></strong> : What reason did you have going in? Was it a question you couldn’t stop thinking about, your career needed it, funding, a supervisor you wanted to work with? Did that reason still hold up a few years in?</p> <p> : What did you care about at the start, and was it still what kept you going when it got hard? Or, Did your reason for doing it change along the way?</p> <p>✨ : Did you just know at the start, or did you go in unsure? Looking back, was that feeling a good guide? What was your intuition telling you?</p> <p><strong>What should you be sure of before saying yes and dedicating years of your life to it ?</strong> About yourself, and about practical things like supervisor, funding and timing.</p> <p><strong>What kept you going no matter what?</strong></p> <p><strong>The honest reasons not to:</strong> Which motivations burned out for you or people you know?</p> <p><strong>I’d really appreciate some reflective answers if you have the time, as I know it can be a personal thing to share.</strong></p> <p>Thanks <strong> </strong></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/sunny_plumeria\"> /u/sunny_plumeria </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq3y50/whats_the_real_sustainable_foundation_for_doing_a/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq3y50/whats_the_real_sustainable_foundation_for_doing_a/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq3y50/whats_the_real_sustainable_foundation_for_doing_a/",
+    "subreddit": "r/PhD",
+    "author": "/u/sunny_plumeria",
+    "publishedAt": "2026-11-07T11:11:55+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.994Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "75a47ca8999104d534b9d32fb84d2cb1e7e7ebd2edcc1aad0092a7fdcb803d2f"
+  },
+  {
+    "id": "reddit_1xq30sk",
+    "redditId": "1xq30sk",
+    "title": "Need advice on Feedback - 4,5 months to submission",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Let me just say this forum has been my lifeline. Thank you for everything so far. </p> <p>Field: humanities. Country: Germany. Type of work: monograph. </p> <p>After many months, my supervisor finally gave me feedback on the 120 pages I sent to them. </p> <p>They gave me feedback on one sentence I wrote in the middle of a page in the middle of a section. This was the only feedback and in this feedback they suggested I changed my style for the entire work. The feedback makes no sense at all. I tried to understand what they wanted because the only thing I want is to finish my PhD and go home, but the more I asked, the unclerer it became. However, what they said suggested I should rewrite everything even though there was no problem either with the material, the research or with my writing as such. There was no comment about the work being badly written, but rather that my supervisor would have written it differently. </p> <p>I am in Germany, so I need them to like my work above anything else. In a sense, they have the key to my freedom. </p> <p>I will write them an email suggesting a date for submission due to my funding ending very soon and about what I can do until then and ask if it would be enough. I am afraid they will see this as a confrontation. Well, I need help. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Barragens\"> /u/Barragens </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq30sk/need_advice_on_feedback_45_months_to_submission/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq30sk/need_advice_on_feedback_45_months_to_submission/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq30sk/need_advice_on_feedback_45_months_to_submission/",
+    "subreddit": "r/PhD",
+    "author": "/u/Barragens",
+    "publishedAt": "2026-11-07T10:11:34+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.994Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "67db2a62d4a5c6cdda26338ac6101fa84dd130423095d045fabe7532e44042bf"
+  },
+  {
+    "id": "reddit_1xq2y12",
+    "redditId": "1xq2y12",
+    "title": "My first first-author paper language improvement",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone, I am a first-year PhD student in Europe. I am happy to announce I finished my first first-author paper and sent it to a really good journal in my field. I got an email back that it's a technical pass, but that the language needs improvement and after revision I can send it back. This was sent to me 2 days after submission, so I guess they used some tool for the language check. </p> <p>If something similar happened to you, how did you proceed? Do you have any hacks how to improve language (English isn't my native), preferably without the use of AI tools? Do I read through the paper and break long sentences into shorter ones? </p> <p>Thank you for any advice. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/_W4t4rI_\"> /u/_W4t4rI_ </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq2y12/my_first_firstauthor_paper_language_improvement/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq2y12/my_first_firstauthor_paper_language_improvement/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq2y12/my_first_firstauthor_paper_language_improvement/",
+    "subreddit": "r/PhD",
+    "author": "/u/_W4t4rI_",
+    "publishedAt": "2026-11-07T10:06:18+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.994Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "a041626c076c51b265f3b09cf20de6409d7a07c8f4bfa7dfbe4e5a0eaa1fcf76"
+  },
+  {
+    "id": "reddit_1xq2hxq",
+    "redditId": "1xq2hxq",
+    "title": "urgent grad school advice",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>i’ve been in a neuroscience masters program for a year and a half now, and projected to defend in the spring and graduate. however, i have an awful relationship with my PI. she has gone so far as to say that the masters program doesn’t care about me, and i’m only there for money. and while i understand that there’s some honesty to that, its definitely demotivating. </p> <p>i feel like i have been so degraded by her that i have lost all sense of self worth. i feel so stupid, like every single thing i do is a mistake.</p> <p>i met with the director of the program a while back about possibly switching mentors, but decided it be best for me to stay with her since i’m so close. </p> <p>he advised me to have a committee meeting and to be prepared as they are formatted like comps. so i studied and read and prepared every single day from the second i woke up to the second i went to sleep. </p> <p>i had my committee meeting today and it was the most embarrassing thing i’ve ever went through. i could barely answer a single question they asked me. i just didn’t understand or i was so insecure about being wrong and looking stupid that i would just say “i don’t know.” it’s so odd to me because i’ve never struggled with academics. </p> <p>i don’t want to continue on in this field. i want to drop out so bad. i’m struggling to find rationale to because Im already $25,000 in student debt, and what will all my friends and family think of me? Or am I just too sensitive? Or am i just trying to run away? </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/BrainTop5256\"> /u/BrainTop5256 </a> <br/> <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq2hxq/urgent_grad_school_advice/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/PhD/comments/1xq2hxq/urgent_grad_school_advice/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/PhD/comments/1xq2hxq/urgent_grad_school_advice/",
+    "subreddit": "r/PhD",
+    "author": "/u/BrainTop5256",
+    "publishedAt": "2026-11-07T09:36:37+00:00",
+    "fetchedAt": "2026-11-07T19:01:14.994Z",
+    "sourceId": "phd-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "aefeadc1bc29c76cf2d1a79bb703e06a6ed957db9d5f36ae82fbb3fc24ef4a92"
+  },
+  {
+    "id": "reddit_1xqcr6u",
+    "redditId": "1xqcr6u",
+    "title": "I compared bwa-mem, minibwa, bwa-mem3 and Parabricks fq2bam on the same WGS sample: 20.8 h vs 4.9 h vs 3.0 h vs 3.2 h",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/79bass\"> /u/79bass </a> <br/> <span><a href=\"https://genomic.social/@frafav/117575881933366676\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xqcr6u/i_compared_bwamem_minibwa_bwamem3_and_parabricks/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xqcr6u/i_compared_bwamem_minibwa_bwamem3_and_parabricks/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/79bass",
+    "publishedAt": "2026-11-07T18:06:09+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.790Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "000d76db3f8f645a006cc2d11cb00e9221348e2130444f40be4e0afcdaa9dfdb"
+  },
+  {
+    "id": "reddit_1xq18xx",
+    "redditId": "1xq18xx",
+    "title": "Using LLMs for sensitive data",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>If you're working in pharma/biotech industry and you use claude or any other of the frontier LLMs for coding and data analysis, are you somehow masking sensitive research information? I mean things like protein names, gene names, compounds that you are working with, out of fear that the company hosting the LLM could steal your data.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ok-Pen2784\"> /u/Ok-Pen2784 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xq18xx/using_llms_for_sensitive_data/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xq18xx/using_llms_for_sensitive_data/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xq18xx/using_llms_for_sensitive_data/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Ok-Pen2784",
+    "publishedAt": "2026-11-07T08:14:25+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.790Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "11603c87f7c05fe2d643bd9f896541f361f04cdc039c449d8b223d2aeaff102e"
+  },
+  {
+    "id": "reddit_1xpp8gd",
+    "redditId": "1xpp8gd",
+    "title": "Digital Pen DREAM Challenge: predict cognitive assessment outcomes from digital clock drawings (open now)",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi all! We just opened registration for the Digital Pen DREAM Challenge at Sage Bionetworks.</p> <p>The task is to predict cognitive assessment outcomes from digital clock drawing test data. Participants draw a clock with a digital pen that records every stroke, its timing, and pen pressure. That makes it a rich sequential/time-series problem with a lot of room for feature engineering and deep learning.</p> <p>The data comes from four large aging and dementia studies: the Framingham Heart Study, the Rush Alzheimer's Disease Center cohorts, the Long Life Family Study, and Integrative Longevity Omics. The goal is earlier, scalable detection of cognitive decline.</p> <p>Key dates:</p> <p>- Challenge is not open!</p> <p>- Kickoff webinar: Nov 18, 2026, 9 AM PT</p> <p>- Winners announced: Mar 26, 2027</p> <p>Top performers will be invited to co-author the challenge overview paper and will have the opportunity to present their results at a major conference in 2027. You can join solo or as a team.</p> <p>Details and registration: <a href=\"https://www.synapse.org/Synapse:syn68634259/wiki/633407\">https://www.synapse.org/Synapse:syn68634259/wiki/633407</a></p> <p>Happy to answer questions in the comments!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Weird-Spray-4180\"> /u/Weird-Spray-4180 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xpp8gd/digital_pen_dream_challenge_predict_cognitive/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xpp8gd/digital_pen_dream_challenge_predict_cognitive/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xpp8gd/digital_pen_dream_challenge_predict_cognitive/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Weird-Spray-4180",
+    "publishedAt": "2026-11-06T21:50:25+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "40f8c2c65d50783ca46d619e9d3bcbe7e2e51a53575118323558afdb441872eb"
+  },
+  {
+    "id": "reddit_1xpleu2",
+    "redditId": "1xpleu2",
+    "title": "Help with how to filter which genomes to use for a project",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>ok, for context, I'm a biotech engineering student with no previous knowledge about bioinformatics but for a single class I'm taking right know and a class I took about c++. I started an investigation project (similar to a dissertation) about genome mining to identify BGC's, and i found a bioproject with 45 genomes of my interest, but I do not know how to filter these genomes and choose the best ones for my project. I do have an assesor and she has been guiding me through this, but when i asked her how to know which genome to use she just said \"with a filtering process\" and left :( so I'm pretty lost about how to do this. Any help is welcome, and also, any website or book about which tools to use and how would be very appreciated too. Thanks and have a nice day! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Still-Information-97\"> /u/Still-Information-97 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xpleu2/help_with_how_to_filter_which_genomes_to_use_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xpleu2/help_with_how_to_filter_which_genomes_to_use_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xpleu2/help_with_how_to_filter_which_genomes_to_use_for/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Still-Information-97",
+    "publishedAt": "2026-11-06T19:13:25+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "afddb7f7857e476ca95b84ccb8c496c492518369d5cf2e734906ece0ea1838ea"
+  },
+  {
+    "id": "reddit_1xpfto0",
+    "redditId": "1xpfto0",
+    "title": "Hyperparameter Optimization in Deep Learning Models for Protein-Protein Interaction Link Prediction",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone,</p> <p>My co-author and I just published our research on making deep learning models more efficient for PPI networks.</p> <p>Tuning DL models for complex biological data often carries massive computational overhead. In this paper, we systematically evaluated different HPO strategies to see which ones best balance training time and prediction accuracy for protein interactions.</p> <p>Always happy to connect with others in the field, so if anyone wants to chat about ML in computational biology, shoot me a DM!</p> <p>Full text here: <a href=\"https://ieeexplore.ieee.org/document/11731552\">https://ieeexplore.ieee.org/document/11731552</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/lolzmila\"> /u/lolzmila </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xpfto0/hyperparameter_optimization_in_deep_learning/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xpfto0/hyperparameter_optimization_in_deep_learning/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xpfto0/hyperparameter_optimization_in_deep_learning/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/lolzmila",
+    "publishedAt": "2026-11-06T15:37:15+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "cbb5977dcfecf7592bf1c4e073b3ac4eda7d3e079e94975813ddaa2926dc6023"
+  },
+  {
+    "id": "reddit_1xpe9sd",
+    "redditId": "1xpe9sd",
+    "title": "RosettaDiffusion4",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/Appropriate_Food_132\"> /u/Appropriate_Food_132 </a> <br/> <span><a href=\"/r/AIProteins/comments/1xpe9kg/rosettadiffusion4/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xpe9sd/rosettadiffusion4/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xpe9sd/rosettadiffusion4/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Appropriate_Food_132",
+    "publishedAt": "2026-11-06T14:33:12+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "da806fcc911dcf662dd964f96d7baaf562b93822ad9deeb145b7b0be9cf712ac"
+  },
+  {
+    "id": "reddit_1xp7s60",
+    "redditId": "1xp7s60",
+    "title": "Need help analyzing DEP data and binding protein",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi, I don't have any experience doing proteomic analysis. If you could please help advise me on how to analyze the data, please. I am struggling too much.....</p> <p>So, I have 72 differentially expressed proteins; the whole service is provided by a bio company, along with KEGG and pathway enrichment analysis. However, it is mostly cancer-related, and what I want to figure out with these data is heavy metal neuronal toxicity. I don't know how to use this to prove my point, so to speak. So, I was thinking about how I can analyze the data myself and draw a fairly comprehensive picture.</p> <p>Other than that, I also have compound-binding proteins. How do I put these two big data sets together and connect them? Because right off the bat, everything seems so random, here and there, difficult to classify, and I dont have what it takes to connect everything togather.</p> <p>I am a chemist, struggling in the world of biology. If you could please have some suggestions. Because I don't think I know what I am doing. Please.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Adventurous-Dog4255\"> /u/Adventurous-Dog4255 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xp7s60/need_help_analyzing_dep_data_and_binding_protein/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xp7s60/need_help_analyzing_dep_data_and_binding_protein/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xp7s60/need_help_analyzing_dep_data_and_binding_protein/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Adventurous-Dog4255",
+    "publishedAt": "2026-11-06T08:33:06+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "9d39f1422ea41870b7c94b4a4693543ac23fe0a6ae714b73871147ac6f85eb5b"
+  },
+  {
+    "id": "reddit_1xp0hfs",
+    "redditId": "1xp0hfs",
+    "title": "I have a question about a recently published paper: High false sign rates in transcriptome-wide association studies",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/dampew\"> /u/dampew </a> <br/> <span><a href=\"https://www.nature.com/articles/s41588-026-02796-4\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xp0hfs/i_have_a_question_about_a_recently_published/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xp0hfs/i_have_a_question_about_a_recently_published/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/dampew",
+    "publishedAt": "2026-11-06T01:40:23+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "9bc75d09a41498a652d667fd397eb444216cd8a759d87f6196953ebe0ad3b47b"
+  },
+  {
+    "id": "reddit_1xov57d",
+    "redditId": "1xov57d",
+    "title": "Drybench: a connected dry-lab toolkit for wet-lab people. Assays, primers, plasmids, molecules, all in the browser. Completely free, no sign-up.",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/AbelMate\"> /u/AbelMate </a> <br/> <span><a href=\"/r/labrats/comments/1xoumc5/drybench_a_connected_drylab_toolkit_for_wetlab/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xov57d/drybench_a_connected_drylab_toolkit_for_wetlab/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xov57d/drybench_a_connected_drylab_toolkit_for_wetlab/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/AbelMate",
+    "publishedAt": "2026-11-05T21:39:58+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "0e0bb1f668c5f1407cad84c3702f7e85e0a8c69be4361d54ea9b25ae67fe00d0"
+  },
+  {
+    "id": "reddit_1xoux5r",
+    "redditId": "1xoux5r",
+    "title": "GNPS2 – Can't upload large Bruker timsTOF mzML files (~17 GB). Any workaround?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone!</p> <p>I'm trying to upload my LC-MS/MS data to GNPS2, but I'm running into some problems with the file upload process.</p> <p>My raw data were acquired using a Bruker timsTOF instrument and are in the <code>.d</code> format. I followed the GNPS2 documentation for Bruker data conversion, but I couldn't get access to the recommended software (CompassXport). Instead, I used ProteoWizard MSConvert with the exact parameters recommended in the GNPS2 documentation.</p> <p>The conversion worked, but the resulting <code>.mzML</code> files are quite large (around 17 GB each). When I try to upload them directly to GNPS2, the upload seems to finish, but I get an error at the very end.</p> <p>I've already tried a few alternatives:</p> <ul> <li><strong>ZIP/GZ compression:</strong> The compressed files upload successfully, but GNPS2 doesn't accept them when submitting a workflow because it requires <code>.mzML</code> files.</li> <li><strong>FileZilla/Cyberduck:</strong> I tried both, but I don't have SFTP access.</li> <li><strong>GNPS2 File Browser:</strong> It says the files are too large.</li> <li><strong>GNPS2 Desktop:</strong> Also tried this, but it didn't work either.</li> </ul> <p>Has anyone experienced something similar when uploading large Bruker datasets?</p> <p>Is there another way to transfer these files to GNPS2? Could uploading them to MassIVE first and then accessing them through GNPS2 be a solution?</p> <p>I'd really appreciate any suggestions. Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/hope_atleast\"> /u/hope_atleast </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xoux5r/gnps2_cant_upload_large_bruker_timstof_mzml_files/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xoux5r/gnps2_cant_upload_large_bruker_timstof_mzml_files/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xoux5r/gnps2_cant_upload_large_bruker_timstof_mzml_files/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/hope_atleast",
+    "publishedAt": "2026-11-05T21:31:16+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "6fb5b2e0ea574dc3470faf731217f25263b97af15fc3080981c9ee7ae2182156"
+  },
+  {
+    "id": "reddit_1xoo81y",
+    "redditId": "1xoo81y",
+    "title": "CRediT Taxonomy; Dispute with Second Author",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>My classmate is the second author for a paper that's just published, for which I am the first author.</p> <p>Prior to publication, she emailed both myself and my supervisor that she thought my supervisor promised her co-first authorship. I was shocked and taken aback, and my supervisor told her he never promised her that.</p> <p>Then, she tried getting more recognitions through the <strong><em>CRediT</em></strong> Taxonomy <strong>(see the enclosed link to the screenshot)</strong>; this is something new that the journal uses in place of the customized contribution statement. My supervisor, who didn't seem to look into the definitions of these roles, shockingly approved it.</p> <p>In the currently published version, the <strong><em>CRediT</em></strong> Taxonomy accurately reflects her contribution, but my supervisor requested me to change back to the version that he approved, purely because he promised her.</p> <p>While I am extremely upset that she got a free ride, I didn't argue with my supervisor further since I don't want to cause further conflicts.</p> <p><strong>My question is:</strong> how would this impact my future post-doc applications or industry positions? How would academics view my contributions generally with the soon-to-be-updated version?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/False-Holiday-3592\"> /u/False-Holiday-3592 </a> <br/> <span><a href=\"https://drive.google.com/file/d/18xKx-p-Xv9PoVNm0ezcvlSJ7EBZtgd1l/view?usp=sharing\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xoo81y/credit_taxonomy_dispute_with_second_author/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xoo81y/credit_taxonomy_dispute_with_second_author/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/False-Holiday-3592",
+    "publishedAt": "2026-11-05T17:11:51+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "a78a886c82daff237fbc7480a2635673af245fbcf2c3d0864ef7f945f5db4ffa"
+  },
+  {
+    "id": "reddit_1xokh5a",
+    "redditId": "1xokh5a",
+    "title": "brisc: a multithreaded toolkit for single-cell analysis",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Thrilled to release brisc, a full-fledged single-cell toolkit that runs multithreaded at 100x the speed of Scanpy and Seurat on tens of millions of cells.</p> <p>Website: <a href=\"https://brisc.run\">https://brisc.run</a></p> <p>Code: <a href=\"https://github.com/briscverse/brisc\">https://github.com/briscverse/brisc</a></p> <p>Preprint: <a href=\"https://www.biorxiv.org/content/10.64898/2026.11.03.764120v1\">https://www.biorxiv.org/content/10.64898/2026.11.03.764120v1</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/briscverse\"> /u/briscverse </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xokh5a/brisc_a_multithreaded_toolkit_for_singlecell/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xokh5a/brisc_a_multithreaded_toolkit_for_singlecell/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xokh5a/brisc_a_multithreaded_toolkit_for_singlecell/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/briscverse",
+    "publishedAt": "2026-11-05T14:46:53+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "cd6d356c85c3efa6404719151a26e3b284e50dc6df30dcc44b0e2ee30840341e"
+  },
+  {
+    "id": "reddit_1xoit6j",
+    "redditId": "1xoit6j",
+    "title": "Looking for Book recommendation",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I asked this question some time ago, hoping now tha someone has some ideas: </p> <p>I really enjoyed „Statistical Rethinking“ by Richard McElreath.</p> <p>Is there something like this for bioinformatics/genetics that one can read from front to back and not like a text or reference book? Something that you can take with you and have a read from now and then?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Salty-File-3334\"> /u/Salty-File-3334 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xoit6j/looking_for_book_recommendation/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xoit6j/looking_for_book_recommendation/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xoit6j/looking_for_book_recommendation/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Salty-File-3334",
+    "publishedAt": "2026-11-05T13:36:11+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "259c97f920d9fc7a95bc36bf0cdcd8a501164561eface4296ba9c0d3b6da8d18"
+  },
+  {
+    "id": "reddit_1xohedx",
+    "redditId": "1xohedx",
+    "title": "Zebrafish Brain single nuclei RNA-seq",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey smart people.<br/> I am analyzing single nuclei RNA-seq from pooled zebrafish. I have 2 groups, A, B and Control. I have 2 samples per group (each samples has 1male + 1 female brains, therefore pools and I cannot dissociate them). I already did the preprocessing and doublet detection per sample. </p> <p>I have a couple of questions:</p> <p>1 - should I do SCTransform on each sample or after harmonizing all samples ?</p> <p>2 - I wanted to see if there is an enriched population of cells and I used this: <a href=\"https://github.com/rpolicastro/scProportionTest\">https://github.com/rpolicastro/scProportionTest</a> (\"This R library facilitates the analysis of the difference between the proprotion of cells in clusters between two scRNA-seq samples. A permutation test is used to calculate a p-value for each cluster, and a confidence interval for the magnitude difference is returned via bootstrapping.\"). Do you have any suggestion how to think about differential abbundance, any tips or nucances, and any specific packages?</p> <p>3 - I did not remove mitocondrial and ribossomal cells, (i removed the ones that have high % but not all cells ) and now I have a cluster of cells with ribossomal markers. Additionaly zebrafish blood cels have nuclei so I have a cluster of cells marked by hemoglobin cells. My question is, should I simply remove these clusters now OR should i regress out this genes? or do something else. Also because these 2 clusters (one with hemoglobin cells and other with ribossomal markers) give me very significant results in the results from question 2 (scProportionTest). </p> <p>I know there is a lot of packages but its so many that i am starting to get confused. </p> <p>Thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Hot-Entrepreneur7730\"> /u/Hot-Entrepreneur7730 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xohedx/zebrafish_brain_single_nuclei_rnaseq/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xohedx/zebrafish_brain_single_nuclei_rnaseq/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xohedx/zebrafish_brain_single_nuclei_rnaseq/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Hot-Entrepreneur7730",
+    "publishedAt": "2026-11-05T12:28:06+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "f6026403f5d2a8500ba214053b9abf6659c213e4406c6a2daa4ae7cb4bf0992e"
+  },
+  {
+    "id": "reddit_1xo8qk4",
+    "redditId": "1xo8qk4",
+    "title": "Computational Biology PhD student - searching for the most optimal biological coding agent",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi everyone! I’m a first-year computational biology PhD student in the US, and I’d appreciate some advice from people using coding agents for research.<br/> I’ve been impressed by how quickly these tools can turn a well-explained idea into working code. For me, a good agent creates as little friction as possible between the questions I want to explore, the approaches I want to try, and their implementation.</p> <p>I’ve also found it really valuable when an agent disagrees with an approach I suggest, catches a questionable assumption, or recommends adjusting parameters based on the biology of the question. I’m still learning, and that kind of back-and-forth can be as useful as the code itself.</p> <p>For the past few months, I’ve been splitting the cost of a $200 ChatGPT subscription with some friends. I was essentially the only person using Codex, so the available usage and resets let me use Astra 6 Ultra for pretty much everything. I realize that may have been overkill for plenty of tasks, but I got used to having that access.</p> <p>Now that I’ll be paying for my own subscription, I’m trying to decide between Claude with Opus 5.5 and staying with Codex using Astra or Sol. I’m planning to try a $100 subscription first, but I’d consider $200 if the extra usage meaningfully improves how I work and learn.</p> <p>My preference is to pay for a reliable model that handles implementation and code efficiency well, while I focus more on the overall architecture, analysis choices, and biological questions. Understanding the code still matters to me; I’d like the agent to make that learning process easier too.<br/> Ideally, I want enough reliable access to stay focused on thinking through the next useful question or analysis without constantly budgeting tokens or worrying about model limits.</p> <p>For people using these tools in computational biology, bioinformatics, or similar research:</p> <p>● Which setup has worked best for you, and how much correction or supervision does it need?<br/> ● Have you found the jump from $100 to $200 worthwhile?<br/> ● Do you use your strongest model for most tasks, or has switching between models worked well for you?</p> <p>I’d really appreciate hearing about your experiences, including anything you wish you’d known before choosing a subscription.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Latter_Salamander381\"> /u/Latter_Salamander381 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xo8qk4/computational_biology_phd_student_searching_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xo8qk4/computational_biology_phd_student_searching_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xo8qk4/computational_biology_phd_student_searching_for/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Latter_Salamander381",
+    "publishedAt": "2026-11-05T03:45:42+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "06d061a3587d3e809c85eb9d1421aacdfc72ee8e5d36dbe4e514790ba27af631"
+  },
+  {
+    "id": "reddit_1xnuhmi",
+    "redditId": "1xnuhmi",
+    "title": "What to do when GO term and the gene list do not match in ORA result ?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi all, </p> <p>Just a quick question on how to interpret &amp; visualize ORA-GO analysis results</p> <p>I ran ORA on list of positive DEGs genes and negative DEGs gene separately, and they gave me the same GO term \"positive regulation of angiogenesis\"). The up genes are mainly metabolic genes while the down genes are mainly immune genes. </p> <p><strong>Can I rename the term when plotting to show the function of the gene list or is it strictly no ?</strong> This is one case where I could see clearly the differences but there are also other enriched GO term that after checking the gene list, I don't think they match. </p> <p><strong>What's the best practice to visualize ORA GO analysis results ?</strong> I've seen many papers only presented a couple GO or KEGG pathway but I'm not sure if they just pick out which are the most significant and related ot the question to plot or if they only see those pathways ? </p> <p>Thank you so much !!! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/NoSink705\"> /u/NoSink705 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xnuhmi/what_to_do_when_go_term_and_the_gene_list_do_not/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xnuhmi/what_to_do_when_go_term_and_the_gene_list_do_not/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xnuhmi/what_to_do_when_go_term_and_the_gene_list_do_not/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/NoSink705",
+    "publishedAt": "2026-11-04T17:37:37+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "e95b04002b5c8acf65b3adbd646cae41934b6c7e5d688b2075275867ef7bbb9d"
+  },
+  {
+    "id": "reddit_1xn73kf",
+    "redditId": "1xn73kf",
+    "title": "Differentially methylated regions/sites",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hey there, </p> <p>I’m doing a sc methylome analysis. At the moment I have done integration of my data with scRNA Seq data, did a kNN based label transfer in the combined latent embedding, and now want to look for DMS/DMR in my clusters I defined. How could I best find these ? So far I’ve used ALLCools “get_dms” and “get_dmr” on pseudobulked .allc files of my clusters. But I have been wondering, if there is another way. Because ALLCools doesn’t account for different batches and I use data from two distinct datasets that are merged/binned in the pseudobulk. Is there something that could take this as a covariate ? Cheers :) </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Jakoblbgggggg\"> /u/Jakoblbgggggg </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xn73kf/differentially_methylated_regionssites/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xn73kf/differentially_methylated_regionssites/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xn73kf/differentially_methylated_regionssites/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Jakoblbgggggg",
+    "publishedAt": "2026-11-03T22:21:25+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "dbf1f4fe1923854cad98d93f3c24b2b40a433a9262a5de579fe81808f8691bd5"
+  },
+  {
+    "id": "reddit_1xn3h3y",
+    "redditId": "1xn3h3y",
+    "title": "CASP-DREAM TAP Challenge: Predict T cell activation from TCR and peptide-MHC sequences",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Working on TCR-pMHC predictions, a new contest is open for registration. The CASP-DREAM TAP Challenge asks teams to classify TCR-peptide-MHC combinations as activating or non-activating. The benchmark has about 5,800 labeled combinations, more than 700 peptides and more than 40 class I HLAs. Every test peptide is at least four amino acid changes (substitutions, insertions or deletions) away from any peptide with a publicly reported TCR specificity. Scored by AUROC.</p> <p>Synapse lists training data options, including the public VDJdb database and Harell Data's proprietary TCR datasets provided by Adaptive Biotechnologies.</p> <p>Registration is now open: <a href=\"https://www.synapse.org/Synapse:syn77965030/wiki/643867\">https://www.synapse.org/Synapse:syn77965030/wiki/643867</a></p> <p><a href=\"https://preview.redd.it/uc1xz6jydgzh1.png?width=2160&amp;format=png&amp;auto=webp&amp;s=831af8d52d64eba35d537870fe56b015186da8b4\">https://preview.redd.it/uc1xz6jydgzh1.png?width=2160&amp;format=png&amp;auto=webp&amp;s=831af8d52d64eba35d537870fe56b015186da8b4</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Harell-Data\"> /u/Harell-Data </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xn3h3y/caspdream_tap_challenge_predict_t_cell_activation/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xn3h3y/caspdream_tap_challenge_predict_t_cell_activation/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xn3h3y/caspdream_tap_challenge_predict_t_cell_activation/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Harell-Data",
+    "publishedAt": "2026-11-03T20:01:18+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "02e2c270838eb7c378d7f25a413a873472fb77f0d214760047e02cd2bddf725d"
+  },
+  {
+    "id": "reddit_1xmybix",
+    "redditId": "1xmybix",
+    "title": "Building MicrobiomeXpress: One‑Click Dashboard for FASTQ → Insights",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p><a href=\"https://preview.redd.it/2i045zhngfzh1.png?width=1395&amp;format=png&amp;auto=webp&amp;s=3f0770588ded11d75637c3a1c7e9f6c06a9b5202\">https://preview.redd.it/2i045zhngfzh1.png?width=1395&amp;format=png&amp;auto=webp&amp;s=3f0770588ded11d75637c3a1c7e9f6c06a9b5202</a></p> <p><a href=\"https://preview.redd.it/q47ekgfzgfzh1.png?width=1498&amp;format=png&amp;auto=webp&amp;s=d19b7740de41a6b150328bad6e5252c77ac4e786\">https://preview.redd.it/q47ekgfzgfzh1.png?width=1498&amp;format=png&amp;auto=webp&amp;s=d19b7740de41a6b150328bad6e5252c77ac4e786</a></p> <p><a href=\"https://preview.redd.it/qu2gdjp0hfzh1.png?width=1408&amp;format=png&amp;auto=webp&amp;s=b3e76f2ef7790e73359db6aeba3f53f044afec2c\">https://preview.redd.it/qu2gdjp0hfzh1.png?width=1408&amp;format=png&amp;auto=webp&amp;s=b3e76f2ef7790e73359db6aeba3f53f044afec2c</a></p> <p>Hi everyone,</p> <p>I’m working on a project called <strong>MicrobiomeXpress</strong> — a web‑based dashboard that automates the entire microbiome pipeline in one click. The idea is to take raw sequencing files (FASTQ/FASTA) and automatically run through:</p> <ul> <li>QC + trimming</li> <li>Denoising &amp; chimera removal</li> <li>OTU/ASV generation</li> <li>Taxonomy assignment</li> <li>Diversity plots &amp; abundance tables</li> <li>Exportable reports (TSV/BIOM)</li> </ul> <p>The goal is to make microbiome workflows <strong>simpler, reproducible, and accessible</strong> for researchers and labs. Attaching some snapshots and reports sample of the in progress app here to have a quick look.</p> <p><a href=\"https://preview.redd.it/dshxqcmdgfzh1.png?width=697&amp;format=png&amp;auto=webp&amp;s=d4f4eb1fa789ed82aede30a16807060f1a634fce\">https://preview.redd.it/dshxqcmdgfzh1.png?width=697&amp;format=png&amp;auto=webp&amp;s=d4f4eb1fa789ed82aede30a16807060f1a634fce</a></p> <p><a href=\"https://preview.redd.it/6y2c64dggfzh1.png?width=994&amp;format=png&amp;auto=webp&amp;s=58811ebcf534ba129dd565866b7debe4209992fb\">https://preview.redd.it/6y2c64dggfzh1.png?width=994&amp;format=png&amp;auto=webp&amp;s=58811ebcf534ba129dd565866b7debe4209992fb</a></p> <p><a href=\"https://preview.redd.it/piu0pk2jgfzh1.png?width=994&amp;format=png&amp;auto=webp&amp;s=66e9620da2c13abeb0dc0f20c0ceeeb0028c25ca\">https://preview.redd.it/piu0pk2jgfzh1.png?width=994&amp;format=png&amp;auto=webp&amp;s=66e9620da2c13abeb0dc0f20c0ceeeb0028c25ca</a></p> <p><a href=\"https://preview.redd.it/2t7komwkgfzh1.png?width=862&amp;format=png&amp;auto=webp&amp;s=0314c54d8e237d60998f9ec363aa67ec0f566540\">https://preview.redd.it/2t7komwkgfzh1.png?width=862&amp;format=png&amp;auto=webp&amp;s=0314c54d8e237d60998f9ec363aa67ec0f566540</a></p> <p>I’d love to hear from the bioinformatics community:</p> <ul> <li>What are the <strong>pain points</strong> you face in microbiome analysis?</li> <li>Where do current tools (QIIME2, DADA2, mothur, etc.) fall short?</li> <li>What features would make a one‑click dashboard genuinely useful in your daily work?</li> </ul> <p>Any feedback or suggestions would be super valuable — I want to make sure this tool addresses real challenges, not just adds another layer.</p> <p>Thanks in advance!</p> <p>— Aishwariya</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/AishVaidhya_1986\"> /u/AishVaidhya_1986 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xmybix/building_microbiomexpress_oneclick_dashboard_for/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xmybix/building_microbiomexpress_oneclick_dashboard_for/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xmybix/building_microbiomexpress_oneclick_dashboard_for/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/AishVaidhya_1986",
+    "publishedAt": "2026-11-03T16:56:06+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "8a631ab2cf651520b4a072b5f09b3ed60482fe42691ca877c392c96284abba0a"
+  },
+  {
+    "id": "reddit_1xmu6e2",
+    "redditId": "1xmu6e2",
+    "title": "Need advice/help on how best to analyze plasma biomarker data with corresponding Tau PET imaging data?",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/Dragon_Cake\"> /u/Dragon_Cake </a> <br/> <span><a href=\"/r/labrats/comments/1xm8xe3/need_advicehelp_on_how_best_to_analyze_plasma/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xmu6e2/need_advicehelp_on_how_best_to_analyze_plasma/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xmu6e2/need_advicehelp_on_how_best_to_analyze_plasma/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Dragon_Cake",
+    "publishedAt": "2026-11-03T14:20:10+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "881ec75fe07be13cf1fe5beffca36d03f2ecb97b2349f295dc00a80565862f7b"
+  },
+  {
+    "id": "reddit_1xmtcxy",
+    "redditId": "1xmtcxy",
+    "title": "Sequencing run more than 3 days",
+    "content": "submitted by   <a href=\"https://www.reddit.com/user/Firm-External-4995\"> /u/Firm-External-4995 </a> <br/> <span><a href=\"/r/nanopore/comments/1xmtcjj/sequencing_run_more_than_3_days/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xmtcxy/sequencing_run_more_than_3_days/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xmtcxy/sequencing_run_more_than_3_days/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/Firm-External-4995",
+    "publishedAt": "2026-11-03T13:47:24+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "793f6b121388dd9991abaf8aa1c993cf48cd456bad6e4bd058907d1a2c34363c"
+  },
+  {
+    "id": "reddit_1xm77kb",
+    "redditId": "1xm77kb",
+    "title": "24,861 candidate insertion sites. 390 were real.",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>If you align a host sample, classify the unmapped reads with Kraken2 and keep every position with a few pairs pointing at it, you get a long list of candidate insertion sites. I benchmarked that on simulated data from real human and bacterial genomes: 24,861 sites reported, 390 of them real. A precision of 1.6%.</p> <p>The reason is library preparation. A chimeric fragment joins host DNA to bacterial DNA at an arbitrary position, and the read pair it produces is indistinguishable from the pair a real integration produces. Read support is not evidence.</p> <p>So I wrote hgt-site, which treats those chimeras as a background rate instead of trying to recognise them one by one: <a href=\"https://github.com/iraajgangavaram/hgt-site\">https://github.com/iraajgangavaram/hgt-site</a></p> <p>For each cluster of pairs pointing at the same host position, it works out how many pairs chance alone would have put there, given how abundant that taxon is across the whole sample, tests the observed count against that, and corrects across every position tested. Reads that cross the junction and get soft-clipped past it then pin the insertion point to the base pair.</p> <p>On the same 18 benchmark datasets, on seeds never used while developing it, it reported 364 sites with none of them false and found all 360 insertions. The 95% interval on precision is 0.990 to 1.000. Calling takes about 3 seconds on a 2.1 million read sample, against about 2.5 minutes for LGTSeek, which has had no commit since 2016.</p> <p>One command, from a BAM and a Kraken2 database to a table, BED and VCF:</p> <pre><code>hgt-site run --bam sample.bam --kraken-db kraken2-db --host-taxid 9606 -o sites.tsv </code></pre> <p>Every benchmark script and all the raw results are in the repo, so the numbers can be checked rather than taken on trust. It has not been run on real sequencing data with confirmed integrations yet, which is the obvious next thing.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/IG30353035\"> /u/IG30353035 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xm77kb/24861_candidate_insertion_sites_390_were_real/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xm77kb/24861_candidate_insertion_sites_390_were_real/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xm77kb/24861_candidate_insertion_sites_390_were_real/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/IG30353035",
+    "publishedAt": "2026-11-02T19:39:50+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "bc882d93bb12eabfaed2bcc01abbbceffe3672f6d20b1ed24057e5a818d8a8fe"
+  },
+  {
+    "id": "reddit_1xm3v0w",
+    "redditId": "1xm3v0w",
+    "title": "Honest take on AI tools for variant analysis - your PhD and domain knowledge still matters",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm curious what folks' experience is like using AI tools for their research, specifically with verifying AI-generated claims and analyses. I wanted to share my experience using Claude Science.</p> <p><strong>The summary: incredible potential, but be careful with interpretation - trust what you know and always be skeptical.</strong></p> <p>My PhD was in hair cell mechanotransduction. I picked a question I could check every step of: where do clinically reported missense variants in TMC1 (the pore-forming subunit of the hair-cell transduction channel) fall on the protein? Are pathogenic ones enriched in the TM helices, and do they sit closer to the pore?</p> <p>I ran it end to end in Claude Science on public data only: ClinVar via gnomAD, Ensembl, UniProt, AlphaFold, and the C. elegans TMC-1 cryo-EM structure (7USW). Repo with prompts, outputs and a notebook: <a href=\"https://github.com/meccaand/TMC1-Variant-Map\">https://github.com/meccaand/TMC1-Variant-Map</a></p> <p><strong>What I had to catch:</strong></p> <ol> <li><p>Consequences from the wrong transcript. The first pass said no benign missense variant sat in a TM helix (p = 0.025). But two of those six \"benign missense\" variants weren't missense on the MANE transcript; the labels came from the gnomAD mirror's off-transcript calls. Re-deriving every consequence on MANE turned up 9 bad rows, including five 3′UTR variants labeled missense. Corrected p = 0.11.</p></li> <li><p>The main claim was driven by a single outlier. The first pore-distance figure said \"35.6 Å closer, p = 0.008.\" That was a difference of means drawn over median bars, driven by one N-terminal variant (K65E) at 98.7 Å. AlphaFold is locally confident there (pLDDT 73), but PAE shows it doesn't know where that domain sits relative to the pore.</p></li> <li><p>Too narrow a pore definition. It used TM4 and TM6 only. By homology to TMEM16/OSCA, it should be TM4–TM7.</p></li> </ol> <p>The built-in reviewer (it re-checks responses against what actually ran) caught two real problems I'd have skimmed past: notebook text that contradicted the output below it, and an off-by-one in a helix-boundary table. It also raised a false positive. It recounted the comparison group using the same bad consequence labels from #1 and told me a non-significant result was significant (p = 0.037 vs 0.053). The checker needs checking too.</p> <p><strong>The main point I'd like to make is that this entire analysis would have taken me days to weeks if I had done this manually. It's incredible what these tools can do, but there's still no substitute (not yet at least) for the years you spent in the lab and hours reading literature.</strong></p> <p>What's your experience been?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/aam1\"> /u/aam1 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xm3v0w/honest_take_on_ai_tools_for_variant_analysis_your/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xm3v0w/honest_take_on_ai_tools_for_variant_analysis_your/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xm3v0w/honest_take_on_ai_tools_for_variant_analysis_your/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/aam1",
+    "publishedAt": "2026-11-02T17:40:52+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "2847b89f4429019536050af7ba47fd114d99387779479a96c4ab66387a1a87a6"
+  },
+  {
+    "id": "reddit_1xm2cs0",
+    "redditId": "1xm2cs0",
+    "title": "EmptyDrops calls more cells than those found in Cell Ranger's filtered matrix",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi, </p> <p>I compared my filtered matrices cell barcodes against those called by EmptyDroplets using the raw unfiltered count matrices.</p> <p>For each sample, I checked 'BOTH' - which included barcodes found in the filtered counts and the ones called by EmptyDroplets, 'FILTERED ONLY' - which only included counts found in the filtered matrix, and 'EMPTYDROPS ONLY'. </p> <p>For the majority of samples, EmptyDroplets called more cells than those in the filtered matrix.<br/> For some samples, 'FILTERED ONLY only contain a small subset of cells not called by EmptyDrops but for other samples FILTERED ONLY contained a large subset of cells not called by EmptyDrops and EmptyDrops also contained a large subset not found in filtered only. </p> <p>Any suggestions on how to proceed? Some samples' filtered matrices barcodes disagree substantially to those called by EmptyDroplets</p> <p>Thank you. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/EquipmentDue2674\"> /u/EquipmentDue2674 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xm2cs0/emptydrops_calls_more_cells_than_those_found_in/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xm2cs0/emptydrops_calls_more_cells_than_those_found_in/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xm2cs0/emptydrops_calls_more_cells_than_those_found_in/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/EquipmentDue2674",
+    "publishedAt": "2026-11-02T16:46:58+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "1001c6db05d636fbcf74397e7649f42c575eaed3bd3f6625fec60800578e7494"
+  },
+  {
+    "id": "reddit_1xlxsz3",
+    "redditId": "1xlxsz3",
+    "title": "hgt-site: a small tool for calling bacterial DNA insertion sites that tests each candidate against chance chimeras",
+    "content": "<!-- SC_OFF --><div class=\"md\"><pre><code>I'm a final-year microbiology undergraduate and I've been working on a tool for finding places where bacterial DNA may have inserted into a host genome. The thing that makes this hard is that most bacterial reads in a host sample are contamination or library-prep chimeras, so read support on its own isn't evidence of an insertion. hgt-site groups read pairs that point at the same host position and tests each group against how many pairs chance would put there, based on how abundant that taxon is in the sample. It also uses reads that cross the junction to give the insertion point to the exact base. One command from a BAM and a Kraken2 database to a table, BED and VCF: hgt-site run --bam sample.bam --kraken-db kraken2-db --host-taxid 9606 -o sites.tsv Benchmarks against LGTSeek on simulated reads from real genomes are in the README, including a repeat with an independent published simulator. All the benchmark scripts and raw results are in the repo so anyone can check them. https://github.com/iraajgangavaram/hgt-site Honest caveat: it hasn't been run on real data with confirmed integrations yet. If anyone has such a dataset, or wants to tell me what's wrong with the statistics, I'd be glad to hear it. </code></pre> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/GangstaBoi8924\"> /u/GangstaBoi8924 </a> <br/> <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xlxsz3/hgtsite_a_small_tool_for_calling_bacterial_dna/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/bioinformatics/comments/1xlxsz3/hgtsite_a_small_tool_for_calling_bacterial_dna/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/bioinformatics/comments/1xlxsz3/hgtsite_a_small_tool_for_calling_bacterial_dna/",
+    "subreddit": "r/bioinformatics",
+    "author": "/u/GangstaBoi8924",
+    "publishedAt": "2026-11-02T13:54:56+00:00",
+    "fetchedAt": "2026-11-07T19:02:00.791Z",
+    "sourceId": "bioinformatics-new",
+    "sourceKeyword": "",
+    "sourceType": "subreddit_new",
+    "contentHash": "5660487640908ebc12ba44e56849ca3200b626bebb89364988d24e69f1039857"
+  },
+  {
+    "id": "reddit_1xq800o",
+    "redditId": "1xq800o",
+    "title": "Pre-conference nerves about seeing my previous advisor",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am going to my first conference as a presenter, rather than just an attendee, and I'm feeling so nervous about it. I'm not nervous about presenting, but rather about seeing my old advisor. ​</p> <p>For context, I did an MS the same place as my undergrad, though my field does not require it, before applying to a phd program (where I am now). I wanted to get experience as a researcher and make sure it was the right path for me. I had a really wonderful advisor there. He was supportive, attentive, involved, helpful​, and gave a lot of great feedback. I'm sure I wouldn't be the researcher I am today without him. ​I graduated in summer 2024, and started my PhD the same year, and during the very short time I had as a break between these things, I was told to prioritize writing a draft of a paper, so I did. And that draft has sat on his desk since. I would occasionally get updates from former coworkers to let me know it was still on his list, but its been over two years so I'm not optomistic. Every couple of months I would check in, and he would say he would return a draft in a couple of months, then I would follow up when nothing came, and the cycle continued. This was up until April of this year, when I got my last \"I'll send you a draft by the end of May\" email, and it's been nothing since. I've sent a few very polite very carefully worded emails, but nothing back.</p> <p>Honestly, it's really negatively impacted my mental health. I ended up in the same really small subfield (sort of unexpectedly) for my phd, and I can't help but ache at the fact that I've poured so much of myself into this field for four and a half years and there's no record of it, up until this presentation this week. I've spent a lot of time wondering what made my work less important, less valuable than my coworkers who did get their work published. To be clear, no feedback during my time there gave me the impression that my work wasn't good enough, if anything it was the opposite. This whole experience has really harmed my perception of myself as a good researcher and made it difficult for me to trust my current advisor.</p> <p>Now, with a conference coming up next week, I am so stressed because I know he will be in attendance. I wanted this to be a time for me to finally present my work and move past all of this, but I just don't know how to handle him being there. Its a pretty large event, but I don't want to be worrying all week. Should i try to talk to him? Should I just ignore the situation if I do? Or should I stick to avoiding him? Any advice is immensely appreciated. ​ ​</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Shadechild\"> /u/Shadechild </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xq800o/preconference_nerves_about_seeing_my_previous/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xq800o/preconference_nerves_about_seeing_my_previous/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xq800o/preconference_nerves_about_seeing_my_previous/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Shadechild",
+    "publishedAt": "2026-11-07T14:44:12+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.605Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "6b07b7ad25bc374ecd8949f75e94f7b30ef60bc69406ece06a02f005cda2f39e"
+  },
+  {
+    "id": "reddit_1xq7wl5",
+    "redditId": "1xq7wl5",
+    "title": "Pi won’t let me master out?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I am an international student in the start of the 5th semester (3rd year) in a merged MS-PhD program. I have recently met with my advisors to talk to them about some real struggles I have been having in the program and shared with them that I would like to pivot to another doctoral program where I might be happier (different environment). My reasons for this was many, lack of community primarily, coupled with that I now find that I would like to diversify my academic career as I have done my bachelor degree in the same university, in addition to not being happy with the PI and group relationship that I have. So far in the program I have been very professional and I have delivered all the necessary deliverables expected of me thus far. I am even writing a manuscript which we are hoping to publish soon. I have completed all the necessary courses to leave with a masters degree and my work itself is very developed and can be used and tried in a defense.</p> <p>When I approached my PI, I explained that I didn’t feel that I could talk about mastering out until I had good work that is presentable and mostly complete. I explained that I have been feeling like this was a bad experience for a very long time but I did want to engage with the research and that did prevent me from giving up entirely in the first half of the year.<br/> Right now, I know that I would like to pursue a change and I discussed it, my PI said that I have been doing very well and that there was too much intellectual investment. I understand that part but I do not want to leave the program with no degree or proof of all the work I have tired myself out for whole two years.</p> <p>I just don’t understand how my PI feels because there are several masters students who get that benefit of learning from scratch and leaving. And I have outperformed the average masters students in my time here, and I understand that I was an expected asset.</p> <p>But the thing is my being in that group was not my choice. I initially joined in an experimental group, experienced some difficulties in the lab, and my PI (main one) advised me to try working in a computational lab on the same topic but dry lab analysis. And so I did, because I didn’t feel like I was in that pi’s very good graces. And I wanted something to work. The first year working in the dry lab was really difficult, but then my project started coming together and I can say now that I love my work very much.</p> <p>With this context, I am not sure that my PI will support me mastering out. I was wondering if anyone can give me advice on what you would do in my position? It is complicated from both ends and I just want to close this chapter terribly and I want something that could make my PI understand that my leaving is valid and that people can make new choices and learn that something is not working for them.</p> <p>I have all the requirements necessary to master out but I am afraid if they don’t say yes I will not be able to switch.</p> <p>Right now in my last meeting my PI asked me to consider staying in the PhD program and that she does not think it is a good idea to leave because there are three years left. But I really do not want to repeat this experience for another three years.</p> <p>Thank you for reading.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Winter-Balance9020\"> /u/Winter-Balance9020 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xq7wl5/pi_wont_let_me_master_out/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xq7wl5/pi_wont_let_me_master_out/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xq7wl5/pi_wont_let_me_master_out/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Winter-Balance9020",
+    "publishedAt": "2026-11-07T14:39:48+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.605Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "c1fcc9a9b7f9546add56aa46dad6e03e4e0caa9aa0eec877bf29fe547a80bc8d"
+  },
+  {
+    "id": "reddit_1xq13kb",
+    "redditId": "1xq13kb",
+    "title": "Professor refuses to give me first author in my PhD paper although all she did was funding the research",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>As the title says. Professor only gives me second author, although I did literally all the work myself, including research ideas, planning, experiments, etc. No supervision or advice was given. All she did was funding my experiments.</p> <p>When it was time to submit a paper, we decide the author list. She always takes the first author, and gives the correspondence to her husband or her friend (neither contributes anything at all). And I get the second author.</p> <p>What should I do?</p> <p>EDIT: more context.</p> <p>Thanks for all the advices! This is very valuable. This is the case that is happening to my friend and he's coming to me for advice, and I'm posting this on behalf of him because he happens to not use reddit.</p> <p>I'm a PhD student in civil engineering major. and the university is based in China, but the specific university is preferred to not be mentioned. Most of the time, the PI takes the first author, and gives her husband the correspondence. This happens to almost all the papers that was published within the lab. In my friend's case, the entire paper that was published was conceptualized, planned, and conducted independently and the PI didn't even supervise the research. When confronting the PI why the first author can't be the student, she argued with \"If you take the first author, then every PhD in the lab will want the first author when publishing a paper\", and that it is the group policy for that sort of author-ing. Sounds eff-ing ridiculous I know.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ayeinutn\"> /u/ayeinutn </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xq13kb/professor_refuses_to_give_me_first_author_in_my/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xq13kb/professor_refuses_to_give_me_first_author_in_my/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xq13kb/professor_refuses_to_give_me_first_author_in_my/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/ayeinutn",
+    "publishedAt": "2026-11-07T08:04:41+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.605Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "96ac1499e4f448120bc3ed838c2b9d6ccf599d84ab91c4e6557a56eee2ec624b"
+  },
+  {
+    "id": "reddit_1xphp86",
+    "redditId": "1xphp86",
+    "title": "My paper was published by Elsevier without me paying the APC and now almost a month after it is published they have sent the invoice",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I recently had a paper published in the final year of my bachelor's degree in an open access journal by Elsevier. However it was my first paper and I was unaware of any APC. Nothing regarding the APC was communicated to me before the paper was published. Almost a month after it was published they have sent me an invoice. I come from a developing country and there is no way I can afford that amount of money for publishing 1 paper. I contacted the university and they refused to bear any cost as the journal apparently doesn't meet the impact-factor requirements nor do they have additional departmental funds. My professor who co-authored and whom I was relying on for the correspondence was also unaware of the APC. I contacted the Elsevier Support for a full or at least a partial waiver explaining my circumstances but they refused too. I don't understand what to do. What happens if I don't pay? I would have paid if the amount was reasonable or something I could afford but that's not the case nor am I able to get any waivers. What are my options now. Do I just ignore the invoice? Will my paper be retracted? Could I face any legal consequences?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/ada_pada_pappu_pada\"> /u/ada_pada_pappu_pada </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xphp86/my_paper_was_published_by_elsevier_without_me/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xphp86/my_paper_was_published_by_elsevier_without_me/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xphp86/my_paper_was_published_by_elsevier_without_me/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/ada_pada_pappu_pada",
+    "publishedAt": "2026-11-06T16:50:40+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.605Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "e8c12c73255790e6c5d42c14789ca3393e6f12dab5bfefef41ee86f98e6938b6"
+  },
+  {
+    "id": "reddit_1xpgp2o",
+    "redditId": "1xpgp2o",
+    "title": "Academic boss declining to be co-author",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I've been working in a biological sciences research group for close to 8 years - initially as a PhD, and then as a part-time early career researcher. The time has been very successful, and we've had good outputs.</p> <p>However, recently my boss, who has been a senior author on many of my papers, has started to decline being included. These have been projects I've secured funding for myself, and largely directed myself, but I've been getting input from the boss on them e.g. lab meetings.</p> <p>The optimistic side of me is interpreting this as my boss trying to let me move away from his supervision and not be seen as always publishing with him, but my more cynical side is interpreting this as him not wanting to be associated with perceived quality of my work, but doesn't want to tell me (although the work, to me, seems as good as anything else we've published). Has anyone any insight into this from the position of a senior academic?</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/CaptainCrash86\"> /u/CaptainCrash86 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xpgp2o/academic_boss_declining_to_be_coauthor/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xpgp2o/academic_boss_declining_to_be_coauthor/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xpgp2o/academic_boss_declining_to_be_coauthor/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/CaptainCrash86",
+    "publishedAt": "2026-11-06T16:11:39+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.605Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "60100e93aa16653aaf76c8d77b9bc056fdf3070eaaa4e5892967e96155238276"
+  },
+  {
+    "id": "reddit_1xp37uh",
+    "redditId": "1xp37uh",
+    "title": "Is a research career in STEM still possible with a GPA below 3.0?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>​</p> <p>Hi everyone! Im still an undergraduate and could really use some advice.</p> <p>I strongly suspect I have undiagnosed ADHD/autism, and I've struggled academically for years, particularly with traditional sit-down examinations and timed tests.</p> <p>I'm currently pursuing a BSc in Natural Sciences at an Open University. It's a three-year degree, but due to multiple repeats, I'll likely need four years to graduate. My GPA is below 3.0.</p> <p>However, I've spent nearly two years volunteering in a Natural Products Chemistry lab at an internationally recognised research institution. I have hands-on research experience and three research abstracts published/presented at scientific conferences.</p> <p>I genuinely love research and dream of becoming a research scientist, eventually pursuing a PhD. However, coming from a developing country, I can only afford to study abroad through fully funded scholarships. Even application fees are a financial burden.</p> <p>I'm worried that my GPA will make me an uncompetitive candidate, regardless of my research experience.</p> <p>Should I still try applying for fully funded Master's/PhD programmes, or should I accept that academia might not be realistic for me and consider industry instead?</p> <p>I also hope to eventually move somewhere where neurodivergence and mental health are taken seriously and accessing support is easier.</p> <p>Am I being unrealistic by holding on to this dream, or is there still a way forward??</p> <p>I refined this by chatgpt for better clarity.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Left_Green4492\"> /u/Left_Green4492 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xp37uh/is_a_research_career_in_stem_still_possible_with/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xp37uh/is_a_research_career_in_stem_still_possible_with/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xp37uh/is_a_research_career_in_stem_still_possible_with/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Left_Green4492",
+    "publishedAt": "2026-11-06T03:58:13+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.605Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "71e5055a9a55fa626d64b47d564cef2aaa440bef8e39aba99d680f495093fc57"
+  },
+  {
+    "id": "reddit_1xotkml",
+    "redditId": "1xotkml",
+    "title": "Affiliation for Independent Researchers",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hello everyone. In the past, I collaborated with a research institution, having co-authored a number of papers while being employed by them. Nowadays, I no longer work there, but still wish to publish research papers independently. The problem is that many journals do not accept submissions from independent researchers, and typically require some affiliation. I have come across some organizations providing affiliation to independent scholars, such as <a href=\"https://ronininstitute.org/\">Ronin Institute</a> and <a href=\"https://a-i-r.science/\">AIR</a>, but I am not sure how credible they are. I would like to hear your opinions and experience on this matter, thanks!</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Dangerous_Bad_5946\"> /u/Dangerous_Bad_5946 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xotkml/affiliation_for_independent_researchers/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xotkml/affiliation_for_independent_researchers/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xotkml/affiliation_for_independent_researchers/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Dangerous_Bad_5946",
+    "publishedAt": "2026-11-05T20:37:13+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.605Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "0fa1399d29390811ae99584d451f973c81fbf9ebf9d9f2178a830349ca7e9a47"
+  },
+  {
+    "id": "reddit_1xopfec",
+    "redditId": "1xopfec",
+    "title": "CRediT Taxonomy; Dispute with Second Author",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>My classmate is the second author for a paper that's just published, for which I am the first author.</p> <p>Prior to publication, she emailed both myself and my supervisor that she thought my supervisor promised her co-first authorship. I was shocked and taken aback, and my supervisor told her he never promised her that.</p> <p>Then, she tried getting more recognitions through the <strong><em>CRediT</em></strong> Taxonomy <strong>(see the enclosed link to the screenshot)</strong>; this is something new that the journal uses in place of the customized contribution statement. My supervisor, who didn't seem to look into the definitions of these roles, shockingly approved it.</p> <p>In the currently published version, the <strong><em>CRediT</em></strong> Taxonomy accurately reflects her contribution, but my supervisor requested me to change back to the version that he approved, purely because he promised her.</p> <p>While I am extremely upset that she got a free ride, I didn't argue with my supervisor further since I don't want to cause further conflicts.</p> <p><strong>My question is:</strong> how would this impact my future post-doc applications or industry positions? How would academics view my contributions generally with the soon-to-be-updated version?</p> <p>Link to the screenshot of CRediT Taxonomy: <a href=\"https://drive.google.com/file/d/18xKx-p-Xv9PoVNm0ezcvlSJ7EBZtgd1l/view?usp=sharing\">https://drive.google.com/file/d/18xKx-p-Xv9PoVNm0ezcvlSJ7EBZtgd1l/view?usp=sharing</a></p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/False-Holiday-3592\"> /u/False-Holiday-3592 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xopfec/credit_taxonomy_dispute_with_second_author/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xopfec/credit_taxonomy_dispute_with_second_author/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xopfec/credit_taxonomy_dispute_with_second_author/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/False-Holiday-3592",
+    "publishedAt": "2026-11-05T17:56:44+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.606Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "58f4e5a34e1630087df1ca50cde116cd168c879b378538d44363f3d337026a33"
+  },
+  {
+    "id": "reddit_1xnuqv4",
+    "redditId": "1xnuqv4",
+    "title": "Does anybody need an illustrator for their wildlife research?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I'm a full time Wildlife Illustrator and Concept Artist specializing in species illustration and wildlife representation, and am looking to have work in published literature. I am looking for somebody researching wildlife and/or conservation who is in need of diagrams/illustrations made for their work. You can find my social media linked in my profile for examples of my work. I am willing to volunteer my skills to the right work depending on the scope of work and timeline. Cheers! </p> <p>Quick Edit: I posted a small gallery of relevant pieces in the comment below! </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Sea_Butterscotch189\"> /u/Sea_Butterscotch189 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xnuqv4/does_anybody_need_an_illustrator_for_their/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xnuqv4/does_anybody_need_an_illustrator_for_their/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xnuqv4/does_anybody_need_an_illustrator_for_their/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Sea_Butterscotch189",
+    "publishedAt": "2026-11-04T17:47:14+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.606Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "9de0536dfb77b6af9a0ad5bbae2f043d60d8ef6ff3d66018b391240313a28e3e"
+  },
+  {
+    "id": "reddit_1xnjynm",
+    "redditId": "1xnjynm",
+    "title": "can you please review my motivation letter",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>i want to join Ai for sciences program at aims south africa</p> <p>\"Over 158,000 people in Rwanda live with visual impairment, according to the 2022 census.</p> <p>Leading assistive glasses are costly and lack Kinyarwanda support.</p> <p>Disability is not inability; we just need to build the right tools</p> <p>at Digital Umuganda, I worked on an assistive glasses prototype that describes indoor</p> <p>environments and reads text aloud in Kinyarwanda for people with low vision. With access to</p> <p>their AI models and mentoring from expert ML engineers, I completed the end-to-end AI pipeline</p> <p>and the 3D modelling of the glasses frame by the end of my internship.</p> <p>To learn how to fit the models inside the glasses, I joined an Erasmus+ internship at the</p> <p>University of Parma in Italy, where I worked on an 8-bit ECG model designed for a</p> <p>microcontroller. It taught me quantization and edge computing, crucial for making the glasses</p> <p>work offline while supporting Kinyarwanda.</p> <p>However, my prototype takes about 31.5 seconds to describe scenes and 43 seconds to read</p> <p>text aloud. I need to identify bottlenecks, reduce resource use, and evaluate Kinyarwanda</p> <p>accuracy.</p> <p>The AI for Science Master’s, with its strong mathematical foundations and Google DeepMind</p> <p>mentoring, would help me address these gaps, especially through three courses. Through Edge</p> <p>Machine Learning, I hope to explore how compression affects speed and resource use when</p> <p>deploying models. Visual Perception would deepen my understanding of how models interpret</p> <p>images, helping me choose efficient models and image resolutions for accurate scene</p> <p>descriptions and text recognition. Advanced Language and Multimodal Models would help me</p> <p>explore generating Kinyarwanda directly from images, reducing delays and errors caused by</p> <p>translating from English.</p> <p>In the research project, I hope to deliver working, reliable offline assistive glasses for people</p> <p>with visual impairments in Rwanda, under the guidance of AIMS supervisors and mentors.</p> <p>Beyond this project, I am applying to learn how to solve problems like this scientifically and take</p> <p>on other challenges in African languages and accessibility.</p> <p>Beyond my technical background, I bring leadership and community experience. As team</p> <p>leader, my team placed sixth at Code for Impact 2025, deploying Kinyarwanda text-to-speech as</p> <p>a service any student could build with. I also lead three volunteers building AI for a Sudanese</p> <p>non-profit organization, including its first retrieval-augmented chatbot. also I mentored five</p> <p>students on a graduation project recognized among their club’s best, and led workshops</p> <p>reaching up to 200 students in Rwanda and Sudan, from AI basics to career advice. These</p> <p>experiences taught me to work with others and share knowledge. At AIMS, I hope to contribute</p> <p>these values toward solving Africa’s challenges through AI and science.</p> <p>After AIMS, I plan to return to Rwanda and start a company to work toward an affordable, locally</p> <p>assembled assistive device that people with visual impairments can actually afford. I will publish</p> <p>my results openly, so other researchers can build on them. In the long term, I want to work withresearchers to empower low-resources African languages, building open datasets and</p> <p>technology around them, so no speaker of these languages is left behind.\"</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Own_Mastodon2927\"> /u/Own_Mastodon2927 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xnjynm/can_you_please_review_my_motivation_letter/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xnjynm/can_you_please_review_my_motivation_letter/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xnjynm/can_you_please_review_my_motivation_letter/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Own_Mastodon2927",
+    "publishedAt": "2026-11-04T09:32:17+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.606Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "57af6fc5c4c0531362cc0cdf966ba874178650680979bdb70fc8a3773ffce23c"
+  },
+  {
+    "id": "reddit_1xnj227",
+    "redditId": "1xnj227",
+    "title": "Opportunity or scam? Please help",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>Hi.. </p> <p>So I’m a med student in Baghdad University and I recently published my first first-author paper (although it’s a hypothesis and theory paper, I was pretty satisfied tbh). The journal was Frontiers in Endocrinology (Q1, IF 5.7, CS 9.2) and went through 2 revision rounds and 3 reviewers saying yes. It‘s about bioengineering of an endocrine organ, a pretty niche sub-field.</p> <p>So yesterday I received this email out of the blue so I’m not really sure if it’s a scam or not… I mean, did they seriously have found zero speaker and contacted me, a med student from the other end of the world? Like, really? Or maybe they are that kind of student-promoting stuff? Idk honestly… What would you think? Is this normal in the West? If it’d benefit my cv, I have family in London so I can arrange the accommodation myself. So, what do you guys say from your experience?</p> <p>Hello Dr. [My Full Name] ,</p> <p>Greetings from Biomed Congress!</p> <p>We are reaching out to see if you would be available to present your work as a <strong>speaker</strong> at the <strong>3</strong><strong><sup>rd</sup></strong> <strong>World Congress on Biomedical Science and Engineering</strong>, which will be held on <strong>July 01–02, 2027</strong>, in <strong>London, UK</strong>. </p> <p><strong>Please use the following link to submit your abstract:</strong> <a href=\"https://biomedical.c2pforum.com/abstract-submission\"><strong>Submit Your Abstract</strong></a></p> <p>The registration fee is <strong>€600</strong>. Registration completed on or before <strong>November 16, 2026,</strong> includes <strong>2 complimentary nights of accommodation</strong>. </p> <p>We hope you will be able to join us in London and take part in the scientific program. </p> <p>Warm regards,<br/> Naina Grace<br/> Program Director | Biomed Congress 2027<br/> T: [+1-864-920-0042](tel:+1-864-920-0042) | W: [+1-678-557-3058](tel:+1-678-557-3058)<br/> E: [<a href=\"mailto:biomedical@xpertnetwork.org\">biomedical@xpertnetwork.org</a>](mailto:<a href=\"mailto:biomedical@xpertnetwork.org\">biomedical@xpertnetwork.org</a>)</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Iraqimedstudent\"> /u/Iraqimedstudent </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xnj227/opportunity_or_scam_please_help/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xnj227/opportunity_or_scam_please_help/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xnj227/opportunity_or_scam_please_help/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Iraqimedstudent",
+    "publishedAt": "2026-11-04T08:31:44+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.606Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "0ebe0a5467cb70f01935b63f64691c50a4caadad806405ae5371d4c5471ed86d"
+  },
+  {
+    "id": "reddit_1xn1e1q",
+    "redditId": "1xn1e1q",
+    "title": "Publish or perish searching with Google scholar - captcha",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I’m running publish or perish and searching with Google scholar. The captcha is preventing the search to go for more than 100 queries because it needs to open Internet Explorer. I need to mention that I’m running publish or perish on Linux using Wine. Does anyone know how to fix that? I tried going on Tools->Preferences->google scholar->allow 1000 queries and clear cache but it didn’t work.</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Outrageous_Bank_4491\"> /u/Outrageous_Bank_4491 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xn1e1q/publish_or_perish_searching_with_google_scholar/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xn1e1q/publish_or_perish_searching_with_google_scholar/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xn1e1q/publish_or_perish_searching_with_google_scholar/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Outrageous_Bank_4491",
+    "publishedAt": "2026-11-03T18:46:09+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.606Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "6877319aae08bf76a2597583215788ba4374b712192b0f54fa6f2ea08fa14588"
+  },
+  {
+    "id": "reddit_1xm4zfa",
+    "redditId": "1xm4zfa",
+    "title": "Finished my PhD, now in a postdoc and having a bit of an identity crisis. Is this normal?",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I have been working as a postdoctoral researcher at a Dutch university for about six months. Before that, I was already living and working in the Netherlands, where I completed my PhD at a different Dutch university.</p> <p>I finished my PhD within the four years of my contract, and my thesis was officially approved in May. My defense is scheduled for November, so I am not technically a doctor yet. Those familiar with the Dutch system will know that the defense is generally more of a formality, because a thesis would not have been approved if there were still serious doubts about awarding the degree. That said, the upcoming defense is definitely taking up some mental space. I still care a lot about doing well, and I find myself reading and preparing in my spare time to make sure I feel ready for it.</p> <p>Objectively speaking, my PhD went reasonably well. I completed it within the official timeframe, published several papers and book chapters as both first author and co-author, and overall it would probably be considered a successful PhD trajectory.</p> <p>The problem is that despite all of that, one of the main things I seem to have gained from my PhD is a deep sense of insecurity.</p> <p>I honestly feel like I am not an expert in anything. I do not feel that I have any particularly special skills or an area in which I really excel. Part of this may be related to the fact that both my academic background and my PhD trajectory were quite interdisciplinary. While I appreciate the value of being able to navigate across different fields, it sometimes leaves me with the feeling that I never developed a clear, recognizable expertise in any one thing. As a result, I often worry that my expertise is not immediately transferable or recognizable outside academia, particularly in industry. </p> <p>This leaves me wondering whether what I am experiencing is simply a normal amount of impostor syndrome, something that many PhD graduates and early-career researchers go through, or whether it is actually telling me something important, namely that I might not be suited for academia.</p> <p>I have been thinking about this even more recently because I expected to enjoy my current postdoc much more than I actually do. The project itself sounded exciting, but I am having difficulties connecting and aligning with both my supervisor and my colleagues.</p> <p>What makes this particularly concerning to me is that something similar happened during my PhD. I never really developed a strong relationship with my supervisors there either. Since this is now happening in a second institution with different people, I find myself wondering whether the common denominator is me. Maybe the issue is not the people I have worked with, but the way I function in academic environments.</p> <p>Another thing I have been struggling with is the question of work-life balance. Academia often seems full of people who work evenings, weekends, and generally make research a central part of their identity and personal life. During my PhD, I actually managed to maintain fairly healthy boundaries. I almost never worked evenings or weekends, except during the final months when I wanted to finish my thesis.</p> <p>I am trying to maintain the same boundaries now as a postdoc, but I increasingly wonder whether I am being naive. If I want a future in academia, do I need to accept that reading drafts on weekends, answering emails outside working hours, and generally working more than my contracted hours is simply part of the deal? Am I unrealistic for wanting a career in academia while also wanting a healthy work-life balance?</p> <p>I think what I am experiencing is, in many ways, an identity crisis. What makes this harder is that I do not feel I have a clear alternative. Because my background is quite interdisciplinary, I struggle to identify a non-academic career path that feels like an obvious fit. Rationally, I know that a PhD develops transferable skills, but emotionally I often feel like I do not have a concrete expertise that another employer would immediately value.</p> <p>There are also practical considerations. My partner and I recently bought a house in the Netherlands, so moving countries again is not something we would like to do anytime soon. My Dutch is improving, and I am committed to working on it over the coming years, but it is not yet good enough to work professionally in Dutch, and sometimes I worry that I may never reach the level I would need.</p> <p>I guess what I am looking for is advice and perspective from people who have been through something similar.</p> <p>Did anyone else experience this kind of uncertainty after finishing their PhD or during their first postdoc? Did it get better with time? Looking back, do you see these feelings as a normal consequence of the transition from PhD to postdoc, or were they a sign that academia was not the right long-term path for you?</p> <p>*TL;DR: Finished a PhD in the Netherlands, started a postdoc, but I feel like I am not really an expert in anything, struggle to connect with supervisors and colleagues, and am questioning whether academia is the right place for me. At the same time, I genuinely love research on some days and feel completely lost on others. Looking for perspectives from people who have gone through something similar.*</p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/Ready_Drawing6326\"> /u/Ready_Drawing6326 </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xm4zfa/finished_my_phd_now_in_a_postdoc_and_having_a_bit/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xm4zfa/finished_my_phd_now_in_a_postdoc_and_having_a_bit/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xm4zfa/finished_my_phd_now_in_a_postdoc_and_having_a_bit/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/Ready_Drawing6326",
+    "publishedAt": "2026-11-02T18:20:21+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.607Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "95e21f99f2e300ed56310f2ee5527ecc27c91750832557ea9c3bf0d4b2191ce2"
+  },
+  {
+    "id": "reddit_1xlllw5",
+    "redditId": "1xlllw5",
+    "title": "I have all my data, supervisor isn't approving of my research, losing my scholarship.",
+    "content": "<!-- SC_OFF --><div class=\"md\"><p>I want to take this off my chest. </p> <p>My dream is to get my MA. I have always been great at research and a top student. Don't get me wrong, I understand that being a top straight A's student doesn't equal being a good researcher but I have conducted my BA's research and thesis and it was accepted and got good grades for it. </p> <p>I applied for a scholarship for my MA, went to a foreign country as a research student, passed my entrance exam after one failed attempt and finished my first and second year of MA classes with A's and all necessary credits to graduate.</p> <p>My problem is, like almost everyone else, my advisor. My advisor never gives me a straightforward advice and whenever I talk with him I always end up shattered, worried and heartbroken and anxious. Recently he told me -even tho I have all my data and analysing it and getting results- that I will need to extend my Master's and delay my graduation just because I haven't been in touch with him. He keeps saying I am giving him excuses about being busy even tho I never miss his classes, seminar, any private meetings, tho he forces me to initiate meeting him. </p> <p>But what should I do with someone who every time I meet lowers my hopes and tells me I can't graduate and if I had met him he would have told me not to conduct my research and start gathering my data because it's not good enough in his opinion hence delaying my graduation. Mind you, I have 2 sub-supervisors and they are super chill and are providing me with tangible feedback and comments on my research and on how I am conducting it and have told me that the research is good and is going in the right direction. I always hear about everyone saying that your supervisor is the one who got your back while mine is my biggest research nemesis. </p> <p>I accepted the fact that I won't be able to graduate on time, maybe not even graduating at all and switching to something else as I repeatedly keep having negative and non-tangible feedback from my supervisor and even with the extension I got I keep wondering if my supervisor will ever let me graduate even. </p> <p>I am sad about the injustice I feel from this situation and how one person's decision and biased opinion can put another life in a bad financial situation and put their future on hold. I never disrespected my supervisor but they seem to hold some grudge against me. </p> <p>I have an amazing support system on my end, I am grateful for the people I have who are helping and supporting me, I am publishing my research no matter how flawed it is and even if I don't graduate. I am not here to ask for any consolation. I just wanted to share my two cents on the internet. I am writing this with tears in my eyes while thinking \"why me? what is it against me and my life? Putting my future on the line? On hold? Making me financially struggle? I am not slacking nor ignoring my research and I am working on it but I have a life outside research and I am trying to move on to it.\"</p> <p>I have a life waiting for me outside of research that I am trying to enjoy despite this situation. I just want to be out. </p> </div><!-- SC_ON -->   submitted by   <a href=\"https://www.reddit.com/user/MitsukaiSan\"> /u/MitsukaiSan </a> <br/> <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xlllw5/i_have_all_my_data_supervisor_isnt_approving_of/\">[link]</a></span>   <span><a href=\"https://www.reddit.com/r/AskAcademia/comments/1xlllw5/i_have_all_my_data_supervisor_isnt_approving_of/\">[comments]</a></span>",
+    "url": "https://www.reddit.com/r/AskAcademia/comments/1xlllw5/i_have_all_my_data_supervisor_isnt_approving_of/",
+    "subreddit": "r/AskAcademia",
+    "author": "/u/MitsukaiSan",
+    "publishedAt": "2026-11-02T02:33:45+00:00",
+    "fetchedAt": "2026-11-07T19:03:01.607Z",
+    "sourceId": "askacademia-publish",
+    "sourceKeyword": "publish",
+    "sourceType": "subreddit_search",
+    "contentHash": "f4d1a3157cd165e81194c2066c90db8479682abb036ed0bb29050d9e605e5172"
   }
 ]
