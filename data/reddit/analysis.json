@@ -202458,5 +202458,43 @@
     "instagramTopic": "",
     "complianceNotes": "帖子为学术讨论/调研征集，非用户论文辅导需求，也未出现同行营销；不强行提炼私域钩子，不回复。",
     "analyzedAt": "2026-11-19T22:28:50.871Z"
+  },
+  {
+    "postId": "reddit_1xs4g2x",
+    "postType": "academic_discussion",
+    "painPoint": "Computational PhD student with wet-lab/theory background struggles with coding and feels dependent on AI, uncertain how to build real coding skills and balance AI use in research.",
+    "problemType": "ai_writing",
+    "urgencyScore": 2,
+    "serviceFitScore": 1,
+    "replyWorthinessScore": 3,
+    "riskScore": 1,
+    "totalScore": 6,
+    "recommendedAction": "save_topic",
+    "suggestedReplyAngle": "",
+    "ctaLevel": "none",
+    "summary": "A second-year computational PhD student from a wet-lab/theory background describes imposter-like feelings about relying on AI for coding, confusion over conflicting PI advice on AI use, and difficulty building genuine computational skills. The post is an academic discussion seeking peer perspectives, not a request for writing or editing services.",
+    "xiaohongshuTopic": "计算生物学PhD不会写代码，全靠AI，正常吗？",
+    "instagramTopic": "When your PhD is computational but your background is wet-lab: navigating AI dependence in research",
+    "complianceNotes": "No service need identified. Do not offer coaching or editing services in response; any engagement should be purely informational and avoid implying we can solve coding or AI-use challenges.",
+    "analyzedAt": "2026-11-20T10:28:46.482Z"
+  },
+  {
+    "postId": "reddit_1xs1mlo",
+    "postType": "academic_discussion",
+    "painPoint": "对生物信息学工作被自动化（尤其是 Agentic AI）替代的担忧，以及职业发展方向的迷茫",
+    "problemType": "other",
+    "urgencyScore": 2,
+    "serviceFitScore": 1,
+    "replyWorthinessScore": 2,
+    "riskScore": 1,
+    "totalScore": 5,
+    "recommendedAction": "ignore",
+    "suggestedReplyAngle": "",
+    "ctaLevel": "none",
+    "summary": "用户是生物信息学博士生，讨论其工作（预处理、数据探索、ML特征选择、多组学整合）容易被自动化，感到无聊和可替代，询问其他子领域的情况以寻找新方向。帖子属于学术职业讨论，不涉及论文写作、审稿返修、英文润色、选刊投稿或AI写作辅导需求。",
+    "xiaohongshuTopic": "",
+    "instagramTopic": "",
+    "complianceNotes": "帖子为学术职业讨论，无相关服务需求，不应强行营销。",
+    "analyzedAt": "2026-11-20T10:28:48.922Z"
   }
 ]
